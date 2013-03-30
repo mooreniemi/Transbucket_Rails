@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  asset_file_name: MyString
+  asset_content_type: MyString
+  asset_file_size: 1
+  asset_updated_at: 2013-03-29 23:14:59
+  pin_id: 1
+
+two:
+  asset_file_name: MyString
+  asset_content_type: MyString
+  asset_file_size: 1
+  asset_updated_at: 2013-03-29 23:14:59
+  pin_id: 1

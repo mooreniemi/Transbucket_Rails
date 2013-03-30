@@ -1,4 +1,4 @@
-<div class="box"><%= link_to (image_tag pin.pin_images.first), pin %>
+<div class="box"><%= link_to (image_tag pin.pin_images.first.photo), pin %>
 	<p class="description">
 <%= pin.description %> by <strong> <%= pin.user.name %></strong> 
 <% if current_user == pin.user %> | <%= link_to 'Edit', edit_pin_path(pin) %>

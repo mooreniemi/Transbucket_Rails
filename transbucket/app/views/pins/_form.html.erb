@@ -10,20 +10,33 @@
       </ul>
     </div>
   <% end %>
+<div class="span4">
 
-      <%= f.label :description, "Submission Title" %>
-    <%= f.text_field :description %>
+    <%= f.label :surgeon, "Surgeon" %>
+    <%= f.text_field :surgeon %>
+
+     <%= f.label :cost, "Cost" %>
+    <%= f.text_field :cost %>
+
+    <%= f.label :revision, "Want revision?" %>
+    <%= f.check_box :revision %>
+
+    <%= f.label :details, "Details" %>
+    <%= f.text_area :details, :cols => "10", :rows => "10" %>
+    <%= f.submit %>
+</div>
+<div class="span4">
 
     <%= f.fields_for :pin_images do |builder| %>
      <% if builder.object.new_record? %> 
-        <br>
         <%= builder.label :caption, "Image Caption" %>
         <%= builder.text_field :caption %>
 
         <%= builder.label :photo, "Image File" %>
         <%= builder.file_field :photo %>
+        <br><br>
          <% end %> 
 
     <% end %>
-<%= f.submit %></div>
+</div></div>
 <% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130330164731) do
+ActiveRecord::Schema.define(:version => 20130330200217) do
 
   create_table "assets", :force => true do |t|
     t.string   "asset_file_name"
@@ -47,6 +47,11 @@ ActiveRecord::Schema.define(:version => 20130330164731) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.string   "procedure"
+    t.boolean  "revision"
+    t.string   "surgeon"
+    t.text     "details"
+    t.integer  "cost"
   end
 
   add_index "pins", ["user_id"], :name => "index_pins_on_user_id"

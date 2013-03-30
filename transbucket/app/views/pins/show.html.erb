@@ -9,9 +9,16 @@
 		</div>
 </div>
 <div class="span3">
-	<p>
-  <b>Description:</b>
-  <%= @pin.description %>
-</p><small><b>Submitter:</b> <%= @pin.user.name %></small>
+	<ul class="unstyled">
+  <li><b>Surgeon:</b>
+  <%= @pin.surgeon %></li>
+  <li><b>Cost:</b>
+  <%= @pin.cost %></li>
+  <li><b>Want revision?:</b>
+ <li><%= @pin.revision %></li>
+ <li><b>Description:</b>
+  <%= @pin.details %></li>
+</ul>
+<small><b>Submitter:</b> <%= @pin.user.name %></small>
 </div>
 <br clear="both" />

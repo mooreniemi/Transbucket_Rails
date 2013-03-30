@@ -1,15 +1,17 @@
-<div class="row">
-	<div class="span6 offset3">
+<div class="row-fluid">
+	<div class="span8">
 		<div class="well">
 			<% for pinimage in @pin.pin_images do %>
-			<%= image_tag pinimage.photo %>
+			<%= image_tag pinimage.photo unless pinimage.photo_file_size.nil? %>
 			<% end %>
-		<p>
+			<% if current_user == @pin.user %> <%= link_to 'Edit', edit_pin_path(@pin) %> <% end %> |
+<%= link_to 'Back', pins_path %>
+		</div>
+</div>
+<div class="span3">
+	<p>
   <b>Description:</b>
   <%= @pin.description %>
-</p><small><%= @pin.user.name %></small></div>
+</p><small><b>Submitter:</b> <%= @pin.user.name %></small>
 </div>
-</div>
-
-<% if current_user == @pin.user %> <%= link_to 'Edit', edit_pin_path(@pin) %> <% end %> |
-<%= link_to 'Back', pins_path %>
+<br clear="both" />

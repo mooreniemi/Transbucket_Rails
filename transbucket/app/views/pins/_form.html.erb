@@ -15,15 +15,15 @@
     <%= f.text_field :description %>
 
     <%= f.fields_for :pin_images do |builder| %>
-    <!-- <% if builder.object.new_record? %> -->
+     <% if builder.object.new_record? %> 
         <br>
-
         <%= builder.label :caption, "Image Caption" %>
         <%= builder.text_field :caption %>
 
         <%= builder.label :photo, "Image File" %>
         <%= builder.file_field :photo %>
-        <!-- <% end %> -->
+         <% end %> 
+
     <% end %>
 <%= f.submit %></div>
 <% end %>

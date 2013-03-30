@@ -3,7 +3,7 @@ before_filter :authenticate_user!, except: [:index]
   # GET /pins
   # GET /pins.json
   def index
-    @pins = Pin.all
+    @pins = Pin.order("created_at desc")
 
     respond_to do |format|
       format.html # index.html.erb

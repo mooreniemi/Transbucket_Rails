@@ -26,6 +26,7 @@ before_filter :authenticate_user!, except: [:index]
   # GET /pins/new.json
   def new
     @pin = current_user.pins.new
+    5.times {@pin.pin_images.build}
 
     respond_to do |format|
       format.html # new.html.erb
@@ -36,6 +37,7 @@ before_filter :authenticate_user!, except: [:index]
   # GET /pins/1/edit
   def edit
     @pin = current_user.pins.find(params[:id])
+    5.times {@pin.pin_images.build}
   end
 
   # POST /pins

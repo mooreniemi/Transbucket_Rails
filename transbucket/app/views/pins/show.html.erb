@@ -1,7 +1,9 @@
 <div class="row">
 	<div class="span6 offset3">
 		<div class="well">
-			<%= image_tag @pin.image %>
+			<% for pinimage in @pin.pin_images do %>
+			<%= image_tag pinimage.photo %>
+			<% end %>
 		<p>
   <b>Description:</b>
   <%= @pin.description %>

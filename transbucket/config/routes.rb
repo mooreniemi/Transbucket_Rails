@@ -1,5 +1,8 @@
 Transbucket::Application.routes.draw do
   resources :pins
+  resources :users
+  resources :pin_images
+  resources :photo
 
 
   devise_for :users

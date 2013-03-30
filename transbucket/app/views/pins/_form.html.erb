@@ -1,13 +1,29 @@
-<%= simple_form_for(@pin, html: { class: "form-horizontal"}) do |f| %>
-  <%= f.error_notification %>
-<%= f.full_error :image_file_size, class: "alert alert-error" %>
-<%= f.full_error :image_content_type, class: "alert alert-error" %>
+<%= form_for @pin, :html => {:multipart => true} do |f| %>
+  <% if @pin.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pin.errors.count, "error") %> prohibited this pin from being saved:</h2>
 
-    <%= f.input :image, label: "Upload an image:" %>
-    <%= f.input :description, as: :text, input_html: { rows: "3"} %>
-  </div>
+      <ul>
+      <% @pin.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-  <div class="form-actions">
-    <%= f.button :submit, class: "btn btn-primary" %>
-  </div>
+      <%= f.label :description, "Submission Title" %>
+    <%= f.text_field :description %>
+
+    <%= f.fields_for :pin_images do |builder| %>
+    <!-- <% if builder.object.new_record? %> -->
+        <br>
+
+        <%= builder.label :caption, "Image Caption" %>
+        <%= builder.text_field :caption %>
+
+        <%= builder.label :photo, "Image File" %>
+        <%= builder.file_field :photo %>
+        <!-- <% end %> -->
+    <% end %>
+<%= f.submit %></div>
 <% end %>

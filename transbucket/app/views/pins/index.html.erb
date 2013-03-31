@@ -1,6 +1,10 @@
+<% if user_signed_in? %>
 <h1>Latest submissions</h1>
-
 <div id="pins">
 <%= render @pins %>
 </div>
+
+<% else %>
+<%= render 'pages/home' %>
+<% end %>
 <br clear="both" />

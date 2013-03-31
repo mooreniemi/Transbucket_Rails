@@ -1,6 +1,6 @@
 <div class="box"><%= link_to (image_tag pin.pin_images.first.photo(:medium)), pin %>
 	<p class="description">
-<%= pin.procedure %> by <strong> <%= pin.surgeon %></strong> 
+<%= pin.procedure %> by <strong> Dr. <%= pin.surgeon %></strong> 
 <% if current_user == pin.user %> | <%= link_to 'Edit', edit_pin_path(pin) %>
 | <%= link_to 'Remove', pin, method: :delete, data: { confirm: 'Are you sure?' } %>
   <% end %>

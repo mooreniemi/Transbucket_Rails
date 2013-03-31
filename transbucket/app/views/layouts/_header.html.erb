@@ -17,6 +17,9 @@
                             <%= link_to 'About',  about_path %>
                         </li>
                     </ul>
+                    <form class="navbar-search pull-left">
+  <input type="text" class="search-query" placeholder="Search">
+</form>
                     <ul class="nav pull-right">
                         <% if user_signed_in? %>
                         <li><%= link_to 'Add +', new_pin_path %> </li>

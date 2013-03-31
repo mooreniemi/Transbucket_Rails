@@ -1,9 +1,9 @@
 <% unless user_signed_in? %>
 <div class="center hero-unit">
     <h1>Welcome!</h1>
-    <p>to <%= link_to 'Transbucket.com',  "http://transbucket.com" %>
+    <p>to Transbucket.com
      </p>
 
-    <p> <%= link_to 'Sign up now!',  new_user_registration_path, class: "btn btn-large btn-primary" %> </p>
+    <p> <%= link_to 'Sign up now',  new_user_registration_path, class: "btn btn-large btn-primary" %> </p>
 </div>
 <% end %>

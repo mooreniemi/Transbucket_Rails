@@ -20,3 +20,4 @@ doc/
 .DS_Store
 .idea
 /public/system
+.sql

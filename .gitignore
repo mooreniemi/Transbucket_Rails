@@ -1,3 +1,9 @@
+#rails specific
+*.sqlite3
+config/database.yml
+log/*
+tmp/*
+
 ## generic files to ignore
 *~
 *.lock

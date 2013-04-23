@@ -4,4 +4,4 @@ require File.expand_path('../application', __FILE__)
 # Initialize the rails application
 Transbucket::Application.initialize!
 
-config.gem "trucker"
+#config.gem "trucker"

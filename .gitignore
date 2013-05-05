@@ -11,3 +11,4 @@ tmp/*
 *.swp
 *.out
 *.sql
+public/system/pin_images/photos/*

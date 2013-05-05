@@ -37,7 +37,8 @@ before_filter :authenticate_user!, except: [:index]
   # GET /pins/1/edit
   def edit
     @pin = current_user.pins.find(params[:id])
-    5.times {@pin.pin_images.build}
+    l = @pin.pin_images.length
+    (5-l).times {@pin.pin_images.build}
   end
 
   # POST /pins

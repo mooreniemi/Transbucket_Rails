@@ -30,16 +30,15 @@
 </div>
 <div class="span4">
 
-    <%= f.fields_for :pin_images do |builder| %>
-     <% if builder.object.new_record? %> 
-        <%= builder.label :caption, "Image Caption" %>
-        <%= builder.text_field :caption %>
-
-        <%= builder.label :photo, "Image File" %>
-        <%= builder.file_field :photo %>
-        <br><br>
-         <% end %> 
-
+    <%= f.fields_for :pin_images do |ff| %>
+        <%= ff.label :caption, "Image Caption" %>
+        <%= ff.text_field :caption %>
+        <% unless ff.object.photo_file_size.nil? %>
+        <%= image_tag ff.object.photo %>
+        <% end %>
+        <%= ff.label :photo, "Image File" %>
+        <%= ff.file_field :photo %>
+        <% #end %>
     <% end %>
 </div></div>
 <% end %>

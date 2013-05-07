@@ -35,6 +35,7 @@
         <%= ff.text_field :caption %>
         <% unless ff.object.photo_file_size.nil? %>
         <%= image_tag ff.object.photo %>
+        <%= ff.object.photo_file_name %>
         <% end %>
         <%= ff.label :photo, "Image File" %>
         <%= ff.file_field :photo %>

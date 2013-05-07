@@ -29,6 +29,7 @@ gem 'simple_form'
 gem 'paperclip', "~> 3.0"
 gem 'activerecord-mysql-adapter'
 gem 'trucker'
+gem 'hirb'
 #gem 'activerecord-mysql2-adapter'
 #gem 'activerecord-jdbc-adapter'
 #gem 'activerecord-jdbcmysql-adapter'

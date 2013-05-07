@@ -12,3 +12,4 @@ tmp/*
 *.out
 *.sql
 public/system/pin_images/photos/*
+public/system/*

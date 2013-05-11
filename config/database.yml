@@ -13,6 +13,8 @@ defaults: &defaults
 development:
   <<: *defaults
   database: mysql_development
+  #socket: /tmp/mysql.sock
+  #port: 9306
 
 test:
   <<: *defaults

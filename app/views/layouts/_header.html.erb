@@ -17,9 +17,13 @@
                             <%= link_to 'About',  about_path %>
                         </li>
                     </ul>
-                    <form class="navbar-search pull-left">
-  <input type="text" class="search-query" placeholder="Search">
-</form>
+
+
+                    <%= form_tag pins_path, :class => 'navbar-search', :method => :get do %>
+                    <%= text_field_tag 'query', "Search", :class => 'search-query' %>
+                    <%= submit_tag 'Go', :class => 'btn' %>
+                    <% end %>
+
                     <ul class="nav pull-right">
                         <% if user_signed_in? %>
                         <li><%= link_to 'Add +', new_pin_path %> </li>

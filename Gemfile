@@ -7,7 +7,7 @@ gem 'rails', '3.2.12'
 
 #gem 'sqlite3'
 gem 'mysql'
-gem 'mysql2'
+gem 'mysql2', '0.3.12b5'
 
 
 # Gems used only for assets and not required
@@ -27,6 +27,7 @@ gem 'jquery-rails'
 gem 'devise'
 gem 'simple_form'
 gem 'paperclip', "~> 3.0"
+gem 'thinking-sphinx', "~> 3.0.2"
 gem 'activerecord-mysql-adapter'
 gem 'trucker'
 gem 'hirb'

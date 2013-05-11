@@ -1,4 +1,5 @@
 Transbucket::Application.routes.draw do
+
   resources :pins
 
 
@@ -6,6 +7,8 @@ Transbucket::Application.routes.draw do
 
 root :to => 'pins#index'
   get 'about' => 'pages#about'
+  get 'terms' => 'pages#terms'
+  get 'privacy' => 'pages#privacy'
 
 
   # The priority is based upon order of creation:

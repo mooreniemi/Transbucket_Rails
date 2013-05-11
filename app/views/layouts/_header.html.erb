@@ -20,8 +20,8 @@
 
 
                     <%= form_tag pins_path, :class => 'navbar-search', :method => :get do %>
-                    <%= text_field_tag 'query', "Search", :class => 'search-query' %>
-                    <%= submit_tag 'Go', :class => 'btn' %>
+                    <%= text_field_tag 'query', value = nil, :class => 'search-query', :placeholder => "Search" %>
+                    <%= submit_tag 'Go', :class => 'search-query btn' %>
                     <% end %>
 
                     <ul class="nav pull-right">

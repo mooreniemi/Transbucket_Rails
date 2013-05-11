@@ -6,7 +6,8 @@ class Pin < ActiveRecord::Base
 
 
   validates :surgeon, presence: true
-  #validates :pin_images_attributes, presence: true
+  validates :procedure, presence: true
+  #validates :pin_images, presence: true
   validates :user_id, presence: true
 
   belongs_to :user

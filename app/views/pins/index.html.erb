@@ -1,5 +1,9 @@
 <% if user_signed_in? %>
+<% if params[:query].blank? %>
 <h1>Latest submissions</h1>
+<% else %>
+<h1>Search result</h1>
+<% end %>
 <div id="pins">
 <%= render @pins %>
 </div>

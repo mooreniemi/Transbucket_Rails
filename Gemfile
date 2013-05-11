@@ -31,6 +31,19 @@ gem 'thinking-sphinx', "~> 3.0.2"
 gem 'activerecord-mysql-adapter'
 gem 'trucker'
 gem 'hirb'
+
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+end
+
+group :test do
+  gem 'faker'
+  gem 'capybara'
+  gem 'guard-rspec'
+  gem 'launchy'
+end
+
 #gem 'activerecord-mysql2-adapter'
 #gem 'activerecord-jdbc-adapter'
 #gem 'activerecord-jdbcmysql-adapter'

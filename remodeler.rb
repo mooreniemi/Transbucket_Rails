@@ -17,4 +17,4 @@ end
 
 for pin in pins do
 	for pin_image in pin_images do
-		if pin.pin_images.nil?
+		if pin.pin_images.photo_file_name.nil?

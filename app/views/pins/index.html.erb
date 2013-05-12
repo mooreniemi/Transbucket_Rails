@@ -5,11 +5,12 @@
 <h1>Search result</h1>
 <% end %>
 <div id="pins">
-	<%= will_paginate @pins %>
+<%= will_paginate @pins %>
 <%= render @pins %>
 </div>
 
 <% else %>
-<%= render 'pages/home' %>
+<%= render @user.pins %>
 <% end %>
 <br clear="both" />
+<%= will_paginate @pins %>

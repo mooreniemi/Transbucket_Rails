@@ -11,21 +11,25 @@
 <%= f.input :password_confirmation, label: "New Password Confirmation", autocomplete: "off" %>
 <%= f.input :current_password %>
 
-  <div class="form-actions"><%= f.submit "Update", class: "btn btn-primary" %></div>
+  <div><%= f.submit "Update", class: "btn btn-primary" %></div>
 <% end %>
 
 <h3>Cancel my account</h3>
 
-<p>:C <%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %></p>
+<p><%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %></p>
 </div>
 <div class="span4">
 	<h2>Your Submissions</h2>
 	<div class="well">
+		<% if current_user.pins.length == 0 then %>
+		<%= link_to 'Submit Now +', new_pin_path %>
+		<% else %>
 		<% for pin in current_user.pins do %>
 		<% for pin_image in pin.pin_images do %>
-		<%= image_tag pin_image.photo %>
+		<%= link_to (image_tag pin_image.photo), pin %>
 		<%= link_to 'Edit', edit_pin_path(pin) %>
 | <%= link_to 'Remove', pin, method: :delete, data: { confirm: 'Are you sure?' } %>
+		<% end %>
 		<% end %>
 		<% end %>
 		</div>

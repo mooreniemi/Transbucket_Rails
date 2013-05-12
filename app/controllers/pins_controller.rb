@@ -3,7 +3,7 @@ before_filter :authenticate_user!, except: [:index]
   # GET /pins
   # GET /pins.json
   def index
-    @pins = params[:query].blank? ? Pin.order("created_at desc") : Pin.search(params[:query])
+    @pins = params[:query].blank? ? Pin.order("created_at desc").paginate(:page => params[:page]) : Pin.search(params[:query])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -77,7 +77,7 @@ before_filter :authenticate_user!, except: [:index]
   # DELETE /pins/1
   # DELETE /pins/1.json
   def destroy
-    @pin = current_user.pins.find(params[:id])
+    @pin = Pin.find(params[:id])
     @pin.destroy
 
     respond_to do |format|

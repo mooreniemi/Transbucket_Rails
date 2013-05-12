@@ -8,6 +8,8 @@ gem 'rails', '3.2.12'
 #gem 'sqlite3'
 gem 'mysql'
 gem 'mysql2', '0.3.12b5'
+#gem 'rack', '1.5.2'
+gem 'will_paginate', '~> 3.0'
 
 
 # Gems used only for assets and not required
@@ -31,6 +33,7 @@ gem 'thinking-sphinx', "~> 3.0.2"
 gem 'activerecord-mysql-adapter'
 gem 'trucker'
 gem 'hirb'
+gem 'thin'
 
 group :development, :test do
   gem 'rspec-rails'

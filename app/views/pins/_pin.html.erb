@@ -1,4 +1,4 @@
-<div class="box"><%= link_to (image_tag pin.pin_images.first.photo(:medium)), pin %>
+<div class="box"><%= link_to (image_tag pin.pin_images.last.photo(:medium)), pin %>
 	<p class="description">
 <%= pin.procedure %> by <strong> Dr. <%= pin.surgeon %></strong> 
 <% if current_user == pin.user || current_user.admin? %> | <%= link_to 'Edit', edit_pin_path(pin) %>

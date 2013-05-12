@@ -14,3 +14,7 @@ for pin in pins do
 	Pin.find(pin).pin_images.new(:photo => File.new("/Users/Alex/Documents/Code/TB_Rails_M/public/system/pin_images/results/#{Pin.find(pin).username}1.jpg", "r")).save
 	end
 end
+
+for pin in pins do
+	for pin_image in pin_images do
+		if pin.pin_images.nil?

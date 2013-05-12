@@ -36,7 +36,7 @@ before_filter :authenticate_user!, except: [:index]
 
   # GET /pins/1/edit
   def edit
-    @pin = current_user.pins.find(params[:id])
+    @pin = Pin.find(params[:id])
     l = @pin.pin_images.length
     (5-l).times {@pin.pin_images.build}
   end
@@ -61,7 +61,7 @@ before_filter :authenticate_user!, except: [:index]
   # PUT /pins/1
   # PUT /pins/1.json
   def update
-    @pin = current_user.pins.find(params[:id])
+    @pin = Pin.find(params[:id])
 
     respond_to do |format|
       if @pin.update_attributes(params[:pin])

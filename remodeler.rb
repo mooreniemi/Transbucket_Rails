@@ -15,6 +15,12 @@ for pin in pins do
 	end
 end
 
+i = 0
 for pin in pins do
-	for pin_image in pin_images do
-		if pin.pin_images.photo_file_name.nil?
+	until i == Pin.find(pin).pin_images.length do
+		if pin.pin_images[i].photo_file_size.nil? then
+			pin.pin_images[i]
+		end
+		i +=1
+	end
+end

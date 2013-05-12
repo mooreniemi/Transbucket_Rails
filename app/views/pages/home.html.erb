@@ -1,15 +1,5 @@
 <% if user_signed_in? %>
+<h2>News</h2>
 <div class="center hero-unit">
-    <h1>Howdy</h1>
-    <p>from <%= link_to 'Transbucket.com',  "http://onemonthrails.com" %>
-     </p>
-</div>
-<% else %>
-<div class="center hero-unit">
-    <h1>Welcome!</h1>
-    <p>to <%= link_to 'One Month Rails',  "http://onemonthrails.com" %>
-     </p>
-
-    <p> <%= link_to 'Sign up now!',  new_user_registration_path, class: "btn btn-large btn-primary" %> </p>
 </div>
 <% end %>

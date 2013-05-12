@@ -8,6 +8,7 @@ root :to => 'pins#index'
   get 'about' => 'pages#about'
   get 'terms' => 'pages#terms'
   get 'privacy' => 'pages#privacy'
+  get 'home' => 'pages#home'
 
 
   # The priority is based upon order of creation:

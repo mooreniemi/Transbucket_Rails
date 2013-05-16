@@ -12,5 +12,6 @@
 <%= will_paginate @pins unless @pins.nil? %>
 <% else %>
 <div class="well"><h1>Welcome</h1>
-<p>To the largest, oldest and best archive of photos of transgender patients online.</div>
+<p>To the largest, oldest and best archive of photos of transgender patients online.</p>
+<p>Want to view the submissions or make one of your own? <%= link_to 'Register', register_path %> or <%= link_to 'Login', login_path %>.</div>
 <% end %>

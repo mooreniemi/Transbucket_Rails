@@ -4,11 +4,18 @@ Transbucket::Application.routes.draw do
 
   devise_for :users
 
+  devise_scope :user do
+  get "/register" => "devise/registrations#new"
+  get "/login" => "devise/sessions#new"
+end
+
+
 root :to => 'pins#index'
   get 'about' => 'pages#about'
   get 'terms' => 'pages#terms'
   get 'privacy' => 'pages#privacy'
   get 'home' => 'pages#home'
+
 
 
   # The priority is based upon order of creation:

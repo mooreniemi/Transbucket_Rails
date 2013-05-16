@@ -119,6 +119,7 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.0)
       mime-types
+    pg (0.15.1)
     polyglot (0.3.3)
     pry (0.9.12.2)
       coderay (~> 1.0.5)
@@ -228,6 +229,7 @@ DEPENDENCIES
   mysql
   mysql2 (= 0.3.12b5)
   paperclip (~> 3.0)
+  pg
   rails (= 3.2.12)
   rspec-rails
   sass-rails (~> 3.2.3)

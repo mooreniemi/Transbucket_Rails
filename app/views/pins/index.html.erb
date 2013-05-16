@@ -5,9 +5,12 @@
 <h1>Search result</h1>
 <% end %>
 <div id="pins">
-<%= will_paginate @pins %>
-<%= render @pins %>
+<%= will_paginate @pins unless @pins.nil? %>
+<%= render @pins unless @pins.nil? %>
 </div>
 <br clear="both" />
-<%= will_paginate @pins %>
+<%= will_paginate @pins unless @pins.nil? %>
+<% else %>
+<div class="well"><h1>Welcome</h1>
+<p>To the largest, oldest and best archive of photos of transgender patients online.</div>
 <% end %>

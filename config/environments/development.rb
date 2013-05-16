@@ -39,4 +39,6 @@ Transbucket::Application.configure do
 
   config.middleware.use Rails::Rack::LogTailer
 
+  config.log_level = ENV["LOG_LEVEL"].to_sym if ENV["LOG_LEVEL"]
+
 end

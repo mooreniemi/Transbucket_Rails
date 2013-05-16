@@ -34,4 +34,6 @@ Transbucket::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  config.log_level = ENV["LOG_LEVEL"].to_sym if ENV["LOG_LEVEL"]
 end

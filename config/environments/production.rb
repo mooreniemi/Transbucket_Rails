@@ -63,6 +63,7 @@ Transbucket::Application.configure do
 
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
+  config.log_level = ENV["LOG_LEVEL"].to_sym if ENV["LOG_LEVEL"]
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)

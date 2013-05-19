@@ -31,6 +31,7 @@ end
 
 gem 'jquery-rails'
 gem 'devise'
+gem 'nested_form'
 gem 'simple_form'
 gem 'paperclip', "~> 3.0"
 gem 'thinking-sphinx', "~> 3.0.2"

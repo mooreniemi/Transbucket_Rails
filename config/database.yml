@@ -13,7 +13,8 @@ defaults: &defaults
 development:
   <<: *defaults
   database: mysql_development
-  #socket: /tmp/mysql.sock
+  socket: /tmp/mysql.sock
+  #socket: /Applications/XAMPP/xamppfiles/var/mysql/mysql.sock
   #port: 9306
 
 test:

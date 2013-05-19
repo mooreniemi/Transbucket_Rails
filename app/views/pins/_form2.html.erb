@@ -42,16 +42,19 @@
 </div>
 <div class="span4">
 
-    <%= f.fields_for :pin_images do |ff| %>
-        <%= ff.label :caption, "Image Caption" %>
-        <%= ff.text_field :caption %>
-        <% unless ff.object.photo_file_size.nil? %>
-        <%= image_tag ff.object.photo %>
-        <%= ff.object.photo_file_name %>
-        <% end %>
-        <%= ff.label :photo, "Image File" %>
-        <%= ff.file_field :photo %>
-        <% #end %>
+<%= f.fields_for :pin_images do |ff| %>  
+    <% if ff.object.new_record? %>
+      <%= ff.label :caption, "Image Caption" %>
+      <%= ff.text_field :caption %>
+      <%= ff.file_field(:photo) %>
+
+     <% else %> 
+        <%= image_tag(photo.url(:thumb)) %>
+        <%= ff.hidden_field :_destroy %>
+        <%= ff.link_to_remove "X"%>
     <% end %>
+  <% end %>
+
+    <p><%= f.link_to_add "Add photo", :pin_images, :class => 'btn btn-success' %></p>
+  <% end %>
 </div></div>
-<% end %>

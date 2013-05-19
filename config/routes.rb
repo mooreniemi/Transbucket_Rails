@@ -9,6 +9,9 @@ Transbucket::Application.routes.draw do
   get "/login" => "devise/sessions#new"
 end
 
+resources :pin do 
+      resources :pin_images
+  end
 
 root :to => 'pins#index'
   get 'about' => 'pages#about'

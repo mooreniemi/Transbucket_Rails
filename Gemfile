@@ -39,6 +39,8 @@ gem 'activerecord-mysql-adapter'
 gem 'trucker'
 gem 'hirb'
 gem 'thin'
+gem 'htmlentities'
+gem 'simple-rss'
 
 group :development, :test do
   gem 'rspec-rails'

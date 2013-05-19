@@ -11,7 +11,29 @@
 <br clear="both" />
 <%= will_paginate @pins unless @pins.nil? %>
 <% else %>
-<div class="well"><h1>Welcome</h1>
-<p>To the largest, oldest and best archive of photos of transgender patients online.</p>
-<p>Want to view the submissions or make one of your own? <%= link_to 'Register', register_path %> or <%= link_to 'Login', login_path %>.</div>
+<div class="row">
+	<div class="span4">
+		<h2>Do you have questions about transitioning?</h2>
+	</div>
+	<div class="span4">
+		<h2>We have answers.</h2>
+	</div>
+	<div class="span4">
+  <h2>See trans* patients like you.</h2>
+</div>
+</div>
+<div class="row">
+	<div class="span4">
+	<%= image_tag(image_path("dysphoria2.png"), :size => "400x400", :alt => "dysphoria", :padding => "10") %>
+	</div>
+	<div class="span4">
+	<%= image_tag(image_path("key.png"), :size => "300x300", :alt => "key", :padding => "10") %>
+	</div>
+	<div class="span4">
+		<div class="btn-group" style="margin-top:30%; margin-left:5%;">
+  <%= link_to 'Register', register_path, :class => "btn btn-primary btn-large" %> <%= link_to 'Learn More', about_path, :class => "btn btn-large" %> <%= link_to 'Login', login_path, :class => "btn btn-large" %>
+</div>
+</div>
+
+</div>
 <% end %>

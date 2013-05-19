@@ -26,7 +26,7 @@ before_filter :authenticate_user!, except: [:index]
   # GET /pins/new.json
   def new
     @pin = current_user.pins.new
-    5.times {@pin.pin_images.build}
+    4.times {@pin.pin_images.build}
 
     respond_to do |format|
       format.html # new.html.erb

@@ -87,6 +87,7 @@ GEM
       rspec (~> 2.13)
     hike (1.2.2)
     hirb (0.7.1)
+    htmlentities (4.3.1)
     i18n (0.6.4)
     innertube (1.0.2)
     journey (1.0.4)
@@ -177,6 +178,7 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
+    simple-rss (1.2.3)
     simple_form (2.1.0)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
@@ -225,6 +227,7 @@ DEPENDENCIES
   faker
   guard-rspec
   hirb
+  htmlentities
   jquery-rails
   launchy
   mysql
@@ -235,6 +238,7 @@ DEPENDENCIES
   rails (= 3.2.12)
   rspec-rails
   sass-rails (~> 3.2.3)
+  simple-rss
   simple_form
   thin
   thinking-sphinx (~> 3.0.2)

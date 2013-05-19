@@ -1,5 +1,14 @@
-<% if user_signed_in? %>
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
 <h2>News</h2>
 <div class="center hero-unit">
-</div>
+<%  rss = SimpleRSS.parse open('http://transbucket.tumblr.com/rss').read
+coder = HTMLEntities.new %>
+<ul class="unstyled">
+<% for e in rss.items do %>
+<li><h3><i class="icon-rss-sign"></i> <%= link_to coder.decode("#{e.title}").html_safe, coder.decode("#{e.link}").html_safe %></h3>
+	<br>
+<%= coder.decode("#{e.description}").html_safe %>
+<hr></li>
 <% end %>
+ </ul>
+</div>

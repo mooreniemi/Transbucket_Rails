@@ -41,6 +41,7 @@
     <%= f.submit "Submit Now", :class => 'btn btn-primary' %>
 </div>
 <div class="span4">
+  <p>We recommend listing images from "Before" to "After", top to bottom in the form.</p>
 
 <%= f.fields_for :pin_images do |ff| %>  
     <% if ff.object.new_record? %>

@@ -4,6 +4,9 @@ Transbucket::Application.routes.draw do
 
   devise_for :users
 
+  match 'contact' => 'contact#new', :as => 'contact', :via => :get
+  match 'contact' => 'contact#create', :as => 'contact', :via => :post
+
   devise_scope :user do
   get "/register" => "devise/registrations#new"
   get "/login" => "devise/sessions#new"

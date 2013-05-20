@@ -20,6 +20,8 @@ Transbucket::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
+  config.assets.debug = false
+
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
 
@@ -61,7 +63,7 @@ Transbucket::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  #config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
   config.log_level = ENV["LOG_LEVEL"].to_sym if ENV["LOG_LEVEL"]
 

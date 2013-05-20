@@ -1,7 +1,6 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
-require 'settings.rb'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -13,20 +12,7 @@ end
 module Transbucket
   class Application < Rails::Application
 
-#http://matharvard.ca/posts/2011/aug/22/contact-form-in-rails-3/
-    config.action_mailer.smtp_settings = {
-  :address              => "smtp.gmail.com",
-  :port                 => 587,
-  :domain               => "transbucket.com",
-  :user_name            => "admin@transbucket.com",
-  :password             => GAPassword,
-  :authentication       => :plain,
-  :enable_starttls_auto => true
-}
 
-config.action_mailer.default_url_options = {
-  :host => "transbucket.com"
-}
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -71,6 +57,9 @@ config.action_mailer.default_url_options = {
 
     # Enable the asset pipeline
     config.assets.enabled = true
+
+    #to silence the 304s
+    config.assets.debug = false
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'

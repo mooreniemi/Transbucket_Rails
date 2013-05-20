@@ -1,7 +1,7 @@
 #rails specific
 *.sqlite3
 config/database.yml
-config/settings.rb
+config/settings.txt
 log/*
 tmp/*
 

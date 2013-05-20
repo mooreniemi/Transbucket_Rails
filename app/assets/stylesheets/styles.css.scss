@@ -83,3 +83,8 @@ body{
     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f8f8f8), to(#e9e9e9));
     background: -moz-linear-gradient(0% 0% 270deg,#f8f8f8, #e9e9e9);
 }
+
+select {
+    margin: 0 20px;
+    width: 220px;
+}

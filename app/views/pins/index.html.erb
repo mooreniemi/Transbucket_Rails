@@ -19,7 +19,7 @@
 		<h2>We have answers.</h2>
 	</div>
 	<div class="span4">
-  <h2>See trans* patients like you.</h2>
+  <h2>See trans* patients like you.</h2> 
 </div>
 </div>
 <div class="row">
@@ -27,12 +27,11 @@
 	<%= image_tag(image_path("dysphoria2.png"), :size => "400x400", :alt => "dysphoria", :padding => "10") %>
 	</div>
 	<div class="span4">
-	<%= image_tag(image_path("dysphoria3.png"), :size => "300x300", :alt => "key", :padding => "10") %>
+	<%= image_tag(image_path("dysphoria3.png"), :size => "400x400", :alt => "key", :padding => "10") %>
 	</div>
 	<div class="span4">
-		<div class="btn-group" style="margin-top:30%; margin-left:5%;">
-  <%= link_to 'Register', register_path, :class => "btn btn-primary btn-large" %> <%= link_to 'Learn More', about_path, :class => "btn btn-large" %> <%= link_to 'Login', login_path, :class => "btn btn-large" %>
-</div>
+		<%= link_to (image_tag(image_path("register.png"), :size => "400x400", :alt => "key", :padding => "10")), register_path %>
+
 </div>
 
 </div>

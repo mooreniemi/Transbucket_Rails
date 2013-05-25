@@ -1,8 +1,8 @@
 Transbucket::Application.routes.draw do
 
   resources :pins
-
   devise_for :users
+  resources :comments, :only => [:create, :destroy]
 
   match 'contact' => 'contact#new', :as => 'contact', :via => :get
   match 'contact' => 'contact#create', :as => 'contact', :via => :post
@@ -21,7 +21,6 @@ root :to => 'pins#index'
   get 'terms' => 'pages#terms'
   get 'privacy' => 'pages#privacy'
   get 'home' => 'pages#home'
-
 
 
   # The priority is based upon order of creation:

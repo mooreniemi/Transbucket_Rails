@@ -15,6 +15,8 @@ before_filter :authenticate_user!, except: [:index]
   # GET /pins/1.json
   def show
     @pin = Pin.find(params[:id])
+    @comments = @pin.comment_threads.order('created_at desc')
+    @new_comment = Comment.build_from(@pin, current_user, "")
 
     respond_to do |format|
       format.html # show.html.erb

@@ -1,0 +1,6 @@
+  <div id ="comment">
+      <div class="well"><%= comment.body %><br>
+      	<%= comment.user.username %>
+      	<small><%= comment.updated_at.strftime('%b %d, %Y at %I:%M %p') %></small>
+      	<%= link_to "×", comment_path(comment), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this comment?", :disable_with => "×", :class => 'close' %></div>
+  </div>

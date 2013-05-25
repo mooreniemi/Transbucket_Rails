@@ -25,3 +25,6 @@
 <small><b>Submitter:</b> <%= @pin.username %></small>
 </div>
 <br clear="both" />
+
+<%= render :partial => 'comments/form', :locals => { :comment => @new_comment } %>
+<%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>

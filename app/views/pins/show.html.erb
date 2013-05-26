@@ -9,7 +9,7 @@
 <%= link_to 'Back', pins_path %>
 		</div>
 </div>
-<div class="span3">
+<div class="span4">
 	<ul class="unstyled">
   <li><b>Surgeon:</b>
   Dr. <%= @pin.surgeon %></li>
@@ -19,8 +19,8 @@
   <%= @pin.cost %></li>
   <li><b>Want revision?:</b>
  <li><%= @pin.revision %></li>
- <li><b>Description:</b>
-  <%= @pin.details %></li>
+ <li><b>Description:</b></li>
+   <li style="background-color:#fff; padding:10px;"><%= @pin.details %></li>
 </ul>
 <small><b>Submitter:</b> <%= @pin.username %></small>
 </div>

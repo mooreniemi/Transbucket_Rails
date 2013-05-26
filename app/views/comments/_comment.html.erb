@@ -1,4 +1,4 @@
-  <div id ="comment">
+  <div class="comment" id="<%=comment.id %>">
       <div class="well"><%= comment.body %><br>
       	<%= comment.user.username %>
       	<small><%= comment.updated_at.strftime('%b %d, %Y at %I:%M %p') %></small>

@@ -19,12 +19,8 @@
                     </ul>
 
 
-                    <%= form_tag pins_path, :class => 'navbar-search', :method => :get do %>
-                    <%= text_field_tag 'query', value = nil, :class => 'search-query', :placeholder => "Search" %>
-                    <%= submit_tag 'Go', :class => 'search-query btn' %>
-                    <% end %>
 
-                    <ul class="nav pull-right">
+                    <ul class="nav">
                         <% if user_signed_in? %>
                         <li><%= link_to 'Add +', new_pin_path %> </li>
                         <li><%= link_to 'My Account',  edit_user_registration_path %></li>
@@ -34,6 +30,10 @@
                                 <li><%= link_to 'Login',  new_user_session_path %></li>
                                 <% end %>
                     </ul>
+                     <%= form_tag pins_path, :class => 'form-search pull-right', :method => :get do %><div class="input-append">
+                    <%= text_field_tag 'query', value = nil, :class => 'span2 search-query', :placeholder => "Search" %>
+                    <%= submit_tag 'Go', :class => 'btn' %></div>
+                    <% end %>
                 </div>
         </div>
     </div>

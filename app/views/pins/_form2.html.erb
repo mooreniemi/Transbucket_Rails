@@ -33,8 +33,9 @@
      <%= f.label :cost, "Cost" %>
     <%= f.text_field :cost %>
 
-    <%= f.label :revision, "Want revision?" %>
+    <label class="checkbox">
     <%= f.check_box :revision %>
+    Seeking a revision</label>
 
     <%= f.label :details, "Details" %>
     <%= f.text_area :details, :cols => "10", :rows => "10" %>
@@ -58,4 +59,4 @@
 
     <p><%= f.link_to_add "Add photo", :pin_images, :class => 'btn btn-success' %></p>
   <% end %>
-</div></div>
+</div><br clear="both">

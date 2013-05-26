@@ -85,8 +85,13 @@ body{
 }
 
 select {
-    margin: 0 20px;
+    margin: 0px;
+    margin-bottom:5px;
     width: 220px;
+}
+
+.gender {
+    margin-left: 20px;
 }
 
 .form-search {

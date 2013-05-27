@@ -1,3 +1,15 @@
+<script>
+$.noConflict();
+jQuery(window).load(function() {
+var $container = jQuery('#pins');
+
+$container.imagesLoaded( function(){
+  $container.masonry({
+    itemSelector : '.box'
+  });
+});
+});
+</script>
 <div class="row-fluid">
 	<div class="span8">
 		<div class="well">

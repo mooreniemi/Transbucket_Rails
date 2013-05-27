@@ -4,12 +4,14 @@
 <% else %>
 <h1>Search result</h1>
 <% end %>
+
+<%= will_paginate @pins unless @pins.nil? %>
 <div id="pins">
-<%= will_paginate @pins unless @pins.nil? %>
 <%= render @pins unless @pins.nil? %>
-</div>
 <br clear="both" />
+</div>
 <%= will_paginate @pins unless @pins.nil? %>
+<br clear="both" />
 <% else %>
 <div class="row">
 	<div class="span4">
@@ -33,6 +35,6 @@
 		<%= link_to (image_tag(image_path("register.png"), :size => "400x400", :alt => "key", :padding => "10")), register_path %>
 
 </div>
-
 </div>
+<br clear="both" />
 <% end %>

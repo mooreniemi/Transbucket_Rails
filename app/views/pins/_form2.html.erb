@@ -9,7 +9,6 @@
     });
   });
   </script>
-
 <%= nested_form_for @pin, :html => {:multipart => true} do |f| %>
   <% if @pin.errors.any? %>
     <div id="error_explanation">
@@ -22,7 +21,7 @@
       </ul>
     </div>
   <% end %>
-<div class="span4">
+<div class="well span4">
 
     <%= f.label :surgeon, "Surgeon" %>
     <%= f.text_field :surgeon %>
@@ -39,9 +38,10 @@
 
     <%= f.label :details, "Details" %>
     <%= f.text_area :details, :cols => "10", :rows => "10" %>
+    <br>
     <%= f.submit "Submit Now", :class => 'btn btn-primary' %>
 </div>
-<div class="span4">
+<div class="well span4">
   <p>We recommend listing images from "Before" to "After", top to bottom in the form.</p>
 
 <%= f.fields_for :pin_images do |ff| %>  
@@ -56,7 +56,7 @@
         <%= ff.link_to_remove "X"%>
     <% end %>
   <% end %>
-
-    <p><%= f.link_to_add "Add photo", :pin_images, :class => 'btn btn-success' %></p>
+<br>
+    <p><%= f.link_to_add "Add another photo", :pin_images, :class => 'btn btn-success' %></p>
   <% end %>
 </div><br clear="both">

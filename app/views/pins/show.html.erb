@@ -11,7 +11,7 @@ $container.imagesLoaded( function(){
 });
 </script>
 <div class="row-fluid">
-	<div class="span8">
+	<div class="span6">
 		<div class="well">
 			<% for pinimage in @pin.pin_images do %>
 			<%= image_tag pinimage.photo unless pinimage.photo_file_size.nil? %>

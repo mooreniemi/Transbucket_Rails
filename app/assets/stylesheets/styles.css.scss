@@ -26,7 +26,6 @@ body{
 /* Required for jQuery Masonry */
 
 .box {
-    height:220px;
 	margin: 10px;
 	padding: 10px;
 	font-size: 11px;
@@ -48,6 +47,10 @@ body{
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
+}
+
+.box p {
+    max-width:250px;
 }
 
 .description {

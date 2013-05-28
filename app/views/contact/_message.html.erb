@@ -1,4 +1,4 @@
-<%= form_for @message, :url => contact_path do |form| %>
+<div class="well span6"><%= form_for @message, :url => contact_path do |form| %>
   <fieldset class="fields">
     <div class="field">
       <%= form.label :name %>
@@ -27,4 +27,5 @@
   <fieldset class="actions">
     <%= form.submit "Send", :class => "btn" %>
   </fieldset>
-<% end %>
+<% end %></div>
+<br clear="both">

@@ -24,3 +24,7 @@ for pin in pins do
 		i +=1
 	end
 end
+
+for pin in pins do
+	pin.update_attribute(:user_id, User.find_by_username(pin.username).id) unless User.find_by_username(pin.username).nil?
+end

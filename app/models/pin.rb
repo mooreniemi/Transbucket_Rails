@@ -14,4 +14,10 @@ class Pin < ActiveRecord::Base
   belongs_to :user
 
   acts_as_commentable
+
+  def has_new_comments(user)
+    @user = User.find(user).last_sign_in_at
+    @comments = Comment.where('created_at > ? and commentable_id = ?', @user, self.id)
+  end
+
 end

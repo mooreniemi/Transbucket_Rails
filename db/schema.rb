@@ -49,40 +49,6 @@ ActiveRecord::Schema.define(:version => 20130524021220) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "old_users", :primary_key => "ID", :force => true do |t|
-    t.string   "username",   :limit => 60
-    t.string   "password",   :limit => 120
-    t.string   "name",       :limit => 40,                           :null => false
-    t.string   "sex",        :limit => 40,  :default => "undefined", :null => false
-    t.string   "email",      :limit => 80,                           :null => false
-    t.string   "Activation", :limit => 40
-    t.string   "contact",    :limit => 4,   :default => "no",        :null => false
-    t.string   "anonymous",  :limit => 4,   :default => "no",        :null => false
-    t.integer  "numImages",                 :default => 0,           :null => false
-    t.datetime "dateJoined",                                         :null => false
-    t.datetime "lastLogin",                                          :null => false
-    t.string   "currency",   :limit => 3,   :default => "USD",       :null => false
-  end
-
-  add_index "old_users", ["email"], :name => "email_index"
-
-  create_table "old_users_dupes", :primary_key => "ID", :force => true do |t|
-    t.string   "username",   :limit => 60
-    t.string   "password",   :limit => 120
-    t.string   "name",       :limit => 40,                           :null => false
-    t.string   "sex",        :limit => 40,  :default => "undefined", :null => false
-    t.string   "email",      :limit => 80,                           :null => false
-    t.string   "Activation", :limit => 40
-    t.string   "contact",    :limit => 4,   :default => "no",        :null => false
-    t.string   "anonymous",  :limit => 4,   :default => "no",        :null => false
-    t.integer  "numImages",                 :default => 0,           :null => false
-    t.datetime "dateJoined",                                         :null => false
-    t.datetime "lastLogin",                                          :null => false
-    t.string   "currency",   :limit => 3,   :default => "USD",       :null => false
-  end
-
-  add_index "old_users_dupes", ["email"], :name => "email_index"
-
   create_table "pin_images", :force => true do |t|
     t.string   "caption"
     t.integer  "pin_id"
@@ -112,33 +78,6 @@ ActiveRecord::Schema.define(:version => 20130524021220) do
   end
 
   add_index "pins", ["user_id"], :name => "index_pins_on_user_id"
-
-  create_table "results", :primary_key => "ID", :force => true do |t|
-    t.string   "username",     :limit => 40,                        :null => false
-    t.date     "surgeryDate"
-    t.string   "surgeon",      :limit => 40,   :default => "other", :null => false
-    t.string   "surgeryType",  :limit => 40,                        :null => false
-    t.integer  "cost"
-    t.string   "comments",     :limit => 1000
-    t.string   "wantRevision", :limit => 20
-    t.string   "anonymous",    :limit => 4,    :default => "no",    :null => false
-    t.string   "insurance",    :limit => 4,    :default => "no",    :null => false
-    t.string   "moderated",    :limit => 4,    :default => "0",     :null => false
-    t.datetime "dateApproved",                                      :null => false
-    t.string   "currencyCode", :limit => 3,    :default => "USD",   :null => false
-    t.string   "img1",         :limit => 40
-    t.string   "img2",         :limit => 40
-    t.string   "img3",         :limit => 40
-    t.string   "img4",         :limit => 40
-    t.date     "img1date"
-    t.date     "img2date"
-    t.date     "img3date"
-    t.date     "img4date"
-    t.string   "img1com",      :limit => 400
-    t.string   "img2com",      :limit => 400
-    t.string   "img3com",      :limit => 400
-    t.string   "img4com",      :limit => 400
-  end
 
   create_table "surgeons", :force => true do |t|
     t.string   "name"

@@ -7,7 +7,7 @@
 defaults: &defaults
   adapter: mysql2
   username: root
-  password: 
+  password:
   host: localhost
 
 development:
@@ -24,6 +24,10 @@ test:
 production:
   <<: *defaults
   database: mysql_production
+
+local:
+  <<: *defaults
+  database: mysql_local
 
 #development:
 #  adapter: sqlite3

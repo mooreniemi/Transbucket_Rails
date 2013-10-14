@@ -16,6 +16,7 @@ gem 'mysql2', '0.3.12b5'
 gem 'will_paginate', '~> 3.0'
 gem 'aws-sdk'
 gem 'figaro'
+gem 'delayed_job_active_record'
 
 
 # Gems used only for assets and not required

@@ -12,6 +12,7 @@ end
 #gem 'sqlite3'
 gem 'mysql'
 gem 'mysql2', '0.3.12b5'
+gem 'pg'
 #gem 'rack', '1.5.2'
 gem 'will_paginate', '~> 3.0'
 gem 'aws-sdk'

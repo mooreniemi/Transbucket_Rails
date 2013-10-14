@@ -5,7 +5,7 @@ mysql:
  socket: /tmp/mysql.sock
  username: root
  password:
- database: mysql_local
+ database: mysql_production
 
 destination:
  # if file is given, output goes to file, else postgres
@@ -15,7 +15,7 @@ destination:
   port: 5432
   username: Alex
   password:
-  database: psql_local
+  database: psql_production
 
 # if tables is given, only the listed tables will be converted.  leave empty to convert all tables.
 #tables:

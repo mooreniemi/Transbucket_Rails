@@ -41,6 +41,10 @@ GEM
     atomic (1.1.13)
     awesome_nested_set (2.1.6)
       activerecord (>= 3.0.0)
+    aws-sdk (1.11.1)
+      json (~> 1.4)
+      nokogiri (>= 1.4.4)
+      uuidtools (~> 2.1)
     bcrypt-ruby (3.1.2)
     bootstrap-sass (2.2.2.0)
       sass (~> 3.2)
@@ -218,6 +222,7 @@ GEM
     uglifier (2.2.1)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
+    uuidtools (2.1.4)
     warden (1.2.3)
       rack (>= 1.0)
     will_paginate (3.0.4)
@@ -230,6 +235,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord-mysql-adapter
   acts_as_commentable_with_threading
+  aws-sdk
   bootstrap-sass (~> 2.2.2.0)
   capybara
   coffee-rails (~> 3.2.1)

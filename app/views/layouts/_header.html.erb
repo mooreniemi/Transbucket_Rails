@@ -13,7 +13,7 @@
                         <li>
                             <%= link_to 'News',  home_path %>
                         </li>
-                        <li>    
+                        <li>
                             <%= link_to 'About',  about_path %>
                         </li>
                     </ul>
@@ -27,12 +27,15 @@
                         <li><%= link_to 'Logout',  destroy_user_session_path, method: :delete %></li>
                         <% else %>
                         <li><%= link_to 'Register', register_path %></li>
-                                <li><%= link_to 'Login',  new_user_session_path %></li>
-                                <% end %>
+                        <li><%= link_to 'Login',  new_user_session_path %></li>
+                        <% end %>
                     </ul>
-                     <%= form_tag pins_path, :class => 'form-search pull-right', :method => :get do %><div class="input-append">
-                    <%= text_field_tag 'query', value = nil, :class => 'span2 search-query', :placeholder => "Search" %>
-                    <%= submit_tag 'Go', :class => 'btn' %></div>
+                    <% if user_signed_in? %>
+                      <%= form_tag pins_path, :class => 'form-search pull-right', :method => :get do %>
+                        <div class="input-append">
+                        <%= text_field_tag 'query', value = nil, :class => 'span2 search-query', :placeholder => "Search" %>
+                        <%= submit_tag 'Go', :class => 'btn' %></div>
+                      <% end %>
                     <% end %>
                 </div>
         </div>

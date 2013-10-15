@@ -48,6 +48,7 @@ gem 'thin'
 gem 'htmlentities'
 gem 'simple-rss'
 gem 'acts_as_commentable_with_threading'
+gem 'rake-progressbar'
 
 group :development, :test do
   gem 'rspec-rails'

@@ -1,8 +1,8 @@
 class Pin < ActiveRecord::Base
   has_many :pin_images, :dependent => :destroy
   has_many :comments
-  
-  attr_accessible :description, :pin_images, :pin_images_attributes, :surgeon, :cost, :revision, :details, :procedure
+
+  attr_accessible :description, :pin_images, :pin_images_attributes, :surgeon, :cost, :revision, :details, :procedure, :username, :id, :created_at
 
   accepts_nested_attributes_for :pin_images, :reject_if => proc {|attributes| attributes.all? {|k,v| v.blank?} }
 

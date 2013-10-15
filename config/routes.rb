@@ -12,11 +12,12 @@ Transbucket::Application.routes.draw do
   get "/login" => "devise/sessions#new"
 end
 
-resources :pin do 
+resources :pin do
       resources :pin_images
   end
 
-root :to => 'pins#index'
+root :to => 'pages#home'
+  get 'pins' => 'pins#index'
   get 'about' => 'pages#about'
   get 'terms' => 'pages#terms'
   get 'privacy' => 'pages#privacy'

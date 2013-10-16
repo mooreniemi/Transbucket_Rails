@@ -4,8 +4,15 @@ namespace :migrate do
     #done in sql
     #INSERT INTO users (id, username, encrypted_password, name, gender, email, created_at, updated_at) SELECT ID, username, password, name, sex, email, dateJoined, lastLogin FROM old_users;
 
-    #where an old user exists with no matching new user id, group those old user ids
+    old_users = OldUser.all
+    bar = RakeProgressbar.new(old_users.count)
+
     #cycle through the old users and create a new user using old user attributes
+    old_users.each do |u|
+      User.new(id: u.id, email: u.email, created_at: u.dateJoined, updated_at: u.lastLogin, username: u.username, gender: u.sex, password: u.password )
+      bar.inc
+    end
+    bar.finished
 
   end
 

@@ -18,8 +18,8 @@ destination:
   database: psql_users
 
 # if tables is given, only the listed tables will be converted.  leave empty to convert all tables.
-#tables:
-#- table1
+tables:
+- users
 #- table2
 # if exclude_tables is given, exclude the listed tables from the conversion.
 #exclude_tables:

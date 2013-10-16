@@ -16,7 +16,7 @@ resources :pin do
       resources :pin_images
   end
 
-root :to => 'pages#home'
+root :to => 'pins#index'
   get 'pins' => 'pins#index'
   get 'about' => 'pages#about'
   get 'terms' => 'pages#terms'

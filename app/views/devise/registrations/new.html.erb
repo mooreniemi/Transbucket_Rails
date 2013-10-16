@@ -7,10 +7,11 @@
 
 
 <%= f.input :name %>
+<%= f.input :username %>
 <%= f.input :email %>
 <%= f.input :password %>
 <%= f.input :password_confirmation %>
-<%= f.label :gender %> 
+<%= f.label :gender %>
 <%= f.select :gender, options_for_select([['None', 1], ['MTF', 2], ['FTM', 3], ['GenderQueer', 4], ['Cisgender', 5]]), {}, {:multiple => true, :class => "gender" } %>
 <br>
 <br>

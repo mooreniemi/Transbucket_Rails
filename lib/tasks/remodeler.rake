@@ -9,7 +9,7 @@ namespace :migrate do
 
     #cycle through the old users and create a new user using old user attributes
     old_users.each do |u|
-      User.new(id: u.id, email: u.email, created_at: u.dateJoined, updated_at: u.lastLogin, username: u.username, gender: u.sex, password: u.password )
+      User.new(id: u.id, email: u.email, created_at: u.dateJoined, updated_at: u.lastLogin, username: u.username, gender: u.sex, password: u.password ).save
       bar.inc
     end
     bar.finished

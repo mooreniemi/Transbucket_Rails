@@ -1,12 +1,20 @@
 <% if pin.pin_images.present? %>
-  <div class="box"><%= link_to (image_tag pin.pin_images.last.photo(:medium)), pin %>
+  <div class="box">
+    <div class="image">
+      <% if pin.has_new_comments(current_user).present? %>
+      <div class="comment_box">
+        <p><%= "<i class='icon-comment'></i> <b>New Comment: </b>".html_safe + pin.has_new_comments(current_user).last.body %></p>
+      </div>
+      <% end %>
+
+      <%= link_to (image_tag pin.pin_images.last.photo(:medium)), pin %></div>
+
   	<p class="description">
-  <%= pin.procedure %> by <strong> Dr. <%= pin.surgeon %></strong>
-  <br> <%= @str = "<br><b>New Comment: </b>"
-  	@str.html_safe + pin.has_new_comments(current_user).last.body unless pin.has_new_comments(current_user).last.nil? %>
-  <% if current_user == pin.user || current_user.admin? %> | <%= link_to 'Edit', edit_pin_path(pin) %>
-  | <%= link_to 'Remove', pin, method: :delete, data: { confirm: 'Are you sure?' } %>
-    <% end %>
+      <%= pin.procedure %> by <strong> Dr. <%= pin.surgeon %></strong>
+
+    <% if current_user == pin.user || current_user.admin? %> | <%= link_to 'Edit', edit_pin_path(pin) %>
+    | <%= link_to 'Remove', pin, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <% end %>
   </p>
   </div>
 <% end %>

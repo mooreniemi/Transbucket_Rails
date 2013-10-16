@@ -6,12 +6,14 @@
 <% end %>
 
 <%= will_paginate @pins unless @pins.nil? %>
-<div id="pins">
-<%= render @pins unless @pins.nil? %>
-<br clear="both" />
-</div>
+  <div id="pins" class="js-masonry" data-masonry-options='{ "columnWidth": 200, "itemSelector": ".box" }'>
+  <%= render @pins unless @pins.nil? %>
+  <br clear="both" />
+  </div>
 <%= will_paginate @pins unless @pins.nil? %>
 <br clear="both" />
+
+
 <% else %>
 <div class="row">
 	<div class="span4">
@@ -21,7 +23,7 @@
 		<h2>We have answers.</h2>
 	</div>
 	<div class="span4">
-  <h2>See trans* patients like you.</h2> 
+  <h2>See trans* patients like you.</h2>
 </div>
 </div>
 <div class="row">

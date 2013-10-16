@@ -36,8 +36,8 @@ body{
 	border-radius: 5px;
 	box-shadow: 1px 1px 10px #444;
 	background-color:#fff;
-    overflow:hidden;
-	
+  overflow:hidden;
+
 }
 
 .box img {
@@ -49,9 +49,6 @@ body{
 	border-radius: 5px;
 }
 
-.box p {
-    max-width:250px;
-}
 
 .description {
 	margin: 10px;
@@ -104,4 +101,22 @@ select {
     margin: 0px;
     margin-top:5px;
     padding: 0px;
+}
+
+.image {
+  position: relative;
+  width: 100%;
+}
+
+.comment_box {
+  position:absolute;
+  top:5px;
+  left:5px;
+  background-color:#999;
+  opacity:0.6;
+  width:95%;
+}
+
+.comment_box p {
+  color: #000000;
 }

@@ -28,22 +28,21 @@ class User < ActiveRecord::Base
 
   def valid_password?(password)
     if self.md5.present?
-      if ::Digest::MD5.hexdigest(password).upcase == self.md5
+      if ::Digest::MD5.hexdigest(password) == self.md5
         self.password = password
         self.md5 = nil
-        self.save!
+        self.save(:validate => false)
         true
       else
         false
       end
-      else
+    else
         super
-      end
     end
+  end
 
-    def reset_password!(*args)
-      self.legacy_password_hash = nil
-      super
-    end
+  def reset_password!(*args)
+    self.legacy_password_hash = nil
+    super
   end
 end

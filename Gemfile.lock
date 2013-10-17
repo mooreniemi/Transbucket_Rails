@@ -293,6 +293,7 @@ DEPENDENCIES
   nested_form
   paperclip (~> 3.0)
   pg
+  pry
   rails (= 3.2.12)
   rake-progressbar
   rspec-rails

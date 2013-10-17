@@ -6,8 +6,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:login]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :gender, :username, :id, :created_at, :updated_at
+  attr_accessible :email, :password_confirmation, :remember_me, :name, :gender, :username, :id, :created_at, :updated_at, :login, :md5, :password
   # attr_accessible :title, :body
+  attr_accessor :login
 
   validates :username,
     :uniqueness => {
@@ -22,6 +23,27 @@ class User < ActiveRecord::Base
       where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
     else
       where(conditions).first
+    end
+  end
+
+  def valid_password?(password)
+    if self.md5.present?
+      if ::Digest::MD5.hexdigest(password).upcase == self.md5
+        self.password = password
+        self.md5 = nil
+        self.save!
+        true
+      else
+        false
+      end
+      else
+        super
+      end
+    end
+
+    def reset_password!(*args)
+      self.legacy_password_hash = nil
+      super
     end
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131014171632) do
+ActiveRecord::Schema.define(:version => 20131016185523) do
 
   create_table "assets", :force => true do |t|
     t.string   "asset_file_name"
@@ -43,6 +43,12 @@ ActiveRecord::Schema.define(:version => 20131014171632) do
 
   add_index "comments", ["commentable_id", "commentable_type"], :name => "index_comments_on_commentable_id_and_commentable_type"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
+  create_table "currency", :id => false, :force => true do |t|
+    t.string  "currency", :limit => 3,                                               :null => false
+    t.decimal "rate",                   :precision => 3, :scale => 0, :default => 0, :null => false
+    t.string  "symbol",   :limit => 10,                                              :null => false
+  end
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0, :null => false
@@ -81,10 +87,10 @@ ActiveRecord::Schema.define(:version => 20131014171632) do
   end
 
   create_table "pin_images", :force => true do |t|
-    t.string   "caption"
+    t.string   "caption",            :limit => 555
     t.integer  "pin_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
@@ -169,6 +175,7 @@ ActiveRecord::Schema.define(:version => 20131014171632) do
     t.string   "gender"
     t.string   "username"
     t.boolean  "admin",                  :default => false
+    t.string   "md5"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

@@ -49,6 +49,7 @@ gem 'htmlentities'
 gem 'simple-rss'
 gem 'acts_as_commentable_with_threading'
 gem 'rake-progressbar'
+gem 'devise-encryptable'
 
 group :development, :test do
   gem 'rspec-rails'

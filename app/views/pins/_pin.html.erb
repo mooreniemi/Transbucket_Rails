@@ -1,7 +1,7 @@
 <% if pin.pin_images.present? && pin.published? %>
   <div class="box">
     <div class="image">
-      <% if pin.has_new_comments(current_user).present? %>
+      <% if pin.has_new_comments(current_user).present? && pin.has_new_comments(current_user).last.published? %>
       <div class="comment_box">
         <p><%= "<i class='icon-comment'></i> <b>New Comment: </b>".html_safe + pin.has_new_comments(current_user).last.body %></p>
       </div>

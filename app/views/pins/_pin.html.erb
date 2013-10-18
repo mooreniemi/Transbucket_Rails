@@ -1,4 +1,4 @@
-<% if pin.pin_images.present? %>
+<% if pin.pin_images.present? && pin.published? %>
   <div class="box">
     <div class="image">
       <% if pin.has_new_comments(current_user).present? %>

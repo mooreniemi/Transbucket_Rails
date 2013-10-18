@@ -47,4 +47,19 @@ class Comment < ActiveRecord::Base
   def self.find_commentable(commentable_str, commentable_id)
     commentable_str.constantize.find(commentable_id)
   end
+
+  state_machine initial: :published do
+    state :pending, value: "pending"
+    state :published, value: "published"
+
+    event :publish do
+      transition nil => :published
+      transition :pending => :published
+    end
+
+    event :review do
+      transition :published => :pending
+    end
+  end
+
 end

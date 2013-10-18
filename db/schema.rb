@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131016185523) do
+ActiveRecord::Schema.define(:version => 20131018185503) do
 
   create_table "assets", :force => true do |t|
     t.string   "asset_file_name"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20131016185523) do
     t.integer  "rgt"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
+    t.string   "state"
   end
 
   add_index "comments", ["commentable_id", "commentable_type"], :name => "index_comments_on_commentable_id_and_commentable_type"
@@ -112,6 +113,7 @@ ActiveRecord::Schema.define(:version => 20131016185523) do
     t.text     "details"
     t.integer  "cost"
     t.string   "username"
+    t.string   "state"
   end
 
   add_index "pins", ["user_id"], :name => "index_pins_on_user_id"

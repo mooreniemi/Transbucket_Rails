@@ -52,6 +52,7 @@ gem 'rake-progressbar'
 gem 'devise-encryptable'
 gem 'state_machine'
 gem 'pry'
+gem 'acts_as_votable', '~> 0.7.1'
 
 group :development, :test do
   gem 'rspec-rails'

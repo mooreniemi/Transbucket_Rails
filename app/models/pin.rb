@@ -14,10 +14,19 @@ class Pin < ActiveRecord::Base
   belongs_to :user
 
   acts_as_commentable
+  acts_as_votable
 
   def has_new_comments(user)
     @user = User.find(user).last_sign_in_at
     @comments = Comment.where('created_at > ? and commentable_id = ?', @user, self.id)
+  end
+
+  def flag_from(user)
+    if self.votes.down.size >= 2 && self.published?
+      self.review!
+    else
+      self.downvote_from(user)
+    end
   end
 
   state_machine initial: :published do

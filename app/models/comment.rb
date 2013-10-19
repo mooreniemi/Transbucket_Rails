@@ -8,7 +8,7 @@ class Comment < ActiveRecord::Base
 
   # NOTE: install the acts_as_votable plugin if you
   # want user to vote on the quality of comments.
-  #acts_as_votable
+  acts_as_votable
 
   belongs_to :commentable, :polymorphic => true
 
@@ -46,6 +46,14 @@ class Comment < ActiveRecord::Base
   # given the commentable class name and id
   def self.find_commentable(commentable_str, commentable_id)
     commentable_str.constantize.find(commentable_id)
+  end
+
+  def flag_from(user)
+    if self.votes.down.size >= 2 && self.published?
+      self.review!
+    else
+      self.downvote_from(user)
+    end
   end
 
   state_machine initial: :published do

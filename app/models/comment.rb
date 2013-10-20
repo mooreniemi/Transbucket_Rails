@@ -48,16 +48,6 @@ class Comment < ActiveRecord::Base
     commentable_str.constantize.find(commentable_id)
   end
 
-  def flag_from(user)
-    if self.votes.down.size >= 2 && self.published?
-      self.review!
-      return {removed: "Removed for review."}
-    else
-      self.downvote_from(user)
-      return {flagged: "Flagged content."}
-    end
-  end
-
   state_machine initial: :published do
     state :pending, value: "pending"
     state :published, value: "published"

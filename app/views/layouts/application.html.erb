@@ -17,14 +17,16 @@
     });
   });
   </script>
- 
+
   </head>
   <body>
     <%= render 'layouts/header' %>
 <div class="container">
-  <% flash.each do |name, msg| %>
-  <%= content_tag(:div, msg, class: "alert alert-#{name}") %>
-  <% end %>
+  <div id="flash-message">
+    <% flash.each do |name, msg| %>
+    <%= content_tag(:div, msg, id: "flash-#{type}") %>
+    <% end %>
+  </div>
     <%= yield %>
     <%= render 'layouts/footer' %>
 </div>

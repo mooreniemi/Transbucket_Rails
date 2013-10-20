@@ -51,8 +51,10 @@ class Comment < ActiveRecord::Base
   def flag_from(user)
     if self.votes.down.size >= 2 && self.published?
       self.review!
+      return {removed: "Removed for review."}
     else
       self.downvote_from(user)
+      return {flagged: "Flagged content."}
     end
   end
 

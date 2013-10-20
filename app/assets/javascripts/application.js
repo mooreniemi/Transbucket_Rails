@@ -14,5 +14,7 @@
 //= require jquery_ujs
 //= require jquery.masonry.min.js
 //= require bootstrap
+//= require bootstrap-tooltip.js
+//= require bootstrap-popover.js
 //= require jquery_nested_form
 //= require_tree .

@@ -1,13 +1,13 @@
 <h4>Add Comment</h4>
 
 <div class="comment-form">
-<%= simple_form_for @new_comment, :remote => true do |f| %>
-  <%= f.error_notification %>
-
-<%= f.input :body, :input_html => {:style => 'width: 99%', :rows => "4"}, :label => false, :placeholder => "Comments that violate our Terms of Service are grounds for immediate and permanent deactivation." %>
-<%= f.hidden_field :commentable_id, :value => @new_comment.commentable_id %>
-<%= f.hidden_field :commentable_type, :value => @new_comment.commentable_type %>
-<%= f.submit "Submit", class: "btn btn-primary", :disable_with => "Submitting..." %>
-<% end %>
+  <%= simple_form_for @new_comment, :remote => true do |f| %>
+    <%= f.error_notification %>
+    <%= f.input :body, :input_html => {:style => 'width: 99%', :rows => "4"}, :label => false, :placeholder => "Comments that violate our Terms of Service are grounds for immediate and permanent deactivation." %>
+    <%= f.hidden_field :commentable_id, :value => @new_comment.commentable_id %>
+    <%= f.hidden_field :commentable_type, :value => @new_comment.commentable_type %>
+    <%= f.submit "Submit", class: "btn btn-primary", :disable_with => "Submitting..." %>
+  <% end %>
 </div>
+
 <br clear="both">

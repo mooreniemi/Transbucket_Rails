@@ -49,7 +49,6 @@ body{
 	border-radius: 5px;
 }
 
-
 .description {
 	margin: 10px;
 }
@@ -118,5 +117,10 @@ select {
 }
 
 .comment_box p {
+  font-size: 14px;
   color: #000000;
+}
+
+.icon-flag {
+  color: red;
 }

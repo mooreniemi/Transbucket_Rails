@@ -11,16 +11,12 @@
                 <div class="nav-collapse">
                     <ul class="nav">
                         <li>
-                          <% unless user_signed_in? %>
                             <%= link_to 'News',  home_path %>
-                          <% end %>
                         </li>
                         <li>
                             <%= link_to 'About',  about_path %>
                         </li>
                     </ul>
-
-
 
                     <ul class="nav">
                         <% if user_signed_in? %>

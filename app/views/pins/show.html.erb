@@ -1,15 +1,3 @@
-<script>
-$.noConflict();
-jQuery(window).load(function() {
-var $container = jQuery('#pins');
-
-$container.imagesLoaded( function(){
-  $container.masonry({
-    itemSelector : '.box'
-  });
-});
-});
-</script>
 <div class="row-fluid">
 	<div class="span6">
 		<div class="well">
@@ -17,26 +5,41 @@ $container.imagesLoaded( function(){
 			<%= image_tag pinimage.photo unless pinimage.photo_file_size.nil? %>
 			<%= pinimage.caption.to_s %>
 			<% end %>
-			<br><% if current_user == @pin.user || current_user.admin == true %> <%= link_to 'Edit', edit_pin_path(@pin) %> | <% end %> 
+			<br><% if current_user == @pin.user || current_user.admin == true %> <%= link_to 'Edit', edit_pin_path(@pin) %> | <% end %>
 <%= link_to 'Back', pins_path %>
 		</div>
 </div>
 <div class="span4">
 	<ul class="unstyled">
-  <li><b>Surgeon:</b>
-  Dr. <%= @pin.surgeon %></li>
-  <li><b>Procedure:</b>
-  <%= @pin.procedure %></li>
-  <li><b>Cost:</b>
-  <%= @pin.cost %></li>
-  <li><b>Want revision?</b>
-  	<%= @pin.revision %></li>
- <li><b>Description:</b></li>
-   <li style="background-color:#fff; padding:10px;"><%= @pin.details %></li>
-</ul>
+    <li><b>Surgeon:</b>
+    Dr. <%= @pin.surgeon %></li>
+    <li><b>Procedure:</b>
+    <%= @pin.procedure %></li>
+    <li><b>Cost:</b>
+    <%= @pin.cost %></li>
+    <li><b>Want revision?</b>
+    	<%= @pin.revision %></li>
+    <li><b>Description:</b></li>
+    <li style="background-color:#fff; padding:10px;"><%= @pin.details %></li>
+   </ul>
+
 <small><b>Submitter:</b> <%= @pin.username %></small>
 </div>
+
 <br clear="both" />
 
 <%= render :partial => 'comments/form', :locals => { :comment => @new_comment } %>
+
+<div id="comments-container">
 <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>
+</div>
+
+<script>
+  $.ajax({
+      url: "/comments/create",
+      cache: false,
+      success: function(html){
+        $("#comments-container").append(html);
+      }
+  });
+</script>

@@ -4,7 +4,7 @@ before_filter :authenticate_user!, except: [:index]
   # GET /pins
   # GET /pins.json
   def index
-    @pins = params[:query].blank? ? Pin.order("created_at desc").paginate(:page => params[:page]) : Pin.search(params[:query], :page => params[:page], :per_page => 20)
+    @pins = params[:query].blank? ? Pin.where(state: 'published').order("created_at desc").paginate(:page => params[:page]) : Pin.search(params[:query], :page => params[:page], :per_page => 20)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -22,6 +22,15 @@ before_filter :authenticate_user!, except: [:index]
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @pin }
+    end
+  end
+
+  def admin
+    @pins = Pin.where(state: 'pending').order("created_at desc").paginate(:page => params[:page])
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @pins }
     end
   end
 

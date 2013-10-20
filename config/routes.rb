@@ -21,8 +21,13 @@ root :to => 'pins#index'
   get 'about' => 'pages#about'
   get 'terms' => 'pages#terms'
   get 'privacy' => 'pages#privacy'
+
   get 'home' => 'pages#home'
+  get 'admin' => 'pins#admin'
+
   get '/:type/:id/flag', to: 'flags#create'
+  get '/:type/:id/remove_flag', to: 'flags#remove_flag'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

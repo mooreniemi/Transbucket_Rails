@@ -8,17 +8,17 @@
 
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 
-
-
   </head>
   <body>
     <%= render 'layouts/header' %>
 <div class="container">
+  <% if user_signed_in? %>
   <div id="flash-message">
     <% flash.each do |name, msg| %>
-    <%= content_tag(:div, msg, class: "alert", id: "flash-#{type}") %>
+    <%= content_tag(:div, msg, class: "alert", id: "flash-#{name}") %>
     <% end %>
   </div>
+  <% end %>
     <%= yield %>
     <%= render 'layouts/footer' %>
 </div>

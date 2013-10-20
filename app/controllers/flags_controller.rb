@@ -17,6 +17,21 @@ respond_to :js
 
   end
 
+  def remove_flag
+    @content = find_content(params[:type], params[:id])
+    @content.votes.down.destroy_all
+    @content.publish!
+
+    respond_to do |format|
+      if @content.published?
+        format.js { render json: status: :created }
+      else
+        format.js {render json: status: :unprocessable_entity }
+      end
+    end
+
+  end
+
   private
 
   def find_content(type, id)

@@ -1,4 +1,4 @@
-<% if pin.pin_images.present? && pin.published? %>
+<% if pin.pin_images.present? %>
   <div class="box">
     <label class="label-with-popover" data-placement="top" data-content="Flags from 3 different users will remove content pending review by a moderator." data-title="Flag this content." data-trigger="hover">
       <%= link_to "<i class='icon-flag'></i>".html_safe, '/pins/' + pin.id.to_s + '/flag.js', remote: true %>
@@ -16,7 +16,7 @@
       <%= pin.procedure %> by <strong> Dr. <%= pin.surgeon %></strong>
 
     <% if current_user == pin.user || current_user.admin? %> | <%= link_to 'Edit', edit_pin_path(pin) %>
-    | <%= link_to 'Remove', pin, method: :delete, data: { confirm: 'Are you sure?' } %>
+    | <%= link_to 'Remove', pin, method: :delete, data: { confirm: 'Are you sure?' } %> | <%= link_to 'Remove Flag', '/pins/' + pin.id.to_s + '/remove_flag.js', remote: true %>
       <% end %>
   </p>
   </div>

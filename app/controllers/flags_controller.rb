@@ -4,12 +4,12 @@ after_filter :flash_to_headers
 respond_to :js
 
   def create
-    @flag = Flag.new(current_user, find_content(params[:id])).flag_on
+    @flag = Flag.new(current_user, find_content(params[:type], params[:id])).flag_on
 
     respond_to do |format|
         if @flag[:status].present?
           flash[:notice] = "Content flagged."
-          format.js   { render json: @flag, status: :created }
+          format.js { render json: @flag, status: :created }
         else
           format.js { render json: @flag.errors, status: :unprocessable_entity }
         end
@@ -19,8 +19,8 @@ respond_to :js
 
   private
 
-  def find_content(id)
-    if Pin.find(id).present?
+  def find_content(type, id)
+    if type == "pins"
       content = Pin.find(id)
     else
       content = Comment.find(id)

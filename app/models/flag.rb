@@ -10,7 +10,8 @@ class Flag
       @content.review!
       return {status: :removed}
     else
-      return {status: :voted_down} if @content.downvote_from(@user)
+      @content.downvote_from(@user)
+      return {status: :voted_down}
     end
   end
 

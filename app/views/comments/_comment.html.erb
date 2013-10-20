@@ -2,5 +2,6 @@
       <div class="well"><%= comment.body %><br>
       	<hr>
       	<small>by <%= comment.user.id %> | <%= comment.updated_at.strftime('%b %d, %Y at %I:%M %p') %></small>
-      	<%= link_to "×", comment_path(comment), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this comment?", :disable_with => "×", :class => 'close' %></div>
+      	<%= link_to "×", comment_path(comment), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this comment?", :disable_with => "×", :class => 'close' %>       <%= link_to "<i class='icon-flag'></i>".html_safe, '/comments/' + comment.id.to_s + '/flag.js', remote: true %>
+      </div>
   </div>

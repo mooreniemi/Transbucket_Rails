@@ -24,9 +24,9 @@ respond_to :js
 
     respond_to do |format|
       if @content.published?
-        format.js { render json: status: :created }
+        format.js { render json: @content, status: :created }
       else
-        format.js {render json: status: :unprocessable_entity }
+        format.js {render json: @content, status: :unprocessable_entity }
       end
     end
 

@@ -67,7 +67,7 @@ Transbucket::Application.configure do
     :port                 => 587,
     :domain               => "transbucket.com",
     :user_name            => "admin@transbucket.com",
-    :password             => IO.read("config/settings.txt"),
+    :password             => "transbucketadmin",
     :authentication       => 'plain',
     :enable_starttls_auto => true
   }

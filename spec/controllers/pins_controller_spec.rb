@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe PinController do
+describe PinsController do
 	describe 'GET #index' do
 			it "populates an array of pins" do
-				pin = create(:pin)
+				pin = FactoryGirl.create(:pin)
 				get :index
 				expect(assigns(:pins)).to match_array [pin]
 			end
@@ -16,7 +16,7 @@ describe PinController do
 
 	describe 'GET #show' do
 			it "assigns the requested pin to @pin" do
-				pin = create(:pin)
+				pin = FactoryGirl.create(:pin)
 				get :show, id: pin
 				expect(assigns(:pin)).to eq pin
 			end
@@ -42,7 +42,7 @@ describe PinController do
 
 	describe 'GET #edit' do
 			it "assigns the requested pin to @pin" do
-				pin = create(:pin)
+				pin = FactoryGirl.create(:pin)
 				get :edit, id: pin
 				expect(assigns(:pin)).to eq pin
 			end

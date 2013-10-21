@@ -44,6 +44,20 @@ Transbucket::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  #config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
+  config.action_mailer.default_url_options = {
+    :host => "transbucket.com"
+  }
+
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :domain               => "transbucket.com",
+    :user_name            => "admin@transbucket.com",
+    :password             => IO.read("config/settings.txt"),
+    :authentication       => 'plain',
+    :enable_starttls_auto => true
+  }
 
 end

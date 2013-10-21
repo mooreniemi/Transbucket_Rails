@@ -42,7 +42,6 @@ gem 'paperclip', "~> 3.0"
 gem 'thinking-sphinx', "~> 3.0.2"
 gem 'flying-sphinx',   '1.0.0'
 gem 'activerecord-mysql-adapter'
-gem 'trucker'
 gem 'hirb'
 gem 'thin'
 gem 'htmlentities'
@@ -60,6 +59,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'factory_girl_rails'
   gem 'faker'
   gem 'capybara'
   gem 'guard-rspec'

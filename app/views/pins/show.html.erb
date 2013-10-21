@@ -33,13 +33,3 @@
 <div id="comments-container">
 <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>
 </div>
-
-<script>
-  $.ajax({
-      url: "/comments/create",
-      cache: false,
-      success: function(html){
-        $("#comments-container").append(html);
-      }
-  });
-</script>

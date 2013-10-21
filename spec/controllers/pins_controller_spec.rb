@@ -16,7 +16,7 @@ describe PinsController do
 
 	describe 'GET #show' do
 			it "assigns the requested pin to @pin" do
-				pin = FactoryGirl.create(:pin)
+				pin = create(:pin)
 				get :show, id: pin
 				expect(assigns(:pin)).to eq pin
 			end

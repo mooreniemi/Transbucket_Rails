@@ -61,6 +61,7 @@ Transbucket::Application.configure do
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.default_url_options = { :host => "www.transbucket.com" }
 
   config.action_mailer.smtp_settings = {
     :address              => "smtp.gmail.com",

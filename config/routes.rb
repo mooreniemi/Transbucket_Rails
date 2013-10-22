@@ -33,17 +33,10 @@ root :to => 'pins#index'
   get '/therapies' => 'pages#update'
   get '/surgeons' => 'pages#update'
   get '/therapists' => 'pages#update'
-  get '/members' => 'pages#update'
   get '/procedures' => 'pages#update'
-  get '/members/therapies' => 'pages#update'
-  get '/members/surgeons' => 'pages#update'
-  get '/members/therapists' => 'pages#update'
-  get '/members/procedures' => 'pages#update'
-  get '/members/galleries' => 'pages#update'
-  get '/members/uploads' => 'pages#update'
-  get '/members/index.php' => 'pages#update'
-  get '/members/galleries/processForm.php' => 'pages#update'
   get '/forum' => 'pages#update'
+  get '/members/*other' => 'pages#update'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -63,13 +63,14 @@ Transbucket::Application.configure do
   # config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default_url_options = { :host => "www.transbucket.com" }
 
-  config.action_mailer.smtp_settings = {
-    :address              => "smtp.gmail.com",
-    :port                 => 587,
-    :domain               => "transbucket.com",
-    :user_name            => "admin@transbucket.com",
-    :password             => "transbucketadmin",
-    :authentication       => 'plain',
+  #https://devcenter.heroku.com/articles/sendgrid#ruby-rails
+  ActionMailer::Base.smtp_settings = {
+    :address        => 'smtp.sendgrid.net',
+    :port           => '587',
+    :authentication => :plain,
+    :user_name      => ENV['SENDGRID_USERNAME'],
+    :password       => ENV['SENDGRID_PASSWORD'],
+    :domain         => 'heroku.com',
     :enable_starttls_auto => true
   }
 

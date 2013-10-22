@@ -41,16 +41,18 @@ Transbucket::Application.configure do
 
   config.action_mailer.delivery_method = :smtp
 
-  #http://matharvard.ca/posts/2011/aug/22/contact-form-in-rails-3/
-config.action_mailer.smtp_settings = {
-  :address              => "smtp.gmail.com",
-  :port                 => 587,
-  :domain               => "transbucket.com",
-  :user_name            => "admin@transbucket.com",
-  :password             => IO.read("config/settings.txt"),
-  :authentication       => 'plain',
-  :enable_starttls_auto => true
-}
+  ENV['SENDGRID_USERNAME'] = "app15705776@heroku.com";
+  ENV['SENDGRID_PASSWORD'] = "4d322jid";
+
+  ActionMailer::Base.smtp_settings = {
+    :address        => 'smtp.sendgrid.net',
+    :port           => '587',
+    :authentication => :plain,
+    :user_name      => ENV['SENDGRID_USERNAME'],
+    :password       => ENV['SENDGRID_PASSWORD'],
+    :domain         => 'heroku.com',
+    :enable_starttls_auto => true
+  }
 
 config.action_mailer.default_url_options = {
   :host => "transbucket.com"

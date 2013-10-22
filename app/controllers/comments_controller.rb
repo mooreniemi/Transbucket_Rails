@@ -17,7 +17,7 @@ respond_to :json
 
   def destroy
     @comment = Comment.find(params[:id])
-    sleep 5
+    #sleep 5
     if @comment.destroy
       render :json => @comment, :status => :ok
     else

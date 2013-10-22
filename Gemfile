@@ -52,6 +52,7 @@ gem 'devise-encryptable'
 gem 'state_machine'
 gem 'pry'
 gem 'acts_as_votable', '~> 0.7.1'
+gem 'newrelic_rpm'
 
 group :development, :test do
   gem 'rspec-rails'

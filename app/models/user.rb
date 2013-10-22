@@ -28,6 +28,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def legacy_password_hash=(password)
+    self.md5
+  end
+
   def valid_password?(password)
     if self.md5.present?
       if ::Digest::MD5.hexdigest(password) == self.md5

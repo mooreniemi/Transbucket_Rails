@@ -4,7 +4,8 @@ before_filter :authenticate_user!, except: [:index]
   # GET /pins
   # GET /pins.json
   def index
-    @pins = params[:query].blank? ? Pin.where(state: 'published').order("created_at desc").paginate(:page => params[:page]) : Pin.search(params[:query], :page => params[:page], :per_page => 20)
+    query = make_safe(params[:query]) if params[:query]
+    @pins = query.blank? ? Pin.where(state: 'published').order("created_at desc").paginate(:page => params[:page]) : Pin.search(query, :page => params[:page], :per_page => 20)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -96,5 +97,12 @@ before_filter :authenticate_user!, except: [:index]
       format.html { redirect_to pins_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def make_safe(query)
+    query.gsub(/(dr.|Dr.|dr|Dr)/, ' ')
+    query.gsub(/[\W]/, ' ')
   end
 end

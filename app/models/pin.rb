@@ -21,6 +21,17 @@ class Pin < ActiveRecord::Base
     @comments = Comment.where('created_at > ? and commentable_id = ?', @user, self.id)
   end
 
+  def cover_image
+    if self.pin_images.last.photo(:medium).present?
+      photo = self.pin_images.last.photo(:medium)
+    elsif self.pin_images.first.photo(:medium).present?
+      photo = self.pin_images.first.photo(:medium)
+    else
+      photo = 'photos/medium/missing.png'
+    end
+    return photo
+  end
+
   state_machine initial: :published do
     state :pending, value: "pending"
     state :published, value: "published"

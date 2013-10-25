@@ -37,7 +37,6 @@ root :to => 'pins#index'
   get '/forum' => 'pages#update'
   get '/members/*other' => 'pages#update'
 
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

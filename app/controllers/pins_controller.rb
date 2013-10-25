@@ -104,5 +104,6 @@ before_filter :authenticate_user!, except: [:index]
   def make_safe(query)
     query.gsub(/(dr.|Dr.|dr|Dr)/, ' ')
     query.gsub(/[\W]/, ' ')
+    return query
   end
 end

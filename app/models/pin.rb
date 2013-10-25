@@ -22,14 +22,8 @@ class Pin < ActiveRecord::Base
   end
 
   def cover_image
-    if self.pin_images.last.photo(:medium).present?
-      photo = self.pin_images.last.photo(:medium)
-    elsif self.pin_images.first.photo(:medium).present?
-      photo = self.pin_images.first.photo(:medium)
-    else
-      photo = 'photos/medium/missing.png'
-    end
-    return photo
+    images = self.pin_images.collect {|p| p if p.photo(:medium).present? }
+    return images.last.photo(:medium)
   end
 
   state_machine initial: :published do

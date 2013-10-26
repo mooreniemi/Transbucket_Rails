@@ -1,38 +1,43 @@
 <div class="span4">
 <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
-<div class="well"><%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
-  <%= f.error_notification %>
+<div class="well">
+  <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+    <%= f.error_notification %>
 
-<%= f.input :name %>
-<%= f.input :username %>
-<%= f.label :gender %>
-<%= f.select(:gender, [['None', 1], ['MTF', 2], ['FTM', 3], ['GenderQueer', 4], ['Cisgender', 5]]) %>
-<%= f.input :email %>
-<%= f.input :password, label: "New Password", autocomplete: "off" %>
-<%= f.input :password_confirmation, label: "New Password Confirmation", autocomplete: "off" %>
-<%= f.input :current_password %>
+    <%= f.input :name %>
+    <%= f.input :username %>
+    <%= f.label :gender %>
+    <%= f.select(:gender, [['None', 1], ['MTF', 2], ['FTM', 3], ['GenderQueer', 4], ['Cisgender', 5]]) %>
+    <%= f.input :email %>
+    <%= f.input :password, label: "New Password", autocomplete: "off" %>
+    <%= f.input :password_confirmation, label: "New Password Confirmation", autocomplete: "off" %>
+    <%= f.input :current_password %>
+    <%= f.input :safe_mode %>
 
-  <div><%= f.submit "Update", class: "btn btn-primary" %></div>
-<% end %></div>
+    <div>
+      <%= f.submit "Update", class: "btn btn-primary" %></div>
+  <% end %></div>
 
 <h3>Cancel my account</h3>
 
 <p><%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn' %></p>
 </div>
+
 <div class="span4">
 	<h2>Your Submissions</h2>
 	<div class="well">
 		<% if current_user.pins.length == 0 then %>
-		<%= link_to 'Submit Now +', new_pin_path %>
+  		<%= link_to 'Submit Now +', new_pin_path %>
 		<% else %>
-		<% for pin in current_user.pins do %>
-				<%= link_to 'Edit', edit_pin_path(pin) %>
-| <%= link_to 'Remove', pin, method: :delete, data: { confirm: 'Are you sure?' } %>
-		<% for pin_image in pin.pin_images do %>
-		<%= link_to (image_tag pin_image.photo), pin %>
-		<% end %>
-		<% end %>
+  		<% for pin in current_user.pins do %>
+  				<%= link_to '<i class="fa fa-pencil-square-o"></i>'.html_safe, edit_pin_path(pin) %>
+        | <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, pin, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <br>
+      		<% for pin_image in pin.pin_images do %>
+      		  <%= link_to (image_tag pin_image.photo), pin %><br>
+      		<% end %>
+		    <% end %>
 		<% end %>
 		</div>
 </div>

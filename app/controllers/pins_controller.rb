@@ -4,8 +4,14 @@ before_filter :authenticate_user!, except: [:index]
   # GET /pins
   # GET /pins.json
   def index
-    query = make_safe(params[:query]) if params[:query]
-    @pins = query.blank? ? Pin.where(state: 'published').order("created_at desc").paginate(:page => params[:page]) : Pin.search(query, :page => params[:page], :per_page => 20)
+    @query = sanitize(params[:query]) if params[:query]
+
+    @presenter = PinPresenter.new(
+    :query => @query,
+    :user => current_user,
+    :page => params[:page],
+    :safe_mode => current_user.safe_mode
+    )
 
     respond_to do |format|
       format.html # index.html.erb
@@ -101,7 +107,7 @@ before_filter :authenticate_user!, except: [:index]
 
   private
 
-  def make_safe(query)
+  def sanitize(query)
     query.gsub!(/(dr.|Dr.|dr|Dr)/, '')
     query.gsub!(/[\W]/, '')
     return Riddle.escape(query)

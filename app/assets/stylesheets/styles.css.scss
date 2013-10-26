@@ -124,3 +124,14 @@ select {
 .icon-flag {
   color: red;
 }
+
+.label-with-popover {
+  display: inline;
+}
+.actions {
+  font-size: 14px;
+}
+
+.actions a:link, a:visited, a:hover {
+  color: black;
+}

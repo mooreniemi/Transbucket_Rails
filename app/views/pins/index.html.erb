@@ -5,12 +5,14 @@
 <h1>Search result</h1>
 <% end %>
 
-<%= will_paginate @pins unless @pins.nil? %>
+<%#= will_paginate @pins unless @pins.nil? %>
   <div id="pins" class="js-masonry" data-masonry-options='{ "columnWidth": 200, "itemSelector": ".box" }'>
-  <%= render @pins unless @pins.nil? %>
+    <% @presenter.all_pins.each do |pin| %>
+      <%= render :partial => 'pins/pin', :locals => {:pin => pin, :safe_mode => @presenter.safe_mode} %>
+    <% end %>
   <br clear="both" />
   </div>
-<%= will_paginate @pins unless @pins.nil? %>
+<%#= will_paginate @pins unless @pins.nil? %>
 <br clear="both" />
 
 

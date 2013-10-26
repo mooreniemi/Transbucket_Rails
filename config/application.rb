@@ -65,8 +65,9 @@ module Transbucket
     config.assets.version = '1.0'
     config.assets.initialize_on_precompile = false
 
-    # added for trucker legacy
-    config.autoload_paths += %W(#{config.root}/app/models/legacy)
+    config.after_initialize do |app|
+      app.config.paths.add 'app/presenters', :eager_load => true
+    end
 
     #
     config.generators do |g|

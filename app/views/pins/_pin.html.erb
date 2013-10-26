@@ -1,29 +1,38 @@
-<% if pin.pin_images.present? %>
-  <div class="box">
-    <label class="label-with-popover" data-placement="top" data-content="Flags from 3 different users will remove content pending review by a moderator." data-title="Flag this content." data-trigger="hover">
-      <%= link_to "<i class='icon-flag'></i>".html_safe, '/pins/' + pin.id.to_s + '/flag.js', remote: true %>
-    </label>
+<% if pin.present? %>
+  <% if pin.pin_images.present? %>
+    <div class="box">
+      <div class="actions">
+      <label class="label-with-popover" data-placement="left" data-content="Flags from 3 different users will remove content pending review by a moderator." data-title="Flag this content." data-trigger="hover">
+        <%= link_to "<i class='icon-flag'></i>".html_safe, '/pins/' + pin.id.to_s + '/flag.js', remote: true %>
+      </label>
+
+      <% if current_user == pin.user || current_user.admin? %>
+      | <%= link_to '<i class="fa fa-pencil-square-o"></i>'.html_safe, edit_pin_path(pin) %>
+      | <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, pin, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+        <% if pin.pending? %>
+          | <%= link_to 'Remove Flag', '/pins/' + pin.id.to_s + '/remove_flag.js', remote: true %>
+        <% end %>
+      <% end %>
+    </div>
+
     <div class="image">
-      <% if pin.has_new_comments(current_user).present? && pin.has_new_comments(current_user).last.published? %>
-      <div class="comment_box">
-        <p><%= "<i class='icon-comment'></i> <b>New Comment: </b>".html_safe + pin.has_new_comments(current_user).last.body.split(" ").first(50).join(" ") %></p>
+      <% #binding.pry %>
+      <% if @presenter.show_new_comments(pin).present? %>
+        <div class="comment_box">
+          <p><%= "<i class='icon-comment'></i> <b>New Comment: </b>".html_safe + pin.comment_threads.last.body.split(" ").first(50).join(" ") %></p>
+        </div>
+      <% end %>
+
+        <%= link_to (image_tag pin.cover_image(safe_mode)), pin %></div>
+
+      	<p class="description">
+          <%= pin.procedure %> by <strong> Dr. <%= pin.surgeon %></strong>
+        </p>
       </div>
-      <% end %>
+  <% end %>
 
-      <%= link_to (image_tag pin.cover_image), pin %></div>
-
-  	<p class="description">
-      <%= pin.procedure %> by <strong> Dr. <%= pin.surgeon %></strong>
-
-    <% if current_user == pin.user || current_user.admin? %> | <%= link_to 'Edit', edit_pin_path(pin) %>
-    | <%= link_to 'Remove', pin, method: :delete, data: { confirm: 'Are you sure?' } %>
-      <% if pin.pending? %>| <%= link_to 'Remove Flag', '/pins/' + pin.id.to_s + '/remove_flag.js', remote: true %>
-      <% end %>
-    <% end %>
-  </p>
-  </div>
+  <script>
+    $('.label-with-popover').popover();
+  </script>
 <% end %>
-
-<script>
-  $('.label-with-popover').popover();
-</script>

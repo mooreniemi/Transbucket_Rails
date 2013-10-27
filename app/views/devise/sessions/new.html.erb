@@ -2,7 +2,7 @@
 
 <div class="well span6">
   <%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), html: { class: 'form-horizontal'}) do |f| %>
-    <%= f.errors %>
+    <%= f.error_notification %>
 
     <%= f.input :login %>
     <%= f.input :password %>

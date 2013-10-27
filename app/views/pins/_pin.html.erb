@@ -17,7 +17,6 @@
     </div>
 
     <div class="image">
-      <% #binding.pry %>
       <% if @presenter.show_new_comments(pin).present? %>
         <div class="comment_box">
           <p><%= "<i class='icon-comment'></i> <b>New Comment: </b>".html_safe + pin.comment_threads.last.body.split(" ").first(50).join(" ") %></p>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131026205013) do
+ActiveRecord::Schema.define(:version => 20131027152024) do
 
   create_table "assets", :force => true do |t|
     t.string   "asset_file_name"
@@ -199,7 +199,7 @@ ActiveRecord::Schema.define(:version => 20131026205013) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.boolean  "safe_mode"
+    t.boolean  "safe_mode",              :default => false
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

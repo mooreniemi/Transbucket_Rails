@@ -1,15 +1,15 @@
 <h2>Sign in</h2>
 
 <div class="well span6">
-<%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), html: { class: 'form-horizontal'}) do |f| %>
-  <%= f.error_notification %>
+  <%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), html: { class: 'form-horizontal'}) do |f| %>
+    <%= f.errors %>
 
-<%= f.input :login %>
-<%= f.input :password %>
-<%= f.input :remember_me, as: :boolean %>
+    <%= f.input :login %>
+    <%= f.input :password %>
+    <%= f.input :remember_me, as: :boolean %>
 
-<%= f.submit "Sign in", class: "btn btn-primary btn-large" %>
-<% end %>
+    <%= f.submit "Sign in", class: "btn btn-primary btn-large" %>
+  <% end %>
 </div>
 <br clear="both">
 

@@ -6,12 +6,14 @@ before_filter :authenticate_user!, except: [:index]
   def index
     @query = sanitize(params[:query]) if params[:query]
 
-    @presenter = PinPresenter.new(
-    :query => @query,
-    :user => current_user,
-    :page => params[:page],
-    :safe_mode => current_user.safe_mode
-    )
+    if user_signed_in?
+      @presenter = PinPresenter.new(
+      :query => @query,
+      :user => current_user,
+      :page => params[:page],
+      :safe_mode => current_user.safe_mode
+      )
+    end
 
     respond_to do |format|
       format.html # index.html.erb

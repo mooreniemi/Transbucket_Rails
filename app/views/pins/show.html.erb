@@ -5,21 +5,23 @@
 			<%= image_tag pinimage.photo unless pinimage.photo_file_size.nil? %>
 			<%= pinimage.caption.to_s %>
 			<% end %>
-			<br><% if current_user == @pin.user || current_user.admin == true %> <%= link_to 'Edit', edit_pin_path(@pin) %> | <% end %>
-<%= link_to 'Back', pins_path %>
+			<br><%= link_to '<i class="fa fa-arrow-left"></i>'.html_safe, pins_path %>
+      <% if current_user == @pin.user || current_user.admin == true %>
+        | <%= link_to '<i class="fa fa-pencil-square-o"></i>'.html_safe, edit_pin_path(@pin) %>
+      <% end %>
 		</div>
 </div>
 <div class="span4">
 	<ul class="unstyled">
-    <li><b>Surgeon:</b>
+    <li><i class="fa fa-user-md"></i> <b>Surgeon:</b>
     Dr. <%= @pin.surgeon %></li>
-    <li><b>Procedure:</b>
+    <li><i class="fa fa-plus-square"></i> <b>Procedure:</b>
     <%= @pin.procedure %></li>
-    <li><b>Cost:</b>
+    <li><i class="fa fa-usd"></i> <b>Cost:</b>
     <%= @pin.cost %></li>
-    <li><b>Want revision?</b>
+    <li><i class="fa fa-exclamation-circle"></i> <b>Want revision?</b>
     	<%= @pin.revision %></li>
-    <li><b>Description:</b></li>
+    <li><i class="fa fa-quote-left"></i> <b>Description:</b></li>
     <li style="background-color:#fff; padding:10px;"><%= @pin.details %></li>
    </ul>
 

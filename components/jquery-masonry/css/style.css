@@ -26,7 +26,7 @@ html {
   overflow-y: scroll;
 }
 
-body { 
+body {
   font: 13px 'Helvetica Neue', Arial, sans-serif;
   background: #D8D5D2;
   color: #222;
@@ -121,7 +121,7 @@ strong { font-weight: bold; }
 #site-nav li.current a { color: white; }
 #site-nav li.current a:hover { color: #D26; }
 
-#site-nav li ul { 
+#site-nav li ul {
   margin-bottom: 0;
 }
 
@@ -163,7 +163,7 @@ strong { font-weight: bold; }
     height: auto;
     margin-bottom: 20px;
   }
-  
+
   #content {
     padding-left: 10px;
   }
@@ -251,7 +251,7 @@ button {
   padding-top: 10px;
 }
 
-.docs #content h2:target { 
+.docs #content h2:target {
   background: #D26;
   color: white;
   padding: 10px 5px 5px;
@@ -328,7 +328,7 @@ button {
 
 .rtl .box {
   float: right;
-  text-align: right; 
+  text-align: right;
   direction: rtl;
 }
 
@@ -472,7 +472,7 @@ button {
   width: 100%;
 }
 
-.homepage .example a:hover { 
+.homepage .example a:hover {
   background: #D26;
   color: white;
 }
@@ -483,7 +483,7 @@ button {
 }
 
 .homepage .loading img {
-  float: left; 
+  float: left;
   padding-right: 5px;
   width: 54px;
 }
@@ -537,7 +537,7 @@ button {
 }
 
 /* Infinite Scroll loader */
-#infscr-loading { 
+#infscr-loading {
   text-align: center;
   z-index: 100;
   position: fixed;
@@ -545,7 +545,7 @@ button {
   bottom: 40px;
   width: 200px;
   padding: 10px;
-  background: #000; 
+  background: #000;
   opacity: 0.8;
   color: #FFF;
   -webkit-border-radius: 10px;
@@ -614,3 +614,8 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
 .clearfix:before, .clearfix:after { content: ""; display: table; }
 .clearfix:after { clear: both; }
 .clearfix { zoom: 1; }
+
+.autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
+.autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+.autocomplete-selected { background: #F0F0F0; }
+.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }

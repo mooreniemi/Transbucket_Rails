@@ -35,7 +35,7 @@ group :assets do
 end
 
 gem "font-awesome-rails"
-gem 'rails3-jquery-autocomplete'
+#gem 'rails3-jquery-autocomplete'
 gem 'jquery-ui-rails'
 gem 'jquery-rails'
 gem 'devise'
@@ -61,6 +61,8 @@ gem 'newrelic_rpm'
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'quiet_assets'
+  gem 'meta_request'
 end
 
 group :test do

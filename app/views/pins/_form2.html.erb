@@ -44,13 +44,13 @@
 <div class="well span4">
   <p>We recommend listing images from "Before" to "After", top to bottom in the form.</p>
 
-<%= f.fields_for :pin_images do |ff| %>  
+<%= f.fields_for :pin_images do |ff| %>
     <% if ff.object.new_record? %>
       <%= ff.label :caption, "Image Caption" %>
       <%= ff.text_field :caption %>
       <%= ff.file_field(:photo) %>
 
-     <% else %> 
+     <% else %>
         <%= image_tag(photo.url(:thumb)) %>
         <%= ff.hidden_field :_destroy %>
         <%= ff.link_to_remove "X"%>

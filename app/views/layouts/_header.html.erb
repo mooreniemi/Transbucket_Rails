@@ -48,13 +48,10 @@
     </div>
 </div>
 
-<script>  var options, a;
-  jQuery(function(){
-     options = {
-       serviceUrl: <%= search_terms_url(:json) %>,
-       minChars: 2
-     };
-     a = $('#query').autocomplete(options);
-  });
-</script>
-
+<script>
+ $(function() {
+   $( "#query" ).autocomplete({
+     source: 'http://localhost:3003/search_terms.json'
+   });
+ });
+ </script>

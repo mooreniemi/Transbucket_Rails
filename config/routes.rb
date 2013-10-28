@@ -1,5 +1,4 @@
 Transbucket::Application.routes.draw do
-
   resources :pins
   devise_for :users
   resources :comments, :only => [:create, :destroy]
@@ -13,14 +12,16 @@ Transbucket::Application.routes.draw do
 end
 
 resources :pin do
-      resources :pin_images
-  end
+  resources :pin_images
+end
+
 
 root :to => 'pins#index'
   get 'pins' => 'pins#index'
   get 'about' => 'pages#about'
   get 'terms' => 'pages#terms'
   get 'privacy' => 'pages#privacy'
+  get 'search_terms' => 'search#search_terms'
 
   get 'home' => 'pages#home'
   get 'admin' => 'pins#admin'

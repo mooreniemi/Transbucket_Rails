@@ -136,6 +136,9 @@ GEM
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (0.2.2)
+      jquery-rails
+      railties (>= 3.1.0)
     json (1.8.0)
     launchy (2.3.0)
       addressable (~> 2.3)
@@ -190,6 +193,8 @@ GEM
       activesupport (= 3.2.12)
       bundler (~> 1.0)
       railties (= 3.2.12)
+    rails3-jquery-autocomplete (1.0.11)
+      rails (~> 3.0)
     railties (3.2.12)
       actionpack (= 3.2.12)
       activesupport (= 3.2.12)
@@ -296,6 +301,7 @@ DEPENDENCIES
   hirb
   htmlentities
   jquery-rails
+  jquery-ui-rails
   launchy
   mysql
   mysql2 (= 0.3.12b5)
@@ -305,6 +311,7 @@ DEPENDENCIES
   pg
   pry
   rails (= 3.2.12)
+  rails3-jquery-autocomplete
   rake-progressbar
   rspec-rails
   sass-rails (~> 3.2.3)

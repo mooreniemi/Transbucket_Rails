@@ -17,6 +17,10 @@ class Pin < ActiveRecord::Base
   acts_as_votable
   acts_as_taggable_on :tags
 
+  scope :published, where(state: 'published')
+  scope :pending, where(state: 'pending')
+
+
   def cover_image(safe_mode=false)
     images = self.pin_images.collect {|p| p if p.photo(:medium).present? }
     image = safe_mode == true ? 'http://placekitten.com/200/300' : images.last.photo(:medium)

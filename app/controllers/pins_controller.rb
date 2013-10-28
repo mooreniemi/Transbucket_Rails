@@ -111,7 +111,7 @@ before_filter :authenticate_user!, except: [:index]
 
   def sanitize(query)
     query.gsub!(/(dr.|Dr.|dr|Dr)/, '')
-    query.gsub!(/[\W]/, '')
+    query.gsub!(/[\W]/, ' ')
     return Riddle.escape(query)
   end
 end

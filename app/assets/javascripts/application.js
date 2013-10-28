@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.ui.all
 //= require jquery.masonry.min.js
 //= require bootstrap
 //= require bootstrap-tooltip.js

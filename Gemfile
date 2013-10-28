@@ -35,6 +35,8 @@ group :assets do
 end
 
 gem "font-awesome-rails"
+gem 'rails3-jquery-autocomplete'
+gem 'jquery-ui-rails'
 gem 'jquery-rails'
 gem 'devise'
 gem 'nested_form'

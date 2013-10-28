@@ -3,7 +3,7 @@
     <div class="box">
       <div class="actions">
       <label class="label-with-popover" data-placement="left" data-content="Flags from 3 different users will remove content pending review by a moderator." data-title="Flag this content." data-trigger="hover">
-        <%= link_to "<i class='icon-flag'></i>".html_safe, '/pins/' + pin.id.to_s + '/flag.js', remote: true %>
+        <%= link_to '<i class="fa fa-flag"></i>'.html_safe, '/pins/' + pin.id.to_s + '/flag.js', remote: true %>
       </label>
 
       <% if current_user == pin.user || current_user.admin? %>

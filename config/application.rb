@@ -60,6 +60,7 @@ module Transbucket
 
     #to silence the 304s
     config.assets.debug = false
+    config.assets.logger = nil
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'

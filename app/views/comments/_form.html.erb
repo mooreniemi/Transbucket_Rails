@@ -1,6 +1,6 @@
 <h4>Add Comment</h4>
 
-<div class="comment-form">
+<div id="create_comment_form">
   <%= simple_form_for @new_comment, :remote => true do |f| %>
     <%= f.error_notification %>
     <%= f.input :body, :input_html => {:style => 'width: 99%', :rows => "4"}, :label => false, :placeholder => "Comments that violate our Terms of Service are grounds for immediate and permanent deactivation." %>

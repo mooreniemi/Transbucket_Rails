@@ -2,8 +2,8 @@
 	<div class="span6">
 		<div class="well">
 			<% for pinimage in @pin.pin_images do %>
-			<%= image_tag pinimage.photo unless pinimage.photo_file_size.nil? %>
-			<%= pinimage.caption.to_s %>
+			  <%= image_tag pinimage.photo unless pinimage.photo_file_size.nil? %>
+			  <%= pinimage.caption.to_s %>
 			<% end %>
 			<br><%= link_to '<i class="fa fa-arrow-left"></i>'.html_safe, pins_path %>
       <% if current_user == @pin.user || current_user.admin == true %>
@@ -14,11 +14,11 @@
 <div class="span4">
 	<ul class="unstyled">
     <li><i class="fa fa-user-md"></i> <b>Surgeon:</b>
-    Dr. <%= @pin.surgeon %></li>
+      Dr. <%= @pin.surgeon %></li>
     <li><i class="fa fa-plus-square"></i> <b>Procedure:</b>
-    <%= @pin.procedure %></li>
+      <%= @pin.procedure %></li>
     <li><i class="fa fa-usd"></i> <b>Cost:</b>
-    <%= @pin.cost %></li>
+      <%= @pin.cost %></li>
     <li><i class="fa fa-exclamation-circle"></i> <b>Want revision?</b>
     	<%= @pin.revision %></li>
     <li><i class="fa fa-quote-left"></i> <b>Description:</b></li>

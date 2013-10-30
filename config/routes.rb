@@ -26,8 +26,11 @@ root :to => 'pins#index'
   get 'home' => 'pages#home'
   get 'admin' => 'pins#admin'
 
-  get '/:type/:id/flag', to: 'flags#create'
-  get '/:type/:id/remove_flag', to: 'flags#remove_flag'
+  get '/comments/:id/flag', to: 'flags#create', as: 'create_flag'
+  get '/comments/:id/remove_flag', to: 'flags#remove_flag', as: 'remove_flag'
+
+  get '/pins/:id/flag.:format', to: 'flags#create', as: 'create_flag'
+  get '/pins/:id/remove_flag.:format', to: 'flags#remove_flag', as: 'remove_flag'
 
   #reroute for old bookmarks
   get '/members' => 'pages#update'

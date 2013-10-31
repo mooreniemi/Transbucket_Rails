@@ -19,14 +19,17 @@ respond_to :js
 
   end
 
-  def remove_flag
-    @content = find_content(params[:type], params[:id])
+  def destroy
+    type = params.keys.last.split('_').first
+    id = params.values.last
+
+    @content = find_content(type, id)
     @content.votes.down.destroy_all
     @content.publish!
 
     respond_to do |format|
       if @content.published?
-        format.js { render json: @content, status: :created }
+        redirect_to pins_path
       else
         format.js {render json: @content, status: :unprocessable_entity }
       end

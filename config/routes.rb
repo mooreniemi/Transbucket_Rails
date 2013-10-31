@@ -6,7 +6,7 @@ Transbucket::Application.routes.draw do
   end
 
   resources :comments, :only => [:create, :destroy] do
-    resources :flags, :only => [:create, :destroy]
+    resources :flags, :only => [:create]
   end
 
   match 'contact' => 'contact#new', :as => 'contact', :via => :get
@@ -14,9 +14,11 @@ Transbucket::Application.routes.draw do
 
   resources :pins do
     resources :pin_images
-    resources :flags, :only => [:create, :destroy]
+    resources :flags, :only => [:create]
   end
 
+  match '/pins/:pin_id/flags/remove_flag' => 'flags#destroy', as: 'remove_pin_flag'
+  match '/comments/:comment_id/flags/remove_flag' => 'flags#destroy', as: 'remove_comment_flag'
 
   get 'pins' => 'pins#index'
   get 'about' => 'pages#about'
@@ -35,6 +37,7 @@ Transbucket::Application.routes.draw do
   get '/procedures' => 'pages#update'
   get '/forum' => 'pages#update'
   get '/members/*other' => 'pages#update'
+  get '/members/uploads/*other' => 'pages#update'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

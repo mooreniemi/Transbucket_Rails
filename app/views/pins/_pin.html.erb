@@ -11,24 +11,26 @@
       | <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, pin, method: :delete, data: { confirm: 'Are you sure?' } %>
 
         <% if pin.pending? %>
-          | <%= link_to 'Remove Flag', pin_flag_path(pin), remote: true %>
+          | <%= link_to 'Remove Flag', remove_pin_flag_path(pin), remote: true %>
         <% end %>
       <% end %>
     </div>
 
-    <div class="image">
-      <% if @presenter.show_new_comments(pin).present? %>
-        <div class="comment_box">
-          <p><%= "<i class='icon-comment'></i> <b>New Comment: </b>".html_safe + pin.comment_threads.last.body.split(" ").first(50).join(" ") %></p>
+    <% if pin.published? %>
+      <div class="image">
+        <% if @presenter.show_new_comments(pin).present? %>
+          <div class="comment_box">
+            <p><%= "<i class='icon-comment'></i> <b>New Comment: </b>".html_safe + pin.comment_threads.last.body.split(" ").first(50).join(" ") %></p>
+          </div>
+        <% end %>
+
+          <%= link_to (image_tag pin.cover_image(safe_mode)), pin %></div>
+
+        	<p class="description">
+            <%= pin.procedure %> by <strong> Dr. <%= pin.surgeon %></strong>
+          </p>
         </div>
       <% end %>
-
-        <%= link_to (image_tag pin.cover_image(safe_mode)), pin %></div>
-
-      	<p class="description">
-          <%= pin.procedure %> by <strong> Dr. <%= pin.surgeon %></strong>
-        </p>
-      </div>
   <% end %>
 
   <script>

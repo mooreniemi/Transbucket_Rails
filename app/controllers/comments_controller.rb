@@ -11,17 +11,16 @@ respond_to :json
     if @comment.save
       render :partial => "comments/comment", :locals => { :comment => @comment }, :layout => false, :status => :created
     else
-      render :js => "alert('error saving comment');"
+      render :json => @comment.errors, :status => :unprocessable_entity
     end
   end
 
   def destroy
     @comment = Comment.find(params[:id])
-    #sleep 5
     if @comment.destroy
       render :json => @comment, :status => :ok
     else
-      render :js => "alert('error deleting comment');"
+      render :json => @comment.errors, :status => :unprocessable_entity
     end
   end
 end

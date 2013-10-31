@@ -27,7 +27,7 @@ Transbucket::Application.configure do
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
-  config.action_mailer.delivery_method = :test
+  #config.action_mailer.delivery_method = :test
 
   # Raise exception on mass assignment protection for Active Record models
   config.active_record.mass_assignment_sanitizer = :strict
@@ -36,4 +36,32 @@ Transbucket::Application.configure do
   config.active_support.deprecation = :stderr
 
   config.log_level = ENV["LOG_LEVEL"].to_sym if ENV["LOG_LEVEL"]
+
+  config.action_mailer.default_url_options = {
+    :host => "transbucket.com"
+  }
+
+  #config.action_mailer.smtp_settings = {
+   # :address              => "smtp.gmail.com",
+    #:port                 => 587,
+    #:domain               => "transbucket.com",
+    #:user_name            => "admin@transbucket.com",
+    #:password             => IO.read("config/settings.txt"),
+    #:authentication       => 'plain',
+    #:enable_starttls_auto => true
+    #}
+
+  ENV['SENDGRID_USERNAME'] = "app15705776@heroku.com";
+  ENV['SENDGRID_PASSWORD'] = "4d322jid";
+
+  ActionMailer::Base.smtp_settings = {
+    :address        => 'smtp.sendgrid.net',
+    :port           => '587',
+    :authentication => :plain,
+    :user_name      => ENV['SENDGRID_USERNAME'],
+    :password       => ENV['SENDGRID_PASSWORD'],
+    :domain         => 'heroku.com',
+    :enable_starttls_auto => true
+  }
+
 end

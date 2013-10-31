@@ -5,10 +5,6 @@ gem 'rails', '3.2.12'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-group :production do
-  gem 'pg'
-end
-
 #gem 'sqlite3'
 gem 'mysql'
 gem 'mysql2', '0.3.12b5'
@@ -58,9 +54,7 @@ gem 'acts_as_votable', '~> 0.7.1'
 gem 'acts-as-taggable-on'
 gem 'newrelic_rpm'
 
-group :development, :test do
-  gem 'rspec-rails'
-  gem 'factory_girl_rails'
+group :development do
   gem 'quiet_assets'
   gem 'meta_request','0.2.1'
   gem 'better_errors'
@@ -68,6 +62,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'capybara'

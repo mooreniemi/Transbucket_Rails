@@ -1,22 +1,23 @@
 Transbucket::Application.routes.draw do
-  resources :pins
   devise_for :users
-  resources :comments, :only => [:create, :destroy]
+  devise_scope :user do
+    get "/register" => "devise/registrations#new"
+    get "/login" => "devise/sessions#new"
+  end
+
+  resources :comments, :only => [:create, :destroy] do
+    resources :flags, :only => [:create, :destroy]
+  end
 
   match 'contact' => 'contact#new', :as => 'contact', :via => :get
   match 'contact' => 'contact#create', :as => 'contact', :via => :post
 
-  devise_scope :user do
-  get "/register" => "devise/registrations#new"
-  get "/login" => "devise/sessions#new"
-end
-
-resources :pin do
-  resources :pin_images
-end
+  resources :pins do
+    resources :pin_images
+    resources :flags, :only => [:create, :destroy]
+  end
 
 
-root :to => 'pins#index'
   get 'pins' => 'pins#index'
   get 'about' => 'pages#about'
   get 'terms' => 'pages#terms'
@@ -25,12 +26,6 @@ root :to => 'pins#index'
 
   get 'home' => 'pages#home'
   get 'admin' => 'pins#admin'
-
-  get '/comments/:id/flag', to: 'flags#create', as: 'create_flag'
-  get '/comments/:id/remove_flag', to: 'flags#remove_flag', as: 'remove_flag'
-
-  get '/pins/:id/flag.:format', to: 'flags#create', as: 'create_flag'
-  get '/pins/:id/remove_flag.:format', to: 'flags#remove_flag', as: 'remove_flag'
 
   #reroute for old bookmarks
   get '/members' => 'pages#update'
@@ -90,11 +85,7 @@ root :to => 'pins#index'
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  root :to => 'pins#index'
 
   # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id))(.:format)'
 end

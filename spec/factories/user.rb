@@ -2,10 +2,9 @@
 
 FactoryGirl.define do
   factory :user do
-    id 1
-    username "username"
-    name "MyString"
-    email "My@String.com"
-    gender
+    username Faker::Internet.user_name
+    name Faker::Name.name
+    email Faker::Internet.free_email
+    password Faker::Internet.password
   end
 end

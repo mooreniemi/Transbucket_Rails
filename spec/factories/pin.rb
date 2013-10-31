@@ -2,7 +2,7 @@ require 'faker'
 
 FactoryGirl.define do
 	factory :pin do |f|
-		f.description { Faker::Lorem.sentences(5).join(" ") }
+		f.description { Faker::Lorem.sentences(3).join(" ") }
 		f.surgeon { Faker::Name.last_name }
 		f.procedure "T Anchor Double Incision"
 		f.user_id { Faker::PhoneNumber.cell_phone}

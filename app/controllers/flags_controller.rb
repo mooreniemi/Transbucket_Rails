@@ -4,7 +4,9 @@ after_filter :flash_to_headers
 respond_to :js
 
   def create
-    @flag = Flag.new(current_user, find_content(params[:type], params[:id])).flag_on
+    type = params.keys.last.split('_').first
+    id = params.values.last
+    @flag = Flag.new(current_user, find_content(type, id)).flag_on
 
     respond_to do |format|
         if @flag[:status].present?
@@ -35,7 +37,7 @@ respond_to :js
   private
 
   def find_content(type, id)
-    if type == "pins"
+    if type == "pin"
       content = Pin.find(id)
     else
       content = Comment.find(id)

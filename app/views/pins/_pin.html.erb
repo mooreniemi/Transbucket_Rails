@@ -3,7 +3,7 @@
     <div class="box">
       <div class="actions">
       <label class="label-with-popover" data-placement="left" data-content="Flags from 3 different users will remove content pending review by a moderator." data-title="Flag this content." data-trigger="hover">
-        <%= link_to '<i class="fa fa-flag"></i>'.html_safe, '/pins/' + pin.id.to_s + '/flag.js', remote: true %>
+        <%= link_to '<i class="fa fa-flag"></i>'.html_safe, pin_flags_path(pin), :method => :post, remote: true %>
       </label>
 
       <% if current_user == pin.user || current_user.admin? %>
@@ -11,7 +11,7 @@
       | <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, pin, method: :delete, data: { confirm: 'Are you sure?' } %>
 
         <% if pin.pending? %>
-          | <%= link_to 'Remove Flag', '/pins/' + pin.id.to_s + '/remove_flag.js', remote: true %>
+          | <%= link_to 'Remove Flag', pin_flag_path(pin), remote: true %>
         <% end %>
       <% end %>
     </div>

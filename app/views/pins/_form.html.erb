@@ -25,7 +25,7 @@
     <%= f.text_field :surgeon %>
 
     <%= f.label :procedure, "Procedure" %>
-    <%= f.select :procedure, [['Double Incision w/ nipple grafts'], ['Periareolar/Keyhole'], ['Double incision w/ NO nipple grafts'], ['T Anchor Double Incision'], ['FTM Phalloplasty'], ['Double Incision w/ NO Nipple Grafts'], ['Other'], ['MTF Bottom Surgery'], ['FTM Metoidioplasty'], ['Breast Augmentation/Implants']] %>
+    <%= f.select :procedure, options_for_select(Pin::PROCEDURES) %>
 
      <%= f.label :cost, "Cost" %>
     <%= f.number_field :cost %>

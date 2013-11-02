@@ -25,6 +25,7 @@ Transbucket::Application.routes.draw do
   get 'terms' => 'pages#terms'
   get 'privacy' => 'pages#privacy'
   get 'search_terms' => 'search#search_terms'
+  get 'surgeons_only' => 'search#surgeons_only'
 
   get 'home' => 'pages#home'
   get 'admin' => 'pins#admin'

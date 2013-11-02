@@ -1,14 +1,3 @@
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
- <script>
-  $(function() {
-    var availableTags = ["Garramone, Charles", "Brownstein, Michael", "Medalie, Daniel ", "Protasov, Kirill", "Dupere, Marc", "Foley, Art", "Fischer, Beverly", "Kuzon, William Michael Jr.", "Westburg, Kirsten", "De La Riva, Patricia", "McLean, Hugh", "Johnson, Melissa", "Johnson, Perry", "Steinwald", "Edwards, Gereth", "Alter, Gary", "Bowman, Cameron", "McGinn, Christine", "other", "Startseva, Olesya", "Leis, Sherman", "Schaarschmidt ", "Tholen, Richard", "Raphael, Peter", "Faridi, Andree", "Reed, Harold", "Andersson, Lena C.", "Monstrey, Stan", "Hassall, Megan", "Steinwald, Paul", "Davies, Dai", "Suporn, Watanyusakul", "Djordjevic, Miroslav", "Reardon, James J.", "Meltzer, Toby", "Daverio, Paul", "Costas, Paul", "Wilson, Alan Neal", "Bowers, Marci", "Perovic, Sava", "Rumer, Kathy", "Mangubat, Antonio", "Lawton, Gary", "Bartholomeusz, Hugh", "Lincenberg, Sheldon", "Menard, Yvon", "Weiss, Paul", "Nguyen, Tuan A.", "Ralph, David", "Gilbert, David", "Buckley, Marie-Claire", "", "Brassard, Pierre", "Caloca, Jaime", "Vichai Surawongsin", "Beck, Joel B", "Bartlett, Richard", "Van Loenen, Thea", "Schaff, Jurgen", "Gahm, Jessica", "Kratz, Gunnar", "Giuffre, Martin", "Jones, Justin", "Crane, Curtis", "Liedl, Bernhard", "Vaniver, Karen", "Yelland, Andrew"];
-    $( "#pin_surgeon" ).autocomplete({
-      source: availableTags
-    });
-  });
-  </script>
 <%= nested_form_for @pin, :html => {:multipart => true} do |f| %>
   <% if @pin.errors.any? %>
     <div id="error_explanation">
@@ -60,3 +49,16 @@
     <p><%= f.link_to_add "Add another photo", :pin_images, :class => 'btn btn-success' %></p>
   <% end %>
 </div><br clear="both">
+
+<script>
+$(document).ready(function(){
+  $(function() {
+    var realTime = '<%= surgeons_only_url %>'
+    $( "#pin_surgeon" ).autocomplete({
+      source: realTime,
+      minLength: 2
+    });
+    $('ul.ui-autocomplete.ui-menu').css('top', '35px');
+  });
+});
+</script>

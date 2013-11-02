@@ -54,12 +54,11 @@ body{
 }
 
 .pagination {
-    padding: 10px;
-    margin-bottom: 20px;
+    margin: 0;
+    padding: 5px 10px 5px 10px;
 }
 
 .pagination a {
-    display: inline-block;
     padding: 0px 5px;
     margin-right: 4px;
     border-radius: 3px;
@@ -134,4 +133,8 @@ select {
 
 .actions a:link, a:visited, a:hover {
   color: black;
+}
+
+#controls {
+  text-align:center;
 }

@@ -5,10 +5,12 @@ before_filter :authenticate_user!, except: [:index]
   # GET /pins.json
   def index
     @query = sanitize(params[:query]) if params[:query]
+    @scope = params[:scope] if params[:scope]
 
     if user_signed_in?
       @presenter = PinPresenter.new(
       :query => @query,
+      :scope => @scope,
       :user => current_user,
       :page => params[:page],
       :safe_mode => current_user.safe_mode
@@ -17,7 +19,7 @@ before_filter :authenticate_user!, except: [:index]
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @pins }
+      format.js
     end
   end
 

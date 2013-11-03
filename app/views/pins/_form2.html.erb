@@ -50,15 +50,4 @@
   <% end %>
 </div><br clear="both">
 
-<script>
-$(document).ready(function(){
-  $(function() {
-    var realTime = '<%= surgeons_only_url %>'
-    $( "#pin_surgeon" ).autocomplete({
-      source: realTime,
-      minLength: 2
-    });
-    $('ul.ui-autocomplete.ui-menu').css('top', '35px');
-  });
-});
-</script>
+<%= render 'pins/surgeon_complete' %>

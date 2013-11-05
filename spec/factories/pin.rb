@@ -2,6 +2,7 @@ require 'faker'
 
 FactoryGirl.define do
 	factory :pin do |f|
+    f.id { Faker::Number.number(5) }
 		f.description { Faker::Lorem.sentences(3).join(" ") }
 		f.surgeon { Faker::Name.last_name }
 		f.procedure "T Anchor Double Incision"
@@ -10,6 +11,7 @@ FactoryGirl.define do
 	end
 
 	factory :invalid_pin do |f|
+    f.id { Faker::Number.number(5) }
 		f.description { Faker::Lorem.sentences(5).join(" ") }
 		f.surgeon { Faker::Name.last_name }
 		f.surgeon nil

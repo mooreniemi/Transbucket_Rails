@@ -2,10 +2,10 @@ class PinPresenter
   attr_accessor :query, :user, :safe_mode
 
   def initialize(opts = {})
-    @page = opts.fetch(:page)
-    @user = opts.fetch(:user) { nil }
-    @safe_mode = opts.fetch(:safe_mode)
-    @query = opts.fetch(:query) { [] }
+    @page = opts.fetch(:page) if opts[:page].present?
+    @user = opts.fetch(:user) { nil } if opts[:user].present?
+    @safe_mode = opts.fetch(:safe_mode) if opts[:safe_mode].present?
+    @query = opts.fetch(:query) { [] } if opts[:query].present?
     @scope = opts[:scope].present? ? opts.fetch(:scope) : 'all'
   end
 

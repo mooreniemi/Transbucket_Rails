@@ -13,11 +13,22 @@
     <%= f.input :password, label: "New Password", autocomplete: "off" %>
     <%= f.input :password_confirmation, label: "New Password Confirmation", autocomplete: "off" %>
     <%= f.input :current_password %>
-    <%= f.input :safe_mode %>
 
     <div>
-      <%= f.submit "Update", class: "btn btn-primary" %></div>
-  <% end %></div>
+      <%= f.submit "Update", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
+<h2>Edit <%= resource_name.to_s.humanize %> Settings</h2>
+
+<div class="well">
+  <%= simple_form_for(resource.preference, :url => user_preferences_path(resource), :html => {:method => :put}) do |f| %>
+    <%= f.input :safe_mode, :size => 10, :value => resource.preference.safe_mode %>
+    <%= f.input :notification, :size => 10, :value => resource.preference.notification %>
+    <%= f.submit "Update", class: "btn btn-primary" %>
+  <% end %>
+</div>
 
 <h3>Cancel my account</h3>
 

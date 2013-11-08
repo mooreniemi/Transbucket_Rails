@@ -12,8 +12,7 @@ before_filter :authenticate_user!, except: [:index]
       :query => @query,
       :scope => @scope,
       :user => current_user,
-      :page => params[:page],
-      :safe_mode => current_user.safe_mode
+      :page => params[:page]
       )
     end
 

@@ -14,7 +14,7 @@ class CommentService
   end
 
   def create_and_notify
-    comment = create(commentable, user, body)
+    comment = create
     send_email_notification(comment)
     comment
   end

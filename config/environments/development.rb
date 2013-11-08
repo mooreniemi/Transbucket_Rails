@@ -62,4 +62,6 @@ config.action_mailer.default_url_options = {
 
   config.log_level = ENV["LOG_LEVEL"].to_sym if ENV["LOG_LEVEL"]
 
+  Paperclip.options[:command_path] = '/usr/local/bin/identify'
+
 end

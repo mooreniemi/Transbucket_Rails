@@ -4,12 +4,12 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Hey, <%= @user.name %>!</h1>
+    <h1>Hey, <%= @user.username %>!</h1>
     <p>
       Another member has posted a comment on your submission.
     </p>
     <p>
-      If you'd like to reply click here: <%= @url %>.
+      If you'd like to reply click <a href='<%= @url %>'>this link</a>.
     </p>
   </body>
 </html>

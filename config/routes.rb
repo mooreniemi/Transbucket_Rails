@@ -1,8 +1,13 @@
 Transbucket::Application.routes.draw do
-  devise_for :users
+  devise_for :users, :path => 'users'
+
   devise_scope :user do
     get "/register" => "devise/registrations#new"
     get "/login" => "devise/sessions#new"
+  end
+
+  resources :users do
+    resource :preferences
   end
 
   resources :comments, :only => [:create, :destroy] do

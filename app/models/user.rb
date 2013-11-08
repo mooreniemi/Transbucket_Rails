@@ -1,4 +1,11 @@
 class User < ActiveRecord::Base
+  has_settings do |s|
+    s.key :view, :defaults => { :safe_mode => false }
+    s.key :contact,  :defaults => { :notification => true }
+  end
+
+  has_one :preference
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -6,7 +13,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :confirmable, :validatable, :authentication_keys => [:login]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password_confirmation, :remember_me, :name, :gender, :username, :id, :created_at, :updated_at, :login, :md5, :password, :safe_mode
+  attr_accessible :email, :password_confirmation, :remember_me, :name, :gender, :username, :id, :created_at, :updated_at, :login, :md5, :password, :settings
   # attr_accessible :title, :body
   attr_accessor :login
 

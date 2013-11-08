@@ -54,6 +54,7 @@ gem 'acts_as_votable', '~> 0.7.1'
 gem 'acts-as-taggable-on'
 gem 'newrelic_rpm'
 gem 'faker'
+gem 'ledermann-rails-settings', :require => 'rails-settings'
 
 group :development do
   gem 'quiet_assets'

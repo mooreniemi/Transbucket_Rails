@@ -23,7 +23,7 @@
             <p><%= "<i class='icon-comment'></i> <b>New Comment: </b>".html_safe + pin.comment_threads.last.body.split(" ").first(50).join(" ") %></p>
           </div>
         <% end %>
-          <%= link_to (image_tag pin.cover_image(current_user.safe_mode)), pin %></div>
+          <%= link_to (image_tag pin.cover_image(@presenter.safe_mode)), pin %></div>
 
         	<p class="description">
             <%= pin.procedure %> by <strong> Dr. <%= pin.surgeon %></strong>

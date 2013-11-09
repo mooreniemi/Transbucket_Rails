@@ -44,6 +44,7 @@ GEM
     atomic (1.1.14)
     awesome_nested_set (2.1.6)
       activerecord (>= 3.0.0)
+    awesome_print (1.2.0)
     aws-s3 (0.6.3)
       builder
       mime-types
@@ -81,6 +82,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    coolline (0.4.2)
     daemons (1.1.9)
     debug_inspector (0.0.2)
     delayed_job (4.0.0)
@@ -140,6 +142,7 @@ GEM
     htmlentities (4.3.1)
     i18n (0.6.5)
     innertube (1.1.0)
+    io-console (0.3)
     journey (1.0.4)
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
@@ -164,10 +167,13 @@ GEM
     meta_request (0.2.1)
       rack-contrib
       rails
+    metaclass (0.0.1)
     method_source (0.8.2)
     middleware (0.1.0)
     mime-types (1.25)
     mini_portile (0.5.1)
+    mocha (0.14.0)
+      metaclass (~> 0.0.1)
     multi_json (1.8.2)
     multipart-post (1.2.0)
     mysql (2.9.1)
@@ -188,6 +194,13 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
+    pry-coolline (0.2.2)
+      coolline (~> 0.3)
+      io-console (~> 0.3.0)
+    pry-nav (0.2.3)
+      pry (~> 0.9.10)
+    pry-rails (0.3.2)
+      pry (>= 0.9.10)
     pusher-client (0.3.1)
       ruby-hmac (~> 0.4.0)
       websocket (~> 1.0.0)
@@ -298,6 +311,7 @@ DEPENDENCIES
   acts-as-taggable-on
   acts_as_commentable_with_threading
   acts_as_votable (~> 0.7.1)
+  awesome_print
   aws-s3
   aws-sdk
   better_errors
@@ -321,6 +335,7 @@ DEPENDENCIES
   launchy
   ledermann-rails-settings
   meta_request (= 0.2.1)
+  mocha
   mysql
   mysql2 (= 0.3.12b5)
   nested_form
@@ -328,6 +343,9 @@ DEPENDENCIES
   paperclip (~> 3.0)
   pg
   pry
+  pry-coolline
+  pry-nav
+  pry-rails
   quiet_assets
   rails (= 3.2.12)
   rake-progressbar

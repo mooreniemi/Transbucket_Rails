@@ -3,7 +3,6 @@ class CommentsController < ApplicationController
 respond_to :js
 
   def create
-    #binding.pry
     @comment_hash = params[:comment]
     @obj = @comment_hash[:commentable_type].constantize.find(@comment_hash[:commentable_id])
     # Not implemented: check to see whether the user has permission to create a comment on this object

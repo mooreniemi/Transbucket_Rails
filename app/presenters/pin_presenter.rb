@@ -4,7 +4,7 @@ class PinPresenter
   def initialize(opts = {})
     @page = opts.fetch(:page) if opts[:page].present?
     @user = opts.fetch(:user) { nil } if opts[:user].present?
-    @safe_mode = UserPolicy.new(@user).safe_mode? if @user.present?
+    @safe_mode = @user.preference.present? ? UserPolicy.new(@user).safe_mode? : false
     @query = opts.fetch(:query) { [] } if opts[:query].present?
     @scope = opts[:scope].present? ? opts.fetch(:scope) : 'all'
   end

@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   end
 
   has_one :preference
+  after_create :set_preference
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -58,5 +59,11 @@ class User < ActiveRecord::Base
   def reset_password!(*args)
     self.legacy_password_hash = nil
     super
+  end
+
+  private
+
+  def set_preference
+    Preference.new(user_id: self.id).save if self.preference.nil?
   end
 end

@@ -22,10 +22,12 @@
 
 <h2>Edit <%= resource_name.to_s.humanize %> Settings</h2>
 
+<% Preference.new(user_id: resource.id) unless resource.preference.present? %>
+
 <div class="well">
   <%= simple_form_for(resource.preference, :url => user_preferences_path(resource), :html => {:method => :put}) do |f| %>
     <%= f.input :safe_mode, :size => 10, :value => resource.preference.safe_mode %>
-    <%= f.input :notification, :size => 10, :value => resource.preference.notification %>
+    <%= f.input :notification, :size => 10, :value => resource.preference.notification  %>
     <%= f.submit "Update", class: "btn btn-primary" %>
   <% end %>
 </div>

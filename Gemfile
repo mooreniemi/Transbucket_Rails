@@ -54,6 +54,11 @@ gem 'acts_as_votable', '~> 0.7.1'
 gem 'acts-as-taggable-on'
 gem 'newrelic_rpm'
 gem 'faker'
+gem 'pry-nav'
+gem 'pry-rails'
+gem 'pry-coolline'
+gem 'awesome_print'
+
 gem 'ledermann-rails-settings', :require => 'rails-settings'
 
 group :development do
@@ -70,6 +75,7 @@ group :test do
   gem 'capybara'
   gem 'guard-rspec'
   gem 'launchy'
+  gem 'mocha'
 end
 
 #gem 'activerecord-mysql2-adapter'

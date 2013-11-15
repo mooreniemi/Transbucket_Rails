@@ -14,7 +14,8 @@ class PinPresenter
   end
 
   def all_pins
-    @pins = @query.blank? ? Pin.where(state: 'published').order("created_at desc").paginate(:page => @page).send(@scope) : Pin.search(@query, :page => @page, :per_page => 20)
+    #binding.pry
+    @pins = @query.blank? ? Pin.recent.paginate(:page => @page).send(@scope) : Pin.search(@query, :page => @page, :per_page => 20)
     @pins.reject! {|p| p.nil? }
     return @pins
   end

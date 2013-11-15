@@ -15,11 +15,22 @@
     <%= f.label :surgeon, "Surgeon" %>
     <%= f.text_field :surgeon %>
 
+    <%= f.label :cost, "Cost" %>
+    <%= f.text_field :cost %>
+
     <%= f.label :procedure, "Procedure" %>
     <%= f.select :procedure, options_for_select(Pin::PROCEDURES) %>
 
-     <%= f.label :cost, "Cost" %>
-    <%= f.text_field :cost %>
+    <%= f.label :sensation, "Post-op Sensation" %>
+    <% 5.times do |i| %>
+      <%= radio_button(:pin, :sensation, i, {class: "star"}) %>
+    <% end %>
+    <br>
+    <%= f.label :satisfaction, "Post-op Satisfaction" %>
+    <% 5.times do |i| %>
+      <%= radio_button(:pin, :satisfaction, i, {class: "star"}) %>
+    <% end %>
+    <br>
 
     <label class="checkbox">
     <%= f.check_box :revision %>

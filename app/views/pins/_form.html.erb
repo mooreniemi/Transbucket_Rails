@@ -15,14 +15,26 @@
       <%= f.label :surgeon, "Surgeon" %>
       <%= f.text_field :surgeon %>
 
-      <%= f.label :procedure, "Procedure" %>
-      <%= f.select :procedure, options_for_select(Pin::PROCEDURES) %>
-
       <%= f.label :cost, "Cost" %>
       <%= f.number_field :cost %>
 
-      <%= f.label :revision, "Want revision?" %>
+      <%= f.label :procedure, "Procedure" %>
+      <%= f.select :procedure, options_for_select(Pin::PROCEDURES, @pin.procedure) %>
+
+      <%= f.label :sensation, "Post-op Sensation" %>
+      <% 5.times do |i| %>
+        <%= radio_button(:pin, :sensation, i, {class: "star"}) %>
+      <% end %>
+      <br>
+      <%= f.label :satisfaction, "Post-op Satisfaction" %>
+      <% 5.times do |i| %>
+        <%= radio_button(:pin, :satisfaction, i, {class: "star"}) %>
+      <% end %>
+      <br>
+
+      <label class="checkbox">
       <%= f.check_box :revision %>
+      Seeking a revision</label>
 
       <%= f.label :details, "Details" %>
       <%= f.text_area :details, :cols => "10", :rows => "10" %>
@@ -31,15 +43,14 @@
   </div>
   <div class="span4">
       <%= f.fields_for :pin_images do |ff| %>
-          <%= ff.label :caption, "Image Caption" %>
-          <%= ff.text_field :caption %>
-          <% unless ff.object.photo_file_size.nil? %>
+        <%= ff.label :caption, "Image Caption" %>
+        <%= ff.text_field :caption %>
+        <% unless ff.object.photo_file_size.nil? %>
           <%= image_tag ff.object.photo %>
           <%= ff.object.photo_file_name %>
-          <% end %>
-          <%= ff.label :photo, "Image File" %>
-          <%= ff.file_field :photo %>
-          <% #end %>
+        <% end %>
+        <%= ff.label :photo, "Image File" %>
+        <%= ff.file_field :photo %>
       <% end %>
   </div>
 </div>

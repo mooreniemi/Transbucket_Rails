@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131110220445) do
+ActiveRecord::Schema.define(:version => 20131115020032) do
 
   create_table "assets", :force => true do |t|
     t.string   "asset_file_name"
@@ -116,6 +116,8 @@ ActiveRecord::Schema.define(:version => 20131110220445) do
     t.integer  "cost"
     t.string   "username"
     t.string   "state"
+    t.integer  "sensation"
+    t.integer  "satisfaction"
   end
 
   add_index "pins", ["user_id"], :name => "index_pins_on_user_id"

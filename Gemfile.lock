@@ -149,6 +149,8 @@ GEM
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-star-rating-rails (4.0.4)
+      rails (>= 3.1.0)
     jquery-ui-rails (0.2.2)
       jquery-rails
       railties (>= 3.1.0)
@@ -157,6 +159,7 @@ GEM
       addressable (~> 2.3)
     ledermann-rails-settings (2.1.0)
       activerecord (>= 3.1)
+    letsrate (1.0.8)
     listen (2.0.0)
       celluloid (>= 0.15.1)
       rb-fsevent (>= 0.9.3)
@@ -335,9 +338,11 @@ DEPENDENCIES
   hirb
   htmlentities
   jquery-rails
+  jquery-star-rating-rails
   jquery-ui-rails
   launchy
   ledermann-rails-settings
+  letsrate
   meta_request (= 0.2.1)
   mocha
   mysql

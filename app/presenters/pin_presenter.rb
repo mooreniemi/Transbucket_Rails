@@ -14,10 +14,13 @@ class PinPresenter
   end
 
   def all_pins
-    #binding.pry
     @pins = @query.blank? ? Pin.recent.paginate(:page => @page).send(@scope) : Pin.search(@query, :page => @page, :per_page => 20)
     @pins.reject! {|p| p.nil? }
     return @pins
+  end
+
+  def by_user(user)
+    @pins = Pin.by_user(user).paginate(:page => @page)
   end
 
   def show_new_comments(pin)

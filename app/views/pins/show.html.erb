@@ -25,7 +25,7 @@
     <li style="background-color:#fff; padding:10px;"><%= @pin.details %></li>
    </ul>
 
-<small><b>Submitter:</b> <%= @pin.username %></small>
+<small><b>Submitter:</b> <%= @pin.user.username.presence || @pin.user.id %></small>
 </div>
 
 <br clear="both" />

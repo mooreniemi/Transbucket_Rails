@@ -25,13 +25,14 @@ class Pin < ActiveRecord::Base
 
   SCOPES = ["ftm", "mtf", "bottom", "top", "need_category"]
 
-  scope :published, where(state: 'published')
-  scope :pending, where(state: 'pending')
+  scope :published, includes(:pin_images, :user).where(state: 'published')
+  scope :pending, includes(:pin_images, :user).where(state: 'pending')
   scope :mtf, where(["procedure in (?)", MTF])
   scope :ftm, where(["procedure in (?)", FTM])
   scope :top, where(["procedure in (?)", TOP])
   scope :bottom, where(["procedure in (?)", BOTTOM])
   scope :need_category, where(procedure: "other")
+  scope :recent, lambda { published.order("created_at desc") }
 
 
   def cover_image(safe_mode=false)

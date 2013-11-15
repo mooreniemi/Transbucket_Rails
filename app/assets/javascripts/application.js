@@ -19,4 +19,5 @@
 //= require bootstrap-tooltip.js
 //= require bootstrap-popover.js
 //= require jquery_nested_form
+//= require jquery-star-rating
 //= require_tree .

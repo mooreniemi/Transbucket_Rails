@@ -21,6 +21,28 @@
       <%= @pin.cost %></li>
     <li><i class="fa fa-exclamation-circle"></i> <b>Want revision?</b>
     	<%= @pin.revision %></li>
+      <% if @pin.sensation.present? %>
+    <li><b>Post-op Sensation</b>
+      <% @pin.sensation.times do |i| %>
+        <input name="star#{i}" type="radio" class="star" disabled="disabled" checked="checked"/>
+      <% end %>
+      <% (5 - @pin.sensation).times do |i| %>
+        <input name="star#{i}" type="radio" class="star" disabled="disabled"/>
+      <% end %>
+    </li>
+    <br>
+    <% end %>
+    <% if @pin.satisfaction.present? %>
+    <li><b>Post-op Satisfaction</b>
+      <% @pin.satisfaction.times do |i| %>
+        <input name="star#{i}" type="radio" class="star" disabled="disabled" checked="checked"/>
+      <% end %>
+      <% (5 - @pin.satisfaction).times do |i| %>
+        <input name="star#{i}" type="radio" class="star" disabled="disabled"/>
+      <% end %>
+    </li>
+    <br>
+    <% end %>
     <li><i class="fa fa-quote-left"></i> <b>Description:</b></li>
     <li style="background-color:#fff; padding:10px;"><%= @pin.details %></li>
    </ul>

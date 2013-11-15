@@ -58,6 +58,8 @@ gem 'pry-nav'
 gem 'pry-rails'
 gem 'pry-coolline'
 gem 'awesome_print'
+gem 'letsrate'
+gem 'jquery-star-rating-rails'
 
 gem 'ledermann-rails-settings', :require => 'rails-settings'
 

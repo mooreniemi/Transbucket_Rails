@@ -2,7 +2,7 @@ class Pin < ActiveRecord::Base
   has_many :pin_images, :dependent => :destroy
   has_many :comments
 
-  attr_accessible :description, :pin_images, :pin_images_attributes, :surgeon, :cost, :revision, :details, :procedure, :username, :id, :created_at
+  attr_accessible :description, :pin_images, :pin_images_attributes, :surgeon, :cost, :revision, :details, :procedure, :username, :id, :created_at, :sensation, :satisfaction
 
   accepts_nested_attributes_for :pin_images, :reject_if => proc {|attributes| attributes.all? {|k,v| v.blank?} }
 
@@ -33,6 +33,7 @@ class Pin < ActiveRecord::Base
   scope :bottom, where(["procedure in (?)", BOTTOM])
   scope :need_category, where(procedure: "other")
   scope :recent, lambda { published.order("created_at desc") }
+  scope :by_user, lambda {|user| where(user_id: user.id)}
 
 
   def cover_image(safe_mode=false)

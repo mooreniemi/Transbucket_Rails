@@ -23,22 +23,16 @@
     	<%= @pin.revision %></li>
       <% if @pin.sensation.present? %>
     <li><b>Post-op Sensation</b>
-      <% @pin.sensation.times do |i| %>
-        <input name="star#{i}" type="radio" class="star" disabled="disabled" checked="checked"/>
-      <% end %>
-      <% (5 - @pin.sensation).times do |i| %>
-        <input name="star#{i}" type="radio" class="star" disabled="disabled"/>
+      <% 5.times do |i| %>
+        <%= radio_button(:pin, :sensation, i, {class: "star", disabled: "disabled"}) %>
       <% end %>
     </li>
     <br>
     <% end %>
     <% if @pin.satisfaction.present? %>
     <li><b>Post-op Satisfaction</b>
-      <% @pin.satisfaction.times do |i| %>
-        <input name="star#{i}" type="radio" class="star" disabled="disabled" checked="checked"/>
-      <% end %>
-      <% (5 - @pin.satisfaction).times do |i| %>
-        <input name="star#{i}" type="radio" class="star" disabled="disabled"/>
+      <% 5.times do |i| %>
+        <%= radio_button(:pin, :satisfaction, i, {class: "star", disabled: "disabled"}) %>
       <% end %>
     </li>
     <br>

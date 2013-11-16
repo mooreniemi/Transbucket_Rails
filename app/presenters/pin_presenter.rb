@@ -34,7 +34,7 @@ class PinPresenter
   end
 
   def scopes
-    [["General Filters", Pin::SCOPES.map(&:humanize)], ["By Procedure", Pin::PROCEDURES.map(&:humanize)], ["By Surgeon", Pin::SURGEONS.map(&:humanize)]]
+    [["General Filters", Pin::SCOPES.map(&:humanize)], ["By Procedure", Pin::PROCEDURES.map(&:humanize).sort], ["By Surgeon", Pin::SURGEONS.map(&:titleize).sort]]
   end
 
   def get_scope(scope)

@@ -14,6 +14,8 @@
           | <%= link_to 'Remove Flag', remove_pin_flag_path(pin), remote: true %>
         <% end %>
       <% end %>
+
+      posted <%= distance_of_time_in_words(Time.now, pin.created_at) %> ago
     </div>
 
     <% if pin.published? %>

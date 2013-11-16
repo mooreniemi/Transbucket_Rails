@@ -6,7 +6,7 @@ class PinPresenter
     @user = opts.fetch(:user) { nil } if opts[:user].present?
     @safe_mode = @user.preference.present? ? UserPolicy.new(@user).safe_mode? : false
     @query = opts.fetch(:query) { [] } if opts[:query].present?
-    @scope = opts[:scope].present? ? opts.fetch(:scope).map(&:parameterize) : ['all']
+    @scope = get_scope(opts.fetch(:scope)) if opts[:scope].present?
   end
 
   def each(&block)
@@ -14,9 +14,12 @@ class PinPresenter
   end
 
   def all_pins
-    @scope.collect! {|e| e.to_sym }
     @pins = @query.blank? ? Pin.recent.paginate(:page => @page) : Pin.search(@query, :page => @page, :per_page => 20)
-    @scope.each {|s| @pins = @pins.send(s)}
+    unless @scope == [:all]
+      @general.each {|s| @pins = @pins.send(s)} if @general.present?
+      @procedures.each {|p| @pins = @pins.by_procedure(p)} if @procedures.present?
+      @surgeons.each {|s| @pins = @pins.by_surgeon(s.titleize)} if @surgeons.present?
+    end
     @pins.reject! {|p| p.nil? }
     return @pins
   end
@@ -30,6 +33,21 @@ class PinPresenter
     @comments = Comment.where('created_at > ? and commentable_id = ?', @sign_in, pin.id)
   end
 
-end
+  def scopes
+    [["General Filters", Pin::SCOPES.map(&:humanize)], ["By Procedure", Pin::PROCEDURES.map(&:humanize)], ["By Surgeon", Pin::SURGEONS.map(&:humanize)]]
+  end
 
-#@pins = query.blank? ? Pin.where(state: 'published').order("created_at desc").paginate(:page => params[:page]) : Pin.search(query, :page => params[:page], :per_page => 20)
+  def get_scope(scope)
+    return [:all] if scope.empty?
+    scope.collect!(&:downcase)
+    @procedures = []
+    @surgeons = []
+    @general = []
+    scope.each {|s| @procedures << s if Pin::PROCEDURES.include?(s) }
+    scope.each {|s| @surgeons << s if Pin::SURGEONS.map(&:downcase).include?(s) }
+    @general = scope - @procedures - @surgeons
+    @general.collect!(&:parameterize).collect!(&:underscore).collect!(&:to_sym) if @general.present?
+    scope
+  end
+
+end

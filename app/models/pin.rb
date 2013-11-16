@@ -22,6 +22,7 @@ class Pin < ActiveRecord::Base
   TOP = ["breast augmentation", "periareolar mastectomy (keyhole)", "double incision without grafts", "double incision with grafts", "t anchor double incision"]
   BOTTOM = ["vaginoplasty", "phalloplasty", "metoidioplasty"]
   PROCEDURES = Pin.uniq.pluck(:procedure)
+  SURGEONS = Pin.uniq.pluck(:surgeon)
 
   SCOPES = ["ftm", "mtf", "bottom", "top", "need_category"]
 
@@ -34,6 +35,8 @@ class Pin < ActiveRecord::Base
   scope :need_category, where(procedure: "other")
   scope :recent, lambda { published.order("created_at desc") }
   scope :by_user, lambda {|user| where(user_id: user.id)}
+  scope :by_procedure, lambda {|procedure| where(procedure: procedure)}
+  scope :by_surgeon, lambda {|surgeon| where(surgeon: surgeon)}
 
 
   def cover_image(safe_mode=false)

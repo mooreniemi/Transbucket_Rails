@@ -6,7 +6,7 @@ class PinPresenter
     @user = opts.fetch(:user) { nil } if opts[:user].present?
     @safe_mode = @user.preference.present? ? UserPolicy.new(@user).safe_mode? : false
     @query = opts.fetch(:query) { [] } if opts[:query].present?
-    @scope = opts[:scope].present? ? opts.fetch(:scope) : 'all'
+    @scope = opts[:scope].present? ? opts.fetch(:scope) : ['all']
   end
 
   def each(&block)
@@ -14,7 +14,9 @@ class PinPresenter
   end
 
   def all_pins
-    @pins = @query.blank? ? Pin.recent.paginate(:page => @page).send(@scope) : Pin.search(@query, :page => @page, :per_page => 20)
+    @scope.collect! {|e| e.to_sym }
+    @pins = @query.blank? ? Pin.recent.paginate(:page => @page) : Pin.search(@query, :page => @page, :per_page => 20)
+    @scope.each {|s| @pins = @pins.send(s)}
     @pins.reject! {|p| p.nil? }
     return @pins
   end

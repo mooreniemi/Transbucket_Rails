@@ -13,5 +13,9 @@
  *= require font-awesome
  *= require jquery.ui.all
  *= require jquery-star-rating
+ *= require jquery.ui.core
+ *= require jquery.ui.theme
+ *= require jquery.multiselect
+ *= require jquery.multiselect.filter
  *= require_tree .
  */

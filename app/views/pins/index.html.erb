@@ -8,9 +8,9 @@
     <%= will_paginate @presenter.all_pins unless @presenter.all_pins.nil? %>
   </div>
 
-  <div id="form_container" class="col-md-6" style="float:left;">
-    <%= form_tag pins_path, :method => 'get', :class => 'scope dropdown', remote: true do %>
-      <%= select_tag :scope, options_for_select(Pin::SCOPES), :multiselect => true %>
+  <div id="form_container" class="col-md-6" style="float:left; position: relative;">
+    <%= form_tag pins_path, :method => 'get', :class => 'scope_dropdown', remote: true do %>
+      <%= select_tag :scope, options_for_select(Pin::SCOPES), {multiple: true, size: 5} %>
       <%= submit_tag "Filter", class: 'btn dropdown-toggle sr-only' %>
     <% end %>
   </div>
@@ -36,3 +36,17 @@
 <% else %>
   <%= render 'pins/welcome' %>
 <% end %>
+
+<script>
+$("#scope").multiselect({
+   position: {
+      my: 'center',
+      at: 'center'
+
+     // only include the "of" property if you want to position
+     // the menu against an element other than the button.
+     // multiselect automatically sets "of" unless you explictly
+     // pass in a value.
+   }
+});
+</script>

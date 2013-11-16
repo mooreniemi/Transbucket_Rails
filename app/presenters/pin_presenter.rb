@@ -6,7 +6,7 @@ class PinPresenter
     @user = opts.fetch(:user) { nil } if opts[:user].present?
     @safe_mode = @user.preference.present? ? UserPolicy.new(@user).safe_mode? : false
     @query = opts.fetch(:query) { [] } if opts[:query].present?
-    @scope = opts[:scope].present? ? opts.fetch(:scope) : ['all']
+    @scope = opts[:scope].present? ? opts.fetch(:scope).map(&:parameterize) : ['all']
   end
 
   def each(&block)

@@ -60,6 +60,7 @@ gem 'pry-coolline'
 gem 'awesome_print'
 gem 'letsrate'
 gem 'jquery-star-rating-rails'
+gem 'jquery-multiselect-rails', :git => 'git://github.com/arojoal/jquery-multiselect-rails.git'
 
 gem 'ledermann-rails-settings', :require => 'rails-settings'
 

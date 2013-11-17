@@ -35,15 +35,17 @@ Transbucket::Application.routes.draw do
   get 'home' => 'pages#home'
   get 'admin' => 'pins#admin'
 
+  get 'bookmarks' => 'pages#bookmarks'
   #reroute for old bookmarks
-  get '/members' => 'pages#update'
-  get '/therapies' => 'pages#update'
-  get '/surgeons' => 'pages#update'
-  get '/therapists' => 'pages#update'
-  get '/procedures' => 'pages#update'
-  get '/forum' => 'pages#update'
-  get '/members/*other' => 'pages#update'
-  get '/members/uploads/*other' => 'pages#update'
+  get '/members' => 'pages#bookmarks'
+  get '/therapies' => 'pages#bookmarks'
+  get '/surgeons' => 'pages#bookmarks'
+  get '/therapists' => 'pages#bookmarks'
+  get '/procedures' => 'pages#bookmarks'
+  get '/forum' => 'pages#bookmarks'
+  get '/members/*other' => 'pages#bookmarks'
+  get '/members/uploads/*other' => 'pages#bookmarks'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

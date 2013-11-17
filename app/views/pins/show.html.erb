@@ -41,7 +41,7 @@
     <li style="background-color:#fff; padding:10px;"><%= @pin.details %></li>
    </ul>
 
-<small><b>Submitter:</b> <%= @pin.user.username.presence || @pin.user.id %></small>
+<% if @pin.user.present? %><small><b>Submitter:</b> <%= @pin.user.username.presence || @pin.user.id %></small><% end %>
 </div>
 
 <br clear="both" />

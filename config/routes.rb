@@ -25,6 +25,8 @@ Transbucket::Application.routes.draw do
   match '/pins/:pin_id/flags/remove_flag' => 'flags#destroy', as: 'remove_pin_flag'
   match '/comments/:comment_id/flags/remove_flag' => 'flags#destroy', as: 'remove_comment_flag'
 
+  match 'by_user' => 'pins#by_user', :as => 'by'
+
   get 'pins' => 'pins#index'
   get 'about' => 'pages#about'
   get 'terms' => 'pages#terms'

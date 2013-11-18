@@ -22,6 +22,11 @@ before_filter :authenticate_user!, except: [:index]
     end
   end
 
+  def by_user
+    @presenter = PinPresenter.new(user: current_user)
+    @pins = @presenter.by_user(User.find(params[:by_user]))
+  end
+
   # GET /pins/1
   # GET /pins/1.json
   def show

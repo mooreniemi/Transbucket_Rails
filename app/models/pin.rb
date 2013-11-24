@@ -1,4 +1,5 @@
 class Pin < ActiveRecord::Base
+  include ThinkingSphinx::Scopes
   has_many :pin_images, :dependent => :destroy
   has_many :comments
 
@@ -37,7 +38,6 @@ class Pin < ActiveRecord::Base
   scope :by_user, lambda {|user| where(user_id: user.id)}
   scope :by_procedure, lambda {|procedure| where(procedure: procedure)}
   scope :by_surgeon, lambda {|surgeon| where(surgeon: surgeon)}
-
 
   def cover_image(safe_mode=false)
     images = self.pin_images.collect {|p| p if p.photo(:medium).present? }

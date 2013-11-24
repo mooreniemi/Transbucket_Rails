@@ -5,7 +5,7 @@ mysql:
  socket: /tmp/mysql.sock
  username: root
  password:
- database: transb6_users
+ database: transb6_surgeons
 
 destination:
  # if file is given, output goes to file, else postgres
@@ -15,12 +15,12 @@ destination:
   port: 5432
   username: Alex
   password:
-  database: psql_users
+  database: psql_local
 
 # if tables is given, only the listed tables will be converted.  leave empty to convert all tables.
 tables:
-- users
-#- table2
+- old_surgeons
+#- therapists
 # if exclude_tables is given, exclude the listed tables from the conversion.
 #exclude_tables:
 #- table3

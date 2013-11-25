@@ -3,13 +3,15 @@ class Pin < ActiveRecord::Base
   has_many :pin_images, :dependent => :destroy
   has_many :comments
 
-  attr_accessible :description, :pin_images, :pin_images_attributes, :surgeon, :cost, :revision, :details, :procedure, :username, :id, :created_at, :sensation, :satisfaction
+  belongs_to :surgeon
+  belongs_to :procedure
+
+  attr_accessible :description, :pin_images, :pin_images_attributes, :surgeon_id, :cost, :revision, :details, :procedure_id, :username, :id, :created_at, :sensation, :satisfaction
 
   accepts_nested_attributes_for :pin_images, :reject_if => proc {|attributes| attributes.all? {|k,v| v.blank?} }
 
-  validates :surgeon, presence: true
-  validates :procedure, presence: true
-  #validates :pin_images, presence: true
+  validates :surgeon_id, presence: true
+  validates :procedure_id, presence: true
   validates :user_id, presence: true
 
   belongs_to :user
@@ -22,8 +24,8 @@ class Pin < ActiveRecord::Base
   MTF = ["vaginoplasty", "breast augmentation", "facial feminization surgery"]
   TOP = ["breast augmentation", "periareolar mastectomy (keyhole)", "double incision without grafts", "double incision with grafts", "t anchor double incision"]
   BOTTOM = ["vaginoplasty", "phalloplasty", "metoidioplasty"]
-  PROCEDURES = Pin.uniq.pluck(:procedure)
-  SURGEONS = Pin.uniq.pluck(:surgeon)
+  PROCEDURES = Pin.uniq.pluck(:procedure_id)
+  SURGEONS = Pin.uniq.pluck(:surgeon_id)
 
   SCOPES = ["ftm", "mtf", "bottom", "top", "need_category"]
 

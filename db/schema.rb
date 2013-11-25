@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131124194211) do
+ActiveRecord::Schema.define(:version => 20131124203329) do
 
   create_table "assets", :force => true do |t|
     t.string   "asset_file_name"
@@ -129,9 +129,9 @@ ActiveRecord::Schema.define(:version => 20131124194211) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.string   "procedure"
+    t.string   "procedure_id"
     t.boolean  "revision"
-    t.string   "surgeon"
+    t.string   "surgeon_id"
     t.text     "details"
     t.integer  "cost"
     t.string   "username"
@@ -148,6 +148,16 @@ ActiveRecord::Schema.define(:version => 20131124194211) do
     t.datetime "updated_at",                      :null => false
     t.boolean  "notification", :default => true
     t.boolean  "safe_mode",    :default => false
+  end
+
+  create_table "procedures", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.string   "type"
+    t.string   "gender"
+    t.integer  "avg_sensation"
+    t.integer  "avg_satisfaction"
   end
 
   create_table "results", :primary_key => "ID", :force => true do |t|

@@ -9,11 +9,19 @@ namespace :pins do
     end
   end
 
+  desc "other procedures"
+  task :other_procedures => :environment do
+    pins = Pin.where(procedure_id: 'other')
+    pins.each {|p| p.update_attributes(procedure_id: 37) }
+  end
+
   desc "give pins surgeon associations"
   task :associate_surgeon => :environment do
     pins = Pin.all
-    pins.each do |p|
+    $ambiguous = []
 
+    pins.each do |p|
+      #binding.pry
       surgeon = p.surgeon_id.downcase.split(',').first
       match_pool = []
 
@@ -21,11 +29,15 @@ namespace :pins do
       last_names.each {|n| match_pool << n if /#{surgeon}/.match(n).present? }
 
       if match_pool.count == 1
-        match = Surgeon.find_by_last_name(match_pool.first)
+        match = Surgeon.find_by_last_name(match_pool.first.titleize)
         p.surgeon_id = match.id if match.present?
         p.save(validate: false)
+      else
+        $ambiguous << match_pool
       end
+
     end
+    p $ambiguous.count
 
   end
 
@@ -45,6 +57,25 @@ namespace :pins do
     pins.each do |pin|
       unless pin.surgeon_id == 'other' || pin.surgeon_id.length < 3
         Surgeon.new(last_name: pin.surgeon_id).save!
+      end
+    end
+  end
+
+  desc "other surgeon as unclaimed"
+  task :other_surgeon => :environment do
+    pins = Pin.where(surgeon_id: '')
+    pins.each {|p| p.update_attributes(surgeon_id: 911) }
+    p pins.count.to_s + " unknown surgeon pins."
+  end
+
+  desc "remove leading white space from surgeon first name"
+  task :surgeon_names => :environment do
+    surgeons = Surgeon.all
+    surgeons.each do |surgeon|
+      if surgeon.first_name.present?
+        new_name = surgeon.first_name.gsub(/\A\s/, '')
+        surgeon.update_attributes(first_name: new_name) unless new_name.blank?
+        surgeon.save
       end
     end
   end

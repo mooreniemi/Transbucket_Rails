@@ -1,6 +1,7 @@
 class Surgeon < ActiveRecord::Base
-  #has_many :pins
-  #has_many :procedures, through: :pins
+  has_many :pins
+  has_many :skills
+  has_many :procedures, through: :skills
 
   attr_accessible :address, :city, :country, :email, :id, :first_name, :last_name, :phone, :procedures, :state, :url, :zip, :notes
 

@@ -19,4 +19,8 @@ namespace :procedure do
     bar.finished
 
   end
+
+  desc "make procedures for surgeons through skills"
+  task :skills => :environment do
+  end
 end

@@ -20,7 +20,7 @@
     <li><i class="fa fa-plus-square"></i> <b>Procedure:</b>
       <%= @pin.procedure.name %></li>
     <li><i class="fa fa-usd"></i> <b>Cost:</b>
-      <%= @pin.cost %></li>
+      <%= number_with_delimiter(@pin.cost) %></li>
     <li><i class="fa fa-exclamation-circle"></i> <b>Want revision?</b>
     	<%= @pin.revision %></li>
       <% if @pin.sensation.present? %>

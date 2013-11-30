@@ -72,8 +72,9 @@ before_filter :authenticate_user!, except: [:index]
   # POST /pins.json
   #submit button triggers
   def create
-    @pin = current_user.pins.new(params[:pin])
-
+    #nested associations are handled inside of the service
+    @pin = PinCreatorService.new(params[:pin], current_user).create
+    binding.pry
     respond_to do |format|
       if @pin.save
         format.html { redirect_to @pin, notice: 'Pin was successfully created.' }

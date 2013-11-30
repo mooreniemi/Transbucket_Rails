@@ -15,7 +15,7 @@ namespace :surgeons do
 
       if Surgeon.where(id: u.id).blank?
         Surgeon.new(id: u.id, email: u.Email, first_name: u.SurgeonName.split(',').last, last_name: u.SurgeonName.split(',').first,
-                  phone: u.Phone, url: u.URL, procedures: u.Procedures, notes: u.Notes,
+                  phone: u.Phone, url: u.URL, procedure_list: u.Procedures, notes: u.Notes,
                   zip: u.ZIP, city: u.City, country: u.Country, address: u.Address ).save(:validate => false)
       end
       bar.inc

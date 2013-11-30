@@ -3,9 +3,17 @@ class Surgeon < ActiveRecord::Base
   has_many :skills
   has_many :procedures, through: :skills
 
-  attr_accessible :address, :city, :country, :email, :id, :first_name, :last_name, :phone, :procedures, :state, :url, :zip, :notes
+  attr_accessible :address, :city, :country, :email, :id, :first_name, :last_name, :phone, :procedure_list, :state, :url, :zip, :notes
 
   def sanitize_name
     query.gsub!(/(dr.|Dr.|dr|Dr|MD|md|M.D.)/, '')
+  end
+
+  def to_s
+    last_name + ', ' + first_name
+  end
+
+  def self.names
+   self.where("surgeons.last_name IS NOT NULL").pluck_all(:first_name, :last_name).collect! {|e| e["first_name"].nil? ? e["last_name"] : e["last_name"] + ', ' + e["first_name"] }.sort
   end
 end

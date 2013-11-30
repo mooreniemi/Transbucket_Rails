@@ -1,5 +1,7 @@
 class Pin < ActiveRecord::Base
   include ThinkingSphinx::Scopes
+  include Constants
+
   has_many :pin_images, :dependent => :destroy
   has_many :comments
 
@@ -23,23 +25,17 @@ class Pin < ActiveRecord::Base
   acts_as_votable
   acts_as_taggable_on :tags
 
-  FTM = ["phalloplasty", "periareolar mastectomy (keyhole)", "double incision without grafts", "double incision with grafts", "metoidioplasty", "t anchor double incision"]
-  MTF = ["vaginoplasty", "breast augmentation", "facial feminization surgery"]
-  TOP = ["breast augmentation", "periareolar mastectomy (keyhole)", "double incision without grafts", "double incision with grafts", "t anchor double incision"]
-  BOTTOM = ["vaginoplasty", "phalloplasty", "metoidioplasty"]
-  PROCEDURES = Pin.uniq.pluck(:procedure_id)
-  SURGEONS = Pin.uniq.pluck(:surgeon_id)
-
-  SCOPES = ["ftm", "mtf", "bottom", "top", "need_category"]
-
   scope :published, includes(:pin_images, :user).where(state: 'published')
   scope :pending, includes(:pin_images, :user).where(state: 'pending')
-  scope :mtf, where(["procedure in (?)", MTF])
-  scope :ftm, where(["procedure in (?)", FTM])
-  scope :top, where(["procedure in (?)", TOP])
-  scope :bottom, where(["procedure in (?)", BOTTOM])
+
+  scope :mtf, where(procedure_id: MTF.map(&:to_s))
+  scope :ftm, where(procedure_id: FTM.map(&:to_s))
+  scope :top, where(procedure_id: TOP.map(&:to_s))
+  scope :bottom, where(procedure_id: BOTTOM.map(&:to_s))
+
   scope :need_category, where(procedure: "other")
   scope :recent, lambda { published.order("created_at desc") }
+
   scope :by_user, lambda {|user| where(user_id: user.id)}
   scope :by_procedure, lambda {|procedure| where(procedure_id: Procedure.find_by_name(procedure).id)}
   scope :by_surgeon, lambda {|surgeon| where(surgeon_id: Surgeon.find_by_last_name(surgeon.split(',').first).id)}

@@ -11,15 +11,32 @@
     </div>
   <% end %>
 <div class="well span4">
-
+  <% surgeon_names = Surgeon.where("surgeons.last_name IS NOT NULL").pluck_all(:first_name, :last_name).collect! {|e| e["first_name"].nil? ? e["last_name"] : e["last_name"] + ', ' + e["first_name"] }.sort %>
     <%= f.label :surgeon, "Surgeon" %>
-    <%= f.text_field :surgeon %>
+    <%= f.select :surgeon_id, options_for_select(Surgeon.names) %>
+
+    <%= f.fields_for :surgeon do |surgeon_form| %>
+      <%= surgeon_form.label :last_name, "Surgeon's last name" %>
+      <%= surgeon_form.text_field :last_name %>
+      <%= surgeon_form.label :first_name, "Surgeon's first name" %>
+      <%= surgeon_form.text_field :first_name %>
+      <%= surgeon_form.link_to_remove "Remove this surgeon" %>
+    <% end %>
+    <%= f.link_to_add "Add a surgeon", :surgeon %>
 
     <%= f.label :cost, "Cost" %>
     <%= f.text_field :cost %>
 
     <%= f.label :procedure, "Procedure" %>
-    <%= f.select :procedure, options_for_select(Pin::PROCEDURES) %>
+    <%= f.select :procedure_id, options_for_select(Procedure.pluck(:name).uniq.sort) %>
+
+    <%= f.fields_for :procedure do |procedure_form| %>
+      <%= procedure_form.label :name, "Procedure Name" %>
+      <%= procedure_form.text_field :name %>
+      <%= procedure_form.link_to_remove "Remove this procedure" %>
+    <% end %>
+    <%= f.link_to_add "Add a procedure", :procedure %>
+
 
     <%= f.label :sensation, "Post-op Sensation" %>
     <% 5.times do |i| %>

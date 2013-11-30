@@ -28,7 +28,7 @@
           <%= link_to (image_tag pin.cover_image(@presenter.safe_mode)), pin %></div>
 
         	<p class="description">
-            <%= pin.procedure %> by <strong> Dr. <%= pin.surgeon %></strong>
+            <%= pin.procedure.name unless pin.procedure.nil? %> by <strong> Dr. <%= pin.surgeon.last_name unless pin.surgeon.nil? %></strong>
           </p>
         </div>
       <% end %>

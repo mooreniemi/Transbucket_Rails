@@ -11,15 +11,14 @@
     </div>
   <% end %>
   <div class="span4">
-
       <%= f.label :surgeon, "Surgeon" %>
-      <%= f.text_field :surgeon %>
+      <%= f.select :surgeon, options_for_select(Surgeon.names, @pin.surgeon.to_s) %>
 
       <%= f.label :cost, "Cost" %>
       <%= f.number_field :cost %>
 
       <%= f.label :procedure, "Procedure" %>
-      <%= f.select :procedure, options_for_select(Pin::PROCEDURES, @pin.procedure) %>
+      <%= f.select :procedure_id, options_for_select(Procedure.all.map(&:name), @pin.procedure.name) %>
 
       <%= f.label :sensation, "Post-op Sensation" %>
       <% 5.times do |i| %>

@@ -74,7 +74,7 @@ before_filter :authenticate_user!, except: [:index]
   def create
     #nested associations are handled inside of the service
     @pin = PinCreatorService.new(params[:pin], current_user).create
-    binding.pry
+
     respond_to do |format|
       if @pin.save
         format.html { redirect_to @pin, notice: 'Pin was successfully created.' }

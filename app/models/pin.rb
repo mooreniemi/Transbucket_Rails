@@ -41,8 +41,8 @@ class Pin < ActiveRecord::Base
   scope :need_category, where(procedure: "other")
   scope :recent, lambda { published.order("created_at desc") }
   scope :by_user, lambda {|user| where(user_id: user.id)}
-  scope :by_procedure, lambda {|procedure| where(procedure: procedure)}
-  scope :by_surgeon, lambda {|surgeon| where(surgeon: surgeon)}
+  scope :by_procedure, lambda {|procedure| where(procedure_id: Procedure.find_by_name(procedure).id)}
+  scope :by_surgeon, lambda {|surgeon| where(surgeon_id: Surgeon.find_by_last_name(surgeon.split(',').first).id)}
 
   def cover_image(safe_mode=false)
     images = self.pin_images.collect {|p| p if p.photo(:medium).present? }

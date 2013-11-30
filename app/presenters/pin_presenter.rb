@@ -34,7 +34,7 @@ class PinPresenter
   end
 
   def scopes
-    [["General Filters", Pin::SCOPES.map(&:humanize)], ["By Procedure", Pin::PROCEDURES.map(&:humanize).sort], ["By Surgeon", Pin::SURGEONS.map(&:titleize).sort]]
+    [["General Filters", Pin::SCOPES.map(&:humanize)], ["By Procedure", Procedure.pluck(:name).sort], ["By Surgeon", Surgeon.names]]
   end
 
   def get_scope(scope)
@@ -43,8 +43,8 @@ class PinPresenter
     @procedures = []
     @surgeons = []
     @general = []
-    scope.each {|s| @procedures << s if Pin::PROCEDURES.include?(s) }
-    scope.each {|s| @surgeons << s if Pin::SURGEONS.map(&:downcase).include?(s) }
+    scope.each {|s| @procedures << s if Procedure.pluck(:name).map(&:downcase).include?(s) }
+    scope.each {|s| @surgeons << s if Surgeon.names.map(&:downcase).include?(s) }
     @general = scope - @procedures - @surgeons
     @general.collect!(&:parameterize).collect!(&:underscore).collect!(&:to_sym) if @general.present?
     scope

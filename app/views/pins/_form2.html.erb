@@ -16,10 +16,24 @@
     <%= f.select :surgeon_id, options_for_select(Surgeon.names) %>
 
     <%= f.fields_for :surgeon do |surgeon_form| %>
-      <%= surgeon_form.label :last_name, "Surgeon's last name" %>
+    <label>Surgeon's last name
       <%= surgeon_form.text_field :last_name %>
-      <%= surgeon_form.label :first_name, "Surgeon's first name" %>
+    </label>
+    <label>Surgeon's first name
       <%= surgeon_form.text_field :first_name %>
+    </label>
+    <label>Surgeon's URL
+      <%= surgeon_form.text_field :url %>
+    </label>
+    <label>Surgeon's city
+      <%= surgeon_form.text_field :city %>
+    </label>
+    <label>Surgeon's state
+      <%= surgeon_form.text_field :state %>
+    </label>
+    <label>Surgeon's country
+      <%= surgeon_form.text_field :country %>
+    </label>
       <%= surgeon_form.link_to_remove "Remove this surgeon" %>
     <% end %>
     <%= f.link_to_add "Add a surgeon", :surgeon %>
@@ -31,8 +45,15 @@
     <%= f.select :procedure_id, options_for_select(Procedure.pluck(:name).uniq.sort) %>
 
     <%= f.fields_for :procedure do |procedure_form| %>
-      <%= procedure_form.label :name, "Procedure Name" %>
-      <%= procedure_form.text_field :name %>
+      <label> Procedure name
+        <%= procedure_form.text_field :name %>
+      </label>
+      <label>Procedure type
+        <%= procedure_form.select :type, options_for_select([ "Top", "Bottom", "Face", "Other" ]) %>
+      </label>
+      <label>Procedure gender
+        <%= procedure_form.select :gender, options_for_select([ "FTM", "MTF" ]) %>
+      </label>
       <%= procedure_form.link_to_remove "Remove this procedure" %>
     <% end %>
     <%= f.link_to_add "Add a procedure", :procedure %>

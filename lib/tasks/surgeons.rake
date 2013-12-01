@@ -62,25 +62,25 @@ namespace :surgeons do
 
   desc "fix outliers"
   task :outliers => :environment do
-    medalie_pins = Pin.where(surgeon_id: [934, 1012, 956, 954, 947])
+    medalie_pins = Pin.where(surgeon_id: [934, 1012, 956, 954, 947].map(&:to_s))
     medalie_pins.each {|p| p.surgeon_id = 12; p.save! }
 
-    mclean_pins = Pin.where(surgeon_id: [960, 1000, 989, 986, 980, 976, 979, 971, 970, 969, 968, 967, 975, 964, 963, 950, 958, 1011])
+    mclean_pins = Pin.where(surgeon_id: [960, 1000, 989, 986, 980, 976, 979, 971, 970, 969, 968, 967, 975, 964, 963, 950, 958, 1011].map(&:to_s))
     mclean_pins.each {|p| p.surgeon_id = 31; p.save! }
 
-    mcguinn_pins = Pin.where(surgeon_id: [994, 973, 961, 1003, 974, 1001, 965, 995])
+    mcguinn_pins = Pin.where(surgeon_id: [994, 973, 961, 1003, 974, 1001, 965, 995].map(&:to_s))
     mcguinn_pins.each {|p| p.surgeon_id = 18; p.save! }
 
-    vanloen_pins = Pin.where(surgeon_id: [165, 946, 990])
+    vanloen_pins = Pin.where(surgeon_id: [165, 946, 990].map(&:to_s))
     vanloen_pins.each {|p| p.surgeon.id = 164; p.save!}
 
-    yelland_pins = Pin.where(surgeon_id: [206, 978])
+    yelland_pins = Pin.where(surgeon_id: [206, 978].map(&:to_s))
     yelland_pins.each {|p| p.surgeon.id = 207; p.save!}
 
-    jj_pins = Pin.where(surgeon_id: 999)
+    jj_pins = Pin.where(surgeon_id: 999.to_s)
     jj_pins.each {|p| p.surgeon.id = 170; p.save!}
 
-    morehouse_pins = Pin.where(surgeon_id: 952)
+    morehouse_pins = Pin.where(surgeon_id: 952.to_s)
     morehouse_pins.each {|p| p.surgeon.id = 167; p.save!}
 
   end

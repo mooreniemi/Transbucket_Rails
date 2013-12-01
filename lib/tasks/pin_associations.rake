@@ -68,16 +68,4 @@ namespace :pins do
     p pins.count.to_s + " unknown surgeon pins."
   end
 
-  desc "remove leading white space from surgeon first name"
-  task :surgeon_names => :environment do
-    surgeons = Surgeon.all
-    surgeons.each do |surgeon|
-      if surgeon.first_name.present?
-        new_name = surgeon.first_name.gsub(/\A\s/, '')
-        surgeon.update_attributes(first_name: new_name) unless new_name.blank?
-        surgeon.save
-      end
-    end
-  end
-
 end

@@ -5,12 +5,8 @@ class Surgeon < ActiveRecord::Base
 
   attr_accessible :address, :city, :country, :email, :id, :first_name, :last_name, :phone, :procedure_list, :state, :url, :zip, :notes
 
-  def sanitize_name
-    query.gsub!(/(dr.|Dr.|dr|Dr|MD|md|M.D.)/, '')
-  end
-
   def to_s
-    last_name + ', ' + first_name
+    first_name.nil? ? last_name : last_name + ', ' + first_name
   end
 
   def self.names

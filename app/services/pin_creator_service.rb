@@ -23,7 +23,7 @@ class PinCreatorService
 
     if @procedure_attributes.present?
       @procedure_attributes.delete('_destroy')
-
+      binding.pry
       procedure = Procedure.new(@procedure_attributes)
       @params["procedure_id"] = procedure.id if procedure.save
     else

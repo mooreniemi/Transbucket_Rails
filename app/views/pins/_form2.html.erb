@@ -36,7 +36,7 @@
       <div class="well form-control">
           <%= procedure_form.text_field :name, placeholder: "Name of procedure" %>
           <label>Type
-          <%= procedure_form.select :type, options_for_select([ "Top", "Bottom", "Face", "Other" ]) %>
+          <%= procedure_form.select :body_type, options_for_select([ "Top", "Bottom", "Face", "Other" ]) %>
         </label>
         <label>Gender
           <%= procedure_form.select :gender, options_for_select([ "FTM", "MTF" ]) %>

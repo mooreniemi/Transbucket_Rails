@@ -13,6 +13,7 @@ class PinCreatorService
     if @surgeon_attributes.present?
       @surgeon_attributes.delete('_destroy')
       @surgeon_attributes.delete('id')
+      @surgeon_attributes['last_name'] = sanitize_name(@surgeon_attributes['last_name'])
 
       surgeon = Surgeon.new(@surgeon_attributes)
       @params["surgeon_id"] = surgeon.id if surgeon.save
@@ -33,6 +34,17 @@ class PinCreatorService
     @params.delete("procedure_attributes")
 
     @user.pins.new(@params.symbolize_keys)
+  end
+
+  private
+
+  def sanitize_name(name)
+    name.gsub!(/(dr.|Dr.|dr|Dr|DR)/, '')
+    name = name.split(',').first
+    name.gsub!(/(MD$|md$|m.d.$|M.D.$)/, '')
+    name.gsub!(/^\s/, '')
+    name.gsub!(/\s$/, '')
+    name
   end
 
 end

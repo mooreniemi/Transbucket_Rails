@@ -1,14 +1,22 @@
 class Pin < ActiveRecord::Base
+  include ThinkingSphinx::Scopes
+  include Constants
+
   has_many :pin_images, :dependent => :destroy
   has_many :comments
 
-  attr_accessible :description, :pin_images, :pin_images_attributes, :surgeon, :cost, :revision, :details, :procedure, :username, :id, :created_at, :sensation, :satisfaction
+  belongs_to :surgeon
+  belongs_to :procedure
+
+  attr_accessible :surgeon_attributes, :procedure_attributes, :pin_images_attributes
+  attr_accessible :description, :pin_images, :surgeon_id, :cost, :revision, :details, :procedure_id, :username, :id, :created_at, :sensation, :satisfaction
 
   accepts_nested_attributes_for :pin_images, :reject_if => proc {|attributes| attributes.all? {|k,v| v.blank?} }
+  accepts_nested_attributes_for :surgeon, :reject_if => proc {|attributes| attributes.all? {|k,v| v.blank?} }
+  accepts_nested_attributes_for :procedure, :reject_if => proc {|attributes| attributes.all? {|k,v| v.blank?} }
 
-  validates :surgeon, presence: true
-  validates :procedure, presence: true
-  #validates :pin_images, presence: true
+  validates :surgeon_id, presence: true
+  validates :procedure_id, presence: true
   validates :user_id, presence: true
 
   belongs_to :user
@@ -17,27 +25,20 @@ class Pin < ActiveRecord::Base
   acts_as_votable
   acts_as_taggable_on :tags
 
-  FTM = ["phalloplasty", "periareolar mastectomy (keyhole)", "double incision without grafts", "double incision with grafts", "metoidioplasty", "t anchor double incision"]
-  MTF = ["vaginoplasty", "breast augmentation", "facial feminization surgery"]
-  TOP = ["breast augmentation", "periareolar mastectomy (keyhole)", "double incision without grafts", "double incision with grafts", "t anchor double incision"]
-  BOTTOM = ["vaginoplasty", "phalloplasty", "metoidioplasty"]
-  PROCEDURES = Pin.uniq.pluck(:procedure)
-  SURGEONS = Pin.uniq.pluck(:surgeon)
-
-  SCOPES = ["ftm", "mtf", "bottom", "top", "need_category"]
-
   scope :published, includes(:pin_images, :user).where(state: 'published')
   scope :pending, includes(:pin_images, :user).where(state: 'pending')
-  scope :mtf, where(["procedure in (?)", MTF])
-  scope :ftm, where(["procedure in (?)", FTM])
-  scope :top, where(["procedure in (?)", TOP])
-  scope :bottom, where(["procedure in (?)", BOTTOM])
+
+  scope :mtf, where(procedure_id: MTF.map(&:to_s))
+  scope :ftm, where(procedure_id: FTM.map(&:to_s))
+  scope :top, where(procedure_id: TOP.map(&:to_s))
+  scope :bottom, where(procedure_id: BOTTOM.map(&:to_s))
+
   scope :need_category, where(procedure: "other")
   scope :recent, lambda { published.order("created_at desc") }
-  scope :by_user, lambda {|user| where(user_id: user.id)}
-  scope :by_procedure, lambda {|procedure| where(procedure: procedure)}
-  scope :by_surgeon, lambda {|surgeon| where(surgeon: surgeon)}
 
+  scope :by_user, lambda {|user| where(user_id: user.id)}
+  scope :by_procedure, lambda {|procedure| where(procedure_id: Procedure.find_by_name(procedure).id)}
+  scope :by_surgeon, lambda {|surgeon| where(surgeon_id: Surgeon.find_by_last_name(surgeon.split(',').first).id)}
 
   def cover_image(safe_mode=false)
     images = self.pin_images.collect {|p| p if p.photo(:medium).present? }

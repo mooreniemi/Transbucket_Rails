@@ -1,5 +1,5 @@
 namespace :procedure do
-  desc "old users into new users"
+  desc "old procedures into new procedures"
   task :consolidate => :environment do
 
     #original list

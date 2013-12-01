@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131115020032) do
+ActiveRecord::Schema.define(:version => 20131126015839) do
 
   create_table "assets", :force => true do |t|
     t.string   "asset_file_name"
@@ -72,6 +72,26 @@ ActiveRecord::Schema.define(:version => 20131115020032) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "old_surgeons", :force => true do |t|
+    t.string "SurgeonName", :limit => 40,                   :null => false
+    t.string "Address",     :limit => 400
+    t.string "City",        :limit => 40
+    t.string "State",       :limit => 20
+    t.string "ZIP",         :limit => 5
+    t.string "Country",     :limit => 40,                   :null => false
+    t.string "Phone",       :limit => 20
+    t.string "Email",       :limit => 40
+    t.string "URL",         :limit => 80
+    t.string "Procedures",  :limit => 400
+    t.string "FTM-Bottom",  :limit => 1,   :default => "0", :null => false
+    t.string "FTM-Top",     :limit => 1,   :default => "0", :null => false
+    t.string "MTF-Bottom",  :limit => 1,   :default => "0", :null => false
+    t.string "MTF-Top",     :limit => 1,   :default => "0", :null => false
+    t.string "Facial",      :limit => 1,   :default => "0", :null => false
+    t.string "HairRemoval", :limit => 1,   :default => "0", :null => false
+    t.string "Notes",       :limit => 800
+  end
+
   create_table "old_users", :primary_key => "ID", :force => true do |t|
     t.string   "username",   :limit => 60
     t.string   "password",   :limit => 120
@@ -109,9 +129,9 @@ ActiveRecord::Schema.define(:version => 20131115020032) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.string   "procedure"
+    t.string   "procedure_id"
     t.boolean  "revision"
-    t.string   "surgeon"
+    t.string   "surgeon_id"
     t.text     "details"
     t.integer  "cost"
     t.string   "username"
@@ -128,6 +148,16 @@ ActiveRecord::Schema.define(:version => 20131115020032) do
     t.datetime "updated_at",                      :null => false
     t.boolean  "notification", :default => true
     t.boolean  "safe_mode",    :default => false
+  end
+
+  create_table "procedures", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.string   "type"
+    t.string   "gender"
+    t.integer  "avg_sensation"
+    t.integer  "avg_satisfaction"
   end
 
   create_table "results", :primary_key => "ID", :force => true do |t|
@@ -169,7 +199,8 @@ ActiveRecord::Schema.define(:version => 20131115020032) do
   add_index "settings", ["target_type", "target_id", "var"], :name => "index_settings_on_target_type_and_target_id_and_var", :unique => true
 
   create_table "surgeons", :force => true do |t|
-    t.string   "name"
+    t.string   "first_name"
+    t.string   "last_name"
     t.string   "address"
     t.string   "city"
     t.string   "state"
@@ -178,9 +209,10 @@ ActiveRecord::Schema.define(:version => 20131115020032) do
     t.integer  "phone"
     t.string   "email"
     t.string   "url"
-    t.string   "procedures"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.text     "procedure_list"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.text     "notes"
   end
 
   create_table "taggings", :force => true do |t|
@@ -198,6 +230,20 @@ ActiveRecord::Schema.define(:version => 20131115020032) do
 
   create_table "tags", :force => true do |t|
     t.string "name"
+  end
+
+  create_table "therapists", :id => false, :force => true do |t|
+    t.string "id",            :limit => 4,                      :null => false
+    t.string "therapistName", :limit => 40,                     :null => false
+    t.string "affiliation",   :limit => 100
+    t.string "address",       :limit => 80
+    t.string "city",          :limit => 80,                     :null => false
+    t.string "state",         :limit => 2,                      :null => false
+    t.string "Country",       :limit => 16,  :default => "USA", :null => false
+    t.string "phone",         :limit => 40
+    t.string "email",         :limit => 40
+    t.string "website",       :limit => 80
+    t.string "notes",         :limit => 800
   end
 
   create_table "users", :force => true do |t|

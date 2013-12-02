@@ -1,5 +1,5 @@
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
-<h2>News</h2>
+<h2><%= title 'Newsfeed' %></h2>
 <div class="center hero-unit">
 <%  rss = SimpleRSS.parse open('http://transbucket.tumblr.com/rss').read
 coder = HTMLEntities.new %>

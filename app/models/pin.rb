@@ -25,8 +25,8 @@ class Pin < ActiveRecord::Base
   acts_as_votable
   acts_as_taggable_on :tags
 
-  scope :published, includes(:pin_images, :user).where(state: 'published')
-  scope :pending, includes(:pin_images, :user).where(state: 'pending')
+  scope :published, includes(:pin_images, :user, :surgeon, :procedure).where(state: 'published')
+  scope :pending, includes(:pin_images, :user, :surgeon, :procedure).where(state: 'pending')
 
   scope :mtf, where(procedure_id: MTF.map(&:to_s))
   scope :ftm, where(procedure_id: FTM.map(&:to_s))

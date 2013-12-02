@@ -1,5 +1,5 @@
 <div class="span4">
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<h2><%= title 'Edit ' + resource_name.to_s.humanize + ' Profile' %></h2>
 
 <div class="well">
   <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>

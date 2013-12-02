@@ -176,6 +176,8 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    meta-tags (1.5.0)
+      actionpack
     meta_request (0.2.1)
       rack-contrib
       rails
@@ -353,6 +355,7 @@ DEPENDENCIES
   launchy
   ledermann-rails-settings
   letsrate
+  meta-tags
   meta_request (= 0.2.1)
   mocha
   mysql

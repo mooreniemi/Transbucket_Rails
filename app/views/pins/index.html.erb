@@ -1,37 +1,37 @@
 <% if user_signed_in? %>
-<% if params[:query].present? %>
-<h2>Search Result for <%= params[:query].titleize %></h2>
-<% end %>
+  <% if params[:query].present? %>
+    <h2><%= title 'Search Result for ' + params[:query].titleize %></h2>
+  <% end %>
 
-<div id="controls" class="row">
-  <div class="page_container" class="col-md-6" style="float:left;">
-    <%= will_paginate @presenter.all_pins unless @presenter.all_pins.nil? %>
-  </div>
-
-  <div id="form_container" class="col-md-6" style="float:left; position: relative;">
-    <%= form_tag pins_path, :method => 'get', :class => 'scope_dropdown', remote: true do %>
-      <%= select_tag :scope, grouped_options_for_select(@presenter.scopes), {multiple: true, size: 5} %>
-      <%= submit_tag "Filter", class: 'btn dropdown-toggle sr-only' %>
-    <% end %>
-  </div>
-</div>
-
-<br clear="both" />
-
-  <div id="pins" class="js-masonry" data-masonry-options='{ "columnWidth": 200, "itemSelector": ".box" }'>
-
-    <div id="pin_container">
-      <%= render @presenter.all_pins %>
+  <div id="controls" class="row">
+    <div class="page_container" class="col-md-6" style="float:left;">
+      <%= will_paginate @presenter.all_pins unless @presenter.all_pins.nil? %>
     </div>
 
+    <div id="form_container" class="col-md-6" style="float:left; position: relative;">
+      <%= form_tag pins_path, :method => 'get', :class => 'scope_dropdown', remote: true do %>
+        <%= select_tag :scope, grouped_options_for_select(@presenter.scopes), {multiple: true, size: 5} %>
+        <%= submit_tag "Filter", class: 'btn dropdown-toggle sr-only' %>
+      <% end %>
+    </div>
   </div>
 
-  <br>
   <br clear="both" />
+  <% title 'Recent Submissions' unless params[:query].present? %>
+    <div id="pins" class="js-masonry" data-masonry-options='{ "columnWidth": 200, "itemSelector": ".box" }'>
 
-  <div class="page_container" class="col-md-6">
-    <%= will_paginate @presenter.all_pins unless @presenter.all_pins.nil? %>
-  </div>
+      <div id="pin_container">
+        <%= render @presenter.all_pins %>
+      </div>
+
+    </div>
+
+    <br>
+    <br clear="both" />
+
+    <div class="page_container" class="col-md-6">
+      <%= will_paginate @presenter.all_pins unless @presenter.all_pins.nil? %>
+    </div>
 
 <% else %>
   <%= render 'pins/welcome' %>

@@ -5,6 +5,7 @@ class Pin < ActiveRecord::Base
   has_many :pin_images, :dependent => :destroy
   has_many :comments
 
+  belongs_to :user
   belongs_to :surgeon
   belongs_to :procedure
 
@@ -19,8 +20,6 @@ class Pin < ActiveRecord::Base
   validates :procedure_id, presence: true
   validates :user_id, presence: true
 
-  belongs_to :user
-
   acts_as_commentable
   acts_as_votable
   acts_as_taggable_on :tags
@@ -28,12 +27,12 @@ class Pin < ActiveRecord::Base
   scope :published, includes(:pin_images, :user, :surgeon, :procedure).where(state: 'published')
   scope :pending, includes(:pin_images, :user, :surgeon, :procedure).where(state: 'pending')
 
-  scope :mtf, where(procedure_id: MTF.map(&:to_s))
-  scope :ftm, where(procedure_id: FTM.map(&:to_s))
-  scope :top, where(procedure_id: TOP.map(&:to_s))
-  scope :bottom, where(procedure_id: BOTTOM.map(&:to_s))
+  scope :mtf, where(["procedure_id in (?)", Pin::MTF_IDS.map(&:to_s)])
+  scope :ftm, where(["procedure_id in (?)", Pin::FTM_IDS.map(&:to_s)])
+  scope :top, where(["procedure_id in (?)", Pin::TOP_IDS.map(&:to_s)])
+  scope :bottom, where(["procedure_id in (?)", Pin::BOTTOM_IDS.map(&:to_s)])
 
-  scope :need_category, where(procedure: "other")
+  scope :need_category, where(procedure_id: 911)
   scope :recent, lambda { published.order("created_at desc") }
 
   scope :by_user, lambda {|user| where(user_id: user.id)}

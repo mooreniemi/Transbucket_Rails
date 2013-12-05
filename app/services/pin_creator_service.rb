@@ -1,11 +1,11 @@
 #app/services/pin_creator_service.rb
 class PinCreatorService
-  attr_reader
+  attr_accessor :params, :surgeon_attributes, :procedure_attributes, :user
 
   def initialize(pin_params, user)
-    @params = pin_params
-    @surgeon_attributes = @params["surgeon_attributes"]
-    @procedure_attributes = @params["procedure_attributes"]
+    @params = ActiveSupport::HashWithIndifferentAccess.new(pin_params)
+    @surgeon_attributes = ActiveSupport::HashWithIndifferentAccess.new(@params["surgeon_attributes"])
+    @procedure_attributes = ActiveSupport::HashWithIndifferentAccess.new(@params["procedure_attributes"])
     @user = user
   end
 
@@ -18,7 +18,7 @@ class PinCreatorService
       surgeon = Surgeon.new(@surgeon_attributes)
       @params["surgeon_id"] = surgeon.id if surgeon.save
     else
-      @params["surgeon_id"] = Surgeon.find_by_last_name(@params["surgeon_id"].split(',').first).id
+      @params["surgeon_id"] = @params["surgeon_id"].respond_to?(:to_i) ? @params["surgeon_id"] : Surgeon.find_by_last_name(@params["surgeon_id"].split(',').first).id
     end
 
     if @procedure_attributes.present?
@@ -26,7 +26,7 @@ class PinCreatorService
       procedure = Procedure.new(@procedure_attributes)
       @params["procedure_id"] = procedure.id if procedure.save
     else
-      @params["procedure_id"] = Procedure.find_by_name(@params["procedure_id"]).id
+      @params["procedure_id"] = @params["procedure_id"].respond_to?(:to_i) ? @params["procedure_id"] : Procedure.find_by_name(@params["procedure_id"]).id
     end
 
     @params.delete("surgeon_attributes")

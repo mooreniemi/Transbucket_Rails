@@ -2,16 +2,17 @@
 
 FactoryGirl.define do
   factory :surgeon do
-    id 1
-    name "MyString"
-    address "MyString"
-    city "MyString"
-    state "MyString"
-    zip 1
-    country "MyString"
-    phone 1
-    email "MyString"
-    url "MyString"
-    procedures "MyString"
+    id { Faker::Number.number(3)}
+    first_name { Faker::Name.first_name }
+    last_name { Faker::Name.last_name }
+    address { Faker::Address.street_address }
+    city { Faker::Address.city }
+    state { Faker::Address.state }
+    zip { Faker::Address.zip_code }
+    country { Faker::Address.country }
+    phone { Faker::PhoneNumber.phone_number }
+    email { Faker::Internet.email }
+    url { Faker::Internet.url }
+    procedure_list { Faker::Lorem.words }
   end
 end

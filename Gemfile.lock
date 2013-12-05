@@ -94,6 +94,7 @@ GEM
     coffee-script-source (1.6.3)
     coolline (0.4.2)
     daemons (1.1.9)
+    database_cleaner (1.1.1)
     debug_inspector (0.0.2)
     delayed_job (4.0.0)
       activesupport (>= 3.0, < 4.1)
@@ -337,6 +338,7 @@ DEPENDENCIES
   bullet
   capybara
   coffee-rails (~> 3.2.1)
+  database_cleaner
   delayed_job_active_record
   devise
   devise-encryptable

@@ -1,5 +1,8 @@
 require 'spec_helper'
 
 describe Procedure do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'has gender' do
+    procedure = create(:procedure)
+    expect(procedure.gender).to_not be_nil
+  end
 end

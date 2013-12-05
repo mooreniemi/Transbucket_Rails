@@ -11,5 +11,5 @@ end
 private
 
 def expected_results
-  (Pin.uniq.pluck(:procedure) + Pin.uniq.pluck(:surgeon)).compact.reject(&:blank?).uniq.each{ |e| e.gsub!(/[\W]/, ' ') }
+  (Procedure.uniq.pluck(:name) + Surgeon.names)
 end

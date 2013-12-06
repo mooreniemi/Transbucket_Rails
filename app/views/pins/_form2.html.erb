@@ -1,4 +1,4 @@
-<!-- New form -->
+<!-- New edit & new form -->
 <%= nested_form_for @pin, :html => {:multipart => true} do |f| %>
   <% if @pin.errors.any? %>
     <div id="error_explanation">
@@ -16,16 +16,18 @@
     <%= f.label :surgeon, "Surgeon" %>
     <%= f.select :surgeon_id, options_for_select(Surgeon.names) %>
 
-      <%= f.fields_for :surgeon do |surgeon_form| %>
-        <div class="well form-control">
-          <%= surgeon_form.text_field :last_name, placeholder: "Surgeon's last name" %>
-          <%= surgeon_form.text_field :first_name, placeholder: "Surgeon's first name" %>
-          <%= surgeon_form.text_field :url, placeholder: "Surgeon's URL" %>
-          <br>
-          <%= surgeon_form.link_to_remove "Remove this surgeon" %>
-        </div>
-      <% end %>
-    <%= f.link_to_add "Add a surgeon", :surgeon %>
+     <% if f.object.new_record? %>
+       <%= f.fields_for :surgeon do |surgeon_form| %>
+          <div class="well form-control">
+            <%= surgeon_form.text_field :last_name, placeholder: "Surgeon's last name" %>
+            <%= surgeon_form.text_field :first_name, placeholder: "Surgeon's first name" %>
+            <%= surgeon_form.text_field :url, placeholder: "Surgeon's URL" %>
+            <br>
+            <%= surgeon_form.link_to_remove "Remove this surgeon" %>
+          </div>
+        <% end %>
+      <%= f.link_to_add "Add a surgeon", :surgeon %>
+    <% end %>
 
     <%= f.label :cost, "Cost" %>
     <%= f.text_field :cost %>
@@ -33,19 +35,21 @@
     <%= f.label :procedure, "Procedure" %>
     <%= f.select :procedure_id, options_for_select(Procedure.pluck(:name).uniq.sort) %>
 
-    <%= f.fields_for :procedure do |procedure_form| %>
-      <div class="well form-control">
-          <%= procedure_form.text_field :name, placeholder: "Name of procedure" %>
-          <label>Type
-          <%= procedure_form.select :body_type, options_for_select([ "Top", "Bottom", "Face", "Other" ]) %>
-        </label>
-        <label>Gender
-          <%= procedure_form.select :gender, options_for_select([ "FTM", "MTF" ]) %>
-        </label>
-        <%= procedure_form.link_to_remove "Remove this procedure" %>
-      </div>
+    <% if f.object.new_record? %>
+      <%= f.fields_for :procedure do |procedure_form| %>
+        <div class="well form-control">
+            <%= procedure_form.text_field :name, placeholder: "Name of procedure" %>
+            <label>Type
+            <%= procedure_form.select :body_type, options_for_select([ "Top", "Bottom", "Face", "Other" ]) %>
+          </label>
+          <label>Gender
+            <%= procedure_form.select :gender, options_for_select([ "FTM", "MTF" ]) %>
+          </label>
+          <%= procedure_form.link_to_remove "Remove this procedure" if f.object.new_record? %>
+        </div>
+      <% end %>
+      <%= f.link_to_add "Add a procedure", :procedure %>
     <% end %>
-    <%= f.link_to_add "Add a procedure", :procedure %>
 
 
     <%= f.label :sensation, "Post-op Sensation" %>
@@ -78,7 +82,7 @@
       <%= ff.file_field(:photo) %>
 
      <% else %>
-        <%= image_tag(photo.url(:thumb)) %>
+        <%= image_tag(ff.object.photo.url(:medium)) %>
         <%= ff.hidden_field :_destroy %>
         <%= ff.link_to_remove "X"%>
     <% end %>

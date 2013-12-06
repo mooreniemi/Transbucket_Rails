@@ -1,6 +1,5 @@
 class PinImagesController < ApplicationController
   def destroy
-    binding.pry
     @pin = Pin.find(params[:pin_id])
     @pin_image = PinImage.find(params[:id])
 

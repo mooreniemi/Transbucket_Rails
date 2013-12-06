@@ -6,11 +6,17 @@ class PinUpdaterService
     @params = ActiveSupport::HashWithIndifferentAccess.new(pin_params)
     @surgeon_attributes = ActiveSupport::HashWithIndifferentAccess.new(@params["surgeon_attributes"])
     @procedure_attributes = ActiveSupport::HashWithIndifferentAccess.new(@params["procedure_attributes"])
+    @pin_images_attributes = ActiveSupport::HashWithIndifferentAccess.new(@params["pin_images_attributes"])
     @pin = Pin.find(@params["pin_id"])
     @user = user
   end
 
   def update
+    if @pin_images_attributes.present?
+      @params["pin_images_attributes"] = @pin_images_attributes.reject {|k, v| !v.include?(:photo) }
+      @params["pin_images_attributes"].values.each {|p| p.delete("_destroy")}
+    end
+
     if @surgeon_attributes.present?
       @surgeon_attributes.delete('_destroy')
       @surgeon_attributes.delete('id')
@@ -34,7 +40,15 @@ class PinUpdaterService
     @params.delete("procedure_attributes")
     @params.delete("pin_id")
 
-    return true if @pin.update_attributes(@params.symbolize_keys)
+    pin_images = []
+    @params["pin_images_attributes"].each {|p| pin_images << PinImage.new(p.last) }
+    @pin.pin_images << pin_images
+
+    if pin_images.empty?
+      return true if @pin.update_attributes(@params.symbolize_keys)
+    else
+      return true if @pin.save && @pin.update_attributes(@params.symbolize_keys)
+    end
   end
 
   private

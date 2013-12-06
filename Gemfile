@@ -56,7 +56,7 @@ gem 'acts-as-taggable-on'
 gem 'newrelic_rpm'
 gem 'faker'
 gem 'pry-nav'
-gem 'pry-rails'
+gem 'pry-rails', :group => :development
 gem 'pry-coolline'
 gem 'awesome_print'
 gem 'letsrate'

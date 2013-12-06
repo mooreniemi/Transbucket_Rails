@@ -1,4 +1,4 @@
-<!-- Edit Form -->
+<!-- OLD Edit Form -->
 <%= nested_form_for @pin, :html => {:multipart => true} do |f| %>
   <% if @pin.errors.any? %>
     <div id="error_explanation">
@@ -43,14 +43,13 @@
   </div>
   <div class="span4">
       <%= f.fields_for :pin_images do |ff| %>
-        <%= ff.label :caption, "Image Caption" %>
-        <%= ff.text_field :caption %>
+        <label>Image Caption: <%= ff.text_field :caption %></label>
         <% unless ff.object.photo_file_size.nil? %>
           <%= image_tag ff.object.photo %>
           <%= ff.object.photo_file_name %>
         <% end %>
-        <%= ff.label :photo, "Image File" %>
-        <%= ff.file_field :photo %>
+        <label>Image File: <%= ff.file_field :photo %></label>
+        <hr class="style-two">
       <% end %>
   </div>
 </div>

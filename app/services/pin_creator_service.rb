@@ -18,7 +18,7 @@ class PinCreatorService
       surgeon = Surgeon.new(@surgeon_attributes)
       @params["surgeon_id"] = surgeon.id if surgeon.save
     else
-      @params["surgeon_id"] = @params["surgeon_id"].respond_to?(:to_i) ? @params["surgeon_id"] : Surgeon.find_by_last_name(@params["surgeon_id"].split(',').first).id
+      @params["surgeon_id"] = @params["surgeon_id"].to_i == 0 ? Surgeon.find_by_last_name(@params["surgeon_id"].split(',').first).id.to_s : @params["surgeon_id"]
     end
 
     if @procedure_attributes.present?
@@ -26,11 +26,12 @@ class PinCreatorService
       procedure = Procedure.new(@procedure_attributes)
       @params["procedure_id"] = procedure.id if procedure.save
     else
-      @params["procedure_id"] = @params["procedure_id"].respond_to?(:to_i) ? @params["procedure_id"] : Procedure.find_by_name(@params["procedure_id"]).id
+      @params["procedure_id"] = @params["procedure_id"].to_i == 0 ? Procedure.find_by_name(@params["procedure_id"]).id.to_s : @params["procedure_id"]
     end
 
     @params.delete("surgeon_attributes")
     @params.delete("procedure_attributes")
+    binding.pry
 
     @user.pins.new(@params.symbolize_keys)
   end

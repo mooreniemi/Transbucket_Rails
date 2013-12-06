@@ -12,9 +12,12 @@
     </div>
   <% end %>
 <div class="well span4">
-  <% surgeon_names = Surgeon.where("surgeons.last_name IS NOT NULL").pluck_all(:first_name, :last_name).collect! {|e| e["first_name"].nil? ? e["last_name"] : e["last_name"] + ', ' + e["first_name"] }.sort %>
     <%= f.label :surgeon, "Surgeon" %>
-    <%= f.select :surgeon_id, options_for_select(Surgeon.names) %>
+    <% if f.object.new_record? %>
+      <%= f.select :surgeon_id, options_for_select(Surgeon.names) %>
+    <% else %>
+      <%= f.select :surgeon_id, options_for_select(Surgeon.names, @pin.surgeon.to_s) %>
+    <% end %>
 
      <% if f.object.new_record? %>
        <%= f.fields_for :surgeon do |surgeon_form| %>
@@ -33,7 +36,11 @@
     <%= f.text_field :cost %>
 
     <%= f.label :procedure, "Procedure" %>
-    <%= f.select :procedure_id, options_for_select(Procedure.pluck(:name).uniq.sort) %>
+    <% if f.object.new_record? %>
+      <%= f.select :procedure_id, options_for_select(Procedure.all.map(&:name)) %>
+    <% else %>
+      <%= f.select :procedure_id, options_for_select(Procedure.all.map(&:name), @pin.procedure.name) %>
+    <% end %>
 
     <% if f.object.new_record? %>
       <%= f.fields_for :procedure do |procedure_form| %>
@@ -80,11 +87,19 @@
       <%= ff.label :caption, "Image Caption" %>
       <%= ff.text_field :caption %>
       <%= ff.file_field(:photo) %>
+      <%= ff.hidden_field :_destroy %>
+      <%= ff.link_to_remove "X"%>
 
      <% else %>
-        <%= image_tag(ff.object.photo.url(:medium)) %>
-        <%= ff.hidden_field :_destroy %>
-        <%= ff.link_to_remove "X"%>
+       <label>Image Caption: <%= ff.text_field :caption %></label>
+       <% unless ff.object.photo_file_size.nil? %>
+         <%= image_tag ff.object.photo %>
+         <%= ff.object.photo_file_name %>
+         <%= button_to('X', '/pins/' + @pin.id.to_s + '/pin_images/' + ff.object.id.to_s,
+                   method: "delete", remote: true, data: { confirm: 'Are you sure?', disable_with: 'loading...' }) %>
+       <% end %>
+       <label>Image File: <%= ff.file_field :photo %></label>
+       <hr class="style-two">
     <% end %>
   <% end %>
 <br>

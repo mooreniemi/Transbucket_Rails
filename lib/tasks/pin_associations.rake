@@ -21,7 +21,6 @@ namespace :pins do
     $ambiguous = []
 
     pins.each do |p|
-      #binding.pry
       surgeon = p.surgeon_id.downcase.split(',').first
       match_pool = []
 

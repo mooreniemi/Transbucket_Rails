@@ -6,7 +6,7 @@ class PinUpdaterService
     @params = ActiveSupport::HashWithIndifferentAccess.new(pin_params)
     @surgeon_attributes = ActiveSupport::HashWithIndifferentAccess.new(@params["surgeon_attributes"])
     @procedure_attributes = ActiveSupport::HashWithIndifferentAccess.new(@params["procedure_attributes"])
-    @pin = Pin.find(@params["id"])
+    @pin = Pin.find(@params["pin_id"])
     @user = user
   end
 
@@ -32,6 +32,7 @@ class PinUpdaterService
 
     @params.delete("surgeon_attributes")
     @params.delete("procedure_attributes")
+    @params.delete("pin_id")
 
     return true if @pin.update_attributes(@params.symbolize_keys)
   end

@@ -12,6 +12,7 @@
     </div>
   <% end %>
 <div class="well span4">
+    <% f.hidden_field :id %>
     <%= f.label :surgeon, "Surgeon" %>
     <% if f.object.new_record? %>
       <%= f.select :surgeon_id, options_for_select(Surgeon.names) %>
@@ -95,7 +96,7 @@
        <% unless ff.object.photo_file_size.nil? %>
          <%= image_tag ff.object.photo %>
          <%= ff.object.photo_file_name %>
-         <%= button_to('X', '/pins/' + @pin.id.to_s + '/pin_images/' + ff.object.id.to_s,
+         <%= link_to('X', '/pins/' + @pin.id.to_s + '/pin_images/' + ff.object.id.to_s,
                    method: "delete", remote: true, data: { confirm: 'Are you sure?', disable_with: 'loading...' }) %>
        <% end %>
        <label>Image File: <%= ff.file_field :photo %></label>

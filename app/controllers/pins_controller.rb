@@ -92,7 +92,7 @@ before_filter :authenticate_user!, except: [:index]
     @pin = Pin.find(params[:id])
 
     respond_to do |format|
-      if @pin.update_attributes(params[:pin])
+      if PinUpdaterService.new(params[:pin].merge({pin_id: params[:id]}), current_user).update
         format.html { redirect_to @pin, notice: 'Pin was successfully updated.' }
         format.json { head :no_content }
       else

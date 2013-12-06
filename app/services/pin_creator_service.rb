@@ -6,10 +6,16 @@ class PinCreatorService
     @params = ActiveSupport::HashWithIndifferentAccess.new(pin_params)
     @surgeon_attributes = ActiveSupport::HashWithIndifferentAccess.new(@params["surgeon_attributes"])
     @procedure_attributes = ActiveSupport::HashWithIndifferentAccess.new(@params["procedure_attributes"])
+    @pin_images_attributes = ActiveSupport::HashWithIndifferentAccess.new(@params["pin_images_attributes"])
     @user = user
   end
 
   def create
+    if @pin_images_attributes.present?
+      @params["pin_images_attributes"] = @pin_images_attributes.reject {|k, v| !v.include?(:photo) }
+      @params["pin_images_attributes"].values.each {|p| p.delete("_destroy")}
+    end
+
     if @surgeon_attributes.present?
       @surgeon_attributes.delete('_destroy')
       @surgeon_attributes.delete('id')
@@ -31,8 +37,14 @@ class PinCreatorService
 
     @params.delete("surgeon_attributes")
     @params.delete("procedure_attributes")
+    #@params.delete("pin_images_attributes")
 
-    @user.pins.new(@params.symbolize_keys)
+    @pin = @user.pins.new(@params.symbolize_keys)
+    pin_images = []
+    @params["pin_images_attributes"].each {|p| pin_images << PinImage.new(p.last) }
+    @pin.pin_images << pin_images
+
+    return @pin
   end
 
   private

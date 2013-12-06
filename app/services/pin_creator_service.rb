@@ -31,7 +31,6 @@ class PinCreatorService
 
     @params.delete("surgeon_attributes")
     @params.delete("procedure_attributes")
-    binding.pry
 
     @user.pins.new(@params.symbolize_keys)
   end

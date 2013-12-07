@@ -1,7 +1,6 @@
 <h2><%= title 'Newsfeed' %></h2>
 <div class="center">
-  <%  rss = SimpleRSS.parse open('http://transbucket.tumblr.com/rss').read
-  coder = HTMLEntities.new %>
+  <%  rss = SimpleRSS.parse open('http://transbucket.tumblr.com/rss').read; coder = HTMLEntities.new %>
     <% for e in rss.items do %>
       <div class="hero-unit">
         <h3><i class="icon-rss-sign"></i>
@@ -11,6 +10,5 @@
       <hr>
         <div class="fb-share-button" data-href="<%= e.link %>" data-type="button_count"></div>
       </div>
-      <% end %>
-    </div>
+    <% end %>
 </div>

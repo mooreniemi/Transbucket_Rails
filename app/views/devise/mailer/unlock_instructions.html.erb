@@ -4,4 +4,4 @@
 
 <p>Click the link below to unlock your account:</p>
 
-<p><%= link_to 'Unlock my account', unlock_url(@resource, :unlock_token => @resource.unlock_token, :utm_medium => 'email', :utm_source => 'devise', :utm_name => 'unlock') %></p>
+<p><%= link_to 'Unlock my account', unlock_url(@resource, :unlock_token => @resource.unlock_token, :utm_medium => 'email', :utm_source => 'devise', :utm_campaign => 'unlock') %></p>

@@ -1,14 +1,16 @@
-<link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
 <h2><%= title 'Newsfeed' %></h2>
-<div class="center hero-unit">
-<%  rss = SimpleRSS.parse open('http://transbucket.tumblr.com/rss').read
-coder = HTMLEntities.new %>
-<ul class="unstyled">
-<% for e in rss.items do %>
-<li><h3><i class="icon-rss-sign"></i> <%= link_to coder.decode("#{e.title}").html_safe, coder.decode("#{e.link}").html_safe %></h3>
-	<br>
-<%= coder.decode("#{e.description}").html_safe %>
-<hr></li>
-<% end %>
- </ul>
+<div class="center">
+  <%  rss = SimpleRSS.parse open('http://transbucket.tumblr.com/rss').read
+  coder = HTMLEntities.new %>
+    <% for e in rss.items do %>
+      <div class="hero-unit">
+        <h3><i class="icon-rss-sign"></i>
+          <%= link_to coder.decode("#{e.title}").html_safe, coder.decode("#{e.link}").html_safe %></h3>
+      	<br>
+        <%= coder.decode("#{e.description}").html_safe %>
+      <hr>
+        <div class="fb-share-button" data-href="<%= e.link %>" data-type="button_count"></div>
+      </div>
+      <% end %>
+    </div>
 </div>

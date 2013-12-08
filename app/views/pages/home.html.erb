@@ -9,6 +9,7 @@
         <%= coder.decode("#{e.description}").html_safe %>
       <hr>
         <div class="fb-share-button" data-href="<%= e.link %>" data-type="button_count"></div>
+        &nbsp; <a href="https://twitter.com/share" class="twitter-share-button" data-url="<%= e.link %>" data-via="transbucket" data-text="<%= e.title %>" data-hashtags="transgender">Tweet</a>
       </div>
     <% end %>
 </div>

@@ -21,4 +21,5 @@
 //= require jquery-star-rating
 //= require jquery.multiselect
 //= require jquery.multiselect.filter
+//= require jquery_nested_form
 //= require_tree .

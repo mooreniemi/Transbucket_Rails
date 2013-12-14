@@ -69,7 +69,7 @@ gem 'ledermann-rails-settings', :require => 'rails-settings'
 group :development, :local do
   gem 'bullet'
   gem 'quiet_assets'
-  gem 'meta_request','0.2.1'
+  gem 'meta_request','0.2.5'
   gem 'better_errors'
   gem 'binding_of_caller'
 end

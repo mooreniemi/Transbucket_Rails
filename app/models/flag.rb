@@ -6,7 +6,7 @@ class Flag
   end
 
   def flag_on
-    if @content.votes.down.size >= 2 && @content.published?
+    if @content.votes.down.size >= 2 #&& @content.published?
       @content.review!
       return {status: :removed}
     else

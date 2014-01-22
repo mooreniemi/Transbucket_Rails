@@ -48,6 +48,10 @@ class Comment < ActiveRecord::Base
     commentable_str.constantize.find(commentable_id)
   end
 
+  def flags
+    self.votes
+  end
+
   state_machine initial: :published do
     state :pending, value: "pending"
     state :published, value: "published"

@@ -3,7 +3,7 @@ class Pin < ActiveRecord::Base
   include Constants
 
   has_many :pin_images, :dependent => :destroy
-  has_many :comments
+  has_many :comments, :foreign_key => 'commentable_id', :class_name => "ActsAsVotable::Vote"
 
   belongs_to :user
   belongs_to :surgeon

@@ -1,3 +1,4 @@
+<% if comment.published? %>
   <div class="comment" id="<%=comment.id %>">
       <div class="well"><%= comment.body %><br>
       	<hr>
@@ -5,3 +6,4 @@
       	<% if comment.user_id == current_user.id %><%= link_to "×", comment_path(comment), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this comment?", :disable_with => "×", :class => 'close' %><% end %>       <%= link_to "<i class='icon-flag'></i>".html_safe, comment_flags_path(comment), :method => :post, remote: true %>
       </div>
   </div>
+<% end %>

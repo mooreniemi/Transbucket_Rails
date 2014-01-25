@@ -19,8 +19,8 @@ small_logo.png: small_logo-fdc485e12bdc57992a72803f14276159.png
 small_logo/index.png: small_logo-fdc485e12bdc57992a72803f14276159.png
 application.js: application-4285110817199f6b2160d7e2f84a84d7.js
 application/index.js: application-4285110817199f6b2160d7e2f84a84d7.js
-application.css: application-75bfc34a0e2ff8af207b967b5e6b79b9.css
-application/index.css: application-75bfc34a0e2ff8af207b967b5e6b79b9.css
+application.css: application-764b5d84421d8b91d47c8f8f32f11587.css
+application/index.css: application-764b5d84421d8b91d47c8f8f32f11587.css
 delete.gif: delete-1e844d7204cc8f7a557cfe2a7a78aced.gif
 delete/index.gif: delete-1e844d7204cc8f7a557cfe2a7a78aced.gif
 star.gif: star-31514b379b533309b6d1382150c2614f.gif

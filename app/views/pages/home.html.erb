@@ -1,12 +1,1 @@
-<h2><%= title 'Newsfeed' %></h2>
-<div class="center">
-  <%  rss = SimpleRSS.parse open('http://transbucket.tumblr.com/rss').read; coder = HTMLEntities.new %>
-    <% for e in rss.items do %>
-      <div class="hero-unit">
-        <h3><i class="icon-rss-sign"></i>
-          <%= link_to coder.decode("#{e.title}").html_safe, coder.decode("#{e.link}").html_safe %></h3>
-      	<br>
-        <%= coder.decode("#{e.description}").html_safe %>
-      </div>
-    <% end %>
-</div>
+<% unless user_signed_in? %><%= render 'pins/welcome' %> <% end %>

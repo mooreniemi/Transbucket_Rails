@@ -1,0 +1,13 @@
+<h2><%= title 'Newsfeed' %></h2>
+<div class="center">
+  <% for e in @rss.items do %>
+
+    <div class="rss_item">
+      <div class="lead">
+        <%= link_to @coder.decode("#{e.title}").html_safe, @coder.decode("#{e.link}").html_safe %></div>
+      <p><%= @coder.decode("#{e.description}").html_safe %></p>
+    </div>
+    <br>
+
+  <% end %>
+</div>

@@ -1,7 +1,7 @@
 <div class="span4">
 <h2><%= title 'Edit ' + resource_name.to_s.humanize + ' Profile' %></h2>
 
-<div class="well">
+<div class="profile_well">
   <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
     <%= f.error_notification %>
 
@@ -24,7 +24,7 @@
 
 <% Preference.new(user_id: resource.id) unless resource.preference.present? %>
 
-<div class="well">
+<div class="profile_well">
   <%= simple_form_for(resource.preference, :url => user_preferences_path(resource), :html => {:method => :put}) do |f| %>
     <%= f.input :safe_mode, :size => 10, :value => resource.preference.safe_mode %>
     <%= f.input :notification, :size => 10, :value => resource.preference.notification  %>
@@ -39,17 +39,19 @@
 
 <div class="span4">
 	<h2>Your Submissions</h2>
-	<div class="well">
+	<div class="profile_well">
 		<% if current_user.pins.length == 0 then %>
   		<%= link_to 'Submit Now +', new_pin_path %>
 		<% else %>
   		<% for pin in current_user.pins do %>
   				<%= link_to '<i class="fa fa-pencil-square-o"></i>'.html_safe, edit_pin_path(pin) %>
         | <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, pin, method: :delete, data: { confirm: 'Are you sure?' } %>
+        | submission #<%= pin.id %>
         <br>
       		<% for pin_image in pin.pin_images do %>
       		  <%= link_to (image_tag pin_image.photo), pin %><br>
       		<% end %>
+          <hr>
 		    <% end %>
 		<% end %>
 		</div>

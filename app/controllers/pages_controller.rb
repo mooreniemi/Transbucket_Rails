@@ -13,6 +13,11 @@ class PagesController < ApplicationController
   def privacy
   end
 
+  def newsfeed
+    @rss = SimpleRSS.parse open('http://transbucket.tumblr.com/rss').read
+    @coder = HTMLEntities.new
+  end
+
   def bookmarks
     respond_to do |format|
       format.html { render 'pages/bookmarks' }

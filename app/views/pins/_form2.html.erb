@@ -11,7 +11,7 @@
       </ul>
     </div>
   <% end %>
-<div class="well span4">
+<div class="submission_well span4">
     <% f.hidden_field :id %>
     <%= f.label :surgeon, "Surgeon" %>
     <% if f.object.new_record? %>
@@ -45,7 +45,7 @@
 
     <% if f.object.new_record? %>
       <%= f.fields_for :procedure do |procedure_form| %>
-        <div class="well form-control">
+        <div class="submission_well form-control">
             <%= procedure_form.text_field :name, placeholder: "Name of procedure" %>
             <label>Type
             <%= procedure_form.select :body_type, options_for_select([ "Top", "Bottom", "Face", "Other" ]) %>
@@ -80,7 +80,7 @@
     <br>
     <%= f.submit "Submit Now", :class => 'btn btn-primary' %>
 </div>
-<div class="well span4">
+<div class="submission_well span4">
   <p>We recommend listing images from "Before" to "After", top to bottom in the form.</p>
 
 <%= f.fields_for :pin_images do |ff| %>

@@ -1,5 +1,5 @@
 class PinsController < ApplicationController
-before_filter :authenticate_user!, except: [:index]
+before_filter :authenticate_user!
 
   # GET /pins
   # GET /pins.json
@@ -7,14 +7,12 @@ before_filter :authenticate_user!, except: [:index]
     @query = sanitize(params[:query]) if params[:query]
     @scope = params[:scope] if params[:scope]
 
-    if user_signed_in?
-      @presenter = PinPresenter.new(
-      :query => @query,
-      :scope => @scope,
-      :user => current_user,
-      :page => params[:page]
-      )
-    end
+    @presenter = PinPresenter.new(
+    :query => @query,
+    :scope => @scope,
+    :user => current_user,
+    :page => params[:page]
+    )
 
     respond_to do |format|
       format.html # index.html.erb

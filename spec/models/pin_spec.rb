@@ -14,7 +14,4 @@ describe Pin do
 	it "is invalid without a procedure" do
 		expect(build(:pin, procedure: nil)).to_not be_valid
 	end
-	#it "has valid pin_images" do
-	#	FactoryGirl.create(:pin).should_receive(:pin_images) #.and_return(true)
-	#end
 end

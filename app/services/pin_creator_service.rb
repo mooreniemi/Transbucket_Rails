@@ -41,7 +41,7 @@ class PinCreatorService
 
     @pin = @user.pins.new(@params.symbolize_keys)
     pin_images = []
-    @params["pin_images_attributes"].each {|p| pin_images << PinImage.new(p.last) }
+    @params["pin_images_attributes"].each {|p| pin_images << PinImage.new(p.last) } unless @params["pin_images_attributes"].nil?
     @pin.pin_images << pin_images
 
     return @pin

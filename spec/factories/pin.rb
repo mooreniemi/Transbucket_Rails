@@ -10,7 +10,7 @@ FactoryGirl.define do
     f.cost 3000
     f.sensation 2
     f.satisfaction 3
-		#f.pin_images {Pin.new.pin_images.new.photo = File.open(Rails.root.join("public", "system", "pin_images", "results", "2be1.jpg"))}
+    f.pin_images { create_list(:pin_image, 3)}
 	end
 
 	factory :invalid_pin do |f|

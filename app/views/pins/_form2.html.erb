@@ -96,7 +96,7 @@
          <% unless ff.object.photo_file_size.nil? %>
            <%= image_tag ff.object.photo %>
            <%= ff.object.photo_file_name %>
-           <%= link_to('X', pin_pin_image_path(pin, ff.object.id),
+           <%= link_to('X', pin_pin_image_path(@pin, ff.object.id),
                      method: "delete", remote: true, data: { confirm: 'Are you sure?', disable_with: 'loading...' }) %>
          <% end %>
          <label>Image File: <%= ff.file_field :photo %></label>

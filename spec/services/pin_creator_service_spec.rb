@@ -1,12 +1,13 @@
 require 'spec_helper'
 
-describe PinCreatorService, '#santize_name' do
+describe PinCreatorService, '#santize_last_name' do
   it "can sanitize a surgeon's name" do
-    service = PinCreatorService.new({},'user')
-    expect(service.send(:sanitize_name, 'dippy-dot, md')).to eq('dippy-dot')
-    expect(service.send(:sanitize_name, 'Dr. dippy-dot, MD')).to eq('dippy-dot')
-    expect(service.send(:sanitize_name, 'dippy-dot md')).to eq('dippy-dot')
-    expect(service.send(:sanitize_name, 'dr dippy-dot m.d.')).to eq('dippy-dot')
+    attrs = attributes_for(:surgeon)
+    attrs[:last_name] = "dippy-dot M.D."
+    user = create(:user)
+    service = PinCreatorService.new({surgeon_attributes: attrs, procedure_attributes: attributes_for(:procedure)},user)
+    pin = service.create
+    expect(pin.surgeon.last_name).to eq('dippy-dot')
   end
 end
 

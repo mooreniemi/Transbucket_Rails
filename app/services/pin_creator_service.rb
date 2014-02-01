@@ -18,6 +18,7 @@ class PinCreatorService
     if pin_images_attributes.present?
       params["pin_images_attributes"] = pin_images_attributes.reject {|k, v| !v.include?(:photo) }
       params["pin_images_attributes"].values.each {|p| p.delete("_destroy")}
+      params["pin_images_attributes"].each {|p| pin_images << PinImage.new(p.last) }
     end
 
     if surgeon_attributes.present?
@@ -34,11 +35,10 @@ class PinCreatorService
 
     params.delete("surgeon_attributes")
     params.delete("procedure_attributes")
-    #params.delete("pin_images_attributes")
+    params.delete("pin_images_attributes")
 
     pin = user.pins.new(params.symbolize_keys)
 
-    params["pin_images_attributes"].each {|p| pin_images << PinImage.new(p.last) } unless params["pin_images_attributes"].nil?
     pin.pin_images << pin_images
 
     return pin

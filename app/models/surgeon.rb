@@ -1,4 +1,5 @@
 class Surgeon < ActiveRecord::Base
+  include SanitizeNames
   has_many :pins
   has_many :skills
   has_many :procedures, through: :skills

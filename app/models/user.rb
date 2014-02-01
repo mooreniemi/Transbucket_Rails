@@ -36,7 +36,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  #TODO figure out what is actually going on here
   def legacy_password_hash=(password)
     self.md5
   end

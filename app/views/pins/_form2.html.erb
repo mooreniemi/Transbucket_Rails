@@ -11,7 +11,7 @@
       </ul>
     </div>
   <% end %>
-<div class="submission_well span4">
+  <div class="submission_well span4">
     <% f.hidden_field :id %>
     <%= f.label :surgeon, "Surgeon" %>
     <% if f.object.new_record? %>
@@ -72,40 +72,40 @@
     <br>
 
     <label class="checkbox">
-    <%= f.check_box :revision %>
+      <%= f.check_box :revision %>
     Seeking a revision</label>
 
-    <%= f.label :details, "Details" %>
-    <%= f.text_area :details, :cols => "10", :rows => "10" %>
+      <%= f.label :details, "Details" %>
+      <%= f.text_area :details, :cols => "10", :rows => "10" %>
     <br>
-    <%= f.submit "Submit Now", :class => 'btn btn-primary' %>
-</div>
-<div class="submission_well span4">
-  <p>We recommend listing images from "Before" to "After", top to bottom in the form.</p>
+      <%= f.submit "Submit Now", :class => 'btn btn-primary' %>
+    </div>
+  <div class="submission_well span4">
+    <p>We recommend listing images from "Before" to "After", top to bottom in the form.</p>
 
-<%= f.fields_for :pin_images do |ff| %>
-    <% if ff.object.new_record? %>
-      <%= ff.label :caption, "Image Caption" %>
-      <%= ff.text_field :caption %>
-      <%= ff.file_field(:photo) %>
-      <%= ff.hidden_field :_destroy %>
-      <%= ff.link_to_remove "X"%>
+  <%= f.fields_for :pin_images do |ff| %>
+      <% if ff.object.new_record? %>
+        <%= ff.label :caption, "Image Caption" %>
+        <%= ff.text_field :caption %>
+        <%= ff.file_field(:photo) %>
+        <%= ff.hidden_field :_destroy %>
+        <%= ff.link_to_remove "X"%>
 
-     <% else %>
-       <label>Image Caption: <%= ff.text_field :caption %></label>
-       <% unless ff.object.photo_file_size.nil? %>
-         <%= image_tag ff.object.photo %>
-         <%= ff.object.photo_file_name %>
-         <%= link_to('X', '/pins/' + @pin.id.to_s + '/pin_images/' + ff.object.id.to_s,
-                   method: "delete", remote: true, data: { confirm: 'Are you sure?', disable_with: 'loading...' }) %>
-       <% end %>
-       <label>Image File: <%= ff.file_field :photo %></label>
-       <hr class="style-two">
+       <% else %>
+         <label>Image Caption: <%= ff.text_field :caption %></label>
+         <% unless ff.object.photo_file_size.nil? %>
+           <%= image_tag ff.object.photo %>
+           <%= ff.object.photo_file_name %>
+           <%= link_to('X', pin_pin_image_path(pin, ff.object.id),
+                     method: "delete", remote: true, data: { confirm: 'Are you sure?', disable_with: 'loading...' }) %>
+         <% end %>
+         <label>Image File: <%= ff.file_field :photo %></label>
+         <hr class="style-two">
+      <% end %>
     <% end %>
-  <% end %>
-<br>
-    <p><%= f.link_to_add "Add another photo", :pin_images, :class => 'btn btn-success' %></p>
-  <% end %>
-</div><br clear="both">
+  <br>
+      <p><%= f.link_to_add "Add another photo", :pin_images, :class => 'btn btn-success' %></p>
+    <% end %>
+  </div><br clear="both">
 
 <%= render 'pins/surgeon_complete' %>

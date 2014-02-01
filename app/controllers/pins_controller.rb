@@ -8,11 +8,11 @@ before_filter :authenticate_user!
     @scope = params[:scope] if params[:scope]
 
     @presenter = PinPresenter.new(
-    :query => @query,
-    :scope => @scope,
-    :user => current_user,
-    :page => params[:page]
-    )
+                                  :query => @query,
+                                  :scope => @scope,
+                                  :user => current_user,
+                                  :page => params[:page]
+                                  )
 
     respond_to do |format|
       format.html # index.html.erb
@@ -74,6 +74,7 @@ before_filter :authenticate_user!
     @pin = PinCreatorService.new(params[:pin], current_user).create
 
     respond_to do |format|
+
       if @pin.save
         format.html { redirect_to @pin, notice: 'Pin was successfully created.' }
         format.json { render json: @pin, status: :created, location: @pin }

@@ -15,8 +15,6 @@ describe PinCreatorService, '#create' do
 
   it "can create a new pin" do
     user = create(:user)
-    surgeon = create(:surgeon)
-    procedure = create(:procedure)
     pin_params = attributes_for(:pin)
 
     service = PinCreatorService.new(pin_params, user)

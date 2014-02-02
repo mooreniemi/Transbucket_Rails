@@ -53,7 +53,7 @@
           <label>Gender
             <%= procedure_form.select :gender, options_for_select([ "FTM", "MTF" ]) %>
           </label>
-          <%= procedure_form.link_to_remove "Remove this procedure" if f.object.new_record? %>
+          <%= procedure_form.link_to_remove "Remove this procedure" %>
         </div>
       <% end %>
       <%= f.link_to_add "Add a procedure", :procedure %>
@@ -83,13 +83,17 @@
   <div class="submission_well span4">
     <p>We recommend listing images from "Before" to "After", top to bottom in the form.</p>
       <%= f.fields_for :pin_images do |ff| %>
-        <%= ff.label :caption, "Image Caption" %>
-        <%= ff.text_field :caption %>
-        <% if ff.object.persisted? %><label>Image File: <%= image_tag ff.object.photo %></label><% end %>
-        <%= ff.file_field(:photo) %>
-        <%= ff.hidden_field :_destroy %>
-        <%= ff.link_to_remove "X"%>
-        <hr class="style-two">
+        <div id='<%= ff.object.id %>'>
+          <%= ff.label :caption, "Image Caption" %>
+          <%= ff.text_field :caption %>
+          <% if ff.object.persisted? %><label>Image File: <%= image_tag ff.object.photo %></label><% end %>
+          <%= ff.file_field(:photo) %>
+          <%= ff.hidden_field :_destroy %>
+          <% if ff.object.persisted? %><%= link_to('X', pin_pin_image_path(@pin, ff.object.id),
+                    method: "delete", remote: true, data: { confirm: 'Are you sure?', disable_with: 'deleting...' }) %><% end %>
+          <%#= ff.link_to_remove "X"%>
+          <hr class="style-two">
+        </div>
       <% end %>
       <br>
       <p><%= f.link_to_add "Add another photo", :pin_images, :class => 'btn btn-success' %></p>

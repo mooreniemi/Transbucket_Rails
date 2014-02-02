@@ -41,6 +41,8 @@ class PinCreatorService
   end
 
   def check_surgeon_attrs
+    return if surgeon_attributes['last_name'].empty?
+
     surgeon_attributes.delete('_destroy')
     surgeon_attributes.delete('id')
     surgeon_attributes['last_name'] = surgeon_attributes.sanitize_last_name

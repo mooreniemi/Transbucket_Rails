@@ -41,7 +41,7 @@ class PinCreatorService
   end
 
   def check_surgeon_attrs
-    return if surgeon_attributes['last_name'].empty?
+    return if surgeon_attributes.stringify_keys!['last_name'].nil?
 
     surgeon_attributes.delete('_destroy')
     surgeon_attributes.delete('id')

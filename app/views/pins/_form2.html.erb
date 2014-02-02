@@ -15,9 +15,9 @@
     <% f.hidden_field :id %>
     <%= f.label :surgeon, "Surgeon" %>
     <% if f.object.new_record? %>
-      <%= f.select :surgeon_id, options_for_select(Surgeon.names) %>
+      <%= f.select :surgeon_id, options_from_collection_for_select(Surgeon.all.sort, 'id', 'to_s') %>
     <% else %>
-      <%= f.select :surgeon_id, options_for_select(Surgeon.names, @pin.surgeon.to_s) %>
+      <%= f.select :surgeon_id, options_from_collection_for_select(Surgeon.all.sort, 'id', 'to_s', @pin.surgeon.id) %>
     <% end %>
 
      <% if f.object.new_record? %>
@@ -38,9 +38,9 @@
 
     <%= f.label :procedure, "Procedure" %>
     <% if f.object.new_record? %>
-      <%= f.select :procedure_id, options_for_select(Procedure.all.map(&:name)) %>
+      <%= f.select :procedure_id,  options_from_collection_for_select(Procedure.all.sort, 'id', 'to_s') %>
     <% else %>
-      <%= f.select :procedure_id, options_for_select(Procedure.all.map(&:name), @pin.procedure.name) %>
+      <%= f.select :procedure_id, options_from_collection_for_select(Procedure.all.sort, 'id', 'to_s', @pin.procedure.id) %>
     <% end %>
 
     <% if f.object.new_record? %>

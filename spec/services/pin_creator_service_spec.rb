@@ -5,7 +5,11 @@ describe PinCreatorService, '#santize_last_name' do
     attrs = attributes_for(:surgeon)
     attrs[:last_name] = "dippy-dot M.D."
     user = create(:user)
-    service = PinCreatorService.new({surgeon_attributes: attrs, procedure_attributes: attributes_for(:procedure)},user)
+    params = {
+      surgeon_attributes: attrs,
+      procedure_attributes: attributes_for(:procedure)
+    }
+    service = PinCreatorService.new(params,user)
     pin = service.create
     expect(pin.surgeon.last_name).to eq('dippy-dot')
   end

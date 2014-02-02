@@ -15,7 +15,7 @@
     <% f.hidden_field :id %>
     <%= f.label :surgeon, "Surgeon" %>
     <% if f.object.surgeon.nil? %>
-      <%= f.select :surgeon_id, options_from_collection_for_select(Surgeon.order('last_name ASC'), 'id', 'to_s') %>
+      <%= f.select :surgeon_id, options_from_collection_for_select(Surgeon.order('last_name ASC'), 'id', 'to_s', 911) %>
     <% else %>
       <%= f.select :surgeon_id, options_from_collection_for_select(Surgeon.order('last_name ASC'), 'id', 'to_s', @pin.surgeon.id) %>
     <% end %>
@@ -91,7 +91,7 @@
           <%= ff.hidden_field :_destroy %>
           <% if ff.object.persisted? %><%= link_to('X', pin_pin_image_path(@pin, ff.object.id),
                     method: "delete", remote: true, data: { confirm: 'Are you sure?', disable_with: 'deleting...' }) %><% end %>
-          <%#= ff.link_to_remove "X"%>
+          <% if ff.object.new_record? %><%= ff.link_to_remove "X"%><% end %>
           <hr class="style-two">
         </div>
       <% end %>

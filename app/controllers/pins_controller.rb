@@ -109,7 +109,7 @@ before_filter :authenticate_user!
 
     respond_to do |format|
       format.html { redirect_to pins_url }
-      format.json { head :no_content }
+      format.json { head :ok }
     end
   end
 

@@ -5,10 +5,8 @@ class PinImagesController < ApplicationController
 
     respond_to do |format|
       if @pin_image.destroy
-        #format.html { redirect_to :back, notice: 'Pin was successfully updated.' }
-        format.json { head :no_content }
+        format.js
       else
-        #format.html { redirect_to :back }
         format.json { render json: @pin.errors, status: :unprocessable_entity }
       end
     end

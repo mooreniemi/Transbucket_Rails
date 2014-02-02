@@ -38,7 +38,7 @@
 
     <%= f.label :procedure, "Procedure" %>
     <% if f.object.new_record? %>
-      <%= f.select :procedure_id,  options_from_collection_for_select(Procedure.all.sort, 'id', 'to_s') %>
+      <%= f.select :procedure_id, options_from_collection_for_select(Procedure.all.sort, 'id', 'to_s') %>
     <% else %>
       <%= f.select :procedure_id, options_from_collection_for_select(Procedure.all.sort, 'id', 'to_s', @pin.procedure.id) %>
     <% end %>

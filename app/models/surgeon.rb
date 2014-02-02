@@ -11,6 +11,9 @@ class Surgeon < ActiveRecord::Base
   end
 
   def self.names
-   self.where("surgeons.last_name IS NOT NULL").pluck_all(:first_name, :last_name).collect! {|e| e["first_name"].nil? ? e["last_name"] : e["last_name"] + ', ' + e["first_name"] }.sort
+   self.where("surgeons.last_name IS NOT NULL")
+   .pluck_all(:first_name, :last_name)
+   .collect! {|e| e["first_name"].nil? ? e["last_name"] : e["last_name"] + ', ' + e["first_name"] }
+   .sort
   end
 end

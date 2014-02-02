@@ -1,22 +1,21 @@
-<h2><%= title 'New Registration' %></h2>
+<% title 'New Registration' %>
 
-<div class="login_well span6">
-<h3>Transbucket.com will never sell, rent, or lease your information.</h3>
-<%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), html: { class: 'form-horizontal'}) do |f| %>
-  <%= f.error_notification %>
-
-
-<%= f.input :name %>
-<%= f.input :username %>
-<%= f.input :email %>
-<%= f.input :password %>
-<%= f.input :password_confirmation %>
-<%= f.label :gender %>
-<%= f.select :gender, options_for_select([['None', 1], ['MTF', 2], ['FTM', 3], ['GenderQueer', 4], ['Cisgender', 5]]), {}, {:multiple => true, :class => "gender" } %>
-<br>
-<br>
-<%= f.submit "Submit", class: "btn btn-primary btn-large" %>
-<% end %>
+<div class="top-block span5 center"><center><h1><i class="fa fa-lock"></i></h1></center></div>
+<div class="login_well span5 center">
+  <p><small>Transbucket.com will <b>never</b> sell, rent, or lease your information.</small></p>
+  <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), html: { class: 'form-horizontal'}) do |f| %>
+    <%= f.error_notification %>
+    <%= f.input :name %>
+    <%= f.input :username %>
+    <%= f.input :email %>
+    <%= f.input :password %>
+    <%= f.input :password_confirmation %>
+    <%= f.label :gender %>
+    <%= f.select :gender, options_for_select([['None', 1], ['MTF', 2], ['FTM', 3], ['GenderQueer', 4], ['Cisgender', 5]]), {}, {:multiple => true, :class => "gender" } %>
+    <br>
+    <br>
+    <%= f.submit "Submit", class: "btn btn-primary btn-large pull-right" %>
+    <%= render "devise/shared/links" %>
+  <% end %>
+  <br clear="both">
 </div>
-<br clear="both">
-<%= render "devise/shared/links" %>

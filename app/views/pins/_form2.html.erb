@@ -1,17 +1,21 @@
 <!-- New edit & new form -->
 <div class='container center'>
 <%= nested_form_for @pin, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
+
   <% if @pin.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@pin.errors.count, "error") %> prohibited this pin from being saved:</h2>
-
       <ul>
-      <% @pin.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+        <% @pin.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
+
+  <div class="top-block span5"><center><i class="fa fa-pencil"></i></center></div>
+  <div class="top-block span5"><center><i class="fa fa-camera"></i></center></div>
+
   <div class="submission_well span5 control-group">
     <% f.hidden_field :id %>
 
@@ -20,9 +24,10 @@
       <div class="controls">
         <% if f.object.surgeon.nil? %>
           <%= f.select :surgeon_id, options_from_collection_for_select(Surgeon.order('last_name ASC'), 'id', 'to_s', 911) %>
+          <%= f.link_to_add '<i class="fa fa-plus-circle"></i>'.html_safe, :surgeon %>
         <% else %>
           <%= f.select :surgeon_id, options_from_collection_for_select(Surgeon.order('last_name ASC'), 'id', 'to_s', @pin.surgeon.id) %>
-        <% end %> <%= f.link_to_add '<i class="fa fa-plus-circle"></i>'.html_safe, :surgeon %>
+        <% end %>
       </div>
     </div>
 
@@ -43,9 +48,10 @@
       <div class="controls">
         <% if f.object.procedure.nil? %>
           <%= f.select :procedure_id, options_from_collection_for_select(Procedure.all.sort, 'id', 'to_s') %>
+          <%= f.link_to_add '<i class="fa fa-plus-circle"></i>'.html_safe, :procedure %>
         <% else %>
           <%= f.select :procedure_id, options_from_collection_for_select(Procedure.all.sort, 'id', 'to_s', @pin.procedure.id) %>
-        <% end %>  <%= f.link_to_add '<i class="fa fa-plus-circle"></i>'.html_safe, :procedure %>
+        <% end %>
       </div>
     </div>
 
@@ -86,7 +92,7 @@
         <% end %>
       </div>
     </div>
-    <div class="">
+
       <div class="control-group">
         <label class="checkbox control-label">Seeking a revision</label>
         <div class="controls">
@@ -98,30 +104,55 @@
       <label class="control-label">Details</label>
       <div class="controls">
         <%= f.text_area :details, :cols => "200", :rows => "10" %>
-        <%= f.submit "Submit Now", :class => 'btn btn-primary' %>
       </div>
     </div>
+
+    <div class="form-actions">
+      <%= f.submit "Submit Now", :class => 'btn btn-primary' %>
     </div>
   </div>
-  <div class="submission_well span4">
+  <div class="submission_well span5">
     <p>We recommend listing images from "Before" to "After", top to bottom in the form.</p>
+    <% count = -1 %>
       <%= f.fields_for :pin_images do |ff| %>
-        <div id='<%= ff.object.id %>'>
-          <%= ff.label :caption, "Image Caption" %>
-          <%= ff.text_field :caption %>
-          <% if ff.object.persisted? %><label>Image File: <%= image_tag ff.object.photo %></label><% end %>
-          <%= ff.file_field(:photo) %>
+        <div id='<%= ff.object.id %>' class='well'>
+          <% count += 1 %>
+          <div class="control-group">
+            <label class="control-label">Caption</label>
+            <div class="controls">
+              <%= ff.text_field :caption %>
+            </div>
+          </div>
+
+          <% if ff.object.persisted? %>
+            <label>Image File: <%= image_tag ff.object.photo %></label>
+            <%= link_to('<i class="fa fa-trash-o"></i>'.html_safe, pin_pin_image_path(@pin, ff.object.id), method: "delete", remote: true, data: { confirm: 'Are you sure?', disable_with: 'deleting...' }) %>
+          <% else %>
+            <%= ff.link_to_remove '<i class="fa fa-trash-o"></i>'.html_safe %>
+          <% end %>
+
+          <div class="input-append pull-right">
+            <input id="photoCover<%= count %>" class="input-large" type="text">
+            <a class="btn" onclick="$('input[id=pin_pin_images_attributes_<%= count %>_photo]').click();">Browse</a>
+          </div>
+          <%= ff.file_field(:photo, accept:'image/png,image/jpg,image/jpeg', class: 'hidden') %>
+
           <%= ff.hidden_field :_destroy %>
-          <% if ff.object.persisted? %><%= link_to('X', pin_pin_image_path(@pin, ff.object.id),
-                    method: "delete", remote: true, data: { confirm: 'Are you sure?', disable_with: 'deleting...' }) %><% end %>
-          <% if ff.object.new_record? %><%= ff.link_to_remove "X"%><% end %>
-          <hr class="style-two">
+          <br clear="both">
         </div>
+
+        <script type="text/javascript">
+          $('input[id=pin_pin_images_attributes_<%= count %>_photo]').change(function() {
+          $('#photoCover<%= count %>').val($(this).val());
+          });
+        </script>
+
       <% end %>
-      <br>
-      <p><%= f.link_to_add "Add another photo", :pin_images, :class => 'btn btn-success' %></p>
+      <div class="form-actions">
+        <%= f.link_to_add "Add another photo", :pin_images, :class => 'btn btn-success' %>
+      </div>
     <% end %>
-  </div><br clear="both">
+  </div>
 </div>
 
 <%= render 'pins/surgeon_complete' %>

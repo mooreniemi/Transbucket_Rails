@@ -1,6 +1,6 @@
 module SanitizeNames
   def sanitize_last_name
-    name = self[:last_name] || self.last_name
+    name = self[:last_name] || self['last_name'] || self.last_name
     name.gsub!(/(dr.|Dr.|dr|Dr|DR)/, '')
     name.split(',').first
     name.gsub!(/(MD$|md$|m.d.$|M.D.$)/, '')

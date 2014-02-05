@@ -63,6 +63,8 @@ gem 'letsrate'
 gem 'jquery-star-rating-rails'
 gem 'jquery-multiselect-rails', :git => 'git://github.com/arojoal/jquery-multiselect-rails.git'
 gem 'rack-block'
+gem "rails-backbone"
+gem 'underscore-rails'
 
 gem 'ledermann-rails-settings', :require => 'rails-settings'
 
@@ -72,6 +74,9 @@ group :development, :local do
   gem 'meta_request','0.2.5'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'jasmine'
+  gem 'guard'
+  gem 'guard-jasmine'
 end
 
 group :test do
@@ -83,6 +88,8 @@ group :test do
   gem 'guard-rspec'
   gem 'launchy'
   gem 'mocha'
+  gem 'jasmine'
+  gem 'guard-jasmine'
 end
 
 #gem 'activerecord-mysql2-adapter'

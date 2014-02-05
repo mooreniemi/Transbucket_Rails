@@ -1,0 +1,1 @@
+Transbucket.Models.Pin = Backbone.Model.extend({});

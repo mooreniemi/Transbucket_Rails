@@ -15,36 +15,43 @@
 		</div>
 </div>
 <div class="span4">
-	<ul class="unstyled">
-    <li><i class="fa fa-user-md"></i> <b>Surgeon:</b>
-      <%= @pin.surgeon.id == 911 ? 'unknown' : 'Dr. ' + @pin.surgeon.to_s %></li>
-    <li><i class="fa fa-plus-square"></i> <b>Procedure:</b>
-      <%= @pin.procedure.name %></li>
-    <li><i class="fa fa-usd"></i> <b>Cost:</b>
-      <%= number_with_delimiter(@pin.cost) %></li>
-    <li><i class="fa fa-exclamation-circle"></i> <b>Want revision?</b>
-    	<%= @pin.revision %></li>
-      <% if @pin.sensation.present? %>
-    <li><b>Post-op Sensation</b>
-      <% 5.times do |i| %>
-        <%= radio_button(:pin, :sensation, i, {class: "star", disabled: "disabled"}) %>
-      <% end %>
-    </li>
-    <br>
-    <% end %>
-    <% if @pin.satisfaction.present? %>
-    <li><b>Post-op Satisfaction</b>
-      <% 5.times do |i| %>
-        <%= radio_button(:pin, :satisfaction, i, {class: "star", disabled: "disabled"}) %>
-      <% end %>
-    </li>
-    <br>
-    <% end %>
-    <li><i class="fa fa-quote-left"></i> <b>Description:</b></li>
-    <li style="background-color:#fff; padding:10px;"><%= @pin.details %></li>
-   </ul>
+	<dl class="dl-horizontal">
+    <dt><i class="fa fa-user-md"></i> Surgeon</dt>
+    <dd><%= @pin.surgeon.id == 911 ? 'unknown' : 'Dr. ' + @pin.surgeon.to_s %></dd>
 
-<% if @pin.user.present? %><small><b>Submitter:</b> <%= link_to @pin.user.username.presence || @pin.user.id, by_path(by_user: @pin.user) %></small><% end %>
+    <dt><i class="fa fa-plus-square"></i> Procedure</dt>
+    <dd><%= @pin.procedure.name %></dd>
+
+    <dt><i class="fa fa-usd"></i> Cost</dt>
+    <dd><%= number_with_delimiter(@pin.cost) %></dd>
+
+    <dt><i class="fa fa-exclamation-circle"></i> Want revision?</dt>
+    <dd><%= @pin.revision %></dd>
+
+    <% if @pin.sensation.present? %>
+      <dt>Post-op Sensation</dt>
+        <dd>
+          <% 5.times do |i| %>
+            <%= radio_button(:pin, :sensation, i, {class: "star", disabled: "disabled"}) %>
+          <% end %>
+        </dd>
+      <br>
+    <% end %>
+
+    <% if @pin.satisfaction.present? %>
+      <dt>Post-op Satisfaction</dt>
+      <dd><% 5.times do |i| %>
+          <%= radio_button(:pin, :satisfaction, i, {class: "star", disabled: "disabled"}) %>
+        <% end %>
+      </dd>
+      <br>
+    <% end %>
+
+    <dt><i class="fa fa-quote-left"></i> Description</dt>
+    <dd style="background-color:#fff; padding:10px;"><%= @pin.details %></dd>
+   </dl>
+
+<% if @pin.user.present? %><small class="pull-right">Submitter: <strong><%= link_to @pin.user.username.presence || @pin.user.id, by_path(by_user: @pin.user) %></small></strong><% end %>
 </div>
 
 <br clear="both" />

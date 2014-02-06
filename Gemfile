@@ -17,6 +17,7 @@ gem "aws-s3"
 gem 'figaro'
 gem 'delayed_job_active_record'
 gem 'meta-tags', :require => 'meta_tags'
+gem 'tinymce-rails'
 
 
 # Gems used only for assets and not required

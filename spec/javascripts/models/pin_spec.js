@@ -8,3 +8,19 @@ describe('Transbucket.Models.Pin', function() {
         expect(pin).not.toBeNull();
     });
 });
+
+describe('Transbucket.Models.Pin', function() {
+    beforeEach(function() {
+        this.task = new Transbucket.Models.Pin();
+    });
+
+    describe('new instance default values', function() {
+        it('has default value for the .name attribute', function() {
+            expect(this.task.get('name')).toEqual('');
+        });
+
+        it('has default value for the .complete attribute', function() {
+            expect(this.task.get('complete')).toBeFalsy();
+        });
+    });
+});

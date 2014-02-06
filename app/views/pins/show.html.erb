@@ -44,14 +44,19 @@
           <%= radio_button(:pin, :satisfaction, i, {class: "star", disabled: "disabled"}) %>
         <% end %>
       </dd>
-      <br>
+      <br clear="both">
     <% end %>
 
-    <dt><i class="fa fa-quote-left"></i> Description</dt>
-    <dd style="background-color:#fff; padding:10px;"><%= @pin.details %></dd>
+    <% if @pin.user.present? %>
+      <dt>Submitter</dt>
+      <dd><strong><%= link_to @pin.user.username.presence || @pin.user.id, by_path(by_user: @pin.user) %></strong></dd>
+    <% end %>
    </dl>
 
-<% if @pin.user.present? %><small class="pull-right">Submitter: <strong><%= link_to @pin.user.username.presence || @pin.user.id, by_path(by_user: @pin.user) %></small></strong><% end %>
+   <div id="details">
+     <i class="fa fa-quote-left"></i>
+     <%= @pin.details.html_safe %>
+   </div>
 </div>
 
 <br clear="both" />

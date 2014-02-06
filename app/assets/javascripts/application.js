@@ -28,4 +28,5 @@
 //= require backbone_datalink
 //= require backbone/transbucket
 //= require underscore
+//= require tinymce
 //= require_tree .

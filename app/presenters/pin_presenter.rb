@@ -1,5 +1,5 @@
 class PinPresenter
-  attr_accessor :query, :user, :safe_mode, :query, :procedures, :surgeons, :page, :general
+  attr_accessor :query, :user, :safe_mode, :query, :procedures, :surgeons, :page, :general, :current_user
 
   def initialize(opts = {})
     @page = opts.fetch(:page) if opts[:page].present?
@@ -11,7 +11,7 @@ class PinPresenter
     @user = opts.fetch(:user) if opts[:user].present?
     @procedures = [opts.fetch(:procedure)] if opts[:procedure].present?
     @surgeons = [opts.fetch(:surgeon)] if opts[:surgeon].present?
-    @general = get_scope(opts.fetch(:scope)) if opts[:scope].present?
+    @general = format_scope(opts.fetch(:scope)) if opts[:scope].present?
   end
 
   def each(&block)
@@ -20,18 +20,22 @@ class PinPresenter
 
   def all
     pins = query.blank? ? Pin.recent.paginate(:page => page) : Pin.search(query, :page => page, :per_page => 20)
-    pins = Pin.by_user(user).paginate(:page => page) if user.present?
 
+    pins = Pin.by_user(user).paginate(:page => page) if user.present?
     general.each {|s| pins = pins.send(s)} if general.present?
+
     procedures.each {|p| pins = pins.by_procedure(p)} if procedures.present?
     surgeons.each {|s| pins = pins.by_surgeon(s)} if surgeons.present?
 
-    pins.reject! {|p| p.nil? }
+    pins = pins.all if pins.empty?
+
+    #pins.reject! {|p| p.nil? }
+    pins.uniq!
     pins
   end
 
   def show_new_comments(pin)
-    sign_in = User.find(user).last_sign_in_at
+    sign_in = User.find(current_user).last_sign_in_at
     comments = Comment.where('created_at > ? and commentable_id = ?', sign_in, pin.id)
   end
 
@@ -39,11 +43,9 @@ class PinPresenter
     [["General Filters", Pin::SCOPES.map(&:humanize)]]
   end
 
-  def get_scope(scope)
-    return [:all] if scope.empty?
-
-    general = [scope - procedures - surgeons]
-    return general.collect!(&:parameterize).collect!(&:underscore).collect!(&:to_sym) if general.present?
+  def format_scope(scope)
+    scope.collect!(&:parameterize).collect!(&:underscore).collect!(&:to_sym)
+    scope
   end
 
 end

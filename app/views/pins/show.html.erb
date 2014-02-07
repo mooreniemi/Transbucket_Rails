@@ -20,7 +20,7 @@
     <dd><%= link_to @pin.surgeon.id == 911 ? 'unknown' : 'Dr. ' + @pin.surgeon.to_s, pins_path({surgeon: [@pin.surgeon.id]}) %></dd>
 
     <dt><i class="fa fa-plus-square"></i> Procedure</dt>
-    <dd><%= @pin.procedure.name %></dd>
+    <dd><%= link_to @pin.procedure.name, pins_path({procedure: [@pin.procedure.id]}) %></dd>
 
     <dt><i class="fa fa-usd"></i> Cost</dt>
     <dd><%= number_with_delimiter(@pin.cost) %></dd>

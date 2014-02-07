@@ -27,8 +27,6 @@ class PinPresenter
     procedures.each {|p| pins = pins.by_procedure(p)} if procedures.present?
     surgeons.each {|s| pins = pins.by_surgeon(s)} if surgeons.present?
 
-    pins = pins.all if pins.empty?
-
     pins.uniq!
     pins
   end

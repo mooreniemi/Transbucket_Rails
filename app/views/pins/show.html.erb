@@ -49,7 +49,7 @@
 
     <% if @pin.user.present? %>
       <dt>Submitter</dt>
-      <dd><strong><%= link_to @pin.user.username.presence || @pin.user.id, by_path(by_user: @pin.user) %></strong></dd>
+      <dd><strong><%= link_to @pin.user.username.presence || @pin.user.id, pins_path(user: @pin.user) %></strong></dd>
     <% end %>
    </dl>
 

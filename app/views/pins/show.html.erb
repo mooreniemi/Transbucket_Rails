@@ -17,7 +17,7 @@
 <div class="span4">
 	<dl class="dl-horizontal">
     <dt><i class="fa fa-user-md"></i> Surgeon</dt>
-    <dd><%= @pin.surgeon.id == 911 ? 'unknown' : 'Dr. ' + @pin.surgeon.to_s %></dd>
+    <dd><%= link_to @pin.surgeon.id == 911 ? 'unknown' : 'Dr. ' + @pin.surgeon.to_s, pins_path({scope: [@pin.surgeon.id]}) %></dd>
 
     <dt><i class="fa fa-plus-square"></i> Procedure</dt>
     <dd><%= @pin.procedure.name %></dd>

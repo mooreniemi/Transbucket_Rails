@@ -5,25 +5,29 @@ before_filter :authenticate_user!
   # GET /pins.json
   def index
     @query = sanitize(params[:query]) if params[:query]
-    @scope = params[:scope] if params[:scope]
 
-    @presenter = PinPresenter.new(
-                                  :query => @query,
-                                  :scope => @scope,
-                                  :user => current_user,
-                                  :page => params[:page]
-                                  )
+    opts = {
+      query: @query,
+      scope: params[:scope],
+      surgeon: params[:surgeon],
+      procedure: params[:procedure],
+      user: params[:user],
+      current_user: current_user,
+      page: params[:page]
+    }
 
+
+    @presenter = PinPresenter.new(opts)
     respond_to do |format|
       format.html # index.html.erb
       format.js
     end
   end
 
-  def by_user
-    @presenter = PinPresenter.new(user: current_user)
-    @pins = @presenter.by_user(User.find(params[:by_user]))
-  end
+  # def by_user
+  #   @presenter = PinPresenter.new(user: current_user)
+  #   @pins = @presenter.by_user(User.find(params[:by_user]))
+  # end
 
   # GET /pins/1
   # GET /pins/1.json

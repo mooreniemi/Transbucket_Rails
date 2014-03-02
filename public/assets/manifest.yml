@@ -17,10 +17,10 @@ register.png: register-8c741bad806b59e2118d95dd0692b2c6.png
 register/index.png: register-8c741bad806b59e2118d95dd0692b2c6.png
 small_logo.png: small_logo-fdc485e12bdc57992a72803f14276159.png
 small_logo/index.png: small_logo-fdc485e12bdc57992a72803f14276159.png
-application.js: application-0e7f0e04f2bcc16a90b39faefdd5ea54.js
-application/index.js: application-0e7f0e04f2bcc16a90b39faefdd5ea54.js
-application.css: application-4a788ee7a32ca24261a9e245a6283eb2.css
-application/index.css: application-4a788ee7a32ca24261a9e245a6283eb2.css
+application.js: application-3cd10390562b2d0fae6170febac534ad.js
+application/index.js: application-3cd10390562b2d0fae6170febac534ad.js
+application.css: application-ac8aeb53b7c20e52deae33d3418769ff.css
+application/index.css: application-ac8aeb53b7c20e52deae33d3418769ff.css
 delete.gif: delete-1e844d7204cc8f7a557cfe2a7a78aced.gif
 delete/index.gif: delete-1e844d7204cc8f7a557cfe2a7a78aced.gif
 star.gif: star-31514b379b533309b6d1382150c2614f.gif

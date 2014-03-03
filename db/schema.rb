@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131201191656) do
+ActiveRecord::Schema.define(:version => 20140303040616) do
 
   create_table "assets", :force => true do |t|
     t.string   "asset_file_name"
@@ -66,6 +66,12 @@ ActiveRecord::Schema.define(:version => 20131201191656) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "genders", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "messages", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -267,7 +273,7 @@ ActiveRecord::Schema.define(:version => 20131201191656) do
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
     t.string   "name"
-    t.string   "gender"
+    t.string   "gender_id"
     t.string   "username"
     t.boolean  "admin",                  :default => false
     t.string   "md5"

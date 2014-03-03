@@ -33,7 +33,7 @@ class PinPresenter
 
   def show_new_comments(pin)
     sign_in = User.find(current_user).last_sign_in_at
-    comments = Comment.where('created_at > ? and commentable_id = ?', sign_in, pin.id)
+    comments = Comment.where('created_at > ? and commentable_id = ? and state = ?', sign_in, pin.id, 'published')
   end
 
   def format_scope(scope)

@@ -1,6 +1,7 @@
 <% if comment.published? %>
   <div class="comment" id="<%=comment.id %>">
-      <div class="well"><%= comment.body %><br>
+      <div class="well">
+      	<%= comment.body %><br>
       	<hr>
       	<small>by <%= comment.user.try(:username) || comment.user.id %> | <%= comment.updated_at.strftime('%b %d, %Y at %I:%M %p') %></small>
       	<% if comment.user_id == current_user.id || current_user.admin? %>

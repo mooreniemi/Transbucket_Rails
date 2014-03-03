@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h3>Greetings from Transbucket.com, <%= @user.name %></h3>
+    <p>
+      We've updated the site!
+    </p>
+    <ul>
+      <li>Gender selection during registration was bugged, and has been fixed.</li>
+      <li>Gender selection now controls the pronouns you will see on your submissions. (Default assignment of pronouns is gender neutral.)</li>
+      <li>To see your user profile and update your gender selection just follow this link: <%= @url %>.</li>
+      <li>Submission authors can now flag comments for immediate review. If you flag a comment on your submission and reload, you will see the comment is gone. Flagged content goes to an admin queue where it is reviewed.</li>
+      <li>Flagging submissions or comments on submissions you did not author will still need to meet a requirement of 3 flags from 3 seperate users to go to review.</li>
+      <li>We've added a WYSIWYG editor to the new submission page so that you can style your text description of your procedure.</li>
+    </ul>
+    <p>
+      We've got a lot more on the way, too, but we need your help. We're looking for: 
+      <ol>
+        <li>admins that can help moderator site content (free volunteers)</li>
+        <li>writers or content curators that can help create procedure explanations (<b>modest stipend is available per article</b>)</li>
+      </ol>
+    </p>
+    <p>
+      We're also considering creating a new feature that will allow for Q&A style submissions without photos. These would be kept in a separate steam from normal submissions, and operate a lot like Quora or StackOverflow. This way comments that are not relevant to submissions could be moved to a more appropriate section. What do you think of that idea? We'd love your feedback.
+    </p>
+    <p>Have feedback for us in general? Consider filling out our release survey: <a href="http://www.surveymonkey.com/s/ZS7MB59">Click here to take our survey.</a></p>
+    <p>-Alex</p>
+  </body>
+</html>

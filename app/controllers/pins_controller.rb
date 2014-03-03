@@ -38,11 +38,13 @@ before_filter :authenticate_user!
   end
 
   def admin
-    @pins = Pin.where(state: 'pending').order("created_at desc").paginate(:page => params[:page])
+    @pins = Pin.where(state: 'pending').order("created_at desc")
+    @comments = Comment.where(state: 'pending').order("created_at desc")
+    @queue = {pins: @pins, comments: @comments}
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @pins }
+      format.json { render json: @queue }
     end
   end
 

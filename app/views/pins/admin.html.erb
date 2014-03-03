@@ -1,9 +1,25 @@
-<h2><%= title 'Admin Queue' %></h2>
+<h4><%= title 'Admin Queue' %></h4>
 
-<%= will_paginate @pins unless @pins.nil? %>
-  <div id="pins" class="js-masonry" data-masonry-options='{ "columnWidth": 200, "itemSelector": ".box" }'>
-  <%= render @pins unless @pins.nil? %>
-  <br clear="both" />
-  </div>
-<%= will_paginate @pins unless @pins.nil? %>
+<div class="container">
+	<table class="table" style="background-color: #fff;">
+		<th>Comments Queue</th>
+		<% @queue[:comments].each do |e| %>
+		<tr><td><%= link_to e.id, pin_path(e.commentable_id) %> </td> 
+			<td><%= e.body %></td>
+			<td><%= link_to "Unflag", remove_comment_flag_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to republish this comment?", :disable_with => "×", :class => 'close' %></td>
+			<td><%= link_to "×", comment_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this comment?", :disable_with => "×", :class => 'close' %></td></tr>
+		<% end %>
+	</table>
+
+	<table class="table" style="background-color: #fff;">
+		<th>Pins Queue</th>
+		<% @queue[:pins].each do |e| %>
+		<tr><td><%= link_to e.id, pin_path(e) %> </td>
+			<td><%= link_to "Unflag", remove_pin_flag_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to republish this pin?", :disable_with => "×", :class => 'close' %></td>
+			<td><%= link_to "×", pin_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this pin?", :disable_with => "×", :class => 'close' %></td></tr>
+		<% end %>
+	</table>
+</div>
+
+
 <br clear="both" />

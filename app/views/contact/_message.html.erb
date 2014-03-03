@@ -1,16 +1,11 @@
 <div class="well span6"><%= form_for @message, :url => contact_path do |form| %>
   <fieldset class="fields">
     <div class="field">
-      <%= form.label :name %>
-      <%= form.text_field :name %>
-    </div>
-    
-    <div class="field">
       <% if user_signed_in? %>
-      <%= form.hidden_field :email, :value => User.find(current_user).email %>
+       <%= form.hidden_field :email, :value => User.find(current_user).email %>
       <% else %>
        <%= form.label :email %>
-      <%= form.text_field :email unless current_user.nil? == false %>
+       <%= form.text_field :email %>
       <% end %>
     </div>
     <div class="field">
@@ -27,5 +22,6 @@
   <fieldset class="actions">
     <%= form.submit "Send", :class => "btn" %>
   </fieldset>
-<% end %></div>
+  <% end %>
+</div>
 <br clear="both">

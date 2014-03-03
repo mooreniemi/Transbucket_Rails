@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe Flag do
   it '3 flags should make a pin pending' do
-    pin = FactoryGirl.create(:pin)
+    pin = create(:pin)
 
-    user = FactoryGirl.build_stubbed(:user)
-    user2 = FactoryGirl.build_stubbed(:user)
-    user3 = FactoryGirl.build_stubbed(:user)
+    user = build_stubbed(:user)
+    user2 = build_stubbed(:user)
+    user3 = build_stubbed(:user)
 
     flag = Flag.new(user, pin).flag_on
     flag2 = Flag.new(user2, pin).flag_on
@@ -16,16 +16,26 @@ describe Flag do
   end
 
   it '3 flags should make a comment pending' do
-    comment = FactoryGirl.create(:comment)
+    comment = create(:comment)
 
-    user = FactoryGirl.build_stubbed(:user)
-    user2 = FactoryGirl.build_stubbed(:user)
-    user3 = FactoryGirl.build_stubbed(:user)
+    user = create(:user)
+    user2 = create(:user)
+    user3 = create(:user)
 
     flag = Flag.new(user, comment).flag_on
     flag2 = Flag.new(user2, comment).flag_on
     flag3 = Flag.new(user3, comment).flag_on
 
+    expect(comment.pending?).to be(true)
+  end
+
+  it "comment's parent pin author can send directly to pending" do
+    pin_author = create(:user)
+    pin = create(:pin, user: pin_author)
+    comment_author = create(:user)
+    comment = create(:comment, commentable_id: pin.id, user: comment_author)
+
+    Flag.new(pin_author, comment).flag_on
     expect(comment.pending?).to be(true)
   end
 end

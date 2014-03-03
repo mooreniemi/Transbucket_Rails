@@ -7,6 +7,7 @@ module PinsHelper
 	}
 
 	def uses_pronouns(author_gender)
+		return "they/them/theirs" if author_gender.nil?
 		unless PRONOUN_HASH[author_gender.id].nil?
 			PRONOUN_HASH[author_gender.id]
 		else

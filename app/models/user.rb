@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
     s.key :contact,  :defaults => { :notification => true }
   end
 
+  belongs_to :gender
   has_one :preference
   after_create :set_preference
 
@@ -14,7 +15,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :confirmable, :validatable, :authentication_keys => [:login], :timeout_in => 180.minutes
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password_confirmation, :remember_me, :name, :gender, :username, :id, :created_at, :updated_at, :login, :md5, :password, :settings
+  attr_accessible :email, :password_confirmation, :remember_me, :name, :gender_id, :username, :id, :created_at, :updated_at, :login, :md5, :password, :settings
   # attr_accessible :title, :body
   attr_accessor :login
 

@@ -12,7 +12,7 @@ describe Flag do
     flag2 = Flag.new(user2, pin).flag_on
     flag3 = Flag.new(user3, pin).flag_on
 
-    expect(pin.pending?).to be(true)
+    expect(pin.pending?).to be_true
   end
 
   it '3 flags should make a comment pending' do
@@ -26,7 +26,7 @@ describe Flag do
     flag2 = Flag.new(user2, comment).flag_on
     flag3 = Flag.new(user3, comment).flag_on
 
-    expect(comment.pending?).to be(true)
+    expect(comment.pending?).to be_true
   end
 
   it "comment's parent pin author can send directly to pending" do
@@ -36,6 +36,6 @@ describe Flag do
     comment = create(:comment, commentable_id: pin.id, user: comment_author)
 
     Flag.new(pin_author, comment).flag_on
-    expect(comment.pending?).to be(true)
+    expect(comment.pending?).to be_true
   end
 end

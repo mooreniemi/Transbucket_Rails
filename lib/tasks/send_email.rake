@@ -6,7 +6,7 @@ namespace :emails do
     bar = RakeProgressbar.new(users.count)
 
     users.each do |user|
-      AdminMailer.announcement_email(user.email).deliver
+      AdminMailer.announcement_email(user).deliver
       bar.inc
     end
 

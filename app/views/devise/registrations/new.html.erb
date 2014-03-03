@@ -11,7 +11,7 @@
     <%= f.input :password %>
     <%= f.input :password_confirmation %>
     <%= f.label :gender %>
-    <%= f.select :gender, options_for_select([['None', 1], ['MTF', 2], ['FTM', 3], ['GenderQueer', 4], ['Cisgender', 5]]), {}, {:multiple => true, :class => "gender" } %>
+    <%= f.select :gender, options_from_collection_for_select(Gender.all, "id", "name") %>
     <br>
     <br>
     <%= f.submit "Submit", class: "btn btn-primary btn-large pull-right" %>

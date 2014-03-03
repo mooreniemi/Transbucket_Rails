@@ -8,7 +8,7 @@
     <%= f.input :name %>
     <%= f.input :username %>
     <%= f.label :gender %>
-    <%= f.select(:gender, [['None', 1], ['MTF', 2], ['FTM', 3], ['GenderQueer', 4], ['Cisgender', 5]]) %>
+    <%= f.select :gender, options_from_collection_for_select(Gender.all, "id", "name") %>
     <p>
       <small>On Transbucket, gender helps control the pronouns you are referred to with. Currently, MTF and FTM genders correspond to binary pronoun identifications. For gender neutral pronouns, please use "None" or "GenderQueer" as your gender. Future updates will allow for pronoun choice independent of your gender identification.</small>
     </p>

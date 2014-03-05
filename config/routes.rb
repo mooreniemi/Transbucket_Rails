@@ -1,5 +1,9 @@
 Transbucket::Application.routes.draw do
 
+  match '/404' => 'errors#not_found'
+  match '/422' => 'errors#server_error'
+  match '/500' => 'errors#server_error'
+
   authenticated :user do
     root :to => "pins#index"
   end

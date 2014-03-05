@@ -1,4 +1,4 @@
-<div class="span4">
+<div class="span5">
 <h2><%= title 'Edit ' + resource_name.to_s.humanize + ' Profile' %></h2>
 
 <div class="profile_well">
@@ -46,7 +46,7 @@
 <p><%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn' %></p>
 </div>
 
-<div class="span4">
+<div class="span6">
 	<h2>Your Submissions</h2>
 	<div class="profile_well">
 		<% if current_user.pins.length == 0 then %>

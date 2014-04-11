@@ -40,13 +40,12 @@ describe PinPresenter do
 
   it 'returns pins scoped by user' do
     current_user = create(:user)
-    user = create(:user)
 
     pins = FactoryGirl.create_list(:pin, 3)
 
-    pins.last.update_attributes(user_id: user.id)
+    user_id = pins.last.user_id
 
-    presenter = PinPresenter.new({current_user: user, user: user.id})
+    presenter = PinPresenter.new({current_user: current_user, user: user_id})
 
     expect(presenter.all.last).to eq(pins.last)
   end

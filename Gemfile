@@ -71,6 +71,7 @@ gem 'underscore-rails'
 gem 'ledermann-rails-settings', :require => 'rails-settings'
 
 group :development, :local do
+  gem 'rack-mini-profiler'
   gem 'bullet'
   gem 'quiet_assets'
   gem 'meta_request','0.2.5'
@@ -82,6 +83,7 @@ group :development, :local do
 end
 
 group :test do
+  gem 'simplecov', '~> 0.7.1'
   gem 'database_cleaner'
   gem 'rspec-rails'
   gem 'factory_girl_rails'

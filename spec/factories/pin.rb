@@ -2,7 +2,7 @@ require 'faker'
 
 FactoryGirl.define do
 	factory :pin do |f|
-	association :user
+		association :user
     f.id { Faker::Number.number(5) }
 		f.description { Faker::Lorem.sentences(3).join(" ") }
 		f.surgeon_id 1

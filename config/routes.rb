@@ -4,6 +4,7 @@ Transbucket::Application.routes.draw do
   get '/422' => 'errors#server_error'
   get '/500' => 'errors#server_error'
 
+  # TODO need real solution for routing root based on login status
   # authenticated :user do
   #   root :to => "pins#index"
   # end
@@ -25,6 +26,7 @@ Transbucket::Application.routes.draw do
     resources :flags, :only => [:create]
   end
 
+  # TODO why are these so weirdly written
   # match 'contact' => 'contact#new', :as => 'contact', :via => :get
   # match 'contact' => 'contact#create', :as => 'contact', :via => :post
 
@@ -33,6 +35,7 @@ Transbucket::Application.routes.draw do
     resources :flags, :only => [:create]
   end
 
+  # TODO should these have verbs?
   # match '/pins/:pin_id/flags/remove_flag' => 'flags#destroy', as: 'remove_pin_flag'
   # match '/comments/:comment_id/flags/remove_flag' => 'flags#destroy', as: 'remove_comment_flag'
 

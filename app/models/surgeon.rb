@@ -4,7 +4,7 @@ class Surgeon < ActiveRecord::Base
   has_many :skills
   has_many :procedures, through: :skills
 
-  attr_accessible :address, :city, :country, :email, :id, :first_name, :last_name, :phone, :procedure_list, :state, :url, :zip, :notes
+  # attr_accessible :address, :city, :country, :email, :id, :first_name, :last_name, :phone, :procedure_list, :state, :url, :zip, :notes
 
   scope :has_procedures, joins(:procedures).
      group('surgeons.id').

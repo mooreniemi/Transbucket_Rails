@@ -1,12 +1,12 @@
 Transbucket::Application.routes.draw do
 
-  match '/404' => 'errors#not_found'
-  match '/422' => 'errors#server_error'
-  match '/500' => 'errors#server_error'
+  get '/404' => 'errors#not_found'
+  get '/422' => 'errors#server_error'
+  get '/500' => 'errors#server_error'
 
-  authenticated :user do
-    root :to => "pins#index"
-  end
+  # authenticated :user do
+  #   root :to => "pins#index"
+  # end
 
   root :to => 'pages#home'
 
@@ -25,18 +25,18 @@ Transbucket::Application.routes.draw do
     resources :flags, :only => [:create]
   end
 
-  match 'contact' => 'contact#new', :as => 'contact', :via => :get
-  match 'contact' => 'contact#create', :as => 'contact', :via => :post
+  # match 'contact' => 'contact#new', :as => 'contact', :via => :get
+  # match 'contact' => 'contact#create', :as => 'contact', :via => :post
 
   resources :pins do
     resources :pin_images
     resources :flags, :only => [:create]
   end
 
-  match '/pins/:pin_id/flags/remove_flag' => 'flags#destroy', as: 'remove_pin_flag'
-  match '/comments/:comment_id/flags/remove_flag' => 'flags#destroy', as: 'remove_comment_flag'
+  # match '/pins/:pin_id/flags/remove_flag' => 'flags#destroy', as: 'remove_pin_flag'
+  # match '/comments/:comment_id/flags/remove_flag' => 'flags#destroy', as: 'remove_comment_flag'
 
-  match 'by_user' => 'pins#by_user', :as => 'by'
+  # match 'by_user' => 'pins#by_user', :as => 'by'
 
   get 'pins' => 'pins#index'
   get 'about' => 'pages#about'

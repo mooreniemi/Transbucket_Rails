@@ -79,6 +79,7 @@ group :development, :local do
   gem 'binding_of_caller'
   gem 'jasmine'
   gem 'guard'
+  gem 'guard-livereload'
   gem 'guard-jasmine'
 end
 

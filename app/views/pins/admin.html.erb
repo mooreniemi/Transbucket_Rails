@@ -8,7 +8,7 @@
 		<th>unflag</th>
 		<th>delete</th>
 		<% @queue[:comments].each do |e| %>
-		<% user = User.find(e.user_id) || Hash.new(email: 'deleted', username: 'deleted') %>
+		<% user = User.find_by(id: e.user_id) || Hash.new(email: 'deleted', username: 'deleted') %>
 		<tr><td><%= link_to e.id, pin_path(e.commentable_id) %> </td>
 		<td> <%= mail_to user.email, user.username %>
 			<td><%= e.body %></td>
@@ -23,7 +23,7 @@
 			<th>unflag</th>
 			<th>delete</th>
 			<% @queue[:pins].each do |e| %>
-			<% user = User.find(e.user_id) || Hash.new(email: 'deleted', username: 'deleted') %>
+			<% user = User.find_by(id: e.user_id) || Hash.new(email: 'deleted', username: 'deleted') %>
 			<tr><td><%= link_to e.id, pin_path(e) %> </td>
 			<td> <%= mail_to user.email, user.username %>
 				<td><%= link_to '<i class="fa fa-flag"></i>'.html_safe, remove_pin_flag_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to republish this pin?", :disable_with => "unflag" %></td>

@@ -118,6 +118,9 @@ GEM
       devise (>= 2.1.0)
     diff-lcs (1.2.5)
     ejs (1.1.1)
+    em-websocket (0.5.0)
+      eventmachine (>= 0.12.9)
+      http_parser.rb (~> 0.5.3)
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.0.2)
@@ -155,12 +158,17 @@ GEM
       multi_json
       thor
       tilt
+    guard-livereload (2.1.2)
+      em-websocket (~> 0.5)
+      guard (~> 2.0)
+      multi_json (~> 1.8)
     guard-rspec (4.2.8)
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
     hike (1.2.3)
     hirb (0.7.1)
     htmlentities (4.3.1)
+    http_parser.rb (0.5.3)
     i18n (0.6.9)
     innertube (1.1.0)
     jasmine (2.0.0)
@@ -381,6 +389,7 @@ DEPENDENCIES
   font-awesome-sass
   guard
   guard-jasmine
+  guard-livereload
   guard-rspec
   hirb
   htmlentities

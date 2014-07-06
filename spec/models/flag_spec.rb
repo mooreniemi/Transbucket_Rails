@@ -12,11 +12,12 @@ describe Flag do
     flag2 = Flag.new(user2, pin).flag_on
     flag3 = Flag.new(user3, pin).flag_on
 
-    expect(pin.pending?).to be_true
+    expect(pin.pending?).to eq(true)
   end
 
   it '3 flags should make a comment pending' do
     comment = create(:comment)
+    Pin.stub_chain(:find, :user) { create(:user) }
 
     user = create(:user)
     user2 = create(:user)
@@ -26,7 +27,7 @@ describe Flag do
     flag2 = Flag.new(user2, comment).flag_on
     flag3 = Flag.new(user3, comment).flag_on
 
-    expect(comment.pending?).to be_true
+    expect(comment.pending?).to eq(true)
   end
 
   it "comment's parent pin author can send directly to pending" do

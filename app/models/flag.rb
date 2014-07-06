@@ -10,7 +10,7 @@ class Flag
     if flagger_is_pin_author?
       content.review!
       return {status: :removed}
-    elsif content.votes.down.size >= 2
+    elsif content.votes_for.down.size >= 2
       content.review!
       return {status: :removed}
     else
@@ -21,9 +21,8 @@ class Flag
 
   def flagger_is_pin_author?
     return false if content.is_a?(Pin)
-    #get id of parent pin of the comment
     pin_author = Pin.find(content.commentable_id).user
-    User.find(user) == User.find(pin_author)
+    User.find(user.id) == User.find(pin_author.id)
   end
 
 end

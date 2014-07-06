@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PinsController do
+describe PinsController, :type => :controller do
 	describe 'GET #index' do
     it "blocks unauthenticated access" do
        sign_in nil

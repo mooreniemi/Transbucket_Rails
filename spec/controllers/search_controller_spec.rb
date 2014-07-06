@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SearchController do
+describe SearchController, :type => :controller do
   it "GET search_terms" do
     get 'search_terms'
     expect(JSON.parse(response.body).sort).to eq(expected_results.sort)

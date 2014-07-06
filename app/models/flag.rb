@@ -1,5 +1,5 @@
 class Flag
-  # attr_accessor :content, :user
+  attr_accessor :content, :user
 
   def initialize(user, content)
     @user = user

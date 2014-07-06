@@ -36,6 +36,6 @@ describe Flag do
     comment = create(:comment, commentable_id: pin.id, user: comment_author)
 
     Flag.new(pin_author, comment).flag_on
-    expect(comment.pending?).to be_true
+    expect(comment.pending?).to eq(true)
   end
 end

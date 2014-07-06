@@ -42,7 +42,7 @@ gem 'tinymce-rails'
 gem 'will_paginate', '~> 3.0'
 gem 'acts_as_commentable_with_threading'
 gem 'state_machine'
-gem 'acts_as_votable'
+gem 'acts_as_votable', '~> 0.10.0'
 gem 'acts-as-taggable-on'
 
 gem 'rack-block'

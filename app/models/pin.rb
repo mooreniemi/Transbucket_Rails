@@ -9,6 +9,10 @@ class Pin < ActiveRecord::Base
   belongs_to :surgeon
   belongs_to :procedure
 
+  acts_as_commentable
+  acts_as_votable
+  acts_as_taggable_on :tags
+  
   accepts_nested_attributes_for :pin_images, :reject_if => proc {|attributes| !attributes.keys.include?(:photo) }
   accepts_nested_attributes_for :surgeon, :reject_if => proc {|attributes| attributes.all? {|k,v| v.blank?} }
   accepts_nested_attributes_for :procedure, :reject_if => proc {|attributes| attributes.all? {|k,v| v.blank?} }
@@ -18,9 +22,6 @@ class Pin < ActiveRecord::Base
   validates :user_id, presence: true
   validates :pin_images, presence: true
 
-  acts_as_commentable
-  acts_as_votable
-  acts_as_taggable_on :tags
 
   scope :published, includes(:pin_images, :user, :surgeon, :procedure).where(state: 'published')
   scope :pending, includes(:pin_images, :user, :surgeon, :procedure).where(state: 'pending')

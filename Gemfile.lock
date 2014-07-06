@@ -365,7 +365,7 @@ DEPENDENCIES
   activerecord-mysql-adapter
   acts-as-taggable-on
   acts_as_commentable_with_threading
-  acts_as_votable
+  acts_as_votable (~> 0.10.0)
   awesome_print
   aws-s3
   aws-sdk

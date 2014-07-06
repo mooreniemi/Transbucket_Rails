@@ -15,6 +15,7 @@ class PinCreatorService
   end
 
   def create
+    # TODO refactor this
     if pin_images_attributes.present?
       params["pin_images_attributes"] = pin_images_attributes.reject {|k, v| !v.include?(:photo) }
       params["pin_images_attributes"].values.each {|p| p.delete("_destroy")}

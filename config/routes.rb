@@ -1,10 +1,9 @@
-Transbucket::Application.routes.draw do
-
+Rails.application.routes.draw do
   get '/404' => 'errors#not_found'
   get '/422' => 'errors#server_error'
   get '/500' => 'errors#server_error'
 
-  # TODO need real solution for routing root based on login status
+  # TODO need to handle authentication pathing
   # authenticated :user do
   #   root :to => "pins#index"
   # end
@@ -26,20 +25,18 @@ Transbucket::Application.routes.draw do
     resources :flags, :only => [:create]
   end
 
-  # TODO why are these so weirdly written
-  # match 'contact' => 'contact#new', :as => 'contact', :via => :get
-  # match 'contact' => 'contact#create', :as => 'contact', :via => :post
+  get 'contact' => 'contact#new'   
+  post 'contact' => 'contact#create' 
 
   resources :pins do
     resources :pin_images
     resources :flags, :only => [:create]
   end
 
-  # TODO should these have verbs?
-  # match '/pins/:pin_id/flags/remove_flag' => 'flags#destroy', as: 'remove_pin_flag'
-  # match '/comments/:comment_id/flags/remove_flag' => 'flags#destroy', as: 'remove_comment_flag'
+  get '/pins/:pin_id/flags/remove_flag' => 'flags#destroy', as: 'remove_pin_flag'
+  get '/comments/:comment_id/flags/remove_flag' => 'flags#destroy', as: 'remove_comment_flag'
 
-  # match 'by_user' => 'pins#by_user', :as => 'by'
+  get 'by_user' => 'pins#by_user', :as => 'by'
 
   get 'pins' => 'pins#index'
   get 'about' => 'pages#about'
@@ -62,5 +59,4 @@ Transbucket::Application.routes.draw do
   get '/forum' => 'pages#bookmarks'
   get '/members/*other' => 'pages#bookmarks'
   get '/members/uploads/*other' => 'pages#bookmarks'
-
 end

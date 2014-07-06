@@ -1,13 +1,12 @@
-#from https://github.com/plataformatec/devise/wiki/How-To:-Stub-authentication-in-controller-specs
+# from https://github.com/plataformatec/devise/wiki/How-To:-Stub-authentication-in-controller-specs
 module ControllerHelpers
   def sign_in(user = build(:user))
     if user.nil?
-      request.env['warden'].stub(:authenticate!).
-        and_throw(:warden, {:scope => :user})
-      controller.stub :current_user => nil
+      allow(request.env['warden']).to receive(:authenticate!).and_throw(:warden, {:scope => :user})
+      allow(controller).to receive(:current_user).and_return(nil)
     else
-      request.env['warden'].stub :authenticate! => user
-      controller.stub :current_user => user
+      allow(request.env['warden']).to receive(:authenticate!).and_return(user)
+      allow(controller).to receive(:current_user).and_return(user)
     end
   end
 end

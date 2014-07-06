@@ -17,7 +17,6 @@ describe Flag do
 
   it '3 flags should make a comment pending' do
     comment = create(:comment)
-    # Pin.stub_chain(:find, :user) { create(:user) }
     allow_any_instance_of(Pin).to receive(:user).and_return(create(:user))
 
     user = create(:user)

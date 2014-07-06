@@ -7,7 +7,7 @@ describe PinsController, :type => :controller do
 
        get :index
 
-       response.should redirect_to(new_user_session_path)
+       expect(response).to redirect_to(new_user_session_path)
      end
 
      it "allows authenticated access" do
@@ -15,7 +15,7 @@ describe PinsController, :type => :controller do
 
        get :index
 
-       response.should be_success
+       expect(response).to be_success
      end
 	end
 
@@ -26,7 +26,7 @@ describe PinsController, :type => :controller do
       pin = create(:pin)
       get :show, id: pin.id
 
-      response.should be_success
+      expect(response).to be_success
     end
 	end
 
@@ -37,7 +37,7 @@ describe PinsController, :type => :controller do
       pin = create(:pin)
       get :edit, id: pin.id
 
-      response.should be_success
+      expect(response).to be_success
     end
 	end
 
@@ -49,9 +49,9 @@ describe PinsController, :type => :controller do
       image_attrs = attributes_for(:pin_image)
       attrs.merge!(pin_images_attributes: {pin_image: image_attrs})
 
-      PinCreatorService.stub(:new).and_return(service = double('service'))
+      allow(PinCreatorService).to receive(:new).and_return(service = double('service'))
 
-      service.stub(:create).and_return(pin = create(:pin))
+      allow(service).to receive(:create).and_return(pin = create(:pin))
 
       post :create, pin: attrs
     end

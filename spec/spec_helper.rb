@@ -1,7 +1,7 @@
 ENV["RAILS_ENV"] = 'test'
 require File.expand_path("../../config/environment", __FILE__)
+require 'support/controller_helpers'
 require 'rspec/rails'
-require 'rspec/autorun'
 require 'factory_girl_rails'
 require 'simplecov'
 SimpleCov.start 
@@ -46,4 +46,6 @@ RSpec.configure do |config|
 
   # from previous rails build
   config.include FactoryGirl::Syntax::Methods
+  config.include Devise::TestHelpers, :type => :controller
+  config.include ControllerHelpers, :type => :controller
 end

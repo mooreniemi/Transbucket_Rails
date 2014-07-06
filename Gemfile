@@ -15,7 +15,6 @@ gem 'thin'
 gem 'aws-sdk'
 gem 'aws-s3'
 
-gem 'newrelic_rpm'
 gem 'figaro'
 gem 'delayed_job_active_record'
 gem 'meta-tags', :require => 'meta_tags'
@@ -47,10 +46,12 @@ gem 'state_machine'
 gem 'acts_as_votable', '~> 0.10.0'
 gem 'acts-as-taggable-on'
 
-gem 'rack-block'
 gem 'rake-progressbar'
-
 gem 'ledermann-rails-settings', :require => 'rails-settings'
+
+group :production do
+  gem 'newrelic_rpm'
+end
 
 group :development, :local, :test do
   gem 'pry'
@@ -87,6 +88,7 @@ end
 group :assets do
   gem 'sass-rails', '4.0.3'
   gem 'coffee-rails', '~> 4.0.0'
-  gem 'bootstrap-sass'
+  gem 'bootstrap-sass', '~> 3.2.0'
+  gem 'autoprefixer-rails'
   gem 'uglifier', '>= 1.0.3'
 end

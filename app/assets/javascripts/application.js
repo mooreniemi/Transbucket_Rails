@@ -12,21 +12,6 @@
 //
 
 //= require jquery
-//= require jquery_ujs
 //= require turbolinks
-//= require jquery.ui.autocomplete
-//= require jquery.masonry.min.js
-//= require bootstrap
-//= require bootstrap-tooltip.js
-//= require bootstrap-popover.js
-//= require jquery-star-rating
-//= require jquery.multiselect
-//= require jquery.multiselect.filter
-//= require jquery_nested_form
-//= require underscore
-//= require backbone
-//= require backbone_rails_sync
-//= require backbone_datalink
-//= require backbone/transbucket
-//= require tinymce
+//= require jquery_ujs
 //= require_tree .

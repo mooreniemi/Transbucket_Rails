@@ -13,6 +13,6 @@ FactoryGirl.define do
     phone { Faker::PhoneNumber.phone_number }
     email { Faker::Internet.email }
     url { Faker::Internet.url }
-    procedure_list { Faker::Lorem.words }
+    procedure_list { Faker::Lorem.words.join(',') }
   end
 end

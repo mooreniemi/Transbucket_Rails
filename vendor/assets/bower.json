@@ -1,0 +1,13 @@
+{
+  "name": "dsl-generated dependencies",
+  "dependencies": {
+    "bootstrap": "latest",
+    "bootstrap-star-rating": "latest",
+    "font-awesome": "latest",
+    "jquery-ui": "latest",
+    "jquery-masonry": "latest",
+    "jquery": "latest",
+    "jquery-multiselect": "latest",
+    "tinymce": "latest"
+  }
+}

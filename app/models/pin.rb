@@ -9,9 +9,6 @@ class Pin < ActiveRecord::Base
   belongs_to :surgeon
   belongs_to :procedure
 
-  # attr_accessible :surgeon_attributes, :procedure_attributes, :pin_images_attributes
-  # attr_accessible :description, :pin_images, :surgeon_id, :cost, :revision, :details, :procedure_id, :username, :user_id, :id, :created_at, :sensation, :satisfaction
-
   accepts_nested_attributes_for :pin_images, :reject_if => proc {|attributes| !attributes.keys.include?(:photo) }
   accepts_nested_attributes_for :surgeon, :reject_if => proc {|attributes| attributes.all? {|k,v| v.blank?} }
   accepts_nested_attributes_for :procedure, :reject_if => proc {|attributes| attributes.all? {|k,v| v.blank?} }

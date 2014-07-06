@@ -5,7 +5,7 @@ describe PinPresenter do
     user = create(:user)
     Pin.destroy_all
 
-    pins = FactoryGirl.create_list(:pin, 3)
+    pins = create_list(:pin, 3)
 
     presenter = PinPresenter.new({current_user: user})
 
@@ -16,7 +16,7 @@ describe PinPresenter do
     surgeon = create(:surgeon)
     user = create(:user)
 
-    pins = FactoryGirl.create_list(:pin, 3)
+    pins = create_list(:pin, 3)
 
     pins.last.update_attributes(surgeon_id: surgeon.id)
 
@@ -29,7 +29,7 @@ describe PinPresenter do
     procedure = create(:procedure)
     user = create(:user)
 
-    pins = FactoryGirl.create_list(:pin, 3)
+    pins = create_list(:pin, 3)
 
     pins.last.update_attributes(procedure_id: procedure.id)
 
@@ -41,7 +41,7 @@ describe PinPresenter do
   it 'returns pins scoped by user' do
     current_user = create(:user)
 
-    pins = FactoryGirl.create_list(:pin, 3)
+    pins = create_list(:pin, 3)
 
     user_id = pins.last.user_id
 

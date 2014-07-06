@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 gem 'rails', '4.1.4'
 
+gem 'turbolinks'
+
 gem 'mysql'
 gem 'activerecord-mysql-adapter'
 gem 'protected_attributes'

@@ -2,20 +2,20 @@ class Pin < ActiveRecord::Base
   include ThinkingSphinx::Scopes
   include Constants
 
-  has_many :pin_images, :dependent => :destroy
-  has_many :comments, :foreign_key => 'commentable_id', :class_name => "ActsAsVotable::Vote"
-
   belongs_to :user
   belongs_to :surgeon
   belongs_to :procedure
 
-  acts_as_commentable
-  acts_as_votable
-  acts_as_taggable_on :tags
+  has_many :pin_images, :dependent => :destroy
+  has_many :comments, :foreign_key => 'commentable_id', :class_name => "ActsAsVotable::Vote"
 
   accepts_nested_attributes_for :pin_images, :reject_if => proc {|attributes| !attributes.keys.include?(:photo) }
   accepts_nested_attributes_for :surgeon, :reject_if => proc {|attributes| attributes.all? {|k,v| v.blank?} }
   accepts_nested_attributes_for :procedure, :reject_if => proc {|attributes| attributes.all? {|k,v| v.blank?} }
+
+  acts_as_commentable
+  acts_as_votable
+  acts_as_taggable_on :tags
 
   validates :surgeon_id, presence: true
   validates :procedure_id, presence: true
@@ -39,9 +39,12 @@ class Pin < ActiveRecord::Base
 
   # TODO yank this out
   def cover_image(safe_mode=false)
-    images = self.pin_images.collect {|p| p if p.photo(:medium).present? }
     image = safe_mode == true ? 'http://placekitten.com/200/300' : images.last.photo(:medium)
-    return image
+    image
+  end
+
+  def images
+    self.pin_images.collect {|p| p if p.photo(:medium).present? }
   end
 
   state_machine initial: :published do

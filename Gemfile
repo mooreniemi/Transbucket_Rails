@@ -3,84 +3,73 @@ source 'https://rubygems.org'
 ruby '1.9.3'
 gem 'rails', '3.2.12'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
-#gem 'sqlite3'
-gem 'mysql'
-gem 'mysql2', '0.3.12b5'
+# for connecting to legacy stuff
+# gem 'mysql'
+# gem 'mysql2', '0.3.12b5'
+# gem 'activerecord-mysql-adapter'
 gem 'pg'
-#gem 'rack', '1.5.2'
+
 gem 'will_paginate', '~> 3.0'
+gem 'paperclip', '~> 3.0'
+
 gem 'aws-sdk'
-gem "aws-s3"
+gem 'aws-s3'
+
 gem 'figaro'
+
 gem 'delayed_job_active_record'
-gem 'meta-tags', :require => 'meta_tags'
 gem 'tinymce-rails'
 
-
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'bootstrap-sass', '~> 2.2.2.0'
-
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
-
-  gem 'uglifier', '>= 1.0.3'
-end
-
-gem 'font-awesome-sass'
-#gem 'rails3-jquery-autocomplete'
-gem 'jquery-ui-rails'
-gem 'jquery-rails'
 gem 'devise'
+gem 'devise-encryptable'
+
+gem 'state_machine'
+
+gem 'rake-progressbar'
+
 gem 'nested_form'
 gem 'simple_form'
-gem 'paperclip', "~> 3.0"
+
 gem 'thinking-sphinx'
 gem 'flying-sphinx'
-gem 'activerecord-mysql-adapter'
-gem 'hirb'
-gem 'thin'
+
 gem 'htmlentities'
 gem 'simple-rss'
-gem 'acts_as_commentable_with_threading'
-gem 'rake-progressbar'
-gem 'devise-encryptable'
-gem 'state_machine'
-gem 'pry'
+gem 'meta-tags', :require => 'meta_tags'
+
 gem 'acts_as_votable', '~> 0.7.1'
 gem 'acts-as-taggable-on'
-gem 'newrelic_rpm'
-gem 'faker'
-gem 'pry-nav'
-gem 'pry-rails'
-gem 'pry-coolline'
-gem 'awesome_print'
+gem 'acts_as_commentable_with_threading'
+gem 'ledermann-rails-settings', :require => 'rails-settings'
 gem 'letsrate'
+
+gem 'awesome_print'
+
+gem 'font-awesome-sass'
+gem 'jquery-ui-rails'
+gem 'jquery-rails'
 gem 'jquery-star-rating-rails'
 gem 'jquery-multiselect-rails', :git => 'git://github.com/arojoal/jquery-multiselect-rails.git'
-gem 'rack-block'
-gem "rails-backbone"
 gem 'underscore-rails'
 
-gem 'ledermann-rails-settings', :require => 'rails-settings'
+gem 'rack-block'
 
 group :development, :local do
+  gem 'thin'
   gem 'rack-mini-profiler'
   gem 'bullet'
   gem 'quiet_assets'
   gem 'meta_request','0.2.5'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'jasmine'
   gem 'guard'
   gem 'guard-livereload'
-  gem 'guard-jasmine'
+end
+
+group :development, :test do
+  gem 'pry-nav'
+  gem 'pry-rails'
+  gem 'pry-coolline'
 end
 
 group :test do
@@ -93,25 +82,19 @@ group :test do
   gem 'guard-rspec'
   gem 'launchy'
   gem 'mocha'
-  gem 'jasmine'
-  gem 'guard-jasmine'
 end
 
-#gem 'activerecord-mysql2-adapter'
-#gem 'activerecord-jdbc-adapter'
-#gem 'activerecord-jdbcmysql-adapter'
+group :production do
+  gem 'newrelic_rpm'
+  gem 'unicorn'
+end
 
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+# Gems used only for assets and not required
+# in production environments by default.
+group :assets do
+  gem 'sass-rails',   '~> 3.2.3'
+  gem 'coffee-rails', '~> 3.2.1'
+  gem 'bootstrap-sass', '~> 2.2.2.0'
 
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'
+  gem 'uglifier', '>= 1.0.3'
+end

@@ -23,9 +23,5 @@
 //= require jquery.multiselect.filter
 //= require jquery_nested_form
 //= require underscore
-//= require backbone
-//= require backbone_rails_sync
-//= require backbone_datalink
-//= require backbone/transbucket
 //= require tinymce
 //= require_tree .

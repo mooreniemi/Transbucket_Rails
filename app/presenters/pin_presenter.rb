@@ -19,7 +19,7 @@ class PinPresenter
   end
 
   def all
-    pins = query.blank? ? Pin.recent.paginate(:page => page) : Pin.search(query, :page => page, :per_page => 20)
+    pins = query.blank? ? Pin.includes(:comments).recent.paginate(:page => page) : Pin.search(query, :page => page, :per_page => 20)
 
     pins = Pin.by_user(user).paginate(:page => page) if user.present?
     general.each {|s| pins = pins.send(s)} if general.present?

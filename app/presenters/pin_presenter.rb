@@ -19,7 +19,7 @@ class PinPresenter
   end
 
   def all
-    pins = query.blank? ? Pin.includes(:comments).recent.paginate(:page => page) : Pin.search(query, :page => page, :per_page => 20)
+    pins = query.blank? ? Pin.recent.paginate(:page => page) : Pin.search(query, :page => page, :per_page => 20)
 
     pins = Pin.by_user(user).paginate(:page => page) if user.present?
     general.each {|s| pins = pins.send(s)} if general.present?
@@ -32,13 +32,18 @@ class PinPresenter
   end
 
   def show_new_comments(pin)
-    sign_in = User.find(current_user).last_sign_in_at
-    comments = Comment.where('created_at > ? and commentable_id = ? and state = ?', sign_in, pin.id, 'published')
+    # TODO huge performance hit happening here
+    comments = Comment.new_comments_to(signed_in_user, pin.id)
   end
 
   def format_scope(scope)
     scope.collect!(&:parameterize).collect!(&:underscore).collect!(&:to_sym)
     scope
+  end
+
+  private
+  def signed_in_user
+    User.find(current_user).last_sign_in_at
   end
 
 end

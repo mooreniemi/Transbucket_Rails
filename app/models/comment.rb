@@ -24,6 +24,10 @@ class Comment < ActiveRecord::Base
     where(:commentable_type => commentable_str.to_s, :commentable_id => commentable_id).order('created_at DESC')
   }
 
+  def self.new_comments_to(user, on_pin)
+    where('created_at > ? and commentable_id = ? and state = ?', user, on_pin, 'published')
+  end
+
   def self.find_commentable(commentable_str, commentable_id)
     commentable_str.constantize.find(commentable_id)
   end

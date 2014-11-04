@@ -7,7 +7,7 @@ class Pin < ActiveRecord::Base
   belongs_to :procedure
 
   has_many :pin_images, :dependent => :destroy
-  has_many :comments, :foreign_key => 'commentable_id', :class_name => "ActsAsVotable::Vote"
+  has_many :comments, :foreign_key => 'commentable_id'
 
   accepts_nested_attributes_for :pin_images, :reject_if => proc {|attributes| !attributes.keys.include?(:photo) }
   accepts_nested_attributes_for :surgeon, :reject_if => proc {|attributes| attributes.all? {|k,v| v.blank?} }

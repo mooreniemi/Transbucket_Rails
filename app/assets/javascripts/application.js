@@ -12,5 +12,14 @@
 //
 
 //= require jquery
-//= require turbolinks
+//= require jquery_ujs
+//= require jquery-ui
+//= require jquery.masonry.min.js
+//= require bootstrap
+//= require jquery-star-rating
+//= require jquery.multiselect
+//= require jquery.multiselect.filter
+//= require jquery_nested_form
+//= require underscore
+//= require tinymce
 //= require_tree .

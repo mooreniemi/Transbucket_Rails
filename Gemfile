@@ -3,10 +3,11 @@ source 'https://rubygems.org'
 ruby '1.9.3'
 gem 'rails', '3.2.12'
 
-# for connecting to legacy stuff
+# for thinking sphinx
 # gem 'mysql'
-# gem 'mysql2', '0.3.12b5'
-# gem 'activerecord-mysql-adapter'
+gem 'mysql2', '0.3.12b5'
+gem 'activerecord-mysql-adapter'
+
 gem 'pg'
 
 gem 'will_paginate', '~> 3.0'

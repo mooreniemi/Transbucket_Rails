@@ -10,7 +10,7 @@ class Flag
     if flagger_is_pin_author?
       content.review!
       return {status: :removed}
-    elsif content.votes_for.down.size >= 2
+    elsif content.votes.down.size >= 2
       content.review!
       return {status: :removed}
     else

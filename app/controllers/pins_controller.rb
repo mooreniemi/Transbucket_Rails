@@ -4,20 +4,8 @@ before_filter :authenticate_user!
   # GET /pins
   # GET /pins.json
   def index
-    @query = sanitize(params[:query]) if params[:query]
-
-    opts = {
-      query: @query,
-      scope: params[:scope],
-      surgeon: params[:surgeon],
-      procedure: params[:procedure],
-      user: params[:user],
-      current_user: current_user,
-      page: params[:page]
-    }
-
-
-    @presenter = PinPresenter.new(opts)
+    @presenter = PinPresenter.new(pin_params)
+    
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -115,6 +103,21 @@ before_filter :authenticate_user!
   end
 
   private
+  def pin_params
+    {
+      query: query,
+      scope: params[:scope],
+      surgeon: params[:surgeon],
+      procedure: params[:procedure],
+      user: params[:user],
+      current_user: current_user,
+      page: params[:page]
+    }
+  end
+
+  def query
+    sanitize(params[:query]) if params[:query]
+  end
 
   def sanitize(query)
     query.gsub!(/(dr.|Dr.|dr|Dr)/, '')

@@ -44,6 +44,8 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
+  config.use_transactional_fixtures = true
+
   # from previous rails build
   config.include FactoryGirl::Syntax::Methods
   config.include Devise::TestHelpers, :type => :controller

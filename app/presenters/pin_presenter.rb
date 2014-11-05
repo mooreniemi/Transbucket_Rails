@@ -11,6 +11,7 @@ class PinPresenter
     @user = opts.fetch(:user) if opts[:user].present?
     @procedures = [opts.fetch(:procedure)] if opts[:procedure].present?
     @surgeons = [opts.fetch(:surgeon)] if opts[:surgeon].present?
+
     @general = format_scope(opts.fetch(:scope)) if opts[:scope].present?
   end
 
@@ -37,12 +38,12 @@ class PinPresenter
     comments = Comment.new_comments_to(signed_in_user, pin.id)
   end
 
+  private
   def format_scope(scope)
     scope.collect!(&:parameterize).collect!(&:underscore).collect!(&:to_sym)
     scope
   end
 
-  private
   def signed_in_user
     User.find(current_user).last_sign_in_at
   end

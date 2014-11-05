@@ -1,5 +1,4 @@
-<% if pin.present? %>
-  <% if pin.pin_images.present? %>
+<% if pin.pin_images.present?  %>
     <div class="box">
       <div class="actions">
       <label class="label-with-popover" data-placement="left" data-content="Flags from 3 different users will remove content pending review by a moderator." data-title="Flag this content." data-trigger="hover">
@@ -20,6 +19,7 @@
 
     <% if pin.published? %>
       <div class="image">
+      <!-- TODO this needs to not be like this -->
         <% if @presenter.show_new_comments(pin).present? %>
           <div class="comment_box">
             <p><%= "<i class='icon-comment'></i> <b>New Comment: </b>".html_safe + pin.comment_threads.last.body.split(" ").first(50).join(" ") %></p>
@@ -32,7 +32,6 @@
           </p>
         </div>
       <% end %>
-  <% end %>
 
   <script>
     $('.label-with-popover').popover();

@@ -1,9 +1,8 @@
 <% if params[:query].present? %>
   <% title 'Search Result for ' + params[:query].titleize %>
+<% else %>
+  <% title 'Recent Submissions' %>
 <% end %>
-
-<%#= javascript_include_tag('bootstrap-multiselect') %>
-<%#= stylesheet_link_tag('bootstrap-multiselect') %>
 
 <div id="controls" class="row">
   <div id="form_container" class="col-md-6 center">
@@ -18,21 +17,21 @@
 </div>
 
 <br clear="both" />
-<% title 'Recent Submissions' unless params[:query].present? %>
-  <div id="pins" class="js-masonry" data-masonry-options='{ "columnWidth": 200, "itemSelector": ".box" }'>
 
-    <div id="pin_container">
-      <%= render @presenter.all %>
-    </div>
+<div id="pins" class="js-masonry" data-masonry-options='{ "columnWidth": 200, "itemSelector": ".box" }'>
 
+  <div id="pin_container">
+    <%= render @presenter.all %>
   </div>
 
-  <br>
-  <br clear="both" />
+</div>
 
-  <div class="page_container col-md-6 pull-right">
-    <%= will_paginate @presenter.all unless @presenter.all.nil? %>
-  </div>
+<br>
+<br clear="both" />
+
+<div class="page_container col-md-6 pull-right">
+  <%= will_paginate @presenter.all unless @presenter.all.nil? %>
+</div>
 
 <script>
   $("#scope").multiselect({

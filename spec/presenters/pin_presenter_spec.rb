@@ -1,22 +1,17 @@
 require 'spec_helper'
 
 describe PinPresenter do
+  let(:pins) { create_list(:pin, 3) }
+  let(:user) { create(:user) }
+
   it 'returns pins' do
-    user = create(:user)
-    Pin.destroy_all
-
-    pins = create_list(:pin, 3)
-
     presenter = PinPresenter.new({current_user: user})
 
-    expect(presenter.all).to eq(pins.reverse)
+    expect(presenter.all).to eq(pins.to_a.reverse)
   end
 
   it 'returns pins scoped by surgeon' do
     surgeon = create(:surgeon)
-    user = create(:user)
-
-    pins = create_list(:pin, 3)
 
     pins.last.update_attributes(surgeon_id: surgeon.id)
 
@@ -27,9 +22,6 @@ describe PinPresenter do
 
   it 'returns pins scoped by procedure' do
     procedure = create(:procedure)
-    user = create(:user)
-
-    pins = create_list(:pin, 3)
 
     pins.last.update_attributes(procedure_id: procedure.id)
 
@@ -40,8 +32,6 @@ describe PinPresenter do
 
   it 'returns pins scoped by user' do
     current_user = create(:user)
-
-    pins = create_list(:pin, 3)
 
     user_id = pins.last.user_id
 

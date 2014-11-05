@@ -145,7 +145,7 @@ GEM
     font-awesome-sass (4.2.2)
       sass (~> 3.2)
     formatador (0.2.5)
-    guard (2.7.3)
+    guard (2.8.0)
       formatador (>= 0.2.4)
       listen (~> 2.7)
       lumberjack (~> 1.0)
@@ -202,7 +202,7 @@ GEM
     multi_json (1.10.1)
     multipart-post (2.0.0)
     mysql (2.9.1)
-    mysql2 (0.3.12b5)
+    mysql2 (0.3.16)
     nested_form (0.3.2)
     newrelic_rpm (3.9.6.257)
     nokogiri (1.6.3.1)
@@ -315,7 +315,7 @@ GEM
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0)
       rack (~> 1.0)
-    thinking-sphinx (3.1.1)
+    thinking-sphinx (3.1.2)
       activerecord (>= 3.1.0)
       builder (>= 2.1.2)
       innertube (>= 1.0.2)
@@ -327,7 +327,7 @@ GEM
     tilt (1.4.1)
     timers (4.0.1)
       hitimes
-    tinymce-rails (4.1.5)
+    tinymce-rails (4.1.6)
       railties (>= 3.1.1)
     treetop (1.4.15)
       polyglot
@@ -395,7 +395,7 @@ DEPENDENCIES
   letsrate
   meta-tags
   meta_request
-  mysql2 (= 0.3.12b5)
+  mysql2
   nested_form
   newrelic_rpm
   paperclip (~> 3.0)

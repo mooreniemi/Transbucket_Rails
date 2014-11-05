@@ -8,8 +8,7 @@ gem 'bower-rails', '~> 0.7.3'
 gem 'protected_attributes'
 
 # for thinking sphinx
-# gem 'mysql'
-gem 'mysql2', '0.3.12b5'
+gem 'mysql2'
 gem 'activerecord-mysql-adapter'
 
 gem 'pg'

@@ -14,7 +14,7 @@ gem 'activerecord-mysql-adapter'
 gem 'pg'
 
 gem 'will_paginate', '~> 3.0'
-gem 'paperclip', '~> 3.0'
+gem 'paperclip'
 
 gem 'aws-sdk'
 gem 'aws-s3'

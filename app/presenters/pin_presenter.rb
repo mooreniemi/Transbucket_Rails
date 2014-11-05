@@ -1,9 +1,8 @@
 class PinPresenter
-  attr_accessor :query, :user, :query, :procedures, :surgeons, :page, :general, :current_user
+  attr_accessor :query, :user, :query, :procedures, :surgeons, :page, :general
 
   def initialize(opts = {})
     @page = opts.fetch(:page) if opts[:page].present?
-    @current_user = opts.fetch(:current_user) if opts[:current_user].present?
 
     @query = opts.fetch(:query) { [] } if opts[:query].present?
 

@@ -59,6 +59,7 @@ gem 'underscore-rails'
 gem 'rack-block'
 
 group :development do
+  gem 'seed_dump'
   gem 'thin'
   gem 'quiet_assets'
   gem 'meta_request'

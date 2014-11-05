@@ -1,16 +1,17 @@
 class PinPresenter
+  using SafeFetch
   attr_accessor :query, :user, :query, :procedures, :surgeons, :page, :general
 
   def initialize(opts = {})
-    @page = opts.fetch(:page) if opts[:page].present?
+    @page = opts.safe_fetch(:page)
 
-    @query = opts.fetch(:query) { [] } if opts[:query].present?
+    @query = opts.safe_fetch(:query) { [] }
 
-    @user = opts.fetch(:user) if opts[:user].present?
-    @procedures = [opts.fetch(:procedure)] if opts[:procedure].present?
-    @surgeons = [opts.fetch(:surgeon)] if opts[:surgeon].present?
+    @user = opts.safe_fetch(:user)
+    @procedures = [opts.safe_fetch(:procedure)]
+    @surgeons = [opts.safe_fetch(:surgeon)]
 
-    @general = format_scope(opts.fetch(:scope)) if opts[:scope].present?
+    @general = format_scope(opts.safe_fetch(:scope)) if opts[:scope].present?
   end
 
   def all

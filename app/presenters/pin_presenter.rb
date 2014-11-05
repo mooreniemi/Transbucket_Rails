@@ -4,7 +4,7 @@ class PinPresenter
   def initialize(opts = {})
     @page = opts.fetch(:page) if opts[:page].present?
     @current_user = opts.fetch(:current_user) if opts[:current_user].present?
-    @safe_mode = @current_user.preference.present? ? UserPolicy.new(@current_user).safe_mode? : false
+    @safe_mode = check_safe_mode
 
     @query = opts.fetch(:query) { [] } if opts[:query].present?
 
@@ -45,6 +45,10 @@ class PinPresenter
   private
   def signed_in_user
     User.find(current_user).last_sign_in_at
+  end
+
+  def check_safe_mode
+    current_user.preference.present? ? UserPolicy.new(current_user).safe_mode? : false
   end
 
 end

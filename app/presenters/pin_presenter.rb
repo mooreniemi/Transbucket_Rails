@@ -33,19 +33,10 @@ class PinPresenter
     pins
   end
 
-  def show_new_comments(pin)
-    # TODO huge performance hit happening here
-    comments = Comment.new_comments_to(signed_in_user, pin.id)
-  end
-
   private
   def format_scope(scope)
     scope.collect!(&:parameterize).collect!(&:underscore).collect!(&:to_sym)
     scope
-  end
-
-  def signed_in_user
-    User.find(current_user).last_sign_in_at
   end
 
   def check_safe_mode

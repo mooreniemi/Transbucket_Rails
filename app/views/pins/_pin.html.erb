@@ -25,7 +25,7 @@
             <p><%= "<i class='icon-comment'></i> <b>New Comment: </b>".html_safe + pin.comment_threads.last.body.split(" ").first(50).join(" ") %></p>
           </div>
         <% end %>
-          <%= link_to (image_tag pin.cover_image(@presenter.safe_mode)), pin %></div>
+          <%= link_to (image_tag pin.cover_image(@safe_mode)), pin %></div>
 
         	<p class="description">
             <%= pin.procedure.name unless pin.procedure.nil? %> by <strong><%= pin.surgeon.id == 911 ? 'unknown' : 'Dr. ' + pin.surgeon.to_s %></strong>

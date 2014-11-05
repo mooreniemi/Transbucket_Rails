@@ -1,11 +1,11 @@
 class PinsController < ApplicationController
-before_filter :authenticate_user!
+  before_filter :authenticate_user!
 
   # GET /pins
   # GET /pins.json
   def index
     @presenter = PinPresenter.new(pin_params)
-    
+
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -123,5 +123,9 @@ before_filter :authenticate_user!
     query.gsub!(/(dr.|Dr.|dr|Dr)/, '')
     query.gsub!(/[\W]/, ' ')
     return Riddle.escape(query)
+  end
+
+  def safe_mode
+    current_user.preference.present? ? UserPolicy.new(current_user).safe_mode? : false
   end
 end

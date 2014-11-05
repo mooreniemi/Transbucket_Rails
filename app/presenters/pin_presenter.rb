@@ -1,10 +1,9 @@
 class PinPresenter
-  attr_accessor :query, :user, :safe_mode, :query, :procedures, :surgeons, :page, :general, :current_user
+  attr_accessor :query, :user, :query, :procedures, :surgeons, :page, :general, :current_user
 
   def initialize(opts = {})
     @page = opts.fetch(:page) if opts[:page].present?
     @current_user = opts.fetch(:current_user) if opts[:current_user].present?
-    @safe_mode = check_safe_mode
 
     @query = opts.fetch(:query) { [] } if opts[:query].present?
 
@@ -13,10 +12,6 @@ class PinPresenter
     @surgeons = [opts.fetch(:surgeon)] if opts[:surgeon].present?
 
     @general = format_scope(opts.fetch(:scope)) if opts[:scope].present?
-  end
-
-  def each(&block)
-    pins.each(&block)
   end
 
   def all
@@ -38,9 +33,4 @@ class PinPresenter
     scope.collect!(&:parameterize).collect!(&:underscore).collect!(&:to_sym)
     scope
   end
-
-  def check_safe_mode
-    current_user.preference.present? ? UserPolicy.new(current_user).safe_mode? : false
-  end
-
 end

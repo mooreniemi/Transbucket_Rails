@@ -1,12 +1,10 @@
 require 'spec_helper'
 
 describe PinPresenter do
-  let(:pins) { create_list(:pin, 3) }
+  let!(:pins) { create_list(:pin, 3) }
 
   it 'returns pins' do
-    presenter = PinPresenter.new({})
-
-    expect(presenter.all).to eq(pins.to_a.reverse)
+    expect(PinPresenter.new.all).to eq(pins.to_a.reverse)
   end
 
   it 'returns pins scoped by surgeon' do
@@ -30,11 +28,16 @@ describe PinPresenter do
   end
 
   it 'returns pins scoped by user' do
-
     user_id = pins.last.user_id
 
     presenter = PinPresenter.new({user: user_id})
 
     expect(presenter.all.last).to eq(pins.last)
+  end
+
+  describe '#has_keywords?' do
+    it 'checks scope content' do
+      expect(PinPresenter.new({scope: nil}).send(:has_keywords?)).to eq(false)
+    end
   end
 end

@@ -22,10 +22,10 @@ class Pin < ActiveRecord::Base
   validates :user_id, presence: true
   validates :pin_images, presence: true
 
-  scope :mtf, where(["procedure_id in (?)", Constants::MTF_IDS.map(&:to_s)])
-  scope :ftm, where(["procedure_id in (?)", Constants::FTM_IDS.map(&:to_s)])
-  scope :top, where(["procedure_id in (?)", Constants::TOP_IDS.map(&:to_s)])
-  scope :bottom, where(["procedure_id in (?)", Constants::BOTTOM_IDS.map(&:to_s)])
+  scope :mtf, -> {where(["procedure_id in (?)", Constants::MTF_IDS.map(&:to_s)])}
+  scope :ftm, -> {where(["procedure_id in (?)", Constants::FTM_IDS.map(&:to_s)])}
+  scope :top, -> {where(["procedure_id in (?)", Constants::TOP_IDS.map(&:to_s)])}
+  scope :bottom, -> {where(["procedure_id in (?)", Constants::BOTTOM_IDS.map(&:to_s)])}
 
   scope :published, -> { includes(:pin_images, :user, :surgeon, :procedure).where(state: 'published') }
   scope :pending, -> { includes(:pin_images, :user, :surgeon, :procedure).where(state: 'pending') }

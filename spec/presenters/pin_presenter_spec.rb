@@ -7,32 +7,30 @@ describe PinPresenter do
     expect(PinPresenter.new.all).to eq(pins.to_a.reverse)
   end
 
-  it 'returns pins scoped by surgeon' do
-    surgeon = create(:surgeon)
+  describe "filtering results" do
+    let(:surgeon) { build(:surgeon) }
+    let(:procedure) { build(:procedure) }
+    let(:user_id) { pins.last.user_id }
 
-    pins.last.update_attributes(surgeon_id: surgeon.id)
+    it 'returns pins scoped by surgeon' do
+      pins.last.update_attributes(surgeon_id: surgeon.id)
+      presenter = PinPresenter.new({surgeon: surgeon.id})
 
-    presenter = PinPresenter.new({surgeon: surgeon.id})
+      expect(presenter.all.last).to eq(pins.last)
+    end
 
-    expect(presenter.all.last).to eq(pins.last)
-  end
+    it 'returns pins scoped by procedure' do
+      pins.last.update_attributes(procedure_id: procedure.id)
+      presenter = PinPresenter.new({procedure: procedure.id})
 
-  it 'returns pins scoped by procedure' do
-    procedure = create(:procedure)
+      expect(presenter.all.last).to eq(pins.last)
+    end
 
-    pins.last.update_attributes(procedure_id: procedure.id)
+    it 'returns pins scoped by user' do
+      presenter = PinPresenter.new({user: user_id})
 
-    presenter = PinPresenter.new({procedure: procedure.id})
-
-    expect(presenter.all.last).to eq(pins.last)
-  end
-
-  it 'returns pins scoped by user' do
-    user_id = pins.last.user_id
-
-    presenter = PinPresenter.new({user: user_id})
-
-    expect(presenter.all.last).to eq(pins.last)
+      expect(presenter.all.last).to eq(pins.last)
+    end
   end
 
   describe '#has_keywords?' do

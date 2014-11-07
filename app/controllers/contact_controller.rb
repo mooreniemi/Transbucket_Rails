@@ -5,7 +5,7 @@ class ContactController < ApplicationController
   end
 
   def create
-    @message = Message.new(params[:message])
+    @message = Message.new(message_params)
     
     if @message.valid?
       NotificationsMailer.new_message(@message).deliver
@@ -14,6 +14,10 @@ class ContactController < ApplicationController
       flash.now.alert = "Please fill all fields."
       render :new
     end
+  end
+
+  def message_params
+    params.require(:message)
   end
 
 end

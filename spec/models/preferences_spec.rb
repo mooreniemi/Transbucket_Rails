@@ -1,5 +1,9 @@
 require 'spec_helper'
 
 describe Preference do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "has many users" do
+    preference = build(:preference)
+    user = build(:user, preference: preference)
+    expect(user.preference).to eq(preference)
+  end
 end

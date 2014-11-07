@@ -1,5 +1,9 @@
 require 'spec_helper'
 
 describe Gender do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "has many users" do
+    gender = build(:gender)
+    user = build(:user, gender: gender)
+    expect(user.gender.name).to eq("GenderQueer")
+  end
 end

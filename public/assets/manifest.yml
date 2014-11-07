@@ -181,3 +181,6 @@ tinymce/skins/lightgray/skin.min.css: tinymce/skins/lightgray/skin.min.css
 tinymce/themes/modern/theme.js: tinymce/themes/modern/theme.js
 tinymce/tinymce.jquery.js: tinymce/tinymce.jquery.js
 tinymce/tinymce.js: tinymce/tinymce.js
+tinymce/plugins/colorpicker/plugin.js: tinymce/plugins/colorpicker/plugin.js
+tinymce/plugins/example/dialog.html: tinymce/plugins/example/dialog.html
+tinymce/plugins/textpattern/plugin.js: tinymce/plugins/textpattern/plugin.js

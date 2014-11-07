@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
-ruby "2.1.3"
+
+# https://devcenter.heroku.com/articles/ruby-versions
+ruby '2.1.3'
 
 gem 'rails', '4.1.4'
 

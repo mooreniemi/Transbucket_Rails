@@ -22,6 +22,8 @@
 //= require underscore/underscore-min
 //= require tinymce/tinymce.min
 //= require tinymce/themes/modern/theme.min
+//= require tinymce/plugins/table/plugin.min
+//= require tinymce/plugins/fullscreen/plugin.min
 //= require jquery-bridget/jquery.bridget
 //= require matches-selector/matches-selector
 //= require get-style-property/get-style-property

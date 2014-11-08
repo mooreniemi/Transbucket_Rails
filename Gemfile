@@ -52,7 +52,7 @@ gem 'letsrate'
 
 gem 'awesome_print'
 
-gem 'font-awesome-sass'
+gem 'font-awesome-rails'
 
 gem 'rack-block'
 

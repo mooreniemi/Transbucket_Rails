@@ -53,11 +53,6 @@ gem 'letsrate'
 gem 'awesome_print'
 
 gem 'font-awesome-sass'
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
-gem 'jquery-star-rating-rails'
-gem 'jquery-multiselect-rails', :git => 'git://github.com/arojoal/jquery-multiselect-rails.git'
-gem 'underscore-rails'
 
 gem 'rack-block'
 

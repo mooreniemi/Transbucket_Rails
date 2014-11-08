@@ -8,6 +8,8 @@
     "jquery-masonry": "latest",
     "jquery": "latest",
     "jquery-multiselect": "latest",
-    "tinymce": "latest"
+    "jquery-star-rating": "latest",
+    "tinymce": "latest",
+    "underscore": "latest"
   }
 }

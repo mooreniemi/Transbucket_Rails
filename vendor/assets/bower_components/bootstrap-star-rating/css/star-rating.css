@@ -1,6 +1,6 @@
 /*!
  * @copyright &copy; Kartik Visweswaran, Krajee.com, 2014
- * @version 2.5.0
+ * @version 3.2.0
  *
  * A simple yet powerful JQuery star rating plugin that allows rendering
  * fractional star ratings and supports Right to Left (RTL) input.
@@ -8,7 +8,14 @@
  * For more JQuery/Bootstrap plugins and demos visit http://plugins.krajee.com
  * For more Yii related demos visit http://demos.krajee.com
  */
-
+.rating-loading {
+    width: 25px;
+    height: 25px;
+    font-size: 0px;
+    color: #fff;
+    background: transparent url('../img/loading.gif') top left no-repeat;
+    border: none;
+}
 /*
  * Stars
  */

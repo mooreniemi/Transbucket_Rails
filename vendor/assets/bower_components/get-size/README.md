@@ -16,18 +16,14 @@ Tested in IE8, IE9 and good browsers.
 
 ## Install
 
-Install with [Bower](http://bower.io) :bird:
+Install with [Bower](http://bower.io) :bird:: `bower install get-size`
 
-``` bash
-bower install desandro/get-size
-```
-
-Or [Component](http://github.com/component/component)
-
-``` bash
-component install desandro/get-size
-```
+Install with npm: `npm install get-size`
 
 ## Fractional values in IE8
 
 For percentage or `em`-based sizes, IE8 does not support fractional values. getSize will round to the nearest value.
+
+## MIT License
+
+getSize is released under the [MIT License](http://desandro.mit-license.org/).

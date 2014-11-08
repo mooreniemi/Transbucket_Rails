@@ -1,6 +1,7 @@
-/**
- * getSize v1.1.7
+/*!
+ * getSize v1.1.8
  * measure size of elements
+ * MIT license
  */
 
 /*jshint browser: true, strict: true, undef: true, unused: true */
@@ -205,7 +206,7 @@ if ( typeof define === 'function' && define.amd ) {
   define( [ 'get-style-property/get-style-property' ], defineGetSize );
 } else if ( typeof exports === 'object' ) {
   // CommonJS for Component
-  module.exports = defineGetSize( require('get-style-property') );
+  module.exports = defineGetSize( require('desandro-get-style-property') );
 } else {
   // browser global
   window.getSize = defineGetSize( window.getStyleProperty );

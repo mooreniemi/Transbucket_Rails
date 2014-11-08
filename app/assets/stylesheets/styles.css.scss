@@ -3,12 +3,13 @@ $navbarBackground: white;
 $btnPrimaryBackground: purple;
 
 /*@import 'bootstrap';
+
+@import 'bootstrap-responsive';*/
+
 body{
     padding-top: 60px;
     background-color:#ccc;
 }
-
-@import 'bootstrap-responsive';*/
 
 /*.navbar-inner{
     @include box-shadow(none !important);

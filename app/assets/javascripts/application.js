@@ -15,10 +15,11 @@
 //= require jquery-ujs/src/rails
 //= require jquery-ui
 //= require jquery-masonry/masonry
-//= require bootstrap
+//= require bootstrap/dist/js/bootstrap.min
 //= require jquery-star-rating/min/rating
 //= require jquery-multiselect/jquery.multiselect
 //= require jquery_nested_form
 //= require underscore/underscore-min
 //= require tinymce/tinymce.min
+//= require tinymce/themes/modern/theme.min
 //= require_tree .

@@ -9,5 +9,10 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+ *= require bootstrap/dist/css/bootstrap.min
+ *= require jquery-star-rating/min/rating
+ *= require jquery-multiselect/jquery.multiselect
+ *= require tinymce/skins/lightgray/skin.min
+ *= require font-awesome/css/font-awesome
  *= require_tree .
  */

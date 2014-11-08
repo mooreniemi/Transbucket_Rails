@@ -10,6 +10,7 @@
  *
  *= require_self
  *= require bootstrap/dist/css/bootstrap.min
+ *= require bootstrap-star-rating/css/star-rating.min
  *= require jquery-star-rating/min/rating
  *= require jquery-multiselect/jquery.multiselect
  *= require tinymce/skins/lightgray/skin.min

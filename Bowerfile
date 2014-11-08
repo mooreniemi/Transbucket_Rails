@@ -3,9 +3,15 @@
 
 asset 'bootstrap'
 asset 'bootstrap-star-rating'
+
 asset 'font-awesome'
+
 asset 'jquery-ui'
 asset 'jquery-masonry'
 asset 'jquery'
 asset 'jquery-multiselect'
+asset 'jquery-star-rating'
+
 asset 'tinymce'
+
+asset 'underscore'

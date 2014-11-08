@@ -1,11 +1,3 @@
-GIT
-  remote: git://github.com/arojoal/jquery-multiselect-rails.git
-  revision: 858cebe4e3178ae3c5ebc408478b82bf58332b75
-  specs:
-    jquery-multiselect-rails (0.0.4)
-      jquery-rails
-      jquery-ui-rails
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -166,13 +158,6 @@ GEM
     innertube (1.1.0)
     joiner (0.3.3)
       activerecord (>= 4.1.0)
-    jquery-rails (3.1.2)
-      railties (>= 3.0, < 5.0)
-      thor (>= 0.14, < 2.0)
-    jquery-star-rating-rails (4.0.4)
-      rails (>= 3.1.0)
-    jquery-ui-rails (5.0.2)
-      railties (>= 3.2.16)
     json (1.8.1)
     kgio (2.9.2)
     launchy (2.4.3)
@@ -347,7 +332,6 @@ GEM
     uglifier (2.5.3)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
-    underscore-rails (1.7.0)
     unicode_utils (1.4.0)
     unicorn (4.8.3)
       kgio (~> 2.6)
@@ -394,10 +378,6 @@ DEPENDENCIES
   guard-livereload
   guard-rspec
   htmlentities
-  jquery-multiselect-rails!
-  jquery-rails
-  jquery-star-rating-rails
-  jquery-ui-rails
   launchy
   ledermann-rails-settings
   letsrate
@@ -430,6 +410,5 @@ DEPENDENCIES
   tinymce-rails
   turbolinks
   uglifier (>= 1.0.3)
-  underscore-rails
   unicorn
   will_paginate (~> 3.0)

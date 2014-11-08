@@ -1,6 +1,6 @@
 {
   "name": "bootstrap-star-rating",
-  "version": "2.5.0",
+  "version": "3.2.0",
   "homepage": "https://github.com/kartik-v/bootstrap-star-rating",
   "authors": [
     "Kartik Visweswaran <kartikv2@gmail.com>"
@@ -29,11 +29,11 @@
     "test",
     "tests"
   ],
-  "_release": "2.5.0",
+  "_release": "3.2.0",
   "_resolution": {
     "type": "version",
-    "tag": "v2.5.0",
-    "commit": "c79f59ed0943a4cd78ef2947bcc384a66fc3236a"
+    "tag": "v3.2.0",
+    "commit": "96a92e7781bba947fce9974e570299595eeb6cdd"
   },
   "_source": "git://github.com/kartik-v/bootstrap-star-rating.git",
   "_target": "*",

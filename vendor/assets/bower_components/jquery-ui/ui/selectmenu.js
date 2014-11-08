@@ -1,5 +1,5 @@
 /*!
- * jQuery UI Selectmenu 1.11.0
+ * jQuery UI Selectmenu 1.11.2
  * http://jqueryui.com
  *
  * Copyright 2014 jQuery Foundation and other contributors
@@ -27,7 +27,7 @@
 }(function( $ ) {
 
 return $.widget( "ui.selectmenu", {
-	version: "1.11.0",
+	version: "1.11.2",
 	defaultElement: "<select>",
 	options: {
 		appendTo: null,
@@ -106,7 +106,7 @@ return $.widget( "ui.selectmenu", {
 			.appendTo( this.button );
 
 		this._setText( this.buttonText, this.element.find( "option:selected" ).text() );
-		this._setOption( "width", this.options.width );
+		this._resizeButton();
 
 		this._on( this.button, this._buttonEvents );
 		this.button.one( "focusin", function() {
@@ -144,6 +144,12 @@ return $.widget( "ui.selectmenu", {
 				role: "listbox",
 				select: function( event, ui ) {
 					event.preventDefault();
+
+					// support: IE8
+					// If the item was selected via a click, the text selection
+					// will be destroyed in IE
+					that._setSelection();
+
 					that._select( ui.item.data( "ui-selectmenu-item" ), event );
 				},
 				focus: function( event, ui ) {
@@ -186,7 +192,9 @@ return $.widget( "ui.selectmenu", {
 	refresh: function() {
 		this._refreshMenu();
 		this._setText( this.buttonText, this._getSelectedItem().text() );
-		this._setOption( "width", this.options.width );
+		if ( !this.options.width ) {
+			this._resizeButton();
+		}
 	},
 
 	_refreshMenu: function() {
@@ -252,6 +260,7 @@ return $.widget( "ui.selectmenu", {
 		this.isOpen = false;
 		this._toggleAttr();
 
+		this.range = null;
 		this._off( this.document );
 
 		this._trigger( "close", event );
@@ -340,6 +349,29 @@ return $.widget( "ui.selectmenu", {
 		this[ this.isOpen ? "close" : "open" ]( event );
 	},
 
+	_setSelection: function() {
+		var selection;
+
+		if ( !this.range ) {
+			return;
+		}
+
+		if ( window.getSelection ) {
+			selection = window.getSelection();
+			selection.removeAllRanges();
+			selection.addRange( this.range );
+
+		// support: IE8
+		} else {
+			this.range.select();
+		}
+
+		// support: IE
+		// Setting the text selection kills the button focus in IE, but
+		// restoring the focus doesn't kill the selection.
+		this.button.focus();
+	},
+
 	_documentClick: {
 		mousedown: function( event ) {
 			if ( !this.isOpen ) {
@@ -353,7 +385,28 @@ return $.widget( "ui.selectmenu", {
 	},
 
 	_buttonEvents: {
-		click: "_toggle",
+
+		// Prevent text selection from being reset when interacting with the selectmenu (#10144)
+		mousedown: function() {
+			var selection;
+
+			if ( window.getSelection ) {
+				selection = window.getSelection();
+				if ( selection.rangeCount ) {
+					this.range = selection.getRangeAt( 0 );
+				}
+
+			// support: IE8
+			} else {
+				this.range = document.selection.createRange();
+			}
+		},
+
+		click: function( event ) {
+			this._setSelection();
+			this._toggle( event );
+		},
+
 		keydown: function( event ) {
 			var preventDefault = true;
 			switch ( event.keyCode ) {
@@ -475,10 +528,7 @@ return $.widget( "ui.selectmenu", {
 		}
 
 		if ( key === "width" ) {
-			if ( !value ) {
-				value = this.element.outerWidth();
-			}
-			this.button.outerWidth( value );
+			this._resizeButton();
 		}
 	},
 
@@ -509,6 +559,17 @@ return $.widget( "ui.selectmenu", {
 			.attr( "aria-expanded", this.isOpen );
 		this.menuWrap.toggleClass( "ui-selectmenu-open", this.isOpen );
 		this.menu.attr( "aria-hidden", !this.isOpen );
+	},
+
+	_resizeButton: function() {
+		var width = this.options.width;
+
+		if ( !width ) {
+			width = this.element.show().outerWidth();
+			this.element.hide();
+		}
+
+		this.button.outerWidth( width );
 	},
 
 	_resizeMenu: function() {

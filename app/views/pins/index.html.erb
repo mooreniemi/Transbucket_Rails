@@ -30,7 +30,7 @@
 <br clear="both" />
 
 <div class="page_container col-md-6 pull-right">
-  <%= will_paginate @presenter.all unless @presenter.all.nil? %>
+  <%= will_paginate @presenter.all unless @presenter.all.empty? %>
 </div>
 
 <script>

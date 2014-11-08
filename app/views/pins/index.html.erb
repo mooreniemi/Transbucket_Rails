@@ -1,3 +1,5 @@
+<%= javascript_include_tag "pins" %>
+
 <% if params[:query].present? %>
   <% title 'Search Result for ' + params[:query].titleize %>
 <% else %>
@@ -32,29 +34,3 @@
 <div class="page_container col-md-6 pull-right">
   <%= will_paginate @presenter.all unless @presenter.all.empty? %>
 </div>
-
-<script>
-  $("#scope").multiselect({
-     position: {
-        my: 'bottom',
-        at: 'center'
-     },
-     noneSelectedText: 'General Options'
-  });
-
-  $("#surgeon").multiselect({
-     position: {
-        my: 'bottom',
-        at: 'center'
-     },
-     noneSelectedText: 'Select Surgeon(s)'
-  });
-
-  $("#procedure").multiselect({
-     position: {
-        my: 'bottom',
-        at: 'center'
-      },
-    noneSelectedText: 'Select Procedure(s)'
-  });
-</script>

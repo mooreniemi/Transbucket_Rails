@@ -21,6 +21,9 @@ module Transbucket
     # config.i18n.default_locale = :de
     config.active_record.whitelist_attributes = false
 
+    # necessary for using bower-rails!
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
+
     config.generators do |g|
       g.test_framework :rspec,
       :fixtures => false,

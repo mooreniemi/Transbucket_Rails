@@ -6,9 +6,10 @@ asset 'bootstrap-star-rating'
 
 asset 'font-awesome'
 
+asset 'jquery'
+asset 'jquery-ujs'
 asset 'jquery-ui'
 asset 'jquery-masonry'
-asset 'jquery'
 asset 'jquery-multiselect'
 asset 'jquery-star-rating'
 

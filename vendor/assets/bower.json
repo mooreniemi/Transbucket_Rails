@@ -3,7 +3,6 @@
   "dependencies": {
     "bootstrap": "latest",
     "bootstrap-star-rating": "latest",
-    "font-awesome": "latest",
     "jquery": "latest",
     "jquery-ujs": "latest",
     "jquery-ui": "latest",

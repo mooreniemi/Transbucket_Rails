@@ -134,8 +134,8 @@ GEM
       pusher-client (~> 0.3)
       riddle (>= 1.5.6)
       thinking-sphinx
-    font-awesome-sass (4.2.2)
-      sass (~> 3.2)
+    font-awesome-rails (4.2.0.0)
+      railties (>= 3.2, < 5.0)
     formatador (0.2.5)
     guard (2.8.0)
       formatador (>= 0.2.4)
@@ -373,7 +373,7 @@ DEPENDENCIES
   faker
   figaro
   flying-sphinx
-  font-awesome-sass
+  font-awesome-rails
   guard
   guard-livereload
   guard-rspec

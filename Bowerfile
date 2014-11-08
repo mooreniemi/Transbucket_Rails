@@ -4,8 +4,6 @@
 asset 'bootstrap'
 asset 'bootstrap-star-rating'
 
-asset 'font-awesome'
-
 asset 'jquery'
 asset 'jquery-ujs'
 asset 'jquery-ui'

@@ -11,7 +11,7 @@
  *= require_self
  *= require font-awesome
  *= require jquery-star-rating/min/rating
- *= require jquery-multiselect/jquery.multiselect
+ *= require multiselect/css/multi-select
  *= require jquery-ui/themes/smoothness/jquery-ui.min
  *= require jquery-ui/themes/smoothness/theme
  *= require bootstrap/dist/css/bootstrap.min

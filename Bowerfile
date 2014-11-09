@@ -8,7 +8,7 @@ asset 'jquery'
 asset 'jquery-ujs'
 asset 'jquery-ui'
 asset 'jquery-masonry'
-asset 'jquery-multiselect'
+asset 'multiselect'
 asset 'jquery-star-rating'
 
 asset 'underscore'

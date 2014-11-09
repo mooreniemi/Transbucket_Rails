@@ -4,18 +4,6 @@
 <% else %>
 <% title 'Recent Submissions' %>
 <% end %>
-<div id="controls" class="row">
-  <div id="form_container" class="col-md-6 center">
-    <%= form_tag pins_path, :method => 'get', :class => 'scope_dropdown', remote: true do %>
-    <%= select_tag :scope, options_from_collection_for_select(Pin::SCOPES, 'to_s', 'humanize'), {multiple: true} %>
-    <%= select_tag :surgeon, options_from_collection_for_select(Surgeon.order('last_name asc'), "id", "to_s"), {multiple: true} %>
-    <%= select_tag :procedure, options_from_collection_for_select(Procedure.order('name asc'), "id", "name"), {multiple: true} %>
-    <%= hidden_field_tag :user, params[:user] if params[:user].present? %>
-    <%= submit_tag "Filter", class: 'btn dropdown-toggle sr-only' %> <%= submit_tag "Clear", :type => "reset", class: 'btn dropdown-toggle sr-only' %>
-    <% end %>
-  </div>
-</div>
-<br clear="both" />
 <div id="pins" class="js-masonry" data-masonry-options='{ "columnWidth": 200, "itemSelector": ".box" }'>
   <div id="pin_container">
     <%= render @presenter.pins %>

@@ -1,26 +1,21 @@
 $(document).ready(function() {
-    $("#scope").multiselect({
-        position: {
-            my: 'bottom',
-            at: 'center'
-        },
-        noneSelectedText: 'General Options'
+    $("#scope").multiSelect({
+        afterSelect: function() {
+            $("#submit-filter").trigger("click");
+        }
     });
 
-    $("#surgeon").multiselect({
-        position: {
-            my: 'bottom',
-            at: 'center'
-        },
-        noneSelectedText: 'Select Surgeon(s)'
+    $("#surgeon").multiSelect({
+        afterSelect: function() {
+            $("#submit-filter").trigger("click");
+        }
     });
 
-    $("#procedure").multiselect({
-        position: {
-            my: 'bottom',
-            at: 'center'
-        },
-        noneSelectedText: 'Select Procedure(s)'
+    $("#procedure").multiSelect({
+        afterSelect: function() {
+            $("#submit-filter").trigger("click");
+        }
     });
+
     $('.label-with-popover').popover();
 });

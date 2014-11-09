@@ -1,2 +1,2 @@
 $("#pin_container").html("<%= escape_javascript(render @presenter.pins) %>");
-$(".page_container").html("<%= escape_javascript(will_paginate @presenter.pins) %>");
+$(".page_container").html("<%= escape_javascript(will_paginate @presenter.pins) unless @presenter.pins.empty? %>");

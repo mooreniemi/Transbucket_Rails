@@ -1,0 +1,9 @@
+<%= f.fields_for :surgeon do |surgeon_form| %>
+<div class="well">
+  <%= surgeon_form.text_field :last_name, placeholder: "Surgeon's last name" %>
+  <%= surgeon_form.text_field :first_name, placeholder: "Surgeon's first name" %>
+  <%= surgeon_form.text_field :url, placeholder: "Surgeon's URL" %>
+  <br>
+  <%= surgeon_form.link_to_remove "cancel" %>
+</div>
+<% end %>

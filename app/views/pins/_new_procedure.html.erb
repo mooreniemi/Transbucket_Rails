@@ -1,0 +1,15 @@
+<%= f.fields_for :procedure do |procedure_form| %>
+<div class="well">
+  <%= procedure_form.text_field :name, placeholder: "Name of procedure" %>
+  <br>
+  <label>Type
+    <%= procedure_form.select :body_type, options_for_select([ "Top", "Bottom", "Face", "Other" ]) %>
+  </label>
+  <br>
+  <label>Gender
+    <%= procedure_form.select :gender, options_for_select([ "FTM", "MTF" ]) %>
+  </label>
+  <br>
+  <%= procedure_form.link_to_remove "cancel" %>
+</div>
+<% end %>

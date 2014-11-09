@@ -47,6 +47,14 @@ class Pin < ActiveRecord::Base
     self.pin_images.collect {|p| p if p.photo(:medium).present? }
   end
 
+  def unknown_surgeon?
+    surgeon.id == 911
+  end
+
+  def latest_comment_snippet
+    comment_threads.last.body.split(" ").first(50).join(" ")
+  end
+
   state_machine initial: :published do
     state :pending, value: "pending"
     state :published, value: "published"

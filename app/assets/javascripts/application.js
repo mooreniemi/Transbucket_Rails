@@ -28,10 +28,10 @@
 //= require matches-selector/matches-selector
 //= require get-style-property/get-style-property
 //= require eventEmitter/EventEmitter.min
-//= require outlayer/item
 //= require eventie/eventie
 //= require doc-ready/doc-ready
-//= require outlayer/outlayer
 //= require get-size/get-size
+//= require outlayer/item
+//= require outlayer/outlayer
 //= require jquery-masonry/masonry
 //= require_tree .

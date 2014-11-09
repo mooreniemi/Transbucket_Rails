@@ -23,7 +23,7 @@ module Transbucket
 
     # necessary for using bower-rails!
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
-    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'jquery-ui', 'themes', 'cupertino', 'images')
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'jquery-ui', 'themes', 'smoothness', 'images')
 
     config.generators do |g|
       g.test_framework :rspec,

@@ -1,43 +1,35 @@
 <% Struct.new("User", :email, :username) # for deleted users, a mock. TODO actually fix this %>
-
 <h4><%= title 'Admin Queue' %></h4>
 <div class="container">
 	<h5>Comments Queue</h5>
 	<table class="table" style="background-color: #fff;">
-
 		<th>parent pin link</th>
 		<th>comment user email</th>
 		<th>comment body</th>
 		<th>unflag</th>
 		<th>delete</th>
-
-			<% @queue[:comments].each do |e| %>
-
-				<% user = User.find_by_id(e.user_id) || Struct::User.new("none", "deleted") %>
-				
-				<tr><td><%= link_to e.id, pin_path(e.commentable_id) %> </td>
-				<td> <%= mail_to user.email, user.username %>
-					<td><%= e.body %></td>
-					<td><%= link_to '<i class="fa fa-flag"></i>'.html_safe, remove_comment_flag_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to republish this comment?", :disable_with => "unflag" %></td>
-					<td><%= link_to "×", comment_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this comment?", :disable_with => "×"%></td></tr>
+		<% @queue[:comments].each do |e| %>
+		<% user = User.find_by_id(e.user_id) || Struct::User.new("none", "deleted") %>
+		
+		<tr><td><%= link_to e.id, pin_path(e.commentable_id) %> </td>
+		<td> <%= mail_to user.email, user.username %>
+			<td><%= e.body %></td>
+			<td><%= link_to '<i class="fa fa-flag"></i>'.html_safe, remove_comment_flag_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to republish this comment?", :disable_with => "unflag" %></td>
+			<td><%= link_to "×", comment_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this comment?", :disable_with => "×"%></td></tr>
 			<% end %>
 		</table>
-
 		<h5>Pins Queue</h5>
 		<table class="table" style="background-color: #fff;">
 			<th>pin id link</th>
 			<th>pin user email</th>
 			<th>unflag</th>
 			<th>delete</th>
-
-				<% @queue[:pins].each do |e| %>
-
-					<% user = User.find_by_id(e.user_id) || Struct::User.new("none", "deleted") %>
-
-					<tr><td><%= link_to e.id, pin_path(e) %> </td>
-					<td> <%= mail_to user.email, user.username %>
-						<td><%= link_to '<i class="fa fa-flag"></i>'.html_safe, remove_pin_flag_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to republish this pin?", :disable_with => "unflag" %></td>
-						<td><%= link_to "×", pin_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this pin?", :disable_with => "×"%></td></tr>
+			<% @queue[:pins].each do |e| %>
+			<% user = User.find_by_id(e.user_id) || Struct::User.new("none", "deleted") %>
+			<tr><td><%= link_to e.id, pin_path(e) %> </td>
+			<td> <%= mail_to user.email, user.username %>
+				<td><%= link_to '<i class="fa fa-flag"></i>'.html_safe, remove_pin_flag_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to republish this pin?", :disable_with => "unflag" %></td>
+				<td><%= link_to "×", pin_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this pin?", :disable_with => "×"%></td></tr>
 				<% end %>
 			</table>
 		</div>

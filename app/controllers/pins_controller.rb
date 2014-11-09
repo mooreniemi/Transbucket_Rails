@@ -5,6 +5,7 @@ class PinsController < ApplicationController
   # GET /pins.json
   def index
     @presenter = PinPresenter.new(pin_params)
+    @comments = Comment.new_comments_to(signed_in_user)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -127,5 +128,9 @@ class PinsController < ApplicationController
 
   def safe_mode
     current_user.preference.present? ? UserPolicy.new(current_user).safe_mode? : false
+  end
+
+  def signed_in_user
+    User.find(current_user).try(:last_sign_in_at)
   end
 end

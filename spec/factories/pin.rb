@@ -1,31 +1,24 @@
 require 'faker'
 
 FactoryGirl.define do
-  factory :pin do |f|
+  factory :pin do
+    id { Faker::Number.number(5) }
+    description { Faker::Lorem.sentences(3).join(" ") }
+    surgeon_id 1
+    procedure_id 4
+    user_id  { Faker::Number.number(5) }
+    cost 3000
+    sensation 2
+    satisfaction 3
+    pin_images { build_list(:pin_image, 3)}
+
     # association :user
-    f.id { Faker::Number.number(5) }
-    f.description { Faker::Lorem.sentences(3).join(" ") }
-    f.surgeon_id 1
-    f.procedure_id 4
-    f.user_id  { Faker::Number.number(5) }
-    f.cost 3000
-    f.sensation 2
-    f.satisfaction 3
-    f.pin_images { build_list(:pin_image, 3)}
-    
     trait :pin_with_comments do
       association :comment, factory: :comment
     end
-  end
-
-  factory :invalid_pin do |f|
-    f.id { Faker::Number.number(5) }
-    f.description { Faker::Lorem.sentences(3).join(" ") }
-    f.surgeon_id nil
-    f.procedure_id nil
-    f.user_id  { Faker::Number.number(5) }
-    f.cost 3000
-    f.sensation 2
-    f.satisfaction 3
+    trait :invalid_pin do
+      surgeon_id nil
+      procedure_id nil
+    end
   end
 end

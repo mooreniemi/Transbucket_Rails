@@ -37,6 +37,20 @@ class Pin < ActiveRecord::Base
   scope :by_procedure, ->(procedure) { where(procedure_id: procedure) }
   scope :by_surgeon, ->(surgeon) { where(surgeon_id: surgeon) }
 
+  state_machine initial: :published do
+    state :pending, value: "pending"
+    state :published, value: "published"
+
+    event :publish do
+      transition nil => :published
+      transition :pending => :published
+    end
+
+    event :review do
+      transition :published => :pending
+    end
+  end
+
   # TODO yank this out
   def cover_image(safe_mode=false)
     image = safe_mode == true ? 'http://placekitten.com/200/300' : images.last.photo(:medium)
@@ -54,19 +68,4 @@ class Pin < ActiveRecord::Base
   def latest_comment_snippet
     comment_threads.last.body.split(" ").first(50).join(" ")
   end
-
-  state_machine initial: :published do
-    state :pending, value: "pending"
-    state :published, value: "published"
-
-    event :publish do
-      transition nil => :published
-      transition :pending => :published
-    end
-
-    event :review do
-      transition :published => :pending
-    end
-  end
-
 end

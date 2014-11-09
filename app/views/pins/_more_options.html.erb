@@ -1,0 +1,22 @@
+<ul class="list-group">
+  <li class="list-group-item">
+    <label>Cost</label>
+    <%= f.text_field :cost %>
+  </li>
+  <li class="list-group-item">
+    <label>Post-op Sensation</label>
+    <% 5.times do |i| %>
+    <%= radio_button(:pin, :sensation, i, {class: "star"}) %>
+    <% end %>
+  </li>
+  <li class="list-group-item">
+    <label>Post-op Satisfaction</label>
+    <% 5.times do |i| %>
+    <%= radio_button(:pin, :satisfaction, i, {class: "star"}) %>
+    <% end %>
+  </li>
+  <li class="list-group-item">
+    <label>Seeking a revision</label>
+    <%= f.check_box :revision %>
+  </li>
+</ul>

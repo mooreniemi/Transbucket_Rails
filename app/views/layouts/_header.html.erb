@@ -35,12 +35,12 @@
       <ul class="nav navbar-nav">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter <span class="caret"></span></a>
-           <ul class="dropdown-menu" role="menu">
-      <li><%= render partial: 'pins/filter_controls' %></li>
+          <ul class="dropdown-menu" role="menu">
+            <li><%= render partial: 'pins/filter_controls' %></li>
+          </ul>
+        </li>
       </ul>
-      </li>
-      </ul>
-      <%= form_tag pins_path, :class => 'form-search navbar-form navbar-left', :method => :get do %>
+      <%= form_tag pins_path, :class => 'form-search navbar-form navbar-right', :method => :get do %>
       <div class="form-group">
         <div class="input-append">
           <%= text_field_tag 'query', value = nil, :class => 'span2 search-query form-control', :placeholder => "Search" %>
@@ -50,7 +50,7 @@
         <% end %>
       </div>
       <% end %>
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
@@ -67,15 +67,16 @@
       </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
+
     <script>
-    $(document).ready(function(){
-    $(function() {
-    var realTime = '<%= search_terms_url %>'
-    $( "#query" ).autocomplete({
-    source: realTime,
-    minLength: 2
-    });
-    $('ul.ui-autocomplete.ui-menu').css('top', '35px');
-    });
-    });
+      $(document).ready(function() {
+          $(function() {
+              var realTime = '<%= search_terms_url %>'
+              $("#query").autocomplete({
+                  source: realTime,
+                  minLength: 2
+              });
+              $('ul.ui-autocomplete.ui-menu').css('top', '35px');
+          });
+      });
     </script>

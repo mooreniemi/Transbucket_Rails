@@ -3,7 +3,7 @@ class PinPresenter
   attr_accessor :user, :procedures, :surgeons, :general
 
   def initialize(opts = {})
-    Pin.includes(:comments) # TODO only improves from 1500 ms to 1200 :c
+    Pin.includes(:comments, :user, :pin_images, :procedure, :surgeon) # TODO only improves from 1500 ms to 1200 :c
 
     @page = opts.delete(:page)
     @query = opts.delete(:query)
@@ -16,7 +16,7 @@ class PinPresenter
     elsif @user.present?
       Pin.by_user(@user).paginate(:page => @page)
     elsif has_keywords?
-      PinFilterQuery.new(filter).filtered
+      PinFilterQuery.new(filter).filtered.paginate(:page => @page)
     else
       Pin.recent.paginate(:page => @page)
     end

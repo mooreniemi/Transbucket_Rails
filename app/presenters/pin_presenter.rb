@@ -8,6 +8,7 @@ class PinPresenter
     @page = opts.delete(:page)
     @query = opts.delete(:query)
     @user = opts.delete(:user)
+    @current_user = opts.delete(:current_user)
     @filter = opts
 
     @pins = if @query.present?
@@ -19,10 +20,6 @@ class PinPresenter
     else
       Pin.recent.paginate(:page => @page)
     end
-  end
-
-  def all
-    pins.uniq!
   end
 
   private

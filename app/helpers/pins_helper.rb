@@ -10,13 +10,4 @@ module PinsHelper
 		return "they/them/theirs" if author_gender.nil?
 		PRONOUN_HASH[author_gender.id]
 	end
-
-	def show_new_comments(pin)
-		# TODO huge performance hit happening here
-		comments = Comment.new_comments_to(signed_in_user, pin.id)
-	end
-
-	def signed_in_user
-		User.find(current_user).last_sign_in_at
-	end
 end

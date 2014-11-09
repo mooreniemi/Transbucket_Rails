@@ -66,6 +66,6 @@ class Pin < ActiveRecord::Base
   end
 
   def latest_comment_snippet
-    comment_threads.last.body.split(" ").first(50).join(" ")
+    try(:comment_threads).try(:snippet)
   end
 end

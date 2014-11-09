@@ -23,7 +23,7 @@
 <div id="pins" class="js-masonry" data-masonry-options='{ "columnWidth": 200, "itemSelector": ".box" }'>
 
   <div id="pin_container">
-    <%= render @presenter.all %>
+    <%= render @presenter.pins %>
   </div>
 
 </div>
@@ -32,5 +32,5 @@
 <br clear="both" />
 
 <div class="page_container col-md-6 pull-right">
-  <%= will_paginate @presenter.all unless @presenter.all.empty? %>
+  <%= will_paginate @presenter.pins unless @presenter.pins.empty? %>
 </div>

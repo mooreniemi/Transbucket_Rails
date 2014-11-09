@@ -1,68 +1,58 @@
 <% title 'Submission #' + @pin.id.to_s %>
-<div class="row-fluid">
-	<div class="span6">
-		<div class="well">
-			<% for pinimage in @pin.pin_images.reject {|p| p.photo_file_size.nil?} do %>
-			  <%= image_tag pinimage.photo %>
-        <br>
-			  <%= pinimage.caption.to_s %>
-        <br><br>
-			<% end %>
-			<br><%= link_to '<i class="fa fa-arrow-left"></i>'.html_safe, pins_path %>
-      <% if current_user == @pin.user || current_user.admin == true %>
-        | <%= link_to '<i class="fa fa-pencil-square-o"></i>'.html_safe, edit_pin_path(@pin) %>
-      <% end %>
-		</div>
-</div>
-<div class="span6">
-	<dl class="dl-horizontal">
-    <dt><i class="fa fa-user-md"></i> Surgeon</dt>
-    <dd><%= link_to @pin.surgeon.id == 911 ? 'unknown' : 'Dr. ' + @pin.surgeon.to_s, pins_path({surgeon: [@pin.surgeon.id]}) %></dd>
-
-    <dt><i class="fa fa-plus-square"></i> Procedure</dt>
-    <dd><%= link_to @pin.procedure.name, pins_path({procedure: [@pin.procedure.id]}) %></dd>
-
-    <dt><i class="fa fa-usd"></i> Cost</dt>
-    <dd><%= number_with_delimiter(@pin.cost) %></dd>
-
-    <dt><i class="fa fa-exclamation-circle"></i> Want revision?</dt>
-    <dd><%= @pin.revision %></dd>
-
-    <% if @pin.sensation.present? %>
-      <dt>Post-op Sensation</dt>
-        <dd>
-          <% 5.times do |i| %>
-            <%= radio_button(:pin, :sensation, i, {class: "star", disabled: "disabled"}) %>
-          <% end %>
-        </dd>
+<div class="row">
+  <div class="col-md-6">
+    <div class="well">
+      <% for pinimage in @pin.pin_images.reject {|p| p.photo_file_size.nil?} do %>
+      <%= image_tag pinimage.photo %>
       <br>
-    <% end %>
-
-    <% if @pin.satisfaction.present? %>
+      <%= pinimage.caption.to_s %>
+      <br><br>
+      <% end %>
+      <br><%= link_to '<i class="fa fa-arrow-left"></i>'.html_safe, pins_path %>
+      <% if current_user == @pin.user || current_user.admin == true %>
+      | <%= link_to '<i class="fa fa-pencil-square-o"></i>'.html_safe, edit_pin_path(@pin) %>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <dl class="dl-horizontal">
+      <dt><i class="fa fa-user-md"></i> Surgeon</dt>
+      <dd><%= link_to @pin.surgeon.id == 911 ? 'unknown' : 'Dr. ' + @pin.surgeon.to_s, pins_path({surgeon: [@pin.surgeon.id]}) %></dd>
+      <dt><i class="fa fa-plus-square"></i> Procedure</dt>
+      <dd><%= link_to @pin.procedure.name, pins_path({procedure: [@pin.procedure.id]}) %></dd>
+      <dt><i class="fa fa-usd"></i> Cost</dt>
+      <dd><%= number_with_delimiter(@pin.cost) %></dd>
+      <dt><i class="fa fa-exclamation-circle"></i> Want revision?</dt>
+      <dd><%= @pin.revision %></dd>
+      <% if @pin.sensation.present? %>
+      <dt>Post-op Sensation</dt>
+      <dd>
+      <% 5.times do |i| %>
+      <%= radio_button(:pin, :sensation, i, {class: "star", disabled: "disabled"}) %>
+      <% end %>
+      </dd>
+      <br>
+      <% end %>
+      <% if @pin.satisfaction.present? %>
       <dt>Post-op Satisfaction</dt>
       <dd><% 5.times do |i| %>
-          <%= radio_button(:pin, :satisfaction, i, {class: "star", disabled: "disabled"}) %>
-        <% end %>
+      <%= radio_button(:pin, :satisfaction, i, {class: "star", disabled: "disabled"}) %>
+      <% end %>
       </dd>
       <br clear="both">
-    <% end %>
-
-    <% if @pin.user.present? %>
+      <% end %>
+      <% if @pin.user.present? %>
       <dt>Submitter</dt>
       <dd><strong><%= link_to @pin.user.username.presence || @pin.user.id, pins_path(user: @pin.user) %></strong></dd>
-    <% end %>
-   </dl>
-
-   <div id="details">
-     <i class="fa fa-quote-left"></i>
-     <%= @pin.details.html_safe %>
-   </div>
-</div>
-
-<br clear="both" />
-
-<div id="comments-container">
-  <%= render :partial => 'comments/form', :locals => { :comment => @new_comment } %>
-
-  <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>
-</div>
+      <% end %>
+    </dl>
+    <div id="details">
+      <i class="fa fa-quote-left"></i>
+      <%= @pin.details.html_safe %>
+    </div>
+  </div>
+  <br clear="both" />
+  <div id="comments-container">
+    <%= render :partial => 'comments/form', :locals => { :comment => @new_comment } %>
+    <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>
+  </div>

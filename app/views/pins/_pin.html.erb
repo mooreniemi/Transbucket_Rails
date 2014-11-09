@@ -14,12 +14,7 @@
   </div>
   <% if pin.published? %>
   <div class="image">
-    <!-- TODO this needs to not be like this -->
-    <% if show_new_comments(pin).present? %>
-    <div class="comment_box">
-      <p><%= "<i class='icon-comment'></i> <b>New Comment: </b>".html_safe + pin.latest_comment_snippet %></p>
-    </div>
-    <% end %>
+    <%= render partial: "latest_comment_snippet", locals: { pin: pin } if @comments.include?(commentable_id: pin.id) %>
     <%= link_to (image_tag pin.cover_image(@safe_mode)), pin %>
   </div>
   <p class="description">

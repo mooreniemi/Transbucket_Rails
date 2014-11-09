@@ -3,7 +3,7 @@ class PinPresenter
   attr_accessor :user, :procedures, :surgeons, :general
 
   def initialize(opts = {})
-    Pin.includes(:comments, :user, :pin_images, :procedure, :surgeon) # TODO only improves from 1500 ms to 1200 :c
+    Pin.includes(:comments, :user, :pin_images, :procedure, :surgeon)
 
     @page = opts.delete(:page)
     @query = opts.delete(:query)
@@ -23,7 +23,6 @@ class PinPresenter
   end
 
   private
-
   def has_keywords?
     filter.values.reject(&:nil?).count > 0
   end

@@ -1,4 +1,5 @@
 <div id="controls" class="row">
+<!-- TODO convert this from form to just pure remote calls? -->
   <%= form_tag pins_path, :method => 'get', :class => 'scope_dropdown', remote: true do %>
   <%= select_tag :scope, options_from_collection_for_select(Pin::SCOPES, 'to_s', 'humanize'), {multiple: true} %>
   <%= select_tag :surgeon, options_from_collection_for_select(Surgeon.order('last_name asc'), "id", "to_s"), {multiple: true} %>

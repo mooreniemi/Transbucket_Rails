@@ -22,4 +22,5 @@ $(document).ready(function() {
         },
         noneSelectedText: 'Select Procedure(s)'
     });
+    $('.label-with-popover').popover();
 });

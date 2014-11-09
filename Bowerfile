@@ -11,6 +11,4 @@ asset 'jquery-masonry'
 asset 'jquery-multiselect'
 asset 'jquery-star-rating'
 
-asset 'tinymce'
-
 asset 'underscore'

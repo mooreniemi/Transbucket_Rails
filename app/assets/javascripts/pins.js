@@ -23,5 +23,6 @@ $(document).ready(function() {
         selectionHeader: "Selected procedures"
     });
 
+    // used to explain flagging
     $('.label-with-popover').popover();
 });

@@ -20,64 +20,10 @@
         <li>
           <%= link_to 'About',  about_path %>
         </li>
-        <% if current_user.present? && current_user.admin? %>
-        <li>
-          <%= link_to 'Admin', admin_path %>
-        </li>
-        <% end %>
         <% if user_signed_in? %>
-        <li><%= link_to 'Submissions', pins_path %> </li>
-        <% unless current_user.gender == "cisgender" %>
-        <li><%= link_to 'Add <i class="fa fa-plus-circle"></i>'.html_safe, new_pin_path %> </li>
-        <% end %>
-        <% end %>
-      </ul>
-      <% if user_signed_in? %>
-      <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><%= render partial: 'pins/filter_controls' %></li>
-          </ul>
-        </li>
-      </ul>
-      <%= form_tag pins_path, :class => 'form-search navbar-form navbar-right', :method => :get do %>
-      <div class="form-group">
-        <div class="input-append">
-          <%= text_field_tag 'query', value = nil, :class => 'span2 search-query form-control', :placeholder => "Search" %>
-          <%#= autocomplete_field_tag 'pin', '', autocomplete_procedure_pin_index_path, :size => 75 %>
-          <%= submit_tag 'Go', :class => 'btn btn-default btn-xs' %>
-        </div>
-        <% end %>
-      </div>
+        <%= render partial: 'layouts/logged_in' %>
       <% end %>
-      <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <% if user_signed_in? %>
-            <li><%= link_to 'My Account',  edit_user_registration_path %></li>
-            <li><%= link_to 'Logout',  destroy_user_session_path, method: :delete %></li>
-            <% else %>
-            <li><%= link_to 'Register', register_path %></li>
-            <li><%= link_to 'Login',  new_user_session_path %></li>
-            <% end %>
-          </ul>
-        </li>
-      </ul>
+      <%= render partial: 'layouts/account_menu' %>
       </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
-
-    <script>
-      $(document).ready(function() {
-          $(function() {
-              var realTime = '<%= search_terms_url %>'
-              $("#query").autocomplete({
-                  source: realTime,
-                  minLength: 2
-              });
-              $('ul.ui-autocomplete.ui-menu').css('top', '35px');
-          });
-      });
-    </script>

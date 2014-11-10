@@ -11,26 +11,8 @@ body{
     background-color:#ccc;
 }
 
-/*.navbar-inner{
-    @include box-shadow(none !important);
-    border: 0;
-}*/
-
-/*.footer{
-    margin-top: 50px;
-    color: $grayLight;
-    a{
-        color: $gray;
-    }
-}*/
-
-.addthis_toolbox {
-  display: inline;
-}
-
-.twitter-share-button {
-  position:relative;
-  top:10px;
+.ms-container {
+  height: 100px;
 }
 
 hr.style-two {

@@ -53,7 +53,7 @@ class Pin < ActiveRecord::Base
 
   # TODO yank this out
   def cover_image(safe_mode=false)
-    image = safe_mode == true ? 'http://placekitten.com/200/300' : images.last.photo(:medium)
+    image = safe_mode == true ? 'http://placekitten.com/200/300' : images.try(:last).try(:photo, :medium)
     image
   end
 

@@ -3,11 +3,6 @@ Rails.application.routes.draw do
   get '/422' => 'errors#server_error'
   get '/500' => 'errors#server_error'
 
-  # TODO need to handle authentication pathing
-  # authenticated :user do
-  #   root :to => "pins#index"
-  # end
-
   root :to => 'pages#home'
 
   devise_for :users, :path => 'users'
@@ -25,8 +20,8 @@ Rails.application.routes.draw do
     resources :flags, :only => [:create]
   end
 
-  get 'contact' => 'contact#new'   
-  post 'contact' => 'contact#create' 
+  get 'contact' => 'contact#new'
+  post 'contact' => 'contact#create'
 
   resources :pins do
     resources :pin_images
@@ -37,17 +32,17 @@ Rails.application.routes.draw do
   get '/comments/:comment_id/flags/remove_flag' => 'flags#destroy', as: 'remove_comment_flag'
 
   get 'by_user' => 'pins#by_user', :as => 'by'
-
   get 'pins' => 'pins#index'
+  get 'admin' => 'pins#admin'
+
   get 'about' => 'pages#about'
   get 'terms' => 'pages#terms'
   get 'privacy' => 'pages#privacy'
-  get 'search_terms' => 'search#search_terms'
-  get 'surgeons_only' => 'search#surgeons_only'
-
   get 'home' => 'pages#home'
   get 'newsfeed' => 'pages#newsfeed'
-  get 'admin' => 'pins#admin'
+
+  get 'search_terms' => 'search#search_terms'
+  get 'surgeons_only' => 'search#surgeons_only'
 
   get 'bookmarks' => 'pages#bookmarks'
   #reroute for old bookmarks

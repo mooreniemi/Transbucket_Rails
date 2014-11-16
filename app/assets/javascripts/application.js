@@ -17,7 +17,8 @@
 //= require bootstrap/dist/js/bootstrap.min
 //= require bootstrap-star-rating/js/star-rating
 //= require jquery-star-rating/min/rating
-//= require multiselect/js/jquery.multi-select
+//= require chosen/chosen.proto
+//= require chosen/chosen.jquery
 //= require jquery_nested_form
 //= require underscore/underscore-min
 //= require tinymce

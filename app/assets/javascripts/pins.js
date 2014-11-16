@@ -1,21 +1,14 @@
 $(document).ready(function() {
     $("#clear-filter").click(function() {
-        $("#filter_dropdown").multiSelect('deselect_all')
-    });
-    $("#scope").multiSelect({
-        selectableHeader: "General categories",
-        selectionHeader: "Selected general"
+        $("#filter_dropdown select").val([]);
+        $("#filter_dropdown select").trigger('chosen:updated');
     });
 
-    $("#surgeon").multiSelect({
-        selectableHeader: "Surgeons",
-        selectionHeader: "Selected surgeons"
-    });
+    $("#scope").chosen({ width:"100%", placeholder_text_multiple: "General tags" });
 
-    $("#procedure").multiSelect({
-        selectableHeader: "Procedures",
-        selectionHeader: "Selected procedures"
-    });
+    $("#procedure").chosen({ width:"100%", placeholder_text_multiple: "Procedures" });
+
+    $("#surgeon").chosen({ width:"100%", placeholder_text_multiple: "Surgeons" });
 
     // used to explain flagging
     $('.label-with-popover').popover();

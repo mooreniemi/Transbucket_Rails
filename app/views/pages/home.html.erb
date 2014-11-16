@@ -1,1 +1,7 @@
-<% unless user_signed_in? %><%= render 'pins/welcome' %> <% end %>
+<% if user_signed_in? %>
+  <script type="text/javascript">
+    window.location.href="/pins"  // hacky but works
+  </script>
+<% else %>
+  <%= render 'pages/welcome' %>
+<% end %>

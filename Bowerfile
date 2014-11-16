@@ -8,7 +8,8 @@ asset 'jquery'
 asset 'jquery-ujs'
 asset 'jquery-ui'
 asset 'jquery-masonry'
-asset 'multiselect'
+# because chosen dudes dont support bower install out of the box
+asset 'chosen', git: "https://github.com/harvesthq/chosen/releases/download/v1.1.0/chosen_v1.1.0.zip"
 asset 'jquery-star-rating'
 
 asset 'underscore'

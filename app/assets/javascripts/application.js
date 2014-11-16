@@ -12,6 +12,7 @@
 //
 
 //= require jquery
+//= require jquery_nested_form
 //= require jquery-ujs/src/rails
 //= require jquery-ui
 //= require bootstrap/dist/js/bootstrap.min
@@ -19,7 +20,6 @@
 //= require jquery-star-rating/min/rating
 //= require chosen/chosen.proto
 //= require chosen/chosen.jquery
-//= require jquery_nested_form
 //= require underscore/underscore-min
 //= require tinymce
 //= require jquery-bridget/jquery.bridget

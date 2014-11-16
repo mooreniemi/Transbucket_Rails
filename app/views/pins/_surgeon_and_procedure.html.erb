@@ -1,27 +1,27 @@
-<div class="submission_well">
-  <div class="row">
-    <% f.hidden_field :id %>
-    <div class="control-group col-md-6">
-      <label class="control-label">Surgeon</label>
-      <div class="controls">
-        <% if f.object.surgeon.nil? %>
-        <%= f.select :surgeon_id, options_from_collection_for_select(Surgeon.order('last_name ASC'), 'id', 'to_s', 911) %>
-        <%= f.link_to_add '<i class="fa fa-plus-circle"></i>'.html_safe, :surgeon %>
-        <% else %>
-        <%= f.select :surgeon_id, options_from_collection_for_select(Surgeon.order('last_name ASC'), 'id', 'to_s', @pin.surgeon.id) %>
-        <% end %>
-      </div>
-    </div>
-    <%= render partial: 'new_surgeon', locals: {f: f} if f.object.surgeon.nil? %>
-    <div class="control-group">
-      <label class="control-label">Procedure</label>
-      <div class="controls">
-        <% if f.object.procedure.nil? %>
-        <%= f.select :procedure_id, options_from_collection_for_select(Procedure.all.sort, 'id', 'to_s') %>
-        <%= f.link_to_add '<i class="fa fa-plus-circle"></i>'.html_safe, :procedure %>
-        <% else %>
-        <%= f.select :procedure_id, options_from_collection_for_select(Procedure.all.sort, 'id', 'to_s', @pin.procedure.id) %>
-        <% end %>
-      </div>
+<div class="row">
+  <% f.hidden_field :id %>
+  <div class="form-group col-md-6">
+    <label class="control-label">Surgeon</label>
+    <div class="controls">
+      <% if f.object.surgeon.nil? %>
+      <%= f.select :surgeon_id, options_from_collection_for_select(Surgeon.order('last_name ASC'), 'id', 'to_s', 911) %>
+      <%= f.link_to_add '<i class="fa fa-plus-circle"></i>'.html_safe, :surgeon %>
+      <% else %>
+      <%= f.select :surgeon_id, options_from_collection_for_select(Surgeon.order('last_name ASC'), 'id', 'to_s', @pin.surgeon.id) %>
+      <% end %>
     </div>
   </div>
+  <%= render partial: 'new_surgeon', locals: {f: f} if f.object.surgeon.nil? %>
+  <div class="form-group">
+    <label class="control-label">Procedure</label>
+    <div class="controls">
+      <% if f.object.procedure.nil? %>
+      <%= f.select :procedure_id, options_from_collection_for_select(Procedure.all.sort, 'id', 'to_s') %>
+      <%= f.link_to_add '<i class="fa fa-plus-circle"></i>'.html_safe, :procedure %>
+      <% else %>
+      <%= f.select :procedure_id, options_from_collection_for_select(Procedure.all.sort, 'id', 'to_s', @pin.procedure.id) %>
+      <% end %>
+    </div>
+  </div>
+  <%= render partial: 'new_procedure', locals: {f: f} if f.object.procedure.nil? %>
+</div>

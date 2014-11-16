@@ -1,0 +1,3 @@
+  <label>Image File: <%= image_tag ff.object.photo %></label>
+  <%= link_to('<i class="fa fa-trash-o"></i>'.html_safe, pin_pin_image_path(@pin, ff.object.id), method: "delete", remote: true, data: { confirm: 'Are you sure?', disable_with: 'deleting...' }) %>
+  <%= ff.hidden_field :_destroy %>

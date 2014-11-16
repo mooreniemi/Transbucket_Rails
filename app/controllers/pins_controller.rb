@@ -4,7 +4,7 @@ class PinsController < ApplicationController
   # GET /pins
   # GET /pins.json
   def index
-    @presenter = PinPresenter.new(pin_params)
+    @presenter = PinPresenter.new(pin_index_params)
     @comments = Comment.new_comments_to(signed_in_user)
 
     respond_to do |format|
@@ -41,7 +41,7 @@ class PinsController < ApplicationController
   # GET /pins/new.json
   def new
     @pin = current_user.pins.new
-    4.times {@pin.pin_images.build}
+    @pin.pin_images.build
 
     respond_to do |format|
       format.html # new.html.erb
@@ -61,7 +61,8 @@ class PinsController < ApplicationController
   #submit button triggers
   def create
     #nested associations are handled inside of the service
-    @pin = PinCreatorService.new(params[:pin], current_user).create
+    #TODO clean this up
+    @pin = PinCreatorService.new(pin_params.merge({pin_images: params["pin_images"]}), current_user).create
 
     respond_to do |format|
 
@@ -105,6 +106,10 @@ class PinsController < ApplicationController
 
   private
   def pin_params
+    params.permit(pin: [ :surgeon_id, :procedure_id, :cost, :revision, :details])
+  end
+
+  def pin_index_params
     {
       query: query,
       scope: params[:scope],

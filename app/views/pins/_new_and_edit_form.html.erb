@@ -1,21 +1,38 @@
 <!-- New edit & new form -->
 <div class="row">
   <div class="col-md-6">
-    <%= nested_form_for @pin, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
+    <%= nested_form_for @pin, :html => {:multipart => true, :class => "form-inline"} do |f| %>
     <%= render partial: 'errors', locals: {pin: @pin} if @pin.errors.any? %>
-    <div class="top-block span5"><center><i class="fa fa-pencil"></i></center></div>
-    <%= render partial: 'surgeon_and_procedure', locals: {f: f} %>
-    <%= render partial: 'new_procedure', locals: {f: f} if f.object.procedure.nil? %>
-    <%= render partial: 'more_options', locals: {f: f} %>
-    <%= render partial: 'details', locals: {f: f} %>
-    <div class="form-actions">
-      <%= f.submit "Submit Now", :class => 'btn btn-primary' %>
+    <div class="top-block span5">
+      <center><i class="fa fa-pencil"></i></center>
+    </div>
+    <div class="submission_well">
+      <%= render partial: 'surgeon_and_procedure', locals: {f: f} %>
+      <br>
+      <label class="control-label">Your experience at a glance:</label>
+      <div class="submission_well">
+        <%= render partial: 'more_options', locals: {f: f} %>
+      </div>
+      <%= render partial: 'details', locals: {f: f} %>
+    </div>
+    <!-- wtf? -->
+    <br style="clear: both;" />
+    <br style="clear: both;" />
+    <br style="clear: both;" />
+    <br style="clear: both;" />
+  </div>
+  <div id="pin_images" class="col-md-6">
+    <div class="top-block span5">
+      <center><i class="fa fa-camera"></i></center>
+    </div>
+    <div class="submission_well">
+      <p>Make sure your photos were shot in good light, and are oriented the correct way.</p>
+      <%= render partial: 'pin_images/form', locals: {f: f} %>
+      <div class="form-actions">
+        <%= f.submit "Submit Now", :class => 'btn btn-success pull-right' %>
+      </div>
     </div>
   </div>
-</div>
-<div class="col-md-6">
-  <%= render partial: 'add_images', locals: {f: f} %>
-</div>
 </div>
 <% end %>
 <%= render 'pins/surgeon_complete' %>

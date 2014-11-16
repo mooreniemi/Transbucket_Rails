@@ -1,0 +1,14 @@
+<div class="control-group">
+  <label class='control-label'>Your photos</label>
+  <div class="controls">
+    <% if @pin.pin_images.exists? %>
+    <% pin_images = @pin.pin_images.reject{|i| i if i.id.nil?} %>
+    <% pin_images.each do |image| %>
+    <%= image_tag image.photo.url(:thumb) %>
+    <%= link_to('<i class="fa fa-trash-o"></i>'.html_safe, pin_pin_image_path(@pin, image), method: "delete", remote: true, data: { confirm: 'Are you sure?', disable_with: 'deleting...' }) %>
+    <br>
+    <% end %>
+    <% end %>
+    <%= file_field_tag "pin_images[]", type: :file, multiple: true %>
+  </div>
+</div>

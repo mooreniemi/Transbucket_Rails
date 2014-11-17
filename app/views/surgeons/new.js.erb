@@ -1,1 +1,25 @@
 $("<%= escape_javascript(render @surgeon) %>").appendTo("#surgeon_form");
+
+// sets up the behavior around submitting it and updating the select box
+$("#new_surgeon_submit").click(function() {
+    var formElement = document.getElementById("new_surgeon");
+    formData = new FormData(formElement);
+    
+    return $.ajax({
+        type: "POST",
+        url: "/surgeons",
+        data: formData,
+        processData: false,  // tell jQuery not to process the data
+        contentType: false,   // tell jQuery not to set contentType
+        success: function(data) {
+            $("#pin_surgeon_id").trigger("chosen:updated");
+            // TODO highlight menu $("#pin_surgeon_id").
+            $("#surgeon_container").hide(500);
+            return false;
+        },
+        error: function(data) {
+            console.log('error:' + data)
+            return false;
+        }
+    });
+});

@@ -26,17 +26,6 @@ class PinsController < ApplicationController
     end
   end
 
-  def admin
-    @pins = Pin.where(state: 'pending').order("created_at desc")
-    @comments = Comment.where(state: 'pending').order("created_at desc")
-    @queue = {pins: @pins, comments: @comments}
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @queue }
-    end
-  end
-
   # GET /pins/new
   # GET /pins/new.json
   def new
@@ -52,8 +41,7 @@ class PinsController < ApplicationController
   # GET /pins/1/edit
   def edit
     @pin = Pin.find(params[:id])
-    l = @pin.pin_images.length
-    (4-l).times {@pin.pin_images.build}
+    @pin.pin_images.build
   end
 
   # POST /pins
@@ -101,6 +89,17 @@ class PinsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to pins_url }
       format.json { head :ok }
+    end
+  end
+
+  def admin
+    @pins = Pin.where(state: 'pending').order("created_at desc")
+    @comments = Comment.where(state: 'pending').order("created_at desc")
+    @queue = {pins: @pins, comments: @comments}
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @queue }
     end
   end
 

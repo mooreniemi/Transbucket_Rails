@@ -8,5 +8,10 @@ class SurgeonsController < ApplicationController
   end
 
   def create
+    @surgeon = Surgeon.new(params[:surgeon])
+
+    if @surgeon.save!
+      head :ok
+    end
   end
 end

@@ -1,4 +1,5 @@
-<%= form_for(@procedure, remote: true) do |procedure_form| %>
+<%= form_for(@procedure, :remote => true, format: 'js',
+:authenticity_token => true) do |procedure_form| %>
 <div class="well">
   <%= procedure_form.text_field :name, placeholder: "Name of procedure" %>
   <br>

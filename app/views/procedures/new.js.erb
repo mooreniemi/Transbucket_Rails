@@ -1,1 +1,27 @@
+// adds the actual form
 $("<%= escape_javascript(render @procedure) %>").appendTo("#procedure_form");
+
+// sets up the behavior around submitting it and updating the select box
+$("#new_procedure_submit").click(function() {
+    var formElement = document.getElementById("new_procedure");
+    formData = new FormData(formElement);
+    
+    return $.ajax({
+        type: "POST",
+        url: "/procedures",
+        data: formData,
+        processData: false,  // tell jQuery not to process the data
+        contentType: false,   // tell jQuery not to set contentType
+        success: function(data) {
+            // see create.js.erb file for the rendering of the new collection
+            $("#pin_procedure_id").trigger("chosen:updated");
+            // TODO highlight menu $("#pin_procedure_id").
+            $("#procedure_container").hide(500);
+            return false;
+        },
+        error: function(data) {
+            console.log('error:' + data)
+            return false;
+        }
+    });
+});

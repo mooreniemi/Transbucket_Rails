@@ -1,15 +1,17 @@
-<%= form_for(@procedure, :remote => true, format: 'js',
-:authenticity_token => true) do |procedure_form| %>
-<div class="well">
-  <%= procedure_form.text_field :name, placeholder: "Name of procedure" %>
-  <br>
-  <label>Type
-    <%= procedure_form.select :body_type, options_for_select([ "Top", "Bottom", "Face", "Other" ]) %>
-  </label>
-  <br>
-  <label>Gender
-    <%= procedure_form.select :gender, options_for_select([ "FTM", "MTF" ]) %>
-  </label>
+<div id="procedure_container">
+  <%= form_for(@procedure, :remote => true,
+  :authenticity_token => true) do |procedure_form| %>
+  <div class="well">
+    <%= procedure_form.text_field :name, placeholder: "Name of procedure" %>
+    <br>
+    <label>Type
+      <%= procedure_form.select :body_type, options_for_select([ "Top", "Bottom", "Face", "Other" ]) %>
+    </label>
+    <br>
+    <label>Gender
+      <%= procedure_form.select :gender, options_for_select([ "FTM", "MTF" ]) %>
+    </label>
+  <% end %>
+  <%= link_to "Add procedure", '#', :id => 'new_procedure_submit', :class => 'btn btn-sm btn-default pull-right' %>
+  </div>
 </div>
-<%= procedure_form.submit "Submit Now", :class => 'btn btn-success pull-right' %>
-<% end %>

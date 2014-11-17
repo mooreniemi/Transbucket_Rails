@@ -10,8 +10,6 @@ class Pin < ActiveRecord::Base
   has_many :comments, :foreign_key => 'commentable_id'
 
   accepts_nested_attributes_for :pin_images, :reject_if => proc {|attributes| !attributes.keys.include?(:photo) }
-  accepts_nested_attributes_for :surgeon, :reject_if => proc {|attributes| attributes.all? {|k,v| v.blank?} }
-  accepts_nested_attributes_for :procedure, :reject_if => proc {|attributes| attributes.all? {|k,v| v.blank?} }
 
   acts_as_commentable
   acts_as_votable

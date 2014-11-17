@@ -28,6 +28,9 @@ Rails.application.routes.draw do
     resources :flags, :only => [:create]
   end
 
+  resources :surgeons
+  resources :procedures
+
   get '/pins/:pin_id/flags/remove_flag' => 'flags#destroy', as: 'remove_pin_flag'
   get '/comments/:comment_id/flags/remove_flag' => 'flags#destroy', as: 'remove_comment_flag'
 

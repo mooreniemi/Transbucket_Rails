@@ -1,9 +1,10 @@
 <label class="control-label">New Surgeon</label>
-<%= form_for(@surgeon, remote: true) do |surgeon_form| %>
+<%= form_for(@surgeon, :remote => true,
+:authenticity_token => true) do |surgeon_form| %>
 <div class="well">
   <%= surgeon_form.text_field :last_name, placeholder: "Surgeon's last name" %>
   <%= surgeon_form.text_field :first_name, placeholder: "Surgeon's first name" %>
   <%= surgeon_form.text_field :url, placeholder: "Surgeon's URL" %>
-<%= surgeon_form.submit "Submit Now", :class => 'btn btn-sm btn-success pull-right' %>
+  <%= surgeon_form.submit "Submit Now", :class => 'btn btn-sm btn-success pull-right' %>
 </div>
 <% end %>

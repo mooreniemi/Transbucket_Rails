@@ -1,6 +1,4 @@
 class ProceduresController < ApplicationController
-  respond_to :json
-
   def new
     @procedure = Procedure.new
 
@@ -14,7 +12,7 @@ class ProceduresController < ApplicationController
 
     if @procedure.save
       respond_to do |format|
-        format.js { render 'create', layout: false}
+        format.js  { @procedures = Procedure.order('name ASC') }
       end
     end
   end

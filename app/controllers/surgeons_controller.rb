@@ -10,8 +10,10 @@ class SurgeonsController < ApplicationController
   def create
     @surgeon = Surgeon.new(params[:surgeon])
 
-    if @surgeon.save!
-      head :ok
+    if @surgeon.save
+      respond_to do |format|
+        format.js  { @surgeons = Surgeon.order('last_name ASC') }
+      end
     end
   end
 end

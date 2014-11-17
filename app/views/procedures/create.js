@@ -1,1 +1,0 @@
-$("#pin_procedure_id").trigger("chosen:updated");

@@ -1,1 +1,0 @@
-$(document).ready(function(){$("#clear-filter").click(function(){$("#filter_dropdown").trigger("chosen:updated")}),$("#scope").chosen(),$("#surgeon").chosen(),$("#procedure").chosen(),$(".label-with-popover").popover()});

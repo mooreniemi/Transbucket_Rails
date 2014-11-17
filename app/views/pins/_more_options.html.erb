@@ -1,3 +1,10 @@
+<script>
+  $(document).ready(function() {
+    $("#sensation").rating();
+    $("#satisfaction").rating();
+});
+</script>
+
 <ul class="list-group">
   <li class="list-group-item">
     <label>Cost</label>
@@ -5,15 +12,11 @@
   </li>
   <li class="list-group-item">
     <label>Post-op Sensation</label>
-    <% 5.times do |i| %>
-    <%= radio_button(:pin, :sensation, i, {class: "star"}) %>
-    <% end %>
+    <%= number_field(:pin, :sensation, {class: "rating", data: {size: 'xs'}, required: false}) %>
   </li>
   <li class="list-group-item">
     <label>Post-op Satisfaction</label>
-    <% 5.times do |i| %>
-    <%= radio_button(:pin, :satisfaction, i, {class: "star"}) %>
-    <% end %>
+    <%= number_field(:pin, :satisfaction, {class: "rating", data: {size: 'xs'}, required: false}) %>
   </li>
   <li class="list-group-item">
     <label>Seeking a revision</label>

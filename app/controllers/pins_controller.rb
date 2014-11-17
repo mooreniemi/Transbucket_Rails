@@ -105,7 +105,7 @@ class PinsController < ApplicationController
 
   private
   def pin_params
-    params.permit(pin: [ :surgeon_id, :procedure_id, :cost, :revision, :details])
+    params.permit(pin: [:surgeon_id, :procedure_id, :cost, :revision, :details, :sensation, :satisfaction])
   end
 
   def pin_index_params

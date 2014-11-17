@@ -16,8 +16,7 @@
 //= require jquery-ujs/src/rails
 //= require jquery-ui
 //= require bootstrap/dist/js/bootstrap.min
-//= require bootstrap-star-rating/js/star-rating
-//= require jquery-star-rating/min/rating
+//= require bootstrap-star-rating/js/star-rating.min
 //= require chosen/chosen.proto
 //= require chosen/chosen.jquery
 //= require underscore/underscore-min

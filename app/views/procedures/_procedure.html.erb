@@ -1,4 +1,4 @@
-<%= f.fields_for :procedure do |procedure_form| %>
+<%= form_for(@procedure, remote: true) do |procedure_form| %>
 <div class="well">
   <%= procedure_form.text_field :name, placeholder: "Name of procedure" %>
   <br>
@@ -9,7 +9,6 @@
   <label>Gender
     <%= procedure_form.select :gender, options_for_select([ "FTM", "MTF" ]) %>
   </label>
-  <br>
-  <%= procedure_form.link_to_remove "cancel" %>
 </div>
+<%= procedure_form.submit "Submit Now", :class => 'btn btn-success pull-right' %>
 <% end %>

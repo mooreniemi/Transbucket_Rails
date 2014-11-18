@@ -16,28 +16,42 @@
   </div>
   <div class="col-md-6">
     <dl class="dl-horizontal">
-      <dt><i class="fa fa-user-md"></i> Surgeon</dt>
-      <dd><%= link_to @pin.surgeon.id == 911 ? 'unknown' : 'Dr. ' + @pin.surgeon.to_s, pins_path({surgeon: [@pin.surgeon.id]}) %></dd>
-      <dt><i class="fa fa-plus-square"></i> Procedure</dt>
-      <dd><%= link_to @pin.procedure.name, pins_path({procedure: [@pin.procedure.id]}) %></dd>
-      <dt><i class="fa fa-usd"></i> Cost</dt>
-      <dd><%= number_with_delimiter(@pin.cost) %></dd>
-      <dt><i class="fa fa-exclamation-circle"></i> Want revision?</dt>
-      <dd><%= @pin.revision %></dd>
-      <% if @pin.sensation.present? %>
-      <dt>Post-op Sensation</dt>
+      <dt>
+      <i class="fa fa-user-md"></i> Surgeon
+      </dt>
       <dd>
-      <% 5.times do |i| %>
-      <%= radio_button(:pin, :sensation, i, {class: "star", disabled: "disabled"}) %>
-      <% end %>
+      <%= link_to @pin.surgeon.id == 911 ? 'unknown' : 'Dr. ' + @pin.surgeon.to_s, pins_path({surgeon: [@pin.surgeon.id]}) %>
+      </dd>
+      <dt>
+      <i class="fa fa-plus-square"></i> Procedure
+      </dt>
+      <dd>
+      <%= link_to @pin.procedure.name, pins_path({procedure: [@pin.procedure.id]}) %>
+      </dd>
+      <dt>
+      <i class="fa fa-usd"></i> Cost
+      </dt>
+      <dd>
+      <%= number_with_delimiter(@pin.cost) %>
+      </dd>
+      <dt>
+      <i class="fa fa-exclamation-circle"></i> Want revision?
+      </dt>
+      <dd>
+      <%= @pin.revision %>
+      </dd>
+      <% if @pin.sensation.present? %>
+      <dt>
+      Post-op Sensation</dt>
+      <dd>
+      <%= number_field(:pin, :sensation, {class: "rating", disabled: "disabled", data: {size: 'xs'}}) %>
       </dd>
       <br>
       <% end %>
       <% if @pin.satisfaction.present? %>
       <dt>Post-op Satisfaction</dt>
-      <dd><% 5.times do |i| %>
-      <%= radio_button(:pin, :satisfaction, i, {class: "star", disabled: "disabled"}) %>
-      <% end %>
+      <dd>
+      <%= number_field(:pin, :satisfaction, {class: "rating", disabled: "disabled", data: {size: 'xs'}}) %>
       </dd>
       <br clear="both">
       <% end %>

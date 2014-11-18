@@ -1,0 +1,32 @@
+<h2>Edit <%= resource_name.to_s.humanize %> Settings</h2>
+<% Preference.new(user_id: resource.id) unless resource.preference.present? %>
+<div class="profile_well">
+  <%= simple_form_for(resource.preference, :url => user_preferences_path(resource), :html => {:method => :put, :class => 'form-horizontal'}) do |f| %>
+  <div class="col-lg-6">
+    <div class="input-group">
+      <span class="input-group-addon">
+      <%= f.check_box :safe_mode, :value => resource.preference.safe_mode %>
+      </span>
+      <span class="form-control">Safe mode </span>
+      <span class="input-group-addon"><i class="glyphicon glyphicon-eye-close"></i></span>
+      </div><!-- /input-group -->
+      </div><!-- /.col-lg-6 -->
+      <div class="col-lg-6">
+        <p>Safe mode will replace all submission images on the index page with safe for work images of kittens.</p>
+      </div>
+      <div class="col-lg-6">
+        <div class="input-group">
+          <span class="input-group-addon">
+          <%= f.check_box :notification, :value => resource.preference.notification  %>
+          </span>
+          <span class="form-control">Notifications</span>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+          </div><!-- /input-group -->
+          </div><!-- /.col-lg-6 -->
+          <div class="col-lg-6">
+            <p>Notification mode allows you to receive emails alerting you to new comments on your submission.</p>
+          </div>
+          <%= f.submit "Update", class: "btn btn-primary pull-right" %>
+          <br clear="both">
+          <% end %>
+        </div>

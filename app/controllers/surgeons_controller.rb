@@ -12,7 +12,7 @@ class SurgeonsController < ApplicationController
 
     if @surgeon.save
       respond_to do |format|
-        format.js  { @surgeons = Surgeon.order('last_name ASC') }
+        format.js  { @surgeons = Surgeon.order('last_name ASC'); @surgeon }
       end
     end
   end

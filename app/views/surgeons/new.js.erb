@@ -12,8 +12,6 @@ $("#new_surgeon_submit").click(function() {
         processData: false,  // tell jQuery not to process the data
         contentType: false,   // tell jQuery not to set contentType
         success: function(data) {
-            $("#pin_surgeon_id").trigger("chosen:updated");
-            // TODO highlight menu $("#pin_surgeon_id").
             $("#surgeon_container").hide(500);
             return false;
         },

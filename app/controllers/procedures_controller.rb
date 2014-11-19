@@ -12,7 +12,7 @@ class ProceduresController < ApplicationController
 
     if @procedure.save
       respond_to do |format|
-        format.js  { @procedures = Procedure.order('name ASC') }
+        format.js  { @procedures = Procedure.order('name ASC'); @procedure }
       end
     end
   end

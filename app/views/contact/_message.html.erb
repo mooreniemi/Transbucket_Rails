@@ -1,27 +1,25 @@
-<div class="well span6"><%= form_for @message, :url => contact_path do |form| %>
-  <fieldset class="fields">
-    <div class="field">
-      <% if user_signed_in? %>
-       <%= form.hidden_field :email, :value => User.find(current_user).email %>
-      <% else %>
-       <%= form.label :email %>
-       <%= form.text_field :email %>
-      <% end %>
-    </div>
-    <div class="field">
-      <%= form.label :subject %>
-      <%= form.text_field :subject %>
-    </div>
-    
-    <div class="field">
-      <%= form.label :body %>
-      <%= form.text_area :body, :cols => "70", :rows => "10", :class => "span6" %>
-    </div>
-  </fieldset>
+<div class="col-md-6 center">
+  <div class="well">
+    <%= form_for @message, url: contact_path do |form| %>
+    <fieldset class="fields">
+      <div class="field">
+        <% if user_signed_in? %>
+        <%= form.hidden_field :email, value: User.find(current_user).email %>
+        <% else %>
+        <div class="input-group padded_nicely">
+          <span class="input-group-addon">@</span>
+          <%= form.email_field :email, placeholder: "Your Return Email", class: "form-control", autofocus: true %>
+        </div>
+        <% end %>
+      </div>
+      <div class="input-group padded_nicely">
+        <%= form.text_field :subject, placeholder: "Subject", class: "form-control" %>
+        <span class="input-group-addon"><i class="fa fa-bullhorn"></i></span>
+      </div>
+      <%= form.text_area :body, class: "form-control", rows:"4", placeholder: "Howdy Transbucket admins!" %>
+    </fieldset>
+  </div>
   
-  <fieldset class="actions">
-    <%= form.submit "Send", :class => "btn" %>
-  </fieldset>
+  <%= form.submit "Send", class: "btn btn-primary" %>
   <% end %>
 </div>
-<br clear="both">

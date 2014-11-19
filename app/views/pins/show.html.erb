@@ -3,12 +3,15 @@
   <div class="col-md-6">
     <div class="well">
       <% for pinimage in @pin.pin_images.reject {|p| p.photo_file_size.nil?} do %>
-      <%= image_tag pinimage.photo %>
-      <br>
-      <%= pinimage.caption.to_s %>
-      <br><br>
+      <div class="thumbnail">
+        <%= image_tag pinimage.photo %>
+        <div class="caption">
+          <%= pinimage.caption.to_s %>
+        </div>
+      </div>
       <% end %>
-      <br><%= link_to '<i class="fa fa-arrow-left"></i>'.html_safe, pins_path %>
+      <br>
+      <%= link_to '<i class="fa fa-arrow-left"></i>'.html_safe, pins_path %>
       <% if current_user == @pin.user || current_user.admin == true %>
       | <%= link_to '<i class="fa fa-pencil-square-o"></i>'.html_safe, edit_pin_path(@pin) %>
       <% end %>

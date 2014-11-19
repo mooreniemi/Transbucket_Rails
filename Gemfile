@@ -73,10 +73,10 @@ group :development, :test do
   gem 'pry-nav'
   gem 'pry-rails'
   gem 'pry-coolline'
+  gem 'faker'
 end
 
 group :test do
-  gem 'faker'
   gem 'simplecov'
   gem 'database_cleaner'
   gem 'rspec-rails'

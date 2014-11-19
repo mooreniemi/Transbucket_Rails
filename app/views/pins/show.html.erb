@@ -62,7 +62,7 @@
     </dl>
     <div id="details">
       <i class="fa fa-quote-left"></i>
-      <%= @pin.details.html_safe %>
+      <%= @pin.details.try(:html_safe) %>
     </div>
   </div>
   <br clear="both" />

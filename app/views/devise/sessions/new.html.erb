@@ -15,11 +15,20 @@
     </div>
     <%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), html: { class: 'form-horizontal'}) do |f| %>
     <%= f.error_notification %>
-    <%= f.text_field :login, placeholder: "Username" %>
-    <%= f.password_field :password, placeholder: "Password" %>
-    <%= f.submit "Sign in", class: "btn btn-primary btn-large pull-right" %>
-    <br><br>
-    Remember me? <%= f.check_box :remember_me, as: :boolean %>
+    <div class="input-group input-group-lg">
+      <span class="input-group-addon"><i class="fa fa-users"></i></span>
+      <%= f.text_field :login, placeholder: "Username", class: "form-control" %>
+      <span class="input-group-addon">
+      <small>remember me?</small> <%= f.check_box :remember_me, as: :boolean %>
+      </span>
+    </div>
+    <div class="input-group input-group-lg">
+      <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+      <%= f.password_field :password, placeholder: "Password", class: "form-control" %>
+      <span class="input-group-btn">
+      <%= f.submit "Sign in", class: "btn btn-primary btn-large" %>
+      </span>
+    </div>
     <% end %>
   </div>
   <div class="well">

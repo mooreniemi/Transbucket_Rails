@@ -4,12 +4,12 @@ FactoryGirl.define do
   factory :pin do
     id { Faker::Number.number(5) }
     description { Faker::Lorem.sentences(3).join(" ") }
-    surgeon_id 1
-    procedure_id 4
+    surgeon_id { Random.rand(11) }
+    procedure_id { Random.rand(10) }
     user_id  { Faker::Number.number(5) }
-    cost 3000
-    sensation 2
-    satisfaction 3
+    cost { Random.rand(50000) }
+    sensation { Random.rand(11) }
+    satisfaction { Random.rand(11) }
     pin_images { build_list(:pin_image, 3)}
 
     # association :user

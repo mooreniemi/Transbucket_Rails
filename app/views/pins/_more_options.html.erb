@@ -12,11 +12,13 @@
   </li>
   <li class="list-group-item">
     <label>Post-op Sensation</label>
-    <%= number_field(:pin, :sensation, {class: "rating", data: {size: 'xs'}, required: false}) %>
+    <!-- note: needs to be text field for chrome focus to work with form validation -->
+    <!-- see comments here: http://plugins.krajee.com/star-rating#options -->
+    <%= text_field(:pin, :sensation, {class: "rating", data: {size: 'xs'}, required: false}) %>
   </li>
   <li class="list-group-item">
     <label>Post-op Satisfaction</label>
-    <%= number_field(:pin, :satisfaction, {class: "rating", data: {size: 'xs'}, required: false}) %>
+    <%= text_field(:pin, :satisfaction, {class: "rating", data: {size: 'xs'}, required: false}) %>
   </li>
   <li class="list-group-item">
     <label>Seeking a revision</label>

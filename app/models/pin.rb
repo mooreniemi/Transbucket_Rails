@@ -60,7 +60,11 @@ class Pin < ActiveRecord::Base
   end
 
   def unknown_surgeon?
-    surgeon.id == 911
+    if surgeon.present?
+      surgeon.id == 911
+    else
+      update_attributes(surgeon_id: 911)
+    end
   end
 
   def latest_comment_snippet

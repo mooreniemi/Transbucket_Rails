@@ -49,6 +49,10 @@ hr.style-two {
 	border-radius: 5px;
 }
 
+p {
+  padding: 5px;
+}
+
 .description {
 	margin: 10px;
 }
@@ -151,6 +155,11 @@ hr.style-two {
 .submission_well {
   background-color: #fff;
   padding: 15px;
+}
+
+.padded_nicely {
+  padding: 15px;
+  margin: auto;
 }
 
 #details {

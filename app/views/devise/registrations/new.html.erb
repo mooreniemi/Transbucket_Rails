@@ -1,21 +1,39 @@
 <% title 'New Registration' %>
-
-<div class="top-block span5 center"><center><h1><i class="fa fa-lock"></i></h1></center></div>
-<div class="login_well span5 center">
-  <p><small>Transbucket.com will <b>never</b> sell, rent, or lease your information.</small></p>
-  <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), html: { class: 'form-horizontal'}) do |f| %>
+<div class="col-md-5 center">
+  <div class="top-block"><center><h1><i class="fa fa-lock"></i></h1></center></div>
+  <div class="login_well">
+    <p><small>Transbucket.com will <b>never</b> sell, rent, or lease your information.</small></p>
+    <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), html: { class: 'form-horizontal'}) do |f| %>
     <%= f.error_notification %>
-    <%= f.input :name %>
-    <%= f.input :username %>
-    <%= f.input :email %>
-    <%= f.input :password %>
-    <%= f.input :password_confirmation %>
-    <%= f.label :gender %>
-    <%= f.select :gender, options_from_collection_for_select(Gender.all, "id", "name") %>
-    <br>
-    <br>
+    <div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+      <%= f.text_field :name, placeholder: "Your name", class: "form-control" %>
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon"><i class="fa fa-users"></i></span>
+      <%= f.text_field :username, placeholder: "Username", class: "form-control" %>
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+      <%= f.email_field :email, placeholder: "Email", class: "form-control" %>
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+      <%= f.password_field :password, placeholder: "Password", class: "form-control" %>
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon"><i class="fa fa-lock"></i><i class="fa fa-check"></i></span>
+      <%= f.password_field :password_confirmation, placeholder: "Password confirmation", class: "form-control" %>
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon"><i class="fa fa-key"></i> Gender: </span>
+      <%= f.select :gender, options_from_collection_for_select(Gender.all, "id", "name"), {}, { class: "form-control"} %>
+    </div>
     <%= f.submit "Submit", class: "btn btn-primary btn-large pull-right" %>
+    <% end %>
+    <br clear="both">
+  </div>
+  <div class="well">
     <%= render "devise/shared/links" %>
-  <% end %>
-  <br clear="both">
+  </div>
 </div>

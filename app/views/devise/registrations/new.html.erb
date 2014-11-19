@@ -5,27 +5,27 @@
     <p><small>Transbucket.com will <b>never</b> sell, rent, or lease your information.</small></p>
     <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), html: { class: 'form-horizontal'}) do |f| %>
     <%= f.error_notification %>
-    <div class="input-group">
+    <div class="input-group padded_nicely">
       <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
       <%= f.text_field :name, placeholder: "Your name", class: "form-control" %>
     </div>
-    <div class="input-group">
+    <div class="input-group padded_nicely">
       <span class="input-group-addon"><i class="fa fa-users"></i></span>
       <%= f.text_field :username, placeholder: "Username", class: "form-control" %>
     </div>
-    <div class="input-group">
+    <div class="input-group padded_nicely">
       <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
       <%= f.email_field :email, placeholder: "Email", class: "form-control" %>
     </div>
-    <div class="input-group">
+    <div class="input-group padded_nicely">
       <span class="input-group-addon"><i class="fa fa-lock"></i></span>
       <%= f.password_field :password, placeholder: "Password", class: "form-control" %>
     </div>
-    <div class="input-group">
+    <div class="input-group padded_nicely">
       <span class="input-group-addon"><i class="fa fa-lock"></i><i class="fa fa-check"></i></span>
       <%= f.password_field :password_confirmation, placeholder: "Password confirmation", class: "form-control" %>
     </div>
-    <div class="input-group">
+    <div class="input-group padded_nicely">
       <span class="input-group-addon"><i class="fa fa-key"></i> Gender: </span>
       <%= f.select :gender, options_from_collection_for_select(Gender.all, "id", "name"), {}, { class: "form-control"} %>
     </div>

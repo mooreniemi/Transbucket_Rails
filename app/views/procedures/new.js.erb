@@ -17,6 +17,7 @@ $("#new_procedure_submit").click(function() {
             $("#pin_procedure_id").trigger("chosen:updated");
             // TODO highlight menu $("#pin_procedure_id").
             $("#procedure_container").hide(500);
+            $("#procedure_container").remove();
             return false;
         },
         error: function(data) {

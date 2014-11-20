@@ -13,6 +13,7 @@ $("#new_surgeon_submit").click(function() {
         contentType: false,   // tell jQuery not to set contentType
         success: function(data) {
             $("#surgeon_container").hide(500);
+            $("#surgeon_container").remove();
             return false;
         },
         error: function(data) {

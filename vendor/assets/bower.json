@@ -6,7 +6,8 @@
     "jquery": "latest",
     "jquery-ujs": "latest",
     "jquery-ui": "latest",
-    "jquery-masonry": "latest",
+    "masonry": "latest",
+    "imagesloaded": "latest",
     "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.1.0/chosen_v1.1.0.zip",
     "underscore": "latest"
   }

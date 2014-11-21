@@ -27,27 +27,13 @@ hr.style-two {
 
 /* Required for jQuery Masonry */
 
-.box {
-	margin: 10px;
-	padding: 10px;
-	font-size: 11px;
-	line-height: 1.4em;
-	float:left;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	background-color:#fff;
-  overflow:hidden;
-
+.item { 
+  width: 25%; 
+  padding: 10px;
 }
-
-.box img {
-	display: block;
-    margin:auto;
-    height:200px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+.item.w2 { width: 50%; }
+.item img {
+   width: 100%;
 }
 
 p {
@@ -55,7 +41,7 @@ p {
 }
 
 .description {
-	margin: 10px;
+  margin: 10px;
 }
 
 .pagination {
@@ -100,10 +86,6 @@ p {
     padding: 0px;
 }
 
-.image {
-  position: relative;
-  width: 100%;
-}
 
 .comment_box {
   position:absolute;
@@ -123,9 +105,6 @@ p {
   color: red;
 }
 
-.label-with-popover {
-  display: inline;
-}
 .actions {
   font-size: 14px;
 }

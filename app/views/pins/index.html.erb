@@ -4,13 +4,9 @@
 <% else %>
 <% title 'Recent Submissions' %>
 <% end %>
-<div id="pins" class="js-masonry" data-masonry-options='{ "columnWidth": 200, "itemSelector": ".box" }'>
-  <div id="pin_container">
-    <%= render @presenter.pins %>
-  </div>
+<div id="pins">
+  <%= render @presenter.pins %>
 </div>
-<br>
-<br clear="both" />
 <div class="page_container col-md-6 pull-right">
   <%= will_paginate @presenter.pins unless @presenter.pins.empty? %>
 </div>

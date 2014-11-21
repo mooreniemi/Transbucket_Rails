@@ -12,13 +12,11 @@ Props to [dperini/ContentLoaded](https://github.com/dperini/ContentLoaded) for o
 
 ## Install
 
-Download [doc-ready.js](doc-ready.js)
+Install with [Bower](http://bower.io) `bower install doc-ready`
 
-Install with [:bird: Bower](http://bower.io) `bower install desandro/doc-ready`
+Install with npm `npm install doc-ready`
 
-Install with npm :truck: `npm install desandro/doc-ready`
-
-Install with [:nut_and_bolt: component](http://github.com/component/component) `component install desandro/doc-ready`
+Install with [Component](http://github.com/component/component) `component install desandro/doc-ready`
 
 ## MIT License
 

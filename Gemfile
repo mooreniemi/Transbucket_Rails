@@ -32,6 +32,7 @@ gem 'devise'
 gem 'devise-encryptable'
 
 gem 'state_machine'
+gem 'fuzzy_match'
 
 gem 'rake-progressbar'
 

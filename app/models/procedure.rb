@@ -10,4 +10,10 @@ class Procedure < ActiveRecord::Base
   def to_s
     name
   end
+
+  def self.names
+    self.where("name IS NOT NULL")
+    .pluck(:name)
+    .sort
+  end
 end

@@ -12,13 +12,20 @@ $("#new_surgeon_submit").click(function() {
         processData: false,  // tell jQuery not to process the data
         contentType: false,   // tell jQuery not to set contentType
         success: function(data) {
-            $("#surgeon_container").hide(500);
-            $("#surgeon_container").remove();
+            $("#surgeon_container").hide( "slow", function() {
+                $("#surgeon_container").remove();
+            });
             return false;
         },
         error: function(data) {
             console.log('error:' + data)
             return false;
         }
+    });
+});
+
+$('#surgeon_form .cancel').click(function(){
+    $("#surgeon_container").hide("slow", function() {
+        $("#surgeon_container").remove();
     });
 });

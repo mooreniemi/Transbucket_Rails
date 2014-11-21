@@ -1,17 +1,25 @@
 <div id="procedure_container">
-  <%= form_for(@procedure, :remote => true,
-  :authenticity_token => true) do |procedure_form| %>
-  <div class="well">
-    <%= procedure_form.text_field :name, placeholder: "Name of procedure" %>
-    <br>
-    <label>Type
-      <%= procedure_form.select :body_type, options_for_select([ "Top", "Bottom", "Face", "Other" ]) %>
-    </label>
-    <br>
-    <label>Gender
-      <%= procedure_form.select :gender, options_for_select([ "FTM", "MTF" ]) %>
-    </label>
-  <% end %>
-  <%= link_to "Add procedure", '#', :id => 'new_procedure_submit', :class => 'btn btn-sm btn-default pull-right' %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <%= link_to '<i class="fa fa-times"></i>'.html_safe, '#', class: 'cancel pull-right' %>
+      <h3 class="panel-title">Add a new procedure</h3>
+    </div>
+    <div class="panel-body">
+      <%= form_for(@procedure, :remote => true,
+      :authenticity_token => true) do |procedure_form| %>
+      <div class="input-group padded_nicely">
+        <%= procedure_form.text_field :name, placeholder: "Name of procedure" %>
+      </div>
+      <div class="input-group padded_nicely">
+        <%= procedure_form.select :body_type, options_for_select([ "Top", "Bottom", "Face", "Other" ]) %>
+      </div>
+      <div class="input-group padded_nicely">
+        <%= procedure_form.select :gender, options_for_select([ "FTM", "MTF" ]) %>
+      </div>
+      <% end %>
+      <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <%= link_to "Add procedure", '#', :id => 'new_procedure_submit', :class => 'btn btn-sm btn-default' %>
+      </div>
+    </div>
   </div>
 </div>

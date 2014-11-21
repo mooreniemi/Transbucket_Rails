@@ -7,4 +7,6 @@
 <div id="pins">
   <%= render @presenter.pins %>
 </div>
-<%= will_paginate @presenter.pins, renderer: BootstrapPagination::Rails unless @presenter.pins.empty? %>
+<div id="paginator">
+  <%= will_paginate @presenter.pins, renderer: BootstrapPagination::Rails unless @presenter.pins.empty? %>
+</div>

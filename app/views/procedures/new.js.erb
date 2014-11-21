@@ -15,14 +15,20 @@ $("#new_procedure_submit").click(function() {
         success: function(data) {
             // see create.js.erb file for the rendering of the new collection
             $("#pin_procedure_id").trigger("chosen:updated");
-            // TODO highlight menu $("#pin_procedure_id").
-            $("#procedure_container").hide(500);
-            $("#procedure_container").remove();
+            $("#procedure_container").hide("slow", function() {
+                $("#procedure_container").remove();
+            });
             return false;
         },
         error: function(data) {
             console.log('error:' + data)
             return false;
         }
+    });
+});
+
+$('#procedure_form .cancel').click(function(){
+    $("#procedure_container").hide("slow", function() {
+        $("#procedure_container").remove();
     });
 });

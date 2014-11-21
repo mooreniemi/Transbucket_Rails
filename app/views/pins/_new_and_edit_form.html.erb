@@ -23,10 +23,8 @@
     <div class="submission_well">
       <p>Make sure your photos were shot in good light, and are oriented the correct way.</p>
       <%= render partial: 'pin_images/form', locals: {f: f} %>
-      <div class="form-actions">
-        <%= f.submit "Submit Now", :class => 'btn btn-success pull-right' %>
-      </div>
     </div>
+      <%= f.submit "Submit Now", :class => 'btn btn-success btn-block' %>
   </div>
 </div>
 <% end %>

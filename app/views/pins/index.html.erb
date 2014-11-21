@@ -7,6 +7,4 @@
 <div id="pins">
   <%= render @presenter.pins %>
 </div>
-<div class="page_container col-md-6 pull-right">
-  <%= will_paginate @presenter.pins unless @presenter.pins.empty? %>
-</div>
+<%= will_paginate @presenter.pins, renderer: BootstrapPagination::Rails unless @presenter.pins.empty? %>

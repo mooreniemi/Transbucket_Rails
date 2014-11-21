@@ -30,5 +30,6 @@
 //= require get-size/get-size
 //= require outlayer/item
 //= require outlayer/outlayer
-//= require jquery-masonry/masonry
+//= require imagesloaded
+//= require masonry/masonry
 //= require_tree .

@@ -25,8 +25,12 @@ $(document).ready(function() {
     // masonry setup
     var container = document.querySelector('#pins'),
         msnry;
-    // initialize Masonry after all images have loaded
-    imagesLoaded(container, function() {
-        msnry = new Masonry(container);
-    });
+
+    // TODO hack
+    if (container) {
+        // initialize Masonry after all images have loaded
+        imagesLoaded(container, function() {
+            msnry = new Masonry(container);
+        });
+    }
 });

@@ -1,25 +1,31 @@
-<div class="box">
-  <div class="actions">
-    <!-- TODO not displaying properly -->
-    <label class="label-with-popover" data-placement="right" data-content="Flags from 3 different users will remove content pending review by a moderator." data-title="Flag this content." data-trigger="hover">
-      <%= link_to '<i class="fa fa-flag"></i>'.html_safe, pin_flags_path(pin), :method => :post, remote: true %>
-    </label>
-    <% if current_user == pin.user || current_user.admin? %>
-    | <%= link_to '<i class="fa fa-pencil-square-o"></i>'.html_safe, edit_pin_path(pin) %>
-    | <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, pin, method: :delete, data: { confirm: 'Are you sure?' } %>
-    <% if pin.pending? %>
-    | <%= link_to 'Remove Flag', remove_pin_flag_path(pin), remote: true %>
-    <% end %>
-    <% end %>
-    posted <%= distance_of_time_in_words(Time.now, pin.created_at) %> ago
+<div class="item">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <% if pin.published? %>
+      <div class="image">
+        <%= render partial: "latest_comment_snippet", locals: { pin: pin } if @comments.include?(commentable_id: pin.id) %>
+        <%= link_to (image_tag pin.cover_image(@safe_mode)), pin %>
+      </div>
+      <p class="description">
+      <%= pin.try(:procedure).try(:name) %> by <strong><%= pin.unknown_surgeon? ? 'unknown' : 'Dr. ' + pin.surgeon.to_s %></strong>
+      </p>
+      <% end %>
+    </div>
+    <div class="panel-footer">
+      <div class="actions">
+        <!-- TODO not displaying properly -->
+        <label class="label-with-popover" data-placement="right" data-content="Flags from 3 different users will remove content pending review by a moderator." data-title="Flag this content." data-trigger="hover">
+          <%= link_to '<i class="fa fa-flag"></i>'.html_safe, pin_flags_path(pin), :method => :post, remote: true %>
+        </label>
+        <% if current_user == pin.user || current_user.admin? %>
+        | <%= link_to '<i class="fa fa-pencil-square-o"></i>'.html_safe, edit_pin_path(pin) %>
+        | <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, pin, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <% if pin.pending? %>
+        | <%= link_to 'Remove Flag', remove_pin_flag_path(pin), remote: true %>
+        <% end %>
+        <% end %>
+        posted <%= distance_of_time_in_words(Time.now, pin.created_at) %> ago
+      </div>
+    </div>
   </div>
-  <% if pin.published? %>
-  <div class="image">
-    <%= render partial: "latest_comment_snippet", locals: { pin: pin } if @comments.include?(commentable_id: pin.id) %>
-    <%= link_to (image_tag pin.cover_image(@safe_mode)), pin %>
-  </div>
-  <p class="description">
-  <%= pin.try(:procedure).try(:name) %> by <strong><%= pin.unknown_surgeon? ? 'unknown' : 'Dr. ' + pin.surgeon.to_s %></strong>
-  </p>
-  <% end %>
 </div>

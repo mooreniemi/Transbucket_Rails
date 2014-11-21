@@ -1,10 +1,10 @@
 {
   "name": "doc-ready",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Let's get this party started... on document ready",
   "main": "doc-ready.js",
   "dependencies": {
-    "eventie": "desandro/eventie"
+    "eventie": "^1"
   },
   "homepage": "https://github.com/desandro/doc-ready",
   "authors": [

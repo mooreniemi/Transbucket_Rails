@@ -29,5 +29,5 @@
   },
   "_source": "git://github.com/desandro/masonry.git",
   "_target": "*",
-  "_originalSource": "jquery-masonry"
+  "_originalSource": "masonry"
 }

@@ -1,5 +1,5 @@
 /*!
- * Outlayer v1.2.0
+ * Outlayer v1.3.0
  * the brains and guts of a layout library
  * MIT license
  */
@@ -13,7 +13,6 @@
 var document = window.document;
 var console = window.console;
 var jQuery = window.jQuery;
-
 var noop = function() {};
 
 // -------------------------- helpers -------------------------- //
@@ -51,7 +50,7 @@ function makeArray( obj ) {
 }
 
 // http://stackoverflow.com/a/384380/182183
-var isElement = ( typeof HTMLElement === 'object' ) ?
+var isElement = ( typeof HTMLElement === 'function' || typeof HTMLElement === 'object' ) ?
   function isElementDOM2( obj ) {
     return obj instanceof HTMLElement;
   } :
@@ -869,6 +868,8 @@ Outlayer.prototype.destroy = function() {
 
   this.unbindResize();
 
+  var id = this.element.outlayerGUID;
+  delete instances[ id ]; // remove reference to instance by id
   delete this.element.outlayerGUID;
   // remove data for jQuery
   if ( jQuery ) {
@@ -994,6 +995,16 @@ if ( typeof define === 'function' && define.amd ) {
       './item'
     ],
     outlayerDefinition );
+} else if ( typeof exports === 'object' ) {
+  // CommonJS
+  module.exports = outlayerDefinition(
+    require('eventie'),
+    require('doc-ready'),
+    require('wolfy87-eventemitter'),
+    require('get-size'),
+    require('desandro-matches-selector'),
+    require('./item')
+  );
 } else {
   // browser global
   window.Outlayer = outlayerDefinition(

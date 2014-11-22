@@ -1,12 +1,9 @@
-<div id="persisted_pins">
-  <% pin_images = @pin.pin_images.reject{|i| i if i.id.nil?} %>
-  <% pin_images.each do |image| %>
-  <%= image_tag image.photo.url(:thumb) %>
-  <%= link_to('<i class="fa fa-trash-o"></i>'.html_safe, pin_image_path(@pin, image), method: "delete", remote: true, data: { confirm: 'Are you sure?', disable_with: 'deleting...' }) %>
-  <br>
-  <div class="input-group">
-    <%= text_field_tag :caption, image.caption, placeholder: "Caption" %>
-  </div>
-  <br>
-  <% end %>
+<% @pin.pin_images.reject{|i| i if i.id.nil?}.each do |image| %>
+<%= image_tag image.photo.url(:thumb) %>
+<%= link_to('<i class="fa fa-trash-o"></i>'.html_safe, pin_image_path(@pin, image), method: "delete", remote: true, data: { confirm: 'Are you sure?', disable_with: 'deleting...' }) %>
+<br>
+<div class="input-group">
+  <%= text_field_tag :caption, image.caption, placeholder: "Caption" %> <button>todo</button>
 </div>
+<br>
+<% end %>

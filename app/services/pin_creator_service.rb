@@ -1,19 +1,18 @@
 #app/services/pin_creator_service.rb
 class PinCreatorService
-  attr_accessor :pin_params, :user, :pin_images
+  attr_accessor :params, :user, :pin_images
 
   def initialize(params, user)
-    params = ActiveSupport::HashWithIndifferentAccess.new(params)
-    @pin_images = params.delete("pin_images")
-    @pin_params = ActiveSupport::HashWithIndifferentAccess.new(params["pin"])
+    @params = params.symbolize_keys
+    @pin_images = params.delete(:pin_image_ids).split(",").reject!(&:blank?)
     @user = user
   end
 
   def create
-    pin = user.pins.new(pin_params.symbolize_keys)
-
-    pin_images.each do |photo|
-      pin.pin_images.build(photo: photo)
+    pin = user.pins.new(params)
+    
+    pin_images.each do |id|
+      pin.pin_images << PinImage.find(id)
     end if pin_images
 
     return pin

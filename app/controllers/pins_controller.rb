@@ -50,7 +50,7 @@ class PinsController < ApplicationController
   def create
     #nested associations are handled inside of the service
     #TODO clean this up
-    @pin = PinCreatorService.new(pin_params.merge({pin_images: params["pin_images"]}), current_user).create
+    @pin = PinCreatorService.new(pin_params, current_user).create
 
     respond_to do |format|
 
@@ -105,7 +105,7 @@ class PinsController < ApplicationController
 
   private
   def pin_params
-    params.permit(pin: [:surgeon_id, :procedure_id, :cost, :revision, :details, :sensation, :satisfaction])
+    params.require(:pin).permit(:surgeon_id, :procedure_id, :cost, :revision, :details, :sensation, :satisfaction, :pin_image_ids)
   end
 
   def pin_index_params

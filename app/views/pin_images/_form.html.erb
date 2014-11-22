@@ -1,14 +1,35 @@
-<div class="control-group">
-  <label class='control-label'>Your photos</label>
-  <div class="controls">
-    <% if @pin.pin_images.exists? %>
-    <% pin_images = @pin.pin_images.reject{|i| i if i.id.nil?} %>
-    <% pin_images.each do |image| %>
+<%= form_for(@pin.pin_images.new, html: { multipart: true, class: "dropzone"}) do |f|  %>
+<div class="fallback">
+  <div id="persisted_pins">
+    <% @pin.pin_images.reject{|i| i if i.id.nil?}.each do |image| %>
     <%= image_tag image.photo.url(:thumb) %>
-    <%= link_to('<i class="fa fa-trash-o"></i>'.html_safe, pin_pin_image_path(@pin, image), method: "delete", remote: true, data: { confirm: 'Are you sure?', disable_with: 'deleting...' }) %>
+    <%= link_to('<i class="fa fa-trash-o"></i>'.html_safe, pin_image_path(@pin, image), method: "delete", remote: true, data: { confirm: 'Are you sure?', disable_with: 'deleting...' }) %>
+    <br>
+    <div class="input-group">
+      <%= text_field_tag :caption, image.caption, placeholder: "Caption" %> <button>todo</button>
+    </div>
     <br>
     <% end %>
-    <% end %>
-    <%= file_field_tag "pin_images[]", type: :file, multiple: true %>
+  </div>
+  <div id="new_pin_image">
+  <hr>
+    <div class="header">
+      <ul class="nav nav-pills pull-right">
+        <li class="active">
+          <%= f.submit "Upload", class: "btn btn-primary" %>
+        </li>
+      </ul>
+      <h3 class="text-muted">Add new photos</h3>
+    </div>
+    <div class="well">
+      <%= form_for(@pin.pin_images.new, html: { multipart: true, class: "dropzone"}) do |f|  %>
+      Drag and drop images here or click for a file browser.
+      <div class="fallback">
+        <!-- like the class above suggests, shown when dropzone isnt working -->
+        <%= f.file_field :photo, multiple: true, placeholder: "Drop files here" %><br>
+      </div>
+      <% end %>
+    </div>
   </div>
 </div>
+<% end %>

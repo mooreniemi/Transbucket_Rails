@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   post 'contact' => 'contact#create'
 
   resources :pin_images
+  
   resources :pins do
     resources :flags, :only => [:create]
   end

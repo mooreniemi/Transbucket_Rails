@@ -46,10 +46,7 @@ class PinsController < ApplicationController
 
   # POST /pins
   # POST /pins.json
-  #submit button triggers
   def create
-    #nested associations are handled inside of the service
-    #TODO clean this up
     @pin = PinCreatorService.new(pin_params, current_user).create
 
     respond_to do |format|

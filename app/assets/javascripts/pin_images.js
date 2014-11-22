@@ -17,8 +17,42 @@ $(document).ready(function() {
         maxFiles: 10
     });
     myDropzone.on("success", function(file, responseText) {
-        // Handle the responseText here. For example, add the text to the preview element:
-        var element = $('#pin_pin_image_ids');
-        element.val(element.val() + "," + responseText.id);
+        var imageIdList = $('#pin_pin_image_ids'),
+            captionButton = document.createElement("button"),
+            captionInput = document.createElement("input");
+
+        $(captionButton).on("click", function() {
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: "/pin_images/174.json",
+                type: 'PATCH',
+                data: JSON.stringify({
+                    caption: $(event.target).text()
+                }),
+                success: function(response, textStatus, jqXhr) {
+                    console.log("Pin image Successfully Patched!");
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // log the error to the console
+                    console.log("The following error occured: " + textStatus, errorThrown);
+                },
+                complete: function() {
+                    console.log("Pin image Patch Ran");
+                }
+            });
+        })
+        // dynamically adding the save pin_image ids to the pin submission form
+        imageIdList.val(imageIdList.val() + "," + responseText.id);
+
+        captionInput.type = "text";
+        captionInput.name = "caption_" + responseText.id;
+        captionInput.placeholder = "Caption";
+
+        file.previewTemplate.appendChild(captionInput);
+        file.previewTemplate.appendChild(captionButton);
+
     });
 });

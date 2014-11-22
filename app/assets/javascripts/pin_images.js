@@ -22,12 +22,13 @@ $(document).ready(function() {
             captionInput = document.createElement("input");
 
         $(captionButton).on("click", function() {
+            event.preventDefault();
             $.ajax({
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                url: "/pin_images/174.json",
+                url: "/pin_images/" + responseText.id + ".json",
                 type: 'PATCH',
                 data: JSON.stringify({
                     caption: $(event.target).text()
@@ -48,11 +49,10 @@ $(document).ready(function() {
         imageIdList.val(imageIdList.val() + "," + responseText.id);
 
         captionInput.type = "text";
-        captionInput.name = "caption_" + responseText.id;
+        captionInput.name = responseText.id;
         captionInput.placeholder = "Caption";
 
         file.previewTemplate.appendChild(captionInput);
         file.previewTemplate.appendChild(captionButton);
-
     });
 });

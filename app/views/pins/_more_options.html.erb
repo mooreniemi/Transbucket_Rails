@@ -1,27 +1,35 @@
 <script>
-  $(document).ready(function() {
-    $("#sensation").rating();
-    $("#satisfaction").rating();
+$(document).ready(function() {
+  $("#sensation").rating();
+  $("#satisfaction").rating();
 });
 </script>
-
-<ul class="list-group">
-  <li class="list-group-item">
-    <label>Cost</label>
-    <%= f.text_field :cost %>
-  </li>
-  <li class="list-group-item">
-    <label>Post-op Sensation</label>
-    <!-- note: needs to be text field for chrome focus to work with form validation -->
-    <!-- see comments here: http://plugins.krajee.com/star-rating#options -->
-    <%= text_field(:pin, :sensation, {class: "rating", data: {size: 'xs'}, required: false}) %>
-  </li>
-  <li class="list-group-item">
-    <label>Post-op Satisfaction</label>
-    <%= text_field(:pin, :satisfaction, {class: "rating", data: {size: 'xs'}, required: false}) %>
-  </li>
-  <li class="list-group-item">
-    <label>Seeking a revision</label>
-    <%= f.check_box :revision %>
-  </li>
-</ul>
+<div class="header">
+  <ul class="nav nav-pills pull-right">
+    <li class="active">
+    </li>
+  </ul>
+  <h3 class="text-muted">Your experience at a glance:</h3>
+</div>
+<div class="submission_well">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <label>Cost</label>
+      <%= f.text_field :cost %>
+    </li>
+    <li class="list-group-item">
+      <label>Post-op Sensation</label>
+      <!-- note: needs to be text field for chrome focus to work with form validation -->
+      <!-- see comments here: http://plugins.krajee.com/star-rating#options -->
+      <%= text_field(:pin, :sensation, {class: "rating", data: {size: 'xs'}, required: false}) %>
+    </li>
+    <li class="list-group-item">
+      <label>Post-op Satisfaction</label>
+      <%= text_field(:pin, :satisfaction, {class: "rating", data: {size: 'xs'}, required: false}) %>
+    </li>
+    <li class="list-group-item">
+      <label>Seeking a revision</label>
+      <%= f.check_box :revision %>
+    </li>
+  </ul>
+</div>

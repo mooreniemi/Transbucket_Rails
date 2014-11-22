@@ -1,35 +1,22 @@
-<%= form_for(@pin.pin_images.new, html: { multipart: true, class: "dropzone"}) do |f|  %>
 <div class="fallback">
   <div id="persisted_pins">
-    <% @pin.pin_images.reject{|i| i if i.id.nil?}.each do |image| %>
-    <%= image_tag image.photo.url(:thumb) %>
-    <%= link_to('<i class="fa fa-trash-o"></i>'.html_safe, pin_image_path(@pin, image), method: "delete", remote: true, data: { confirm: 'Are you sure?', disable_with: 'deleting...' }) %>
-    <br>
-    <div class="input-group">
-      <%= text_field_tag :caption, image.caption, placeholder: "Caption" %> <button>todo</button>
-    </div>
-    <br>
-    <% end %>
+
   </div>
-  <div id="new_pin_image">
-  <hr>
+  <div>
     <div class="header">
       <ul class="nav nav-pills pull-right">
         <li class="active">
-          <%= f.submit "Upload", class: "btn btn-primary" %>
         </li>
       </ul>
       <h3 class="text-muted">Add new photos</h3>
     </div>
-    <div class="well">
-      <%= form_for(@pin.pin_images.new, html: { multipart: true, class: "dropzone"}) do |f|  %>
-      Drag and drop images here or click for a file browser.
+    <div class="dropzone" id="dropper">
       <div class="fallback">
-        <!-- like the class above suggests, shown when dropzone isnt working -->
-        <%= f.file_field :photo, multiple: true, placeholder: "Drop files here" %><br>
+        <%= form_for(PinImage.new, html: {multipart: true}) do |pin_image_form| %>
+        <%= pin_image_form.file_field :photo, multiple: true, name: "pin_image[photo]" %>
+        <%= pin_image_form.text_field :caption %>
+        <% end %>
       </div>
-      <% end %>
     </div>
   </div>
 </div>
-<% end %>

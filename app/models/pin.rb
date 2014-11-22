@@ -9,7 +9,7 @@ class Pin < ActiveRecord::Base
   has_many :pin_images, :dependent => :destroy
   has_many :comments, :foreign_key => 'commentable_id'
 
-  accepts_nested_attributes_for :pin_images, :reject_if => proc {|attributes| !attributes.keys.include?(:photo) }
+  attr_accessor :pin_image_ids
 
   acts_as_commentable
   acts_as_votable

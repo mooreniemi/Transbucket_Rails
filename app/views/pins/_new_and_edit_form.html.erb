@@ -1,7 +1,7 @@
 <!-- New edit & new form -->
 <div class="row">
   <div class="col-md-6">
-    <%= nested_form_for @pin, :html => {:multipart => true, :class => "form-inline"} do |f| %>
+    <%= nested_form_for @pin, html: {multipart: true, class: "form-inline"} do |f| %>
     <%= render partial: 'errors', locals: {pin: @pin} if @pin.errors.any? %>
     <div class="top-block span5">
       <center><i class="fa fa-pencil"></i></center>
@@ -15,7 +15,8 @@
       </div>
       <%= render partial: 'details', locals: {f: f} %>
       <br>
-      <%= f.submit "Submit Now", :class => 'btn btn-success btn-block' %>
+      <%= f.hidden_field :pin_image_ids %>
+      <%= f.submit "Submit Now", class: 'btn btn-success btn-block', id: 'pin_submit' %>
     </div>
   </div>
   <div id="pin_images" class="col-md-6">
@@ -23,7 +24,7 @@
       <center><i class="fa fa-camera"></i></center>
     </div>
     <div class="submission_well">
-      <%= render partial: 'pin_images/form' %>
+      <%= render partial: 'pin_images/form', locals: {f: f} %>
     </div>
   </div>
 </div>

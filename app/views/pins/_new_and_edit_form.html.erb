@@ -1,11 +1,11 @@
 <!-- New edit & new form -->
+<%= nested_form_for @pin, html: {multipart: true, class: "form-inline"} do |f| %>
 <div class="row">
   <div class="top-block">
     <i class="fa fa-camera"></i>
   </div>
   <div id="pin_images">
     <div class="submission_well">
-      <%= nested_form_for @pin, html: {multipart: true, class: "form-inline"} do |f| %>
       <%= render partial: 'errors', locals: {pin: @pin} if @pin.errors.any? %>
       <%= render partial: 'pin_images/form', locals: {f: f} %>
     </div>
@@ -19,11 +19,7 @@
 <div class="row">
   <div class="submission_well col-md-6">
     <%= render partial: 'surgeon_and_procedure', locals: {f: f} %>
-    <br>
-    <label class="control-label">Your experience at a glance:</label>
-    <div class="submission_well">
-      <%= render partial: 'more_options', locals: {f: f} %>
-    </div>
+    <%= render partial: 'more_options', locals: {f: f} %>
   </div>
   <div class="submission_well col-md-6">
     <%= render partial: 'details', locals: {f: f} %>
@@ -31,7 +27,7 @@
   </div>
 </div>
 <div class="row">
-  <%= f.submit "Submit Now", class: 'btn btn-success btn-block', id: 'pin_submit' %>
+  <%= f.submit "Submit Now", class: 'btn btn-success btn-block' %>
 </div>
 <% end %>
 <%= render 'pins/surgeon_complete' %>

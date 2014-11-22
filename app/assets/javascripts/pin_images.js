@@ -1,11 +1,7 @@
 $(document).ready(function() {
-    // disable auto discover
     Dropzone.autoDiscover = false;
-
-    // grap our pin_image form by its id
-    $("#new_pin_image").dropzone({
+    var myDropzone = new Dropzone("#dropper", {
         url: '/pin_images',
-        // restrict image size to a maximum 1MB
         maxFilesize: 1,
         // changed the passed param to one accepted by
         // our rails app
@@ -14,6 +10,15 @@ $(document).ready(function() {
         addRemoveLinks: true,
         headers: {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-        }
+        },
+        autoProcessQueue: true,
+        uploadMultiple: true,
+        parallelUploads: 100,
+        maxFiles: 10
+    });
+    myDropzone.on("success", function(file, responseText) {
+        // Handle the responseText here. For example, add the text to the preview element:
+        var element = $('#pin_pin_image_ids');
+        element.val(element.val() + "," + responseText.id);
     });
 });

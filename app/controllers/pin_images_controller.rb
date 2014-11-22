@@ -7,7 +7,7 @@ class PinImagesController < ApplicationController
   def create
     @pin_image = PinImage.create(pin_image_params)
     if @pin_image.save
-      render json: { message: "success" }, :status => 200
+      render json: { id: @pin_image.id }, :status => 200
     else
       #  you need to send an error header, otherwise Dropzone
       #  will not interpret the response as an error:

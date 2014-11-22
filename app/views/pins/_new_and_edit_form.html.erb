@@ -14,6 +14,8 @@
         <%= render partial: 'more_options', locals: {f: f} %>
       </div>
       <%= render partial: 'details', locals: {f: f} %>
+      <br>
+      <%= f.submit "Submit Now", :class => 'btn btn-success btn-block' %>
     </div>
   </div>
   <div id="pin_images" class="col-md-6">
@@ -21,10 +23,8 @@
       <center><i class="fa fa-camera"></i></center>
     </div>
     <div class="submission_well">
-      <p>Make sure your photos were shot in good light, and are oriented the correct way.</p>
-      <%= render partial: 'pin_images/form', locals: {f: f} %>
+      <%= render partial: 'pin_images/form' %>
     </div>
-      <%= f.submit "Submit Now", :class => 'btn btn-success btn-block' %>
   </div>
 </div>
 <% end %>

@@ -8,6 +8,7 @@
     "jquery-ui": "latest",
     "masonry": "latest",
     "imagesloaded": "latest",
+    "dropzone": "latest",
     "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.1.0/chosen_v1.1.0.zip",
     "underscore": "latest"
   }

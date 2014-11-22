@@ -15,6 +15,7 @@
 //= require jquery_nested_form
 //= require jquery-ujs/src/rails
 //= require jquery-ui
+//= require dropzone/downloads/dropzone.min
 //= require bootstrap/dist/js/bootstrap.min
 //= require bootstrap-star-rating/js/star-rating.min
 //= require chosen/chosen.proto

@@ -1,8 +1,5 @@
 <%= javascript_include_tag "dropzone" %>
 <div class="fallback">
-  <div id="persisted_pins">
-    <%= render 'pin_images/persisted' %>
-  </div>
   <div class="dropzone" id="dropper">
     <div class="fallback">
       <%= form_for(PinImage.new, html: {multipart: true}) do |pin_image_form| %>

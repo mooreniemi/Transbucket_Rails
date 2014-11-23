@@ -1,6 +1,6 @@
 class PinImagesController < ApplicationController
   respond_to :json
-  
+
   def update
     @pin_image = PinImage.find(params[:id])
     @pin_image.update_attributes(caption: params[:caption])

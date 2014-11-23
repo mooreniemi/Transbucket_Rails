@@ -19,7 +19,19 @@ $(document).ready(function() {
             autoProcessQueue: true,
             uploadMultiple: true,
             parallelUploads: 100,
-            maxFiles: 10
+            maxFiles: 10,
+            init: function() {
+                // getting this pin's current pin_images
+                $.getJSON("pin_images.json", function(data) {
+                    var pinImages = data["pins"];
+                    if (pinImages) {
+                        pinImages.forEach(function(pinImage) {
+                            myDropzone.addFile.call(myDropzone, pinImage);
+                            myDropzone.options.thumbnail.call(myDropzone, pinImage, pinImage.url);
+                        });
+                    }
+                });
+            }
         });
         myDropzone.on("success", function(file, responseText) {
             var imageIdList = $('#pin_pin_image_ids'),

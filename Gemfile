@@ -13,6 +13,7 @@ gem 'protected_attributes'
 # for thinking sphinx
 gem 'mysql2'
 gem 'activerecord-mysql-adapter'
+gem 'active_model_serializers'
 
 gem 'pg'
 

@@ -1,5 +1,6 @@
 class PinsController < ApplicationController
   before_filter :authenticate_user!
+  respond_to :json
 
   # GET /pins
   # GET /pins.json
@@ -87,6 +88,11 @@ class PinsController < ApplicationController
       format.html { redirect_to pins_url }
       format.json { head :ok }
     end
+  end
+
+  def pin_images    
+    @pin_images = Pin.find(params[:id]).pin_images
+    respond_with(@pin_images)
   end
 
   def admin

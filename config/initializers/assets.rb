@@ -1,1 +1,1 @@
-Rails.application.config.assets.precompile += %w( pins.js search.js )
+Rails.application.config.assets.precompile += %w( pins.js search.js dropzone.js rated_divs.js )

@@ -10,7 +10,7 @@ $(document).ready(function() {
             maxFilesize: 1,
             // changed the passed param to one accepted by
             // our rails app
-            paramName: "pin_image[photo]",
+            paramName: "photos",
             // show remove links on each image pin_image
             addRemoveLinks: true,
             headers: {
@@ -21,9 +21,9 @@ $(document).ready(function() {
             parallelUploads: 100,
             maxFiles: 10,
             init: function() {
-                // getting this pin's current pin_images
-                $.getJSON("pin_images.json", function(data) {
-                    var pinImages = data["pins"];
+                // getting this pin's current pin_images, for edit page
+                // TODO break this out
+                $.getJSON("pin_images.json", function(pinImages) {
                     if (pinImages) {
                         pinImages.forEach(function(pinImage) {
                             myDropzone.addFile.call(myDropzone, pinImage);

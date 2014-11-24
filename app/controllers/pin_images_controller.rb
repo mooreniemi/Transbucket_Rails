@@ -13,13 +13,15 @@ class PinImagesController < ApplicationController
   end
 
   def create
-    @pin_image = PinImage.create(pin_image_params)
-    if @pin_image.save
-      render json: { id: @pin_image.id }, :status => 200
+    @pin_images = pin_image_params.inject([]) do |memo, photo|
+      memo << PinImage.create(photo: photo)
+    end
+    if @pin_images.present?
+      render json: { id: @pin_images.map(&:id) }, :status => 200
     else
       #  you need to send an error header, otherwise Dropzone
       #  will not interpret the response as an error:
-      render json: { error: @pin_image.errors.full_messages.join(',')}, :status => 400
+      render json: { error: @pin_images.errors.full_messages.join(',')}, :status => 400
     end
   end
 
@@ -38,6 +40,9 @@ class PinImagesController < ApplicationController
 
   private
   def pin_image_params
-    params.require(:pin_image).permit(:photo)
+    #params.require(:pin_image).permit(photo: [:'0'])
+    #params.require(:pin_image).permit(:photo)
+    #params.require(:pin_image)["photo"].values.first
+    params.require(:photos).values
   end
 end

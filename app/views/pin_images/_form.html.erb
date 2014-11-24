@@ -3,7 +3,7 @@
   <div class="dropzone" id="dropper">
     <div class="fallback">
       <%= form_for(PinImage.new, html: {multipart: true}) do |pin_image_form| %>
-      <%= pin_image_form.file_field :photo, multiple: true, name: "pin_image[photo]" %>
+      <%= pin_image_form.file_field :photo %>
       <%= pin_image_form.text_field :caption %>
       <% end %>
     </div>

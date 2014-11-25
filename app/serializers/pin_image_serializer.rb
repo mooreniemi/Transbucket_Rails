@@ -1,5 +1,5 @@
 class PinImageSerializer < ActiveModel::Serializer
-  attributes :id, :name, :size, :type, :url
+  attributes :id, :name, :size, :type, :url, :caption
   def name
     object.photo_file_name
   end

@@ -1,6 +1,7 @@
 $(document).ready(function() {
     // dropzone setup
-    var container = document.querySelector('#dropper');
+    var container = document.querySelector('#dropper'),
+        template =  $('.hide').html();
 
     if (container) {
         Dropzone.autoDiscover = false;
@@ -8,6 +9,7 @@ $(document).ready(function() {
         var myDropzone = new Dropzone("#dropper", {
             url: '/pin_images',
             maxFilesize: 1,
+            previewTemplate: template,
             // changed the passed param to one accepted by
             // our rails app
             paramName: "photos",
@@ -16,11 +18,18 @@ $(document).ready(function() {
             headers: {
                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             },
-            autoProcessQueue: true,
+            autoProcessQueue: false,
             uploadMultiple: true,
             parallelUploads: 100,
             maxFiles: 10,
             init: function() {
+                var submitButton = document.querySelector("#submit-all")
+                myDropzone = this; // closure
+
+                submitButton.addEventListener("click", function() {
+                    myDropzone.processQueue(); // Tell Dropzone to process all queued files.
+                });
+
                 // getting this pin's current pin_images, for edit page
                 // TODO break this out
                 $.getJSON("pin_images.json", function(pinImages) {
@@ -28,46 +37,17 @@ $(document).ready(function() {
                         pinImages.forEach(function(pinImage) {
                             myDropzone.addFile.call(myDropzone, pinImage);
                             myDropzone.options.thumbnail.call(myDropzone, pinImage, pinImage.url);
+                            $(pinImage.previewElement).prop('id', pinImage.id);
+                            $(pinImage.previewElement).children('input').val(pinImage.caption)
                         });
                     }
                 });
             }
         });
         myDropzone.on("success", function(file, responseText) {
-            var imageIdList = $('#pin_pin_image_ids'),
-                captionButton = document.createElement("button"),
-                captionInput = document.createElement("input");
-            $(captionButton).on("click", function() {
-                event.preventDefault();
-                $.ajax({
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    url: "/pin_images/" + responseText.id + ".json",
-                    type: 'PATCH',
-                    data: JSON.stringify({
-                        caption: $(event.target).text()
-                    }),
-                    success: function(response, textStatus, jqXhr) {
-                        console.log("Pin image Successfully Patched!");
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        // log the error to the console
-                        console.log("The following error occured: " + textStatus, errorThrown);
-                    },
-                    complete: function() {
-                        console.log("Pin image Patch Ran");
-                    }
-                });
-            })
+            var imageIdList = $('#pin_pin_image_ids');
             // dynamically adding the save pin_image ids to the pin submission form
             imageIdList.val(imageIdList.val() + "," + responseText.id);
-            captionInput.type = "text";
-            captionInput.name = responseText.id;
-            captionInput.placeholder = "Caption";
-            file.previewTemplate.appendChild(captionInput);
-            file.previewTemplate.appendChild(captionButton);
         });
     }
 });

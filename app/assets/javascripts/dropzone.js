@@ -1,7 +1,7 @@
 $(document).ready(function() {
     // dropzone setup
     var container = document.querySelector('#dropper'),
-        template =  $('.hide').html();
+        template = $('.hide').html();
 
     if (container) {
         Dropzone.autoDiscover = false;
@@ -48,6 +48,10 @@ $(document).ready(function() {
             var imageIdList = $('#pin_pin_image_ids');
             // dynamically adding the save pin_image ids to the pin submission form
             imageIdList.val(imageIdList.val() + "," + responseText.id);
+        });
+        myDropzone.on("sendingmultiple", function(file, xhr, formData) {
+            //Add additional data to the upload
+            formData.append('caption', $('.caption').val());
         });
     }
 });

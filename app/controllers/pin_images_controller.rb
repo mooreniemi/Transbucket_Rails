@@ -13,9 +13,7 @@ class PinImagesController < ApplicationController
   end
 
   def create
-    # :last call grabs us the file from the form data
-    #binding.pry
-    @pin_images = pin_image_params.map(&:last).collect do |file|
+    @pin_images = upload_params.collect do |file|
       PinImage.create(photo: file[:photo], caption: file[:caption])
     end
 
@@ -42,6 +40,10 @@ class PinImagesController < ApplicationController
   end
 
   private
+  def upload_params
+    pin_image_params.map(&:last)
+  end
+
   def pin_image_params
     params.require(:pin_images)
   end

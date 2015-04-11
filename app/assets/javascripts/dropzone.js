@@ -1,19 +1,24 @@
 $(document).ready(function() {
     // dropzone setup
     var container = document.querySelector('#dropper'),
-        template = $('.hide').html();
+        template = $('.hide').html(),
+        counter = -1;
 
     if (container) {
         Dropzone.autoDiscover = false;
-
         var myDropzone = new Dropzone("#dropper", {
             url: '/pin_images',
             maxFilesize: 1,
             previewTemplate: template,
             // changed the passed param to one accepted by
             // our rails app
-            paramName: "pin_images",
+            paramName: function(n) {
+                return "pin_images[" + n + "][photo]"
+            },
             // show remove links on each image pin_image
+            // params: {
+            //     caption: "doodle"
+            // },
             addRemoveLinks: true,
             headers: {
                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
@@ -52,10 +57,12 @@ $(document).ready(function() {
             // dynamically adding the save pin_image ids to the pin submission form
             imageIdList.val(imageIdList.val() + "," + responseText.id);
         });
-        myDropzone.on("sendingmultiple", function(file, xhr, formData) {
-            //TODO need to specify per file
-            //Add additional data to the upload
-            formData.append('pin_images[0]caption', $('.caption').val());
+        myDropzone.on("addedfile", function(file) {
+            $(".dz-preview:last-child").attr('id', "LM-" + file.lastModified);
+        });
+        myDropzone.on("sending", function(file, xhr, formData) {
+            counter += 1
+            formData.append('pin_images[' + counter + ']caption', $('#LM-'+file.lastModified+' .caption').val());
         });
     }
 });

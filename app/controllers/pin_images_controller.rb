@@ -2,7 +2,7 @@ class PinImagesController < ApplicationController
   respond_to :json
 
   def update
-    @pin_image = PinImage.find(params[:id])
+    @pin_image = PinImage.where(id: params[:id]).first
     @pin_image.update_attributes(caption: params[:caption])
     respond_with(@pin_image)
   end
@@ -13,9 +13,12 @@ class PinImagesController < ApplicationController
   end
 
   def create
-    @pin_images = pin_image_params.inject([]) do |memo, photo|
-      memo << PinImage.create(photo: photo)
+    # :last call grabs us the file from the form data
+    #binding.pry
+    @pin_images = pin_image_params.map(&:last).collect do |file|
+      PinImage.create(photo: file[:photo], caption: file[:caption])
     end
+
     if @pin_images.present?
       render json: { id: @pin_images.map(&:id) }, :status => 200
     else
@@ -40,9 +43,6 @@ class PinImagesController < ApplicationController
 
   private
   def pin_image_params
-    #params.require(:pin_image).permit(photo: [:'0'])
-    #params.require(:pin_image).permit(:photo)
-    #params.require(:pin_image)["photo"].values.first
-    params.require(:photos).values
+    params.require(:pin_images)
   end
 end

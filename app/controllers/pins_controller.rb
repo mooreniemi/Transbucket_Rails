@@ -1,5 +1,6 @@
 class PinsController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :get_pin, :except => [:index, :new, :create]
   respond_to :json
 
   # GET /pins
@@ -17,7 +18,6 @@ class PinsController < ApplicationController
   # GET /pins/1
   # GET /pins/1.json
   def show
-    @pin = Pin.find(params[:id])
     @comments = @pin.comment_threads.order('created_at desc')
     @new_comment = Comment.build_from(@pin, current_user, "")
 
@@ -31,8 +31,6 @@ class PinsController < ApplicationController
   # GET /pins/new.json
   def new
     @pin = current_user.pins.new
-    @pin.pin_images.build
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @pin }
@@ -41,8 +39,6 @@ class PinsController < ApplicationController
 
   # GET /pins/1/edit
   def edit
-    @pin = Pin.find(params[:id])
-    @pin.pin_images.build
   end
 
   # POST /pins
@@ -65,7 +61,6 @@ class PinsController < ApplicationController
   # PUT /pins/1
   # PUT /pins/1.json
   def update
-    @pin = Pin.find(params[:id])
 
     respond_to do |format|
       if PinUpdaterService.new(params[:pin].merge({pin_id: params[:id]}), current_user).update
@@ -81,7 +76,6 @@ class PinsController < ApplicationController
   # DELETE /pins/1
   # DELETE /pins/1.json
   def destroy
-    @pin = Pin.find(params[:id])
     @pin.destroy
 
     respond_to do |format|
@@ -107,6 +101,10 @@ class PinsController < ApplicationController
   end
 
   private
+  def get_pin
+    @pin = Pin.find(params[:id])
+  end
+
   def pin_params
     params.require(:pin).permit(:surgeon_id, :procedure_id, :cost, :revision, :details, :sensation, :satisfaction, :pin_image_ids)
   end

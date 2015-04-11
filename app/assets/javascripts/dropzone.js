@@ -12,7 +12,7 @@ $(document).ready(function() {
             previewTemplate: template,
             // changed the passed param to one accepted by
             // our rails app
-            paramName: "photos",
+            paramName: "pin_images",
             // show remove links on each image pin_image
             addRemoveLinks: true,
             headers: {
@@ -30,18 +30,21 @@ $(document).ready(function() {
                     myDropzone.processQueue(); // Tell Dropzone to process all queued files.
                 });
 
-                // getting this pin's current pin_images, for edit page
                 // TODO break this out
-                $.getJSON("pin_images.json", function(pinImages) {
-                    if (pinImages) {
-                        pinImages.forEach(function(pinImage) {
-                            myDropzone.addFile.call(myDropzone, pinImage);
-                            myDropzone.options.thumbnail.call(myDropzone, pinImage, pinImage.url);
-                            $(pinImage.previewElement).prop('id', pinImage.id);
-                            $(pinImage.previewElement).children('input').val(pinImage.caption)
-                        });
-                    }
-                });
+                // getting this pin's current pin_images, for edit page
+                var pathname = window.location.pathname;
+                if (pathname.match(/\/pins\/\d*\/edit/)) {
+                    $.getJSON("pin_images.json", function(pinImages) {
+                        if (pinImages) {
+                            pinImages.forEach(function(pinImage) {
+                                myDropzone.addFile.call(myDropzone, pinImage);
+                                myDropzone.options.thumbnail.call(myDropzone, pinImage, pinImage.url);
+                                $(pinImage.previewElement).prop('id', pinImage.id);
+                                $(pinImage.previewElement).children('input').val(pinImage.caption)
+                            });
+                        }
+                    });
+                }
             }
         });
         myDropzone.on("success", function(file, responseText) {
@@ -50,8 +53,9 @@ $(document).ready(function() {
             imageIdList.val(imageIdList.val() + "," + responseText.id);
         });
         myDropzone.on("sendingmultiple", function(file, xhr, formData) {
+            //TODO need to specify per file
             //Add additional data to the upload
-            formData.append('caption', $('.caption').val());
+            formData.append('pin_images[0]caption', $('.caption').val());
         });
     }
 });

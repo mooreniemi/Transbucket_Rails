@@ -1,8 +1,31 @@
+version 3.5.1
+=============
+**Date:** 13-Feb-2015
+
+1. (enh #44): Ability to integrate with other font icon CSS frameworks like Font Awesome.
+    - New property `ratingClass` added to allow configuring other icon framework css classes.
+2. Set copyright year to current.
+
+version 3.5.0
+=============
+**Date:** 31-Jan-2015
+
+1. (enh #39): Prevent invalid star rating for numStars > 5 with default value & hoverChange enabled.
+2. (enh #42): Code cleanup and restructure for JS lint changes (using JSHint Code cleanup library).
+
+version 3.4.0
+=============
+**Date:** 16-Dec-2014
+
+1. (enh #35): Added `destroy` method to destroy the rating plugin.
+2. (enh #36): Added `create` method to create the rating plugin (typically after a destroy).
+
 version 3.3.0
 =============
-**Date:** 14-Nov-2014
+**Date:** 17-Nov-2014
 
 1. (bug #32): Prevent invalid star ratings if cursor is close to left/right edge of star array.
+2. (enh #33): Enhance touch methods for compatibility across more wider mobile device browsers.
 
 version 3.2.0
 =============

@@ -322,6 +322,29 @@
 
     $.ajaxPrefilter(function(options, originalOptions, xhr){ if ( !options.crossDomain ) { rails.CSRFProtection(xhr); }});
 
+    // This event works the same as the load event, except that it fires every
+    // time the page is loaded.
+    //
+    // See https://github.com/rails/jquery-ujs/issues/357
+    // See https://developer.mozilla.org/en-US/docs/Using_Firefox_1.5_caching
+    $(window).on("pageshow.rails", function () {
+      $($.rails.enableSelector).each(function () {
+        var element = $(this);
+
+        if (element.data("ujs:enable-with")) {
+          $.rails.enableFormElement(element);
+        }
+      });
+
+      $($.rails.linkDisableSelector).each(function () {
+        var element = $(this);
+
+        if (element.data("ujs:enable-with")) {
+          $.rails.enableElement(element);
+        }
+      });
+    });
+
     $document.delegate(rails.linkDisableSelector, 'ajax:complete', function() {
         rails.enableElement($(this));
     });
@@ -344,11 +367,11 @@
         if (handleRemote === false) {
           rails.enableElement(link);
         } else {
-          handleRemote.error( function() { rails.enableElement(link); } );
+          handleRemote.fail( function() { rails.enableElement(link); } );
         }
         return false;
 
-      } else if (link.data('method')) {
+      } else if (method) {
         rails.handleMethod(link);
         return false;
       }
@@ -366,7 +389,7 @@
       if (handleRemote === false) {
         rails.enableFormElement(button);
       } else {
-        handleRemote.error( function() { rails.enableFormElement(button); } );
+        handleRemote.fail( function() { rails.enableFormElement(button); } );
       }
       return false;
     });

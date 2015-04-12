@@ -18,7 +18,7 @@
 //= require eventie/eventie
 //= require doc-ready/doc-ready
 //= require fizzy-ui-utils/utils
-//= require dropzone/dist/min/dropzone.min
+//= require dropzone/dist/dropzone
 //= require bootstrap/dist/js/bootstrap.min
 //= require bootstrap-star-rating/js/star-rating.min
 //= require chosen/chosen.proto

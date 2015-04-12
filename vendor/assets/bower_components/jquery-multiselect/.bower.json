@@ -1,11 +1,11 @@
 {
   "name": "jquery-multiselect",
   "homepage": "https://github.com/dio-el-claire/jquery-multiselect",
-  "_release": "95b734f3ce",
+  "_release": "3097538145",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "95b734f3ce030793c363738e027d42f75c862dc3"
+    "commit": "3097538145fd0730f0a39b1d00276e6ac995faed"
   },
   "_source": "git://github.com/dio-el-claire/jquery-multiselect.git",
   "_target": "*",

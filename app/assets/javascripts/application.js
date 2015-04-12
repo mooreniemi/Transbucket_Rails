@@ -15,7 +15,10 @@
 //= require jquery_nested_form
 //= require jquery-ujs/src/rails
 //= require jquery-ui
-//= require dropzone/downloads/dropzone.min
+//= require eventie/eventie
+//= require doc-ready/doc-ready
+//= require fizzy-ui-utils/utils
+//= require dropzone/dist/min/dropzone.min
 //= require bootstrap/dist/js/bootstrap.min
 //= require bootstrap-star-rating/js/star-rating.min
 //= require chosen/chosen.proto
@@ -26,7 +29,6 @@
 //= require matches-selector/matches-selector
 //= require get-style-property/get-style-property
 //= require eventEmitter/EventEmitter.min
-//= require eventie/eventie
 //= require doc-ready/doc-ready
 //= require get-size/get-size
 //= require outlayer/item

@@ -4,7 +4,7 @@ $(document).ready(function() {
         template = $('.hide').html(),
         queueCounter = -1;
 
-    if (container) {
+    if (container && location.pathname.split("/")[2] == "new") {
         Dropzone.autoDiscover = false;
         var myDropzone = new Dropzone("#dropper", {
             url: '/pin_images',

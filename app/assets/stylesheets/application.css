@@ -13,7 +13,7 @@
  *= require chosen/chosen.min
  *= require jquery-ui/themes/smoothness/jquery-ui.min
  *= require jquery-ui/themes/smoothness/theme
- *= require dropzone/dist/min/dropzone.min
+ *= require dropzone/dist/dropzone
  *= require bootstrap/dist/css/bootstrap.min
  *= require bootstrap-star-rating/css/star-rating.min
  *= require_tree .

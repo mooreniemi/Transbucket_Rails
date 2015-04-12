@@ -2,14 +2,9 @@ class PinImagesController < ApplicationController
   respond_to :json
 
   def update
-    @pin_image = PinImage.where(id: params[:id]).first
-    @pin_image.update_attributes(caption: params[:caption])
-    respond_with(@pin_image)
-  end
-
-  def new
-    # unused currently due to pin association
-    @pin_image = PinImage.new
+    pin_image = PinImage.where(id: params[:id]).first.
+      update_attributes(caption: params[:caption])
+    respond_with(pin_image)
   end
 
   def create

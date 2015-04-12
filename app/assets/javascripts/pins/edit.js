@@ -4,8 +4,8 @@ $(document).ready(function() {
         template = $('.hide').html(),
         queueCounter = -1;
 
-    if (container && location.pathname.split("/")[2] != "new") {
-        Dropzone.autoDiscover = false;
+    Dropzone.autoDiscover = false;
+    if (container && !location.pathname.match(/pins\/new/)) {
         var myDropzone = new Dropzone("#dropper", {
             url: '/pin_images',
             method: 'put',
@@ -39,22 +39,20 @@ $(document).ready(function() {
                             myDropzone.options.thumbnail.call(myDropzone, pinImage, pinImage.url);
                         });
                     }
-                    $(".dz-preview .caption").mouseout(function() {
-                        var pinImageId = this.parentElement.parentElement.id;
+                    // allow caption updates independently
+                    $(".dz-preview .caption").on("input",function() {
+                        var pinImageId = this.parentElement.id;
                         $.ajax({
                             url: '/pin_images/' + pinImageId + '.json',
                             type: 'PUT',
                             data: {
                                 id: pinImageId,
                                 caption: this.value
-                            },
-                            success: function(response) {
-                                console.log('yes')
                             }
                         });
                     });
                     return pinImages;
-                });   
+                });
             }
         });
     }

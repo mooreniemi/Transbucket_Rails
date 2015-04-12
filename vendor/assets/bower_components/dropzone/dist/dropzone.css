@@ -228,11 +228,11 @@
     .dropzone .dz-preview:hover .dz-details {
       opacity: 1; }
     .dropzone .dz-preview .dz-details {
-      z-index: 20;
+/*      z-index: 20;
       position: absolute;
       top: 0;
       left: 0;
-      opacity: 0;
+      opacity: 0;*/
       font-size: 13px;
       min-width: 100%;
       max-width: 100%;

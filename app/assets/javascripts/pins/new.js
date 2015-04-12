@@ -3,22 +3,17 @@ $(document).ready(function() {
     var container = document.querySelector('#dropper'),
         template = $('.hide').html(),
         queueCounter = -1;
-
-    if (container && location.pathname.split("/")[2] == "new") {
-        Dropzone.autoDiscover = false;
+    // TODO this should work but maybe load order prevents?
+    Dropzone.autoDiscover = false;
+    if (container && !!location.pathname.match(/pins\/new/)) {
         var myDropzone = new Dropzone("#dropper", {
             url: '/pin_images',
+            method: 'post',
             maxFilesize: 1,
             previewTemplate: template,
-            // changed the passed param to one accepted by
-            // our rails app
             paramName: function(n) {
                 return "pin_images[" + n + "][photo]"
             },
-            // show remove links on each image pin_image
-            // params: {
-            //     caption: "doodle"
-            // },
             addRemoveLinks: true,
             headers: {
                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')

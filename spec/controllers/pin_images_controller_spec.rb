@@ -26,18 +26,4 @@ describe PinImagesController, type: :controller do
       expect(PinImage.last.caption).to eq(caption)
     end
   end
-  context "actual params" do
-    let(:params) do
-      {"captions"=>
-       {"0"=>"doodle"},
-       "pin_images"=>
-       {"0"=>test_photo},
-       "action"=>"create",
-       "controller"=>"pin_images"}
-    end
-    it "need to munge together captions and images" do
-      post :create, params
-      expect(response).to be_success
-    end
-  end
 end

@@ -30,6 +30,10 @@ $(document).ready(function() {
                     myDropzone.processQueue(); // Tell Dropzone to process all queued files.
                 });
 
+                myDropzone.on("addedfile", function(file) {
+                    $('#submit-all').prop("disabled", false);
+                });
+
                 $.getJSON("pin_images.json", function(pinImages) {
                     if (pinImages) {
                         pinImages.forEach(function(pinImage) {
@@ -40,14 +44,21 @@ $(document).ready(function() {
                         });
                     }
                     // allow caption updates independently
-                    $(".dz-preview .caption").on("input",function() {
-                        var pinImageId = this.parentElement.id;
+                    $(".save-caption").on("click", function(e) {
+                        var pinImageId = this.parentElement.id,
+                            input = $(this.parentElement).find("input:first"),
+                            captionText = input.val(),
+                            target = $(this);
                         $.ajax({
                             url: '/pin_images/' + pinImageId + '.json',
                             type: 'PUT',
                             data: {
                                 id: pinImageId,
-                                caption: this.value
+                                caption: captionText
+                            },
+                            success: function() {
+                                input.css('border-color', 'green');
+                                target.append('✔');
                             }
                         });
                     });

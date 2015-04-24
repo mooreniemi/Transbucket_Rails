@@ -23,7 +23,7 @@ $(document).ready(function() {
             parallelUploads: 100,
             maxFiles: 10,
             init: function() {
-                var submitButton = document.querySelector("#submit-all")
+                var submitButton = document.querySelector("#submit-all");
                 myDropzone = this; // closure
 
                 submitButton.addEventListener("click", function() {
@@ -33,6 +33,7 @@ $(document).ready(function() {
         });
         myDropzone.on("addedfile", function(file) {
             $(".dz-preview:last-child").attr('id', "LM-" + file.lastModified);
+            $('#submit-all').prop("disabled", false);
         });
         myDropzone.on("sending", function(file, xhr, formData) {
             var captionEl = '#LM-' + file.lastModified + ' .caption';

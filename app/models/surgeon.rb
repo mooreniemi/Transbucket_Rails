@@ -4,9 +4,9 @@ class Surgeon < ActiveRecord::Base
   has_many :skills
   has_many :procedures, through: :skills
 
-  scope :has_procedures, joins(:procedures).
-    group('surgeons.id').
-    having('count(procedures.id) > 0')
+  scope :has_procedures, -> { joins(:procedures).
+                              group('surgeons.id').
+                              having('count(procedures.id) > 0') }
 
   def to_s
     first_name.nil? ? last_name : last_name + ', ' + first_name

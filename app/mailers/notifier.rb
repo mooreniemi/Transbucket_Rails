@@ -5,6 +5,6 @@ class Notifier < ActionMailer::Base
   def send_reminder_email(user)
     @user = user
     mail( :to => @user.email,
-    :subject => 'Transbucket.com Has Moved' )
+         :subject => 'Transbucket.com Has Moved' )
   end
 end

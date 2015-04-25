@@ -3,8 +3,9 @@ source 'https://rubygems.org'
 # https://devcenter.heroku.com/articles/ruby-versions
 ruby '2.2.2'
 
-gem 'rails', '4.1.4'
+gem 'rails', '4.2.1'
 
+gem 'puma'
 gem 'turbolinks'
 gem 'bower-rails', '~> 0.7.3'
 
@@ -103,5 +104,4 @@ group :production do
   # for assets, see https://devcenter.heroku.com/articles/rails-4-asset-pipeline
   gem 'rails_12factor'
   gem 'newrelic_rpm'
-  gem 'unicorn'
 end

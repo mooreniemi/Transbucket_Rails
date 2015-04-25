@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # https://devcenter.heroku.com/articles/ruby-versions
-ruby '2.1.3'
+ruby '2.2.2'
 
 gem 'rails', '4.1.4'
 
@@ -22,7 +22,7 @@ gem 'will_paginate-bootstrap'
 
 gem 'paperclip', '~> 4.2'
 gem 'aws-sdk'
-gem 'aws-s3'
+# gem 'aws-s3'
 
 gem 'figaro'
 

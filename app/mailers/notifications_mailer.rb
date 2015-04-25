@@ -4,7 +4,8 @@ class NotificationsMailer < ActionMailer::Base
 
   def new_message(message)
     @message = message
-    mail(:subject => "[Transbucket.com Support] #{message.subject}", :from => message.email)
+    mail(:subject => "[Transbucket.com Support] #{message.subject}",
+         :from => message.email)
   end
 
 end

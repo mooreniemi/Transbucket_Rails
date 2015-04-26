@@ -1,4 +1,5 @@
 class Pin < ActiveRecord::Base
+  include AASM
   include ThinkingSphinx::Scopes
   include Constants
 
@@ -6,8 +7,8 @@ class Pin < ActiveRecord::Base
   belongs_to :surgeon
   belongs_to :procedure
 
-  has_many :pin_images, :dependent => :destroy
-  has_many :comments, :foreign_key => 'commentable_id'
+  has_many :pin_images, dependent: :destroy
+  has_many :comments, foreign_key: 'commentable_id'
 
   attr_accessor :pin_image_ids
 
@@ -25,9 +26,6 @@ class Pin < ActiveRecord::Base
   scope :top, -> {where(["procedure_id in (?)", Constants::TOP_IDS.map(&:to_s)])}
   scope :bottom, -> {where(["procedure_id in (?)", Constants::BOTTOM_IDS.map(&:to_s)])}
 
-  scope :published, -> { includes(:pin_images, :user, :surgeon, :procedure).where(state: 'published') }
-  scope :pending, -> { includes(:pin_images, :user, :surgeon, :procedure).where(state: 'pending') }
-
   scope :need_category, -> { where(procedure_id: 911) }
   scope :recent, -> { published.order("created_at desc") }
 
@@ -35,17 +33,16 @@ class Pin < ActiveRecord::Base
   scope :by_procedure, ->(procedure) { where(procedure_id: procedure) }
   scope :by_surgeon, ->(surgeon) { where(surgeon_id: surgeon) }
 
-  state_machine initial: :published do
+  aasm column: :state do
     state :pending, value: "pending"
-    state :published, value: "published"
+    state :published, value: "published", initial: :published
 
     event :publish do
-      transition nil => :published
-      transition :pending => :published
+      transitions from: :pending, to: :published
     end
 
     event :review do
-      transition :published => :pending
+      transitions from: :published, to: :pending
     end
   end
 

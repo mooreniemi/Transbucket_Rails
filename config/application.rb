@@ -21,6 +21,8 @@ module Transbucket
     # config.i18n.default_locale = :de
     config.active_record.whitelist_attributes = false
 
+    config.active_record.raise_in_transactional_callbacks = true
+
     # necessary for using bower-rails!
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'jquery-ui', 'themes', 'smoothness', 'images')

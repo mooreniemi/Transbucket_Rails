@@ -33,7 +33,7 @@ gem 'tinymce-rails'
 gem 'devise'
 gem 'devise-encryptable'
 
-gem 'state_machine'
+gem 'aasm'
 gem 'fuzzy_match'
 
 gem 'rake-progressbar'
@@ -88,6 +88,7 @@ group :test do
   gem 'capybara'
   gem 'guard-rspec'
   gem 'launchy'
+  gem 'rspec-console'
 end
 
 # Gems used only for assets and not required

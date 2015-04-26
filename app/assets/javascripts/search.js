@@ -2,7 +2,7 @@
 
 $(document).ready(function() {
     $(function() {
-        var realTime = '/search_terms.json'
+        var realTime = '/search_terms.json';
         $("#query").autocomplete({
             source: realTime,
             minLength: 3,

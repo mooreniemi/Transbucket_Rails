@@ -8,9 +8,9 @@ describe Flag do
     user2 = build_stubbed(:user)
     user3 = build_stubbed(:user)
 
-    flag = Flag.new(user, pin).flag_on
-    flag2 = Flag.new(user2, pin).flag_on
-    flag3 = Flag.new(user3, pin).flag_on
+    Flag.new(user, pin).flag_on
+    Flag.new(user2, pin).flag_on
+    Flag.new(user3, pin).flag_on
 
     expect(pin.pending?).to eq(true)
   end
@@ -23,9 +23,9 @@ describe Flag do
     user2 = create(:user)
     user3 = create(:user)
 
-    flag = Flag.new(user, comment).flag_on
-    flag2 = Flag.new(user2, comment).flag_on
-    flag3 = Flag.new(user3, comment).flag_on
+    Flag.new(user, comment).flag_on
+    Flag.new(user2, comment).flag_on
+    Flag.new(user3, comment).flag_on
 
     expect(comment.pending?).to eq(true)
   end

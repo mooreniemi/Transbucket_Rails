@@ -1,23 +1,23 @@
 class Comment < ActiveRecord::Base
-  validates :body, :presence => true
-  validates :user, :presence => true
+  include AASM
+  validates :body, presence: true
+  validates :user, presence: true
 
   acts_as_votable
 
-  belongs_to :commentable, :polymorphic => true
+  belongs_to :commentable, polymorphic: true
   belongs_to :user
 
-  state_machine initial: :published do
+  aasm column: :state do
     state :pending, value: "pending"
-    state :published, value: "published"
+    state :published, value: "published", initial: :published
 
     event :publish do
-      transition nil => :published
-      transition :pending => :published
+      transitions from: :pending, to: :published
     end
 
     event :review do
-      transition :published => :pending
+      transitions from: :published, to: :pending
     end
   end
 
@@ -35,11 +35,11 @@ class Comment < ActiveRecord::Base
 
   # TODO mixing scopes and class level methods
   scope :find_comments_by_user, lambda { |user|
-    where(:user_id => user.id).order('created_at DESC')
+    where(user_id: user.id).order('created_at DESC')
   }
 
   scope :find_comments_for_commentable, lambda { |commentable_str, commentable_id|
-    where(:commentable_type => commentable_str.to_s, :commentable_id => commentable_id).order('created_at DESC')
+    where(commentable_type: commentable_str.to_s, commentable_id: commentable_id).order('created_at DESC')
   }
 
   def self.new_comments_to(user)
@@ -52,8 +52,8 @@ class Comment < ActiveRecord::Base
 
   def self.build_from(obj, user_id, comment)
     new \
-      :commentable => obj,
-      :body        => comment,
-      :user_id     => user_id.id
+      commentable: obj,
+      body: comment,
+      user_id: user_id.id
   end
 end

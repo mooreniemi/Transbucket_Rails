@@ -19,6 +19,7 @@ class Flag
     end
   end
 
+  private
   def flagger_is_pin_author?
     return false if content.is_a?(Pin)
     pin_author = Pin.find(content.commentable_id).user

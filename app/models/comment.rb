@@ -1,3 +1,4 @@
+# Comments are applied on submissions, no threading on each other currently.
 class Comment < ActiveRecord::Base
   include AASM
   validates :body, presence: true
@@ -9,8 +10,8 @@ class Comment < ActiveRecord::Base
   belongs_to :user
 
   aasm column: :state do
-    state :pending, value: "pending"
-    state :published, value: "published", initial: :published
+    state :pending, value: 'pending'
+    state :published, value: 'published', initial: :published
 
     event :publish do
       transitions from: :pending, to: :published
@@ -21,26 +22,23 @@ class Comment < ActiveRecord::Base
     end
   end
 
-  def has_children?
-    self.children.any?
-  end
-
   def flags
-    self.votes
+    votes
   end
 
   def snippet
-    last.body.split(" ").first(50).join(" ")
+    last.body.split(' ').first(50).join(' ')
   end
 
-  # TODO mixing scopes and class level methods
-  scope :find_comments_by_user, lambda { |user|
+  def self.find_comments_by_user(user)
     where(user_id: user.id).order('created_at DESC')
-  }
+  end
 
-  scope :find_comments_for_commentable, lambda { |commentable_str, commentable_id|
-    where(commentable_type: commentable_str.to_s, commentable_id: commentable_id).order('created_at DESC')
-  }
+  def self.find_comments_for_commentable(commentable_str, commentable_id)
+    where(commentable_type: commentable_str.to_s,
+          commentable_id: commentable_id).
+          order('created_at DESC')
+  end
 
   def self.new_comments_to(user)
     where('created_at > ? and state = ?', user, 'published')

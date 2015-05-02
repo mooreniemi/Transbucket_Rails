@@ -1,3 +1,6 @@
+# "Pin" as a name is baggage from the original app,
+# generic "pinning" of content.
+# Now it is the primary submission model.
 class Pin < ActiveRecord::Base
   include AASM
   include ThinkingSphinx::Scopes
@@ -21,21 +24,45 @@ class Pin < ActiveRecord::Base
   validates :user_id, presence: true
   validates :pin_images, presence: true
 
-  scope :mtf, -> {where(["procedure_id in (?)", Constants::MTF_IDS.map(&:to_s)])}
-  scope :ftm, -> {where(["procedure_id in (?)", Constants::FTM_IDS.map(&:to_s)])}
-  scope :top, -> {where(["procedure_id in (?)", Constants::TOP_IDS.map(&:to_s)])}
-  scope :bottom, -> {where(["procedure_id in (?)", Constants::BOTTOM_IDS.map(&:to_s)])}
+  def self.mtf
+    where(['procedure_id in (?)', Constants::MTF_IDS.map(&:to_s)])
+  end
 
-  scope :need_category, -> { where(procedure_id: 911) }
-  scope :recent, -> { published.order("created_at desc") }
+  def self.ftm
+    where(['procedure_id in (?)', Constants::FTM_IDS.map(&:to_s)])
+  end
 
-  scope :by_user, ->(user) { includes(:pin_images, :user, :surgeon, :procedure).where(user_id: user) }
-  scope :by_procedure, ->(procedure) { where(procedure_id: procedure) }
-  scope :by_surgeon, ->(surgeon) { where(surgeon_id: surgeon) }
+  def self.top
+    where(['procedure_id in (?)', Constants::TOP_IDS.map(&:to_s)])
+  end
+
+  def self.bottom
+    where(['procedure_id in (?)', Constants::BOTTOM_IDS.map(&:to_s)])
+  end
+
+  def self.need_category
+    where(procedure_id: 911)
+  end
+
+  def self.recent
+    published.order('created_at desc')
+  end
+
+  def self.by_user(user)
+    includes(:pin_images, :user, :surgeon, :procedure).where(user_id: user)
+  end
+
+  def self.by_procedure(procedure)
+    where(procedure_id: procedure)
+  end
+
+  def self.by_surgeon(surgeon)
+    where(surgeon_id: surgeon)
+  end
 
   aasm column: :state do
-    state :pending, value: "pending"
-    state :published, value: "published", initial: :published
+    state :pending, value: 'pending'
+    state :published, value: 'published', initial: :published
 
     event :publish do
       transitions from: :pending, to: :published
@@ -46,14 +73,15 @@ class Pin < ActiveRecord::Base
     end
   end
 
-  # TODO yank this out
-  def cover_image(safe_mode=false)
-    image = safe_mode == true ? 'http://placekitten.com/200/300' : images.try(:last).try(:photo, :medium)
+  # TODO: many of the below methods belong elsewhere
+  def cover_image(safe_mode = false)
+    kitty_url = 'http://placekitten.com/200/300'
+    image = safe_mode == true ? kitty_url : images.try(:last)
     image
   end
 
   def images
-    self.pin_images.collect {|p| p if p.photo(:medium).present? }
+    pin_images.all_mediums
   end
 
   def unknown_surgeon?

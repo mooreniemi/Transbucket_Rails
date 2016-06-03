@@ -34,7 +34,11 @@ To run locally, I use `rails s -p 3003` (because I am often running servers on o
 
 ## [ci](https://circleci.com/dashboard)
 
-Currently trying out CircleCI, which runs the app on Ubuntu.
+Currently trying out [CircleCI](https://circleci.com/), which runs the app on [Ubuntu 12](https://circleci.com/docs/build-image-precise/).
+
+For fix_presenter branch: [![CircleCI](https://circleci.com/gh/mooreniemi/Transbucket_Rails/tree/fix_presenter.svg?style=svg&circle-token=22981fbc246ebdb12d14ef593592e163d093caf7)](https://circleci.com/gh/mooreniemi/Transbucket_Rails/tree/fix_presenter)
+
+For master branch: [![CircleCI](https://circleci.com/gh/mooreniemi/Transbucket_Rails/tree/master.svg?style=svg&circle-token=22981fbc246ebdb12d14ef593592e163d093caf7)](https://circleci.com/gh/mooreniemi/Transbucket_Rails/tree/master)
 
 ## [staging](https://dashboard-preview.heroku.com/apps/transbucket-staging)
 

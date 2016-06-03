@@ -11,6 +11,9 @@ gem 'bower-rails', '~> 0.7.3'
 
 gem 'protected_attributes'
 
+# for ci
+gem 'rspec_junit_formatter', '0.2.2'
+
 # for thinking sphinx
 gem 'mysql2'
 gem 'activerecord-mysql-adapter'

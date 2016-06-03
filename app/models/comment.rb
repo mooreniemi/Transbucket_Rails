@@ -1,4 +1,5 @@
 # Comments are applied on submissions, no threading on each other currently.
+# Much of this class was generated from commentable gem.
 class Comment < ActiveRecord::Base
   include AASM
   validates :body, presence: true

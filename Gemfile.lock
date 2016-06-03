@@ -207,7 +207,7 @@ GEM
     multi_json (1.11.2)
     multipart-post (2.0.0)
     mysql (2.9.1)
-    mysql2 (0.4.1)
+    mysql2 (0.4.4)
     nenv (0.2.0)
     nested_form (0.3.2)
     newrelic_rpm (3.14.0.305)
@@ -421,7 +421,7 @@ DEPENDENCIES
   letsrate
   meta-tags
   meta_request
-  mysql2
+  mysql2 (~> 0.4.4)
   nested_form
   newrelic_rpm
   paperclip (~> 4.2)

@@ -36,5 +36,7 @@ Helpful commands (from project root):
 
 - Is there a rake task? Use `rake -T` to check.
 - If the search is not functioning, make sure the search daemon is running by using `rake ts:start`.
+- Locked yourself out? `User.where(email: 'user_email_address').take.reset_password('new_password','new_password').confirm`
 
-Contact me at moore.niemi@gmail.com
+# contact
+moore.niemi@gmail.com

@@ -26,7 +26,6 @@ gem 'will_paginate-bootstrap'
 
 gem 'paperclip', '~> 4.2'
 gem 'aws-sdk'
-# gem 'aws-s3'
 
 gem 'figaro'
 
@@ -64,48 +63,50 @@ gem 'font-awesome-rails'
 gem 'rack-block'
 
 group :development do
-  gem 'seed_dump'
-  gem 'thin'
-  gem 'quiet_assets'
-  gem 'meta_request'
-  gem 'better_errors'
+	gem 'letter_opener'
+	gem 'seed_dump'
+	gem 'thin'
+	gem 'quiet_assets'
+	gem 'meta_request'
+	gem 'better_errors'
 end
 
 group :development, :test do
-  gem 'rack-mini-profiler'
-  gem 'bullet'
-  gem 'binding_of_caller'
-  gem 'guard'
-  gem 'guard-livereload'
-  gem 'pry-nav'
-  gem 'pry-rails'
-  gem 'pry-coolline'
-  gem 'faker'
+	gem 'rack-mini-profiler'
+	gem 'bullet'
+	gem 'binding_of_caller'
+	gem 'guard'
+	gem 'guard-livereload'
+	gem 'pry-rescue'
+	gem 'pry-nav'
+	gem 'pry-rails'
+	gem 'pry-coolline'
+	gem 'faker'
 end
 
 group :test do
-  gem 'simplecov'
-  gem 'database_cleaner'
-  gem 'rspec-rails'
-  gem 'factory_girl_rails'
-  gem 'capybara'
-  gem 'guard-rspec'
-  gem 'launchy'
-  gem 'rspec-console'
+	gem 'simplecov'
+	gem 'database_cleaner'
+	gem 'rspec-rails'
+	gem 'factory_girl_rails'
+	gem 'capybara'
+	gem 'guard-rspec'
+	gem 'launchy'
+	gem 'rspec-console'
 end
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails', '4.0.3'
-  gem 'coffee-rails', '~> 4.0.0'
-  gem 'bootstrap-sass', '~> 3.2.0'
-  gem 'autoprefixer-rails'
-  gem 'uglifier', '>= 1.0.3'
+	gem 'sass-rails', '4.0.3'
+	gem 'coffee-rails', '~> 4.0.0'
+	gem 'bootstrap-sass', '~> 3.2.0'
+	gem 'autoprefixer-rails'
+	gem 'uglifier', '>= 1.0.3'
 end
 
 group :production do
-  # for assets, see https://devcenter.heroku.com/articles/rails-4-asset-pipeline
-  gem 'rails_12factor'
-  gem 'newrelic_rpm'
+	# for assets, see https://devcenter.heroku.com/articles/rails-4-asset-pipeline
+	gem 'rails_12factor'
+	gem 'newrelic_rpm'
 end

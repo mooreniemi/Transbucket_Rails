@@ -5,14 +5,14 @@ Rails 4 (in Ruby 2.1.3), using [bower_rails](https://github.com/rharriso/bower-r
 
 
 ## database setup
-# mysql
+### mysql
 For set up, you'll need to make sure you have mysql installed for Sphinx (search functionality) and Postgres installed for the actual database. The database is currently set up to have the user "Alex".
 
 For mysql, use `brew install mysql` and follow those instructions.
 
 I also found I needed to link `sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib`.
 
-# postgres
+### postgres
 For Postgres, use [postgresapp](http://postgresapp.com/). Use `createuser "Alex"` in the shell to create the user, then in psql run `ALTER ROLE "ALEX" CREATEDB;` to give it the right permissions.
 
 Now you should be able to run `rake db:create` and `rake db:migrate`. Make sure to rerun migrations for `RAILS_ENV=test`, then you can run `bundle` to install gems, and `rspec` to run tests.
@@ -21,12 +21,26 @@ Some seed data is necessary for the site to work. Run `rake genders:create`, `ra
 
 For your ease, use `rake test_users:create` to create a user and an admin. Both will have the password "password". The usernames should output to console.
 
-# running locally
+# run environments
+## local
 
 To run locally, I use `rails s -p 3003` (because I am often running servers on other ports). Then navigate to localhost:3003 to browse.
 
+## [staging](https://dashboard-preview.heroku.com/apps/transbucket-staging)
 
-# tests
+Staging and local both deploy and depend on [heroku](https://heroku.com/).
+
+Deploying a branch to [staging](https://transbucket-staging.herokuapp.com/):
+
+`git push staging fix_presenter:master`
+
+Connecting to staging to debug or run tasks:
+
+`heroku run rails console --app transbucket-staging`
+
+## production
+
+## tests
 
 `rspec`
 

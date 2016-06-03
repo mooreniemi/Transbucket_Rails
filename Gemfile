@@ -5,7 +5,7 @@ ruby '2.2.2'
 
 gem 'rails', '4.2.1'
 
-gem 'puma'
+gem 'unicorn'
 gem 'turbolinks'
 gem 'bower-rails', '~> 0.7.3'
 

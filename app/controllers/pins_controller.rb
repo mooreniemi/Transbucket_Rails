@@ -61,7 +61,6 @@ class PinsController < ApplicationController
   # PUT /pins/1
   # PUT /pins/1.json
   def update
-
     respond_to do |format|
       if PinUpdaterService.new(params[:pin].merge({pin_id: params[:id]}), current_user).update
         format.html { redirect_to @pin, notice: 'Pin was successfully updated.' }

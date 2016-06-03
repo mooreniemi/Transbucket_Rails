@@ -1,7 +1,7 @@
 Transbucket.com (Transbucket_Rails)
 ===================================
 
-Rails 4 (in Ruby 2.1.3), using [bower_rails](https://github.com/rharriso/bower-rails) to manage javascript dependencies.
+Rails 4.1.2 (in Ruby 2.2.2), using [bower_rails](https://github.com/rharriso/bower-rails) to manage javascript dependencies.
 
 # setup
 ## database setup
@@ -28,7 +28,7 @@ For your ease, use `rake test_users:create` to create a user and an admin. Both 
 
 Staging and production both deploy and depend on [heroku](https://heroku.com/). You should grab their [cli](https://devcenter.heroku.com/articles/using-the-cli). These instructions assume you've set it up.
 
-## local
+## [local](http://localhost:3000)
 
 To run locally, I use `rails s -p 3003` (because I am often running servers on other ports). Then navigate to [localhost:3003](http://localhost:3000/) to browse. You can also just run it without specifiying the port.
 
@@ -58,4 +58,4 @@ Helpful commands (from project root):
 
 # contact
 
-[alex](mailto:moore.niemi@gmail.com)
+[alex](moore.niemi@gmail.com)

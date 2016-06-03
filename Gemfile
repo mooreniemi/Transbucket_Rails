@@ -15,7 +15,7 @@ gem 'protected_attributes'
 gem 'rspec_junit_formatter', '0.2.2'
 
 # for thinking sphinx
-gem 'mysql2'
+gem 'mysql2', '~> 0.4.4'
 gem 'activerecord-mysql-adapter'
 gem 'active_model_serializers'
 

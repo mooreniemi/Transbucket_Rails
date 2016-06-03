@@ -57,6 +57,8 @@ gem 'ledermann-rails-settings', :require => 'rails-settings'
 gem 'letsrate'
 
 gem 'awesome_print'
+# we use Faker to create junk data sometimes on staging
+gem 'faker'
 
 gem 'font-awesome-rails'
 
@@ -81,7 +83,6 @@ group :development, :test do
 	gem 'pry-nav'
 	gem 'pry-rails'
 	gem 'pry-coolline'
-	gem 'faker'
 end
 
 group :test do

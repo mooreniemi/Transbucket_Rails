@@ -3,16 +3,19 @@ Transbucket.com (Transbucket_Rails)
 
 Rails 4 (in Ruby 2.1.3), using [bower_rails](https://github.com/rharriso/bower-rails) to manage javascript dependencies.
 
-
+# setup
 ## database setup
-### mysql
+
 For set up, you'll need to make sure you have mysql installed for Sphinx (search functionality) and Postgres installed for the actual database. The database is currently set up to have the user "Alex".
+
+### mysql
 
 For mysql, use `brew install mysql` and follow those instructions.
 
 I also found I needed to link `sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib`.
 
 ### postgres
+
 For Postgres, use [postgresapp](http://postgresapp.com/). Use `createuser "Alex"` in the shell to create the user, then in psql run `ALTER ROLE "ALEX" CREATEDB;` to give it the right permissions.
 
 Now you should be able to run `rake db:create` and `rake db:migrate`. Make sure to rerun migrations for `RAILS_ENV=test`, then you can run `bundle` to install gems, and `rspec` to run tests.
@@ -22,13 +25,14 @@ Some seed data is necessary for the site to work. Run `rake genders:create`, `ra
 For your ease, use `rake test_users:create` to create a user and an admin. Both will have the password "password". The usernames should output to console.
 
 # run environments
+
+Staging and production both deploy and depend on [heroku](https://heroku.com/). You should grab their [cli](https://devcenter.heroku.com/articles/using-the-cli). These instructions assume you've set it up.
+
 ## local
 
-To run locally, I use `rails s -p 3003` (because I am often running servers on other ports). Then navigate to localhost:3003 to browse.
+To run locally, I use `rails s -p 3003` (because I am often running servers on other ports). Then navigate to [localhost:3003](http://localhost:3000/) to browse. You can also just run it without specifiying the port.
 
 ## [staging](https://dashboard-preview.heroku.com/apps/transbucket-staging)
-
-Staging and local both deploy and depend on [heroku](https://heroku.com/).
 
 Deploying a branch to [staging](https://transbucket-staging.herokuapp.com/):
 
@@ -38,7 +42,7 @@ Connecting to staging to debug or run tasks:
 
 `heroku run rails console --app transbucket-staging`
 
-## production
+## [production](transbucket.com)
 
 ## tests
 
@@ -53,4 +57,5 @@ Helpful commands (from project root):
 - Locked yourself out? `User.where(email: 'user_email_address').take.reset_password('new_password','new_password').confirm`
 
 # contact
-moore.niemi@gmail.com
+
+[alex](mailto:moore.niemi@gmail.com)

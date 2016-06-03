@@ -6,8 +6,9 @@ namespace :test_users do
       password_confirmation: 'password',
       username: 'meowmeow',
       name: 'AlexUser',
-      gender: Gender.first).save!
-    meow_meow.confirm
+      gender: Gender.first)
+		meow_meow.skip_confirmation!
+		meow_meow.save!
     puts "meowmeow user created successfully"
 
     zoon = User.new(email: 'mooreniemi@gmail.com',
@@ -16,8 +17,9 @@ namespace :test_users do
       username: 'zoon',
       name: 'AlexAdmin',
       gender: Gender.first,
-      admin: true).save!
-    zoon.confirm
-    puts "zoon admin created successfully"
+      admin: true)
+    zoon.skip_confirmation!
+		zoon.save!
+    puts "zoon ADMIN created successfully"
   end
 end

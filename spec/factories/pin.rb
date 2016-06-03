@@ -16,6 +16,7 @@ FactoryGirl.define do
     trait :pin_with_comments do
       association :comment, factory: :comment
     end
+
     trait :invalid_pin do
       surgeon_id nil
       procedure_id nil

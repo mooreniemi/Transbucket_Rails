@@ -1,0 +1,10 @@
+## Customize the test machine
+machine:
+  timezone:
+    America/New_York # Set the timezone
+
+  # Version of ruby to use
+  ruby:
+    version:
+      2.2.2
+

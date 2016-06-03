@@ -81,7 +81,7 @@ class Pin < ActiveRecord::Base
   end
 
   def images
-    pin_images.all_mediums
+    pin_images.collect { |pin| pin.photo }
   end
 
   def unknown_surgeon?

@@ -16,7 +16,7 @@ I also found I needed to link `sudo ln -s /usr/local/mysql/lib/libmysqlclient.18
 
 ### postgres
 
-For Postgres, use [postgresapp](http://postgresapp.com/). Use `createuser "Alex"` in the shell to create the user, then in psql run `ALTER ROLE "ALEX" CREATEDB;` to give it the right permissions.
+For Postgres, use [postgresapp](http://postgresapp.com/). Use `createuser "Alex" -s` in the shell to create the user. If permissions seem wrong, run `psql` and enter `ALTER ROLE "ALEX" CREATEDB;` to give it the right permissions.
 
 Now you should be able to run `rake db:create` and `rake db:migrate`. Make sure to rerun migrations for `RAILS_ENV=test`, then you can run `bundle` to install gems, and `rspec` to run tests.
 
@@ -31,6 +31,10 @@ Staging and production both deploy and depend on [heroku](https://heroku.com/). 
 ## [local](http://localhost:3000)
 
 To run locally, I use `rails s -p 3003` (because I am often running servers on other ports). Then navigate to [localhost:3003](http://localhost:3000/) to browse. You can also just run it without specifiying the port.
+
+## [ci](https://circleci.com/dashboard)
+
+Currently trying out CircleCI, which runs the app on Ubuntu.
 
 ## [staging](https://dashboard-preview.heroku.com/apps/transbucket-staging)
 

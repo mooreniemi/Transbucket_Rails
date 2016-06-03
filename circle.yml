@@ -8,3 +8,5 @@ machine:
     version:
       2.2.2
 
+	pre:
+    - createuser "Alex" -s

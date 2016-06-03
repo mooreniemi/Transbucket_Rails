@@ -1,6 +1,6 @@
 class PinsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :get_pin, :except => [:index, :new, :create]
+  before_filter :get_pin, :except => [:index, :new, :create, :admin]
   respond_to :json
 
   # GET /pins
@@ -84,7 +84,7 @@ class PinsController < ApplicationController
     end
   end
 
-  def pin_images    
+  def pin_images
     @pin_images = Pin.find(params[:id]).pin_images
     respond_with(@pin_images)
   end

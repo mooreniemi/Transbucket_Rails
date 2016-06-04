@@ -1,9 +1,9 @@
-<% cache(pin) do %>
 <div class="item">
   <div class="panel panel-default">
     <div class="panel-body">
       <% if pin.published? %>
 				<%= render partial: "latest_comment_snippet", locals: { pin: pin } if @comments.map(&:commentable_id).include?(pin.id) %>
+				<% cache(pin) do %>
       <div class="image">
         <%= link_to (image_tag pin.cover_image(@safe_mode)), pin %>
       </div>

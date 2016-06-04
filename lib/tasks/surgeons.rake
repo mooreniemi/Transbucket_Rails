@@ -98,6 +98,7 @@ namespace :surgeons do
 
   desc "use seed data"
   task :seed => :environment do
+    Surgeon.create!(id: 911) # this surgeon takes the place of any unknown surgeons
     Surgeon.create!([
   {first_name: nil, last_name: "Christiansen", address: nil, city: nil, state: nil, zip: nil, country: nil, phone: nil, email: nil, url: nil, procedure_list: nil, notes: nil},
   {first_name: nil, last_name: "Cartwright", address: nil, city: nil, state: nil, zip: nil, country: nil, phone: nil, email: nil, url: nil, procedure_list: nil, notes: nil},

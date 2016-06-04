@@ -1,7 +1,7 @@
 class FlagsController < ApplicationController
-before_filter :authenticate_user!
-after_filter :flash_to_headers
-respond_to :js
+  before_filter :authenticate_user!
+  after_filter :flash_to_headers
+  respond_to :js
 
   def create
     type = params.keys.last.split('_').first
@@ -9,14 +9,13 @@ respond_to :js
     @flag = Flag.new(current_user, find_content(type, id)).flag_on
 
     respond_to do |format|
-        if @flag[:status].present?
-          flash[:notice] = "Content flagged."
-          format.js { render json: @flag, status: :created }
-        else
-          format.js { render json: @flag.errors, status: :unprocessable_entity }
-        end
+      if @flag[:status].present?
+        flash[:notice] = "Content flagged."
+        format.js { render json: @flag, status: :created }
+      else
+        format.js { render json: @flag.errors, status: :unprocessable_entity }
       end
-
+    end
   end
 
   def destroy

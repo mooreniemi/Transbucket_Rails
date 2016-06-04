@@ -23,7 +23,7 @@
       <i class="fa fa-user-md"></i> Surgeon
       </dt>
       <dd>
-      <%= link_to @pin.surgeon.id == 911 ? 'unknown' : 'Dr. ' + @pin.surgeon.to_s, pins_path({surgeon: [@pin.surgeon.id]}) %>
+      <%= link_to @pin.unknown_surgeon? ? 'unknown' : 'Dr. ' + @pin.surgeon.to_s, pins_path({surgeon: [@pin.surgeon.id]}) %>
       </dd>
       <dt>
       <i class="fa fa-plus-square"></i> Procedure

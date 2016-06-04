@@ -2,6 +2,7 @@
 # Much of this class was generated from commentable gem.
 class Comment < ActiveRecord::Base
 	include AASM
+  include NotificationsHelper
 	validates :body, presence: true
 	validates :user, presence: true
 
@@ -18,7 +19,7 @@ class Comment < ActiveRecord::Base
 			transitions from: :pending, to: :published
 		end
 
-		event :review do
+		event :review, :after => :admin_review do
 			transitions from: :published, to: :pending
 		end
 	end

@@ -3,8 +3,6 @@ class PinPresenter
   attr_accessor :user, :procedures, :surgeons, :general
 
   def initialize(opts = {})
-    Pin.includes(:comments, :user, :pin_images, :procedure, :surgeon)
-
     @page = opts.delete(:page)
     @query = opts.delete(:query)
     @user = opts.delete(:user)
@@ -12,13 +10,13 @@ class PinPresenter
     @filter = opts
 
     @pins = if @query.present?
-      Pin.search(@query, :page => @page, :per_page => 20)
+      Pin.includes(:user).search(@query, :page => @page, :per_page => 20)
     elsif @user.present?
-      Pin.by_user(@user).paginate(:page => @page)
+      Pin.includes(:user).by_user(@user).paginate(:page => @page)
     elsif has_keywords?
       PinFilterQuery.new(filter).filtered.paginate(:page => @page)
     else
-      Pin.recent.paginate(:page => @page)
+      Pin.includes(:user).recent.paginate(:page => @page)
     end
   end
 

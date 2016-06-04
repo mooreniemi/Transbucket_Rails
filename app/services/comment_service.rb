@@ -32,15 +32,15 @@ class CommentService
 
     begin
       send_email_notification(comment)
-    rescue Net:: SMTPAuthenticationError => e
-      puts "#{e} - while attempting to send notification " +
-        "on #{commentable.id} #{commentable.class} for #{user}"
+    rescue => e
+      puts "#{e} was raised while attempting to send notification " +
+        "on #{commentable.class} #{commentable.id} to User #{user.id}"
     end
 
     comment
   end
 
   def send_email_notification(comment)
-    CommentMailer.new_comment_email(self).deliver
+    CommentMailer.new_comment_email(user.id, commentable.id).deliver_now
   end
 end

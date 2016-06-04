@@ -1,6 +1,7 @@
 require 'faker'
 
-25.times do |i|
+PIN_COUNT = 25
+PIN_COUNT.times do |i|
   Pin.create(
     id: Faker::Number.number(5),
     description: Faker::Hacker.say_something_smart,
@@ -20,4 +21,4 @@ require 'faker'
   puts "created ##{i} pin"
 end
 
-puts "created 10 pins"
+puts "created #{PIN_COUNT} pins"

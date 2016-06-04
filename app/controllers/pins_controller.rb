@@ -7,7 +7,7 @@ class PinsController < ApplicationController
   # GET /pins.json
   def index
     @presenter = PinPresenter.new(pin_index_params)
-    @comments = Comment.new_comments_to(signed_in_user)
+    @comments = Comment.new_as_of(user_last_sign_in)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -134,7 +134,7 @@ class PinsController < ApplicationController
     current_user.preference.present? ? UserPolicy.new(current_user).safe_mode? : false
   end
 
-  def signed_in_user
-    User.find(current_user).try(:last_sign_in_at)
+  def user_last_sign_in
+    User.find(current_user.id).try(:last_sign_in_at)
   end
 end

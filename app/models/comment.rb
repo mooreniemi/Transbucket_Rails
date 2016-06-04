@@ -28,7 +28,7 @@ class Comment < ActiveRecord::Base
   end
 
   def snippet
-    last.body.split(' ').first(50).join(' ')
+    body.split(' ').first(5).join(' ')
   end
 
   def self.find_comments_by_user(user)
@@ -41,8 +41,8 @@ class Comment < ActiveRecord::Base
           order('created_at DESC')
   end
 
-  def self.new_comments_to(user)
-    where('created_at > ? and state = ?', user, 'published')
+  def self.new_as_of(last_login_time)
+    where("created_at > ? and state = 'published'", last_login_time)
   end
 
   def self.find_commentable(commentable_str, commentable_id)

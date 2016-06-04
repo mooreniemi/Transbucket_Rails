@@ -13,6 +13,8 @@ describe Flag do
     Flag.new(user3, pin).flag_on
 
     expect(pin.pending?).to eq(true)
+    # TODO
+    # expect(Delayed::Job.all.count).to eq(1)
   end
 
   it '3 flags should make a comment pending' do
@@ -28,6 +30,7 @@ describe Flag do
     Flag.new(user3, comment).flag_on
 
     expect(comment.pending?).to eq(true)
+    expect(Delayed::Job.all.count).to eq(1)
   end
 
   it "comment's parent pin author can send directly to pending" do
@@ -38,5 +41,6 @@ describe Flag do
 
     Flag.new(pin_author, comment).flag_on
     expect(comment.pending?).to eq(true)
+    expect(Delayed::Job.all.count).to eq(1)
   end
 end

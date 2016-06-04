@@ -18,8 +18,8 @@
           <%= link_to '<i class="fa fa-flag"></i>'.html_safe, pin_flags_path(pin), :method => :post, remote: true %>
         </label>
         <% if current_user == pin.user || current_user.admin? %>
-        | <%= link_to '<i class="fa fa-pencil-square-o"></i>'.html_safe, edit_pin_path(pin) %>
-        | <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, pin, method: :delete, data: { confirm: 'Are you sure?' } %>
+        | <%= link_to fa_icon("pencil-square-o"), edit_pin_path(pin) %>
+        | <%= link_to fa_icon("trash-o"), pin, method: :delete, data: { confirm: 'Are you sure?' } %>
         <% if pin.pending? %>
         | <%= link_to 'Remove Flag', remove_pin_flag_path(pin), remote: true %>
         <% end %>

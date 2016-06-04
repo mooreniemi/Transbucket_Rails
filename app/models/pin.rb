@@ -93,6 +93,6 @@ class Pin < ActiveRecord::Base
   end
 
   def latest_comment_snippet
-    try(:comment_threads).try(:snippet)
+    try(:comment_threads).try(:last).try(:snippet)
   end
 end

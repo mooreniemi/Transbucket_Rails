@@ -58,8 +58,6 @@ Connecting to staging to debug or run tasks:
 
 # more help
 
-Helpful commands (from project root):
-
 - Is there a rake task? Use `rake -T` to check.
 - If the search is not functioning, make sure the search daemon is running by using `rake ts:start`.
 - Locked yourself out? `User.where(email: 'user_email_address').take.reset_password('new_password','new_password').confirm`
@@ -68,4 +66,4 @@ Helpful commands (from project root):
 
 # contact
 
-[alex](moore.niemi@gmail.com)
+[email alex](mailto:moore.niemi@gmail.com)

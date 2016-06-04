@@ -5,6 +5,7 @@ class Pin < ActiveRecord::Base
 	include AASM
 	include ThinkingSphinx::Scopes
 	include Constants
+  include PinsHelper
 
 	belongs_to :user
 	belongs_to :surgeon
@@ -71,28 +72,5 @@ class Pin < ActiveRecord::Base
 		event :review do
 			transitions from: :published, to: :pending
 		end
-	end
-
-	# TODO: many of the below methods belong elsewhere
-	def cover_image(safe_mode = false)
-		kitty_url = 'http://placekitten.com/200/300'
-		image = safe_mode == true ? kitty_url : images.try(:last)
-		image
-	end
-
-	def images
-		pin_images.collect { |pin| pin.photo }
-	end
-
-	def unknown_surgeon?
-		if surgeon.present?
-			surgeon.id == 911
-		else
-			update_attributes(surgeon_id: 911)
-		end
-	end
-
-	def latest_comment_snippet
-		try(:comment_threads).try(:last).try(:snippet)
 	end
 end

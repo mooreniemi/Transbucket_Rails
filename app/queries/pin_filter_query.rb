@@ -10,13 +10,18 @@ class PinFilterQuery
 
   def filtered
     if surgeons.present?
-      Pin.by_surgeon([surgeons])
+      Rails.cache.fetch([surgeons].join(',')) do
+        Pin.by_surgeon([surgeons])
+      end
     elsif procedures.present?
-      Pin.by_procedure([procedures])
+      Rails.cache.fetch([procedures].join(',')) do
+        Pin.by_procedure([procedures])
+      end
     elsif general.present?
-      # TODO eval of string is bad news
       args = general.join('.')
-      Pin.instance_eval{eval args}
+      Rails.cache.fetch(args) do
+        Pin.instance_eval { eval args }
+      end
     else
       Pin.none
     end

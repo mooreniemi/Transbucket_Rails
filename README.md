@@ -56,25 +56,46 @@ Connecting to staging to debug or run tasks:
 
 `rspec`
 
+If you need to see some performance stats, use `rspec --profile`.
 
 ## profiling
 
-In dev mode, [rack-mini-profiler](https://github.com/MiniProfiler/rack-mini-profiler) and [ruby-prof](https://github.com/ruby-prof/ruby-prof) are available.
+In dev mode, [rack-mini-profiler](https://github.com/MiniProfiler/rack-mini-profiler), [stackprof](https://github.com/tmm1/stackprof) and [ruby-prof](https://github.com/ruby-prof/ruby-prof) are available.
+
+### ruby-prof example
 
 ```ruby
-    require 'ruby-prof'
-    RubyProf.start
+  require 'ruby-prof'
+  RubyProf.start
 
-    # some ruby code you want to profile
+  # some ruby code you want to profile
 
-    result = RubyProf.stop
-    printer = RubyProf::FlatPrinter.new(result)
-    printer.print(STDOUT)
+  result = RubyProf.stop
+  printer = RubyProf::FlatPrinter.new(result)
+  printer.print(STDOUT)
 
-    # if you need the call stack, try
-    #printer = RubyProf::CallStackPrinter.new(result)
-    #printer.print(File.open('tmp/ruby_prof.html', "w"))
+  # if you need the call stack, try
+  #printer = RubyProf::CallStackPrinter.new(result)
+  #printer.print(File.open('tmp/ruby_prof.html', "w"))
 ```
+
+### stackprof example
+
+```ruby
+  # i add this to the top of a test file
+  # say, spec/presenters/pin_presenter_spec.rb
+
+  RSpec.configure do |config|
+    config.around(:each) do |example|
+      path = Rails.root.join("tmp/stackprof-cpu-test-#{example.full_description.parameterize}.dump")
+      StackProf.run(mode: :cpu, out: path.to_s) do
+        example.run
+      end
+    end
+  end
+```
+
+Then you can use something like: `bundle exec stackprof tmp/stackprof-cpu-test-pinpresenter-filtering-results-returns-pins-scoped-by-procedure.dump` to view the dump.
 
 If you need to find a corresponding call, you can use `git grep suspicious_call -- '*.rb'`.
 

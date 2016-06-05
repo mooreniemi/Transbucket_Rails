@@ -2,9 +2,10 @@ ENV["RAILS_ENV"] = 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'support/controller_helpers'
 require 'rspec/rails'
+require 'capybara/rspec'
 require 'factory_girl_rails'
 require 'simplecov'
-SimpleCov.start 
+SimpleCov.start
 
 RSpec.configure do |config|
   # config.profile_examples = 10
@@ -45,6 +46,8 @@ RSpec.configure do |config|
   end
 
   config.use_transactional_fixtures = true
+
+  config.infer_spec_type_from_file_location!
 
   # from previous rails build
   config.include FactoryGirl::Syntax::Methods

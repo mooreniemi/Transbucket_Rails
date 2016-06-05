@@ -12,8 +12,7 @@ class Procedure < ActiveRecord::Base
   end
 
   def self.names
-    self.where("name IS NOT NULL")
-    .pluck(:name)
-    .sort
+    self.where("name IS NOT NULL").
+      pluck(:name).sort
   end
 end

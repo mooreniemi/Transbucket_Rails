@@ -1,4 +1,4 @@
-<% cache(@pin) do %>
+<% cache([@pin, @pin.pin_images]) do %>
 <% title 'Submission #' + @pin.id.to_s %>
 <div class="row">
   <div class="col-md-6">

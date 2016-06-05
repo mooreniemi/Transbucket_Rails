@@ -44,6 +44,8 @@ For master branch: [![CircleCI](https://circleci.com/gh/mooreniemi/Transbucket_R
 
 ## [staging](https://dashboard-preview.heroku.com/apps/transbucket-staging)
 
+Staging is meant to run in the production environment, as close to actual production as possible.
+
 Deploying a branch to [staging](https://transbucket-staging.herokuapp.com/):
 
 `git push staging fix_presenter:master`
@@ -53,6 +55,13 @@ Connecting to staging to debug or run tasks:
 `heroku run rails console --app transbucket-staging`
 
 ## [production](transbucket.com)
+
+For staging and production, assets need to be recompiled. It's wise to clean them first:
+
+```
+  rake assets:clean
+  RAILS_ENV=production bundle exec rake assets:precompile
+```
 
 ## tests
 

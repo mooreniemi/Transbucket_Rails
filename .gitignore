@@ -11,6 +11,7 @@ tmp/*
 *.swp
 *.out
 *.sql
+public/page_cache/*
 public/system/pin_images/photos/*
 public/system/*
 # Ignore application configuration

@@ -1,2 +1,16 @@
 $("#pins").html("<%= escape_javascript(render @presenter.pins) %>");
 $("#paginator").html("<%= escape_javascript(will_paginate @presenter.pins) unless @presenter.pins.empty? %>");
+
+// TODO duplication in index.js
+$(document).ready(function() {
+  // masonry setup
+  var container = document.querySelector('#pins'),
+    msnry;
+
+  if (container) {
+    // initialize Masonry after all images have loaded
+    imagesLoaded(container, function() {
+      msnry = new Masonry(container);
+    });
+  }
+});

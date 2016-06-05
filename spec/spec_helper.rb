@@ -4,9 +4,12 @@ require 'support/controller_helpers'
 require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/rspec'
+require 'capybara/poltergeist'
+Capybara.javascript_driver = :poltergeist
 require 'factory_girl_rails'
 require 'simplecov'
 SimpleCov.start
+
 
 RSpec.configure do |config|
   # config.profile_examples = 10

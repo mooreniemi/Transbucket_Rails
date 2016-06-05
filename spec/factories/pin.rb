@@ -10,14 +10,14 @@ FactoryGirl.define do
     cost { Random.rand(50000) }
     sensation { Random.rand(11) }
     satisfaction { Random.rand(11) }
-    pin_images { build_list(:pin_image, 2)}
+    pin_images { build_list(:pin_image, 2) }
 
     # association :user
-    trait :pin_with_comments do
-      association :comment, factory: :comment
+    trait :with_comments do
+      comments { create_list(:comment, 2) }
     end
 
-    trait :invalid_pin do
+    trait :invalid do
       surgeon_id nil
       procedure_id nil
     end

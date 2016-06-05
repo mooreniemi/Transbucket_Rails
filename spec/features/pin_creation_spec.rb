@@ -20,7 +20,7 @@ describe "pin creation", :js => true do
 
     attach_file("dz-file-input", Rails.root.join("spec", "fixtures", "cat.jpg"), visible: false)
 
-    cat_img = find('.dz-preview img')
+    cat_img = find('.dz-preview img[alt]:not([alt=""])')
 
     expect(cat_img[:alt]).to eql("cat.jpg")
   end

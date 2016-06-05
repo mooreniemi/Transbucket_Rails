@@ -1,7 +1,4 @@
-ENV["RAILS_ENV"] = 'test'
-require File.expand_path("../../config/environment", __FILE__)
 require 'support/controller_helpers'
-require 'rspec/rails'
 require 'rspec-benchmark'
 require 'factory_girl_rails'
 require 'simplecov'
@@ -46,11 +43,7 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
-  config.use_transactional_fixtures = true
-
   # from previous rails build
   config.include FactoryGirl::Syntax::Methods
   config.include RSpec::Benchmark::Matchers
-  config.include Devise::TestHelpers, :type => :controller
-  config.include ControllerHelpers, :type => :controller
 end

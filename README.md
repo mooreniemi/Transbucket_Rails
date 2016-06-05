@@ -24,6 +24,14 @@ Some seed data is necessary for the site to work. Run `rake genders:create`, `ra
 
 For your ease, use `rake test_users:create` to create a user and an admin. Both will have the password "password". The usernames should output to console.
 
+# running scheduled jobs / async execution
+
+Via Heroku add-ons we have [scheduler](https://devcenter.heroku.com/articles/scheduler). The process is basically add a `rake` task, and use `heroku addons:open scheduler` to open the scheduler.
+
+The other option is [delayed_job](https://github.com/collectiveidea/delayed_job). During deploy, a separate dyno is used to run `rake jobs:work` which starts the `delayed_job` process that manages execution of the queue.
+
+I've been using the `scheduler` to run things like periodic jobs, whereas I use `delayed_jobs` for stuff like sending an email async. (For an example see `app/helpers/notifications_helper.rb`.)
+
 # run environments
 
 Staging and production both deploy and depend on [Heroku](https://heroku.com/). You should grab their [cli](https://devcenter.heroku.com/articles/using-the-cli). These instructions assume you've set it up.

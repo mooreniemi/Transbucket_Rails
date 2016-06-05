@@ -2,6 +2,7 @@ ENV["RAILS_ENV"] = 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'support/controller_helpers'
 require 'rspec/rails'
+require 'capybara/rails'
 require 'capybara/rspec'
 require 'factory_girl_rails'
 require 'simplecov'

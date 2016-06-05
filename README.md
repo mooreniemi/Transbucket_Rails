@@ -99,6 +99,12 @@ Then you can use something like: `bundle exec stackprof tmp/stackprof-cpu-test-p
 
 If you need to find a corresponding call, you can use `git grep suspicious_call -- '*.rb'`.
 
+# caching
+
+Fragment, page, and low-level caching are being used despite Heroku's [ephemeral file store](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem). Given the site runs on one dyno, and that deploys are infrequent, filestore caching still has some benefit.
+
+Page caching is only used for public areas of the site. For the majority of the site, fragment caching and low-level calls of the form `Rails.cache.fetch` are being used.
+
 # more help
 
 - Is there a rake task? Use `rake -T` to check.

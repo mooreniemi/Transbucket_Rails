@@ -35,6 +35,13 @@ $(document).ready(function() {
           $('#submit-all').prop("disabled", false);
         });
 
+        myDropzone.on("removedfile", function(file) {
+          $.ajax({
+            url: "pin_images/" + file.id,
+            type: 'DELETE'
+          });
+        });
+
         myDropzone.on("success", function(file, responseText) {
           var imageIdList = $('#pin_pin_image_ids');
           // dynamically adding the save pin_image ids to the pin submission form

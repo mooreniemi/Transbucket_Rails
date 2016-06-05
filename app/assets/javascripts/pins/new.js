@@ -7,7 +7,9 @@ $(document).ready(function() {
   Dropzone.autoDiscover = false;
   if (container && !!location.pathname.match(/pins\/new/)) {
     var myDropzone = new Dropzone("#dropper", {
-      url: 'pin_images',
+      // must have slash to go out of pins/ namespace
+      // as pin_id wont exist yet
+      url: '/pin_images',
       method: 'post',
       maxFilesize: 1,
       previewTemplate: template,

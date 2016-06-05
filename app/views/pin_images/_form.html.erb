@@ -1,16 +1,16 @@
 <div class="fallback">
-  <div class="dropzone" id="dropper">
+  <div class="dropzone" id="dropper" data-pin-id="<%= @pin.try(:id) %>">
     <div class="fallback">
       <%= form_for(PinImage.new, html: {multipart: true}) do |pin_image_form| %>
-      <%= pin_image_form.file_field :photo %>
-      <%= pin_image_form.text_field :caption %>
+        <%= pin_image_form.file_field :photo %>
+        <%= pin_image_form.text_field :caption %>
       <% end %>
     </div>
   </div>
 </div>
 <button id="submit-all" class="btn btn-primary start" disabled="true">
-<i class="glyphicon glyphicon-upload"></i>
-<span>Upload photos</span>
+  <i class="glyphicon glyphicon-upload"></i>
+  <span>Upload photos</span>
 </button>
 <div class="hide">
   <div class="dz-preview dz-file-preview">

@@ -101,6 +101,7 @@ group :test do
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'
 	gem 'capybara'
+	gem 'selenium-webdriver'
 	gem 'poltergeist'
 	gem 'guard-rspec'
 	gem 'launchy'

@@ -1,12 +1,12 @@
 <div id="persisted_pins" class="col-md-6">
   <% @pin.pin_images.reject{|i| i if i.id.nil?}.each do |image| %>
   <div class="thumbnail">
-  <%= link_to('<i class="fa fa-trash-o"></i>'.html_safe, pin_image_path(image.id), method: "delete", remote: true, data: { confirm: 'Are you sure?', disable_with: 'deleting...' }) %>
+    <%= link_to(fa_icon("trash-o"), pin_image_path(image.id), method: "delete", remote: true, data: { confirm: 'Are you sure?', disable_with: 'deleting...' }) %>
     <%= image_tag image.photo.url(:thumb) %>
   </div>
   <div class="caption">
     <div class="input-group">
-      <%= text_field_tag :caption, image.caption, placeholder: "Caption" %> 
+      <%= text_field_tag :caption, image.caption, placeholder: "Caption" %>
       <%= link_to('update caption'.html_safe, pin_image_path(image.id), method: "patch", remote: true, data: { disable_with: 'updating...' }) %>
     </div>
   </div>

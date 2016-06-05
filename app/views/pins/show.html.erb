@@ -12,34 +12,34 @@
       </div>
       <% end %>
       <br>
-      <%= link_to '<i class="fa fa-arrow-left"></i>'.html_safe, pins_path %>
+      <%= link_to fa_icon("arrow-left"), pins_path %>
       <% if current_user == @pin.user || current_user.admin == true %>
-      | <%= link_to '<i class="fa fa-pencil-square-o"></i>'.html_safe, edit_pin_path(@pin) %>
+      | <%= link_to fa_icon("pencil-square-o"), edit_pin_path(@pin) %>
       <% end %>
     </div>
   </div>
   <div class="col-md-6">
     <dl class="dl-horizontal">
       <dt>
-      <i class="fa fa-user-md"></i> Surgeon
+       <%= fa_icon "user-md" %> Surgeon
       </dt>
       <dd>
       <%= link_to @pin.unknown_surgeon? ? 'unknown' : 'Dr. ' + @pin.surgeon.to_s, pins_path({surgeon: [@pin.surgeon.id]}) %>
       </dd>
       <dt>
-      <i class="fa fa-plus-square"></i> Procedure
+        <%= fa_icon "plus-square" %> Procedure
       </dt>
       <dd>
       <%= link_to @pin.procedure.name, pins_path({procedure: [@pin.procedure.id]}) %>
       </dd>
       <dt>
-      <i class="fa fa-usd"></i> Cost
+      <%= fa_icon "usd" %> Cost
       </dt>
       <dd>
       <%= number_with_delimiter(@pin.cost) %>
       </dd>
       <dt>
-      <i class="fa fa-exclamation-circle"></i> Want revision?
+        <%= fa_icon "exclamation-circle" %> Want revision?
       </dt>
       <dd>
       <%= @pin.revision %>
@@ -65,7 +65,7 @@
       <% end %>
     </dl>
     <div id="details">
-      <i class="fa fa-quote-left"></i>
+      <%= fa_icon "quote-left" %>
       <%= @pin.details.try(:html_safe) %>
     </div>
   </div>

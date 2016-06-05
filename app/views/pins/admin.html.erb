@@ -14,7 +14,7 @@
 		<tr><td><%= link_to e.id, pin_path(e.commentable_id) %> </td>
 		<td> <%= mail_to user.email, user.username %>
 			<td><%= e.body %></td>
-			<td><%= link_to '<i class="fa fa-flag"></i>'.html_safe, remove_comment_flag_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to republish this comment?", :disable_with => "unflag" %></td>
+			<td><%= link_to fa_icon("flag"), remove_comment_flag_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to republish this comment?", :disable_with => "unflag" %></td>
 			<td><%= link_to "×", comment_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this comment?", :disable_with => "×"%></td></tr>
 			<% end %>
 		</table>
@@ -28,7 +28,7 @@
 			<% user = User.find_by_id(e.user_id) || Struct::User.new("none", "deleted") %>
 			<tr><td><%= link_to e.id, pin_path(e) %> </td>
 			<td> <%= mail_to user.email, user.username %>
-				<td><%= link_to '<i class="fa fa-flag"></i>'.html_safe, remove_pin_flag_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to republish this pin?", :disable_with => "unflag" %></td>
+				<td><%= link_to fa_icon("flag"), remove_pin_flag_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to republish this pin?", :disable_with => "unflag" %></td>
 				<td><%= link_to "×", pin_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this pin?", :disable_with => "×"%></td></tr>
 				<% end %>
 			</table>

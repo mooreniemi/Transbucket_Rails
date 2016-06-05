@@ -65,6 +65,7 @@ GEM
     aws-sdk-resources (2.1.32)
       aws-sdk-core (= 2.1.32)
     bcrypt (3.1.10)
+    benchmark-perf (0.1.0)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -305,6 +306,9 @@ GEM
       rspec-core (~> 3.3.0)
       rspec-expectations (~> 3.3.0)
       rspec-mocks (~> 3.3.0)
+    rspec-benchmark (0.1.0)
+      benchmark-perf (~> 0.1.0)
+      rspec (>= 3.0.0, < 4.0.0)
     rspec-console (0.6.1)
       bond
     rspec-core (3.3.2)
@@ -357,6 +361,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
+    stackprof (0.2.9)
     thin (1.6.4)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -455,6 +460,7 @@ DEPENDENCIES
   rails (= 4.2.1)
   rails_12factor
   rake-progressbar
+  rspec-benchmark
   rspec-console
   rspec-rails
   rspec_junit_formatter (= 0.2.2)
@@ -464,6 +470,7 @@ DEPENDENCIES
   simple-rss
   simple_form
   simplecov
+  stackprof
   thin
   thinking-sphinx
   tinymce-rails
@@ -472,9 +479,6 @@ DEPENDENCIES
   unicorn
   will_paginate (~> 3.0)
   will_paginate-bootstrap
-
-RUBY VERSION
-   ruby 2.2.2p95
 
 BUNDLED WITH
    1.12.5

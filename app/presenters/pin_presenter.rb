@@ -10,13 +10,13 @@ class PinPresenter
     @filter = opts
 
     @pins = if @query.present?
-      Pin.includes(:user).search(@query, :page => @page, :per_page => 20)
+      Pin.includes(:user, :pin_images, :procedure, :surgeon).search(@query, :page => @page, :per_page => 20)
     elsif @user.present?
-      Pin.includes(:user).by_user(@user).paginate(:page => @page)
+      Pin.includes(:user, :pin_images, :procedure, :surgeon).by_user(@user).paginate(:page => @page)
     elsif has_keywords?
       PinFilterQuery.new(filter).filtered.paginate(:page => @page)
     else
-      Pin.includes(:user).recent.paginate(:page => @page)
+      Pin.includes(:user, :pin_images, :procedure, :surgeon).recent.paginate(:page => @page)
     end
   end
 

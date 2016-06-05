@@ -31,7 +31,7 @@ class PinImagesController < ApplicationController
 
   def destroy
     @pin = Pin.find(params[:pin_id])
-    @pin_image = PinImage.find(params[:id])
+    @pin_image = @pin.pin_images.find(params[:id])
 
     respond_to do |format|
       if @pin_image.destroy

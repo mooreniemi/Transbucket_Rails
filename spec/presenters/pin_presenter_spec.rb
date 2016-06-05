@@ -30,6 +30,18 @@ describe PinPresenter do
 
       expect(presenter.pins.last).to eq(pins.last)
     end
+
+    skip 'performance tests' do
+      it 'needs to perform user filtering quickly' do
+        expect { PinPresenter.new({user: user_id}) }.to perform_under(0.50).and_sample(10)
+      end
+      it 'needs to perform surgeon filtering quickly' do
+        expect { PinPresenter.new({surgeon: surgeon.id}) }.to perform_under(0.50).and_sample(10)
+      end
+      it 'needs to perform procedure filtering quickly' do
+        expect { PinPresenter.new({procedure: procedure.id}) }.to perform_under(0.50).and_sample(10)
+      end
+    end
   end
 
   describe '#has_keywords?' do

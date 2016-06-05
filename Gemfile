@@ -74,8 +74,10 @@ group :development do
 end
 
 group :development, :test do
+  gem 'stackprof'
   gem 'ruby-prof'
 	gem 'rack-mini-profiler'
+  gem 'rspec-benchmark'
 	gem 'bullet'
 	gem 'binding_of_caller'
 	gem 'guard'

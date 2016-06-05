@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe SearchController, :type => :controller do
   it "GET search_terms" do

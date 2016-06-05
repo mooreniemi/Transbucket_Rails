@@ -10,11 +10,11 @@ class PinCreatorService
 
   def create
     pin = user.pins.new(params)
-    
+
     pin_images.each do |id|
       pin.pin_images << PinImage.find(id)
     end if pin_images
 
-    return pin
+    pin
   end
 end

@@ -23,11 +23,10 @@ Rails.application.routes.draw do
   get 'contact' => 'contact#new'
   post 'contact' => 'contact#create'
 
+  # FIXME duplicative
   resources :pin_images
-
-  get 'pins/:id/pin_images' => "pins#pin_images"
-  
   resources :pins do
+    resources :pin_images
     resources :flags, :only => [:create]
   end
 

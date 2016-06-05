@@ -7,7 +7,7 @@ $(document).ready(function() {
   Dropzone.autoDiscover = false;
   if (container && !!location.pathname.match(/pins\/new/)) {
     var myDropzone = new Dropzone("#dropper", {
-      url: '/pin_images',
+      url: 'pin_images',
       method: 'post',
       maxFilesize: 1,
       previewTemplate: template,

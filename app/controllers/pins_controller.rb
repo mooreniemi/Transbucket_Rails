@@ -8,7 +8,6 @@ class PinsController < ApplicationController
   def index
     @presenter = PinPresenter.new(pin_index_params)
     @comments = Comment.new_as_of(user_last_sign_in)
-
     respond_to do |format|
       format.html # index.html.erb
       format.js

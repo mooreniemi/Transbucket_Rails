@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  caches_page :home, :about, :terms, :privacy, :bookmarks
   before_filter :force_request_format_to_html
 
   def home

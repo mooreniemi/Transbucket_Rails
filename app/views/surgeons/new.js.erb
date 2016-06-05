@@ -4,7 +4,7 @@ $("<%= escape_javascript(render @surgeon) %>").appendTo("#surgeon_form");
 $("#new_surgeon_submit").click(function() {
     var formElement = document.getElementById("new_surgeon");
     formData = new FormData(formElement);
-    
+
     return $.ajax({
         type: "POST",
         url: "/surgeons",

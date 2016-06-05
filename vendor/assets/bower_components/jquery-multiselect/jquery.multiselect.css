@@ -15,28 +15,28 @@
 	font-weight:normal;
 }
 
-.mselect-list-item { 
-	display:block; 
-}
-
-.mselect-list-item label { 
-	width:100%; 
+.mselect-list-item {
 	display:block;
 }
 
-.mselect-input-container { 
-	position:relative; 
-	padding:.2em; 
+.mselect-list-item label {
+	width:100%;
+	display:block;
+}
+
+.mselect-input-container {
+	position:relative;
+	padding:.2em;
 	display:none;
 }
 
 .mselect-input { width: 99%; margin:0; }
 
-.mselect-button-add { 
-	display:block; 
+.mselect-button-add {
+	display:block;
 	zoom:1;
 	position:relative;
-	text-decoration:none; 
+	text-decoration:none;
 	padding-left:24px;
 	padding:2px 2px 2px 24px;
 	cursor:pointer;
@@ -55,10 +55,10 @@
 
 .mselect-button-add-icon { left:.2em; margin-top:-10px; }
 
-.mselect .mselect-button-cancel { 
-	right:.5em; 
+.mselect .mselect-button-cancel {
+	right:.5em;
 	margin-top:-8px;
-	cursor:pointer; 
+	cursor:pointer;
 	border:0 solid;
 	background:transparent;
 }

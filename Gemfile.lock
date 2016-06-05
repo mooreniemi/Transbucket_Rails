@@ -257,8 +257,6 @@ GEM
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.4)
-    rack-block (0.1.1)
-      rack (>= 1.3)
     rack-contrib (1.4.0)
       git-version-bump (~> 0.15)
       rack (~> 1.4)
@@ -458,7 +456,6 @@ DEPENDENCIES
   pry-rails
   pry-rescue
   quiet_assets
-  rack-block
   rack-mini-profiler
   rails (= 4.2.1)
   rails_12factor

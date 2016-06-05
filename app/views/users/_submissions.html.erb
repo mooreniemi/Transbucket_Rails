@@ -4,8 +4,8 @@
     <%= link_to 'Submit Now +', new_pin_path %>
     <% else %>
     <% for pin in current_user.pins do %>
-    <%= link_to '<i class="fa fa-pencil-square-o"></i>'.html_safe, edit_pin_path(pin) %>
-    | <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, pin, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <%= link_to fa_icon("pencil-square-o"), edit_pin_path(pin) %>
+    | <%= link_to fa_icon("trash-o"), pin, method: :delete, data: { confirm: 'Are you sure?' } %>
     | submission #<%= pin.id %>
     <br>
     <% for pin_image in pin.pin_images do %>

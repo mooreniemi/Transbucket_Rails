@@ -1,4 +1,5 @@
 # https://github.com/laserlemon/figaro#required-keys
+# TODO use figaro to check environment
 #Figaro.require_keys(
   #"S3_BUCKET",
   #"S3_BUCKET_NAME",

@@ -15,7 +15,6 @@ describe PinPresenter do
     it 'returns pins scoped by surgeon' do
       pins.last.update_attributes(surgeon_id: surgeon.id)
       presenter = PinPresenter.new({surgeon: surgeon.id})
-
       expect(presenter.pins.last).to eq(pins.last)
     end
 

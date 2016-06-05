@@ -327,6 +327,7 @@ GEM
     rspec_junit_formatter (0.2.2)
       builder (< 4)
       rspec-core (>= 2, < 4, != 2.12.0)
+    ruby-prof (0.15.9)
     sass (3.2.19)
     sass-rails (4.0.3)
       railties (>= 4.0.0, < 5.0)
@@ -457,6 +458,7 @@ DEPENDENCIES
   rspec-console
   rspec-rails
   rspec_junit_formatter (= 0.2.2)
+  ruby-prof
   sass-rails (= 4.0.3)
   seed_dump
   simple-rss

@@ -2,7 +2,7 @@
   <% if !f.object.new_record? %>
   <%= image_tag f.object.photo.url %>
   <% end %>
-  
+
   <%= f.file_field :photo %>
   <%= f.label :caption, "Image Caption" %>
   <%= f.text_field :caption %>

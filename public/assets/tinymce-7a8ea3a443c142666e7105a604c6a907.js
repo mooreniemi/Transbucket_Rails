@@ -87,7 +87,7 @@ window.tinymce = window.tinymce || {
 
 			target[fragments[fragments.length - 1]] = modules[id];
 		}
-		
+
 		// Expose private modules for unit tests
 		if (exports.AMDLC_TESTS) {
 			privateModules = exports.privateModules || {};
@@ -40461,5 +40461,3 @@ define("tinymce/ui/Throbber", [
 
 expose(["tinymce/dom/EventUtils","tinymce/dom/Sizzle","tinymce/Env","tinymce/util/Tools","tinymce/dom/DomQuery","tinymce/html/Styles","tinymce/dom/TreeWalker","tinymce/html/Entities","tinymce/dom/DOMUtils","tinymce/dom/ScriptLoader","tinymce/AddOnManager","tinymce/dom/RangeUtils","tinymce/html/Node","tinymce/html/Schema","tinymce/html/SaxParser","tinymce/html/DomParser","tinymce/html/Writer","tinymce/html/Serializer","tinymce/dom/Serializer","tinymce/util/VK","tinymce/dom/ControlSelection","tinymce/dom/BookmarkManager","tinymce/dom/Selection","tinymce/Formatter","tinymce/UndoManager","tinymce/EditorCommands","tinymce/util/URI","tinymce/util/Class","tinymce/util/EventDispatcher","tinymce/util/Observable","tinymce/ui/Selector","tinymce/ui/Collection","tinymce/ui/ReflowQueue","tinymce/ui/Control","tinymce/ui/Factory","tinymce/ui/KeyboardNavigation","tinymce/ui/Container","tinymce/ui/DragHelper","tinymce/ui/Scrollable","tinymce/ui/Panel","tinymce/ui/Movable","tinymce/ui/Resizable","tinymce/ui/FloatPanel","tinymce/ui/Window","tinymce/ui/MessageBox","tinymce/WindowManager","tinymce/EditorObservable","tinymce/Shortcuts","tinymce/util/Promise","tinymce/Editor","tinymce/util/I18n","tinymce/FocusManager","tinymce/EditorManager","tinymce/util/XHR","tinymce/util/JSON","tinymce/util/JSONRequest","tinymce/util/JSONP","tinymce/util/LocalStorage","tinymce/Compat","tinymce/ui/Layout","tinymce/ui/AbsoluteLayout","tinymce/ui/Tooltip","tinymce/ui/Widget","tinymce/ui/Button","tinymce/ui/ButtonGroup","tinymce/ui/Checkbox","tinymce/ui/ComboBox","tinymce/ui/ColorBox","tinymce/ui/PanelButton","tinymce/ui/ColorButton","tinymce/util/Color","tinymce/ui/ColorPicker","tinymce/ui/Path","tinymce/ui/ElementPath","tinymce/ui/FormItem","tinymce/ui/Form","tinymce/ui/FieldSet","tinymce/ui/FilePicker","tinymce/ui/FitLayout","tinymce/ui/FlexLayout","tinymce/ui/FlowLayout","tinymce/ui/FormatControls","tinymce/ui/GridLayout","tinymce/ui/Iframe","tinymce/ui/Label","tinymce/ui/Toolbar","tinymce/ui/MenuBar","tinymce/ui/MenuButton","tinymce/ui/MenuItem","tinymce/ui/Menu","tinymce/ui/ListBox","tinymce/ui/Radio","tinymce/ui/Rect","tinymce/ui/ResizeHandle","tinymce/ui/Slider","tinymce/ui/Spacer","tinymce/ui/SplitButton","tinymce/ui/StackLayout","tinymce/ui/TabPanel","tinymce/ui/TextBox","tinymce/ui/Throbber"]);
 })(this);
-
-

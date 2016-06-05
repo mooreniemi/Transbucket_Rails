@@ -17,7 +17,7 @@ class PinsController < ApplicationController
   # GET /pins/1
   # GET /pins/1.json
   def show
-    @comments = @pin.comment_threads.order('created_at desc')
+    @comments = @pin.comments_desc
     @new_comment = Comment.build_from(@pin, current_user, "")
 
     respond_to do |format|

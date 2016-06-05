@@ -1,7 +1,6 @@
 #rails specific
 *.sqlite3
 #config/database.yml
-#config/settings.txt
 log/*
 tmp/*
 
@@ -15,5 +14,5 @@ tmp/*
 public/system/pin_images/photos/*
 public/system/*
 # Ignore application configuration
-#/config/application.yml
+/config/application.yml
 coverage/*

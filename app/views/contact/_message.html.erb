@@ -14,12 +14,12 @@
       </div>
       <div class="input-group padded_nicely">
         <%= form.text_field :subject, placeholder: "Subject", class: "form-control" %>
-        <span class="input-group-addon"><i class="fa fa-bullhorn"></i></span>
+        <span class="input-group-addon"><%= fa_icon 'bullhorn' %></span>
       </div>
       <%= form.text_area :body, class: "form-control", rows:"4", placeholder: "Howdy Transbucket admins!" %>
     </fieldset>
   </div>
-  
+
   <%= form.submit "Send", class: "btn btn-primary" %>
   <% end %>
 </div>

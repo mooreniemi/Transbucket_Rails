@@ -1,6 +1,6 @@
 <% title 'Forgot your password?' %>
 <div class="col-md-5 center">
-  <div class="top-block"><center><h1><i class="fa fa-lock"></i></h1></center></div>
+  <div class="top-block"><center><h1><%= fa_icon "lock" %></h1></center></div>
   <div class="login_well">
     <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
     <%= devise_error_messages! %>

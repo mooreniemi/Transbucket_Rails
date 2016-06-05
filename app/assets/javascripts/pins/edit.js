@@ -1,14 +1,14 @@
 $(document).ready(function() {
   // dropzone setup
   var container = document.querySelector('#dropper'),
-  template = $('.hide').html(),
-  queueCounter = -1;
+    template = $('.hide').html(),
+    queueCounter = -1;
 
   Dropzone.autoDiscover = false;
   if (container && !location.pathname.match(/pins\/new/)) {
     var myDropzone = new Dropzone("#dropper", {
-      url: '/pin_images',
-      method: 'put',
+      url: 'pin_images',
+      method: 'post',
       maxFilesize: 1,
       previewTemplate: template,
       paramName: function(n) {
@@ -23,8 +23,9 @@ $(document).ready(function() {
       parallelUploads: 100,
       maxFiles: 10,
       init: function() {
-        var submitButton = document.querySelector("#submit-all");
-        myDropzone = this; // closure
+        var submitButton = document.querySelector("#submit-all"),
+          myDropzone = this,
+          pinId = $('#dropper').data('pin-id');
 
         submitButton.addEventListener("click", function() {
           myDropzone.processQueue(); // Tell Dropzone to process all queued files.
@@ -32,6 +33,12 @@ $(document).ready(function() {
 
         myDropzone.on("addedfile", function(file) {
           $('#submit-all').prop("disabled", false);
+        });
+
+        myDropzone.on("success", function(file, responseText) {
+          var imageIdList = $('#pin_pin_image_ids');
+          // dynamically adding the save pin_image ids to the pin submission form
+          imageIdList.val(imageIdList.val() + "," + responseText.id);
         });
 
         $.getJSON("pin_images.json", function(pinImages) {
@@ -43,12 +50,13 @@ $(document).ready(function() {
               myDropzone.options.thumbnail.call(myDropzone, pinImage, pinImage.url);
             });
           }
+
           // allow caption updates independently
           $(".save-caption").on("click", function(e) {
             var pinImageId = this.parentElement.id,
-            input = $(this.parentElement).find("input:first"),
-            captionText = input.val(),
-            target = $(this);
+              input = $(this.parentElement).find("input:first"),
+              captionText = input.val(),
+              target = $(this);
             $.ajax({
               url: '/pin_images/' + pinImageId + '.json',
               type: 'PUT',

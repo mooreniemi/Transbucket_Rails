@@ -83,11 +83,6 @@ class PinsController < ApplicationController
     end
   end
 
-  def pin_images
-    @pin_images = Pin.find(params[:id]).pin_images
-    respond_with(@pin_images)
-  end
-
   def admin
     @pins = Pin.where(state: 'pending').order("created_at desc")
     @comments = Comment.where(state: 'pending').order("created_at desc")

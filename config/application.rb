@@ -8,6 +8,8 @@ Bundler.require(*Rails.groups)
 
 module Transbucket
   class Application < Rails::Application
+    config.action_controller.page_cache_directory = "#{Rails.root.to_s}/public/page_cache"
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

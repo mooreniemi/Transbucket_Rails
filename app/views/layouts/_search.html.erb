@@ -1,3 +1,4 @@
+<% cache do %>
 <%= javascript_include_tag 'search' %>
 <%= form_tag pins_path, :class => 'form-search navbar-form navbar-right', :method => :get do %>
 <div class="form-group">
@@ -8,3 +9,4 @@
   </div>
   <% end %>
 </div>
+<% end %>

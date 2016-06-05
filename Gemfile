@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 ruby '2.2.2'
 
 gem 'rails', '4.2.1'
+# used for public areas of the site, see PagesController
 gem 'actionpack-page_caching'
 
 gem 'unicorn'
@@ -15,12 +16,16 @@ gem 'protected_attributes'
 # for ci
 gem 'rspec_junit_formatter', '0.2.2'
 
-# for thinking sphinx
+# for thinking sphinx (search functionality)
 gem 'mysql2', '~> 0.4.4'
 gem 'activerecord-mysql-adapter'
+gem 'thinking-sphinx'
+gem 'flying-sphinx'
+
 gem 'active_model_serializers'
 
 gem 'pg'
+gem 'delayed_job_active_record'
 
 gem 'will_paginate', '~> 3.0'
 gem 'will_paginate-bootstrap'
@@ -28,10 +33,8 @@ gem 'will_paginate-bootstrap'
 gem 'paperclip', '~> 4.2'
 gem 'aws-sdk'
 
+# for managing environment variables
 gem 'figaro'
-
-gem 'delayed_job_active_record'
-gem 'tinymce-rails'
 
 gem 'devise'
 gem 'devise-encryptable'
@@ -39,13 +42,20 @@ gem 'devise-encryptable'
 gem 'aasm'
 gem 'fuzzy_match'
 
+# kept at top level so rake tasks can use
+# in any environment
 gem 'rake-progressbar'
+gem 'awesome_print'
+# we use Faker to create junk data sometimes on staging
+gem 'faker'
 
 gem 'nested_form'
 gem 'simple_form'
 
-gem 'thinking-sphinx'
-gem 'flying-sphinx'
+gem 'ledermann-rails-settings', :require => 'rails-settings'
+
+# pin submission wysiwyg
+gem 'tinymce-rails'
 
 gem 'htmlentities'
 gem 'simple-rss'
@@ -54,16 +64,12 @@ gem 'meta-tags', :require => 'meta_tags'
 gem 'acts_as_votable', '~> 0.7.1'
 gem 'acts-as-taggable-on'
 gem 'acts_as_commentable_with_threading'
-gem 'ledermann-rails-settings', :require => 'rails-settings'
 gem 'letsrate'
-
-gem 'awesome_print'
-# we use Faker to create junk data sometimes on staging
-gem 'faker'
 
 gem 'font-awesome-rails'
 
-gem 'rack-block'
+# TODO blocking ips, bots, etc
+# gem 'rack-attack'
 
 group :development do
 	gem 'letter_opener'

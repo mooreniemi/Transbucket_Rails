@@ -20,4 +20,3 @@ $(document)
     $(this).hide('fast')
   .on "ajax:error", ".comment", ->
     $(this).fadeTo('fast', 1)
-

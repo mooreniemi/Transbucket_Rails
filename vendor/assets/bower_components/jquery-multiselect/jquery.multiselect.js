@@ -28,7 +28,7 @@
 
 					select.children('option').each(function(i, option) {
 						option = $(option);
-						
+
 						str += o.item
 							.replace(/%value%/gi,  option.val())
 							.replace(/%checked%/i, option.attr('selected') ? 'checked="checked"' : '')
@@ -97,7 +97,7 @@
 							list.children('.mselect-list-item').length
 								? list.children('.mselect-list-item:last').after(item)
 								: list.prepend(item);
-								
+
 							select.append('<option value="'+v+'" selected="selected">'+v+'</option>');
 
 						}
@@ -168,7 +168,7 @@
 		 * @type  String
 		 */
 		addButton : '<a href="#" class="mselect-button-add"><span class="ui-state-default mselect-button-add-icon"><span class="ui-icon ui-icon-plusthick"/></span>%addText%</a>' ,
-		
+
 		/**
 		 * Text for "Cancel" icon in text field
 		 *

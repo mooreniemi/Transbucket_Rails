@@ -57,7 +57,7 @@ utils.modulo = function( num, div ) {
 };
 
 // ----- isArray ----- //
-  
+
 var objToString = Object.prototype.toString;
 utils.isArray = function( obj ) {
   return objToString.call( obj ) == '[object Array]';

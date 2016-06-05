@@ -13,7 +13,7 @@
  */
 
 (function () {
-	
+
 
 	/**
 	 * Class for managing events.
@@ -562,7 +562,7 @@ if ( typeof define === 'function' && define.amd ) {
  * MIT License
  */
 
-( function( window, factory ) { 
+( function( window, factory ) {
   // universal module definition
 
   /*global define: false, module: false, require: false */

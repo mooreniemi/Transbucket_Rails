@@ -237,7 +237,7 @@ if ( typeof define === 'function' && define.amd ) {
  */
 
 ;(function () {
-    
+
 
     /**
      * Class for managing events.
@@ -1101,7 +1101,7 @@ if ( typeof define === 'function' && define.amd ) {
 
 ( function( ElemProto ) {
 
-  
+
 
   var matchesMethod = ( function() {
     // check for the standard method name first
@@ -1207,7 +1207,7 @@ if ( typeof define === 'function' && define.amd ) {
 
 ( function( window, factory ) {
   /*global define: false, module: false, require: false */
-  
+
   // universal module definition
 
   if ( typeof define == 'function' && define.amd ) {
@@ -1257,7 +1257,7 @@ utils.modulo = function( num, div ) {
 };
 
 // ----- isArray ----- //
-  
+
 var objToString = Object.prototype.toString;
 utils.isArray = function( obj ) {
   return objToString.call( obj ) == '[object Array]';
@@ -1474,7 +1474,7 @@ return utils;
  */
 
 ( function( window, factory ) {
-  
+
   // universal module definition
   if ( typeof define === 'function' && define.amd ) {
     // AMD
@@ -2041,7 +2041,7 @@ return Item;
  */
 
 ( function( window, factory ) {
-  
+
   // universal module definition
 
   if ( typeof define == 'function' && define.amd ) {
@@ -2944,7 +2944,7 @@ return Outlayer;
  */
 
 ( function( window, factory ) {
-  
+
   // universal module definition
   if ( typeof define === 'function' && define.amd ) {
     // AMD
@@ -3138,4 +3138,3 @@ return Outlayer;
   return Masonry;
 
 }));
-

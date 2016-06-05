@@ -96,7 +96,7 @@ group :development, :test do
 end
 
 group :test do
-	gem 'simplecov'
+	gem 'simplecov', :require => false
 	gem 'database_cleaner'
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'

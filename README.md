@@ -56,6 +56,28 @@ Connecting to staging to debug or run tasks:
 
 `rspec`
 
+
+## profiling
+
+In dev mode, [rack-mini-profiler](https://github.com/MiniProfiler/rack-mini-profiler) and [ruby-prof](https://github.com/ruby-prof/ruby-prof) are available.
+
+```ruby
+    require 'ruby-prof'
+    RubyProf.start
+
+    # some ruby code you want to profile
+
+    result = RubyProf.stop
+    printer = RubyProf::FlatPrinter.new(result)
+    printer.print(STDOUT)
+
+    # if you need the call stack, try
+    #printer = RubyProf::CallStackPrinter.new(result)
+    #printer.print(File.open('tmp/ruby_prof.html', "w"))
+```
+
+If you need to find a corresponding call, you can use `git grep suspicious_call -- '*.rb'`.
+
 # more help
 
 - Is there a rake task? Use `rake -T` to check.

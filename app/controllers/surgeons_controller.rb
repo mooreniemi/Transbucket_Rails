@@ -17,6 +17,7 @@ class SurgeonsController < ApplicationController
     end
   end
 
+  private
   def surgeon_params
     params.require(:surgeon).permit(:last_name, :first_name, :url)
   end

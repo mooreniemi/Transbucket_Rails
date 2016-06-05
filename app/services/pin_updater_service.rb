@@ -7,7 +7,7 @@ class PinUpdaterService
     @params = pin_params.stringify_keys!
     @surgeon_attributes = @params["surgeon_attributes"]
     @procedure_attributes = @params["procedure_attributes"]
-    @pin_image_ids = @params["pin_image_ids"].split(',').reject(&:empty?).map(&:to_i)
+    @pin_image_ids = @params["pin_image_ids"].present? ? @params["pin_image_ids"].split(',').reject(&:empty?).map(&:to_i) : []
     @pin = Pin.find(@params["pin_id"])
     @user = user
 

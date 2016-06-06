@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "the flagging process" do
   let!(:users) { create_list(:user, 4, :with_confirmation) }
-  let!(:pin) { create(:pin, :with_comments, user_id: users.first.id) }
+  let!(:pin) { create(:pin, :with_comments, :with_surgeon_and_procedure, user_id: users.first.id) }
 
   before :each do
     allow_any_instance_of(Paperclip::Attachment).to receive(:url).and_return("/assets/register.png")
@@ -22,20 +22,20 @@ describe "the flagging process" do
       expect(pin_item).to have_no_selector('a[href="/pins/' + pin.id.to_s + '/flags"]')
     end
 
-    xit "should not allow you to flag your own comment" do
+    it "should not allow you to flag your own comment" do
       login_as(users[1], :scope => :user)
 
       visit '/pins/' + pin.id.to_s
 
       comment_text = "This is my comment: nonce #{rand(9999)}"
       within("#new_comment") do
-        fill_in "comment_body", comment_text
+        fill_in "comment_body", :with => comment_text
       end
 
       click_button "Submit"
 
-      comments = find("#comments-container")
-      expect(comments).to have_content comment_text
+      comment = find('.comment', :text => comment_text)
+      expect(comment).to have_no_selector(".fa-flag")
     end
   end
 
@@ -50,16 +50,22 @@ describe "the flagging process" do
       end
 
       visit '/pins'
+
       expect(page).to have_no_selector(".item[data-pin-id='" + pin.id.to_s + "']")
     end
 
-    xit "should unpublish a comment" do
+    it "should unpublish a comment" do
       comment_id = pin.comments.first.id
       users[1..-1].each do |user|
         login_as(user, :scope => :user)
 
         visit '/pins/' + pin.id.to_s
+        flag_link = find("#comment-#{comment_id} .fa-flag").find(:xpath, "..")
+        flag_link.click
       end
+
+      visit '/pins/' + pin.id.to_s
+      expect(page).to have_no_selector("#comment-#{comment_id}")
     end
 
  end

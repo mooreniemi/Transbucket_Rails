@@ -1,11 +1,10 @@
 require 'rails_helper'
 
 describe "pin creation", :js => true do
+  let(:user) { create(:user, :with_confirmation) }
+
   before :each do
-    @user = create(:user)
-    @user.skip_confirmation!
-    @user.save!
-    login_as(@user, :scope => :user)
+    login_as(user, :scope => :user)
   end
 
   after :each do

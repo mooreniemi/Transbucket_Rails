@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe PinUpdaterService, '#santize_last_name' do
   it "can sanitize a surgeon's name" do

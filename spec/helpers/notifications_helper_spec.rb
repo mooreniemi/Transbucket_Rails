@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe NotificationsHelper do
   describe '#notify_admin' do

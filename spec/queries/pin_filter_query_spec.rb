@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe PinFilterQuery, "#filtered" do
   it "handles nil just in case" do

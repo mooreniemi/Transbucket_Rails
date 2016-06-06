@@ -36,7 +36,6 @@ describe "pin creation" do
     click_button "Upload photos"
 
     expect(find("#dropper")).to have_selector(".dz-complete")
-    save_screenshot("/Users/corajr/Desktop/uploaded.png")
 
     pin_data = { :cost => rand(999),
                  :experience => Faker::Lorem.sentences(3).join(" ")

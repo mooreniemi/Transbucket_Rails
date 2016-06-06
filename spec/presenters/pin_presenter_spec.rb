@@ -8,8 +8,8 @@ describe PinPresenter do
   end
 
   describe "filtering results" do
-    let(:surgeon) { build(:surgeon) }
-    let(:procedure) { build(:procedure) }
+    let(:surgeon) { create(:surgeon) }
+    let(:procedure) { create(:procedure) }
     let(:user_id) { pins.last.user_id }
 
     it 'returns pins scoped by surgeon' do

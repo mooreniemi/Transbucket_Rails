@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'faker'
 
-describe "pin creation", :js => true do
+describe "pin creation" do
   let(:user) { create(:user, :with_confirmation) }
 
   before :each do
@@ -12,7 +12,7 @@ describe "pin creation", :js => true do
     Warden.test_reset!
   end
 
-  it "should create a new pin with data and images" do
+  it "should create a new pin with data and images", :js => true do
     visit '/pins/new'
 
     find(".dz-hidden-input", visible: false)

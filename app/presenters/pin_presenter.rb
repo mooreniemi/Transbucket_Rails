@@ -10,8 +10,7 @@ class PinPresenter
     @filter = opts
 
     @pins = if @query.present?
-			# search is from thinking_sphinx
-      Pin.search(@query, :page => @page, :per_page => 20)
+      Pin.search(@query, page: @page, per_page: 20, sql: { include: :user })
     elsif @user.present?
       Pin.includes(:user, :pin_images, :procedure, :surgeon).by_user(@user).paginate(:page => @page)
     elsif has_keywords?

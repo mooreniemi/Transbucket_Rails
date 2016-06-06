@@ -8,5 +8,12 @@ FactoryGirl.define do
     trait :wants_notifications do
       preference
     end
+
+    trait :with_confirmation do
+      after(:create) do |user|
+        user.skip_confirmation!
+        user.save!
+      end
+    end
   end
 end

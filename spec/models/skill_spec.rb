@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Skill do
   let!(:surgeon) {create(:surgeon)}

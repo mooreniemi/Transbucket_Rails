@@ -1,5 +1,5 @@
 # spec/models/pin_spec.rb
-require 'spec_helper'
+require 'rails_helper'
 
 describe Pin do
   it 'has a valid factory' do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Flag do
   it '3 flags should make a pin pending' do

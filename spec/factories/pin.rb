@@ -2,7 +2,6 @@ require 'faker'
 
 FactoryGirl.define do
   factory :pin do
-    id { Faker::Number.number(5) }
     description { Faker::Lorem.sentences(3).join(" ") }
     surgeon_id { Random.rand(11) }
     procedure_id { Random.rand(10) }
@@ -12,9 +11,13 @@ FactoryGirl.define do
     satisfaction { Random.rand(11) }
     pin_images { build_list(:pin_image, 2) }
 
-    # association :user
     trait :with_comments do
       comments { create_list(:comment, 2) }
+    end
+
+    trait :with_surgeon_and_procedure do
+      surgeon
+      procedure
     end
 
     trait :invalid do

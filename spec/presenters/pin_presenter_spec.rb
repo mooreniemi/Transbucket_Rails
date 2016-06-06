@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe PinPresenter do
   let!(:pins) { create_list(:pin, 3) }

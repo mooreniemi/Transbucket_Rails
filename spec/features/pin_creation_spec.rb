@@ -2,17 +2,14 @@ require 'rails_helper'
 require 'faker'
 
 describe "pin creation", :js => true do
-  let!(:old_wait) { Capybara.default_max_wait_time }
   let(:user) { create(:user, :with_confirmation) }
 
   before :each do
     login_as(user, :scope => :user)
-    Capybara.default_max_wait_time = 15
   end
 
   after :each do
     Warden.test_reset!
-    Capybara.default_max_wait_time = old_wait
   end
 
   it "should create a new pin with data and images" do

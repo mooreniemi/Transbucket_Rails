@@ -24,14 +24,6 @@ Some seed data is necessary for the site to work. Run `rake genders:create`, `ra
 
 For your ease, use `rake test_users:create` to create a user and an admin. Both will have the password "password". The usernames should output to console.
 
-# running scheduled jobs / async execution
-
-Via Heroku add-ons we have [scheduler](https://devcenter.heroku.com/articles/scheduler). The process is basically add a `rake` task, and use `heroku addons:open scheduler` to open the scheduler.
-
-The other option is [delayed_job](https://github.com/collectiveidea/delayed_job). During deploy, a separate dyno is used to run `rake jobs:work` which starts the `delayed_job` process that manages execution of the queue.
-
-I've been using the `scheduler` to run things like periodic jobs, whereas I use `delayed_jobs` for stuff like sending an email async. (For an example see `app/helpers/notifications_helper.rb`.)
-
 # run environments
 
 Staging and production both deploy and depend on [Heroku](https://heroku.com/). You should grab their [cli](https://devcenter.heroku.com/articles/using-the-cli). These instructions assume you've set it up.
@@ -123,6 +115,22 @@ If you need to find a corresponding call, you can use `git grep suspicious_call 
 Fragment, page, and low-level caching are being used despite Heroku's [ephemeral file store](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem). Given the site runs on one dyno, and that deploys are infrequent, filestore caching still has some benefit.
 
 Page caching is only used for public areas of the site. For the majority of the site, fragment caching and low-level calls of the form `Rails.cache.fetch` are being used.
+
+# search
+
+We're using [thinking-sphinx](http://freelancing-gods.com/thinking-sphinx/quickstart.html) for our search functionality, with [flying-sphinx](http://info.flying-sphinx.com/) on Heroku.
+
+Though `bundle install` succeeded, I found I needed to use `ln -s /usr/local/lib/libpq.5.8.dylib /usr/local/lib/libpq.5.5.dylib` later to get the `searchd` to run. Run using: `rake ts:regenerate`.
+
+If you're not seeing expected results, use `rake ts:index` to reindex the pins.
+
+# running scheduled jobs / async execution
+
+Via Heroku add-ons we have [scheduler](https://devcenter.heroku.com/articles/scheduler). The process is basically add a `rake` task, and use `heroku addons:open scheduler` to open the scheduler.
+
+The other option is [delayed_job](https://github.com/collectiveidea/delayed_job). During deploy, a separate dyno is used to run `rake jobs:work` which starts the `delayed_job` process that manages execution of the queue.
+
+I've been using the `scheduler` to run things like periodic jobs, whereas I use `delayed_jobs` for stuff like sending an email async. (For an example see `app/helpers/notifications_helper.rb`.)
 
 # more help
 

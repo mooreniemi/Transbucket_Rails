@@ -3,6 +3,8 @@ require 'faker'
 
 describe "pin creation" do
   let(:user) { create(:user, :with_confirmation) }
+  let!(:surgeon) { create(:surgeon) }
+  let!(:procedure) { create(:procedure) }
 
   before :each do
     login_as(user, :scope => :user)
@@ -34,6 +36,7 @@ describe "pin creation" do
     click_button "Upload photos"
 
     expect(find("#dropper")).to have_selector(".dz-complete")
+    save_screenshot("/Users/corajr/Desktop/uploaded.png")
 
     pin_data = { :cost => rand(999),
                  :experience => Faker::Lorem.sentences(3).join(" ")
@@ -46,6 +49,8 @@ describe "pin creation" do
     page.execute_script("tinyMCE.activeEditor.setContent('#{pin_data[:experience]}')")
 
     click_button "Submit Now"
+
+    expect(page).to have_content("Pin was successfully created.")
 
     thumbnail = find(".thumbnail")
     expect(thumbnail.find(".caption").text).to eql(caption)

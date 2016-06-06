@@ -3,8 +3,8 @@ require 'faker'
 FactoryGirl.define do
   factory :pin do
     description { Faker::Lorem.sentences(3).join(" ") }
-    surgeon_id { Random.rand(11) }
-    procedure_id { Random.rand(10) }
+    surgeon
+    procedure
     user_id  { Faker::Number.number(5) }
     cost { Random.rand(50000) }
     sensation { Random.rand(11) }
@@ -15,9 +15,9 @@ FactoryGirl.define do
       comments { create_list(:comment, 2) }
     end
 
-    trait :with_surgeon_and_procedure do
-      surgeon
-      procedure
+    trait :with_surgeon_and_procedure_ids do
+      surgeon_id { Faker::Number.number(5) }
+      procedure_id { Faker::Number.number(5) }
     end
 
     trait :invalid do

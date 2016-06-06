@@ -101,7 +101,7 @@ group :test do
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'
 	gem 'capybara'
-  gem 'connection_pool'
+  gem 'database_cleaner'
 	gem 'poltergeist'
 	gem 'guard-rspec'
 	gem 'launchy'

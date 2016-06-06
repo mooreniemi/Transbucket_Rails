@@ -1,38 +1,34 @@
 require 'rails_helper'
 
 describe PinPresenter do
-  let!(:pins) do
-    pins = create_list(:pin, 3)
-    pins.sort_by! { |pin| pin.id }
-    pins
-  end
+  let!(:pins) { create_list(:pin, 3) }
 
   it 'returns pins' do
     expect(PinPresenter.new.pins).to eq(pins.to_a.reverse)
   end
 
   describe "filtering results" do
-    let(:surgeon) { create(:surgeon) }
-    let(:procedure) { create(:procedure) }
+    let!(:surgeon) { create(:surgeon) }
+    let!(:procedure) { create(:procedure) }
     let(:user_id) { pins.last.user_id }
 
     it 'returns pins scoped by surgeon' do
       pins.last.update_attributes!(surgeon_id: surgeon.id)
       presenter = PinPresenter.new({surgeon: surgeon.id})
-      expect(presenter.pins.order(:id).last).to eq(pins.last)
+      expect(presenter.pins.last).to eq(pins.last)
     end
 
     it 'returns pins scoped by procedure' do
       pins.last.update_attributes!(procedure_id: procedure.id)
       presenter = PinPresenter.new({procedure: procedure.id})
 
-      expect(presenter.pins.order(:id).last).to eq(pins.last)
+      expect(presenter.pins.last).to eq(pins.last)
     end
 
     it 'returns pins scoped by user' do
       presenter = PinPresenter.new({user: user_id})
 
-      expect(presenter.pins.order(:id).last).to eq(pins.last)
+      expect(presenter.pins.last).to eq(pins.last)
     end
 
     skip 'performance tests' do

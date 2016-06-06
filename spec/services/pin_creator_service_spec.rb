@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe PinCreatorService, '#create' do
   let!(:user) { create(:user) }
-  let(:pin_params) { attributes_for(:pin).merge!({pin_image_ids: "1"})}
+  let(:pin_params) { attributes_for(:pin, :with_surgeon_and_procedure_ids).merge!({pin_image_ids: "1"})}
 
   it "can create a new pin" do
     service = PinCreatorService.new(pin_params, user)

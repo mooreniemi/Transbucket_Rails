@@ -7,7 +7,7 @@ describe "pin creation", :js => true do
 
   before :each do
     login_as(user, :scope => :user)
-    Capybara.default_max_wait_time = 8
+    Capybara.default_max_wait_time = 15
   end
 
   after :each do

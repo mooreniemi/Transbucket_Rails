@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "the flagging process" do
   let!(:users) { create_list(:user, 4, :with_confirmation) }
-  let!(:pin) { create(:pin, :with_comments, user_id: users.first.id) }
+  let!(:pin) { create(:pin, :with_comments, :with_surgeon_and_procedure, user_id: users.first.id) }
 
   before :each do
     allow_any_instance_of(Paperclip::Attachment).to receive(:url).and_return("/assets/register.png")

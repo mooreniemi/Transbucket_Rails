@@ -107,6 +107,8 @@ GEM
     daemons (1.2.3)
     database_cleaner (1.5.1)
     debug_inspector (0.0.2)
+    declarative (0.0.7)
+      uber (>= 0.0.15)
     delayed_job (4.1.1)
       activesupport (>= 3.0, < 5.0)
     delayed_job_active_record (4.1.0)
@@ -122,6 +124,10 @@ GEM
     devise-encryptable (0.2.0)
       devise (>= 2.1.0)
     diff-lcs (1.2.5)
+    disposable (0.2.6)
+      declarative (~> 0.0.6)
+      representable (>= 2.4.0, <= 3.1.0)
+      uber
     docile (1.1.5)
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
@@ -299,6 +305,14 @@ GEM
     rb-fsevent (0.9.6)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
+    reform (2.1.0)
+      disposable (>= 0.2.2, < 0.3.0)
+      representable (>= 2.4.0, < 3.1.0)
+      uber (~> 0.0.11)
+    reform-rails (0.1.0)
+    representable (3.0.0)
+      declarative (~> 0.0.5)
+      uber (~> 0.0.15)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
     riddle (1.5.12)
@@ -382,6 +396,7 @@ GEM
       coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    uber (0.0.15)
     uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
@@ -460,6 +475,8 @@ DEPENDENCIES
   rails (= 4.2.1)
   rails_12factor
   rake-progressbar
+  reform
+  reform-rails
   rspec-benchmark
   rspec-console
   rspec-rails
@@ -479,6 +496,9 @@ DEPENDENCIES
   unicorn
   will_paginate (~> 3.0)
   will_paginate-bootstrap
+
+RUBY VERSION
+   ruby 2.2.2p95
 
 BUNDLED WITH
    1.12.5

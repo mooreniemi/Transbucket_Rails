@@ -51,6 +51,8 @@ gem 'faker'
 
 gem 'nested_form'
 gem 'simple_form'
+gem 'reform'
+gem 'reform-rails'
 
 gem 'ledermann-rails-settings', :require => 'rails-settings'
 
@@ -101,7 +103,6 @@ group :test do
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'
 	gem 'capybara'
-  gem 'database_cleaner'
 	gem 'poltergeist'
 	gem 'guard-rspec'
 	gem 'launchy'

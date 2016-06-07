@@ -20,6 +20,16 @@ class PinForm < Reform::Form
   property :state
 
   collection :pin_images do
+    property :photo_file_name
+    validates :photo_file_name, presence: true
+
+    property :photo_file_size
+    validates :photo_file_size, presence: true
+
+    property :photo_content_type
+    validates :photo_content_type, presence: true
+
+    property :caption
   end
 
   # property :surgeon, form: SurgeonForm

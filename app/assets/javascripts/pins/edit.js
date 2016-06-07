@@ -48,37 +48,41 @@ $(document).ready(function() {
           imageIdList.val(imageIdList.val() + "," + responseText.id);
         });
 
-        $.getJSON("pin_images.json", function(pinImages) {
-          if (pinImages) {
-            pinImages.forEach(function(pinImage) {
-              myDropzone.options.addedfile.call(myDropzone, pinImage);
-              $(pinImage.previewElement).prop('id', pinImage.id);
-              $(pinImage.previewElement).children('input').val(pinImage.caption);
-              myDropzone.options.thumbnail.call(myDropzone, pinImage, pinImage.url);
-            });
-          }
+        if (window.location.pathname != '/pins') {
+          // FIXME edit fails to preserve uploaded images on failed submission
+          $.getJSON("pin_images.json", function(pinImages) {
+            if (pinImages) {
+              pinImages.forEach(function(pinImage) {
+                myDropzone.options.addedfile.call(myDropzone, pinImage);
+                $(pinImage.previewElement).prop('id', pinImage.id);
+                $(pinImage.previewElement).children('input').val(pinImage.caption);
+                myDropzone.options.thumbnail.call(myDropzone, pinImage, pinImage.url);
+              });
+            }
 
-          // allow caption updates independently
-          $(".save-caption").on("click", function(e) {
-            var pinImageId = this.parentElement.id,
-              input = $(this.parentElement).find("input:first"),
-              captionText = input.val(),
-              target = $(this);
-            $.ajax({
-              url: '/pin_images/' + pinImageId + '.json',
-              type: 'PUT',
-              data: {
-                id: pinImageId,
-                caption: captionText
-              },
-              success: function() {
-                input.css('border-color', 'green');
-                target.append('✔');
-              }
+            // allow caption updates independently
+            $(".save-caption").on("click", function(e) {
+              var pinImageId = this.parentElement.id,
+                  input = $(this.parentElement).find("input:first"),
+                  captionText = input.val(),
+                  target = $(this);
+              $.ajax({
+                url: '/pin_images/' + pinImageId + '.json',
+                type: 'PUT',
+                data: {
+                  id: pinImageId,
+                  caption: captionText
+                },
+                success: function() {
+                  input.css('border-color', 'green');
+                  target.append('✔');
+                }
+              });
             });
+            return pinImages;
           });
-          return pinImages;
-        });
+        }
+
       }
     });
   }

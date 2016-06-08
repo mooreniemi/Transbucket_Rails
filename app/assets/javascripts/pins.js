@@ -10,7 +10,8 @@ $(document).ready(function() {
         queueCounter = 0;
 
     Dropzone.autoDiscover = false;
-    $("#submit-all").prop("disabled", true);
+
+    if (!isEditing) $("#submit-all").prop("disabled", true);
 
     var dropzoneOptions = {
       previewsContainer: "#dropper",
@@ -33,8 +34,10 @@ $(document).ready(function() {
         myDropzone = this; // closure
 
         submitButton.addEventListener("click", function(event) {
-          event.preventDefault();
-          myDropzone.processQueue(); // Tell Dropzone to process all queued files.
+          if (myDropzone.getQueuedFiles().length > 0) {
+            event.preventDefault();
+            myDropzone.processQueue(); // Tell Dropzone to process all queued files.
+          }
         });
       }
     };

@@ -1,13 +1,16 @@
 $(document).ready(function() {
-  // dropzone setup
-  var container = document.querySelector('#dropper'),
-  template = $('#preview-template').html(),
-  queueCounter = -1;
-  // TODO this should work but maybe load order prevents?
-  Dropzone.autoDiscover = false;
-  if (container && !!location.pathname.match(/pins\/new/)) {
+  var path = location.pathname.match(/pins\/(?:new|[^/]+\/edit)/);
+  if (!!path) {
+    // dropzone setup
+
+    var isEditing = path[0] !== "pins/new",
+        template = $('#preview-template').html(),
+        queueCounter = -1;
+
+    Dropzone.autoDiscover = false;
     $("#submit-all").prop("disabled", true);
-    var myDropzone = new Dropzone("#new_pin", {
+
+    var dropzoneOptions = {
       previewsContainer: "#dropper",
       clickable: "#dropper",
       maxFilesize: 1,
@@ -32,7 +35,9 @@ $(document).ready(function() {
           myDropzone.processQueue(); // Tell Dropzone to process all queued files.
         });
       }
-    });
+    };
+
+    var myDropzone = new Dropzone(".form-inline", dropzoneOptions);
 
     myDropzone.on("addedfile", function(file) {
       $(".dz-message:visible").hide();
@@ -40,10 +45,17 @@ $(document).ready(function() {
       $('#submit-all').prop("disabled", false);
     });
 
-    myDropzone.on("removedfile", function() {
+    myDropzone.on("removedfile", function(file) {
       if ($(".dz-preview:visible").length == 0) {
         $(".dz-message").show();
         $('#submit-all').prop("disabled", true);
+      }
+
+      if (isEditing) {
+        $.ajax({
+          url: "pin_images/" + file.id,
+          type: 'DELETE'
+        });
       }
     });
 
@@ -67,5 +79,41 @@ $(document).ready(function() {
         $("#error_explanation ul").append("<li>" + error + "</li>");
       });
     });
+
+    if (isEditing) {
+      $(".dz-message:visible").hide();
+
+      $.getJSON("pin_images.json", function(pinImages) {
+        if (pinImages) {
+          pinImages.forEach(function(pinImage) {
+            myDropzone.options.addedfile.call(myDropzone, pinImage);
+            $(pinImage.previewElement).data('pin-image-id', pinImage.id);
+            $(pinImage.previewElement).children('input').val(pinImage.caption);
+            myDropzone.options.thumbnail.call(myDropzone, pinImage, pinImage.url);
+          });
+        }
+
+        // allow caption updates independently
+        $("input.caption").on("change", function(e) {
+          var pinImageId = $(this.parentElement).data('pin-image-id'),
+              input = $(this),
+              captionText = input.val();
+
+          $.ajax({
+            url: '/pin_images/' + pinImageId + '.json',
+            type: 'PUT',
+            data: {
+              id: pinImageId,
+              caption: captionText
+            },
+            success: function() {
+              input.css('border-color', 'green');
+              input.append('✔');
+            }
+          });
+        });
+        return pinImages;
+      });
+    }
   }
 });

@@ -29,30 +29,34 @@ class PinsController < ApplicationController
   # GET /pins/new
   # GET /pins/new.json
   def new
-    @pin = current_user.pins.new
+    @form = PinForm.new(current_user.pins.new)
+    @form.prepopulate!
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @pin }
+      format.json { render json: @form.model }
     end
   end
 
   # GET /pins/1/edit
   def edit
+    @form = PinForm.new(Pin.find(params[:id]))
   end
 
   # POST /pins
   # POST /pins.json
   def create
-    @pin = PinCreatorService.new(pin_params, current_user).create
+    @form = PinForm.new(current_user.pins.new)
 
     respond_to do |format|
+      if @form.validate(pin_params)
+        @form.save
+        @pin = @form.model
 
-      if @pin.save
         format.html { redirect_to @pin, notice: 'Pin was successfully created.' }
         format.json { render json: @pin, status: :created, location: @pin }
       else
-        format.html { render action: "new" }
-        format.json { render json: @pin.errors, status: :unprocessable_entity }
+        format.html { render action: 'new' }
+        format.json { render json: @form.errors.full_messages, status: :unprocessable_entity }
       end
     end
   end
@@ -99,7 +103,11 @@ class PinsController < ApplicationController
   end
 
   def pin_params
-    params.require(:pin).permit(:surgeon_id, :procedure_id, :cost, :revision, :details, :sensation, :satisfaction, :pin_image_ids)
+    pin_images = params.delete(:pin_images)
+    params[:pin][:pin_images] = pin_images.values unless pin_images.nil?
+    params.require(:pin).permit!
+    # params.require(:pin).permit(:surgeon_id, :procedure_id, :cost, :revision, :details, :sensation, :satisfaction,
+                                # pin_images: [:photo, :caption])
   end
 
   def pin_index_params

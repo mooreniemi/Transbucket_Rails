@@ -21,11 +21,11 @@
     <span class="input-group-addon">Sensation</span>
     <!-- note: needs to be text field for chrome focus to work with form validation -->
     <!-- see comments here: http://plugins.krajee.com/star-rating#options -->
-    <%= text_field(:pin, :sensation, {class: "form-control", required: false}) %>
+    <%= f.text_field :sensation, class: "form-control", required: false %>
   </div>
   <br>
   <div class="input-group padded_nicely">
     <span class="input-group-addon">Satisfaction</span>
-    <%= text_field(:pin, :satisfaction, {class: "form-control", required: false}) %>
+    <%= f.text_field :satisfaction, class: "form-control", required: false %>
   </div>
 </div>

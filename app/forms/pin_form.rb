@@ -28,7 +28,7 @@ class PinForm < Reform::Form
   end
 
   def prepopulate_pin_images!(options)
-    self.pin_images << PinImage.new if pin_images.size < 3
+    3.times { self.pin_images << PinImage.new }
   end
 
   def save

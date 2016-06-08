@@ -4,6 +4,7 @@ $(document).ready(function() {
     // dropzone setup
 
     var isEditing = path[0] !== "pins/new",
+        formSelector = ".form-inline",
         template = $('#preview-template').html(),
         queueCounter = -1;
 
@@ -37,7 +38,7 @@ $(document).ready(function() {
       }
     };
 
-    var myDropzone = new Dropzone(".form-inline", dropzoneOptions);
+    var myDropzone = new Dropzone(formSelector, dropzoneOptions);
 
     myDropzone.on("addedfile", function(file) {
       $(".dz-message:visible").hide();
@@ -70,7 +71,12 @@ $(document).ready(function() {
     });
 
     myDropzone.on("successmultiple", function(file, responseText) {
-      window.location.href = "/pins/" + responseText.id;
+      if (isEditing) {
+        var pinId = $(formSelector).data("pin-id");
+        window.location.href = "/pins/" + pinId;
+      } else {
+        window.location.href = "/pins/" + responseText.id;
+      }
     });
 
     myDropzone.on("errormultiple", function(file, errorMessage) {

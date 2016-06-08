@@ -3,22 +3,22 @@
   <div class="form-group col-md-6">
     <label class="control-label">Surgeon</label>
     <div id="surgeon_form" class="controls">
-      <% if f.object.surgeon.nil? %>
+      <% if f.object.surgeon_id.nil? %>
       <%= f.select :surgeon_id, options_from_collection_for_select(Surgeon.order('last_name ASC'), 'id', 'to_s', 911) %>
       <%= link_to fa_icon("plus-circle"), new_surgeon_path, remote: true, id: 'add_new_procedure' %>
       <% else %>
-      <%= f.select :surgeon_id, options_from_collection_for_select(Surgeon.order('last_name ASC'), 'id', 'to_s', @pin.surgeon.id) %>
+      <%= f.select :surgeon_id, options_from_collection_for_select(Surgeon.order('last_name ASC'), 'id', 'to_s', f.object.surgeon_id) %>
       <% end %>
     </div>
   </div>
   <div class="form-group col-md-6">
     <label class="control-label">Procedure</label>
     <div id="procedure_form" class="controls">
-      <% if f.object.procedure.nil? %>
+      <% if f.object.procedure_id.nil? %>
       <%= f.select :procedure_id, options_from_collection_for_select(Procedure.order('name ASC'), 'id', 'to_s') %>
       <%= link_to fa_icon("plus-circle"), new_procedure_path, remote: true, id: 'add_new_surgeon' %>
       <% else %>
-      <%= f.select :procedure_id, options_from_collection_for_select(Procedure.order('name ASC'), 'id', 'to_s', @pin.procedure.id) %>
+      <%= f.select :procedure_id, options_from_collection_for_select(Procedure.order('name ASC'), 'id', 'to_s', f.object.procedure_id) %>
       <% end %>
     </div>
   </div>

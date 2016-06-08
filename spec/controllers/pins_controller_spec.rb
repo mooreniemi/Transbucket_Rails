@@ -47,15 +47,21 @@ describe PinsController, :type => :controller do
       it 'returns a valid pin on create' do
         sign_in
 
-        attrs = attributes_for(:pin)
+        attrs = build(:pin, :with_surgeon_and_procedure).attributes
         image_attrs = attributes_for(:pin_image)
-        attrs.merge!(pin_images_attributes: {pin_image: image_attrs})
 
-        allow(PinCreatorService).to receive(:new).and_return(service = double('service'))
+        post(:create, {pin: attrs, pin_images: {"0" => image_attrs}})
+        expect(response).to redirect_to(pin_url(assigns(:pin)))
+      end
 
-        allow(service).to receive(:create).and_return(pin = create(:pin))
+      it "refuses to create an invalid pin" do
+        sign_in
 
-        post :create, pin: attrs
+        attrs = attributes_for(:pin, :invalid)
+        image_attrs = attributes_for(:pin_image)
+
+        post(:create, {pin: attrs, pin_images: {"0" => image_attrs}})
+        expect(assigns(:form).errors).not_to be_empty
       end
     end
   end

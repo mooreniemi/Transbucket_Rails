@@ -20,6 +20,10 @@ FactoryGirl.define do
       procedure
     end
 
+    trait :real_pin_images do
+      pin_images { build_list(:real_pin_image, 2) }
+    end
+
     trait :invalid do
       surgeon_id nil
       procedure_id nil

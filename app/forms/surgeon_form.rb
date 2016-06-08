@@ -1,5 +1,6 @@
 class SurgeonForm < Reform::Form
   property :first_name
+  validates :first_name, presence: true
   property :last_name
   property :address
   property :city

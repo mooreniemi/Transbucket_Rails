@@ -6,7 +6,8 @@ $(document).ready(function() {
     var isEditing = path[0] !== "pins/new",
         formSelector = ".form-inline",
         template = $('#preview-template').html(),
-        queueCounter = -1;
+        fileCounter = 0,
+        queueCounter = 0;
 
     Dropzone.autoDiscover = false;
     $("#submit-all").prop("disabled", true);
@@ -42,7 +43,8 @@ $(document).ready(function() {
 
     myDropzone.on("addedfile", function(file) {
       $(".dz-message:visible").hide();
-      $(".dz-preview:last-child").attr('id', "LM-" + file.lastModified);
+      file.index = fileCounter++;
+      $(".dz-preview:last-child").attr('id', "file-" + file.index);
       $('#submit-all').prop("disabled", false);
     });
 
@@ -61,9 +63,8 @@ $(document).ready(function() {
     });
 
     myDropzone.on("sending", function(file, xhr, formData) {
-      var captionEl = '#LM-' + file.lastModified + ' .caption';
-      queueCounter += 1;
-      formData.append('pin_images[' + queueCounter + ']caption', $(captionEl).val());
+      var captionEl = '#file-' + file.index + ' .caption';
+      formData.append('pin_images[' + (queueCounter++) + ']caption', $(captionEl).val());
     });
 
     myDropzone.on("sendingmultiple", function() {

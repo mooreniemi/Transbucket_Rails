@@ -1,5 +1,5 @@
 <!-- New edit & new form -->
-<%= form_for @form, html: {multipart: true, class: "form-inline"} do |pin_form| %>
+<%= form_for @form, html: {multipart: true, class: "form-inline", data: {"pin-id" => @form.try(:id)}} do |pin_form| %>
   <div class="row">
     <div class="top-block">
       <span class="h2"> <%= fa_icon "camera" %> Photos</span>

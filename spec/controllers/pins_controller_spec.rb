@@ -45,8 +45,6 @@ describe PinsController, :type => :controller do
 
     describe 'POST #create' do
       it 'returns a valid pin on create' do
-        sign_in
-
         attrs = build(:pin, :with_surgeon_and_procedure).attributes
         image_attrs = attributes_for(:pin_image)
 
@@ -55,13 +53,35 @@ describe PinsController, :type => :controller do
       end
 
       it "refuses to create an invalid pin" do
-        sign_in
-
         attrs = attributes_for(:pin, :invalid)
         image_attrs = attributes_for(:pin_image)
 
         post(:create, {pin: attrs, pin_images: {"0" => image_attrs}})
         expect(assigns(:form).errors).not_to be_empty
+      end
+    end
+
+    describe 'PUT #update' do
+      def clear_attrs(attrs)
+        attrs.reject do |k,v|
+          case k
+          when 'id', 'updated_at', 'created_at'; true
+          else false
+          end
+        end
+      end
+
+      it 'updates an existing pin' do
+        pin = create(:pin, :with_surgeon_and_procedure)
+
+        updated_attrs = build(:pin, :with_surgeon_and_procedure).attributes
+        updated_attrs = clear_attrs(updated_attrs)
+        put :update, :id => pin.id, :pin => updated_attrs
+
+        pin.reload
+        expect(response).to redirect_to(pin_url(assigns(:pin)))
+        pin_attrs = clear_attrs(pin.attributes)
+        expect(pin_attrs).to eq(updated_attrs)
       end
     end
   end

@@ -51,5 +51,21 @@ describe PinForm do
       expect(Surgeon.where(email: pin.surgeon.email)).to exist
       expect(Procedure.where(name: pin.procedure.name)).to exist
     end
+
+    context "when pin already exists" do
+      let(:pin) { create(:pin, :with_surgeon_and_procedure, :real_pin_images) }
+      let(:form) { PinForm.new(pin) }
+
+      it "should delete nested models when instructed" do
+        id_to_delete = pin.pin_images[0].id
+        attrs = pin.attributes
+        attrs["pin_images"] = pin.pin_images.map(&:attributes)
+        attrs["pin_images"][0]["_destroy"] = "1"
+        expect(form.validate(attrs)).to be true
+        expect(form.errors.messages).to be_empty
+        form.save
+        expect(PinImage.where(id: id_to_delete)).not_to exist
+      end
+    end
   end
 end

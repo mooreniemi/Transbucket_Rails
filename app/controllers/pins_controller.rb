@@ -40,6 +40,7 @@ class PinsController < ApplicationController
   # GET /pins/1/edit
   def edit
     @form = PinForm.new(Pin.find(params[:id]))
+    @form.prepopulate!
   end
 
   # POST /pins

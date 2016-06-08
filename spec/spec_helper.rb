@@ -50,6 +50,8 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
+  config.example_status_persistence_file_path = File.expand_path("../../spec/examples.txt", __FILE__)
+
   # from previous rails build
   config.include FactoryGirl::Syntax::Methods
   config.include RSpec::Benchmark::Matchers

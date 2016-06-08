@@ -20,15 +20,27 @@ class PinForm < Reform::Form
   property :state
 
   collection :pin_images,
-             populate_if_empty: PinImage,
+             populator: :populate_pin_images!,
              prepopulator: :prepopulate_pin_images! do
     property :pin_id
     property :photo
     property :caption
+    property :_destroy, virtual: true, writeable: false
   end
 
   def prepopulate_pin_images!(options)
     3.times { self.pin_images << PinImage.new }
+  end
+
+  def populate_pin_images!(fragment:, **)
+    item = pin_images.find { |image| image.id == fragment["id"].to_i }
+
+    if fragment["_destroy"] == "1"
+      pin_images.delete(item)
+      return skip!
+    end
+
+    item ? item : pin_images.append(PinImage.new)
   end
 
   def save

@@ -14,7 +14,7 @@ module CapybaraHelpers
   end
 
   def add_image(caption = nil, index = 0)
-    attach_file("pin_pin_images_attributes_#{index}_photo", Rails.root.join("spec", "fixtures", "cat.jpg"), visible: false)
+    attach_file("pin_pin_images_attributes_#{index}_photo", Rails.root.join("spec", "fixtures", "cat.jpg"))
     fill_in "pin_pin_images_attributes_#{index}_caption", :with => caption unless caption.nil?
   end
 

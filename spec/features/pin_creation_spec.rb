@@ -2,8 +2,10 @@ require 'rails_helper'
 require 'faker'
 
 describe "pin creation" do
+  include CapybaraHelpers
+
   let(:user) { create(:user, :with_confirmation) }
-  let(:caption) { "je suis le chat" }
+  let(:new_images) { build_list(:pin_image, 3) }
 
   before :each do
     login_as(user, :scope => :user)
@@ -15,16 +17,11 @@ describe "pin creation" do
 
   def pin_create(&block)
     visit '/pins/new'
-    attach_file("pin_pin_images_attributes_0_photo", Rails.root.join("spec", "fixtures", "cat.jpg"), visible: false)
-    fill_in "pin_pin_images_attributes_0_caption", :with => caption
-    pin_data = { :cost => rand(999),
-                 :experience => Faker::Lorem.sentences(3).join(" ")
-               }
 
-    within("#new_pin") do
-      fill_in "Cost", :with => pin_data[:cost]
-      fill_in "pin_details", :with => pin_data[:experience]
-    end
+    pin_data = gen_pin_data
+
+    add_images(new_images)
+    enter_details(pin_data)
 
     click_button "Submit Now"
     block.call(pin_data)
@@ -33,31 +30,13 @@ describe "pin creation" do
   def pin_create_js(&block)
     visit '/pins/new'
 
-    find(".dz-hidden-input", visible: false)
-    page.execute_script("$('.dz-hidden-input').attr('id', 'dz-file-input')")
+    pin_data = gen_pin_data
 
-    attach_file("dz-file-input", Rails.root.join("spec", "fixtures", "cat.jpg"), visible: false)
-
-    cat_img = find('.dz-preview img[alt]:not([alt=""])')
-    expect(cat_img[:alt]).to eql("cat.jpg")
-
-    find("#dropper").fill_in("Caption", :with => caption)
+    add_images(new_images, js: true)
 
     expect(page).to have_no_selector("#submit-all[disabled]")
 
-    pin_data = { :cost => rand(999),
-                 :experience => Faker::Lorem.sentences(3).join(" ")
-               }
-
-    within("#new_pin") do
-      fill_in "Cost", :with => pin_data[:cost]
-    end
-
-    page.execute_script("tinyMCE.activeEditor.setContent('#{pin_data[:experience]}')")
-
-    within_frame("pin_details_ifr") do
-      expect(page).to have_content(pin_data[:experience])
-    end
+    enter_details(pin_data, js: true)
 
     click_button "Submit Now"
     block.call(pin_data)
@@ -80,13 +59,8 @@ describe "pin creation" do
         self.send(pin_creator) do |pin_data|
           expect(page).to have_content("Please respect pronouns")
 
-          thumbnail = find(".thumbnail")
-          expect(thumbnail.find(".caption").text).to eql(caption)
-
-          expect(find('dl')).to have_content(pin_data[:cost])
-
-          experience_section = find("#details")
-          expect(experience_section).to have_content(pin_data[:experience])
+          check_pin_data(pin_data)
+          check_photos(new_images)
         end
       end
     end

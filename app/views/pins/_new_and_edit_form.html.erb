@@ -1,30 +1,33 @@
 <!-- New edit & new form -->
-<div class="row">
-  <div class="top-block">
-    <%= fa_icon "camera" %>
-  </div>
-  <div id="pin_images">
-    <div class="submission_well">
-      <%= render partial: 'pin_images/form' %>
-    </div>
-  </div>
-</div>
-<%= form_for @pin, html: {multipart: true, class: "form-inline"} do |pin_form| %>
-  <%= render partial: 'errors', locals: {pin: @pin} if @pin.errors.any? %>
-  <%= pin_form.hidden_field :pin_image_ids %>
+<%= form_for @form, html: {multipart: true, class: "form-inline"} do |pin_form| %>
   <div class="row">
     <div class="top-block">
-      <%= fa_icon "pencil" %>
+      <span class="h2"> <%= fa_icon "camera" %> Photos</span>
+    </div>
+    <div id="pin_images">
+      <div class="submission_well">
+        <%= render partial: 'pin_images/form', locals: {f: pin_form} %>
+      </div>
+    </div>
+  </div>
+  <%= render partial: 'errors', locals: {form: @form} if @form.errors.any? %>
+  <div class="row">
+    <div class="top-block">
+      <span class="h2"> <%= fa_icon "pencil" %> Details</span>
+    </div>
+  </div>
+  <div class="row submission_well">
+    <div class="col-md-6">
+      <%= render partial: 'surgeon_and_procedure', locals: {f: pin_form} %>
+      <%= render partial: 'more_options', locals: {f: pin_form} %>
+    </div>
+    <div class="col-md-6">
+      <%= render partial: 'details', locals: {f: pin_form} %>
     </div>
   </div>
   <div class="row">
-    <div class="submission_well col-md-6">
-      <%= render partial: 'surgeon_and_procedure', locals: {f: pin_form} %>
-      <%= render partial: 'more_options', locals: {f: pin_form} %>
-      <%= pin_form.submit "Submit Now", class: 'btn btn-success btn-block' %>
-    </div>
-    <div class="submission_well col-md-6">
-      <%= render partial: 'details', locals: {f: pin_form} %>
+    <div class="submission_well col-md-12">
+      <%= pin_form.submit "Submit Now", class: 'btn btn-success btn-block', id: "submit-all" %>
     </div>
   </div>
 <% end %>

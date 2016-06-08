@@ -3,12 +3,12 @@ module CapybaraHelpers
     visit(path) unless current_path == path
   end
 
-  def add_images(images, js: false)
+  def add_images(images, js: false, offset: 0)
     images.each_with_index do |image, index|
       if js
-        add_image_js(image.caption, index)
+        add_image_js(image.caption, index + offset)
       else
-        add_image(image.caption, index)
+        add_image(image.caption, index + offset)
       end
     end
   end

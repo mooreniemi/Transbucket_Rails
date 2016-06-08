@@ -20,8 +20,12 @@ FactoryGirl.define do
       procedure
     end
 
-    trait :real_pin_images do
+    trait :real_pin_image_attrs do
       pin_images { build_list(:real_pin_image, 2) }
+    end
+
+    trait :real_pin_images do
+      pin_images { create_list(:real_pin_image, 2) }
     end
 
     trait :invalid do

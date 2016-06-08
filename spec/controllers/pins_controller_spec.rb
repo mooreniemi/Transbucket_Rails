@@ -72,7 +72,7 @@ describe PinsController, :type => :controller do
       end
 
       it 'updates an existing pin' do
-        pin = create(:pin, :with_surgeon_and_procedure)
+        pin = create(:pin, :with_surgeon_and_procedure, :real_pin_images)
 
         updated_attrs = build(:pin, :with_surgeon_and_procedure).attributes
         updated_attrs = clear_attrs(updated_attrs)

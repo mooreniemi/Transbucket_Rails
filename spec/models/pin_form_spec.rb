@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe PinForm do
-  let(:pin) { build(:pin, :with_surgeon_and_procedure, :real_pin_images) }
+  let(:pin) { build(:pin, :with_surgeon_and_procedure, :real_pin_image_attrs) }
   let(:form) { PinForm.new(pin) }
 
   it "should have all the attributes of a pin" do

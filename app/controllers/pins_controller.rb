@@ -64,13 +64,18 @@ class PinsController < ApplicationController
   # PUT /pins/1
   # PUT /pins/1.json
   def update
+    @form = PinForm.new(Pin.find(params[:id]))
+
     respond_to do |format|
-      if PinUpdaterService.new(params[:pin].merge({pin_id: params[:id]}), current_user).update
+      if @form.validate(pin_params)
+        @form.save
+        @pin = @form.model
+
         format.html { redirect_to @pin, notice: 'Pin was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @pin.errors, status: :unprocessable_entity }
+        format.json { render json: @form.errors.full_messages, status: :unprocessable_entity }
       end
     end
   end

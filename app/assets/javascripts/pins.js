@@ -70,8 +70,16 @@ $(document).ready(function() {
       formData.append('pin_images[' + (queueCounter++) + ']caption', $(captionEl).val());
     });
 
-    myDropzone.on("sendingmultiple", function() {
+    myDropzone.on("sendingmultiple", function(files, xhr, formData) {
       tinyMCE.triggerSave();
+
+      var existingIds = $("[data-pin-image-id]:not([data-pin-image-id=''])").map(function() {
+        return $(this).data('pin-image-id');
+      }).get();
+
+      existingIds.forEach(function(d,i) {
+        formData.append("pin_images[" + (i+files.length) + "][id]", d);
+      });
     });
 
     myDropzone.on("successmultiple", function(file, responseText) {

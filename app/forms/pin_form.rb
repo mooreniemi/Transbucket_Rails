@@ -1,6 +1,8 @@
 require 'reform'
 
 class PinForm < Reform::Form
+  feature Sync::SkipUnchanged
+
   property :user_id
   validates :user_id, presence: true
 
@@ -37,6 +39,8 @@ class PinForm < Reform::Form
 
     if fragment["_destroy"] == "1"
       pin_images.delete(item)
+      # sync may ignore if unchanged, so we delete it early
+      PinImage.destroy(item.id)
       return skip!
     end
 

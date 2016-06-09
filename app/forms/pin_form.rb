@@ -39,7 +39,7 @@ class PinForm < Reform::Form
 
     if fragment["_destroy"] == "1"
       pin_images.delete(item)
-      # sync may ignore if unchanged, so we delete it early
+      # sync may ignore this if image is otherwise unchanged, so we delete it early
       PinImage.destroy(item.id)
       return skip!
     end

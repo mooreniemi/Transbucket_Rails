@@ -52,8 +52,8 @@ describe PinForm do
     end
 
     context "when pin already exists" do
-      let(:pin) { create(:pin, :with_surgeon_and_procedure, :real_pin_images) }
-      let(:form) { PinForm.new(pin) }
+      let!(:pin) { create(:pin, :with_surgeon_and_procedure, :real_pin_images) }
+      let!(:form) { PinForm.new(pin) }
 
       shared_examples "delete nested" do
         it "deletes a nested model" do
@@ -71,10 +71,24 @@ describe PinForm do
       include_examples "delete nested"
 
       context "with broken images" do
-        let(:pin) { create(:pin, :with_surgeon_and_procedure, :broken_pin_images) }
-        let(:form) { PinForm.new(pin) }
+        let!(:pin) { create(:pin, :with_surgeon_and_procedure, :broken_pin_images) }
+        let!(:form) { PinForm.new(pin) }
 
         include_examples "delete nested"
+
+        it "deletes and changes nested models" do
+          id_to_delete = pin.pin_images[0].id
+          id_to_change = pin.pin_images[1].id
+          attrs = pin.attributes
+          attrs["pin_images"] = pin.pin_images.map(&:attributes)
+          attrs["pin_images"][0]["_destroy"] = "1"
+          attrs["pin_images"][1]["caption"] = "new caption"
+          expect(form.validate(attrs)).to be true
+          expect(form.errors.messages).to be_empty
+          form.save
+          expect(PinImage.where(id: id_to_delete)).not_to exist
+          expect(PinImage.find(id_to_change).caption).to eq("new caption")
+        end
       end
     end
   end

@@ -55,15 +55,26 @@ describe PinForm do
       let(:pin) { create(:pin, :with_surgeon_and_procedure, :real_pin_images) }
       let(:form) { PinForm.new(pin) }
 
-      it "should delete nested models when instructed" do
-        id_to_delete = pin.pin_images[0].id
-        attrs = pin.attributes
-        attrs["pin_images"] = pin.pin_images.map(&:attributes)
-        attrs["pin_images"][0]["_destroy"] = "1"
-        expect(form.validate(attrs)).to be true
-        expect(form.errors.messages).to be_empty
-        form.save
-        expect(PinImage.where(id: id_to_delete)).not_to exist
+      shared_examples "delete nested" do
+        it "deletes a nested model" do
+          id_to_delete = pin.pin_images[0].id
+          attrs = pin.attributes
+          attrs["pin_images"] = pin.pin_images.map(&:attributes)
+          attrs["pin_images"][0]["_destroy"] = "1"
+          expect(form.validate(attrs)).to be true
+          expect(form.errors.messages).to be_empty
+          form.save
+          expect(PinImage.where(id: id_to_delete)).not_to exist
+        end
+      end
+
+      include_examples "delete nested"
+
+      context "with broken images" do
+        let(:pin) { create(:pin, :with_surgeon_and_procedure, :broken_pin_images) }
+        let(:form) { PinForm.new(pin) }
+
+        include_examples "delete nested"
       end
     end
   end

@@ -4,8 +4,8 @@ require "faker"
 describe "pin updating" do
   include CapybaraHelpers
 
-  let(:user) { create(:user, :with_confirmation) }
-  let(:pin) { create(:pin, :with_surgeon_and_procedure, :real_pin_images) }
+  let!(:user) { create(:user, :with_confirmation) }
+  let!(:pin) { create(:pin, :with_surgeon_and_procedure, :real_pin_images, user: user) }
   let(:pin_data) { { :cost => rand(999),
                      :experience => Faker::Lorem.sentences(3).join(" ")
                    } }
@@ -13,8 +13,6 @@ describe "pin updating" do
 
   before :each do
     login_as(user, :scope => :user)
-
-    ensure_on "/pins/#{pin.id}/edit"
   end
 
   after :each do
@@ -23,6 +21,7 @@ describe "pin updating" do
 
   shared_examples "pin updating" do
     it "updates the pin with one less photo and new info" do
+      ensure_on "/pins/#{pin.id}/edit"
       self.send(:updater)
 
       click_button "Submit Now"
@@ -33,6 +32,7 @@ describe "pin updating" do
     end
 
     it "updates the pin with new info and photos" do
+      ensure_on "/pins/#{pin.id}/edit"
       self.send(:updater)
       self.send(:updater_photos)
 
@@ -59,6 +59,12 @@ describe "pin updating" do
     end
 
     include_examples "pin updating"
+
+    context "with broken pin images" do
+      let!(:pin) { create(:pin, :with_surgeon_and_procedure, :broken_pin_images) }
+
+      include_examples "pin updating"
+    end
   end
 
   context "with js", :js => true do
@@ -77,5 +83,11 @@ describe "pin updating" do
     end
 
     include_examples "pin updating"
+
+    context "with broken pin images" do
+      let!(:pin) { create(:pin, :with_surgeon_and_procedure, :broken_pin_images) }
+
+      include_examples "pin updating"
+    end
   end
 end

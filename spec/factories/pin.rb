@@ -28,6 +28,10 @@ FactoryGirl.define do
       pin_images { create_list(:real_pin_image, 2) }
     end
 
+    trait :broken_pin_images do
+      pin_images { create_list(:pin_image, 2) }
+    end
+
     trait :invalid do
       surgeon_id nil
       procedure_id nil

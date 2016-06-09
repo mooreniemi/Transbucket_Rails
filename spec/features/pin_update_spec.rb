@@ -4,8 +4,8 @@ require "faker"
 describe "pin updating" do
   include CapybaraHelpers
 
-  let!(:user) { create(:user, :with_confirmation) }
-  let!(:pin) { create(:pin, :with_surgeon_and_procedure, :real_pin_images, user: user) }
+  let(:user) { create(:user, :with_confirmation) }
+  let(:pin) { create(:pin, :with_surgeon_and_procedure, :real_pin_images, user: user) }
   let(:pin_data) { { :cost => rand(999),
                      :experience => Faker::Lorem.sentences(3).join(" ")
                    } }
@@ -61,7 +61,7 @@ describe "pin updating" do
     include_examples "pin updating"
 
     context "with broken pin images" do
-      let!(:pin) { create(:pin, :with_surgeon_and_procedure, :broken_pin_images) }
+      let(:pin) { create(:pin, :with_surgeon_and_procedure, :broken_pin_images) }
 
       include_examples "pin updating"
     end
@@ -85,7 +85,7 @@ describe "pin updating" do
     include_examples "pin updating"
 
     context "with broken pin images" do
-      let!(:pin) { create(:pin, :with_surgeon_and_procedure, :broken_pin_images) }
+      let(:pin) { create(:pin, :with_surgeon_and_procedure, :broken_pin_images) }
 
       include_examples "pin updating"
     end

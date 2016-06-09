@@ -40,7 +40,6 @@ describe PinForm do
 
   context "with nested models" do
     it "should create the pin and its nested models when saved" do
-      allow_any_instance_of(Paperclip::Storage::Filesystem).to receive(:copy_to_local_file).and_return(nil)
       form.save
       saved_pin = form.model
       pin.pin_images.each do |pin_image|

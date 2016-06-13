@@ -5,10 +5,12 @@
     <div id="surgeon_form" class="controls">
       <% if f.object.surgeon_id.nil? %>
       <%= f.select :surgeon_id, options_from_collection_for_select(Surgeon.order('last_name ASC'), 'id', 'to_s', 911) %>
-      <%= link_to fa_icon("plus-circle"), new_surgeon_path, remote: true, id: 'add_new_surgeon' %>
       <% else %>
       <%= f.select :surgeon_id, options_from_collection_for_select(Surgeon.order('last_name ASC'), 'id', 'to_s', f.object.surgeon_id) %>
       <% end %>
+
+      <a id="add_new_surgeon" href="#" class="add-button"><%= fa_icon("plus-circle") %></a>
+      <%= render partial: 'surgeons/surgeon', locals: {f: f} %>
     </div>
   </div>
   <div class="form-group col-md-6">
@@ -16,10 +18,11 @@
     <div id="procedure_form" class="controls">
       <% if f.object.procedure_id.nil? %>
       <%= f.select :procedure_id, options_from_collection_for_select(Procedure.order('name ASC'), 'id', 'to_s') %>
-      <%= link_to fa_icon("plus-circle"), new_procedure_path, remote: true, id: 'add_new_procedure' %>
       <% else %>
       <%= f.select :procedure_id, options_from_collection_for_select(Procedure.order('name ASC'), 'id', 'to_s', f.object.procedure_id) %>
       <% end %>
+      <a id="add_new_procedure" href="#" class="add-button"><%= fa_icon("plus-circle") %></a>
+      <%= render partial: 'procedures/procedure', locals: {f: f} %>
     </div>
   </div>
 </div>

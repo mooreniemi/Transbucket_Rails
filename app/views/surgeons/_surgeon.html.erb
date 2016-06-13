@@ -1,12 +1,11 @@
-<div id="surgeon_container">
+<div id="surgeon_container" class="add-form hide">
   <div class="panel panel-default">
     <div class="panel-heading">
       <%= link_to fa_icon("times"), '#', class: 'cancel pull-right' %>
       <h3 class="panel-title">Add a new surgeon</h3>
     </div>
     <div class="panel-body">
-      <%= form_for(@surgeon, :remote => true,
-      :authenticity_token => true) do |surgeon_form| %>
+      <%= f.fields_for :surgeon do |surgeon_form| %>
       <div class="input-group padded_nicely">
         <%= surgeon_form.text_field :last_name, placeholder: "Surgeon's last name" %>
       </div>
@@ -17,9 +16,6 @@
         <%= surgeon_form.text_field :url, placeholder: "Surgeon's URL" %>
       </div>
       <% end %>
-      <div class="btn-group btn-group-justified">
-        <%= link_to "Add surgeon", '#', :id => 'new_surgeon_submit', :class => 'btn btn-sm btn-default' %>
-      </div>
     </div>
   </div>
 </div>

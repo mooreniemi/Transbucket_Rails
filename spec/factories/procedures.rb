@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :procedure do
     name { Faker::Lorem.words(2).join(" ") }
-    gender { Faker::Lorem.word }
-    body_type { Faker::Lorem.word }
+    gender { ["MTF", "FTM"].sample }
+    body_type { ["Top", "Bottom", "Face", "Other"].sample }
     avg_sensation 3
     avg_satisfaction 3
   end

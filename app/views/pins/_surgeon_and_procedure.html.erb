@@ -16,7 +16,7 @@
     <div id="procedure_form" class="controls">
       <% if f.object.procedure_id.nil? %>
       <%= f.select :procedure_id, options_from_collection_for_select(Procedure.order('name ASC'), 'id', 'to_s') %>
-      <%= link_to fa_icon("plus-circle"), new_procedure_path, remote: true, id: 'add_new_surgeon' %>
+      <%= link_to fa_icon("plus-circle"), new_procedure_path, remote: true, id: 'add_new_procedure' %>
       <% else %>
       <%= f.select :procedure_id, options_from_collection_for_select(Procedure.order('name ASC'), 'id', 'to_s', f.object.procedure_id) %>
       <% end %>

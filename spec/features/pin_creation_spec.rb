@@ -19,6 +19,8 @@ describe "pin creation" do
 
   shared_examples "the pin creation process" do |js: false|
     let(:js) { js }
+    let(:new_surgeon) { build(:surgeon) }
+    let(:new_procedure) { build(:procedure) }
 
     def pin_create
       visit '/pins/new'
@@ -38,21 +40,6 @@ describe "pin creation" do
         expect(page).to have_content("Surgeon can't be blank")
         expect(page).to have_content("Procedure can't be blank")
       end
-
-      it "creates a new pin if surgeon and procedure are added" do
-        self.send(:pin_create)
-
-        surgeon = build(:surgeon)
-        procedure = build(:procedure)
-        add_surgeon(surgeon, js: js)
-        add_procedure(procedure, js: js)
-
-        click_button "Submit Now"
-
-        check_surgeon_and_procedure(surgeon, procedure)
-        check_pin_data(pin_data)
-        check_photos(new_images)
-      end
     end
 
     context "with surgeon and procedure initialized" do
@@ -66,6 +53,19 @@ describe "pin creation" do
 
         check_surgeon_and_procedure(surgeon, procedure)
         expect(page).to have_content("Please respect pronouns")
+        check_pin_data(pin_data)
+        check_photos(new_images)
+      end
+
+      it "creates a pin, adding a new surgeon and procedure" do
+        self.send(:pin_create)
+        add_surgeon(new_surgeon, js: js)
+        add_procedure(new_procedure, js: js)
+
+        click_button "Submit Now"
+
+        expect(page).to have_content("Please respect pronouns")
+        check_surgeon_and_procedure(new_surgeon, new_procedure)
         check_pin_data(pin_data)
         check_photos(new_images)
       end

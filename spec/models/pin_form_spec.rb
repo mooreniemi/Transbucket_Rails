@@ -18,16 +18,16 @@ describe PinForm do
 
     it "should require a surgeon" do
       form.validate({})
-      expect(form.errors[:surgeon_id]).to include("can't be blank")
+      expect(form.errors[:surgeon]).to include("can't be blank")
     end
 
     it "should require a procedure" do
       form.validate({})
-      expect(form.errors[:procedure_id]).to include("can't be blank")
+      expect(form.errors[:procedure]).to include("can't be blank")
     end
 
     it "should be able to validate a real pin" do
-      form.validate(pin.attributes)
+      form.validate(pin.attributes.merge({"surgeon" => pin.surgeon.attributes, "procedure" => pin.procedure.attributes}))
       expect(form.errors.messages).to be_empty
     end
   end

@@ -52,31 +52,35 @@ module CapybaraHelpers
     end
   end
 
+  def select_in_chosen(chosen_id, item)
+    page.execute_script("$('#{chosen_id}').trigger('chosen:open')")
+    within(chosen_id + "_chosen") do
+      field_selector = ".chosen-search input[type='text']"
+      find(field_selector).native.send_keys("#{item}\n")
+    end
+  end
+
   def add_surgeon(surgeon, js: false)
     if js
       find("#add_new_surgeon").click
-      within("#new_surgeon") do
-        fill_in "Surgeon's last name", :with => surgeon.last_name
-        fill_in "Surgeon's first name", :with => surgeon.first_name
-        fill_in "Surgeon's URL", :with => surgeon.url
-      end
-      click_link "Add surgeon"
-    else
-      pending "add surgeon without js"
+    end
+
+    within("#surgeon_container") do
+      fill_in "Surgeon's last name", :with => surgeon.last_name
+      fill_in "Surgeon's first name", :with => surgeon.first_name
+      fill_in "Surgeon's URL", :with => surgeon.url
     end
   end
 
   def add_procedure(procedure, js: false)
     if js
       find("#add_new_procedure").click
-      within("#new_procedure") do
-        fill_in "Name of procedure", :with => procedure.name
-        select procedure.body_type, :from => "procedure_body_type"
-        select procedure.gender, :from => "procedure_gender"
-      end
-      click_link "Add procedure"
-    else
-      pending "add procedure without js"
+    end
+
+    within("#procedure_container") do
+      fill_in "Name of procedure", :with => procedure.name
+      select procedure.body_type, :from => "pin_procedure_body_type"
+      select procedure.gender, :from => "pin_procedure_gender"
     end
   end
 

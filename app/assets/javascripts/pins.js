@@ -9,6 +9,18 @@ $(document).ready(function() {
         fileCounter = 0,
         queueCounter = 0;
 
+    $(".add-button").click(function() {
+      var controls = $(this).parents('.controls'),
+          add_form = controls.find(".add-form.hide");
+      add_form.toggleClass('hide');
+    });
+
+    $(".controls .cancel").click(function() {
+      var add_form = $(this).parents('.add-form');
+      add_form.find("input[type=text]").val("");
+      add_form.addClass('hide');
+    });
+
     Dropzone.autoDiscover = false;
 
     if (!isEditing) $("#submit-all").prop("disabled", true);

@@ -52,6 +52,37 @@ module CapybaraHelpers
     end
   end
 
+  def add_surgeon(surgeon, js: false)
+    if js
+      find("#add_new_surgeon").click
+      within("#new_surgeon") do
+        fill_in "Surgeon's last name", :with => surgeon.last_name
+        fill_in "Surgeon's first name", :with => surgeon.first_name
+        fill_in "Surgeon's URL", :with => surgeon.url
+      end
+      click_link "Add surgeon"
+    else
+      pending "add surgeon without js"
+    end
+  end
+
+  def add_procedure(procedure, js: false)
+    if js
+      find("#add_new_procedure").click
+      within("#new_procedure") do
+        fill_in "Name of procedure", :with => procedure.name
+        select procedure.body_type, :from => "procedure_body_type"
+        select procedure.gender, :from => "procedure_gender"
+      end
+      click_link "Add procedure"
+    else
+      pending "add procedure without js"
+    end
+  end
+
+  def check_surgeon_and_procedure(surgeon, procedure)
+  end
+
   def check_pin_data(pin_data)
     expect(find('dl')).to have_content(pin_data[:cost])
 

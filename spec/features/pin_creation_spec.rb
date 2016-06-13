@@ -6,6 +6,8 @@ describe "pin creation" do
 
   let(:user) { create(:user, :with_confirmation) }
   let(:new_images) { build_list(:pin_image, 3) }
+  let(:pin_data) { gen_pin_data }
+
 
   before :each do
     login_as(user, :scope => :user)
@@ -15,62 +17,66 @@ describe "pin creation" do
     Warden.test_reset!
   end
 
-  def pin_create(&block)
-    visit '/pins/new'
+  shared_examples "the pin creation process" do |js: false|
+    let(:js) { js }
 
-    pin_data = gen_pin_data
+    def pin_create
+      visit '/pins/new'
 
-    add_images(new_images)
-    enter_details(pin_data)
+      add_images(new_images, js: js)
+      enter_details(pin_data, js: js)
 
-    click_button "Submit Now"
-    block.call(pin_data)
-  end
+      expect(page).to have_no_selector("#submit-all[disabled]") if js
+    end
 
-  def pin_create_js(&block)
-    visit '/pins/new'
+    context "with no surgeons or procedures defined" do
+      it "fails to create a new pin, displaying errors" do
+        self.send(:pin_create)
 
-    pin_data = gen_pin_data
+        click_button "Submit Now"
 
-    add_images(new_images, js: true)
+        expect(page).to have_content("Surgeon can't be blank")
+        expect(page).to have_content("Procedure can't be blank")
+      end
 
-    expect(page).to have_no_selector("#submit-all[disabled]")
+      it "creates a new pin if surgeon and procedure are added" do
+        self.send(:pin_create)
 
-    enter_details(pin_data, js: true)
+        surgeon = build(:surgeon)
+        procedure = build(:procedure)
+        add_surgeon(surgeon, js: js)
+        add_procedure(procedure, js: js)
 
-    click_button "Submit Now"
-    block.call(pin_data)
-  end
+        click_button "Submit Now"
 
-  shared_examples "the pin creation process" do |pin_creator|
-    context "with no surgeons or procedures" do
-      it "should fail to create a new pin, displaying errors" do
-        self.send(pin_creator) do |pin_data|
-          expect(page).to have_content("Surgeon can't be blank")
-          expect(page).to have_content("Procedure can't be blank")
-        end
+        check_surgeon_and_procedure(surgeon, procedure)
+        check_pin_data(pin_data)
+        check_photos(new_images)
       end
     end
+
     context "with surgeon and procedure initialized" do
       let!(:surgeon) { create(:surgeon) }
       let!(:procedure) { create(:procedure) }
 
-      it "should create a new pin with data and images" do
-        self.send(pin_creator) do |pin_data|
-          expect(page).to have_content("Please respect pronouns")
+      it "creates a new pin with data and images" do
+        self.send(:pin_create)
 
-          check_pin_data(pin_data)
-          check_photos(new_images)
-        end
+        click_button "Submit Now"
+
+        check_surgeon_and_procedure(surgeon, procedure)
+        expect(page).to have_content("Please respect pronouns")
+        check_pin_data(pin_data)
+        check_photos(new_images)
       end
     end
   end
 
   context "with no js" do
-    include_examples "the pin creation process", :pin_create
+    include_examples "the pin creation process", js: false
   end
 
   context "with js", :js => true do
-    include_examples "the pin creation process", :pin_create_js
+    include_examples "the pin creation process", js: true
   end
 end

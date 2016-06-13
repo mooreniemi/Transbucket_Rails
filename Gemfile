@@ -86,6 +86,7 @@ group :development, :test do
   gem 'stackprof'
   gem 'ruby-prof'
 	gem 'rack-mini-profiler'
+  # gem 'flamegraph' # for rack-mini-profiler
   gem 'rspec-benchmark'
 	gem 'bullet'
 	gem 'binding_of_caller'

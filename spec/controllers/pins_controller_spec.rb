@@ -45,7 +45,9 @@ describe PinsController, :type => :controller do
 
     describe 'POST #create' do
       it 'returns a valid pin on create' do
-        attrs = build(:pin, :with_surgeon_and_procedure).attributes
+        surgeon = attributes_for(:surgeon)
+        procedure = attributes_for(:procedure)
+        attrs = attributes_for(:pin).merge({surgeon: surgeon, procedure: procedure})
         image_attrs = attributes_for(:pin_image)
 
         post(:create, {pin: attrs, pin_images: {"0" => image_attrs}})
@@ -65,7 +67,8 @@ describe PinsController, :type => :controller do
       def clear_attrs(attrs)
         attrs.reject do |k,v|
           case k
-          when 'id', 'updated_at', 'created_at'; true
+          when 'id', 'updated_at', 'created_at',
+               'procedure', 'procedure_id', 'surgeon', 'surgeon_id'; true
           else false
           end
         end
@@ -73,15 +76,26 @@ describe PinsController, :type => :controller do
 
       it 'updates an existing pin' do
         pin = create(:pin, :with_surgeon_and_procedure, :real_pin_images)
+        old_surgeon_id = pin.surgeon.id
+        old_procedure_id = pin.procedure.id
 
-        updated_attrs = build(:pin, :with_surgeon_and_procedure).attributes
-        updated_attrs = clear_attrs(updated_attrs)
+        surgeon = attributes_for(:surgeon)
+        procedure = attributes_for(:procedure)
+        updated_attrs = build(:pin).attributes.merge({"surgeon" => surgeon, "procedure" => procedure})
+
         put :update, :id => pin.id, :pin => updated_attrs
 
         pin.reload
         expect(response).to redirect_to(pin_url(assigns(:pin)))
+
         pin_attrs = clear_attrs(pin.attributes)
+        updated_attrs = clear_attrs(updated_attrs)
+
         expect(pin_attrs).to eq(updated_attrs)
+        expect(pin.surgeon.id).to_not eq(old_surgeon_id)
+        expect(pin.procedure.id).to_not eq(old_procedure_id)
+        expect(pin.surgeon.url).to eq(surgeon[:url])
+        expect(pin.procedure.name).to eq(procedure[:name])
       end
     end
   end

@@ -5,7 +5,7 @@
     <div id="surgeon_form" class="controls">
       <% if f.object.surgeon_id.nil? %>
       <%= f.select :surgeon_id, options_from_collection_for_select(Surgeon.order('last_name ASC'), 'id', 'to_s', 911) %>
-      <%= link_to fa_icon("plus-circle"), new_surgeon_path, remote: true, id: 'add_new_procedure' %>
+      <%= link_to fa_icon("plus-circle"), new_surgeon_path, remote: true, id: 'add_new_surgeon' %>
       <% else %>
       <%= f.select :surgeon_id, options_from_collection_for_select(Surgeon.order('last_name ASC'), 'id', 'to_s', f.object.surgeon_id) %>
       <% end %>

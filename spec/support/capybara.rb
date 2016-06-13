@@ -81,6 +81,9 @@ module CapybaraHelpers
   end
 
   def check_surgeon_and_procedure(surgeon, procedure)
+    details = find("dl")
+    expect(details).to have_content(surgeon.last_name)
+    expect(details).to have_content(procedure.name)
   end
 
   def check_pin_data(pin_data)

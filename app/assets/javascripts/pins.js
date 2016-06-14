@@ -124,6 +124,12 @@ $(document).ready(function() {
     });
 
     myDropzone.on("errormultiple", function(file, errorMessage) {
+      var errorCount = errorMessage.length == 1 ? "1 error" : errorMessage.length + " errors";
+
+      $("#error_explanation")
+        .removeClass("hide")
+        .prepend($("<h2>" + errorCount + " prohibited this pin from being saved:</h2>"));
+
       $("#error_explanation ul").empty();
       errorMessage.forEach(function(error) {
         $("#error_explanation ul").append("<li>" + error + "</li>");

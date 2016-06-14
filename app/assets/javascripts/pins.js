@@ -89,6 +89,8 @@ $(document).ready(function() {
         $('#submit-all').prop("disabled", true);
       }
 
+      clearError(file.index);
+
       if (isEditing) {
         $.ajax({
           url: "pin_images/" + file.id,
@@ -123,18 +125,45 @@ $(document).ready(function() {
       }
     });
 
-    myDropzone.on("errormultiple", function(file, errorMessage) {
-      var errorCount = errorMessage.length == 1 ? "1 error" : errorMessage.length + " errors";
+    function clearError(fileIndex) {
+      $("#error-file-" + fileIndex).remove();
+      updateErrorCount();
+    }
 
-      $("#error_explanation")
-        .removeClass("hide")
-        .prepend($("<h2>" + errorCount + " prohibited this pin from being saved:</h2>"));
+    function updateErrorCount() {
+      var errorBlock = $("#error_explanation"),
+          errorCount = $("#error_explanation li").length,
+          fileErrorCount = $("#error_explanation li.error-file").length,
+          errorCountStr = errorCount == 1 ? "1 error" : errorCount + " errors";
 
-      $("#error_explanation ul").empty();
-      errorMessage.forEach(function(error) {
-        $("#error_explanation ul").append("<li>" + error + "</li>");
-      });
+      if (errorCount == 0) {
+        errorBlock.addClass("hide");
+      } else {
+        errorBlock.find("h2").remove();
+        errorBlock.prepend($("<h2>" + errorCountStr + " prohibited this pin from being saved:</h2>"));
+        errorBlock.removeClass("hide");
+      }
+
+      $("#submit-all").prop("disabled", (fileErrorCount > 0));
+   }
+
+    function errorsCallback(file, errorMessage) {
+      var fromRails = Array.isArray(errorMessage);
+
+      if (fromRails) {
+        errorMessage.forEach(function(error) {
+          $("#error_explanation ul").append($("<li>" + error + "</li>"));
+        });
+      }
+
+      updateErrorCount();
+    }
+
+    myDropzone.on("error", function(file, errorMessage) {
+      $("#error_explanation ul").append($("<li class='error-file' id='error-file-" + file.index + "'>" + errorMessage + "</li>"));
     });
+
+    myDropzone.on("errormultiple", errorsCallback);
 
     if (isEditing) {
       $(".dz-message:visible").hide();

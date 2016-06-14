@@ -8,6 +8,8 @@ class Surgeon < ActiveRecord::Base
                               group('surgeons.id').
                               having('count(procedures.id) > 0') }
 
+  phony_normalize :phone, default_country_code: 'US'
+
   def to_s
     first_name.nil? ? last_name : last_name + ', ' + first_name
   end

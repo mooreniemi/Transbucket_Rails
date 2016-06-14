@@ -1,13 +1,13 @@
 <!--TODO why is this in an erb file? -->
 <script>
-$(document).ready(function(){
-  $(function() {
-    var realTime = '<%= surgeons_only_url %>'
-    $( "#pin_surgeon" ).autocomplete({
-      source: realTime,
-      minLength: 2
+  $(document).ready(function(){
+    $(function() {
+      var realTime = '<%= surgeons_only_url %>'
+      $( "#pin_surgeon" ).autocomplete({
+        source: realTime,
+        minLength: 2
+      });
+      $('ul.ui-autocomplete.ui-menu').css('top', '35px');
     });
-    $('ul.ui-autocomplete.ui-menu').css('top', '35px');
   });
-});
 </script>

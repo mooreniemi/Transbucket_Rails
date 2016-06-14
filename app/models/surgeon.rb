@@ -10,14 +10,16 @@ class Surgeon < ActiveRecord::Base
 
   phony_normalize :phone, default_country_code: 'US'
 
+  validates :last_name, uniqueness: { scope: :first_name }
+  validates :last_name, presence: true
+
   def to_s
-    first_name.nil? ? last_name : last_name + ', ' + first_name
+    first_name.nil? ? last_name : last_name.capitalize + ', ' + first_name.capitalize
   end
 
   def self.names
-    self.where("surgeons.last_name IS NOT NULL")
-    .pluck(:first_name, :last_name)
-    .collect! {|e| e[0].nil? ? e[1] : e.reverse.join(',') }
-    .sort
+    self.pluck(:first_name, :last_name).
+      collect! {|e| e[0].nil? ? e[1] : e.reverse.join(',') }.
+      sort
   end
 end

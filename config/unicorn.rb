@@ -5,7 +5,12 @@
 worker_processes Integer(ENV["WEB_CONCURRENCY"] || 3)
 timeout 15
 preload_app true
-pid "tmp/pids/unicorn.pid"
+
+if ENV['RAILS_ENV'] != 'production'
+  require 'fileutils'
+  FileUtils.mkdir_p 'tmp/pids'
+  pid "tmp/pids/unicorn.pid"
+end
 
 before_fork do |server, worker|
   defined?(ActiveRecord::Base) and

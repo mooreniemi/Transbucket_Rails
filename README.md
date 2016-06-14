@@ -63,6 +63,8 @@ For staging and production, assets need to be recompiled. It's wise to clean the
   RAILS_ENV=production bundle exec rake assets:precompile
 ```
 
+While we remain on Heroku, it will infer this step for us. (You won't need to do it.)
+
 ## tests
 
 `rspec`
@@ -78,6 +80,10 @@ Best if you run `unicorn` rather than usual development server `thin`:
 Then after installing [apache_bench](http://work.stevegrossi.com/2015/02/07/load-testing-rails-apps-with-apache-bench-siege-and-jmeter/) (you should be able to do `brew install ab`) run:
 
 `ab -n 100 -c 10 http://0.0.0.0:8080/`
+
+## static analysis
+
+[rubocop](https://github.com/bbatsov/rubocop) and [brakeman](https://github.com/presidentbeef/brakeman) are be available.
 
 ## profiling
 

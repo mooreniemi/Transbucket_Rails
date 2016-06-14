@@ -83,7 +83,7 @@ Then after installing [apache_bench](http://work.stevegrossi.com/2015/02/07/load
 
 ## static analysis
 
-[rubocop](https://github.com/bbatsov/rubocop) and [brakeman](https://github.com/presidentbeef/brakeman) are be available.
+[rubocop](https://github.com/bbatsov/rubocop) and [brakeman](https://github.com/presidentbeef/brakeman) are available.
 
 ## profiling
 

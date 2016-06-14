@@ -21,6 +21,18 @@ $(document).ready(function() {
       add_form.addClass('hide');
     });
 
+    $("#pin_procedure_attributes_id").chosen({
+      width: "80%",
+      placeholder_text_single: "Procedures",
+      max_selected_options: 1
+    });
+
+    $("#pin_surgeon_attributes_id").chosen({
+      width: "80%",
+      placeholder_text_single: "Surgeons",
+      max_selected_options: 1
+    });
+
     Dropzone.autoDiscover = false;
 
     if (!isEditing) $("#submit-all").prop("disabled", true);

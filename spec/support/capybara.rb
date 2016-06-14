@@ -53,10 +53,20 @@ module CapybaraHelpers
   end
 
   def select_in_chosen(chosen_id, item)
-    page.execute_script("$('#{chosen_id}').trigger('chosen:open')")
-    within(chosen_id + "_chosen") do
+    page.execute_script("$('##{chosen_id}').trigger('chosen:open')")
+    within("##{chosen_id}_chosen") do
       field_selector = ".chosen-search input[type='text']"
-      find(field_selector).native.send_keys("#{item}\n")
+      field = find(field_selector).native
+      field.send_keys("#{item}")
+      field.send_keys(:return)
+    end
+  end
+
+  def select_in_field(field_id, item, js: false)
+    if js
+      select_in_chosen field_id, item
+    else
+      select item, :from => field_id
     end
   end
 
@@ -79,8 +89,8 @@ module CapybaraHelpers
 
     within("#procedure_container") do
       fill_in "Name of procedure", :with => procedure.name
-      select procedure.body_type, :from => "pin_procedure_body_type"
-      select procedure.gender, :from => "pin_procedure_gender"
+      select procedure.body_type, :from => "pin_procedure_attributes_body_type"
+      select procedure.gender, :from => "pin_procedure_attributes_gender"
     end
   end
 

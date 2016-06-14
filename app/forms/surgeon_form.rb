@@ -12,10 +12,7 @@ class SurgeonForm < Reform::Form
   property :country
   property :phone
   property :email
-
   property :url
-  validates :url, presence: true
-
   property :procedure_list
   property :notes
 end

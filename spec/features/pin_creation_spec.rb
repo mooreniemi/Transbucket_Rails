@@ -5,6 +5,7 @@ describe "pin creation" do
   include CapybaraHelpers
 
   let(:user) { create(:user, :with_confirmation) }
+  let!(:unknown_surgeon) { create(:surgeon, id: 911, first_name: "Surgeon", last_name: "Unknown") }
   let(:new_images) { build_list(:pin_image, 3) }
   let(:pin_data) { gen_pin_data }
 
@@ -31,23 +32,15 @@ describe "pin creation" do
       expect(page).to have_no_selector("#submit-all[disabled]") if js
     end
 
-    context "with no surgeons or procedures defined" do
-      it "fails to create a new pin, displaying errors" do
-        self.send(:pin_create)
-
-        click_button "Submit Now"
-
-        expect(page).to have_content("Surgeon can't be blank")
-        expect(page).to have_content("Procedure can't be blank")
-      end
-    end
-
     context "with surgeon and procedure initialized" do
       let!(:surgeon) { create(:surgeon) }
       let!(:procedure) { create(:procedure) }
 
       it "creates a new pin with data and images" do
         self.send(:pin_create)
+
+        select_in_field("pin_surgeon_attributes_id", "#{surgeon.last_name}, #{surgeon.first_name}", js: js)
+        select_in_field("pin_procedure_attributes_id", procedure.name, js: js)
 
         click_button "Submit Now"
 

@@ -35,6 +35,7 @@ describe PinsController, :type => :controller do
 
     describe 'GET #edit' do
       it "retrieves pin for edit view" do
+        create(:surgeon, id: 911)
 
         pin = create(:pin)
         get :edit, id: pin.id
@@ -47,7 +48,7 @@ describe PinsController, :type => :controller do
       it 'returns a valid pin on create' do
         surgeon = attributes_for(:surgeon)
         procedure = attributes_for(:procedure)
-        attrs = attributes_for(:pin).merge({surgeon: surgeon, procedure: procedure})
+        attrs = attributes_for(:pin).merge({"surgeon_attributes" => surgeon, "procedure_attributes" => procedure})
         image_attrs = attributes_for(:pin_image)
 
         post(:create, {pin: attrs, pin_images: {"0" => image_attrs}})
@@ -68,7 +69,7 @@ describe PinsController, :type => :controller do
         attrs.reject do |k,v|
           case k
           when 'id', 'updated_at', 'created_at',
-               'procedure', 'procedure_id', 'surgeon', 'surgeon_id'; true
+               'procedure_attributes', 'procedure_id', 'surgeon_attributes', 'surgeon_id'; true
           else false
           end
         end
@@ -81,7 +82,7 @@ describe PinsController, :type => :controller do
 
         surgeon = attributes_for(:surgeon)
         procedure = attributes_for(:procedure)
-        updated_attrs = build(:pin).attributes.merge({"surgeon" => surgeon, "procedure" => procedure})
+        updated_attrs = build(:pin).attributes.merge({"surgeon_attributes" => surgeon, "procedure_attributes" => procedure})
 
         put :update, :id => pin.id, :pin => updated_attrs
 

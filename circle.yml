@@ -6,7 +6,12 @@ machine:
   # Version of ruby to use
   ruby:
     version:
-      2.2.2
+      2.2.3
 
   pre:
     - createuser "Alex" -s
+
+dependencies:
+  post:
+    - bundle exec rake db:create && RAILS_ENV=test bundle exec rake db:create
+    - bundle exec rake db:migrate && RAILS_ENV=test bundle exec rake db:migrate

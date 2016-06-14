@@ -48,7 +48,7 @@ class PinForm < Reform::Form
 
   def populate_procedure!(fragment:, **)
     id = fragment["id"]
-    if id.nil?
+    if id.nil? || id == 0 || id == ""
       self.procedure = Procedure.new
     else
       self.procedure = Procedure.find(id.to_i)
@@ -57,7 +57,7 @@ class PinForm < Reform::Form
 
   def populate_surgeon!(fragment:, **)
     id = fragment["id"]
-    if id.nil?
+    if id.nil? || id == 0 || id == ""
       self.surgeon = Surgeon.new
     else
       self.surgeon = Surgeon.find(id.to_i)

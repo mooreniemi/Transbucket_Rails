@@ -33,6 +33,8 @@ describe "pin updating" do
   shared_examples "pin updating" do
     it "updates the pin with one less photo and new info" do
       ensure_on "/pins/#{pin.id}/edit"
+      expect(find("select#pin_surgeon_attributes_id", visible: false).value.to_i).to eq(pin.surgeon.id)
+      expect(find("select#pin_procedure_attributes_id", visible: false).value.to_i).to eq(pin.procedure.id)
       self.send(:updater)
 
       click_button "Submit Now"

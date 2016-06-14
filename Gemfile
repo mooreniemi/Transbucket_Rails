@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 # https://devcenter.heroku.com/articles/ruby-versions
 ruby '2.2.2'
 
-gem 'rails', '4.2.1'
+gem 'rails'
 # used for public areas of the site, see PagesController
 gem 'actionpack-page_caching'
 

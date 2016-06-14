@@ -55,6 +55,17 @@ describe PinForm do
       let!(:pin) { create(:pin, :with_surgeon_and_procedure, :real_pin_images) }
       let!(:form) { PinForm.new(pin) }
 
+      context "when prepopulating" do
+        it "sets the correct surgeon and procedure to render" do
+          form.prepopulate!
+          expect(form.surgeon.id).to eq(pin.surgeon.id)
+          expect(form.procedure.id).to eq(pin.procedure.id)
+
+          # other properties should not be set
+          expect(form.surgeon.first_name).to be nil
+        end
+      end
+
       shared_examples "delete nested" do
         it "deletes a nested model" do
           id_to_delete = pin.pin_images[0].id

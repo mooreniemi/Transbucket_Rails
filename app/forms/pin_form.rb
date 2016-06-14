@@ -8,12 +8,12 @@ class PinForm < Reform::Form
 
   property :surgeon, form: SurgeonForm,
            populator: :populate_surgeon!,
-           prepopulator: ->(options) { self.surgeon = Surgeon.new }
+           prepopulator: :prepopulate_surgeon!
   validates :surgeon, presence: true
 
   property :procedure, form: ProcedureForm,
            populator: :populate_procedure!,
-           prepopulator: ->(options) { self.procedure = Procedure.new }
+           prepopulator: :prepopulate_procedure!
   validates :procedure, presence: true
 
   property :cost
@@ -36,6 +36,14 @@ class PinForm < Reform::Form
 
   def prepopulate_pin_images!(options)
     3.times { self.pin_images << PinImage.new }
+  end
+
+  def prepopulate_procedure!(options)
+    self.procedure = (procedure && procedure.id) ? OpenStruct.new(id: procedure.id) : Procedure.new
+  end
+
+  def prepopulate_surgeon!(options)
+    self.surgeon = (surgeon && surgeon.id) ? OpenStruct.new(id: surgeon.id) : Surgeon.new
   end
 
   def populate_procedure!(fragment:, **)

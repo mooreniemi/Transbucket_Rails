@@ -1,0 +1,27 @@
+#!/bin/sh
+
+unicorn -c config/unicorn.rb -D
+
+HOST=http://127.0.0.1:8080
+
+LOGIN_PAGE=$HOST/users/sign_in
+TOKEN=`curl --cookie-jar cookie_file $LOGIN_PAGE | grep csrf-token | awk -F '"' '{ print $4; }'`
+USERNAME=meowmeow
+PASSWORD=password
+curl  --cookie cookie_file \
+      --cookie-jar cookie_file \
+      --data "user[login]=$USERNAME&user[password]=$PASSWORD" \
+      --data-urlencode authenticity_token=$TOKEN \
+      $LOGIN_PAGE
+
+INTERNAL_PAGE=$HOST/pins
+
+# check if logged-in ok
+# curl --cookie cookie_file $INTERNAL_PAGE
+
+COOKIE="_transbucket_session="`grep _transbucket_session cookie_file  | awk -F '\t' '{print $7;}'`
+TRIALS=100
+CONCURRENCY=10
+ab -n $TRIALS -c $CONCURRENCY -C $COOKIE $INTERNAL_PAGE
+
+kill -TERM `cat tmp/pids/unicorn.pid`

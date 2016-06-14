@@ -18,5 +18,6 @@ public/system/*
 /config/application.yml
 coverage/*
 spec/examples.txt
+cookie_file
 
 db/sphinx/

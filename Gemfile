@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # https://devcenter.heroku.com/articles/ruby-versions
-ruby '2.2.2'
+ruby '2.2.3'
 
 gem 'rails'
 # used for public areas of the site, see PagesController

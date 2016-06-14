@@ -5,7 +5,6 @@
       <h3 class="panel-title">Add a new surgeon</h3>
     </div>
     <div class="panel-body">
-      <%= f.fields_for :surgeon do |surgeon_form| %>
       <div class="input-group padded_nicely">
         <%= surgeon_form.text_field :last_name, placeholder: "Surgeon's last name" %>
       </div>
@@ -15,7 +14,6 @@
       <div class="input-group padded_nicely">
         <%= surgeon_form.text_field :url, placeholder: "Surgeon's URL" %>
       </div>
-      <% end %>
     </div>
   </div>
 </div>

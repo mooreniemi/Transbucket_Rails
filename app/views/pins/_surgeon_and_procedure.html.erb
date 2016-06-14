@@ -3,26 +3,23 @@
   <div class="form-group col-md-6">
     <label class="control-label">Surgeon</label>
     <div id="surgeon_form" class="controls">
-      <% if f.object.surgeon_id.nil? %>
-      <%= f.select :surgeon_id, options_from_collection_for_select(Surgeon.order('last_name ASC'), 'id', 'to_s', 911) %>
-      <% else %>
-      <%= f.select :surgeon_id, options_from_collection_for_select(Surgeon.order('last_name ASC'), 'id', 'to_s', f.object.surgeon_id) %>
-      <% end %>
+      <%= f.fields_for :surgeon do |surgeon_form| %>
+        <%= surgeon_form.select :id, options_from_collection_for_select(Surgeon.order('last_name ASC'), 'id', 'to_s', surgeon_form.object.id) %>
 
-      <a id="add_new_surgeon" href="#" class="add-button"><%= fa_icon("plus-circle") %></a>
-      <%= render partial: 'surgeons/surgeon', locals: {f: f} %>
+        <a id="add_new_surgeon" href="#" class="add-button"><%= fa_icon("plus-circle") %></a>
+        <%= render partial: 'surgeons/surgeon', locals: {surgeon_form: surgeon_form} %>
+      <% end %>
     </div>
   </div>
   <div class="form-group col-md-6">
     <label class="control-label">Procedure</label>
     <div id="procedure_form" class="controls">
-      <% if f.object.procedure_id.nil? %>
-      <%= f.select :procedure_id, options_from_collection_for_select(Procedure.order('name ASC'), 'id', 'to_s') %>
-      <% else %>
-      <%= f.select :procedure_id, options_from_collection_for_select(Procedure.order('name ASC'), 'id', 'to_s', f.object.procedure_id) %>
+      <%= f.fields_for :procedure do |procedure_form| %>
+        <%= procedure_form.select :id, options_from_collection_for_select(Procedure.order('name ASC'), 'id', 'to_s', procedure_form.object.id) %>
+
+        <a id="add_new_procedure" href="#" class="add-button"><%= fa_icon("plus-circle") %></a>
+        <%= render partial: 'procedures/procedure', locals: {procedure_form: procedure_form} %>
       <% end %>
-      <a id="add_new_procedure" href="#" class="add-button"><%= fa_icon("plus-circle") %></a>
-      <%= render partial: 'procedures/procedure', locals: {f: f} %>
     </div>
   </div>
 </div>

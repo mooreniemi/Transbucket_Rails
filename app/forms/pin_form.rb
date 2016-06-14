@@ -6,10 +6,14 @@ class PinForm < Reform::Form
   property :user_id
   validates :user_id, presence: true
 
-  property :surgeon, form: SurgeonForm, populator: :populate_surgeon!
+  property :surgeon, form: SurgeonForm,
+           populator: :populate_surgeon!,
+           prepopulator: ->(options) { self.surgeon = Surgeon.new }
   validates :surgeon, presence: true
 
-  property :procedure, form: ProcedureForm, populator: :populate_procedure!
+  property :procedure, form: ProcedureForm,
+           populator: :populate_procedure!,
+           prepopulator: ->(options) { self.procedure = Procedure.new }
   validates :procedure, presence: true
 
   property :cost
@@ -35,11 +39,21 @@ class PinForm < Reform::Form
   end
 
   def populate_procedure!(fragment:, **)
-    self.procedure = (fragment["id"].nil? ? Procedure.new : Procedure.find(fragment["id"].to_i))
+    id = fragment["id"]
+    if id.nil?
+      self.procedure = Procedure.new
+    else
+      self.procedure = Procedure.find(id.to_i)
+    end
   end
 
   def populate_surgeon!(fragment:, **)
-    self.surgeon = (fragment["id"].nil? ? Surgeon.new : Surgeon.find(fragment["id"].to_i))
+    id = fragment["id"]
+    if id.nil?
+      self.surgeon = Surgeon.new
+    else
+      self.surgeon = Surgeon.find(id.to_i)
+    end
   end
 
   def populate_pin_images!(fragment:, **)

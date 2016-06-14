@@ -59,4 +59,9 @@ Rails.application.routes.draw do
   get '/forum' => 'pages#bookmarks'
   get '/members/*other' => 'pages#bookmarks'
   get '/members/uploads/*other' => 'pages#bookmarks'
+
+  # the logs get very noisy with backtraces unless we ignore missing images
+  if Rails.env.development?
+    get "/system/:url", to: proc { [410, {}, ['']] }, url: /.+/
+  end
 end

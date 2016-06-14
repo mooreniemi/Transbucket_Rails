@@ -37,6 +37,13 @@ $(document).ready(function() {
 
     if (!isEditing) $("#submit-all").prop("disabled", true);
 
+    function onAddedPreview() {
+      $('.dz-preview').off('click');
+      $('.dz-preview').click(function (event) {
+        event.stopPropagation();
+      });
+    }
+
     var dropzoneOptions = {
       previewsContainer: "#dropper",
       clickable: "#dropper",
@@ -73,6 +80,7 @@ $(document).ready(function() {
       file.index = fileCounter++;
       $(".dz-preview:last-child").attr('id', "file-" + file.index);
       $('#submit-all').prop("disabled", false);
+      onAddedPreview();
     });
 
     myDropzone.on("removedfile", function(file) {
@@ -133,6 +141,8 @@ $(document).ready(function() {
             $(pinImage.previewElement).children('input').val(pinImage.caption);
             myDropzone.options.thumbnail.call(myDropzone, pinImage, pinImage.url);
           });
+
+          onAddedPreview();
         }
 
         // allow caption updates independently

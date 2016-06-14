@@ -69,6 +69,16 @@ For staging and production, assets need to be recompiled. It's wise to clean the
 
 If you need to see some performance stats, use `rspec --profile`.
 
+### performance testing
+
+Best if you run `unicorn` rather than usual development server `thin`:
+
+`unicorn -c config/unicorn.rb` # this will spawn 3 processes
+
+Then after installing [apache_bench](http://work.stevegrossi.com/2015/02/07/load-testing-rails-apps-with-apache-bench-siege-and-jmeter/) (you should be able to do `brew install ab`) run:
+
+`ab -n 100 -c 10 http://0.0.0.0:8080/`
+
 ## profiling
 
 In dev mode, [rack-mini-profiler](https://github.com/MiniProfiler/rack-mini-profiler), [stackprof](https://github.com/tmm1/stackprof) and [ruby-prof](https://github.com/ruby-prof/ruby-prof) are available.

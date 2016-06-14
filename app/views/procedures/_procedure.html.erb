@@ -5,7 +5,6 @@
       <h3 class="panel-title">Add a new procedure</h3>
     </div>
     <div class="panel-body">
-      <%= f.fields_for :procedure do |procedure_form| %>
       <div class="input-group padded_nicely">
         <%= procedure_form.text_field :name, placeholder: "Name of procedure" %>
       </div>
@@ -15,7 +14,6 @@
       <div class="input-group padded_nicely">
         <%= procedure_form.select :gender, options_for_select([ "FTM", "MTF" ]) %>
       </div>
-      <% end %>
     </div>
   </div>
 </div>

@@ -108,9 +108,25 @@ class PinsController < ApplicationController
     @pin = Pin.find(params[:id])
   end
 
+  def id_or_attributes(attributes)
+    return nil if attributes.nil?
+
+    id = attributes.delete("id")
+
+    if attributes["name"].present?
+      attributes
+    elsif !attributes.has_key?("name") and attributes.values.any?(&:present?)
+      attributes
+    else
+      {"id" => id}
+    end
+  end
+
   def pin_params
     pin_images = params.delete(:pin_images)
     params[:pin][:pin_images] = pin_images.values unless pin_images.nil?
+    params[:pin][:surgeon] = id_or_attributes(params[:pin].delete(:surgeon_attributes))
+    params[:pin][:procedure] = id_or_attributes(params[:pin].delete(:procedure_attributes))
     params.require(:pin).permit!
     # params.require(:pin).permit(:surgeon_id, :procedure_id, :cost, :revision, :details, :sensation, :satisfaction,
                                 # pin_images: [:photo, :caption])

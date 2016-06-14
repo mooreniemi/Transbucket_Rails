@@ -238,6 +238,10 @@ GEM
       mime-types
       mimemagic (= 0.3.0)
     pg (0.18.3)
+    phony (2.15.25)
+    phony_rails (0.14.1)
+      activesupport (>= 3.0)
+      phony (~> 2.12)
     poltergeist (1.9.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -466,6 +470,7 @@ DEPENDENCIES
   newrelic_rpm
   paperclip (~> 4.2)
   pg
+  phony_rails
   poltergeist
   protected_attributes
   pry-coolline

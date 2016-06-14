@@ -54,6 +54,8 @@ gem 'simple_form'
 gem 'reform'
 gem 'reform-rails'
 
+gem 'phony_rails'
+
 gem 'ledermann-rails-settings', :require => 'rails-settings'
 
 # pin submission wysiwyg

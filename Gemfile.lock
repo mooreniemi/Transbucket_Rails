@@ -252,6 +252,9 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (= 0.3.0)
+    parallel (1.9.0)
+    parallel_tests (2.5.0)
+      parallel
     pg (0.18.3)
     phony (2.15.25)
     phony_rails (0.14.1)
@@ -497,6 +500,7 @@ DEPENDENCIES
   nested_form
   newrelic_rpm
   paperclip (~> 4.2)
+  parallel_tests
   pg
   phony_rails
   poltergeist

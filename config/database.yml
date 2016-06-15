@@ -24,7 +24,7 @@ development:
 
 test:
   <<: *defaults
-  database: psql_test
+  database: psql_test<%= ENV['TEST_ENV_NUMBER'] %>
 
 production:
   <<: *defaults

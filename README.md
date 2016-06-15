@@ -71,6 +71,21 @@ While we remain on Heroku, it will infer this step for us. (You won't need to do
 
 If you need to see some performance stats, use `rspec --profile`.
 
+### parallel tests
+
+To set up:
+
+```sh
+rake parallel:create
+rake parallel:prepare
+```
+
+(Or on CI: `rake parallel:setup`)
+
+Run tests:
+
+`rake parallel:spec`
+
 ### performance testing
 
 Best if you run `unicorn` rather than usual development server `thin`:

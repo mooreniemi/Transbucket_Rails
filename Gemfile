@@ -111,7 +111,6 @@ group :test do
 	gem 'guard-rspec'
 	gem 'launchy'
 	gem 'rspec-console'
-  gem 'connection_pool'
 end
 
 # Gems used only for assets and not required

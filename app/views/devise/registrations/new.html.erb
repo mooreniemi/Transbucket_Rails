@@ -27,7 +27,7 @@
     </div>
     <div class="input-group padded_nicely">
       <span class="input-group-addon"><%= fa_icon "key" %> Gender: </span>
-      <%= f.select :gender, options_from_collection_for_select(Gender.all, "id", "name"), {}, { class: "form-control"} %>
+      <%= f.select :gender_id, options_from_collection_for_select(Gender.all, "id", "name"), {}, { class: "form-control"} %>
     </div>
     <%= f.submit "Submit", class: "btn btn-primary btn-large pull-right" %>
     <% end %>

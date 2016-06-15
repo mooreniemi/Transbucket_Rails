@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
   acts_as_voter
 
   def self.find_first_by_auth_conditions(warden_conditions)
-    conditions = warden_conditions.dup
+    conditions = warden_conditions.dup.to_h
     if login = conditions.delete(:login)
       where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
     else

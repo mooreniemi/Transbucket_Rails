@@ -1,64 +1,32 @@
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
-            <a class="brand" href="/"> <%= image_tag(image_path("small_logo.png"), :size => "16x16", :alt => "Index") %> Transbucket.com</a>
-
-                <div class="nav-collapse">
-                    <ul class="nav">
-                        <li>
-                            <%= link_to 'News',  newsfeed_path %>
-                        </li>
-                        <li>
-                            <%= link_to 'About',  about_path %>
-                        </li>
-                        <% if current_user.present? && current_user.admin? %>
-                          <li>
-                            <%= link_to 'Admin', admin_path %>
-                          </li>
-                        <% end %>
-                    </ul>
-
-                    <ul class="nav">
-                        <% if user_signed_in? %>
-                        <li><%= link_to 'Submissions', pins_path %> </li>
-                        <% unless current_user.gender == "cisgender" %>
-                          <li><%= link_to 'Add <i class="fa fa-plus-circle"></i>'.html_safe, new_pin_path %> </li>
-                        <% end %>
-                        <li><%= link_to 'My Account',  edit_user_registration_path %></li>
-                        <li><%= link_to 'Logout',  destroy_user_session_path, method: :delete %></li>
-                        <% else %>
-                        <li><%= link_to 'Register', register_path %></li>
-                        <li><%= link_to 'Login',  new_user_session_path %></li>
-                        <% end %>
-                    </ul>
-                    <% if user_signed_in? %>
-                      <%= form_tag pins_path, :class => 'form-search pull-right', :method => :get do %>
-                        <div class="input-append">
-                          <%= text_field_tag 'query', value = nil, :class => 'span2 search-query', :placeholder => "Search" %>
-                          <%#= autocomplete_field_tag 'pin', '', autocomplete_procedure_pin_index_path, :size => 75 %>
-                          <%= submit_tag 'Go', :class => 'btn' %>
-                      </div>
-                      <% end %>
-                    <% end %>
-                </div>
-        </div>
+<% cache do %>
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      </button>
+      <%= link_to image_tag("small_logo.png", :size => "16x16", :alt => "Index"), root_path, :class => "navbar-brand" %>
+      <a class="navbar-brand" href="<%= root_path %>">Transbucket.com</a>
     </div>
-</div>
-
-<script>
-$(document).ready(function(){
-  $(function() {
-    var realTime = '<%= search_terms_url %>'
-    $( "#query" ).autocomplete({
-      source: realTime,
-      minLength: 2
-    });
-    $('ul.ui-autocomplete.ui-menu').css('top', '35px');
-  });
-});
-</script>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li>
+          <%= link_to 'News',  newsfeed_path %>
+        </li>
+        <li>
+          <%= link_to 'About',  about_path %>
+        </li>
+      <% end %>
+        <% if user_signed_in? %>
+        <%= render partial: 'layouts/logged_in' %>
+        <% end %>
+        <%= render partial: 'layouts/account_menu' %>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

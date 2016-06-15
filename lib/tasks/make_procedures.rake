@@ -8,9 +8,9 @@ namespace :procedure do
     bar.inc
     Pin::MTF.each {|n| Procedure.new(name: n, gender: 'mtf').save }
     bar.inc
-    Procedure.all.each {|p| p.type = 'top' && p.save if Pin::TOP.include?(p.name) }
+    Procedure.all.each {|p| p.body_type = 'top' && p.save if Pin::TOP.include?(p.name) }
     bar.inc
-    Procedure.all.each {|p| p.type = 'bottom' && p.save if Pin::BOTTOM.include?(p.name) }
+    Procedure.all.each {|p| p.body_type = 'bottom' && p.save if Pin::BOTTOM.include?(p.name) }
     bar.finished
 
   end

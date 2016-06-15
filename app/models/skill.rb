@@ -1,5 +1,6 @@
 class Skill < ActiveRecord::Base
-  attr_accessible :surgeon_id, :procedure_id
+  # surgeon has_many :procedures, through: :skills
+  # attr_accessible :surgeon_id, :procedure_id
   belongs_to :surgeon
   belongs_to :procedure
 end

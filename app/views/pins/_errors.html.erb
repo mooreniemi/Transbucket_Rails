@@ -1,0 +1,10 @@
+<div id="error_explanation" class="submission_well<% if !form.errors.any? %> hide<% end %>">
+  <% if form.errors.any? %>
+    <h2><%= pluralize(form.errors.count, "error") %> prohibited this pin from being saved:</h2>
+  <% end %>
+  <ul>
+    <% form.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+    <% end %>
+  </ul>
+</div>

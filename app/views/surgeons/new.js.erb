@@ -1,0 +1,31 @@
+$("<%= escape_javascript(render @surgeon) %>").appendTo("#surgeon_form");
+
+// sets up the behavior around submitting it and updating the select box
+$("#new_surgeon_submit").click(function() {
+    var formElement = document.getElementById("new_surgeon");
+    formData = new FormData(formElement);
+
+    return $.ajax({
+        type: "POST",
+        url: "/surgeons",
+        data: formData,
+        processData: false,  // tell jQuery not to process the data
+        contentType: false,   // tell jQuery not to set contentType
+        success: function(data) {
+            $("#surgeon_container").hide( "slow", function() {
+                $("#surgeon_container").remove();
+            });
+            return false;
+        },
+        error: function(data) {
+            console.log('error:' + data)
+            return false;
+        }
+    });
+});
+
+$('#surgeon_form .cancel').click(function(){
+    $("#surgeon_container").hide("slow", function() {
+        $("#surgeon_container").remove();
+    });
+});

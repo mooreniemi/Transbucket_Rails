@@ -1,14 +1,14 @@
 <% if comment.published? %>
-  <div class="comment" id="<%=comment.id %>">
+  <div class="comment" id="comment-<%=comment.id %>">
       <div class="well">
       	<%= comment.body %><br>
       	<hr>
       	<small>by <strong>
-          <%= link_to comment.user.try(:username) || comment.user.id, pins_path(user: comment.user) %></strong> | 
+          <%= link_to comment.user.try(:username) || comment.user.id, pins_path(user: comment.user) %></strong> |
           <%= comment.updated_at.strftime('%b %d, %Y at %I:%M %p') %></small>
       	<% if comment.user_id == current_user.id || current_user.admin? %>
-      		<%= link_to "×", comment_path(comment), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this comment?", :disable_with => "×", :class => 'close' %><% end %>       
-      		<%= link_to "<i class='icon-flag'></i>".html_safe, comment_flags_path(comment), :method => :post, remote: true %>
+      		<%= link_to "×", comment_path(comment), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this comment?", :disable_with => "×", :class => 'close' %><% end %>
+          <%= link_to(fa_icon("flag"), comment_flags_path(comment), :method => :post, remote: true) unless current_user == comment.user %>
       </div>
   </div>
 <% end %>

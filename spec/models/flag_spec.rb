@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Flag do
   it '3 flags should make a pin pending' do
@@ -8,25 +8,29 @@ describe Flag do
     user2 = build_stubbed(:user)
     user3 = build_stubbed(:user)
 
-    flag = Flag.new(user, pin).flag_on
-    flag2 = Flag.new(user2, pin).flag_on
-    flag3 = Flag.new(user3, pin).flag_on
+    Flag.new(user, pin).flag_on
+    Flag.new(user2, pin).flag_on
+    Flag.new(user3, pin).flag_on
 
-    expect(pin.pending?).to be_true
+    expect(pin.pending?).to eq(true)
+    # TODO
+    # expect(Delayed::Job.all.count).to eq(1)
   end
 
   it '3 flags should make a comment pending' do
     comment = create(:comment)
+    allow_any_instance_of(Pin).to receive(:user).and_return(create(:user))
 
     user = create(:user)
     user2 = create(:user)
     user3 = create(:user)
 
-    flag = Flag.new(user, comment).flag_on
-    flag2 = Flag.new(user2, comment).flag_on
-    flag3 = Flag.new(user3, comment).flag_on
+    Flag.new(user, comment).flag_on
+    Flag.new(user2, comment).flag_on
+    Flag.new(user3, comment).flag_on
 
-    expect(comment.pending?).to be_true
+    expect(comment.pending?).to eq(true)
+    expect(Delayed::Job.all.count).to eq(1)
   end
 
   it "comment's parent pin author can send directly to pending" do
@@ -36,6 +40,7 @@ describe Flag do
     comment = create(:comment, commentable_id: pin.id, user: comment_author)
 
     Flag.new(pin_author, comment).flag_on
-    expect(comment.pending?).to be_true
+    expect(comment.pending?).to eq(true)
+    expect(Delayed::Job.all.count).to eq(1)
   end
 end

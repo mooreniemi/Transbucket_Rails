@@ -1,0 +1,12 @@
+<% cache do %>
+<%= javascript_include_tag 'search' %>
+<%= form_tag pins_path, :class => 'form-search navbar-form navbar-right', :method => :get do %>
+<div class="form-group">
+  <div class="input-append">
+    <%= text_field_tag 'query', value = nil, :class => 'span2 search-query form-control', :placeholder => "Search" %>
+    <%#= autocomplete_field_tag 'pin', '', autocomplete_procedure_pin_index_path, :size => 75 %>
+    <%= submit_tag 'Go', :class => 'btn btn-default btn-xs' %>
+  </div>
+  <% end %>
+</div>
+<% end %>

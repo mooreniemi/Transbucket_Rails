@@ -1,0 +1,17 @@
+# A sample Bowerfile
+# Check out https://github.com/42dev/bower-rails#ruby-dsl-configuration for more options
+
+asset 'bootstrap'
+asset 'bootstrap-star-rating'
+
+asset 'jquery'
+asset 'jquery-ujs'
+asset 'jquery-ui'
+asset 'masonry'
+asset 'imagesloaded'
+asset 'dropzone'
+
+# because chosen dudes dont support bower install out of the box
+asset 'chosen', git: "https://github.com/harvesthq/chosen/releases/download/v1.1.0/chosen_v1.1.0.zip"
+
+asset 'underscore'

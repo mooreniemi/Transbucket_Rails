@@ -1,0 +1,3 @@
+$("#pin_procedure_id").html("<%= escape_javascript(select_tag :procedure_id, options_from_collection_for_select(@procedures, 'id', 'to_s', @procedure)) %>");
+$('#pin_procedure_id option[value="<%= escape_javascript(@procedure.id.to_s) %>"]').attr('selected','selected');
+$("#pin_procedure_id").trigger("chosen:updated");

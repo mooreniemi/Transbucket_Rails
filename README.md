@@ -92,11 +92,11 @@ For master branch: [![CircleCI](https://circleci.com/gh/mooreniemi/Transbucket_R
 
 ## [staging](https://dashboard-preview.heroku.com/apps/transbucket-staging)
 
-Staging is meant to run in the production environment, as close to actual production as possible.
+Staging is meant to run in the production environment, as close to actual production as possible. Every successful build on CI (based on every `git push` you do) will trigger a deployment on staging automatically.
 
-Deploying a branch to [staging](https://transbucket-staging.herokuapp.com/):
+If you need to deploying a branch to [staging](https://transbucket-staging.herokuapp.com/) manually:
 
-`git push staging fix_presenter:master`
+`git push staging your_branch:master`
 
 Connecting to staging to debug or run tasks:
 

@@ -4,33 +4,14 @@
     <%= will_paginate @pins unless @pins.nil? %>
   </div>
 </div>
-
 <br clear="both" />
-
-  <div id="pins" class="js-masonry" data-masonry-options='{ "columnWidth": 200, "itemSelector": ".box" }'>
-
-    <div id="pin_container">
-      <%= render @pins %>
-    </div>
-
+<div id="pins" class="js-masonry" data-masonry-options='{ "columnWidth": 200, "itemSelector": ".box" }'>
+  <div id="pin_container">
+    <%= render @pins %>
   </div>
-
-  <br>
-  <br clear="both" />
-
-  <div class="page_container" class="col-md-6">
-    <%= will_paginate @pins unless @pins.nil? %>
-  </div>
-  <script>
-  $("#scope").multiselect({
-     position: {
-        my: 'bottom',
-        at: 'center'
-
-       // only include the "of" property if you want to position
-       // the menu against an element other than the button.
-       // multiselect automatically sets "of" unless you explictly
-       // pass in a value.
-     }
-  });
-  </script>
+</div>
+<br>
+<br clear="both" />
+<div class="page_container" class="col-md-6">
+  <%= will_paginate @pins unless @pins.nil? %>
+</div>

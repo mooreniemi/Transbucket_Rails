@@ -1,37 +1,65 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.12'
+# https://devcenter.heroku.com/articles/ruby-versions
+ruby '2.2.3'
 
-# for thinking sphinx
-# gem 'mysql'
-gem 'mysql2', '0.3.12b5'
+gem 'rails'
+# used for public areas of the site, see PagesController
+gem 'actionpack-page_caching'
+
+gem 'unicorn'
+gem 'turbolinks'
+gem 'bower-rails', '~> 0.7.3'
+
+gem 'protected_attributes'
+
+# for ci
+gem 'rspec_junit_formatter', '0.2.2'
+
+# for thinking sphinx (search functionality)
+gem 'mysql2', '~> 0.4.4'
 gem 'activerecord-mysql-adapter'
+gem 'thinking-sphinx'
+gem 'flying-sphinx'
+
+gem 'active_model_serializers'
 
 gem 'pg'
+gem 'delayed_job_active_record'
 
 gem 'will_paginate', '~> 3.0'
-gem 'paperclip', '~> 3.0'
+gem 'will_paginate-bootstrap'
 
+gem 'paperclip', :git=> 'https://github.com/thoughtbot/paperclip', :ref => '523bd46c768226893f23889079a7aa9c73b57d68'
 gem 'aws-sdk'
-gem 'aws-s3'
 
+# for managing environment variables
 gem 'figaro'
-
-gem 'delayed_job_active_record'
-gem 'tinymce-rails'
 
 gem 'devise'
 gem 'devise-encryptable'
 
-gem 'state_machine'
+gem 'aasm'
+gem 'fuzzy_match'
 
+# kept at top level so rake tasks can use
+# in any environment
 gem 'rake-progressbar'
+gem 'awesome_print'
+# we use Faker to create junk data sometimes on staging
+gem 'faker'
 
 gem 'nested_form'
 gem 'simple_form'
+gem 'reform'
+gem 'reform-rails'
 
-gem 'thinking-sphinx'
-gem 'flying-sphinx'
+gem 'phony_rails'
+
+gem 'ledermann-rails-settings', :require => 'rails-settings'
+
+# pin submission wysiwyg
+gem 'tinymce-rails'
 
 gem 'htmlentities'
 gem 'simple-rss'
@@ -40,61 +68,64 @@ gem 'meta-tags', :require => 'meta_tags'
 gem 'acts_as_votable', '~> 0.7.1'
 gem 'acts-as-taggable-on'
 gem 'acts_as_commentable_with_threading'
-gem 'ledermann-rails-settings', :require => 'rails-settings'
 gem 'letsrate'
 
-gem 'awesome_print'
+gem 'font-awesome-rails'
 
-gem 'font-awesome-sass'
-gem 'jquery-ui-rails'
-gem 'jquery-rails'
-gem 'jquery-star-rating-rails'
-gem 'jquery-multiselect-rails', :git => 'git://github.com/arojoal/jquery-multiselect-rails.git'
-gem 'underscore-rails'
+# TODO blocking ips, bots, etc
+# gem 'rack-attack'
 
-gem 'rack-block'
-
-group :development, :local do
-  gem 'thin'
-  gem 'rack-mini-profiler'
-  gem 'bullet'
-  gem 'quiet_assets'
-  gem 'meta_request','0.2.5'
-  gem 'better_errors'
-  gem 'binding_of_caller'
-  gem 'guard'
-  gem 'guard-livereload'
+group :development do
+  gem 'brakeman', :require => false
+	gem 'letter_opener'
+	gem 'seed_dump'
+	gem 'thin'
+	gem 'quiet_assets'
+	gem 'meta_request'
+	gem 'better_errors'
 end
 
 group :development, :test do
-  gem 'pry-nav'
-  gem 'pry-rails'
-  gem 'pry-coolline'
+  gem 'stackprof'
+  gem 'ruby-prof'
+	gem 'rack-mini-profiler'
+  # gem 'flamegraph' # for rack-mini-profiler
+  gem 'rspec-benchmark'
+  gem 'parallel_tests'
+	gem 'bullet'
+	gem 'binding_of_caller'
+	gem 'guard'
+	gem 'guard-livereload'
+	gem 'pry-rescue'
+	gem 'pry-nav'
+	gem 'pry-rails'
+	gem 'pry-coolline'
 end
 
 group :test do
-  gem 'simplecov', '~> 0.7.1'
-  gem 'database_cleaner'
-  gem 'rspec-rails'
-  gem 'factory_girl_rails'
-  gem 'faker'
-  gem 'capybara'
-  gem 'guard-rspec'
-  gem 'launchy'
-  gem 'mocha'
-end
-
-group :production do
-  gem 'newrelic_rpm'
-  gem 'unicorn'
+	gem 'simplecov', :require => false
+	gem 'database_cleaner'
+	gem 'rspec-rails'
+	gem 'factory_girl_rails'
+	gem 'capybara'
+	gem 'poltergeist'
+	gem 'guard-rspec'
+	gem 'launchy'
+	gem 'rspec-console'
 end
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'bootstrap-sass', '~> 2.2.2.0'
+	gem 'sass-rails', '4.0.3'
+	gem 'coffee-rails', '~> 4.0.0'
+	gem 'bootstrap-sass', '~> 3.2.0'
+	gem 'autoprefixer-rails'
+	gem 'uglifier', '>= 1.0.3'
+end
 
-  gem 'uglifier', '>= 1.0.3'
+group :production do
+	# for assets, see https://devcenter.heroku.com/articles/rails-4-asset-pipeline
+	gem 'rails_12factor'
+	gem 'newrelic_rpm'
 end

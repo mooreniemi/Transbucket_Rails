@@ -1,52 +1,52 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe PinPresenter do
+  let!(:pins) { create_list(:pin, 3) }
+
   it 'returns pins' do
-    user = create(:user)
-    Pin.destroy_all
-
-    pins = FactoryGirl.create_list(:pin, 3)
-
-    presenter = PinPresenter.new({current_user: user})
-
-    expect(presenter.all).to eq(pins.reverse)
+    expect(PinPresenter.new.pins).to eq(pins.to_a.reverse)
   end
 
-  it 'returns pins scoped by surgeon' do
-    surgeon = create(:surgeon)
-    user = create(:user)
+  describe "filtering results" do
+    let!(:surgeon) { create(:surgeon) }
+    let!(:procedure) { create(:procedure) }
+    let(:user_id) { pins.last.user_id }
 
-    pins = FactoryGirl.create_list(:pin, 3)
+    it 'returns pins scoped by surgeon' do
+      pins.last.update_attributes!(surgeon_id: surgeon.id)
+      presenter = PinPresenter.new({surgeon: surgeon.id})
+      expect(presenter.pins.last).to eq(pins.last)
+    end
 
-    pins.last.update_attributes(surgeon_id: surgeon.id)
+    it 'returns pins scoped by procedure' do
+      pins.last.update_attributes!(procedure_id: procedure.id)
+      presenter = PinPresenter.new({procedure: procedure.id})
 
-    presenter = PinPresenter.new({current_user: user, surgeon: surgeon.id})
+      expect(presenter.pins.last).to eq(pins.last)
+    end
 
-    expect(presenter.all.last).to eq(pins.last)
+    it 'returns pins scoped by user' do
+      presenter = PinPresenter.new({user: user_id})
+
+      expect(presenter.pins.last).to eq(pins.last)
+    end
+
+    skip 'performance tests' do
+      it 'needs to perform user filtering quickly' do
+        expect { PinPresenter.new({user: user_id}) }.to perform_under(0.50).and_sample(10)
+      end
+      it 'needs to perform surgeon filtering quickly' do
+        expect { PinPresenter.new({surgeon: surgeon.id}) }.to perform_under(0.50).and_sample(10)
+      end
+      it 'needs to perform procedure filtering quickly' do
+        expect { PinPresenter.new({procedure: procedure.id}) }.to perform_under(0.50).and_sample(10)
+      end
+    end
   end
 
-  it 'returns pins scoped by procedure' do
-    procedure = create(:procedure)
-    user = create(:user)
-
-    pins = FactoryGirl.create_list(:pin, 3)
-
-    pins.last.update_attributes(procedure_id: procedure.id)
-
-    presenter = PinPresenter.new({current_user: user, procedure: procedure.id})
-
-    expect(presenter.all.last).to eq(pins.last)
-  end
-
-  it 'returns pins scoped by user' do
-    current_user = create(:user)
-
-    pins = FactoryGirl.create_list(:pin, 3)
-
-    user_id = pins.last.user_id
-
-    presenter = PinPresenter.new({current_user: current_user, user: user_id})
-
-    expect(presenter.all.last).to eq(pins.last)
+  describe '#has_keywords?' do
+    it 'checks scope content' do
+      expect(PinPresenter.new({scope: nil}).send(:has_keywords?)).to eq(false)
+    end
   end
 end

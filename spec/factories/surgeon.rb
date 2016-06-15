@@ -2,7 +2,6 @@
 
 FactoryGirl.define do
   factory :surgeon do
-    id { Faker::Number.number(3)}
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
     address { Faker::Address.street_address }
@@ -13,6 +12,6 @@ FactoryGirl.define do
     phone { Faker::PhoneNumber.phone_number }
     email { Faker::Internet.email }
     url { Faker::Internet.url }
-    procedure_list { Faker::Lorem.words }
+    procedure_list { Faker::Lorem.words.join(',') }
   end
 end

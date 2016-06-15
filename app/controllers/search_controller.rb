@@ -1,21 +1,30 @@
 class SearchController < ApplicationController
-respond_to :json
+  respond_to :json
 
   def search_terms
-    @terms = Procedure.pluck(:name) + Surgeon.names
-    @terms.each {|term| term.gsub!(/[\W]/, ' ')}
-    @matches = []
-    @term = params[:term]
-    @terms.each {|t| @matches << t if /(#{@term})/.match(t.downcase)}
-    render :json => @matches
+    matches = FuzzyMatch.new(all_keywords).find(term)
+    render :json => {:match => matches}.to_json
   end
 
   def surgeons_only
-    @terms = Surgeon.names
-    @terms.each {|term| term.gsub!(/[\W]/, ' ')}
-    @matches = []
-    @term = params[:term]
-    @terms.each {|t| @matches << t if /(#{@term})/.match(t.downcase)}
-    render :json => @matches
+    matches = FuzzyMatch.new(surgeons).find(term)
+    render :json => {:match => matches}.to_json
+  end
+
+  private
+  def all_keywords
+    procedures + surgeons
+  end
+
+  def procedures
+    Procedure.names
+  end
+
+  def surgeons
+    Surgeon.names
+  end
+
+  def term
+    params.permit(:term)[:term]
   end
 end

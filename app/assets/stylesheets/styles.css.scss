@@ -2,125 +2,64 @@ $navbarBackgroundHighlight: white;
 $navbarBackground: white;
 $btnPrimaryBackground: purple;
 
-@import 'bootstrap';
+/*@import 'bootstrap';
+
+@import 'bootstrap-responsive';*/
+
 body{
-    padding-top: 60px;
-    background-color:#ccc;
+  padding-top: 60px;
+  padding-bottom: 70px;
+  background-color:#ccc;
 }
 
-@import 'bootstrap-responsive';
-
-.navbar-inner{
-    @include box-shadow(none !important);
-    border: 0;
-}
-
-.footer{
-    margin-top: 50px;
-    color: $grayLight;
-    a{
-        color: $gray;
-    }
-}
-
-.addthis_toolbox {
-  display: inline;
-}
-
-.twitter-share-button {
-  position:relative;
-  top:10px;
+.ms-container {
+  height: 100px;
 }
 
 hr.style-two {
-    border: 0;
-    height: 1px;
-    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
-    background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
-    background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
-    background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+  border: 0;
+  height: 1px;
+  background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+  background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+  background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+  background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+}
+
+.yellow {
+  color: #FCC000;
+}
+
+.hide {
+  display: none;
 }
 
 /* Required for jQuery Masonry */
 
-.box {
-	margin: 10px;
-	padding: 10px;
-	font-size: 11px;
-	line-height: 1.4em;
-	float:left;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	background-color:#fff;
-  overflow:hidden;
-
+.item {
+  width: 25%;
+  padding: 10px;
+}
+.item.w2 { width: 50%; }
+.item img {
+  width: 100%;
 }
 
-.box img {
-	display: block;
-    margin:auto;
-    height:200px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+p {
+  padding: 5px;
 }
 
 .description {
-	margin: 10px;
-}
-
-.pagination {
-    margin: 0;
-    padding: 5px 10px 5px 10px;
-}
-
-.pagination a {
-    padding: 0px 5px;
-    margin-right: 4px;
-    border-radius: 3px;
-    border: solid 1px #c0c0c0;
-    background: #e9e9e9;
-    box-shadow: inset 0px 1px 0px rgba(255,255,255, .8), 0px 1px 3px rgba(0,0,0, .1);
-    font-size: .875em;
-    font-weight: bold;
-    text-decoration: none;
-    color: #717171;
-    text-shadow: 0px 1px 0px rgba(255,255,255, 1);
-}
-
-.pagination.active {
-    border: none;
-    background: #616161;
-    box-shadow: inset 0px 0px 8px rgba(0,0,0, .5), 0px 1px 0px rgba(255,255,255, .8);
-    color: #f0f0f0;
-    text-shadow: 0px 0px 3px rgba(0,0,0, .5);
-}
-
-.pagination.gradient {
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f8f8f8), to(#e9e9e9));
-    background: -moz-linear-gradient(0% 0% 270deg,#f8f8f8, #e9e9e9);
-}
-
-select {
-    margin: 0px;
-    margin-bottom:5px;
-    width: 220px;
+  margin: 10px;
 }
 
 .gender {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 
 .form-search {
-    margin: 0px;
-    margin-top:5px;
-    padding: 0px;
-}
-
-.image {
-  position: relative;
-  width: 100%;
+  margin: 0px;
+  margin-top:5px;
+  padding: 0px;
 }
 
 .comment_box {
@@ -137,13 +76,14 @@ select {
   color: #000000;
 }
 
+.comment_box.fa {
+  color: red;
+}
+
 .icon-flag {
   color: red;
 }
 
-.label-with-popover {
-  display: inline;
-}
 .actions {
   font-size: 14px;
 }
@@ -161,6 +101,11 @@ select {
   padding: 15px;
 }
 
+.profile_well .input-group {
+  padding: 5px;
+  margin: 5px;
+}
+
 .login_well {
   background-color: #fff;
   padding: 15px;
@@ -169,6 +114,11 @@ select {
 .submission_well {
   background-color: #fff;
   padding: 15px;
+}
+
+.padded_nicely {
+  padding: 10px;
+  margin: auto;
 }
 
 #details {
@@ -188,4 +138,13 @@ select {
 .top-block {
   background-color: #FCC000;
   padding: 15px;
+}
+
+ul.dropdown-menu {
+  padding: 10px;
+  width: 250px;
+}
+
+.chosen-container{
+  margin-top: 10px;
 }

@@ -14,4 +14,12 @@ namespace :genders do
     bar.finished
 
   end
+
+#   Gender.create!([
+#   {name: "FTM"},
+#   {name: "MTF"},
+#   {name: "GenderQueer"},
+#   {name: "None"},
+#   {name: "Cisgender"}
+# ])
 end

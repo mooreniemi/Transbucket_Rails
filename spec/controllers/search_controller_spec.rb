@@ -1,15 +1,11 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe SearchController do
+describe SearchController, :type => :controller do
   it "GET search_terms" do
-    get 'search_terms'
-    expect(JSON.parse(response.body).sort).to eq(expected_results.sort)
+    expect(Procedure).to receive(:names).and_return(["foo"])
+    expect(Surgeon).to receive(:names).and_return(["Dippity"])
+
+    get 'search_terms', term: "foo"
+    expect(JSON.parse(response.body)["match"]).to include("foo")
   end
-
-end
-
-private
-
-def expected_results
-  (Procedure.uniq.pluck(:name) + Surgeon.names)
 end

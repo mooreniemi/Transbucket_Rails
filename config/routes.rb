@@ -1,12 +1,7 @@
-Transbucket::Application.routes.draw do
-
-  match '/404' => 'errors#not_found'
-  match '/422' => 'errors#server_error'
-  match '/500' => 'errors#server_error'
-
-  authenticated :user do
-    root :to => "pins#index"
-  end
+Rails.application.routes.draw do
+  get '/404' => 'errors#not_found'
+  get '/422' => 'errors#server_error'
+  get '/500' => 'errors#server_error'
 
   root :to => 'pages#home'
 
@@ -25,29 +20,34 @@ Transbucket::Application.routes.draw do
     resources :flags, :only => [:create]
   end
 
-  match 'contact' => 'contact#new', :as => 'contact', :via => :get
-  match 'contact' => 'contact#create', :as => 'contact', :via => :post
+  get 'contact' => 'contact#new'
+  post 'contact' => 'contact#create'
 
+  # FIXME duplicative
+  resources :pin_images
   resources :pins do
     resources :pin_images
     resources :flags, :only => [:create]
   end
 
-  match '/pins/:pin_id/flags/remove_flag' => 'flags#destroy', as: 'remove_pin_flag'
-  match '/comments/:comment_id/flags/remove_flag' => 'flags#destroy', as: 'remove_comment_flag'
+  resources :surgeons
+  resources :procedures
 
-  match 'by_user' => 'pins#by_user', :as => 'by'
+  get '/pins/:pin_id/flags/remove_flag' => 'flags#destroy', as: 'remove_pin_flag'
+  get '/comments/:comment_id/flags/remove_flag' => 'flags#destroy', as: 'remove_comment_flag'
 
+  get 'by_user' => 'pins#by_user', :as => 'by'
   get 'pins' => 'pins#index'
+  get 'admin' => 'pins#admin'
+
   get 'about' => 'pages#about'
   get 'terms' => 'pages#terms'
   get 'privacy' => 'pages#privacy'
-  get 'search_terms' => 'search#search_terms'
-  get 'surgeons_only' => 'search#surgeons_only'
-
   get 'home' => 'pages#home'
   get 'newsfeed' => 'pages#newsfeed'
-  get 'admin' => 'pins#admin'
+
+  get 'search_terms' => 'search#search_terms'
+  get 'surgeons_only' => 'search#surgeons_only'
 
   get 'bookmarks' => 'pages#bookmarks'
   #reroute for old bookmarks
@@ -60,4 +60,8 @@ Transbucket::Application.routes.draw do
   get '/members/*other' => 'pages#bookmarks'
   get '/members/uploads/*other' => 'pages#bookmarks'
 
+  # the logs get very noisy with backtraces unless we ignore missing images
+  if Rails.env.development?
+    get "/system/:url", to: proc { [410, {}, ['']] }, url: /.+/
+  end
 end

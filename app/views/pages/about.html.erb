@@ -1,21 +1,21 @@
-<h3><%= title 'About Transbucket' %></h3>
-  <div class="center faq_item">
-    <p><strong>TransBucket.com</strong> was created Summer 2009 after the shutdown of <%= link_to 'Transter.com',  "http://wayback.archive.org/web/20010815000000*/http://www.transster.com" %> (2001-2009), a surgery photosharing website exclusively for FTMs.</p>
-
-    <p>Rather than simply replace Transster, a new founding vision was to create a site that would be a health care and surgery resource for the <b>entire online trans* community</b>, from FTMs to MTFs to genderqueers, agender individuals, and everyone else who could benefit from exploring the real life experiences collected here. We aim to be as inclusive as possible, and do not make any judgements on what consistutes a trans* identification.</p>
-
-    <p>In other words, <b><i>you will never be told you are "not trans enough" to be here.</i></b></p>
-
-    <p>As of Fall 2012, the original founders Kit and Ryan have moved on from active management of the site. The site is now managed by Alex. Alex is a transgender man, and is committed to the founding principle of an inclusive resource for the entire community. Alex's experience is in back end web development and community management.</p>
-
-    <p>You can contact Alex using this <%= link_to 'contact form', contact_path %> or <a href="mailto:webmaster@transbucket.com">by email</a> with site feedback. You can also find us on <%= link_to 'Facebook', "https://www.facebook.com/transbucket" %> and <%= link_to 'Twitter', "https://twitter.com/transbucket" %>.</p>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+<% title 'About Transbucket' %>
+<div class="row">
+  <div class="padded_nicely col-md-6 center" style="background: url('<%= image_url("dysphoria2.png", :size => "400x400", :alt => "key", :padding => "10") %>') no-repeat top center; height:200px;">
   </div>
-
-  <h3>Answers to Some Frequently Asked Questions</h3>
-  <div class="center faq_item">
-    <span class="lead">Why does Transbucket use "trans*"?</span>
-    <p>Words are never neutral. We recognize that the trans* umbrella term can obscure differences in access and needs among different transgender people. There's no perfect solution in words to problems that are political in nature. We hope that the resources available on this site are a positive contribution to your transition, no matter how you identify. If any wording or processes on the site make you feel uncomfortable, please let us know so that the resources contained aren't lost to you.</p>
-    <span class="lead">Why does Transbucket have a gender drop-down rather than a fill in form?</span>
-    <p>We recognize, forgive the pun, that gender can't fit in a box. But for the purposes of the site, we need some ways to categorize content so that it can be searched by different individuals. We also try to adjust outreach efforts on the site relative to the demographics of our users. If you would like to see an option added to the drop-down, please contact us.</p>
+</div>
+<div class="row nice-font">
+  <div class="faq_item col-md-6 center">
+    <p class="lead"><strong>TransBucket.com</strong> was created Summer 2009 after the shutdown of <%= link_to 'Transster.com',  "http://wayback.archive.org/web/20010815000000*/http://www.transster.com" %> (2001-2009), a surgery photosharing website exclusively for FTMs.</span></p>
   </div>
-<br>
+  &nbsp;
+  <div class="faq_item col-md-6 center">
+    <p>Rather than simply replace Transster, a new founding vision was to create a site that would be a health care and surgery resource for the <b>entire online trans community</b>, from FTMs to MTFs to genderqueers, agender individuals, and everyone else who could benefit from exploring the real life experiences collected here.</p>
+    <p>We aim to be as inclusive as possible, and do not make any judgements on what consistutes a trans identification. In other words, <mark>you will <strong>never</strong> be told you are "not trans enough" to be here.</mark> We recognize, however, for historical reasons this site mostly contains content aimed at FTMs. If you are an MTF identified individual and have input on how better we can serve you as part of our community, please let us know using the contact info below.</p>
+    <p>As of Fall 2012, the original founders Kit and Ryan moved on from active management of the site. The site is now managed by Alex. Alex is a transgender man, and is committed to the founding principle of an inclusive resource for the entire community. Alex's experience is in back end web development and community management.</p>
+  </div>
+  &nbsp;
+  <div class="faq_item col-md-6 center">
+    <p class="lead">You can contact Alex using this <%= link_to "contact form #{fa_icon('envelope-o')}".html_safe, contact_path %> or <a href="mailto:webmaster@transbucket.com">by email</a> with site feedback. You can also find us on <%= link_to "Facebook #{fa_icon('facebook')}".html_safe, "https://www.facebook.com/transbucket" %> and <%= link_to "Twitter #{fa_icon('twitter')}".html_safe, "https://twitter.com/transbucket" %>.</p>
+  </div>
+</div>

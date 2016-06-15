@@ -1,7 +1,6 @@
 #rails specific
 *.sqlite3
 #config/database.yml
-#config/settings.txt
 log/*
 tmp/*
 
@@ -12,8 +11,14 @@ tmp/*
 *.swp
 *.out
 *.sql
+public/page_cache/*
 public/system/pin_images/photos/*
 public/system/*
+/public/assets
 # Ignore application configuration
-#/config/application.yml
+/config/application.yml
 coverage/*
+spec/examples.txt
+cookie_file
+
+db/sphinx/

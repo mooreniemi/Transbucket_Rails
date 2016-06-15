@@ -9,13 +9,12 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require bootstrap
  *= require font-awesome
- *= require jquery.ui.all
- *= require jquery-star-rating
- *= require jquery.ui.core
- *= require jquery.ui.theme
- *= require jquery.multiselect
- *= require jquery.multiselect.filter
+ *= require chosen/chosen.min
+ *= require jquery-ui/themes/smoothness/jquery-ui.min
+ *= require jquery-ui/themes/smoothness/theme
+ *= require dropzone/dist/dropzone
+ *= require bootstrap/dist/css/bootstrap.min
+ *= require bootstrap-star-rating/css/star-rating.min
  *= require_tree .
  */

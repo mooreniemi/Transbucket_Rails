@@ -1,0 +1,16 @@
+<% cache do %>
+<ul class="nav navbar-nav">
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <span class="caret"></span></a>
+    <ul class="dropdown-menu" role="menu">
+      <% if user_signed_in? %>
+      <li><%= link_to 'My Account',  edit_user_registration_path %></li>
+      <li><%= link_to 'Logout',  destroy_user_session_path, method: :delete %></li>
+      <% else %>
+      <li><%= link_to 'Register', register_path %></li>
+      <li><%= link_to 'Login',  new_user_session_path %></li>
+      <% end %>
+    </ul>
+  </li>
+</ul>
+<% end %>

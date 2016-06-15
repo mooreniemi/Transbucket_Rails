@@ -1,27 +1,40 @@
 require 'faker'
 
 FactoryGirl.define do
-	factory :pin do |f|
-		association :user
-    f.id { Faker::Number.number(5) }
-		f.description { Faker::Lorem.sentences(3).join(" ") }
-		f.surgeon_id 1
-		f.procedure_id 4
-		f.user_id  { Faker::Number.number(5) }
-    f.cost 3000
-    f.sensation 2
-    f.satisfaction 3
-    f.pin_images { create_list(:pin_image, 3)}
-	end
+  factory :pin do
+    description { Faker::Lorem.sentences(3).join(" ") }
+    association :surgeon, factory: :surgeon, strategy: :build
+    association :procedure, factory: :procedure, strategy: :build
+    user_id  { Faker::Number.number(5) }
+    cost { Random.rand(50000) }
+    sensation { Random.rand(11) }
+    satisfaction { Random.rand(11) }
+    pin_images { build_list(:pin_image, 2) }
 
-	factory :invalid_pin do |f|
-    f.id { Faker::Number.number(5) }
-		f.description { Faker::Lorem.sentences(3).join(" ") }
-		f.surgeon_id nil
-		f.procedure_id nil
-		f.user_id  { Faker::Number.number(5) }
-    f.cost 3000
-    f.sensation 2
-    f.satisfaction 3
-	end
+    trait :with_comments do
+      comments { create_list(:comment, 2) }
+    end
+
+    trait :with_surgeon_and_procedure do
+      surgeon
+      procedure
+    end
+
+    trait :real_pin_image_attrs do
+      pin_images { build_list(:real_pin_image, 2) }
+    end
+
+    trait :real_pin_images do
+      pin_images { create_list(:real_pin_image, 2) }
+    end
+
+    trait :broken_pin_images do
+      pin_images { create_list(:pin_image, 2) }
+    end
+
+    trait :invalid do
+      surgeon { { id: nil } }
+      procedure { { id: nil } }
+    end
+  end
 end

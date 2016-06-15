@@ -1,0 +1,31 @@
+<%= javascript_include_tag 'rated_divs' %>
+<div class="header">
+  <ul class="nav nav-pills pull-right">
+    <li class="active">
+    </li>
+  </ul>
+  <h3 class="text-muted">Your experience at a glance:</h3>
+</div>
+<div class="submission_well">
+  <div class="input-group padded_nicely">
+    <span class="input-group-addon"><%= fa_icon "money" %></span>
+    <%= f.text_field :cost, placeholder: "Cost", class: "form-control" %>
+  </div>
+  <div class="input-group padded_nicely">
+    <span class="input-group-addon">
+    <%= f.check_box :revision %>
+    </span> <span class="form-control">Seeking a revision?</span>
+  </div>
+  <br>
+  <div class="input-group padded_nicely">
+    <span class="input-group-addon">Sensation</span>
+    <!-- note: needs to be text field for chrome focus to work with form validation -->
+    <!-- see comments here: http://plugins.krajee.com/star-rating#options -->
+    <%= f.text_field :sensation, class: "form-control", required: false %>
+  </div>
+  <br>
+  <div class="input-group padded_nicely">
+    <span class="input-group-addon">Satisfaction</span>
+    <%= f.text_field :satisfaction, class: "form-control", required: false %>
+  </div>
+</div>

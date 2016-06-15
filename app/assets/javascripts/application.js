@@ -12,16 +12,27 @@
 //
 
 //= require jquery
-//= require jquery_ujs
-//= require jquery.ui.autocomplete
-//= require jquery.masonry.min.js
-//= require bootstrap
-//= require bootstrap-tooltip.js
-//= require bootstrap-popover.js
-//= require jquery-star-rating
-//= require jquery.multiselect
-//= require jquery.multiselect.filter
 //= require jquery_nested_form
-//= require underscore
+//= require jquery-ujs/src/rails
+//= require jquery-ui
+//= require eventie/eventie
+//= require doc-ready/doc-ready
+//= require fizzy-ui-utils/utils
+//= require dropzone/dist/dropzone
+//= require bootstrap/dist/js/bootstrap.min
+//= require bootstrap-star-rating/js/star-rating.min
+//= require chosen/chosen.proto
+//= require chosen/chosen.jquery
+//= require underscore/underscore-min
 //= require tinymce
+//= require jquery-bridget/jquery.bridget
+//= require matches-selector/matches-selector
+//= require get-style-property/get-style-property
+//= require eventEmitter/EventEmitter.min
+//= require doc-ready/doc-ready
+//= require get-size/get-size
+//= require outlayer/item
+//= require outlayer/outlayer
+//= require imagesloaded
+//= require masonry/masonry
 //= require_tree .

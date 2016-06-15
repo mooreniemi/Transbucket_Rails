@@ -108,6 +108,7 @@ group :test do
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'
 	gem 'capybara'
+  gem 'capybara-email'
 	gem 'poltergeist'
 	gem 'guard-rspec'
 	gem 'launchy'

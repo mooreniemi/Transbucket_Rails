@@ -22,7 +22,7 @@
 Transbucket.com (Transbucket_Rails)
 ===================================
 
-Rails 4.1.2 (in Ruby 2.2.2), using [bower_rails](https://github.com/rharriso/bower-rails) to manage javascript dependencies.
+Rails 4.2.6 (in Ruby 2.2.3), using [bower_rails](https://github.com/rharriso/bower-rails) to manage javascript dependencies.
 
 # setup
 ## database setup

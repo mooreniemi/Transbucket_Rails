@@ -47,15 +47,16 @@ Rails.application.configure do
 
   Paperclip.options[:command_path] = '/usr/local/bin/identify'
 
-  config.paperclip_defaults = {
-    :storage => :s3,
-		:s3_region => "us-east-1",
-    :s3_credentials => {
-      :bucket => ENV['S3_BUCKET'],
-      :access_key_id => ENV['S3_KEY'],
-      :secret_access_key => ENV['S3_SECRET']
-    }
-  }
+  # if you need to test s3, uncomment this
+  #config.paperclip_defaults = {
+    #:storage => :s3,
+		#:s3_region => "us-east-1",
+    #:s3_credentials => {
+      #:bucket => ENV['S3_BUCKET'],
+      #:access_key_id => ENV['S3_KEY'],
+      #:secret_access_key => ENV['S3_SECRET']
+    #}
+  #}
 
   config.after_initialize do
     Bullet.enable = true

@@ -91,7 +91,7 @@ $(document).ready(function() {
 
       clearError(file.index);
 
-      if (isEditing) {
+      if (isEditing && file.id) {
         $.ajax({
           url: "pin_images/" + file.id,
           type: 'DELETE'
@@ -100,7 +100,7 @@ $(document).ready(function() {
     });
 
     myDropzone.on("sending", function(file, xhr, formData) {
-      var captionEl = '#file-' + file.index + ' .caption';
+      var captionEl = '#file-' + file.index + ' .pin-image-caption';
       formData.append('pin_images[' + (queueCounter++) + ']caption', $(captionEl).val());
     });
 
@@ -186,19 +186,21 @@ $(document).ready(function() {
               input = $(this),
               captionText = input.val();
 
-          $.ajax({
-            url: '/pin_images/' + pinImageId + '.json',
-            type: 'PUT',
-            data: {
-              id: pinImageId,
-              caption: captionText
-            },
-            success: function() {
-              input.css('border-color', 'green');
-              input.append('✔');
-            }
-          });
-        });
+          if (pinImageId) {
+            $.ajax({
+              url: '/pin_images/' + pinImageId + '.json',
+              type: 'PUT',
+              data: {
+                id: pinImageId,
+                caption: captionText
+              },
+              success: function() {
+                input.css('border-color', 'green');
+                input.append('✔');
+              }
+            });
+          }
+       });
         return pinImages;
       });
     }

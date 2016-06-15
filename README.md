@@ -66,11 +66,11 @@ I also found I needed to link `sudo ln -s /usr/local/mysql/lib/libmysqlclient.18
 
 For Postgres, use [postgresapp](http://postgresapp.com/). Use `createuser "Alex" -s` in the shell to create the user. If permissions seem wrong, run `psql` and enter `ALTER ROLE "ALEX" CREATEDB;` to give it the right permissions.
 
-Now you should be able to run `rake db:create` and `rake db:migrate`. Make sure to rerun migrations for `RAILS_ENV=test`, then you can run `bundle` to install gems, and `rspec` to run tests.
+Now you should be able to run `rake db:setup`. Make sure to redo this command and for subsequent commands rerun for `RAILS_ENV=test`, then you can run `bundle` to install gems, and `rspec` to run tests.
 
-Some seed data is necessary for the site to work. Run `rake genders:create`, `rake surgeons:seed`, and `rake procedure:create`.
+Some seed data is necessary for the site to work. It is all handled via `rake db:seed` which is included during `rake db:setup`. The process in general is a backup and dump of the [prod database](https://devcenter.heroku.com/articles/heroku-postgres-import-export#export) is made, then a [seed_dump](https://github.com/rroblak/seed_dump) from it.
 
-For your ease, use `rake test_users:create` to create a user and an admin. Both will have the password "password". The usernames should output to console.
+For your ease, `rake db:seed` will also create a user and an admin. Both will have the password "password". The usernames should output to console.
 
 # run environments
 

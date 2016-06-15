@@ -1,16 +1,16 @@
 #app/services/comments_service.rb
 class CommentService
-	attr_reader :body, :commentable, :user
+	attr_reader :body, :commentable, :commenter
 	attr_accessor :comment
 
-	def initialize(commentable, user, body)
+	def initialize(commentable, commenter, body)
 		@commentable = commentable
 		@body = body
-		@user = user
+		@commenter = commenter
 	end
 
 	def create
-		policy = UserPolicy.new(user)
+		policy = UserPolicy.new(commentable.user)
 
 		if policy.wants_email?
 			@comment = create_and_notify
@@ -24,7 +24,7 @@ class CommentService
 	private
 
 	def build
-		Comment.build_from(commentable, user, body)
+		Comment.build_from(commentable, commenter, body)
 	end
 
 	# TODO we shouldnt be sending notification until we are
@@ -36,7 +36,7 @@ class CommentService
 			send_email_notification(comment)
 		rescue => e
 			puts "#{e} was raised while attempting to send notification " +
-				"on #{commentable.class} #{commentable.id} to User #{user.id}"
+				"on #{commentable.class} #{commentable.id} to User #{commentable.user.id}"
 		end
 
 		comment

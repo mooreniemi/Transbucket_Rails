@@ -1,14 +1,15 @@
 require 'rails_helper'
 
 describe CommentService do
-	let(:pin) { create(:pin) }
 	let(:user) { create(:user, :wants_notifications) }
+	let(:commenter) { create(:user) }
+	let(:pin) { create(:pin, user: user) }
 
 	it 'can create a comment and notify appropriately' do
 		expect_any_instance_of(CommentMailer).to receive(:new_comment_email).with(
 			user.id, pin.id).and_return(true)
 
-		CommentService.new(pin, user, "new comment").create
+		CommentService.new(pin, commenter, "new comment").create
 		expect(Comment.count).to eq(1)
 	end
 

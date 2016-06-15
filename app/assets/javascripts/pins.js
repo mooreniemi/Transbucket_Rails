@@ -4,14 +4,14 @@ $(document).ready(function() {
     // dropzone setup
 
     var isEditing = path[0] !== "pins/new",
-      formSelector = ".form-inline",
-      template = $('#preview-template').html(),
-      fileCounter = 0,
-      queueCounter = 0;
+        formSelector = ".form-inline",
+        template = $('#preview-template').html(),
+        fileCounter = 0,
+        queueCounter = 0;
 
     $(".add-button").click(function() {
       var controls = $(this).parents('.controls'),
-        add_form = controls.find(".add-form.hide");
+          add_form = controls.find(".add-form.hide");
       add_form.toggleClass('hide');
     });
 
@@ -145,7 +145,7 @@ $(document).ready(function() {
       }
 
       $("#submit-all").prop("disabled", (fileErrorCount > 0));
-   }
+    }
 
     function errorsCallback(file, errorMessage) {
       var fromRails = Array.isArray(errorMessage);
@@ -181,10 +181,10 @@ $(document).ready(function() {
         }
 
         // allow caption updates independently
-        $("input.caption").on("change", function(e) {
-          var pinImageId = $(this.parentElement).data('pin-image-id'),
-            input = $(this),
-            captionText = input.val();
+        $("input.pin-image-caption").on("change", function(e) {
+          var pinImageId = $(this).parents('.dz-preview').data('pin-image-id'),
+              input = $(this),
+              captionText = input.val();
 
           $.ajax({
             url: '/pin_images/' + pinImageId + '.json',

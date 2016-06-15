@@ -15,3 +15,9 @@ dependencies:
   post:
     - bundle exec rake db:create && RAILS_ENV=test bundle exec rake db:create
     - bundle exec rake db:migrate && RAILS_ENV=test bundle exec rake db:migrate
+
+deployment:
+  staging:
+    branch: fix_presenter
+    heroku:
+      appname: transbucket-staging

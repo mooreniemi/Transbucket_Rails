@@ -43,6 +43,6 @@ class CommentService
 	end
 
 	def send_email_notification(comment)
-		CommentMailer.new_comment_email(user.id, commentable.id).deliver_now
+		CommentMailer.new_comment_email(commentable.user.id, commentable.id).deliver_now
 	end
 end

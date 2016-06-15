@@ -20,9 +20,11 @@ describe "pin updating" do
 
   before :each do
     login_as(user, :scope => :user)
-    Rails.application.routes.send(:eval_block, Proc.new do
-      get '/test_files/:url', to: 'test_files#missing', url: /.+/
-    end)
+    Rails.application.routes.send(:eval_block,
+                                  Proc.new do
+                                    get "/test_files#{ENV['TEST_ENV_NUMBER']}/:url",
+                                        to: 'test_files#missing', url: /.+/
+                                  end)
   end
 
   after :each do

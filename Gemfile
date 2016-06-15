@@ -91,6 +91,7 @@ group :development, :test do
 	gem 'rack-mini-profiler'
   # gem 'flamegraph' # for rack-mini-profiler
   gem 'rspec-benchmark'
+  gem 'parallel_tests'
 	gem 'bullet'
 	gem 'binding_of_caller'
 	gem 'guard'

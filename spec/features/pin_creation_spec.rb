@@ -47,7 +47,7 @@ describe "pin creation" do
       it "creates a new pin with data and images" do
         self.send(:pin_create)
 
-        select_in_field("pin_surgeon_attributes_id", "#{surgeon.sanitize_last_name}, #{surgeon.first_name}", js: js)
+        select_in_field("pin_surgeon_attributes_id", surgeon.to_s, js: js)
         select_in_field("pin_procedure_attributes_id", procedure.name, js: js)
 
         click_button "Submit Now"

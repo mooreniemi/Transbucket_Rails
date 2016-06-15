@@ -1,4 +1,4 @@
-<div class="dropzone" id="dropper" data-pin-id="<%= @form.try(:id) %>">
+<div class="dropzone well" id="dropper" data-pin-id="<%= @form.try(:id) %>">
   <div class="dz-message">Drop files here to upload</div>
   <div class="fallback">
     <%= f.fields_for :pin_images do |pin_image_form| %>
@@ -19,27 +19,34 @@
 </div>
 
 <div id="preview-template" class="hide">
-  <div class="dz-preview dz-file-preview">
-    <input class="caption" type="text" placeholder="Caption"></input>
-    <br>
+  <div class="dz-preview dz-file-preview thumbnail">
     <img data-dz-thumbnail />
-    <div class="dz-details">
-      <div class="dz-filename">
-        <span data-dz-name></span>
+
+    <div class="caption">
+      <div class="input-group input-group-md">
+        <input class="form-control pin-image-caption" type="text" placeholder="Caption"></input>
       </div>
-      <div class="dz-size" data-dz-size></div>
-    </div>
-    <div class="dz-progress">
-      <span class="dz-upload" data-dz-uploadprogress></span>
-    </div>
-    <div class="dz-success-mark">
-      <span>✔</span>
-    </div>
-    <div class="dz-error-mark">
-      <span>✘</span>
-    </div>
-    <div class="dz-error-message">
-      <span data-dz-errormessage></span>
+
+      <div class="text-center">
+        <div class="dz-filename">
+          <span data-dz-name></span>
+        </div>
+        <div data-dz-size></div>
+      </div>
+      <div class="hide">
+        <div class="dz-progress">
+          <span class="dz-upload" data-dz-uploadprogress></span>
+        </div>
+        <div class="dz-success-mark">
+          <span>✔</span>
+        </div>
+        <div class="dz-error-mark">
+          <span>✘</span>
+        </div>
+      </div>
+      <div class="dz-error-message">
+        <span data-dz-errormessage></span>
+      </div>
     </div>
   </div>
 </div>

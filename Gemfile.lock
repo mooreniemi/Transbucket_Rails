@@ -112,7 +112,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1.1)
-    connection_pool (2.2.0)
     coolline (0.5.0)
       unicode_utils (~> 1.4)
     daemons (1.2.3)
@@ -474,7 +473,6 @@ DEPENDENCIES
   bullet
   capybara
   coffee-rails (~> 4.0.0)
-  connection_pool
   database_cleaner
   delayed_job_active_record
   devise

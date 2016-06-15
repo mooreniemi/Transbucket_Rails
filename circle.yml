@@ -18,6 +18,6 @@ dependencies:
 
 deployment:
   staging:
-    branch: fix_presenter
+    branch: master
     heroku:
       appname: transbucket-staging

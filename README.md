@@ -24,6 +24,33 @@ Transbucket.com (Transbucket_Rails)
 
 Rails 4.2.6 (in Ruby 2.2.3), using [bower_rails](https://github.com/rharriso/bower-rails) to manage javascript dependencies.
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [setup](#setup)
+  - [database setup](#database-setup)
+    - [mysql](#mysql)
+    - [postgres](#postgres)
+- [run environments](#run-environments)
+  - [local](#local)
+  - [ci](#ci)
+  - [staging](#staging)
+  - [production](#production)
+  - [tests](#tests)
+    - [parallel tests](#parallel-tests)
+    - [performance testing](#performance-testing)
+  - [static analysis](#static-analysis)
+  - [profiling](#profiling)
+    - [ruby-prof example](#ruby-prof-example)
+    - [stackprof example](#stackprof-example)
+- [caching](#caching)
+- [search](#search)
+- [running scheduled jobs / async execution](#running-scheduled-jobs--async-execution)
+- [more help](#more-help)
+- [contact](#contact)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 # setup
 ## database setup
 

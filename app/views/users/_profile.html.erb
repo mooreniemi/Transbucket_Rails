@@ -14,7 +14,7 @@
     <span class="input-group-addon"><%= fa_icon "key" %> Gender: </span>
     <%= f.select :gender_id, options_from_collection_for_select(Gender.all, "id", "name"), {}, { class: "form-control"} %>
   </div>
-  <!-- small>On Transbucket, gender helps control the pronouns you are referred to with. Currently, MTF and FTM genders correspond to binary pronoun identifications. For gender neutral pronouns, please use "None" or "GenderQueer" as your gender. Future updates will allow for pronoun choice independent of your gender identification.</small -->
+  <small>On Transbucket, gender helps control the pronouns you are referred to with. Currently, MTF and FTM genders correspond to binary pronoun identifications. For gender neutral pronouns, please use "None" or "GenderQueer" as your gender. Future updates will allow for pronoun choice independent of your gender identification.</small>
   <div class="input-group">
     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i> Email: </span>
     <%= f.email_field :email, class: "form-control" %>
@@ -27,8 +27,7 @@
   </div>
   <div>
     <%= f.submit "Update", class: "btn btn-primary pull-right" %>
-    <%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn' %>
+  <% end %>
     <br clear="both">
   </div>
-  <% end %>
 </div>

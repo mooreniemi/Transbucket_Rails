@@ -4,12 +4,12 @@ RSpec.describe "registration" do
   let!(:genders) { create_list(:gender, 5) }
   let(:user) { build(:user, gender: genders.last) }
 
-  def fill_out_sign_up(user)
+  def fill_out_sign_up(user, invalid: false)
     visit '/register'
 
     fill_in "Your name", :with => user.name
     fill_in "Username", :with => user.username
-    fill_in "Email", :with => user.email
+    fill_in "Email", :with => user.email unless invalid
     fill_in "Password", :with => user.password
     fill_in "Password confirmation", :with => user.password
     select user.gender.name, :from => "user_gender_id"
@@ -23,28 +23,46 @@ RSpec.describe "registration" do
     click_button "Sign in"
   end
 
-  it "creates a new user that can sign in" do
-    fill_out_sign_up(user)
+  shared_examples "registration" do
+    it "displays errors upon incorrect input" do
+      self.send(:fill_out_sign_up, user, invalid: true)
+      click_button "Submit"
+      expect(page).to have_content("Email can't be blank")
+    end
 
-    clear_emails
+    it "creates a new user that can sign in" do
+      self.send(:fill_out_sign_up, user)
 
-    click_button "Submit"
+      clear_emails
 
-    expect(page).to have_content("A message with a confirmation link")
+      click_button "Submit"
 
-    open_email(user.email)
-    current_email.click_link 'Confirm my account'
+      expect(page).to have_content("A message with a confirmation link")
 
-    expect(page).to have_content("Your account was successfully confirmed")
+      open_email(user.email)
+      current_email.click_link 'Confirm my account'
 
-    login_user(user, remember: true)
+      expect(page).to have_content("Your account was successfully confirmed")
 
-    expect(current_path).to eq('/pins')
+      login_user(user, remember: true)
 
-    user_in_db = User.find_by!(email: user.email)
+      expect(current_path).to eq('/pins')
 
-    expect(user_in_db.confirmed_at).not_to be nil
-    expect(user_in_db.gender_id.to_i).to eq(user.gender.id)
+      user_in_db = User.find_by!(email: user.email)
+
+      expect(user_in_db.confirmed_at).not_to be nil
+      expect(user_in_db.gender_id.to_i).to eq(user.gender.id)
+    end
+  end
+
+  context "without js" do
+    include_examples "registration"
+  end
+
+  context "with js", :js => true do
+    ActionMailer::Base.default_url_options[:host] = "localhost:#{Capybara.server_port}"
+
+    include_examples "registration"
   end
 
 end

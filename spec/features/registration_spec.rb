@@ -27,7 +27,7 @@ RSpec.describe "registration" do
     it "displays errors upon incorrect input" do
       self.send(:fill_out_sign_up, user, invalid: true)
       click_button "Submit"
-      expect(page).to have_content("Email cannot be blank")
+      expect(page).to have_content("Email can't be blank")
     end
 
     it "creates a new user that can sign in" do
@@ -60,6 +60,8 @@ RSpec.describe "registration" do
   end
 
   context "with js", :js => true do
+    ActionMailer::Base.default_url_options[:host] = "localhost:#{Capybara.server_port}"
+
     include_examples "registration"
   end
 

@@ -12,7 +12,7 @@
   </div>
   <div class="input-group">
     <span class="input-group-addon"><%= fa_icon "key" %> Gender: </span>
-    <%= f.select :gender_id, options_from_collection_for_select(Gender.all, "id", "name"), {}, { class: "form-control"} %>
+    <%= f.select :gender_id, options_from_collection_for_select(Gender.all, "id", "name", resource.gender.id), {}, { class: "form-control"} %>
   </div>
   <small>On Transbucket, gender helps control the pronouns you are referred to with. Currently, MTF and FTM genders correspond to binary pronoun identifications. For gender neutral pronouns, please use "None" or "GenderQueer" as your gender. Future updates will allow for pronoun choice independent of your gender identification.</small>
   <div class="input-group">

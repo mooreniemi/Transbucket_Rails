@@ -23,34 +23,44 @@ RSpec.describe "registration" do
     click_button "Sign in"
   end
 
-  it "displays errors upon incorrect input" do
-    fill_out_sign_up(user, invalid: true)
-    click_button "Submit"
-    expect(page).to have_content("Email cannot be blank")
+  shared_examples "registration" do
+    it "displays errors upon incorrect input" do
+      self.send(:fill_out_sign_up, user, invalid: true)
+      click_button "Submit"
+      expect(page).to have_content("Email cannot be blank")
+    end
+
+    it "creates a new user that can sign in" do
+      self.send(:fill_out_sign_up, user)
+
+      clear_emails
+
+      click_button "Submit"
+
+      expect(page).to have_content("A message with a confirmation link")
+
+      open_email(user.email)
+      current_email.click_link 'Confirm my account'
+
+      expect(page).to have_content("Your account was successfully confirmed")
+
+      login_user(user, remember: true)
+
+      expect(current_path).to eq('/pins')
+
+      user_in_db = User.find_by!(email: user.email)
+
+      expect(user_in_db.confirmed_at).not_to be nil
+      expect(user_in_db.gender_id.to_i).to eq(user.gender.id)
+    end
   end
 
-  it "creates a new user that can sign in" do
-    fill_out_sign_up(user)
+  context "without js" do
+    include_examples "registration"
+  end
 
-    clear_emails
-
-    click_button "Submit"
-
-    expect(page).to have_content("A message with a confirmation link")
-
-    open_email(user.email)
-    current_email.click_link 'Confirm my account'
-
-    expect(page).to have_content("Your account was successfully confirmed")
-
-    login_user(user, remember: true)
-
-    expect(current_path).to eq('/pins')
-
-    user_in_db = User.find_by!(email: user.email)
-
-    expect(user_in_db.confirmed_at).not_to be nil
-    expect(user_in_db.gender_id.to_i).to eq(user.gender.id)
+  context "with js", :js => true do
+    include_examples "registration"
   end
 
 end

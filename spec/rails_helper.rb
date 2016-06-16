@@ -10,6 +10,7 @@ require 'capybara/email/rspec'
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 Capybara.server_port = 9887 + ENV['TEST_ENV_NUMBER'].to_i
+ActionMailer::Base.default_url_options[:host] = "localhost:#{Capybara.server_port}"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

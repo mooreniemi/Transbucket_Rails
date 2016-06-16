@@ -4,12 +4,12 @@ RSpec.describe "registration" do
   let!(:genders) { create_list(:gender, 5) }
   let(:user) { build(:user, gender: genders.last) }
 
-  def fill_out_sign_up(user)
+  def fill_out_sign_up(user, invalid: false)
     visit '/register'
 
     fill_in "Your name", :with => user.name
     fill_in "Username", :with => user.username
-    fill_in "Email", :with => user.email
+    fill_in "Email", :with => user.email unless invalid
     fill_in "Password", :with => user.password
     fill_in "Password confirmation", :with => user.password
     select user.gender.name, :from => "user_gender_id"
@@ -21,6 +21,12 @@ RSpec.describe "registration" do
     check "user_remember_me" if remember
 
     click_button "Sign in"
+  end
+
+  it "displays errors upon incorrect input" do
+    fill_out_sign_up(user, invalid: true)
+    click_button "Submit"
+    expect(page).to have_content("Email cannot be blank")
   end
 
   it "creates a new user that can sign in" do

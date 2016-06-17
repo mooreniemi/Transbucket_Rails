@@ -56,8 +56,6 @@ gem 'reform-rails'
 
 gem 'phony_rails'
 
-gem 'ledermann-rails-settings', :require => 'rails-settings'
-
 # pin submission wysiwyg
 gem 'tinymce-rails'
 

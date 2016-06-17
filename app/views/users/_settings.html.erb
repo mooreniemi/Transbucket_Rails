@@ -1,5 +1,4 @@
 <h2>Edit <%= resource_name.to_s.humanize %> Settings</h2>
-<% resource.preference = Preference.new unless resource.preference.present? %>
 <div class="profile_well">
   <%= simple_form_for(resource.preference, :url => user_preferences_path(resource), :html => {:method => :put, :class => 'form-horizontal'}) do |f| %>
     <div class="col-lg-6">

@@ -1,4 +1,8 @@
 class ProceduresController < ApplicationController
+  def index
+    @procedures = Procedure.all
+  end
+
   def new
     @procedure = Procedure.new
 

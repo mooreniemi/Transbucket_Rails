@@ -30,4 +30,9 @@ describe CommentService do
 
 		expect(comment.body).to eq(text)
 	end
+
+  it "respects notification settings" do
+    # expect_any_instance_of(CommentMailer).not_to receive(:new_comment_email)
+    # CommentService.new(pin, commenter, "example not notified").create
+  end
 end

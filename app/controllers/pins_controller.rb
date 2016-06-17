@@ -52,6 +52,7 @@ class PinsController < ApplicationController
       if @form.validate(pin_params)
         @form.save
         @pin = @form.model
+        @pin.procedure.recalculate_avgs
 
         format.html { redirect_to @pin, notice: 'Pin was successfully created.' }
         format.json { render json: @pin, status: :created, location: @pin }
@@ -71,6 +72,7 @@ class PinsController < ApplicationController
       if @form.validate(pin_params)
         @form.save
         @pin = @form.model
+        @pin.procedure.recalculate_avgs
 
         format.html { redirect_to @pin, notice: 'Pin was successfully updated.' }
         format.json { head :no_content }
@@ -146,12 +148,6 @@ class PinsController < ApplicationController
 
   def query
     sanitize(params[:query]) if params[:query]
-  end
-
-  def sanitize(query)
-    query.gsub!(/(dr.|Dr.|dr|Dr)/, '')
-    query.gsub!(/[\W]/, ' ')
-    return Riddle.escape(query)
   end
 
   def safe_mode

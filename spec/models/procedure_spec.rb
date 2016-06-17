@@ -1,16 +1,21 @@
 require 'rails_helper'
 
 describe Procedure do
-  it 'has gender' do
-    procedure = create(:procedure)
-    expect(procedure.gender).to_not be_nil
+  it 'calculates avg sensation' do
+    procedure = create(:procedure, :uncomputed)
+    create(:pin, sensation: 3, procedure_id: procedure.id)
+
+    procedure.recalculate_avgs
+    expect(procedure.reload.avg_sensation).to eq(3)
+
+    create(:pin, procedure_id: procedure.id, sensation: 5)
+    procedure.recalculate_avgs
+    expect(procedure.reload.avg_sensation).to eq(4)
   end
 
   it 'has #names' do
     create_list(:procedure, 3)
-    names = Procedure.where("name IS NOT NULL")
-    .pluck(:name)
-    .sort
+    names = Procedure.pluck(:name).sort
     expect(Procedure.names).to eq(names)
   end
 end

@@ -7,8 +7,8 @@ FactoryGirl.define do
     association :procedure, factory: :procedure, strategy: :build
     user_id  { Faker::Number.number(5) }
     cost { Random.rand(50000) }
-    sensation { Random.rand(11) }
-    satisfaction { Random.rand(11) }
+    sensation { Random.rand(5) }
+    satisfaction { Random.rand(5) }
     pin_images { build_list(:pin_image, 2) }
 
     trait :with_comments do

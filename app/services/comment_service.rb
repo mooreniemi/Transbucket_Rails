@@ -10,13 +10,14 @@ class CommentService
 	end
 
 	def create
-		policy = UserPolicy.new(commentable.user)
+    if commentable.user.present?
+		  policy = UserPolicy.new(commentable.user)
+      wants_email = policy.wants_email?
+    else
+      wants_email = false
+    end
 
-		if policy.wants_email?
-			@comment = create_and_notify
-		else
-			@comment = build
-		end
+    @comment = wants_email ? create_and_notify : build
 
 		@comment.save
 	end

@@ -77,6 +77,7 @@ gem 'font-awesome-rails'
 
 group :development do
   gem 'brakeman', :require => false
+  gem 'any_login'
 	gem 'letter_opener'
 	gem 'seed_dump'
 	gem 'thin'

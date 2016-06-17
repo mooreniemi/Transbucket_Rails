@@ -18,6 +18,7 @@
       <% end %>
       <%= yield %>
     </div>
+    <%= any_login_here if Rails.env.development? %>
     <%= render 'layouts/footer' %>
   </body>
 </html>

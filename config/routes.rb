@@ -33,8 +33,9 @@ Rails.application.routes.draw do
   resources :surgeons
   resources :procedures
 
-  get '/pins/:pin_id/flags/remove_flag' => 'flags#destroy', as: 'remove_pin_flag'
-  get '/comments/:comment_id/flags/remove_flag' => 'flags#destroy', as: 'remove_comment_flag'
+  # TODO redundant?
+  delete '/pins/:pin_id/flags/remove_flag' => 'flags#destroy', as: 'remove_pin_flag'
+  delete '/comments/:comment_id/flags/remove_flag' => 'flags#destroy', as: 'remove_comment_flag'
 
   get 'by_user' => 'pins#by_user', :as => 'by'
   get 'pins' => 'pins#index'

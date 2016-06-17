@@ -28,7 +28,7 @@ class FlagsController < ApplicationController
 
     respond_to do |format|
       if @content.published?
-        redirect_to pins_path
+        flash[:notice] = "Removed flags."
       else
         format.js {render json: @content, status: :unprocessable_entity }
       end

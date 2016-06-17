@@ -24,7 +24,9 @@ class Flag
 
   def flagger_is_pin_author?
     return false if content.is_a?(Pin)
+    return false if user.nil?
     pin_author = Pin.find(content.commentable_id).user
+    return false if pin_author.nil?
     user.id == pin_author.id
   end
 end

@@ -65,6 +65,8 @@ GEM
       awesome_nested_set (>= 3.0)
     acts_as_votable (0.7.1)
     addressable (2.3.8)
+    any_login (1.2.1)
+      rails (>= 4.0.0)
     arel (6.0.3)
     autoprefixer-rails (6.0.3)
       execjs
@@ -476,6 +478,7 @@ DEPENDENCIES
   acts-as-taggable-on
   acts_as_commentable_with_threading
   acts_as_votable (~> 0.7.1)
+  any_login
   autoprefixer-rails
   awesome_print
   aws-sdk

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "leaving a comment" do
+RSpec.describe "commenting", :fake_images => true do
   let(:pin) { create(:pin, :with_surgeon_and_procedure) }
   let(:comment) { build(:comment) }
   let(:user) { create(:user, :with_confirmation) }
@@ -22,5 +22,30 @@ RSpec.describe "leaving a comment" do
     end
 
     expect(page).to have_content(comment.body)
+  end
+
+  context "deletion" do
+    let!(:comment) { create(:comment, user: user, commentable: pin) }
+
+    before(:each) do
+      visit "/pins/#{pin.id}"
+      expect(page).to have_content(comment.body)
+    end
+
+    it "allows users to delete their comments (js only)", :js => true do
+      accept_confirm do
+        find("a.close").click
+      end
+
+      expect(page).not_to have_content(comment.body)
+    end
+
+    it "doesn't delete if confirmation is dismissed (js only)", :js => true do
+      dismiss_confirm do
+        find("a.close").click
+      end
+
+      expect(page).to have_content(comment.body)
+    end
   end
 end

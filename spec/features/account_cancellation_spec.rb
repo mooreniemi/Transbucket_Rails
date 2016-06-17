@@ -21,16 +21,18 @@ RSpec.describe "cancel user account" do
   end
 
   context "with js", :js => true do
-    before { skip("Need js confirmation") }
-
-    it "deletes the user's account after confirmation with JS" do
-      click_button "Cancel my account"
+    it "deletes the user's account after confirmation" do
+      accept_confirm do
+        click_button "Cancel my account"
+      end
 
       expect(User.where(email: user.email)).not_to exist
     end
 
     it "doesn't delete the account if not confirmed" do
-      click_button "Cancel my account"
+      dismiss_confirm do
+        click_button "Cancel my account"
+      end
 
       expect(User.where(email: user.email)).to exist
     end

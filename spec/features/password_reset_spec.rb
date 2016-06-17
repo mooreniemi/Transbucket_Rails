@@ -1,7 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "password reset" do
-  let!(:user) { create(:user, :with_confirmation) }
+  let!(:users) { create_list(:user, 2, :with_confirmation) }
+  let!(:user) { users.last }
 
   it "sends an email with a reset token that works" do
     visit '/users/password/new'
@@ -11,6 +12,8 @@ RSpec.describe "password reset" do
     clear_emails
     click_button "Send me reset password instructions"
     open_email(user.email)
+
+    expect(current_email).to have_content("Hello #{user.email}")
 
     current_email.click_link 'Change my password'
 

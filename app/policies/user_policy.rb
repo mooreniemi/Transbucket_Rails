@@ -6,10 +6,10 @@ class UserPolicy
   end
 
   def wants_email?
-    user.preference.notification == true
+    user.preference && (user.preference.notification == true)
   end
 
   def safe_mode?
-    user.preference.safe_mode == true
+    user.preference && (user.preference.safe_mode == true)
   end
 end

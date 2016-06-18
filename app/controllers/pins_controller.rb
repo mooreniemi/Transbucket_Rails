@@ -1,4 +1,5 @@
 class PinsController < ApplicationController
+  include SanitizeNames
   before_filter :authenticate_user!
   before_filter :get_pin, :except => [:index, :new, :create, :admin]
   respond_to :json
@@ -147,7 +148,7 @@ class PinsController < ApplicationController
   end
 
   def query
-    sanitize(params[:query]) if params[:query]
+    sanitize_query(params[:query]) if params[:query]
   end
 
   def safe_mode

@@ -65,6 +65,8 @@ GEM
       awesome_nested_set (>= 3.0)
     acts_as_votable (0.7.1)
     addressable (2.3.8)
+    any_login (1.2.1)
+      rails (>= 4.0.0)
     arel (6.0.3)
     autoprefixer-rails (6.0.3)
       execjs
@@ -111,6 +113,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-email (2.5.0)
+      capybara (~> 2.4)
+      mail
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cliver (0.3.2)
@@ -178,6 +183,8 @@ GEM
     font-awesome-rails (4.4.0.0)
       railties (>= 3.2, < 5.0)
     formatador (0.2.5)
+    friendly_id (5.1.0)
+      activerecord (>= 4.0.0)
     fuzzy_match (2.1.0)
     git-version-bump (0.15.1)
     globalid (0.3.6)
@@ -219,8 +226,6 @@ GEM
     kgio (2.10.0)
     launchy (2.4.3)
       addressable (~> 2.3)
-    ledermann-rails-settings (2.4.0)
-      activerecord (>= 3.1)
     letsrate (1.0.9)
     letter_opener (1.4.1)
       launchy (~> 2.2)
@@ -473,6 +478,7 @@ DEPENDENCIES
   acts-as-taggable-on
   acts_as_commentable_with_threading
   acts_as_votable (~> 0.7.1)
+  any_login
   autoprefixer-rails
   awesome_print
   aws-sdk
@@ -483,6 +489,7 @@ DEPENDENCIES
   brakeman
   bullet
   capybara
+  capybara-email
   coffee-rails (~> 4.0.0)
   database_cleaner
   delayed_job_active_record
@@ -493,13 +500,13 @@ DEPENDENCIES
   figaro
   flying-sphinx
   font-awesome-rails
+  friendly_id (~> 5.1.0)
   fuzzy_match
   guard
   guard-livereload
   guard-rspec
   htmlentities
   launchy
-  ledermann-rails-settings
   letsrate
   letter_opener
   meta-tags

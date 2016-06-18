@@ -29,10 +29,10 @@ describe Surgeon do
   end
 
   describe ".names" do
-   it 'provides a list of names formatted for SearchController' do
-     surgeons = create_list(:surgeon, 2)
-     name_string = "#{surgeons[0].last_name},#{surgeons[0].first_name}"
-     expect(Surgeon.names).to include(name_string)
-   end
+    it 'provides a list of names formatted for SearchController' do
+      surgeons = create_list(:surgeon, 2)
+      name_string = "#{surgeons[0].last_name},#{surgeons[0].first_name}"
+      expect(Surgeon.names).to include(name_string)
+    end
   end
 end

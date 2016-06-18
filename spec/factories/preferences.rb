@@ -1,5 +1,7 @@
 FactoryGirl.define do
-  factory :preference, :class => 'Preference' do
-    user_id 1
+  factory :preference do
+    user
+    notification true
+    safe_mode false
   end
 end

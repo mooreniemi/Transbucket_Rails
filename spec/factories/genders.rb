@@ -2,6 +2,9 @@
 
 FactoryGirl.define do
   factory :gender do
-    name "GenderQueer"
+    sequence(:name) do |n|
+      genders = ["MTF", "FTM", "GenderQueer"]
+      "#{genders[n % genders.size]}#{n}"
+    end
   end
 end

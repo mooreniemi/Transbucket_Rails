@@ -6,4 +6,8 @@ FactoryGirl.define do
     avg_sensation 3
     avg_satisfaction 3
   end
+  trait :uncomputed do
+    avg_sensation nil
+    avg_satisfaction nil
+  end
 end

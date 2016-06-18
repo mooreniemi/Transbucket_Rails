@@ -1,9 +1,4 @@
 class User < ActiveRecord::Base
-  has_settings do |s|
-    s.key :view, :defaults => { :safe_mode => false }
-    s.key :contact,  :defaults => { :notification => true }
-  end
-
   belongs_to :gender
   has_one :preference
   after_create :set_preference
@@ -29,7 +24,7 @@ class User < ActiveRecord::Base
   acts_as_voter
 
   def self.find_first_by_auth_conditions(warden_conditions)
-    conditions = warden_conditions.dup.to_h
+    conditions = warden_conditions.dup.to_hash
     if login = conditions.delete(:login)
       where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
     else

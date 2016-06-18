@@ -13,13 +13,37 @@ describe CommentService do
 		expect(Comment.count).to eq(1)
 	end
 
+  context "with a pin with no user" do
+    let(:pin) { create(:pin) }
+
+    it 'creates a comment with no notification' do
+      expect_any_instance_of(CommentMailer).not_to receive(:new_comment_email)
+
+      CommentService.new(pin, commenter, "new comment").create
+      expect(Comment.count).to eq(1)
+    end
+  end
+
 	it 'logs notification errors on comments' do
 		expect_any_instance_of(CommentService).to receive(:send_email_notification).
 			and_raise(Net::SMTPAuthenticationError)
 
-		comment = CommentService.new(pin, user, text = "comment text").
-			send(:create_and_notify)
+    comment = nil
+    text = "comment text"
+
+    expected_error = "Net::SMTPAuthenticationError was raised while " +
+                     "attempting to send notification on Pin #{pin.id} " +
+                     "to User #{user.id}\n"
+
+    expect {
+		  comment = CommentService.new(pin, user, text).send(:create_and_notify)
+    }.to output(expected_error).to_stdout
 
 		expect(comment.body).to eq(text)
 	end
+
+  it "respects notification settings" do
+    # expect_any_instance_of(CommentMailer).not_to receive(:new_comment_email)
+    # CommentService.new(pin, commenter, "example not notified").create
+  end
 end

@@ -1,13 +1,7 @@
 require "rails_helper"
 require "faker"
 
-class TestFilesController < ApplicationController
-  def missing
-    head :no_content
-  end
-end
-
-describe "pin updating" do
+describe "pin updating", :fake_images => true do
   include CapybaraHelpers
 
   let(:user) { create(:user, :with_confirmation) }
@@ -20,23 +14,23 @@ describe "pin updating" do
 
   before :each do
     login_as(user, :scope => :user)
-    Rails.application.routes.send(:eval_block,
-                                  Proc.new do
-                                    get "/test_files#{ENV['TEST_ENV_NUMBER']}/:url",
-                                        to: 'test_files#missing', url: /.+/
-                                  end)
-  end
+ end
 
   after :each do
     Warden.test_reset!
-    Rails.application.reload_routes!
   end
 
-  shared_examples "pin updating" do
+  shared_examples "pin updating" do |js: false|
     it "updates the pin with one less photo and new info" do
       ensure_on "/pins/#{pin.id}/edit"
       expect(find("select#pin_surgeon_attributes_id", visible: false).value.to_i).to eq(pin.surgeon.id)
       expect(find("select#pin_procedure_attributes_id", visible: false).value.to_i).to eq(pin.procedure.id)
+
+      pin.pin_images.each do |pin_image|
+        image_caption = find("#{js ? '.dz-preview' : '.pin-image-fields'}[data-pin-image-id='#{pin_image.id}'] .pin-image-caption")
+        expect(image_caption.value).to eq(pin_image.caption)
+      end
+
       self.send(:updater)
 
       click_button "Submit Now"
@@ -73,12 +67,12 @@ describe "pin updating" do
       add_images(new_images, offset: offset)
     end
 
-    include_examples "pin updating"
+    include_examples "pin updating", js: false
 
     context "with broken pin images" do
       let(:pin) { create(:pin, :with_surgeon_and_procedure, :broken_pin_images) }
 
-      include_examples "pin updating"
+      include_examples "pin updating", js: false
     end
   end
 
@@ -97,12 +91,12 @@ describe "pin updating" do
       add_images(new_images, js: true, offset: offset)
     end
 
-    include_examples "pin updating"
+    include_examples "pin updating", js: true
 
     context "with broken pin images" do
       let(:pin) { create(:pin, :with_surgeon_and_procedure, :broken_pin_images) }
 
-      include_examples "pin updating"
+      include_examples "pin updating", js: true
     end
   end
 end

@@ -33,6 +33,9 @@ gem 'will_paginate-bootstrap'
 gem 'paperclip', :git=> 'https://github.com/thoughtbot/paperclip', :ref => '523bd46c768226893f23889079a7aa9c73b57d68'
 gem 'aws-sdk'
 
+# for slug ids
+gem 'friendly_id', '~> 5.1.0' # Note: You MUST use 5.0.0 or greater for Rails 4.0+
+
 # for managing environment variables
 gem 'figaro'
 
@@ -56,8 +59,6 @@ gem 'reform-rails'
 
 gem 'phony_rails'
 
-gem 'ledermann-rails-settings', :require => 'rails-settings'
-
 # pin submission wysiwyg
 gem 'tinymce-rails'
 
@@ -77,6 +78,7 @@ gem 'font-awesome-rails'
 
 group :development do
   gem 'brakeman', :require => false
+  gem 'any_login'
 	gem 'letter_opener'
 	gem 'seed_dump'
 	gem 'thin'
@@ -108,6 +110,7 @@ group :test do
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'
 	gem 'capybara'
+  gem 'capybara-email'
 	gem 'poltergeist'
 	gem 'guard-rspec'
 	gem 'launchy'

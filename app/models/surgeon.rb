@@ -1,5 +1,7 @@
 class Surgeon < ActiveRecord::Base
   include SanitizeNames
+  extend FriendlyId
+  friendly_id :full_name, use: :slugged
   has_many :pins
   has_many :skills
   has_many :procedures, through: :skills
@@ -12,6 +14,10 @@ class Surgeon < ActiveRecord::Base
 
   validates :last_name, uniqueness: { scope: :first_name }
   validates :last_name, presence: true
+
+  def full_name
+    "#{last_name}-#{first_name}"
+  end
 
   def to_s
     first_name.nil? ? last_name : last_name.capitalize + ', ' + first_name.capitalize

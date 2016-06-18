@@ -1,4 +1,8 @@
 class SurgeonsController < ApplicationController
+  def show
+    @surgeon = Surgeon.friendly.find(params[:id])
+  end
+
   def new
     @surgeon = Surgeon.new
 

@@ -32,10 +32,4 @@ module PinsHelper
   def latest_comment_snippet
     try(:comment_threads).try(:last).try(:snippet)
   end
-
-  def sanitize(query)
-    query.gsub!(/(dr.|Dr.|dr|Dr)/, '')
-    query.gsub!(/[\W]/, ' ')
-    return Riddle.escape(query)
-  end
 end

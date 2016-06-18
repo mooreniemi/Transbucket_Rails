@@ -1,4 +1,8 @@
 class Procedure < ActiveRecord::Base
+  include Stats
+  extend FriendlyId
+  friendly_id :name
+
   has_many :pins
   has_many :skills
   has_many :surgeons, through: :skills
@@ -7,10 +11,6 @@ class Procedure < ActiveRecord::Base
 
   validates :name, uniqueness: true
   validates :name, presence: true
-
-  def recalculate_avgs
-    RecalculateAvgsQuery.for(self.class, self.id)
-  end
 
   def to_s
     name

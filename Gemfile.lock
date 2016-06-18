@@ -183,6 +183,8 @@ GEM
     font-awesome-rails (4.4.0.0)
       railties (>= 3.2, < 5.0)
     formatador (0.2.5)
+    friendly_id (5.1.0)
+      activerecord (>= 4.0.0)
     fuzzy_match (2.1.0)
     git-version-bump (0.15.1)
     globalid (0.3.6)
@@ -500,6 +502,7 @@ DEPENDENCIES
   figaro
   flying-sphinx
   font-awesome-rails
+  friendly_id (~> 5.1.0)
   fuzzy_match
   guard
   guard-livereload

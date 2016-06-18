@@ -33,6 +33,9 @@ gem 'will_paginate-bootstrap'
 gem 'paperclip', :git=> 'https://github.com/thoughtbot/paperclip', :ref => '523bd46c768226893f23889079a7aa9c73b57d68'
 gem 'aws-sdk'
 
+# for slug ids
+gem 'friendly_id', '~> 5.1.0' # Note: You MUST use 5.0.0 or greater for Rails 4.0+
+
 # for managing environment variables
 gem 'figaro'
 

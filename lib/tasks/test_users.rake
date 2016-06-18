@@ -1,25 +1,34 @@
 namespace :test_users do
   desc "test users for staging and dev"
   task create: :environment do
-    meow_meow = User.new(email: 'bigbadmath@gmail.com',
+    doodle = User.new(email: 'doodle.doo@foo.com',
       password: 'password',
       password_confirmation: 'password',
-      username: 'meowmeow',
-      name: 'AlexUser',
-      gender: Gender.first)
-		meow_meow.skip_confirmation!
-		meow_meow.save!
-    puts "meowmeow user created successfully"
+      username: 'doodle',
+      name: 'DoodleDoo',
+      gender: Gender.last)
+		doodle.skip_confirmation!
+		doodle.save!
+    puts "doodle user created successfully"
 
-    zoon = User.new(email: 'mooreniemi@gmail.com',
+    skeeter = User.new(email: 'skeeter@foo.com',
       password: 'password',
       password_confirmation: 'password',
-      username: 'zoon',
-      name: 'AlexAdmin',
-      gender: Gender.first,
-      admin: true)
-    zoon.skip_confirmation!
-		zoon.save!
-    puts "zoon ADMIN created successfully"
+      username: 'skeeter',
+      name: 'Skeeter',
+      gender: Gender.last)
+		skeeter.skip_confirmation!
+		skeeter.save!
+    puts "skeeter user created successfully"
+
+    shitty_cat = User.new(email: 'shitty_cat@cats.com',
+      password: 'password',
+      password_confirmation: 'password',
+      username: 'shitty_cat',
+      name: 'Koko',
+      gender: Gender.last)
+		shitty_cat.skip_confirmation!
+		shitty_cat.save!
+    puts "shitty_cat user created successfully"
   end
 end

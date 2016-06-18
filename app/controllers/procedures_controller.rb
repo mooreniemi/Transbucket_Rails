@@ -1,4 +1,12 @@
 class ProceduresController < ApplicationController
+  def index
+    @procedures = Procedure.all
+  end
+
+  def show
+    @procedure = Procedure.friendly.find(params[:id])
+  end
+
   def new
     @procedure = Procedure.new
 

@@ -18,7 +18,7 @@ class Surgeon < ActiveRecord::Base
   end
 
   def self.names
-    self.pluck(:first_name, :last_name).
+    pluck(:first_name, :last_name).
       collect! {|e| e[0].nil? ? e[1] : e.reverse.join(',') }.
       sort
   end

@@ -4,4 +4,6 @@ class ProcedureForm < Reform::Form
   property :body_type
   property :avg_sensation
   property :avg_satisfaction
+  property :description
+  property :slug, writable: false
 end

@@ -2,31 +2,31 @@
   <div class="panel panel-default">
     <div class="panel-body">
       <% if pin.published? %>
-				<%= render partial: "latest_comment_snippet", locals: { pin: pin } if @comments.map(&:commentable_id).include?(pin.id) %>
-				<% cache([pin, @safe_mode]) do %>
-      <div class="image">
-        <%= link_to (image_tag pin.cover_image(@safe_mode)), pin %>
+        <%= render partial: "latest_comment_snippet", locals: { pin: pin } if @comments.map(&:commentable_id).include?(pin.id) %>
+        <% cache([pin, @safe_mode]) do %>
+          <div class="image">
+            <%= link_to (image_tag pin.cover_image(@safe_mode)), pin %>
+          </div>
+          <p class="description">
+            <%= pin.try(:procedure).try(:name) %> by <strong><%= pin.unknown_surgeon? ? 'unknown' : 'Dr. ' + pin.surgeon.to_s %></strong>
+          </p>
+        <% end %>
       </div>
-      <p class="description">
-      <%= pin.try(:procedure).try(:name) %> by <strong><%= pin.unknown_surgeon? ? 'unknown' : 'Dr. ' + pin.surgeon.to_s %></strong>
-      </p>
+      <div class="panel-footer">
+        <div class="actions">
+          <label class="label-with-popover" data-placement="right" data-content="Flags from 3 different users will remove content pending review by a moderator." data-title="Flag this content." data-trigger="hover">
+            <%= link_to(fa_icon("flag"), pin_flags_path(pin), :method => :post, remote: true) + " | " unless current_user == pin.user %>
+          </label>
+          <% if current_user == pin.user || current_user.admin? %>
+            <%= link_to fa_icon("pencil-square-o"), edit_pin_path(pin) %>
+            | <%= link_to fa_icon("trash-o"), pin, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% if pin.pending? %>
+            | <%= link_to 'Remove Flag', remove_pin_flag_path(pin), remote: true %>
+        <% end %>
       <% end %>
-    </div>
-    <div class="panel-footer">
-      <div class="actions">
-        <label class="label-with-popover" data-placement="right" data-content="Flags from 3 different users will remove content pending review by a moderator." data-title="Flag this content." data-trigger="hover">
-          <%= link_to(fa_icon("flag"), pin_flags_path(pin), :method => :post, remote: true) + " | " unless current_user == pin.user %>
-        </label>
-        <% if current_user == pin.user || current_user.admin? %>
-        <%= link_to fa_icon("pencil-square-o"), edit_pin_path(pin) %>
-        | <%= link_to fa_icon("trash-o"), pin, method: :delete, data: { confirm: 'Are you sure?' } %>
-        <% if pin.pending? %>
-        | <%= link_to 'Remove Flag', remove_pin_flag_path(pin), remote: true %>
-        <% end %>
-        <% end %>
-        posted <%= distance_of_time_in_words(Time.now, pin.created_at) %> ago
-      </div>
+      posted <%= distance_of_time_in_words(Time.now, pin.created_at) %> ago
     </div>
   </div>
+</div>
 </div>
 <% end %>

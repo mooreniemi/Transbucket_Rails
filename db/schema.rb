@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160618190824) do
+ActiveRecord::Schema.define(version: 20160618193337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,8 +121,8 @@ ActiveRecord::Schema.define(version: 20160618190824) do
     t.integer  "satisfaction"
   end
 
-  add_index "pins", ["satisfaction"], name: "index_pins_on_satisfaction", using: :btree
-  add_index "pins", ["sensation"], name: "index_pins_on_sensation", using: :btree
+  add_index "pins", ["procedure_id"], name: "index_pins_on_procedure_id", using: :btree
+  add_index "pins", ["surgeon_id"], name: "index_pins_on_surgeon_id", using: :btree
   add_index "pins", ["user_id"], name: "index_pins_on_user_id", using: :btree
 
   create_table "preferences", force: :cascade do |t|

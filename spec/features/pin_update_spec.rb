@@ -25,6 +25,12 @@ describe "pin updating", :fake_images => true do
       ensure_on "/pins/#{pin.id}/edit"
       expect(find("select#pin_surgeon_attributes_id", visible: false).value.to_i).to eq(pin.surgeon.id)
       expect(find("select#pin_procedure_attributes_id", visible: false).value.to_i).to eq(pin.procedure.id)
+
+      pin.pin_images.each do |pin_image|
+        image_caption = find("[data-pin-image-id='#{pin_image.id}'] .pin-image-caption")
+        expect(image_caption.value).to eq(pin_image.caption)
+      end
+
       self.send(:updater)
 
       click_button "Submit Now"

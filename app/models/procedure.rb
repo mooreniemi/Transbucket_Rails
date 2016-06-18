@@ -1,7 +1,7 @@
 class Procedure < ActiveRecord::Base
   include Stats
   extend FriendlyId
-  friendly_id :name
+  friendly_id :name, use: :slugged
 
   has_many :pins
   has_many :skills

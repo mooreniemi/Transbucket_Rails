@@ -1,0 +1,19 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <%= @procedure.name %>
+  </div>
+  <div class="panel-body">
+    <%= @procedure.description %>
+  </div>
+  <!-- List group -->
+  <ul class="list-group">
+    <li class="list-group-item">
+      Average sensation: <%= @procedure.avg_sensation %>
+    </li>
+    <li class="list-group-item">
+      Average satisfaction: <%= @procedure.avg_satisfaction %>
+    </li>
+  </ul>
+</div>
+
+<%= link_to "Back to procedures list", procedures_path %>

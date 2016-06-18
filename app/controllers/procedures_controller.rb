@@ -3,6 +3,10 @@ class ProceduresController < ApplicationController
     @procedures = Procedure.all
   end
 
+  def show
+    @procedure = Procedure.friendly.find(params[:id])
+  end
+
   def new
     @procedure = Procedure.new
 

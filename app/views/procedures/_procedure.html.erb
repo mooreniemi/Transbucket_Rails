@@ -1,5 +1,5 @@
 <tr>
-  <td><%= procedure.name %></td>
+  <td><%= link_to procedure.name, procedure_path(procedure) %></td>
   <td><%= procedure.avg_satisfaction %></td>
   <td><%= procedure.avg_sensation %></td>
 </tr>

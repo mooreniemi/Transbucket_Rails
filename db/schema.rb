@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160618175539) do
+ActiveRecord::Schema.define(version: 20160618181002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,6 +142,7 @@ ActiveRecord::Schema.define(version: 20160618175539) do
     t.integer  "avg_sensation"
     t.integer  "avg_satisfaction"
     t.string   "slug"
+    t.string   "description"
   end
 
   add_index "procedures", ["slug"], name: "index_procedures_on_slug", unique: true, using: :btree

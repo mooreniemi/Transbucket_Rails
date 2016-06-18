@@ -1,8 +1,3 @@
-<% if current_user.admin? %>
-<li>
-  <%= link_to 'Admin', admin_path %>
-</li>
-<% end %>
 <li>
   <%= link_to 'Submissions', pins_path %>
 </li>
@@ -21,6 +16,11 @@
 <% unless current_user.gender == "cisgender" %>
 <li>
   <%= link_to "Add #{fa_icon('plus-circle yellow')}".html_safe, new_pin_path %>
+</li>
+<% end %>
+<% if current_user.admin? %>
+<li class="bg-danger">
+  <%= link_to 'Admin', admin_path %>
 </li>
 <% end %>
 </ul>

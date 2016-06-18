@@ -2,17 +2,18 @@
   <div class="dz-message">Drop files here to upload</div>
   <div class="fallback">
     <%= f.fields_for :pin_images do |pin_image_form| %>
-      <%#= puts "#{pin_image_form.object.inspect}" %>
-      <div class="form-group">
-        <%= pin_image_form.label :photo %>:
-        <%= pin_image_form.file_field :photo %>
-      </div>
-      <div class="form-group">
-        <%= pin_image_form.text_field :caption, placeholder: "Caption" %>
-      </div>
-      <div class="form-group" data-pin-image-id="<%= pin_image_form.object.try(:id) %>">
-        <%= pin_image_form.label :_destroy, "Remove" %>:
-        <%= pin_image_form.check_box :_destroy %>
+      <div class="pin-image-fields" data-pin-image-id="<%= pin_image_form.object.try(:id) %>">
+        <div class="form-group">
+          <%= pin_image_form.label :photo %>:
+          <%= pin_image_form.file_field :photo %>
+        </div>
+        <div class="form-group">
+          <%= pin_image_form.text_field :caption, placeholder: "Caption", class: "form-control pin-image-caption" %>
+        </div>
+        <div class="form-group">
+          <%= pin_image_form.label :_destroy, "Remove" %>:
+          <%= pin_image_form.check_box :_destroy %>
+        </div>
       </div>
     <% end %>
   </div>

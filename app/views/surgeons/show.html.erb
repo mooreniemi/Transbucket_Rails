@@ -1,11 +1,12 @@
 <div class="media">
-  <a class="media-left" href="#">
-    <img class="media-object" data-src="..." alt="avatar image">
-  </a>
+  <div class="media-left">
+    <%= fa_icon "user-md", class: "fa-5x media-object" %>
+  </div>
   <div class="media-body">
     <h4 class="media-heading">
-      Dr. <%= @surgeon.to_s %>
+      <%= link_to @surgeon.to_s, @surgeon.url %>
     </h4>
+    <%= @surgeon.procedure_list %>
     <%= @surgeon.notes %>
   </div>
 </div>

@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   belongs_to :gender
   has_one :preference
-  after_commit :set_preference
+  after_create :set_preference
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,

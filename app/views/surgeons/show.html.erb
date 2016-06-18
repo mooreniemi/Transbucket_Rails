@@ -1,1 +1,11 @@
-<%= @surgeon.to_s %>
+<div class="media">
+  <a class="media-left" href="#">
+    <img class="media-object" data-src="..." alt="avatar image">
+  </a>
+  <div class="media-body">
+    <h4 class="media-heading">
+      Dr. <%= @surgeon.to_s %>
+    </h4>
+    <%= @surgeon.notes %>
+  </div>
+</div>

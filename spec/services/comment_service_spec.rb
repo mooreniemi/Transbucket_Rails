@@ -13,6 +13,13 @@ describe CommentService do
 		expect(Comment.count).to eq(1)
 	end
 
+  it 'doesnt notify a user they commented on their own submission' do
+    expect_any_instance_of(CommentMailer).to_not receive(:new_comment_email)
+
+    CommentService.new(pin, user, "my own comment").create
+    expect(Comment.count).to eq(1)
+  end
+
   context "with a pin with no user" do
     let(:pin) { create(:pin) }
 

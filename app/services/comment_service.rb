@@ -10,7 +10,7 @@ class CommentService
   end
 
   def create
-    if commentable.user.present?
+    if commentable.user.present? && commentable.user != commenter
       policy = UserPolicy.new(commentable.user)
       wants_email = policy.wants_email?
     else

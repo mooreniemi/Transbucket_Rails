@@ -173,7 +173,7 @@ $(document).ready(function() {
           pinImages.forEach(function(pinImage) {
             myDropzone.options.addedfile.call(myDropzone, pinImage);
             $(pinImage.previewElement).attr('data-pin-image-id', pinImage.id);
-            $(pinImage.previewElement).children('input').val(pinImage.caption);
+            $(pinImage.previewElement).find('input.pin-image-caption').val(pinImage.caption);
             myDropzone.options.thumbnail.call(myDropzone, pinImage, pinImage.url);
           });
 

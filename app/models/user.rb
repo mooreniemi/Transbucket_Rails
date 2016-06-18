@@ -1,9 +1,4 @@
 class User < ActiveRecord::Base
-  has_settings do |s|
-    s.key :view, :defaults => { :safe_mode => false }
-    s.key :contact,  :defaults => { :notification => true }
-  end
-
   belongs_to :gender
   has_one :preference
   after_create :set_preference

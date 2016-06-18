@@ -7,11 +7,11 @@ class UserPolicy
 
   def wants_email?
     return false if user.nil?
-    user.preference.notification == true
+    user.preference && (user.preference.notification == true)
   end
 
   def safe_mode?
     return false if user.nil?
-    user.preference.safe_mode == true
+    user.preference && (user.preference.safe_mode == true)
   end
 end

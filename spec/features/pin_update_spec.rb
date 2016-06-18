@@ -1,13 +1,7 @@
 require "rails_helper"
 require "faker"
 
-class TestFilesController < ApplicationController
-  def missing
-    head :no_content
-  end
-end
-
-describe "pin updating" do
+describe "pin updating", :fake_images => true do
   include CapybaraHelpers
 
   let(:user) { create(:user, :with_confirmation) }
@@ -20,16 +14,10 @@ describe "pin updating" do
 
   before :each do
     login_as(user, :scope => :user)
-    Rails.application.routes.send(:eval_block,
-                                  Proc.new do
-                                    get "/test_files#{ENV['TEST_ENV_NUMBER']}/:url",
-                                        to: 'test_files#missing', url: /.+/
-                                  end)
-  end
+ end
 
   after :each do
     Warden.test_reset!
-    Rails.application.reload_routes!
   end
 
   shared_examples "pin updating" do

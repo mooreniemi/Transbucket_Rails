@@ -226,8 +226,6 @@ GEM
     kgio (2.10.0)
     launchy (2.4.3)
       addressable (~> 2.3)
-    ledermann-rails-settings (2.4.0)
-      activerecord (>= 3.1)
     letsrate (1.0.9)
     letter_opener (1.4.1)
       launchy (~> 2.2)
@@ -509,7 +507,6 @@ DEPENDENCIES
   guard-rspec
   htmlentities
   launchy
-  ledermann-rails-settings
   letsrate
   letter_opener
   meta-tags

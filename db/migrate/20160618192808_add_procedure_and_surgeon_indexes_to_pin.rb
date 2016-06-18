@@ -1,4 +1,4 @@
-class ProcedureAndSurgeonIndexes < ActiveRecord::Migration
+class AddProcedureAndSurgeonIndexesToPin < ActiveRecord::Migration
   def change
     add_index :pins, :surgeon_id
     add_index :pins, :procedure_id

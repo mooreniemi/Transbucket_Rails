@@ -1,3 +1,4 @@
+# this is called when we update or create a Pin
 class RecalculateAvgsQuery
   def self.for(type, id)
     relevant_pins = Pin.where("#{type.to_s.tableize.singularize}_id = #{id}")

@@ -26,19 +26,19 @@ class Pin < ActiveRecord::Base
   validates :pin_images, presence: true
 
   def self.mtf
-    where(['procedure_id in (?)', Constants::MTF_IDS.map(&:to_s)])
+    where(['procedure_id in (?)', Constants::MTF_IDS])
   end
 
   def self.ftm
-    where(['procedure_id in (?)', Constants::FTM_IDS.map(&:to_s)])
+    where(['procedure_id in (?)', Constants::FTM_IDS])
   end
 
   def self.top
-    where(['procedure_id in (?)', Constants::TOP_IDS.map(&:to_s)])
+    where(['procedure_id in (?)', Constants::TOP_IDS])
   end
 
   def self.bottom
-    where(['procedure_id in (?)', Constants::BOTTOM_IDS.map(&:to_s)])
+    where(['procedure_id in (?)', Constants::BOTTOM_IDS])
   end
 
   def self.need_category

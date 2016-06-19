@@ -19,6 +19,10 @@ class Surgeon < ActiveRecord::Base
     "#{last_name}-#{first_name}"
   end
 
+  def satisfaction_by_procedure
+    Pin.where(surgeon_id: self.id).group([:procedure_id]).average(:satisfaction)
+  end
+
   def to_s
     first_name.nil? ? last_name : last_name.capitalize + ', ' + first_name.capitalize
   end

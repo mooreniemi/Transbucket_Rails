@@ -1,6 +1,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <%= @procedure.name %>
+    <%= link_to Pin.where(procedure_id: @procedure.id).count, pins_path(procedure: @procedure.id), { style: 'border-radius: 100%; background: #ffffcc; display:inline-block; padding:5px;' } %>
   </div>
   <div class="panel-body">
     <%= @procedure.description %>
@@ -9,11 +10,11 @@
   <ul class="list-group">
     <li class="list-group-item">
       Average sensation: <%= @procedure.avg_sensation %>
-    </li>
-    <li class="list-group-item">
-      Average satisfaction: <%= @procedure.avg_satisfaction %>
-    </li>
+  </li>
+  <li class="list-group-item">
+    Average satisfaction: <%= @procedure.avg_satisfaction %>
+</li>
   </ul>
 </div>
 
-<%= link_to "Back to procedures list", procedures_path %>
+<%= link_to fa_icon("arrow-left") + " Back to Procedures list", procedures_path %>

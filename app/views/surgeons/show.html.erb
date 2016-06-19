@@ -1,13 +1,40 @@
-<div class="media">
-  <div class="media-left">
-    <%= fa_icon "user-md", class: "fa-5x media-object" %>
+<% cache(@surgeon) do %>
+  <div class="media">
+    <div class="media-left">
+      <%= fa_icon "user-md", class: "fa-5x media-object" %>
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">
+        <%= link_to @surgeon.to_s, @surgeon.url %>
+      </h4>
+      <address>
+        <%= @surgeon.address %><br>
+        <%= @surgeon.city %>, <%= @surgeon.state %> <%= @surgeon.zip %><br>
+        <%= @surgeon.country %><br>
+        <abbr title="Phone">P:</abbr> <%= @surgeon.phone %>
+    </address>
+    <% if @surgeon.notes %>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          Notes: <%= @surgeon.notes %></div>
+        </div>
+      <% end %>
+
+    <% @surgeon.satisfaction_by_procedure.each do |procedure_id, satisfaction| %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><%= Procedure.find(procedure_id).name.to_s %>
+          <%= link_to Pin.where(surgeon_id: @surgeon.id).where(procedure_id: procedure_id).count, pins_path(procedure: procedure_id, surgeon: @surgeon.id), { style: 'border-radius: 100%; background: #ffffcc; display:inline-block; padding:5px;' } %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        Average patient satisfaction is <%= satisfaction.to_i.to_s %>
+      <label class="label-with-popover" data-placement="right" data-content="Overall procedure satisfaction across all surgeons is: <%= Procedure.find(procedure_id).avg_satisfaction %>" data-title="Satisfaction Compared" data-trigger="hover" data-original-title="" title="">
+        <%= fa_icon("bar-chart") %>
+      </label>
+    </div>
   </div>
-  <div class="media-body">
-    <h4 class="media-heading">
-      <%= link_to @surgeon.to_s, @surgeon.url %>
-    </h4>
-    <%= @surgeon.procedure_list %>
-    <!-- TODO put avgs here -->
-    <%= @surgeon.notes %>
-  </div>
+<% end %>
 </div>
+  </div>
+<% end %>

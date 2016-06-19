@@ -15,4 +15,5 @@ class SurgeonForm < Reform::Form
   property :url
   property :procedure_list
   property :notes
+  property :slug, writable: false
 end

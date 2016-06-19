@@ -51,6 +51,7 @@ gem 'rake-progressbar'
 gem 'awesome_print'
 # we use Faker to create junk data sometimes on staging
 gem 'faker'
+gem 'zip-codes'
 
 gem 'nested_form'
 gem 'simple_form'

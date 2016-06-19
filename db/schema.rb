@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160618193337) do
+ActiveRecord::Schema.define(version: 20160619040925) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -180,7 +180,10 @@ ActiveRecord::Schema.define(version: 20160618193337) do
     t.datetime "updated_at"
     t.string   "last_name"
     t.text     "notes"
+    t.string   "slug"
   end
+
+  add_index "surgeons", ["slug"], name: "index_surgeons_on_slug", unique: true, using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
@@ -216,7 +219,7 @@ ActiveRecord::Schema.define(version: 20160618193337) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.string   "gender_id"
+    t.integer  "gender_id",              default: 4,     null: false
     t.string   "username"
     t.boolean  "admin",                  default: false
     t.string   "md5"

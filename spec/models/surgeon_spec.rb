@@ -21,6 +21,10 @@ describe Surgeon do
     expect(new_surgeon.last_name).to eq(first_surgeon.last_name)
   end
 
+  describe "#avg_ratings_by_procedure" do
+
+  end
+
   describe "#to_s" do
     it 'displays the surgeon name like Last, First' do
       surgeon = build(:surgeon, first_name: "larry", last_name: "schmoe")

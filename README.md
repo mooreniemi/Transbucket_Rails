@@ -22,7 +22,9 @@
 Transbucket.com (Transbucket_Rails)
 ===================================
 
-Rails 4.2.6 (in Ruby 2.2.3), using [bower_rails](https://github.com/rharriso/bower-rails) to manage javascript dependencies.
+Transbucket.com is a photo-sharing website for transgender patients. We have roughly 70k users, and average 1000 uniques per month. We're not a huge site, but we do have active users that rely on us. And we're the only site without any profit agenda: this site is by and for the community. We welcome [contributions](https://github.com/mooreniemi/Transbucket_Rails/issues).
+
+The TL;DR of technical specs is: Rails 4.2.6 (in Ruby 2.2.3), using [bower_rails](https://github.com/rharriso/bower-rails) to manage Javascript dependencies, on Postgres database for storage, and with Sphinx indexing for search.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->

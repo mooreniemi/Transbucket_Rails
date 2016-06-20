@@ -7,7 +7,7 @@
     <div class="media-body">
       <h4 class="media-heading">
         <%= link_to @surgeon.to_s, @surgeon.url %>
-        <br><%= (fa_icon('star') * @surgeon.overall_satisfaction).html_safe %>
+        <br><%= (fa_icon('star') * @surgeon.overall_satisfaction).html_safe unless @surgeon.overall_satisfaction.nil? %>
       </h4>
       <address>
         <%= @surgeon.address %><br>

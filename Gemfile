@@ -51,6 +51,7 @@ gem 'rake-progressbar'
 gem 'awesome_print'
 # we use Faker to create junk data sometimes on staging
 gem 'faker'
+gem 'zip-codes'
 
 gem 'nested_form'
 gem 'simple_form'
@@ -92,6 +93,8 @@ group :development, :test do
   gem 'ruby-prof'
 	gem 'rack-mini-profiler'
   # gem 'flamegraph' # for rack-mini-profiler
+  gem 'spring'
+  gem 'spring-commands-rspec'
   gem 'rspec-benchmark'
   gem 'parallel_tests'
 	gem 'bullet'

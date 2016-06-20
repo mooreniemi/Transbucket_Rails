@@ -15,10 +15,17 @@ describe Surgeon do
 
   it 'last names can be dupe if first distinct' do
     first_surgeon = create(:surgeon)
-    dupe_surgeon_attrs = first_surgeon.attributes.except("id", "first_name")
-    new_surgeon = Surgeon.create(dupe_surgeon_attrs)
+    new_surgeon = create(:surgeon, last_name: first_surgeon.last_name, first_name: "cthulu")
     expect(new_surgeon.first_name).to_not eq(first_surgeon.first_name)
     expect(new_surgeon.last_name).to eq(first_surgeon.last_name)
+  end
+
+  describe "#satisfaction_by_procedure" do
+    it 'gives procedure id and average satisfaction' do
+      pin = create(:pin, :with_surgeon_and_procedure)
+      expect(pin.surgeon.satisfaction_by_procedure).
+        to eq({ pin.procedure.id => pin.satisfaction})
+    end
   end
 
   describe "#to_s" do

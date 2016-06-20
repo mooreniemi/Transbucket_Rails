@@ -24,7 +24,7 @@
        <%= fa_icon "user-md" %> Surgeon
       </dt>
       <dd>
-      <%= link_to @pin.unknown_surgeon? ? 'unknown' : 'Dr. ' + @pin.surgeon.to_s, pins_path({surgeon: [@pin.surgeon.id]}) %>
+      <%= link_to @pin.unknown_surgeon? ? 'unknown' : 'Dr. ' + @pin.surgeon.to_s, surgeon_path(@pin.surgeon) %>
       </dd>
       <dt>
         <%= fa_icon "plus-square" %> Procedure

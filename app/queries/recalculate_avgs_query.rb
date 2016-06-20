@@ -5,10 +5,10 @@ class RecalculateAvgsQuery
     thing_of_type = type.find(id)
 
     return false if relevant_pins.empty?
-    new_avg_sat = relevant_pins.average(:satisfaction)
+    new_avg_sat = relevant_pins.where.not(satisfaction: 0).average(:satisfaction)
 
     thing_of_type.avg_satisfaction = new_avg_sat
-    new_avg_sen = relevant_pins.average(:sensation)
+    new_avg_sen = relevant_pins.where.not(sensation: 0).average(:sensation)
     thing_of_type.avg_sensation = new_avg_sen
 
     thing_of_type.save!

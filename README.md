@@ -127,18 +127,22 @@ If you need to see some performance stats, use `rspec --profile`.
 
 ### parallel tests
 
-To set up:
+To set up (one time only):
 
 ```sh
-rake parallel:create
-rake parallel:prepare
+rake parallel:setup
 ```
 
-(Or on CI: `rake parallel:setup`)
-
-Run tests:
+Then, run tests with:
 
 `rake parallel:spec`
+
+Or, to run with Spring for faster load times:
+
+```sh
+export DISABLE_SPRING=0 # needed to force activate spring
+spring rake parallel:spec
+```
 
 ### performance testing
 

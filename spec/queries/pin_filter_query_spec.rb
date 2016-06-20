@@ -15,4 +15,15 @@ describe PinFilterQuery, "#filtered" do
     expect(Pin).to_not receive(:top)
     expect(PinFilterQuery.new({scope: ['top']}).filtered.first).to eq(pin)
   end
+
+  it 'handles different combinations of query' do
+    all_filters = {scope: 'top', surgeon: pin.surgeon.id.to_s, procedure: pin.procedure.id.to_s}
+    (1..all_filters.size).each do |size|
+      all_filters.keys.combination(size).each do |keys|
+        filter = {}
+        keys.each { |k| filter[k] = [all_filters[k]] }
+        expect(PinFilterQuery.new(filter).filtered.first).to eq(pin)
+      end
+    end
+  end
 end

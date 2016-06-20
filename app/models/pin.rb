@@ -6,6 +6,7 @@ class Pin < ActiveRecord::Base
   include ThinkingSphinx::Scopes
   include Constants
   include PinsHelper
+  include NotificationsHelper
 
   belongs_to :user
   belongs_to :surgeon
@@ -24,6 +25,19 @@ class Pin < ActiveRecord::Base
   validates :procedure, presence: true
   validates :user_id, presence: true
   validates :pin_images, presence: true
+
+  aasm column: :state do
+    state :pending, value: 'pending'
+    state :published, value: 'published', initial: :published
+
+    event :publish do
+      transitions from: :pending, to: :published
+    end
+
+    event :review, :after => :admin_review do
+      transitions from: :published, to: :pending
+    end
+  end
 
   def self.mtf
     where(['procedure_id in (?)', Constants::MTF_IDS])
@@ -63,18 +77,5 @@ class Pin < ActiveRecord::Base
 
   def comments_desc
     comment_threads.includes(:user).order('created_at desc')
-  end
-
-  aasm column: :state do
-    state :pending, value: 'pending'
-    state :published, value: 'published', initial: :published
-
-    event :publish do
-      transitions from: :pending, to: :published
-    end
-
-    event :review do
-      transitions from: :published, to: :pending
-    end
   end
 end

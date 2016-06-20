@@ -121,6 +121,8 @@ While we remain on Heroku, it will infer this step for us. (You won't need to do
 
 `rspec`
 
+Spring is installed to speed up Rails loading times; you should see much shorter load times after the first run.
+
 If you need to see some performance stats, use `rspec --profile`.
 
 ### parallel tests

@@ -93,6 +93,8 @@ group :development, :test do
   gem 'ruby-prof'
 	gem 'rack-mini-profiler'
   # gem 'flamegraph' # for rack-mini-profiler
+  gem 'spring'
+  gem 'spring-commands-rspec'
   gem 'rspec-benchmark'
   gem 'parallel_tests'
 	gem 'bullet'

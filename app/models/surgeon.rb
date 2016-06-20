@@ -19,8 +19,14 @@ class Surgeon < ActiveRecord::Base
     "#{last_name}-#{first_name}"
   end
 
+  def overall_satisfaction
+    # 0 means unrated basically
+    Pin.where(surgeon_id: id).where.not(satisfaction: 0).average(:satisfaction)
+  end
+
   def satisfaction_by_procedure
-    Pin.where(surgeon_id: self.id).group([:procedure_id]).average(:satisfaction)
+    Pin.where(surgeon_id: self.id).where.not(satisfaction: 0).
+      group([:procedure_id]).average(:satisfaction)
   end
 
   def to_s

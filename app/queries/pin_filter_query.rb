@@ -9,7 +9,17 @@ class PinFilterQuery
   end
 
   def filtered
-    if surgeons.present?
+    if surgeons.present? && procedures.present?
+      if general.present?
+        Rails.cache.fetch("very_specific:" + general.join('.') + [surgeons + procedures].join(',')) do
+          Pin.instance_eval { eval args }.by_surgeon([surgeons]).by_procedure([procedures])
+        end
+      else
+        Rails.cache.fetch("surgeons_by_procedures:" + [surgeons + procedures].join(',')) do
+          Pin.by_surgeon([surgeons]).by_procedure([procedures])
+        end
+      end
+    elsif surgeons.present?
       Rails.cache.fetch("surgeons:" + [surgeons].join(',')) do
         Pin.by_surgeon([surgeons])
       end

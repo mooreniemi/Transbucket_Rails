@@ -15,5 +15,4 @@ module Constants
   SURGEONS = Pin.uniq.pluck(:surgeon_id)
 
   SCOPES = ["ftm", "mtf", "bottom", "top", "need_category"]
-
 end

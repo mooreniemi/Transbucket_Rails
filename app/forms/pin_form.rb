@@ -21,6 +21,7 @@ class PinForm < Reform::Form
   property :satisfaction
   property :description
   property :revision
+  property :complication_list
   property :details
 
   property :state

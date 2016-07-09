@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 describe PinPresenter do
+  before(:each) do
+    Rails.cache.clear
+  end
+
   let!(:pins) { create_list(:pin, 3) }
 
   it 'returns pins' do

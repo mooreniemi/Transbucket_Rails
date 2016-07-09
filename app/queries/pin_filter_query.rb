@@ -1,44 +1,44 @@
 class PinFilterQuery
   attr_accessor :pins
-  attr_accessor :procedures, :surgeons, :general
+  VALID_FILTERS = [:procedures, :surgeons, :general, :complications]
+  attr_accessor(*VALID_FILTERS)
 
   def initialize(keywords)
     @procedures = keywords[:procedure]
     @surgeons = keywords[:surgeon]
+    @complications = add_default(keywords[:complication])
     @general = format_scope(keywords.fetch(:scope,nil))
   end
 
   def filtered
-    if surgeons.present? && procedures.present?
-      if general.present?
-        args = general.join('.')
-        Rails.cache.fetch("very_specific:" + args + [surgeons + procedures].join(',')) do
-          Pin.instance_eval { eval args }.by_surgeon([surgeons]).by_procedure([procedures])
-        end
-      else
-        Rails.cache.fetch("surgeons_by_procedures:" + [surgeons + procedures].join(',')) do
-          Pin.by_surgeon([surgeons]).by_procedure([procedures])
-        end
-      end
-    elsif surgeons.present?
-      Rails.cache.fetch("surgeons:" + [surgeons].join(',')) do
-        Pin.by_surgeon([surgeons])
-      end
-    elsif procedures.present?
-      Rails.cache.fetch("procedures:" + [procedures].join(',')) do
-        Pin.by_procedure([procedures])
-      end
-    elsif general.present?
-      args = general.join('.')
-      Rails.cache.fetch("search_terms:" + args) do
-        Pin.instance_eval { eval args }
-      end
-    else
-      Pin.none
+    active_filters = []
+    keywords = []
+    VALID_FILTERS.each do |filter|
+      next if send(filter).nil?
+      keywords << send(filter)
+      active_filters << filter
+    end
+
+    # this will make the instance_eval a no-op
+    args = general.present? ? general.join('.') : 'Pin'
+    Rails.cache.fetch(cache_key_for(active_filters, keywords)) do
+      Pin.instance_eval { eval args }.
+        tagged_with(*complications).
+        by_procedure([procedures].flatten).
+        by_surgeon([surgeons].flatten).
+        recent
     end
   end
 
   private
+
+  def cache_key_for(active_filters, keywords)
+    "#{active_filters.zip(keywords)}"
+  end
+
+  def add_default(complication_params)
+    complication_params.nil? ? [['SENTINEL'], exclude: true] : complication_params
+  end
 
   def format_scope(scope)
     return if scope.nil?

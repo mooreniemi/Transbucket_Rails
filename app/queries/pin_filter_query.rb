@@ -33,9 +33,7 @@ class PinFilterQuery
   private
 
   def cache_key_for(active_filters, keywords)
-    key = "#{active_filters.zip(keywords)}"
-    puts key
-    key
+    "#{active_filters.zip(keywords)}"
   end
 
   def add_default(complication_params)

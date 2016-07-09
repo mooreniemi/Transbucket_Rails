@@ -23,4 +23,13 @@ describe Pin do
       expect(pin.comments_desc).to eq(pin.comments.order('created_at desc'))
     end
   end
+  describe '#complications' do
+    it 'allows complication tags to be added' do
+      pin = create(:pin)
+      pin.complication_list = "runny nose, pain"
+      pin.save
+      pin.reload
+      expect(pin.complications.first.name).to eq('runny nose')
+    end
+  end
 end

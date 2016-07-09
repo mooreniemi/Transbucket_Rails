@@ -134,4 +134,5 @@ group :production do
 	# for assets, see https://devcenter.heroku.com/articles/rails-4-asset-pipeline
 	gem 'rails_12factor'
 	gem 'newrelic_rpm'
+  gem 'lograge'
 end

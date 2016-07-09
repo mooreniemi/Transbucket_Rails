@@ -141,6 +141,7 @@ class PinsController < ApplicationController
       scope: params[:scope],
       surgeon: params[:surgeon],
       procedure: params[:procedure],
+      complication: params[:complication],
       user: params[:user],
       current_user: current_user,
       page: params[:page]

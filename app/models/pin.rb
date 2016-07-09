@@ -19,7 +19,7 @@ class Pin < ActiveRecord::Base
 
   acts_as_commentable
   acts_as_votable
-  acts_as_taggable_on :tags
+  acts_as_taggable_on :complications
 
   validates :surgeon, presence: true
   validates :procedure, presence: true
@@ -68,11 +68,19 @@ class Pin < ActiveRecord::Base
   end
 
   def self.by_procedure(procedure)
-    where(procedure_id: procedure)
+    if procedure == [nil]
+      where.not(procedure_id: procedure)
+    else
+      where(procedure_id: procedure)
+    end
   end
 
   def self.by_surgeon(surgeon)
-    where(surgeon_id: surgeon)
+    if surgeon == [nil]
+      where.not(surgeon_id: surgeon)
+    else
+      where(surgeon_id: surgeon)
+    end
   end
 
   def comments_desc

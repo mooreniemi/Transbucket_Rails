@@ -22,12 +22,13 @@ describe "the flagging process" do
       expect(pin_item).to have_no_selector('a[href="/pins/' + pin.id.to_s + '/flags"]')
     end
 
-    it "should not allow you to flag your own comment" do
+    it "should not allow you to flag your own comment", :js => true do
       login_as(users[1], :scope => :user)
 
       visit '/pins/' + pin.id.to_s
 
       comment_text = "This is my comment: nonce #{rand(9999)}"
+      click_link "add thread"
       within("#new_comment") do
         fill_in "comment_body", :with => comment_text
       end

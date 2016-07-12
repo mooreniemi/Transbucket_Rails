@@ -56,7 +56,7 @@ describe "the flagging process" do
     end
 
     it "should unpublish a comment" do
-      comment_id = pin.comments.first.id
+      comment_id = pin.comment_threads.first.id
       users[1..-1].each do |user|
         login_as(user, :scope => :user)
 

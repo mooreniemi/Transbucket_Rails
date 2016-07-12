@@ -6,7 +6,6 @@ class Procedure < ActiveRecord::Base
   has_many :pins
   has_many :skills
   has_many :surgeons, through: :skills
-  has_many :comments, foreign_key: 'commentable_id'
 
   acts_as_commentable
 

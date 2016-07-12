@@ -13,7 +13,6 @@ class Pin < ActiveRecord::Base
   belongs_to :procedure
 
   has_many :pin_images, dependent: :destroy
-  has_many :comments, foreign_key: 'commentable_id'
 
   attr_accessor :pin_image_ids
 

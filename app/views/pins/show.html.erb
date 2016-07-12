@@ -84,6 +84,7 @@
   <br clear="both" />
 <% end %>
 <div id="comments-container">
+  <h4><%= fa_icon("comments-o") %> discussion</h4>
   <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>
     <h5>Please respect pronouns when writing to the submission author. Their preferred pronouns are: <%= uses_pronouns(@pin.user.try(:gender)) %>.</h5>
   <%= link_to "<h5>#{fa_icon("comments-o")} add thread</h5>".html_safe, new_comment_path(parent_id: @pin.id, commentable_type: "Pin"), remote: true %>

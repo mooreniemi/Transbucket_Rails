@@ -69,8 +69,6 @@ gem 'meta-tags', :require => 'meta_tags'
 
 gem 'acts_as_votable', '~> 0.7.1'
 gem 'acts-as-taggable-on'
-# TODO we're not really using the threading API
-# we could / should switch back to regular
 gem 'acts_as_commentable_with_threading'
 gem 'letsrate'
 

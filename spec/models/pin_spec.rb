@@ -20,7 +20,7 @@ describe Pin do
   describe '#comments_desc' do
     it 'returns comments for pin in desc order' do
       pin = create(:pin, :with_comments)
-      expect(pin.comments_desc).to eq(pin.comments.order('created_at desc'))
+      expect(pin.comments_desc).to eq(pin.comment_threads.order('created_at desc'))
     end
   end
   describe '#complications' do

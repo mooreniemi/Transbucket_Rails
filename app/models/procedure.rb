@@ -7,6 +7,8 @@ class Procedure < ActiveRecord::Base
   has_many :skills
   has_many :surgeons, through: :skills
 
+  acts_as_commentable
+
   # attr_accessible :name, :body_type, :gender, :avg_sensation, :avg_satisfaction
 
   validates :name, uniqueness: true
@@ -18,5 +20,9 @@ class Procedure < ActiveRecord::Base
 
   def self.names
     self.pluck(:name).sort
+  end
+
+  def comments_desc
+    comment_threads.includes(:user).order('created_at desc')
   end
 end

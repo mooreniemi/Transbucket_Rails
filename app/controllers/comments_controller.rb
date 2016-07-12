@@ -1,34 +1,46 @@
-# comments_controller.rb
 class CommentsController < ApplicationController
-	respond_to :js
+  respond_to :js
 
-	def create
-		service = CommentService.new(commented_on, current_user, comment_hash[:body])
-		service.create
-		@comment = service.comment
+  def new
+    @commentable = commentable_type.constantize.find(parent_id)
+    @new_comment = Comment.build_from(@commentable, current_user, "")
+  end
 
-		if @comment.errors.present?
-			render :json => @comment.errors, :status => :unprocessable_entity
-		else
-			render :partial => "comments/comment", :locals => { :comment => @comment }, :layout => false, :status => :created
-		end
-	end
+  def create
+    service = CommentService.new(commented_on, current_user, comment_hash[:body])
+    service.create
+    @comment = service.comment
 
-	def destroy
-		@comment = Comment.find(params[:id])
-		if @comment.destroy
-			render :json => @comment, :status => :ok
-		else
-			render :json => @comment.errors, :status => :unprocessable_entity
-		end
-	end
+    if @comment.errors.present?
+      render :json => @comment.errors, :status => :unprocessable_entity
+    else
+      render :partial => "comments/comment", :locals => { :comment => @comment }, :layout => false, :status => :created
+    end
+  end
 
-	private
-	def comment_hash
-		params[:comment]
-	end
+  def destroy
+    @comment = Comment.find(params[:id])
+    if @comment.destroy
+      render :nothing => true, :status => :ok
+    else
+      render :json => @comment.errors, :status => :unprocessable_entity
+    end
+  end
 
-	def commented_on
-		comment_hash[:commentable_type].constantize.find(comment_hash[:commentable_id])
-	end
+  private
+  def parent_id
+    params[:parent_id]
+  end
+
+  def commentable_type
+    params.fetch(:commentable_type, "Comment")
+  end
+
+  def comment_hash
+    params[:comment]
+  end
+
+  def commented_on
+    comment_hash[:commentable_type].constantize.find(comment_hash[:commentable_id])
+  end
 end

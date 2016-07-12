@@ -1,4 +1,3 @@
-# comments.js.coffee
 # Create a comment
 $(document)
   .on "ajax:beforeSend", "#create_comment_form", (evt, xhr, settings) ->
@@ -10,13 +9,13 @@ $(document)
       .removeClass('uneditable-input')
       .removeAttr('disabled', 'disabled')
       .val('');
-    $('<div class="">').html(xhr.responseText).hide().insertAfter($(this)).show('slow')
+    $(this).html(xhr.responseText).hide().insertAfter($(this)).show('slow')
 
 # Delete a comment
 $(document)
-  .on "ajax:beforeSend", ".comment", ->
-    $(this).fadeTo('fast', 0.5)
-  .on "ajax:success", ".comment", ->
-    $(this).hide('fast')
-  .on "ajax:error", ".comment", ->
-    $(this).fadeTo('fast', 1)
+  .on "ajax:beforeSend", ".close", (evt, xhr) ->
+    $(this.parentElement.parentElement).fadeTo('fast', 0.5)
+  .on "ajax:success", ".close", (evt, xhr) ->
+    $(this.parentElement.parentElement).hide('fast')
+  .on "ajax:error", ".close", ->
+    $(this.parentElement.parentElement).fadeTo('fast', 1)

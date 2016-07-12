@@ -19,4 +19,10 @@ describe Procedure do
     names = Procedure.pluck(:name).sort
     expect(Procedure.names).to eq(names)
   end
+  it 'can be commented on' do
+    user = create(:user)
+    procedure = create(:procedure)
+    CommentService.new(procedure, user, "good procedure").create
+    expect(procedure.root_comments.first.body).to eq("good procedure")
+  end
 end

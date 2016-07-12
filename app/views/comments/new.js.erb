@@ -1,0 +1,1 @@
+$("#reply-target-<%= @new_comment.commentable_id %>").append("<%= escape_javascript(render :partial => 'comments/form', :locals => { :comment => @new_comment }) %>").focus();

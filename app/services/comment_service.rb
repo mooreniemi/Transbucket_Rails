@@ -1,4 +1,5 @@
-#app/services/comments_service.rb
+# 3 entities are commentable: Comment, Pin, Procedure
+# Procedure commenting allows threading (commenting on Comment)
 class CommentService
   attr_reader :body, :commentable, :commenter
   attr_accessor :comment
@@ -10,7 +11,7 @@ class CommentService
   end
 
   def create
-    if commentable.user.present? && commentable.user != commenter
+    if commentable.try(:user).present? && commentable.user != commenter
       policy = UserPolicy.new(commentable.user)
       wants_email = policy.wants_email?
     else

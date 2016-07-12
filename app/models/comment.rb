@@ -6,6 +6,7 @@ class Comment < ActiveRecord::Base
   validates :body, presence: true
   validates :user, presence: true
 
+  acts_as_commentable
   # votes on comments are just flags
   # flags determine whether something needs to be reviewed
   acts_as_votable

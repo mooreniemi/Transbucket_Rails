@@ -25,7 +25,7 @@
   <div id="comments-container">
     <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>
     <%= link_to "<h5>#{fa_icon("comment-o")} add thread</h5>".html_safe, new_comment_path(commentable_id: @procedure.id, commentable_type: "Procedure"), remote: true %>
-    <div id="reply-target-<%= @procedure.id %>">
+    <div id="commentable" class="reply-target">
     </div>
   </div>
 <% end %>

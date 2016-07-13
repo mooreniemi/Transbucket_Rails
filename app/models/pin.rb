@@ -6,6 +6,7 @@ class Pin < ActiveRecord::Base
   include ThinkingSphinx::Scopes
   include Constants
   include PinsHelper
+  include CommentsHelper
   include NotificationsHelper
 
   belongs_to :user
@@ -79,17 +80,6 @@ class Pin < ActiveRecord::Base
       where.not(surgeon_id: surgeon)
     else
       where(surgeon_id: surgeon)
-    end
-  end
-
-  def comments_desc
-    timestamp = comment_threads.order('updated_at DESC').first.try(:updated_at)
-    return [] if timestamp.nil?
-
-    Rails.cache.fetch("#{timestamp.to_i}-#{comment_threads.pluck(:id).join('-')}") do
-      comment_threads.where(parent_id: nil).
-        includes(:user).
-        order('updated_at asc')
     end
   end
 end

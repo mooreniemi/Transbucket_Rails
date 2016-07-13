@@ -18,7 +18,7 @@ class PinsController < ApplicationController
   # GET /pins/1
   # GET /pins/1.json
   def show
-    @comments = @pin.comments_desc
+    @comments = @pin.comments_asc
     @new_comment = Comment.build_from(@pin, current_user, "")
 
     respond_to do |format|

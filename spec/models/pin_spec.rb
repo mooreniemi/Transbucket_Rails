@@ -17,10 +17,10 @@ describe Pin do
   it 'is published as its initial state' do
     expect(build(:pin).state).to eq('published')
   end
-  describe '#comments_desc' do
+  describe '#comments_asc' do
     it 'returns comments for pin in desc order' do
       pin = create(:pin, :with_comments)
-      expect(pin.comments_desc).to eq(pin.comment_threads.order('created_at desc'))
+      expect(pin.comments_asc).to eq(pin.comment_threads.order('updated_at asc'))
     end
   end
   describe '#complications' do

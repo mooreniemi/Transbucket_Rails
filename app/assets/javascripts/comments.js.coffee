@@ -9,7 +9,8 @@ $(document)
       .removeClass('uneditable-input')
       .removeAttr('disabled', 'disabled')
       .val('');
-    $(this).html(xhr.responseText).hide().insertAfter($(this)).show('slow')
+    $($.parseHTML(xhr.responseText)).hide().insertAfter($(this)).show('slow')
+    $(this).hide()
 
 # Delete a comment
 $(document)

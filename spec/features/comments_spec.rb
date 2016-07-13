@@ -22,8 +22,7 @@ RSpec.describe "commenting", :fake_images => true, :js => true do
       click_button "Submit"
     end
 
-    find(".comment", :text => comment.body)
-    expect(page).to have_content(comment.body)
+    expect(page).to have_selector(".panel-body", :text => comment.body)
   end
 
   it "adds another comment on a thread" do
@@ -41,13 +40,14 @@ RSpec.describe "commenting", :fake_images => true, :js => true do
     comment_div.click_link "reply"
 
     reply = build(:comment)
-    within("##{comment_div[:id]} #new_comment") do
+    new_comment = "##{comment_div[:id]} #new_comment"
+    within(new_comment) do
       fill_in "comment[body]", :with => reply.body
       click_button "Submit"
     end
 
-    find(".panel-body", :text => reply.body)
-    expect(find("##{comment_div[:id]}")).to have_content(reply.body)
+    expect(page).not_to have_selector(new_comment)
+    expect(page).to have_selector(".panel-body", :text => reply.body)
   end
 
   context "deletion" do

@@ -1,16 +1,16 @@
-#app/services/comments_service.rb
 class CommentService
-  attr_reader :body, :commentable, :commenter
+  attr_reader :body, :commentable, :commenter, :parent_comment_id
   attr_accessor :comment
 
-  def initialize(commentable, commenter, body)
+  def initialize(commentable, commenter, body, parent_comment_id = nil)
     @commentable = commentable
     @body = body
     @commenter = commenter
+    @parent_comment_id = parent_comment_id
   end
 
   def create
-    if commentable.user.present? && commentable.user != commenter
+    if commentable.try(:user).present? && commentable.user != commenter
       policy = UserPolicy.new(commentable.user)
       wants_email = policy.wants_email?
     else
@@ -18,8 +18,10 @@ class CommentService
     end
 
     @comment = wants_email ? create_and_notify : build
+    @comment.save!
 
-    @comment.save
+    # threading
+    @comment.move_to_child_of(Comment.find(parent_comment_id)) unless parent_comment_id.blank?
   end
 
   private

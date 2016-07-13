@@ -4,7 +4,12 @@ class ProceduresController < ApplicationController
   end
 
   def show
-    @procedure = Procedure.friendly.find(params[:id])
+    @procedure = Procedure.includes(:comment_threads).friendly.find(params[:id])
+    # procedure pages are public, but comments should be private
+    if current_user
+      @comments = @procedure.comments_asc
+      @new_comment = Comment.build_from(@procedure, current_user, "")
+    end
   end
 
   def new

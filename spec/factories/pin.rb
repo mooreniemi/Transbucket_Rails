@@ -12,7 +12,7 @@ FactoryGirl.define do
     pin_images { build_list(:pin_image, 2) }
 
     trait :with_comments do
-      comments { create_list(:comment, 2) }
+      comment_threads { create_list(:comment, 2) }
     end
 
     trait :with_surgeon_and_procedure do

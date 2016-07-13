@@ -89,7 +89,7 @@ class Pin < ActiveRecord::Base
     Rails.cache.fetch("#{timestamp.to_i}-#{comment_threads.pluck(:id).join('-')}") do
       comment_threads.where(parent_id: nil).
         includes(:user).
-        order('created_at desc')
+        order('updated_at asc')
     end
   end
 end

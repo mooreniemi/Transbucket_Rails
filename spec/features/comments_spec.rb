@@ -22,6 +22,7 @@ RSpec.describe "commenting", :fake_images => true, :js => true do
       click_button "Submit"
     end
 
+    find(".comment", :text => comment.body)
     expect(page).to have_content(comment.body)
   end
 
@@ -45,7 +46,7 @@ RSpec.describe "commenting", :fake_images => true, :js => true do
       click_button "Submit"
     end
 
-    find(".comment", :text => reply.body)
+    find(".panel-body", :text => reply.body)
     expect(find("##{comment_div[:id]}")).to have_content(reply.body)
   end
 

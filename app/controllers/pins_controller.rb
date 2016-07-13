@@ -98,7 +98,7 @@ class PinsController < ApplicationController
   def admin
     @pins = Pin.where(state: 'pending').order("created_at desc")
     @comments = Comment.where(state: 'pending').order("created_at desc")
-    @queue = {pins: @pins, comments: @comments}
+    @queue = { pins: @pins, comments: @comments }
 
     respond_to do |format|
       format.html # index.html.erb
@@ -108,7 +108,7 @@ class PinsController < ApplicationController
 
   private
   def get_pin
-    @pin = Pin.find(params[:id])
+    @pin = Pin.includes(:comment_threads).find(params[:id])
   end
 
   def id_or_attributes(attributes)

@@ -23,6 +23,6 @@ class Procedure < ActiveRecord::Base
   end
 
   def comments_desc
-    root_comments.includes(:user).order('created_at desc')
+    comment_threads.where(parent_id: nil).includes(:user).order('created_at desc')
   end
 end

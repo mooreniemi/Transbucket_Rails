@@ -59,7 +59,7 @@ GEM
       tzinfo (~> 1.1)
     acts-as-taggable-on (3.5.0)
       activerecord (>= 3.2, < 5)
-    acts_as_commentable_with_threading (2.0.0)
+    acts_as_commentable_with_threading (2.0.1)
       activerecord (>= 4.0)
       activesupport (>= 4.0)
       awesome_nested_set (>= 3.0)
@@ -71,8 +71,8 @@ GEM
     autoprefixer-rails (6.0.3)
       execjs
       json
-    awesome_nested_set (3.0.2)
-      activerecord (>= 4.0.0, < 5)
+    awesome_nested_set (3.1.1)
+      activerecord (>= 4.0.0, < 5.1)
     awesome_print (1.6.1)
     aws-sdk (2.3.14)
       aws-sdk-resources (= 2.3.14)

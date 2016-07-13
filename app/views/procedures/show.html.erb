@@ -1,11 +1,14 @@
+<% title @procedure.to_s  %>
 <div class="panel panel-default">
   <div class="panel-heading">
     <%= @procedure.name %>
     <%= link_to Pin.where(procedure_id: @procedure.id).count, pins_path(procedure: @procedure.id), { style: 'border-radius: 100%; background: #ffffcc; display:inline-block; padding:5px;' } %>
   </div>
-  <div class="panel-body">
-    <%= @procedure.description %>
-  </div>
+  <% if @procedure.description %>
+    <div class="panel-body">
+      <%= @procedure.description %>
+    </div>
+  <% end %>
   <!-- List group -->
   <ul class="list-group">
     <li class="list-group-item">
@@ -17,4 +20,12 @@
   </ul>
 </div>
 
-<%= link_to fa_icon("arrow-left") + " Back to Procedures list", procedures_path %>
+<% if current_user %>
+  <h4><%= fa_icon("comments-o") %> discussion</h4>
+  <div id="comments-container">
+    <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>
+    <%= link_to "<h5>#{fa_icon("comment-o")} add thread</h5>".html_safe, new_comment_path(commentable_id: @procedure.id, commentable_type: "Procedure"), remote: true %>
+    <div id="commentable" class="reply-target">
+    </div>
+  </div>
+<% end %>

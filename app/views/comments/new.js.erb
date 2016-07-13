@@ -1,1 +1,3 @@
-$("#reply-target-<%= @new_comment.commentable_id %>").append("<%= escape_javascript(render :partial => 'comments/form', :locals => { :comment => @new_comment }) %>").focus();
+$("<%= @parent_id ? "#comment-#{@parent_id} " : '#commentable'%>.reply-target").append(
+  "<%= escape_javascript(render :partial => 'comments/form', :locals => { :comment => @new_comment }) %>"
+).focus();

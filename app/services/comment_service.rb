@@ -1,13 +1,12 @@
-# 3 entities are commentable: Comment, Pin, Procedure
-# Procedure commenting allows threading (commenting on Comment)
 class CommentService
-  attr_reader :body, :commentable, :commenter
+  attr_reader :body, :commentable, :commenter, :parent_comment_id
   attr_accessor :comment
 
-  def initialize(commentable, commenter, body)
+  def initialize(commentable, commenter, body, parent_comment_id = nil)
     @commentable = commentable
     @body = body
     @commenter = commenter
+    @parent_comment_id = parent_comment_id
   end
 
   def create
@@ -19,8 +18,10 @@ class CommentService
     end
 
     @comment = wants_email ? create_and_notify : build
+    @comment.save!
 
-    @comment.save
+    # threading
+    @comment.move_to_child_of(Comment.find(parent_comment_id)) unless parent_comment_id.blank?
   end
 
   private

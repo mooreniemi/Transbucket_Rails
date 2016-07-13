@@ -83,6 +83,6 @@ class Pin < ActiveRecord::Base
   end
 
   def comments_desc
-    comment_threads.includes(:user).order('created_at desc')
+    root_comments.includes(:user).order('created_at desc')
   end
 end

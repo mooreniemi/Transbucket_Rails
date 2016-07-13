@@ -25,6 +25,29 @@ RSpec.describe "commenting", :fake_images => true, :js => true do
     expect(page).to have_content(comment.body)
   end
 
+  it "adds another comment on a thread" do
+    visit "/pins/#{pin.id}"
+
+    click_link "add thread"
+    within("#new_comment") do
+      fill_in "comment[body]", :with => comment.body
+      click_button "Submit"
+    end
+
+    expect(page).to have_content(comment.body)
+
+    comment_selector = ".comment"
+    find(comment_selector).click_link "reply"
+
+    reply = build(:comment)
+    within(comment_selector + " #new_comment") do
+      fill_in "comment[body]", :with => reply.body
+      click_button "Submit"
+    end
+
+    expect(find(comment_selector)).to have_content(reply.body)
+  end
+
   context "deletion" do
     let!(:comment) { create(:comment, user: user, commentable: pin) }
 

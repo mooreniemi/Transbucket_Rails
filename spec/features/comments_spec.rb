@@ -36,16 +36,17 @@ RSpec.describe "commenting", :fake_images => true, :js => true do
 
     expect(page).to have_content(comment.body)
 
-    comment_selector = ".comment"
-    find(comment_selector).click_link "reply"
+    comment_div = find(".comment", :text => comment.body)
+    comment_div.click_link "reply"
 
     reply = build(:comment)
-    within(comment_selector + " #new_comment") do
+    within("##{comment_div[:id]} #new_comment") do
       fill_in "comment[body]", :with => reply.body
       click_button "Submit"
     end
 
-    expect(find(comment_selector)).to have_content(reply.body)
+    find(".comment", :text => reply.body)
+    expect(find("##{comment_div[:id]}")).to have_content(reply.body)
   end
 
   context "deletion" do

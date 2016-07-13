@@ -22,7 +22,7 @@ describe Surgeon do
 
   describe "#satisfaction_by_procedure" do
     it 'gives procedure id and average satisfaction' do
-      pin = create(:pin, :with_surgeon_and_procedure)
+      pin = create(:pin, :with_surgeon_and_procedure, satisfaction: rand(5) + 1)
       expect(pin.surgeon.satisfaction_by_procedure).
         to eq({ pin.procedure.id => pin.satisfaction})
     end

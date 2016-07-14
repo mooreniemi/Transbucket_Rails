@@ -6,6 +6,7 @@ class Pin < ActiveRecord::Base
   include ThinkingSphinx::Scopes
   include Constants
   include PinsHelper
+  include CommentsHelper
   include NotificationsHelper
 
   belongs_to :user
@@ -13,7 +14,6 @@ class Pin < ActiveRecord::Base
   belongs_to :procedure
 
   has_many :pin_images, dependent: :destroy
-  has_many :comments, foreign_key: 'commentable_id'
 
   attr_accessor :pin_image_ids
 
@@ -81,9 +81,5 @@ class Pin < ActiveRecord::Base
     else
       where(surgeon_id: surgeon)
     end
-  end
-
-  def comments_desc
-    comment_threads.includes(:user).order('created_at desc')
   end
 end

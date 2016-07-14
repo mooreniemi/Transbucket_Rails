@@ -18,7 +18,7 @@ class PinsController < ApplicationController
   # GET /pins/1
   # GET /pins/1.json
   def show
-    @comments = @pin.comments_desc
+    @comments = @pin.comments_asc
     @new_comment = Comment.build_from(@pin, current_user, "")
 
     respond_to do |format|
@@ -98,7 +98,7 @@ class PinsController < ApplicationController
   def admin
     @pins = Pin.where(state: 'pending').order("created_at desc")
     @comments = Comment.where(state: 'pending').order("created_at desc")
-    @queue = {pins: @pins, comments: @comments}
+    @queue = { pins: @pins, comments: @comments }
 
     respond_to do |format|
       format.html # index.html.erb
@@ -108,7 +108,7 @@ class PinsController < ApplicationController
 
   private
   def get_pin
-    @pin = Pin.find(params[:id])
+    @pin = Pin.includes(:comment_threads).find(params[:id])
   end
 
   def id_or_attributes(attributes)

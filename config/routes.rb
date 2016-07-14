@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     resource :preferences
   end
 
-  resources :comments, :only => [:create, :destroy] do
+  resources :comments, :only => [:new, :create, :destroy] do
     resources :flags, :only => [:create]
   end
 

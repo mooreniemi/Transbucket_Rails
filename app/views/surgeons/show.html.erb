@@ -8,18 +8,20 @@
       <h4 class="media-heading">
         <%= link_to @surgeon.to_s, @surgeon.url %>
         <br><%= (fa_icon('star') * @surgeon.overall_satisfaction).html_safe unless @surgeon.overall_satisfaction.nil? %>
-      </h4>
+    </h4>
+    <% if @surgeon.address %>
       <address>
         <%= @surgeon.address %><br>
         <%= @surgeon.city %>, <%= @surgeon.state %> <%= @surgeon.zip %><br>
         <%= @surgeon.country %><br>
-    </address>
+      </address>
+    <% end %>
     <% if @surgeon.notes %>
       <div class="panel panel-default">
         <div class="panel-body">
           Notes: <%= @surgeon.notes %></div>
-        </div>
-      <% end %>
+      </div>
+    <% end %>
 
     <% @surgeon.satisfaction_by_procedure.each do |procedure_id, satisfaction| %>
       <div class="panel panel-default">

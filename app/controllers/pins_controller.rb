@@ -108,7 +108,7 @@ class PinsController < ApplicationController
 
   private
   def get_pin
-    @pin = Pin.includes(:comment_threads).find(params[:id])
+    @pin = Pin.includes(comment_threads: [:children]).find(params[:id])
   end
 
   def id_or_attributes(attributes)

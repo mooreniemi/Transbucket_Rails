@@ -10,9 +10,10 @@ describe PinsController, :type => :controller do
   end
 
   context "when signed in" do
+    let (:user) { create(:user) }
+
     before(:each) do
-      allow(User).to receive(:find).and_return(build(:user))
-      sign_in
+      sign_in(user)
     end
 
     describe "GET #index" do
@@ -26,7 +27,7 @@ describe PinsController, :type => :controller do
     describe 'GET #show' do
       it "retrieves pin for view" do
 
-        pin = create(:pin)
+        pin = create(:pin, user: user)
         get :show, id: pin.id
 
         expect(response).to be_success
@@ -37,7 +38,7 @@ describe PinsController, :type => :controller do
       it "retrieves pin for edit view" do
         create(:surgeon, id: 911)
 
-        pin = create(:pin)
+        pin = create(:pin, user: user)
         get :edit, id: pin.id
 
         expect(response).to be_success
@@ -76,13 +77,13 @@ describe PinsController, :type => :controller do
       end
 
       it 'updates an existing pin' do
-        pin = create(:pin, :with_surgeon_and_procedure, :real_pin_images)
+        pin = create(:pin, :with_surgeon_and_procedure, :real_pin_images, user: user)
         old_surgeon_id = pin.surgeon.id
         old_procedure_id = pin.procedure.id
 
         surgeon = attributes_for(:surgeon)
         procedure = attributes_for(:procedure)
-        updated_attrs = build(:pin).attributes.merge({"surgeon_attributes" => surgeon, "procedure_attributes" => procedure})
+        updated_attrs = build(:pin, user: user).attributes.merge({"surgeon_attributes" => surgeon, "procedure_attributes" => procedure})
 
         put :update, :id => pin.id, :pin => updated_attrs
 
@@ -97,6 +98,50 @@ describe PinsController, :type => :controller do
         expect(pin.procedure.id).to_not eq(old_procedure_id)
         expect(pin.surgeon.url).to eq(surgeon[:url])
         expect(pin.procedure.name).to eq(procedure[:name])
+      end
+    end
+
+    describe "DELETE #destroy" do
+      it "deletes a pin and redirects to pins index" do
+        pin = create(:pin, user: user)
+
+        delete :destroy, :id => pin.id
+        expect(response).to redirect_to(pins_url)
+      end
+    end
+  end
+
+  context "when signed in as a different user" do
+    let (:users) { create_list(:user, 2) }
+    let (:pin) { create(:pin, user: users.last)}
+
+    before(:each) do
+      sign_in(users.first)
+    end
+
+    describe "GET #edit" do
+      it "is forbidden to edit" do
+        get :edit, id: pin.id
+
+        expect(response).to be_forbidden
+      end
+    end
+
+    describe "PUT #update" do
+      it "is forbidden to update" do
+        updated_attrs = build(:pin).attributes
+
+        put :update, :id => pin.id, :pin => updated_attrs
+
+        expect(response).to be_forbidden
+      end
+    end
+
+    describe "DELETE #destroy" do
+      it "is forbidden to destroy" do
+        delete :destroy, :id => pin.id
+
+        expect(response).to be_forbidden
       end
     end
   end

@@ -1,16 +1,19 @@
 require "rails_helper"
 
 RSpec.describe "commenting", :fake_images => true, :js => true do
+  let!(:original_wait) { Capybara.default_max_wait_time }
   let(:pin) { create(:pin, :with_surgeon_and_procedure) }
   let(:comment) { build(:comment) }
   let(:user) { create(:user, :with_confirmation) }
 
   before(:each) do
     login_as(user, :scope => :user)
+    Capybara.default_max_wait_time = 2 * original_wait
   end
 
   after :each do
     Warden.test_reset!
+    Capybara.default_max_wait_time = original_wait
   end
 
   it "creates a new comment on a pin" do

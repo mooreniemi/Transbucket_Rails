@@ -47,7 +47,7 @@ describe "the flagging process" do
 
         visit '/pins'
         flag_link = find('a[href="/pins/' + pin.id.to_s + '/flags"]')
-        flag_link.click
+        flag_link.trigger("click")
       end
 
       visit '/pins'
@@ -62,7 +62,7 @@ describe "the flagging process" do
 
         visit '/pins/' + pin.id.to_s
         flag_link = find("#comment-#{comment_id} .fa-flag").find(:xpath, "..")
-        flag_link.click
+        flag_link.trigger("click")
       end
 
       visit '/pins/' + pin.id.to_s

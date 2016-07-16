@@ -70,7 +70,7 @@ describe "pin updating", :fake_images => true do
     include_examples "pin updating", js: false
 
     context "with broken pin images" do
-      let(:pin) { create(:pin, :with_surgeon_and_procedure, :broken_pin_images) }
+      let(:pin) { create(:pin, :with_surgeon_and_procedure, :broken_pin_images, user: user) }
 
       include_examples "pin updating", js: false
     end
@@ -94,7 +94,7 @@ describe "pin updating", :fake_images => true do
     include_examples "pin updating", js: true
 
     context "with broken pin images" do
-      let(:pin) { create(:pin, :with_surgeon_and_procedure, :broken_pin_images) }
+      let(:pin) { create(:pin, :with_surgeon_and_procedure, :broken_pin_images, user: user) }
 
       include_examples "pin updating", js: true
     end

@@ -1,6 +1,7 @@
 class PinsController < ApplicationController
   include SanitizeNames
   before_filter :authenticate_user!
+  before_filter :validate_user, :only => [:edit, :update, :destroy]
   before_filter :get_pin, :except => [:index, :new, :create, :admin]
   respond_to :json
 
@@ -40,7 +41,7 @@ class PinsController < ApplicationController
 
   # GET /pins/1/edit
   def edit
-    @form = PinForm.new(Pin.find(params[:id]))
+    @form = PinForm.new(current_user.pins.find(params[:id]))
     @form.prepopulate!
   end
 
@@ -67,7 +68,7 @@ class PinsController < ApplicationController
   # PUT /pins/1
   # PUT /pins/1.json
   def update
-    @form = PinForm.new(Pin.find(params[:id]))
+    @form = PinForm.new(current_user.pins.find(params[:id]))
 
     respond_to do |format|
       if @form.validate(pin_params)
@@ -158,5 +159,15 @@ class PinsController < ApplicationController
 
   def user_last_sign_in
     User.find(current_user.id).try(:last_sign_in_at)
+  end
+
+  def validate_user
+    pin = Pin.find(params[:id])
+
+    if current_user == pin.user
+      return true
+    else
+      head :forbidden
+    end
   end
 end

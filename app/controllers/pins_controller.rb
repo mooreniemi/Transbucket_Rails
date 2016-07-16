@@ -164,7 +164,9 @@ class PinsController < ApplicationController
   def validate_user
     pin = Pin.find(params[:id])
 
-    unless current_user == pin.user
+    if current_user == pin.user
+      return true
+    else
       head :forbidden
     end
   end

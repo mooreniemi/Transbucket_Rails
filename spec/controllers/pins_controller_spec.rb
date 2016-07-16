@@ -99,5 +99,49 @@ describe PinsController, :type => :controller do
         expect(pin.procedure.name).to eq(procedure[:name])
       end
     end
+
+    describe "DELETE #destroy" do
+      it "deletes a pin and redirects to pins index" do
+        pin = create(:pin)
+
+        delete :destroy, :id => pin.id
+        expect(response).to redirect_to(pins_url)
+      end
+    end
+  end
+
+  context "when signed in as a different user" do
+    let (:users) { create_list(:user, 2) }
+    let (:pin) { create(:pin, user: users.last)}
+
+    before(:each) do
+      sign_in(users.first)
+    end
+
+    describe "GET #edit" do
+      it "is forbidden to edit" do
+        get :edit, id: pin.id
+
+        expect(response).to be_forbidden
+      end
+    end
+
+    describe "PUT #update" do
+      it "is forbidden to update" do
+        updated_attrs = build(:pin).attributes
+
+        put :update, :id => pin.id, :pin => updated_attrs
+
+        expect(response).to be_forbidden
+      end
+    end
+
+    describe "DELETE #destroy" do
+      it "is forbidden to destroy" do
+        delete :destroy, :id => pin.id
+
+        expect(response).to be_forbidden
+      end
+    end
   end
 end

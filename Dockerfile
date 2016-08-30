@@ -25,5 +25,3 @@ ADD Gemfile* $APP_HOME/
 RUN bundle install
 
 ADD . $APP_HOME
-COPY ./config/docker_database.yml $APP_HOME/config/database.yml
-RUN cat $APP_HOME/config/database.yml

@@ -10,13 +10,17 @@ defaults: &defaults
   enable_star: true
   min_infix_len: 3
 
-development:
-  <<: *defaults
-  database: psql_development
+development: &default
+  adapter: postgresql
+  database: backbone_data_bootstrap_development
+  min_messages: WARNING
+  pool: 5
+  username: postgres
+  host: db
 
 test:
-  <<: *defaults
-  database: psql_test<%= ENV['TEST_ENV_NUMBER'] %>
+  <<: *default
+  database: backbone_data_bootstrap_test
 
 production:
   <<: *defaults

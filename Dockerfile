@@ -17,7 +17,7 @@ RUN apt-get install -y libqt4-webkit libqt4-dev xvfb
 # for a JS runtime
 RUN apt-get install -y nodejs
 
-ENV APP_HOME /myapp
+ENV APP_HOME /tb
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
@@ -25,3 +25,5 @@ ADD Gemfile* $APP_HOME/
 RUN bundle install
 
 ADD . $APP_HOME
+COPY ./config/docker_database.yml $APP_HOME/config/database.yml
+RUN cat $APP_HOME/config/database.yml

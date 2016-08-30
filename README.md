@@ -31,11 +31,14 @@ The TL;DR of technical specs is: Rails 4.2.6 (in Ruby 2.2.3), using [bower_rails
 **Table of Contents**
 
 - [setup](#setup)
-  - [database setup](#database-setup)
-    - [mysql](#mysql)
-    - [postgres](#postgres)
+  - [via docker](#via-docker)
+  - [manually](#manually)
+    - [database setup](#database-setup)
+      - [mysql](#mysql)
+      - [postgres](#postgres)
+      - [thinking sphinx](#thinking-sphinx)
 - [run environments](#run-environments)
-  - [local](#local)
+  - [development (local)](#development-local)
   - [ci](#ci)
   - [staging](#staging)
   - [production](#production)
@@ -53,18 +56,52 @@ The TL;DR of technical specs is: Rails 4.2.6 (in Ruby 2.2.3), using [bower_rails
 - [contact](#contact)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+update -->
+
 # setup
-## database setup
+## via docker
+
+Largely sourced from [Thoughtbot](https://robots.thoughtbot.com/rails-on-docker).
+
+```
+
+# preliminaries can be run anywhere
+brew install caskroom/cask/brew-cask
+brew cask install virtualbox
+brew install docker docker-machine
+
+docker-machine create --driver virtualbox default
+eval "$(docker-machine env default)"
+
+# prob want to add this to your .bashrc: eval `docker-machine env 2>/dev/null`
+
+brew install docker-compose
+
+# now our env is good, from root dir app specific stuff
+
+docker-compose build # will run the Dockerfile
+docker-compose run web rake db:create db:setup # seeds db
+docker-compose up # run all services in docker-compose.yml
+
+# now you'll be running on that docker's 3000 port
+# ie http://192.168.99.100:3000
+docker-machine ip # to get the host
+
+```
+
+
+## manually
+### database setup
 
 For set up, you'll need to make sure you have mysql installed for Sphinx (search functionality) and Postgres installed for the actual database. The database is currently set up to have the user "Alex".
 
-### mysql
+#### mysql
 
 For mysql, use `brew install mysql` and follow those instructions.
 
 I also found I needed to link `sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib`.
 
-### postgres
+#### postgres
 
 Heroku [manages our database.yml](https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-ruby) in production (and staging), so all these instructions are just for local environment.
 
@@ -75,6 +112,8 @@ Now you should be able to run `rake db:setup`. Make sure to redo this command an
 Some seed data is necessary for the site to work. It is all handled via `rake db:seed` which is included during `rake db:setup`. The process in general is a backup and dump of the [prod database](https://devcenter.heroku.com/articles/heroku-postgres-import-export#export) is made, then a [seed_dump](https://github.com/rroblak/seed_dump) from it.
 
 For your ease, `rake db:seed` will also create a user and an admin. Both will have the password "password". The usernames should output to console.
+
+#### thinking sphinx
 
 # run environments
 

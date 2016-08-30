@@ -1,6 +1,5 @@
-# Dockerfile does COPY of this into
-# config/database.yml so containers
-# work correctly in docker compose
+# docker-compose.yml mounts this in place of
+# config/database.yml so containers connect
 
 defaults: &defaults
   adapter: postgresql

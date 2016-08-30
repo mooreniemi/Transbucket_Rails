@@ -17,11 +17,15 @@ defaults: &defaults
 
 development: &default
   adapter: postgresql
-  database: psql_development
+  database: backbone_data_bootstrap_development
+  min_messages: WARNING
+  pool: 5
+  username: postgres
+  host: db
 
 test:
   <<: *default
-  database: psql_test<%= ENV['TEST_ENV_NUMBER'] %>
+  database: backbone_data_bootstrap_test
 
 production:
   <<: *defaults

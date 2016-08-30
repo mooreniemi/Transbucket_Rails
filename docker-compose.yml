@@ -5,6 +5,9 @@ services:
     ports:
       - "5432:5432"
 
+  sphinx:
+    image: romeoz/docker-sphinxsearch
+
   web:
     build: .
     command: bin/rails server --port 3000 --binding 0.0.0.0
@@ -13,4 +16,6 @@ services:
     links:
       - db
     volumes:
-      - .:/myapp
+      - .:/tb
+      - ./config/docker_database.yml:/tb/config/database.yml
+

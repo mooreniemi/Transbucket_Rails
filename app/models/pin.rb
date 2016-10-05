@@ -68,18 +68,12 @@ class Pin < ActiveRecord::Base
   end
 
   def self.by_procedure(procedure)
-    if procedure == [nil]
-      where.not(procedure_id: procedure)
-    else
-      where(procedure_id: procedure)
-    end
+    return all if procedure.nil?
+    where(procedure_id: procedure)
   end
 
   def self.by_surgeon(surgeon)
-    if surgeon == [nil]
-      where.not(surgeon_id: surgeon)
-    else
-      where(surgeon_id: surgeon)
-    end
+    return all if surgeon.nil?
+    where(surgeon_id: surgeon)
   end
 end

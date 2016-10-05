@@ -12,7 +12,6 @@ class PinFilterQuery
   end
 
   def filtered
-    # this will make the instance_eval a no-op
     args = general.present? ? general.join('.') : 'Pin'
     Rails.cache.fetch(cache_key) do
       Pin.instance_eval { eval args }.

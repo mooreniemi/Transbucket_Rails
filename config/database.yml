@@ -1,5 +1,6 @@
 defaults: &defaults
   adapter: postgresql
+  prepared_statements: false
   host: localhost
   encoding: unicode
   pool: 5

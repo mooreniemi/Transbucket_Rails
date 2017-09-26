@@ -399,6 +399,7 @@ GEM
       sass (~> 3.2.0)
       sprockets (~> 2.8, <= 2.11.0)
       sprockets-rails (~> 2.0)
+    scout_apm (2.1.32)
     seed_dump (3.2.2)
       activerecord (~> 4)
       activesupport (~> 4)
@@ -546,6 +547,7 @@ DEPENDENCIES
   rspec_junit_formatter (= 0.2.2)
   ruby-prof
   sass-rails (= 4.0.3)
+  scout_apm
   seed_dump
   simple-rss
   simple_form
@@ -564,7 +566,7 @@ DEPENDENCIES
   zip-codes
 
 RUBY VERSION
-   ruby 2.2.2p95
+   ruby 2.3.3p222
 
 BUNDLED WITH
-   1.12.5
+   1.13.6

@@ -77,6 +77,10 @@ Some seed data is necessary for the site to work. It is all handled via `rake db
 
 For your ease, `rake db:seed` will also create a user and an admin. Both will have the password "password". The usernames should output to console.
 
+On Ubuntu, you will likely need to follow [these
+instructions](https://gist.github.com/p1nox/4953113) after you've
+installed headers.
+
 # run environments
 
 Staging and production both deploy and depend on [Heroku](https://heroku.com/). You should grab their [cli](https://devcenter.heroku.com/articles/using-the-cli). These instructions assume you've set it up.

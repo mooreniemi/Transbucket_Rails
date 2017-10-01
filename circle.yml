@@ -3,11 +3,6 @@ machine:
   timezone:
     America/New_York # Set the timezone
 
-  # Version of ruby to use
-  ruby:
-    version:
-      2.2.3
-
   pre:
     - createuser "Alex" -s
 

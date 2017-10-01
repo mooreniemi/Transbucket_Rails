@@ -1,11 +1,6 @@
-# SQLite version 3.x
-#   gem install sqlite3
-#
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem 'sqlite3'
-
 defaults: &defaults
   adapter: postgresql
+  prepared_statements: false
   host: localhost
   encoding: unicode
   pool: 5
@@ -18,9 +13,6 @@ defaults: &defaults
 development:
   <<: *defaults
   database: psql_development
-  #socket: /tmp/mysql.sock
-  #socket: /Applications/XAMPP/xamppfiles/var/mysql/mysql.sock
-  #port: 9306
 
 test:
   <<: *defaults

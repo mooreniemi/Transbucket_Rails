@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # https://devcenter.heroku.com/articles/ruby-versions
-ruby '2.2.3'
+ruby '2.3.3'
 
 gem 'rails'
 # used for public areas of the site, see PagesController
@@ -134,5 +134,6 @@ group :production do
 	# for assets, see https://devcenter.heroku.com/articles/rails-4-asset-pipeline
 	gem 'rails_12factor'
 	gem 'newrelic_rpm'
+  gem 'scout_apm'
   gem 'lograge'
 end

@@ -1,22 +1,23 @@
 
 												 _______
-										 _.-()______)-._
-									 .'               '.
-									/                   \
-								 :      _________      :
-								 |.--'''         '''--.|
-								 (                     )
-								 :'--..._________...--':
-								 :                     :
-									:                   :
-									:                   :
-									 :                 :
-									 :                 :
-										:               :
-										:               :
-										 :             :
-							 jrei  :_           _:
-											 '''-----'''
+  										     _.-()______)-._
+									       .'               '.
+									      /                   \
+								         :      _________      :
+								         |.--'''         '''--.|
+								         (                     )
+								         :'--..._________...--':
+								         :                     :
+									      :                   :
+									      :                   :
+									       :                 :
+									       :                 :
+										    :               :
+										    :               :
+										     :             :
+				           			   jrei  :_           _:
+									   		   '''-----'''
+
 
 
 Transbucket.com (Transbucket_Rails)
@@ -75,6 +76,10 @@ Now you should be able to run `rake db:setup`. Make sure to redo this command an
 Some seed data is necessary for the site to work. It is all handled via `rake db:seed` which is included during `rake db:setup`. The process in general is a backup and dump of the [prod database](https://devcenter.heroku.com/articles/heroku-postgres-import-export#export) is made, then a [seed_dump](https://github.com/rroblak/seed_dump) from it.
 
 For your ease, `rake db:seed` will also create a user and an admin. Both will have the password "password". The usernames should output to console.
+
+On Ubuntu, you will likely need to follow [these
+instructions](https://gist.github.com/p1nox/4953113) after you've
+installed headers.
 
 # run environments
 

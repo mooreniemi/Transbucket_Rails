@@ -17,8 +17,8 @@ gem 'protected_attributes'
 gem 'rspec_junit_formatter', '0.2.2'
 
 # for thinking sphinx (search functionality)
-gem 'mysql2', '~> 0.4.4'
-gem 'activerecord-mysql-adapter'
+gem 'mysql2', '~> 0.4.10'
+gem 'activerecord-mysql2-adapter'
 gem 'thinking-sphinx'
 gem 'flying-sphinx'
 
@@ -125,7 +125,7 @@ end
 group :assets do
 	gem 'sass-rails', '4.0.3'
 	gem 'coffee-rails', '~> 4.0.0'
-	gem 'bootstrap-sass', '~> 3.2.0'
+  gem 'bootstrap-sass', '3.2.0.4'
 	gem 'autoprefixer-rails'
 	gem 'uglifier', '>= 1.0.3'
 end

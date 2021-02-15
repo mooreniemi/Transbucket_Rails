@@ -19,8 +19,8 @@ gem 'rspec_junit_formatter', '0.2.2'
 # for thinking sphinx (search functionality)
 gem 'mysql2', '~> 0.4.10'
 gem 'activerecord-mysql2-adapter'
-gem 'thinking-sphinx'
-gem 'flying-sphinx'
+gem 'thinking-sphinx', '~> 4.0'
+gem 'flying-sphinx', '~> 2.0'
 
 gem 'active_model_serializers'
 

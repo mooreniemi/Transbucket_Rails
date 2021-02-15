@@ -1,10 +1,10 @@
 require 'faker'
 
-PIN_COUNT = 25
+PIN_COUNT = 250
 PIN_COUNT.times do |i|
   Pin.create(
-    id: Faker::Number.number(5),
     description: Faker::Hacker.say_something_smart,
+    details: Faker::Hacker.say_something_smart,
     surgeon_id: Random.rand(11),
     procedure_id: Random.rand(10),
     user_id: Faker::Number.number(5),
@@ -16,7 +16,7 @@ PIN_COUNT.times do |i|
         photo: "",
         caption: Faker::Hacker.say_something_smart
       )
-  ]
+    ]
   )
 end
 

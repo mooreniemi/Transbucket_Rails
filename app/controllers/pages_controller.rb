@@ -15,7 +15,7 @@ class PagesController < ApplicationController
   end
 
   def newsfeed
-    @rss = SimpleRSS.parse open('http://transbucket.tumblr.com/rss').read
+    @rss = SimpleRSS.parse open('https://transbucket.tumblr.com/rss#_=_').read
     @coder = HTMLEntities.new
   end
 

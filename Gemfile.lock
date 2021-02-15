@@ -87,8 +87,9 @@ GEM
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     bond (0.5.1)
-    bootstrap-sass (3.2.0.4)
-      sass (~> 3.2)
+    bootstrap-sass (3.4.1)
+      autoprefixer-rails (>= 5.2.1)
+      sassc (>= 2.0.0)
     bower-rails (0.7.3)
     brakeman (3.2.1)
       erubis (~> 2.6)
@@ -396,6 +397,8 @@ GEM
       sass (~> 3.2.0)
       sprockets (~> 2.8, <= 2.11.0)
       sprockets-rails (~> 2.0)
+    sassc (2.4.0)
+      ffi (~> 1.9)
     scout_apm (2.1.32)
     seed_dump (3.2.2)
       activerecord (~> 4)
@@ -491,7 +494,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.13)
   better_errors
   binding_of_caller
-  bootstrap-sass (= 3.2.0.4)
+  bootstrap-sass (= 3.4.1)
   bower-rails (~> 0.7.3)
   brakeman
   bullet

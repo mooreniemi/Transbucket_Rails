@@ -39,6 +39,8 @@ gem 'friendly_id', '~> 5.1.0' # Note: You MUST use 5.0.0 or greater for Rails 4.
 # for managing environment variables
 gem 'figaro'
 
+# for authentication
+gem 'bcrypt', '~> 3.1.13'
 gem 'devise'
 gem 'devise-encryptable'
 

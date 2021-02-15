@@ -1,7 +1,9 @@
+password = "big fake password for testing"
+
 meow_meow = User.new(
   email: 'bigbadmath@gmail.com',
-  password: 'password',
-  password_confirmation: 'password',
+  password: password,
+  password_confirmation: password,
   username: 'meowmeow',
   name: 'AlexUser',
   gender: Gender.first
@@ -12,8 +14,8 @@ puts "meowmeow user created successfully"
 
 zoon = User.new(
   email: 'mooreniemi@gmail.com',
-  password: 'password',
-  password_confirmation: 'password',
+  password: password,
+  password_confirmation: password,
   username: 'zoon',
   name: 'AlexAdmin',
   gender: Gender.first,
@@ -22,4 +24,3 @@ zoon = User.new(
 zoon.skip_confirmation!
 zoon.save!
 puts "zoon ADMIN created successfully"
-

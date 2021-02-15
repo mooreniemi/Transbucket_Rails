@@ -23,8 +23,6 @@
 Transbucket.com (Transbucket_Rails)
 ===================================
 
-Transbucket.com is a photo-sharing website for transgender patients. We have roughly 70k users, and average 1000 uniques per month. We're not a huge site, but we do have active users that rely on us. And we're the only site without any profit agenda: this site is by and for the community. We welcome [contributions](https://github.com/mooreniemi/Transbucket_Rails/issues).
-
 The TL;DR of technical specs is: Rails 4.2.6 (in Ruby 2.2.3), using [bower_rails](https://github.com/rharriso/bower-rails) to manage Javascript dependencies, on Postgres database for storage, and with Sphinx indexing for search.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -55,6 +53,7 @@ The TL;DR of technical specs is: Rails 4.2.6 (in Ruby 2.2.3), using [bower_rails
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 # setup
+
 ## database setup
 
 For set up, you'll need to make sure you have mysql installed for Sphinx (search functionality) and Postgres installed for the actual database. The database is currently set up to have the user "Alex".
@@ -63,13 +62,21 @@ For set up, you'll need to make sure you have mysql installed for Sphinx (search
 
 For mysql, use `brew install mysql` and follow those instructions.
 
+Note: below is probably old.
+
 I also found I needed to link `sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib`.
 
 ### postgres
 
 Heroku [manages our database.yml](https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-ruby) in production (and staging), so all these instructions are just for local environment.
 
-For Postgres, use [postgresapp](http://postgresapp.com/). Use `createuser "Alex" -s` in the shell to create the user. If permissions seem wrong, run `psql` and enter `ALTER ROLE "ALEX" CREATEDB;` to give it the right permissions.
+For Postgres on Mac, you can use [postgresapp](http://postgresapp.com/).
+On Linux check your distribution details.
+
+Use `createuser "Alex" -s` in the shell to create the user. (On
+Linux,`createuser` is its own executable, so log onto `psql` first.) If
+permissions seem wrong, run `psql` and enter `ALTER ROLE "ALEX" CREATEDB;`
+to give it the right permissions.
 
 Now you should be able to run `rake db:setup`. Make sure to redo this command and for subsequent commands rerun for `RAILS_ENV=test`, then you can run `bundle` to install gems, and `rspec` to run tests.
 
@@ -124,7 +131,8 @@ While we remain on Heroku, it will infer this step for us. (You won't need to do
 
 ## tests
 
-`rspec`
+On the Ruby side, `rspec`, but you also need `phantomjs` in order to run
+UI integ tests.
 
 Spring is installed to speed up Rails loading times; you should see much shorter load times after the first run.
 

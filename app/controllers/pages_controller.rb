@@ -15,7 +15,8 @@ class PagesController < ApplicationController
   end
 
   def newsfeed
-    @rss = SimpleRSS.parse open('https://transbucket.tumblr.com/rss#_=_').read
+    # FIXME: we shouldn't need to parse the whole stream just to take the last n
+    @rss = SimpleRSS.parse(open('https://transbucket.tumblr.com/rss#_=_').read).items.take(3)
     @coder = HTMLEntities.new
   end
 

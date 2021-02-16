@@ -1,5 +1,5 @@
-<div class="footer navbar-fixed-bottom submission_well">
 <% unless user_signed_in? %>
+<div class="row padded_nicely">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- test1 -->
 <ins class="adsbygoogle"
@@ -11,7 +11,9 @@
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
+</div>
 <% end %>
+<div class="footer navbar-fixed-bottom submission_well">
 <% cache(Date.today.year) do %>
   <small> &nbsp;
   <b><%= Date.today.year %></b> &copy; Transbucket.com |

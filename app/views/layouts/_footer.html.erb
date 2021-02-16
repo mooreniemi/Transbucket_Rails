@@ -1,9 +1,22 @@
-<% cache(Date.today.year) do %>
 <div class="footer navbar-fixed-bottom submission_well">
+<% unless user_signed_in? %>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- test1 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3154444439610781"
+     data-ad-slot="3311943876"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<% end %>
+<% cache(Date.today.year) do %>
   <small> &nbsp;
   <b><%= Date.today.year %></b> &copy; Transbucket.com |
   <%= link_to 'Terms of Service', terms_path %> |
   <%= link_to 'Privacy Policy', privacy_path %>
   </small>
-</div>
 <% end %>
+</div>

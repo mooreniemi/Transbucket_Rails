@@ -23,6 +23,7 @@ class PinFilterQuery
     # this will make the instance_eval a no-op
     args = general.present? ? general.join('.') : 'Pin'
     Rails.cache.fetch(cache_key_for(active_filters, keywords)) do
+      # FIXME not crazy about eval here, how can we make sure this is safe from delete
       Pin.instance_eval { eval args }.
         tagged_with(*complications).
         by_procedure([procedures].flatten).

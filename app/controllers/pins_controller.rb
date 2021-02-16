@@ -132,6 +132,7 @@ class PinsController < ApplicationController
     params[:pin][:surgeon] = id_or_attributes(params[:pin].delete(:surgeon_attributes))
     params[:pin][:procedure] = id_or_attributes(params[:pin].delete(:procedure_attributes))
     params.require(:pin).permit!
+    # FIXME: why was this commented out? should it be removed?
     # params.require(:pin).permit(:surgeon_id, :procedure_id, :cost, :revision, :details, :sensation, :satisfaction,
                                 # pin_images: [:photo, :caption])
   end

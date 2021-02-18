@@ -3,9 +3,8 @@
   <% for e in @rss do %>
 
     <div class="rss_item">
-      <div class="lead">
-        <%= link_to @coder.decode("#{e.title}").html_safe, @coder.decode("#{e.link}").html_safe %></div>
       <p><%= @coder.decode("#{e.description}").html_safe %></p>
+      <%= link_to @coder.decode("#{e.pubDate}").html_safe, @coder.decode("#{e.link}").html_safe %>
     </div>
     <br>
 

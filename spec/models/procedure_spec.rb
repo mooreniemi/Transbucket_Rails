@@ -1,6 +1,21 @@
 require 'rails_helper'
 
 describe Procedure do
+  describe "is properly normalized" do
+    it 'is saved lowercase' do
+      procedure = Procedure.new(name: "Something Uppercase")
+      procedure.save!
+      expect(procedure.name).to eq("something uppercase")
+    end
+    it 'thus considers different cased attempts duplicates' do
+      procedure = Procedure.new(name: "Something Uppercase")
+      procedure.save!
+      procedure_dup = Procedure.new(name: "something uppercase")
+      expect(procedure_dup.valid?).to eq(false)
+      expect(procedure_dup.errors.messages).to eq({"name": ["has already been taken"] })
+      expect(procedure_dup.save).to eq(false)
+    end
+  end
   describe "#recalculate_avgs" do
     it 'calculates avg sensation' do
       procedure = create(:procedure, :uncomputed)

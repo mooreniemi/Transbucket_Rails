@@ -15,8 +15,11 @@ class Procedure < ActiveRecord::Base
   validates :name, uniqueness: true
   validates :name, presence: true
 
+  # save downcase, display capitalized
+  before_validation { self.name.downcase! }
+
   def to_s
-    name
+    name.capitalize
   end
 
   def self.names

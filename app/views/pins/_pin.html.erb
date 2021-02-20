@@ -1,48 +1,55 @@
 <% if rand(1..15) == 7 %>
   <% Rails.logger.debug "Serving ad with #{pin.id}" %>
-<div class="item" class="ad">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- test1 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-3154444439610781"
-     data-ad-slot="3311943876"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-</div>
+  <div class="item" class="ad">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- test1 -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-3154444439610781"
+         data-ad-slot="3311943876"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
 <% end %>
+<!-- end ad snippet  -->
+<% if pin.published? %>
 <div class="item" data-pin-id="<%= pin.id %>">
   <div class="panel panel-default">
     <div class="panel-body">
-      <% if pin.published? %>
-        <%= render partial: "latest_comment_snippet", locals: { pin: pin } if @comments.map(&:commentable_id).include?(pin.id) %>
-        <% cache([pin, @safe_mode]) do %>
-          <div class="image">
-            <%= link_to (image_tag pin.cover_image(@safe_mode)), pin %>
-          </div>
-          <p class="description">
-            <%= pin.try(:procedure).try(:name) %> by <strong><%= pin.unknown_surgeon? ? 'unknown' : 'Dr. ' + pin.surgeon.to_s %></strong>
-          </p>
-        <% end %>
+    <%= render partial: "latest_comment_snippet", locals: { pin: pin } if @comments.map(&:commentable_id).include?(pin.id) %>
+    <% cache([pin, @safe_mode]) do %>
+      <div class="image">
+        <%= link_to (image_tag pin.cover_image(@safe_mode)), pin %>
       </div>
-      <div class="panel-footer">
-        <div class="actions">
-          <label class="label-with-popover" data-placement="right" data-content="Flags from 3 different users will remove content pending review by a moderator." data-title="Flag this content." data-trigger="hover">
-            <%= link_to(fa_icon("flag"), pin_flags_path(pin), :method => :post, remote: true) + " | " unless current_user == pin.user %>
-          </label>
-          <% if current_user == pin.user || current_user.admin? %>
-            <%= link_to fa_icon("pencil-square-o"), edit_pin_path(pin) %>
-            | <%= link_to fa_icon("trash-o"), pin, method: :delete, data: { confirm: 'Are you sure?' } %>
-          <% if pin.pending? %>
-            | <%= link_to 'Remove Flag', remove_pin_flag_path(pin), remote: true %>
-        <% end %>
-      <% end %>
-      posted <%= distance_of_time_in_words(Time.now, pin.created_at) %> ago
+      <p class="description">
+        <%= pin.try(:procedure).try(:name) %> by <strong><%= pin.unknown_surgeon? ? 'unknown' : 'Dr. ' + pin.surgeon.to_s %></strong>
+      </p>
+    <% end %>
+    <!-- end cache fragment  -->
     </div>
+    <!-- panel body end -->
+    <div class="panel-footer">
+      <div class="actions">
+        <label class="label-with-popover" data-placement="right" data-content="Flags from 3 different users will remove content pending review by a moderator." data-title="Flag this content." data-trigger="hover">
+          <%= link_to(fa_icon("flag"), pin_flags_path(pin), :method => :post, remote: true) + " | " unless current_user == pin.user %>
+        </label>
+      <% if current_user == pin.user || current_user.admin? %>
+        <%= link_to fa_icon("pencil-square-o"), edit_pin_path(pin) %>
+        | <%= link_to fa_icon("trash-o"), pin, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <% if pin.pending? %>
+        | <%= link_to 'Remove Flag', remove_pin_flag_path(pin), remote: true %>
+      <% end %>
+      <!-- end if pin pending -->
+      <% end %>
+      <!-- end if user can edit -->
+        posted <%= distance_of_time_in_words(Time.now, pin.created_at) %> ago
+      </div>
+      <!-- end footer actions -->
+    </div>
+    <!-- end panel footer -->
   </div>
-</div>
 </div>
 <% end %>

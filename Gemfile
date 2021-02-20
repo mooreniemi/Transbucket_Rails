@@ -128,7 +128,7 @@ group :assets do
 	gem 'sass-rails', '4.0.3'
 	gem 'coffee-rails', '~> 4.0.0'
 	# other versions yanked https://rubygems.org/gems/bootstrap-sass/versions
-	gem 'bootstrap-sass', '3.2.0.4'
+	gem 'bootstrap-sass', '3.4.1'
 	gem 'autoprefixer-rails'
 	gem 'uglifier', '>= 1.0.3'
 end

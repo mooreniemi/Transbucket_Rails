@@ -1,6 +1,7 @@
 # PinImages is probably somewhat confusing.
 # Probably should've just stuck paperclip on pin.
 class PinImage < ActiveRecord::Base
+  include Searchable
   belongs_to :pin
 
   has_attached_file :photo,

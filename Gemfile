@@ -16,19 +16,19 @@ gem 'protected_attributes'
 # for ci
 gem 'rspec_junit_formatter', '0.2.2'
 
-# for thinking sphinx (search functionality)
-gem 'mysql2', '~> 0.4.10'
-gem 'activerecord-mysql2-adapter'
-gem 'thinking-sphinx', '~> 4.0'
-gem 'flying-sphinx', '~> 2.0'
+# needs to be before ES
+gem 'will_paginate', '~> 3.0'
+gem 'will_paginate-bootstrap'
+
+gem 'faraday_middleware-aws-sigv4'
+gem 'elasticsearch-model'
+# gem 'elasticsearch-persistence'
+gem 'elasticsearch-rails'
 
 gem 'active_model_serializers'
 
 gem 'pg'
 gem 'delayed_job_active_record'
-
-gem 'will_paginate', '~> 3.0'
-gem 'will_paginate-bootstrap'
 
 gem 'paperclip', :git=> 'https://github.com/thoughtbot/paperclip', :ref => '523bd46c768226893f23889079a7aa9c73b57d68'
 gem 'aws-sdk'

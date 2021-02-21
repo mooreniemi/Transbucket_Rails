@@ -2,6 +2,9 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
+# https://github.com/elastic/elasticsearch-rails/tree/master/elasticsearch-rails#activesupport-instrumentation
+require 'elasticsearch/rails/instrumentation'
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -36,12 +39,12 @@ module Transbucket
 
     config.generators do |g|
       g.test_framework :rspec,
-      :fixtures => false,
-      :view_specs => false,
-      :helper_specs => false,
-      :routing_specs => false,
-      :controller_specs => true,
-      :request_specs => true
+        :fixtures => false,
+        :view_specs => false,
+        :helper_specs => false,
+        :routing_specs => false,
+        :controller_specs => true,
+        :request_specs => true
     end
   end
 end

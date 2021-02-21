@@ -1,4 +1,5 @@
 class Surgeon < ActiveRecord::Base
+  include Searchable
   include SanitizeNames
   extend FriendlyId
   friendly_id :full_name, use: :slugged
@@ -17,6 +18,10 @@ class Surgeon < ActiveRecord::Base
 
   def full_name
     "#{last_name}-#{first_name}"
+  end
+
+  def pretty_name
+    "#{last_name}, #{first_name}"
   end
 
   def overall_satisfaction

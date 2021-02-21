@@ -1,4 +1,5 @@
 class Procedure < ActiveRecord::Base
+  include Searchable
   include Stats
   include CommentsHelper
   extend FriendlyId

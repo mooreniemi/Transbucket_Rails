@@ -35,10 +35,20 @@ hr.style-two {
 
 /* Required for jQuery Masonry */
 
+/* mobile first */
+$small: 600px;
+$medium: 900px;
+
 .item {
-  width: 25%;
   padding: 10px;
+  @media screen and (max-width: $small) {
+    width: 100%;
+  }
+  @media screen and (min-width: $medium) {
+    width: 25%;
+  }
 }
+
 .item.w2 { width: 50%; }
 .item img {
   width: 100%;

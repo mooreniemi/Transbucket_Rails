@@ -61,7 +61,7 @@ class Pin < ActiveRecord::Base
 
   def as_indexed_json(options={})
     hash = self.as_json()
-    hash['complications'] = self.complications
+    hash['complications'] = self.complications.join(',')
     hash['surgeon_name'] = self.surgeon.pretty_name
     hash['procedure_name'] = self.procedure.name
     hash['procedure_description'] = self.procedure.description

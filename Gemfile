@@ -100,6 +100,7 @@ group :development, :test do
   gem 'rspec-benchmark'
   gem 'parallel_tests'
 	gem 'bullet'
+  gem 'bundler', '1.17.1'
 	gem 'binding_of_caller'
 	gem 'guard'
 	gem 'guard-livereload'
@@ -110,6 +111,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'phantomjs', :require => 'phantomjs/poltergeist'
 	gem 'simplecov', :require => false
 	gem 'database_cleaner'
 	gem 'rspec-rails'

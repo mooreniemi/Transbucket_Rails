@@ -9,7 +9,9 @@ class Pin < ActiveRecord::Base
   include CommentsHelper
   include NotificationsHelper
 
-  settings index: { number_of_shards: 3, number_of_replicas: 1} do
+  # why are we ok with 0 replicas? because we have hourly snapshots
+  # and because we are exporting data stored in our backed up db
+  settings index: { number_of_shards: 3, number_of_replicas: 0 } do
     mapping do
       indexes :surgeon
       indexes :procedure

@@ -63,6 +63,17 @@ class Pin < ActiveRecord::Base
     published.order('created_at desc')
   end
 
+  def self.by_gender(gender_name)
+    unless Gender.pluck(:name).include?(gender_name)
+      raise Exception.new "Invalid Gender name"
+    end
+    joins('LEFT JOIN procedures on pins.procedure_id = procedures.id').where(procedures: { gender: gender_name })
+  end
+
+  def self.by_user_gender(user)
+    by_gender(user.gender.name)
+  end
+
   def self.by_user(user)
     includes(:pin_images, :user, :surgeon, :procedure).where(user_id: user)
   end

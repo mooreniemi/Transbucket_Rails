@@ -18,6 +18,8 @@ class PinPresenter
               # includes are handled inside Query object
               PinFilterQuery.new(filter).filtered.paginate(:page => @page)
             else
+              # NOTE: if we want to do by_user_gender, we'd do it here
+              # but there's not an easy way to let people change this on the fly
               Pin.includes(:user, :pin_images, :procedure, :surgeon).recent.paginate(:page => @page)
             end
   end

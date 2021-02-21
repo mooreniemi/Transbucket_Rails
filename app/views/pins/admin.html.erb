@@ -2,10 +2,27 @@
 <h3><%= title 'Moderation Queue' %></h3>
 <div class="panel panel-default">
   <div class="panel-body">
-    3 flags on a comment or pin land it in this queue. It is always possible users thought they were giving a thumbs up, so please make sure to check each pin or comment before deleting.
+    <p>3 flags on a comment or pin land it in this queue. It is always possible users thought they were giving a thumbs up, so please make sure to check each pin or comment before deleting.</p>
+    <p>Why is this page called "queendom"? Because hackers know to try and target any "admin/" or similar page. "queendom" is a partial anagram of moderation queue</p>
   </div>
 </div>
-<h5>Comments Queue</h5>
+
+<h4>Pins Queue</h4>
+<table class="table" style="background-color: #fff;">
+  <th>pin id link</th>
+  <th>pin user email</th>
+  <th>unflag</th>
+  <th>delete</th>
+  <% @queue[:pins].each do |e| %>
+    <% user = User.find_by_id(e.user_id) || Struct::User.new("none", "deleted") %>
+    <tr><td><%= link_to e.id, pin_path(e) %> </td>
+      <td> <%= mail_to user.email, user.username %>
+      <td><%= link_to fa_icon("flag"), remove_pin_flag_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to republish this pin?", :disable_with => "unflag" %></td>
+      <td><%= link_to "×", pin_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this pin?", :disable_with => "×"%></td></tr>
+  <% end %>
+</table>
+
+<h4>Comments Queue</h4>
 <table class="table" style="background-color: #fff;">
   <th>parent pin link</th>
   <th>comment user email</th>
@@ -24,17 +41,3 @@
   <% end %>
 </table>
 
-<h5>Pins Queue</h5>
-<table class="table" style="background-color: #fff;">
-  <th>pin id link</th>
-  <th>pin user email</th>
-  <th>unflag</th>
-  <th>delete</th>
-  <% @queue[:pins].each do |e| %>
-    <% user = User.find_by_id(e.user_id) || Struct::User.new("none", "deleted") %>
-    <tr><td><%= link_to e.id, pin_path(e) %> </td>
-      <td> <%= mail_to user.email, user.username %>
-      <td><%= link_to fa_icon("flag"), remove_pin_flag_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to republish this pin?", :disable_with => "unflag" %></td>
-      <td><%= link_to "×", pin_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this pin?", :disable_with => "×"%></td></tr>
-  <% end %>
-</table>

@@ -39,7 +39,7 @@ Rails.application.routes.draw do
 
   get 'by_user' => 'pins#by_user', :as => 'by'
   get 'pins' => 'pins#index'
-  get 'admin' => 'pins#admin'
+  get 'queendom' => 'pins#admin'
 
   get 'about' => 'pages#about'
   get 'terms' => 'pages#terms'

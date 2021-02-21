@@ -23,6 +23,9 @@
           <li>
             <%= link_to 'Procedures',  procedures_path %>
           </li>
+          <li>
+            <%= link_to 'Surgeons',  surgeons_path %>
+          </li>
         <% end %>
         <% if user_signed_in? %>
           <%= render partial: 'layouts/logged_in' %>

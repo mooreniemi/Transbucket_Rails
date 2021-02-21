@@ -1,0 +1,10 @@
+<% title "Surgeons" %>
+<div id="surgeons" style="background-color:#ffffff">
+  <table class="table table-hover table-bordered" bgcolor="#ffffcc">
+    <th>Name</th>
+    <th>Submissions</th>
+    <% @surgeons.each do |surgeon| %>
+    <%= render partial: 'surgeons/surgeon_row', locals: { surgeon: surgeon } %>
+    <% end %>
+  </table>
+</div>

@@ -1,5 +1,10 @@
 <tr itemscope itemtype="https://schema.org/MedicalProcedure">
   <td><%= link_to procedure.name, procedure_path(procedure) %></td>
+  <% if user_signed_in? %>
+  <td><%= link_to Pin.where(procedure_id: procedure.id).count, pins_path(procedure: procedure.id) %></td>
+<% else %>
+  <td><%= link_to "Register to see more", register_path  %></td>
+  <% end %>
   <td><%= procedure.avg_satisfaction %></td>
   <td><%= procedure.avg_sensation %></td>
   <td><%= procedure.comment_threads.count %></td>

@@ -29,8 +29,8 @@ else
     f.request :aws_sigv4,
       service: 'es',
       region: 'us-east-1',
-      access_key_id: ENV['AWS_ACCESS_KEY_ID'],
-      secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
+      access_key_id: ENV['ES_AWS_ACCESS_KEY_ID'],
+      secret_access_key: ENV['ES_AWS_SECRET_ACCESS_KEY']
   end
 end
 

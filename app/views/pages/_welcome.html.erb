@@ -1,22 +1,16 @@
 <div class="row">
+<center>
   <div class="col-md-4">
-    <h3><%= title 'Do you have questions about transitioning?' %></h3>
+    <h3><%= title 'Are you considering transition care?' %></h3>
+    <%= link_to (image_tag("dysphoria2.png", :size => "200x200", :alt => "dysphoria", :padding => "10")), register_path %>
   </div>
   <div class="col-md-4">
-    <h3>We have answers.</h3>
+    <h3>You should join the community.</h3>
+    <%= link_to (image_tag("dysphoria3.png", :size => "200x200", :alt => "key", :padding => "10")), register_path %>
   </div>
   <div class="col-md-4">
-    <h3><%= link_to "Register to see more.", register_path %></h3>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-4">
-    <%= image_tag("dysphoria2.png", :size => "200x200", :alt => "dysphoria", :padding => "10") %>
-  </div>
-  <div class="col-md-4">
-    <%= image_tag("dysphoria3.png", :size => "200x200", :alt => "key", :padding => "10") %>
-  </div>
-  <div class="col-md-4">
+    <h3><%= link_to "Register to see real results.", register_path %></h3>
     <%= link_to (image_tag("register.png", :size => "200x200", :alt => "key", :padding => "10")), register_path %>
   </div>
+</center>
 </div>

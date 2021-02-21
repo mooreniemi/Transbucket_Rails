@@ -30,7 +30,8 @@ $(document).ready(function() {
   if (container) {
     // initialize Masonry after all images have loaded
     imagesLoaded(container, function() {
-      msnry = new Masonry(container);
+      // https://masonry.desandro.com/options.html
+      msnry = new Masonry(container, {});
     });
   }
 });

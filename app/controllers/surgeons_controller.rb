@@ -1,4 +1,8 @@
 class SurgeonsController < ApplicationController
+  def index
+    @surgeons = Surgeon.all.order(:last_name)
+  end
+
   def show
     @surgeon = Surgeon.friendly.find(params[:id])
   end

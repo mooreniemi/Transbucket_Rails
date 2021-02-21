@@ -10,16 +10,15 @@
           <span class="icon-bar"></span>
         </button>
         <%= link_to image_tag("small_logo.png", :size => "16x16", :alt => "Index"), root_path, :class => "navbar-brand" %>
+        <% unless user_signed_in? %>
         <a class="navbar-brand" href="<%= root_path %>">Transbucket.com</a>
+        <% end %>
       </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <li>
             <%= link_to 'News',  newsfeed_path %>
-          </li>
-          <li>
-            <%= link_to 'About',  about_path %>
           </li>
           <li>
             <%= link_to 'Procedures',  procedures_path %>

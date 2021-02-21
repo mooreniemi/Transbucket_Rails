@@ -1,11 +1,16 @@
 <% title @procedure.to_s  %>
-<div class="panel panel-default">
+<div class="panel panel-default" itemscope itemtype="https://schema.org/MedicalProcedure">
   <div class="panel-heading">
     <%= @procedure.name %>
     <%= link_to Pin.where(procedure_id: @procedure.id).count, pins_path(procedure: @procedure.id), { style: 'border-radius: 100%; background: #ffffcc; display:inline-block; padding:5px;' } %>
   </div>
+  <% if @procedure.body_type %>
+    <div class="panel-body" itemprop="bodyLocation">
+      <i>This procedure is classified as a "<%= @procedure.body_type %>" procedure.</i>
+    </div>
+  <% end %>
   <% if @procedure.description %>
-    <div class="panel-body">
+    <div class="panel-body" itemprop="description" itemprop="howPerformed">
       <%= @procedure.description %>
     </div>
   <% end %>

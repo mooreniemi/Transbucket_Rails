@@ -1,5 +1,6 @@
 <% title @surgeon.to_s  %>
 <% cache(@surgeon) do %>
+<div itemscope itemtype="https://schema.org/Physician">
   <div class="media">
     <div class="media-left">
       <%= fa_icon "user-md", class: "fa-5x media-object" %>
@@ -38,5 +39,6 @@
     </div>
   </div>
 <% end %>
+</div>
 </div>
 <% end %>

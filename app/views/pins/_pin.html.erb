@@ -16,15 +16,15 @@
 <% end %>
 <!-- end ad snippet  -->
 <% if pin.published? %>
-<div class="item" data-pin-id="<%= pin.id %>">
+<div class="item" data-pin-id="<%= pin.id %>" itemscope>
   <div class="panel panel-default">
     <div class="panel-body">
     <%= render partial: "latest_comment_snippet", locals: { pin: pin } if @comments.map(&:commentable_id).include?(pin.id) %>
     <% cache([pin, @safe_mode]) do %>
-      <div class="image">
+      <div class="image" itemprop="image">
         <%= link_to (image_tag pin.cover_image(@safe_mode)), pin %>
       </div>
-      <p class="description">
+      <p class="description" itemprop="description">
         <%= pin.try(:procedure).try(:name) %> by <strong><%= pin.unknown_surgeon? ? 'unknown' : 'Dr. ' + pin.surgeon.to_s %></strong>
       </p>
     <% end %>

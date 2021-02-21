@@ -13,6 +13,9 @@ class Procedure < ActiveRecord::Base
 
   # attr_accessible :name, :body_type, :gender, :avg_sensation, :avg_satisfaction
 
+  settings index: { number_of_shards: 1, number_of_replicas: 0 } do
+  end
+
   validates :name, uniqueness: true
   validates :name, presence: true
 

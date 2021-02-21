@@ -12,10 +12,15 @@ end
 
 Rails.logger.info("Initializing Elasticsearch client")
 
-if Rails.env.development? || Rails.env.test?
+if Rails.env.development?
   # we don't sign requests to localhost
   Rails.logger.warn("Will hit LOCAL Elasticsearch")
   Elasticsearch::Model.client = Elasticsearch::Client.new(config)
+elsif Rails.env.test?
+  # FIXME: we can do better than this?
+  # we don't want to run callbacks in this environment
+  Rails.logger.warn("Not initializing Elasticsearch in test")
+  Elasticsearch::Model.client = nil
 else
   # https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-request-signing.html#es-request-signing-ruby
   require 'faraday_middleware/aws_sigv4'

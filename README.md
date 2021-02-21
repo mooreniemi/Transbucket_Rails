@@ -58,8 +58,11 @@ The TL;DR of technical specs is: Rails 4.2.6 (in Ruby 2.2.3), using [bower_rails
 update -->
 
 # setup
+<<<<<<< HEAD
 
 ## database setup
+=======
+>>>>>>> 3e8f3879c8a0cf8cb0a601e63d007d198ed9da6c
 ## via docker
 
 Largely sourced from [Thoughtbot](https://robots.thoughtbot.com/rails-on-docker).
@@ -122,10 +125,13 @@ Some seed data is necessary for the site to work. It is all handled via `rake db
 
 For your ease, `rake db:seed` will also create a user and an admin. Both will have the password "password". The usernames should output to console.
 
+<<<<<<< HEAD
 On Ubuntu, you will likely need to follow [these
 instructions](https://gist.github.com/p1nox/4953113) after you've
 installed headers.
 
+=======
+>>>>>>> 3e8f3879c8a0cf8cb0a601e63d007d198ed9da6c
 #### thinking sphinx
 
 # run environments

@@ -1,4 +1,4 @@
-<% unless user_signed_in? %>
+<% if Rails.env.production? && !user_signed_in? %>
 <div class="row padded_nicely">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- test1 -->

@@ -1,5 +1,4 @@
 class Surgeon < ActiveRecord::Base
-  include Searchable
   include SanitizeNames
   extend FriendlyId
   friendly_id :full_name, use: :slugged
@@ -11,8 +10,6 @@ class Surgeon < ActiveRecord::Base
                               group('surgeons.id').
                               having('count(procedures.id) > 0') }
 
-  settings index: { number_of_shards: 1, number_of_replicas: 0 } do
-  end
   phony_normalize :phone, default_country_code: 'US'
 
   validates :last_name, uniqueness: { scope: :first_name }

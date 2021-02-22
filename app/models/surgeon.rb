@@ -19,6 +19,10 @@ class Surgeon < ActiveRecord::Base
     "#{last_name}-#{first_name}"
   end
 
+  def pretty_name
+    "#{last_name}, #{first_name}"
+  end
+
   def overall_satisfaction
     # 0 means unrated basically
     Pin.where(surgeon_id: id).where.not(satisfaction: 0).average(:satisfaction)

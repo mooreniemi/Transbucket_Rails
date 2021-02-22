@@ -1,0 +1,17 @@
+development: &default
+  host: 'http://localhost:9200'
+  transport_options:
+    request:
+      timeout: !!integer 1000
+test:
+  <<: *default
+staging:
+  host: 'https://search-transbucket-symbntikd52uetnbyokxb3haha.us-east-1.es.amazonaws.com:443'
+  transport_options:
+    request:
+      timeout: !!integer 900
+production:
+  host: 'https://search-transbucket-symbntikd52uetnbyokxb3haha.us-east-1.es.amazonaws.com:443'
+  transport_options:
+    request:
+      timeout: !!integer 600

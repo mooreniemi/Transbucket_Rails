@@ -1,4 +1,4 @@
-<% if rand(1..15) == 7 %>
+<% if Rails.env.production? && rand(1..15) == 7 %>
   <% Rails.logger.debug "Serving ad with #{pin.id}" %>
   <div class="item" class="ad">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>

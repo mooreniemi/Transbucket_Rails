@@ -3,11 +3,36 @@
 # Now it is the primary submission model.
 class Pin < ActiveRecord::Base
   include AASM
-  include ThinkingSphinx::Scopes
+  include Searchable
   include Constants
   include PinsHelper
   include CommentsHelper
   include NotificationsHelper
+
+  # why are we ok with 0 replicas? because we have hourly snapshots
+  # and because we are exporting data stored in our backed up db
+  settings index: { number_of_shards: 3, number_of_replicas: 0 } do
+    mapping do
+      # TODO
+      indexes :surgeon
+      indexes :procedure
+      indexes :pin_images
+
+      indexes :description, type: 'text' do
+        indexes :description, analyzer: 'snowball'
+        indexes :tokenized, analyzer: 'simple'
+      end
+      indexes :details, type: 'text' do
+        indexes :details, analyzer: 'snowball'
+        indexes :tokenized, analyzer: 'simple'
+      end
+      indexes :captions, analyzer: 'snowball'
+      indexes :complications, analyzer: 'snowball'
+      indexes :surgeon_name, analyzer: 'snowball'
+      indexes :procedure_name, analyzer: 'snowball'
+      indexes :procedure_description, analyzer: 'snowball'
+    end
+  end
 
   belongs_to :user
   belongs_to :surgeon
@@ -37,6 +62,16 @@ class Pin < ActiveRecord::Base
     event :review, :after => :admin_review do
       transitions from: :published, to: :pending
     end
+  end
+
+  def as_indexed_json(options={})
+    hash = self.as_json()
+    hash['complications'] = self.complications.join(',')
+    hash['captions'] = self.pin_images.map(&:caption).join(',')
+    hash['surgeon_name'] = self.surgeon.pretty_name
+    hash['procedure_name'] = self.procedure.name
+    hash['procedure_description'] = self.procedure.description
+    hash
   end
 
   def self.mtf

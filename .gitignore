@@ -20,5 +20,3 @@ public/system/*
 coverage/*
 spec/examples.txt
 cookie_file
-
-db/sphinx/

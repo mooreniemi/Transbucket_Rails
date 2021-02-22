@@ -23,7 +23,10 @@ jrei  :_           _:
 Transbucket.com (Transbucket_Rails)
 ===================================
 
-The TL;DR of technical specs is: Rails 4.2.6 (in Ruby 2.2.3), using [bower_rails](https://github.com/rharriso/bower-rails) to manage Javascript dependencies, on Postgres database for storage, and with Sphinx indexing for search.
+The TL;DR of technical specs is: Rails 4.2.6 (in Ruby 2.2.3), using
+[bower_rails](https://github.com/rharriso/bower-rails) to manage
+Javascript dependencies, on Postgres database for storage, and with
+Elasticsearch for search.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -31,10 +34,10 @@ The TL;DR of technical specs is: Rails 4.2.6 (in Ruby 2.2.3), using [bower_rails
 
 - [setup](#setup)
   - [database setup](#database-setup)
-    - [mysql](#mysql)
+    - [elasticsearch](#elasticsearch)
     - [postgres](#postgres)
 - [run environments](#run-environments)
-  - [local](#local)
+  - [development (local)](#development-local)
   - [ci](#ci)
   - [staging](#staging)
   - [production](#production)
@@ -56,15 +59,19 @@ The TL;DR of technical specs is: Rails 4.2.6 (in Ruby 2.2.3), using [bower_rails
 
 ## database setup
 
-For set up, you'll need to make sure you have mysql installed for Sphinx (search functionality) and Postgres installed for the actual database. The database is currently set up to have the user "Alex".
+For set up, you'll need to make sure you have Elasticsearch installed for search functionality and Postgres installed for the actual database. The database is currently set up to have the user "Alex".
 
-### mysql
+### elasticsearch
 
-For mysql, use `brew install mysql` and follow those instructions.
+```
+brew install elasticsearch
+brew install kibana
 
-Note: below is probably old.
+# to make sure ES is up
+curl localhost:9200
+```
 
-I also found I needed to link `sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib`.
+Then you can access the [Kibana UI](http://localhost:5601/app/kibana#/dev_tools/console).
 
 ### postgres
 
@@ -220,11 +227,18 @@ Page caching is only used for public areas of the site. For the majority of the 
 
 # search
 
-We're using [thinking-sphinx](http://freelancing-gods.com/thinking-sphinx/quickstart.html) for our search functionality, with [flying-sphinx](http://info.flying-sphinx.com/) on Heroku.
+The `Pin` model has a callback that will update Elasticsearch. But when
+you are initially filling the index, you want to run the below command
+after you have seeded the database. Essentially Elasticsearch is
+a secondary view of our database data. It is safe to delete it and reindex
+it.
 
-Though `bundle install` succeeded, I found I needed to use `ln -s /usr/local/lib/libpq.5.8.dylib /usr/local/lib/libpq.5.5.dylib` later to get the `searchd` to run. Run using: `rake ts:regenerate`.
+```
+rake environment elasticsearch:import:model CLASS='Pin' INCLUDE='PinImage,Surgeon,Procedure' FORCE=true
 
-If you're not seeing expected results, use `rake ts:index` to reindex the pins.
+# should show you the index you created, labeled by env
+curl localhost:9200/_cat/indices
+```
 
 # running scheduled jobs / async execution
 
@@ -237,11 +251,10 @@ I've been using the `scheduler` to run things like periodic jobs, whereas I use 
 # more help
 
 - Is there a rake task? Use `rake -T` to check.
-- If the search is not functioning, make sure the search daemon is running by using `rake ts:start`.
 - Locked yourself out? `User.where(email: 'user_email_address').take.reset_password('new_password','new_password').confirm`
 - Having trouble getting to where an error is raised or want a quick feedback loop? Try [pry-rescue](https://github.com/ConradIrwin/pry-rescue) by doing `bundle exec rescue rspec` or `bundle exec rescue rails s`.
 - Not seeing a change you expect? Some fragment [caching](http://guides.rubyonrails.org/caching_with_rails.html) is being used. If you need to manually clear it, hop into `rails c` and then run `Rails.cache.clear`. (You can also just `rm -rf tmp`.)
 
 # contact
 
-[email alex](mailto:moore.niemi@gmail.com)
+[email alex](mailto:webmaster@transbucket.com)

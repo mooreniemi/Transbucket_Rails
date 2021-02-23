@@ -45,26 +45,9 @@ Rails.application.configure do
     :host => "transbucket.com"
   }
 
-  Paperclip.options[:command_path] = '/usr/local/bin/identify'
-
-  # if you need to test s3, uncomment this
-  #config.paperclip_defaults = {
-    #:storage => :s3,
-		#:s3_region => "us-east-1",
-    #:s3_credentials => {
-      #:bucket => ENV['S3_BUCKET'],
-      #:access_key_id => ENV['S3_KEY'],
-      #:secret_access_key => ENV['S3_SECRET']
-    #}
-  #}
-
   config.after_initialize do
     Bullet.enable = true
     Bullet.bullet_logger = true
-    #Bullet.xmpp = { :account  => 'bullets_account@jabber.org',
-    #                :password => 'bullets_password_for_jabber',
-    #                :receiver => 'your_account@jabber.org',
-    #                :show_online_status => true }
     Bullet.rails_logger = true
   end
 end

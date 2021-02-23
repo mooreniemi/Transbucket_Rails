@@ -44,7 +44,7 @@ Rails.application.configure do
   # Set to :debug to see everything in the log.
   config.log_level = :info
   # https://github.com/roidrage/lograge
-  config.lograge.enabled = true
+  # config.lograge.enabled = true
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
@@ -91,7 +91,11 @@ Rails.application.configure do
       :bucket => ENV['S3_BUCKET'],
       :access_key_id => ENV['S3_KEY'],
       :secret_access_key => ENV['S3_SECRET']
-    }
+    },
+    :s3_protocol => :https,
+    :url => ':s3_alias_url',
+    :s3_host_alias => 'dr2cslmbutxxa.cloudfront.net',
+    :path => '/:class/:attachment/:id_partition/:style/:filename'
   }
 
   # see https://devcenter.heroku.com/articles/sendgrid#ruby-rails

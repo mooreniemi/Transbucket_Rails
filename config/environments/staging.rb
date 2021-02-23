@@ -92,8 +92,7 @@ Rails.application.configure do
       :bucket => ENV['S3_BUCKET'],
       :access_key_id => ENV['S3_KEY'],
       :secret_access_key => ENV['S3_SECRET']
-    },
-    :s3_host_alias => "https://dwusg3ww9j123.cloudfront.net/"
+    }
   }
 
   # see https://devcenter.heroku.com/articles/sendgrid#ruby-rails

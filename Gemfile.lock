@@ -70,15 +70,12 @@ GEM
     awesome_nested_set (3.1.1)
       activerecord (>= 4.0.0, < 5.1)
     awesome_print (1.6.1)
-    aws-eventstream (1.1.0)
     aws-sdk (2.3.14)
       aws-sdk-resources (= 2.3.14)
     aws-sdk-core (2.3.14)
       jmespath (~> 1.0)
     aws-sdk-resources (2.3.14)
       aws-sdk-core (= 2.3.14)
-    aws-sigv4 (1.2.2)
-      aws-eventstream (~> 1, >= 1.0.2)
     bcrypt (3.1.16)
     benchmark-perf (0.1.0)
     better_errors (2.1.1)
@@ -186,9 +183,6 @@ GEM
       i18n (~> 0.5)
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
-    faraday_middleware-aws-sigv4 (0.4.0)
-      aws-sigv4 (~> 1.0)
-      faraday (>= 0.15)
     ffi (1.9.10)
     figaro (1.1.1)
       thor (~> 0.14)
@@ -506,7 +500,6 @@ DEPENDENCIES
   elasticsearch-rails
   factory_girl_rails
   faker
-  faraday_middleware-aws-sigv4
   figaro
   font-awesome-rails
   friendly_id (~> 5.1.0)

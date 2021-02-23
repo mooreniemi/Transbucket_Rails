@@ -9,9 +9,20 @@ class Pin < ActiveRecord::Base
   include CommentsHelper
   include NotificationsHelper
 
-  # why are we ok with 0 replicas? because we have hourly snapshots
-  # and because we are exporting data stored in our backed up db
-  settings index: { number_of_shards: 3, number_of_replicas: 0 } do
+  belongs_to :user
+  belongs_to :surgeon
+  belongs_to :procedure
+
+  has_many :pin_images, dependent: :destroy
+
+  attr_accessor :pin_image_ids
+
+  acts_as_commentable
+  acts_as_votable
+  acts_as_taggable_on :complications
+
+  # we have so few records we don't really need multiple shards
+  settings index: { number_of_shards: 1 } do
     mapping do
       # TODO
       indexes :surgeon
@@ -34,17 +45,15 @@ class Pin < ActiveRecord::Base
     end
   end
 
-  belongs_to :user
-  belongs_to :surgeon
-  belongs_to :procedure
-
-  has_many :pin_images, dependent: :destroy
-
-  attr_accessor :pin_image_ids
-
-  acts_as_commentable
-  acts_as_votable
-  acts_as_taggable_on :complications
+  def as_indexed_json(options={})
+    hash = self.as_json()
+    hash['complications'] = self.complications.join(',')
+    hash['captions'] = self.pin_images.map(&:caption).join(',')
+    hash['surgeon_name'] = self.surgeon.pretty_name
+    hash['procedure_name'] = self.procedure.name
+    hash['procedure_description'] = self.procedure.description
+    hash
+  end
 
   validates :surgeon, presence: true
   validates :procedure, presence: true
@@ -62,16 +71,6 @@ class Pin < ActiveRecord::Base
     event :review, :after => :admin_review do
       transitions from: :published, to: :pending
     end
-  end
-
-  def as_indexed_json(options={})
-    hash = self.as_json()
-    hash['complications'] = self.complications.join(',')
-    hash['captions'] = self.pin_images.map(&:caption).join(',')
-    hash['surgeon_name'] = self.surgeon.pretty_name
-    hash['procedure_name'] = self.procedure.name
-    hash['procedure_description'] = self.procedure.description
-    hash
   end
 
   def self.mtf

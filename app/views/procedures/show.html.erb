@@ -1,8 +1,9 @@
 <% title @procedure.to_s  %>
+<% cache(@procedure) do %>
 <div class="panel panel-default" itemscope itemtype="https://schema.org/MedicalProcedure">
   <div class="panel-heading">
-    <%= @procedure.name %>
-    <%= link_to Pin.where(procedure_id: @procedure.id).count, pins_path(procedure: @procedure.id), { style: 'border-radius: 100%; background: #ffffcc; display:inline-block; padding:5px;' } %>
+    <h2><%= @procedure.name %></h2>
+    <%= link_to "See all submissions", pins_path(procedure: @procedure.id) %>
   </div>
   <% if @procedure.body_type %>
     <div class="panel-body" itemprop="bodyLocation">
@@ -24,6 +25,7 @@
 </li>
   </ul>
 </div>
+<% end %>
 
 <% if current_user %>
   <h4><%= fa_icon("comments-o") %> discussion</h4>

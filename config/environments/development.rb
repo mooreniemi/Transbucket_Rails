@@ -45,12 +45,6 @@ Rails.application.configure do
     :host => "transbucket.com"
   }
 
-  config.paperclip_defaults = {
-    :storage => :filesystem,
-    :url => "/assets/:class/:attachment/:id_partition/:basename_:style.:extension",
-    :command_path => '/usr/local/bin/identify'
-  }
-
   config.after_initialize do
     Bullet.enable = true
     Bullet.bullet_logger = true

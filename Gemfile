@@ -20,9 +20,9 @@ gem 'rspec_junit_formatter', '0.2.2'
 gem 'will_paginate', '~> 3.0'
 gem 'will_paginate-bootstrap'
 
-gem 'faraday_middleware-aws-sigv4'
+# FIXME: if using AWS
+# gem 'faraday_middleware-aws-sigv4'
 gem 'elasticsearch-model'
-# gem 'elasticsearch-persistence'
 gem 'elasticsearch-rails'
 
 gem 'active_model_serializers'

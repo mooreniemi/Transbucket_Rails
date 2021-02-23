@@ -94,7 +94,7 @@ Rails.application.configure do
       :secret_access_key => ENV['S3_SECRET']
     },
     :url => ':s3_alias_url',
-    :s3_host_alias => 'https://dwusg3ww9j123.cloudfront.net/',
+    :s3_host_alias => 'dwusg3ww9j123.cloudfront.net/',
     :path => '/:class/:attachment/:id_partition/:style/:filename'
   }
 

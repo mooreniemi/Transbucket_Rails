@@ -1,6 +1,7 @@
 class SurgeonsController < ApplicationController
   def index
     @surgeons = Surgeon.all.order(:last_name)
+    @pins_per_surgeon = Surgeon.joins(:pins).group("pins.surgeon_id").count
   end
 
   def show

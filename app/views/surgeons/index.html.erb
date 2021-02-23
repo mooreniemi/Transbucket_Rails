@@ -4,7 +4,7 @@
     <th>Name</th>
     <th>Submissions</th>
     <% @surgeons.each do |surgeon| %>
-    <%= render partial: 'surgeons/surgeon_row', locals: { surgeon: surgeon } %>
+    <%= render partial: 'surgeons/surgeon_row', locals: { surgeon: surgeon, pin_count: @pins_per_surgeon[surgeon.id] } %>
     <% end %>
   </table>
 </div>

@@ -1,7 +1,7 @@
 <tr itemscope itemtype="https://schema.org/Physician">
   <td><%= link_to "#{surgeon.last_name}, #{surgeon.first_name}", surgeon_path(surgeon.id) %></td>
 <% if user_signed_in? %>
-  <td><%= link_to Pin.where(surgeon_id: surgeon.id).count, pins_path(surgeon: surgeon.id)  %></td>
+  <td><%= link_to pin_count || 0, pins_path(surgeon: surgeon.id)  %></td>
 <% else %>
   <td><%= link_to "Register to see more", register_path  %></td>
 <% end %>

@@ -6,6 +6,7 @@ class PinImage < ActiveRecord::Base
   has_attached_file :photo,
     styles: { medium: '320x240>', thumb: '100x100#' },
     default_url: 'http://placekitten.com/200/300',
+    url: ':s3_alias_url',
     s3_host_alias: 'https://dwusg3ww9j123.cloudfront.net/'
 
   validates_attachment_content_type :photo,

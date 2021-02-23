@@ -79,6 +79,9 @@ gem 'font-awesome-rails'
 # TODO blocking ips, bots, etc
 # gem 'rack-attack'
 
+# in some environments we turn "down" logging
+gem 'lograge'
+
 group :development do
   gem 'brakeman', :require => false
   gem 'any_login'
@@ -138,5 +141,4 @@ group :production do
 	gem 'rails_12factor'
 	gem 'newrelic_rpm'
   gem 'scout_apm'
-  gem 'lograge'
 end

@@ -94,7 +94,7 @@ Rails.application.configure do
     },
     :s3_protocol => :https,
     :url => ':s3_alias_url',
-    :s3_host_alias => 'dwusg3ww9j123.cloudfront.net',
+    :s3_host_alias => ENV['CLOUDFRONT_URL'],
     :path => '/:class/:attachment/:id_partition/:style/:filename'
   }
 

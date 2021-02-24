@@ -6,6 +6,7 @@ RSpec.describe "surgeons/show" do
   shared_examples "surgeon" do
     it "displays the surgeon" do
       assign(:surgeon, surgeon)
+      assign(:pins_by_surgeon_procedure, {})
 
       render
 
@@ -24,10 +25,12 @@ RSpec.describe "surgeons/show" do
 
     it "shows the relevant procedures" do
       assign(:surgeon, surgeon)
+      assign(:pins_by_surgeon_procedure, { [surgeon.id, pin.procedure_id] => 1})
 
       render
 
       expect(rendered).to match(Regexp.new(pin.procedure.name))
+      expect(rendered).to match(Regexp.new("Average patient satisfaction"))
     end
   end
 end

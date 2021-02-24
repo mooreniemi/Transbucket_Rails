@@ -29,7 +29,7 @@ class Surgeon < ActiveRecord::Base
   end
 
   def satisfaction_by_procedure
-    Pin.where(surgeon_id: self.id).where.not(satisfaction: 0).
+    Pin.where(surgeon_id: id).where.not(satisfaction: 0).
       group([:procedure_id]).average(:satisfaction)
   end
 

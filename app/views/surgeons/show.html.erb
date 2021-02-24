@@ -28,7 +28,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title"><%= Procedure.find(procedure_id).name.to_s %>
-          <%= link_to Pin.where(surgeon_id: @surgeon.id).where(procedure_id: procedure_id).count, pins_path(procedure: procedure_id, surgeon: @surgeon.id), { style: 'border-radius: 100%; background: #ffffcc; display:inline-block; padding:5px;' } %>
+          <%= link_to @pins_by_surgeon_procedure[[@surgeon.id, procedure_id]], pins_path(procedure: procedure_id, surgeon: @surgeon.id), { style: 'border-radius: 100%; background: #ffffcc; display:inline-block; padding:5px;' } %>
         </h3>
       </div>
       <div class="panel-body">

@@ -57,6 +57,32 @@ Elasticsearch for search.
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 # setup
 
+## docker-compose
+
+Once you have [docker-compose](https://docs.docker.com/compose/install/)
+installed, you can spin up a containerized local dev environment by running:
+
+```sh
+docker-compose up --build
+```
+
+This will bring up the app at http://localhost:3000 alongside Elasticsearch,
+Kibana, and Postgres. You can then complete the initial setup by running:
+
+```sh
+docker-compose exec web bundle exec rake db:setup
+docker-compose exec web \
+    bundle exec rake environment elasticsearch:import:model CLASS=Pin INDEX=development_pins FORCE=y
+```
+
+To stop the environment, run:
+```sh
+docker-compose down
+```
+
+Alternatively, you can set up all the services directly on your machine as
+described in the rest of this section.
+
 ## database setup
 
 For set up, you'll need to make sure you have Elasticsearch installed for search functionality and Postgres installed for the actual database. The database is currently set up to have the user "Alex".

@@ -1,11 +1,11 @@
 defaults: &defaults
   adapter: postgresql
   prepared_statements: false
-  host: localhost
+  host: <%= ENV['POSTGRES_HOST'] || "localhost" %>
   encoding: unicode
   pool: 5
   username: <%= ENV['POSTGRES_USER'] || "Alex" %>
-  password:
+  password: <%= ENV['POSTGRES_PASSWORD'] || "" %>
   morphology: stem_en
   enable_star: true
   min_infix_len: 3

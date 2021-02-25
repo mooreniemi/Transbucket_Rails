@@ -42,6 +42,7 @@ gem 'figaro'
 # for authentication
 gem 'bcrypt', '~> 3.1.13'
 gem 'devise'
+gem 'devise-i18n'
 gem 'devise-encryptable'
 
 gem 'aasm'

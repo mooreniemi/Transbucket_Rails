@@ -149,6 +149,8 @@ GEM
       warden (~> 1.2.3)
     devise-encryptable (0.2.0)
       devise (>= 2.1.0)
+    devise-i18n (1.5.1)
+      devise (>= 3.4)
     diff-lcs (1.4.4)
     disposable (0.2.6)
       declarative (~> 0.0.6)
@@ -496,6 +498,7 @@ DEPENDENCIES
   delayed_job_active_record
   devise
   devise-encryptable
+  devise-i18n
   elasticsearch-model
   elasticsearch-rails
   factory_girl_rails

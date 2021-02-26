@@ -5,4 +5,4 @@
 
 <p><%= t('.instruction') %></p>
 
-<p><%= link_to t('.action'), unlock_url(@resource, :unlock_token => @token) %></p>
+<p><%= link_to t('.action'), unlock_url(@resource, :unlock_token => @token, :utm_medium => 'email', :utm_source => 'devise', :utm_campaign => 'unlock') %></p>

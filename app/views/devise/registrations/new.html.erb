@@ -8,7 +8,7 @@
         <span class="explanation">Your <b>username</b> will be visible to all users and is what you use to log in. It is unique across the site.</span>
         <div class="input-group padded_nicely">
           <span class="input-group-addon"><%= fa_icon "users" %></span>
-          <%= f.text_field :username, placeholder: t("activerecord.models.user"), class: "form-control" %>
+          <%= f.text_field :username, placeholder: "Username", class: "form-control" %>
         </div>
       </div>
       <div id="email">
@@ -22,7 +22,7 @@
         <span class="explanation">Your <b>password</b> will be encrypted when stored, and can be recovered using your email.</span>
         <div class="input-group padded_nicely">
           <span class="input-group-addon"><%= fa_icon "lock" %></span>
-          <%= f.password_field :password, placeholder: t("activerecord.attributes.user.email"), class: "form-control" %>
+          <%= f.password_field :password, placeholder: t("activerecord.attributes.user.password"), class: "form-control" %>
         </div>
         <div class="input-group padded_nicely">
           <span class="input-group-addon"><%= fa_icon "lock" %><%= fa_icon "check" %></span>

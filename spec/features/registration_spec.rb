@@ -26,7 +26,7 @@ RSpec.describe "registration" do
   shared_examples "registration" do
     it "displays errors upon incorrect input" do
       self.send(:fill_out_sign_up, user, invalid: true)
-      click_button "Submit"
+      click_button "Sign up"
       expect(page).to have_content("Email can't be blank")
     end
 
@@ -35,7 +35,7 @@ RSpec.describe "registration" do
 
       clear_emails
 
-      click_button "Submit"
+      click_button "Sign up"
 
       expect(page).to have_content("A message with a confirmation link")
 

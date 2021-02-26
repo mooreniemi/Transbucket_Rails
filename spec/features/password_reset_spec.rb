@@ -20,7 +20,7 @@ RSpec.describe "password reset" do
     new_password = Faker::Internet.password
 
     fill_in "New password", :with => new_password
-    fill_in "New password confirmation", :with => new_password
+    fill_in "Confirm new password", :with => new_password
     click_button "Change my password"
 
     expect(page).to have_content("Your password was changed successfully.")

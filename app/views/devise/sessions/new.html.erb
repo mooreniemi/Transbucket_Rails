@@ -22,7 +22,7 @@
         <%= f.text_field :login, placeholder: "Username", autofocus: true, class: "form-control" %>
         <span class="input-group-addon">
           <small>
-            <%= t('.remember_me') %>?
+            <%= t('activerecord.attributes.user.remember_me') %>?
           </small>
           <%= f.check_box :remember_me, as: :boolean %>
         </span>

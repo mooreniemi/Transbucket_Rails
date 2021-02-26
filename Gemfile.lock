@@ -222,6 +222,7 @@ GEM
     highline (1.7.8)
     hike (1.2.3)
     htmlentities (4.3.4)
+    http_accept_language (2.1.1)
     http_parser.rb (0.6.0)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
@@ -511,6 +512,7 @@ DEPENDENCIES
   guard-livereload
   guard-rspec
   htmlentities
+  http_accept_language
   launchy
   letsrate
   letter_opener

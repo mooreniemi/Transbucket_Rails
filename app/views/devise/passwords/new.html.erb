@@ -8,9 +8,8 @@
       <%= f.error_notification %>
 
       <div class="input-group padded_nicely">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope">
-          </i></span>
-          <%= f.email_field :email, required: true, autofocus: true, class: "form-control" %>
+        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+        <%= f.email_field :email, placeholder: t("activerecord.attributes.user.email"), required: true, autofocus: true, class: "form-control" %>
       </div>
 
       <div class="form-actions">

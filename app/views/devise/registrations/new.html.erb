@@ -1,17 +1,57 @@
-<h2><%= t(".sign_up") %></h2>
-
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :email, required: true, autofocus: true %>
-    <%= f.input :password, required: true %>
-    <%= f.input :password_confirmation, required: true %>
+<% title t(".sign_up") %>
+<div class="col-md-6 center">
+  <div class="top-block"><center><h1><%= fa_icon "lock" %></h1></center></div>
+  <div class="login_well">
+    <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), html: { class: 'form-horizontal'}) do |f| %>
+      <%= render 'shared/errors', object: resource %>
+      <div id="username">
+        <span class="explanation">Your <b>username</b> will be visible to all users and is what you use to log in. It is unique across the site.</span>
+        <div class="input-group padded_nicely">
+          <span class="input-group-addon"><%= fa_icon "users" %></span>
+          <%= f.text_field :username, placeholder: "Username", class: "form-control" %>
+        </div>
+      </div>
+      <div id="email">
+        <span class="explanation">Your <b>email</b> will be visible to admins but not other users. Your email will be confirmed.</span>
+        <div class="input-group padded_nicely">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+          <%= f.email_field :email, placeholder: "Email", class: "form-control" %>
+        </div>
+      </div>
+      <div id="password">
+        <span class="explanation">Your <b>password</b> will be encrypted when stored, and can be recovered using your email.</span>
+        <div class="input-group padded_nicely">
+          <span class="input-group-addon"><%= fa_icon "lock" %></span>
+          <%= f.password_field :password, placeholder: "Password", class: "form-control" %>
+        </div>
+        <div class="input-group padded_nicely">
+          <span class="input-group-addon"><%= fa_icon "lock" %><%= fa_icon "check" %></span>
+          <%= f.password_field :password_confirmation, placeholder: "Password confirmation", class: "form-control" %>
+        </div>
+      </div>
+      <div id="name">
+        <span class="explanation">Your <b>name</b> will be visible to admins and used in communications with them. If you are a care provider and do not use your real name, you will be blocked from the site.</span>
+        <div class="input-group padded_nicely">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <%= f.text_field :name, placeholder: "Your name", class: "form-control" %>
+        </div>
+      </div>
+      <div id="gender">
+        <span class="explanation">Your <b>gender</b> will be visible to everyone when you post results. It is also used to set some defaults for what content you see and your pronouns. It can be updated after registration.</span>
+        <div class="input-group padded_nicely">
+          <span class="input-group-addon"><%= fa_icon "key" %> Gender: </span>
+          <%= f.select :gender_id, options_from_collection_for_select(Gender.all, "id", "name"), {}, { class: "form-control"} %>
+        </div>
+      </div>
+      <p>By registering on Transbucket.com <b>you agree</b> to follow our <%= link_to "Terms of Service", terms_path %>.
+      </p>
+      <center>
+        <%= f.submit t(".sign_up"), class: "btn btn-primary btn-large" %>
+      </center>
+    <% end %>
+    <br clear="both">
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, t(".sign_up") %>
+  <div class="well">
+    <%= render "devise/shared/links" %>
   </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

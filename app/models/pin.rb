@@ -24,34 +24,51 @@ class Pin < ActiveRecord::Base
   # we have so few records we don't really need multiple shards
   settings index: { number_of_shards: 1 } do
     mapping do
-      # TODO
-      indexes :surgeon
-      indexes :procedure
-      indexes :pin_images
+      # no need to do full text search on this
+      indexes :state, type: 'keyword'
+      # keyword (exact term) doesn't make sense for these
+      indexes :description, type: 'text', analyzer: 'english'
+      indexes :details, type: 'text', analyzer: 'english'
 
-      indexes :description, type: 'text' do
-        indexes :description, analyzer: 'snowball'
-        indexes :tokenized, analyzer: 'simple'
+      # we use the english analyzer, and do keywords as well as text
+      # because then we can do significant terms aggregations
+      # https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-lang-analyzer.html#english-analyzer
+      indexes :complications do
+        indexes :name, type: 'text', analyzer: 'english' do
+          indexes :keyword, type: 'keyword'
+        end
       end
-      indexes :details, type: 'text' do
-        indexes :details, analyzer: 'snowball'
-        indexes :tokenized, analyzer: 'simple'
+      indexes :surgeon do
+        indexes :pretty_name, type: 'text', analyzer: 'english' do
+          indexes :keyword, type: 'keyword'
+        end
       end
-      indexes :captions, analyzer: 'snowball'
-      indexes :complications, analyzer: 'snowball'
-      indexes :surgeon_name, analyzer: 'snowball'
-      indexes :procedure_name, analyzer: 'snowball'
-      indexes :procedure_description, analyzer: 'snowball'
+      indexes :procedure do
+        indexes :name, type: 'text', analyzer: 'english' do
+          indexes :keyword, type: 'keyword'
+        end
+        indexes :description, type: 'text', analyzer: 'english'
+      end
+      indexes :pin_images do
+        indexes :caption, type: 'text', analyzer: 'english'
+      end
     end
   end
 
   def as_indexed_json(options={})
-    hash = self.as_json()
-    hash['complications'] = self.complications.join(',')
-    hash['captions'] = self.pin_images.map(&:caption).join(',')
-    hash['surgeon_name'] = self.surgeon.pretty_name
-    hash['procedure_name'] = self.procedure.name
-    hash['procedure_description'] = self.procedure.description
+    hash = self.as_json(
+      only: [
+        :id, :user_id, :procedure_id, :surgeon_id, :state, :username,
+        :updated_at, :created_at, :description, :details,
+        :satisfaction, :sensation, :revision, :cost
+      ],
+      include: {
+        surgeon: { methods: [:pretty_name], only: [:pretty_name] },
+        procedure: { only: [:name, :description] },
+        pin_images: { only: [:caption] },
+        complications: { only: [:name] }
+      }
+    )
     hash
   end
 
@@ -94,7 +111,7 @@ class Pin < ActiveRecord::Base
   end
 
   def self.recent
-    published.order('created_at desc')
+    published.order('updated_at desc')
   end
 
   def self.by_gender(gender_name)

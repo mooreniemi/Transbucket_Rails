@@ -31,6 +31,9 @@ en:
     surgeons: "Surgeons"
     submissions: "Submissions"
     account: "Account"
+    filter: "Filter"
+    add: "Add"
+    search: "Search"
   footer:
     about: "About"
     tos: "Terms of Service"

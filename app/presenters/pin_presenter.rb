@@ -11,7 +11,7 @@ class PinPresenter
 
     @pins = if @query.present?
               # FIXME: with all includes get some unused eager, without get N+1
-              options = { sort: [{ updated_at: 'desc' }]}
+              options = { sort: [{ updated_at: {order: 'desc'}}]}
               Pin.search(@query, options).paginate(:page => @page).records
             elsif @user.present?
               Pin.includes(:user, :pin_images, :procedure, :surgeon).by_user(@user).paginate(:page => @page)

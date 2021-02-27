@@ -1,8 +1,8 @@
 <%= javascript_include_tag "pins" %>
 <% if params[:query].present? %>
-<% title 'Search Result for ' + params[:query].titleize %>
+  <% title 'Search Result for ' + params[:query].titleize %>
 <% else %>
-<% title 'Recent Submissions' %>
+  <% title 'Recent Submissions' %>
 <% end %>
 <div id="pins">
   <%= render @presenter.pins %>

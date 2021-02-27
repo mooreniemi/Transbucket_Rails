@@ -1,17 +1,24 @@
-<% title 'Forgot your password?' %>
+<% title t(".forgot_your_password") %>
+
 <div class="col-md-5 center">
   <div class="top-block"><center><h1><%= fa_icon "lock" %></h1></center></div>
   <div class="login_well">
-    <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
-    <%= devise_error_messages! %>
-    <div class="input-group padded_nicely">
-      <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-      <%= f.email_field :email, placeholder: "Email", class: "form-control", autofocus: true %>
-    </div>
-    <%= f.submit "Send me reset password instructions", class: "btn btn-info" %>
+
+    <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= f.error_notification %>
+
+      <div class="input-group padded_nicely">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+        <%= f.email_field :email, placeholder: t("activerecord.attributes.user.email"), required: true, autofocus: true, class: "form-control" %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.button :submit, t(".send_me_reset_password_instructions"), class: "btn btn-info" %>
+      </div>
+    <% end %>
   </div>
+
   <div class="well">
     <%= render "devise/shared/links" %>
   </div>
 </div>
-<% end %>

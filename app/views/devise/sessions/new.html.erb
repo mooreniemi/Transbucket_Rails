@@ -1,4 +1,5 @@
-<% title 'Sign In' %>
+<% title t(".sign_in") %>
+
 <div class="col-md-6 center">
   <div class="top-block">
     <center>
@@ -7,32 +8,36 @@
       </h1>
     </center>
   </div>
+
   <div class="login_well">
     <div id="flash-message">
       <% flash.each do |name, msg| %>
-        <%= content_tag(:div, msg, class: "alert", id: "flash-#{name}") %>
+        <%= content_tag(:div, msg, class: 'alert', id: "flash-#{name}") %>
       <% end %>
     </div>
-    <%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), html: { class: 'form-horizontal'}) do |f| %>
+    <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-horizontal'}) do |f| %>
       <%= f.error_notification %>
       <div class="input-group input-group-lg padded_nicely">
         <span class="input-group-addon"><%= fa_icon "users" %></span>
-        <%= f.text_field :login, placeholder: "Username", class: "form-control" %>
+        <%= f.text_field :login, placeholder: "Username", autofocus: true, class: "form-control" %>
         <span class="input-group-addon">
-          <small>remember me?</small> <%= f.check_box :remember_me, as: :boolean %>
-      </span>
-    </div>
-    <div class="input-group input-group-lg padded_nicely">
-      <span class="input-group-addon"><%= fa_icon "lock" %></span>
-      <%= f.password_field :password, placeholder: "Password", class: "form-control" %>
-      <span class="input-group-btn">
-        <%= f.submit "Sign in", class: "btn btn-primary btn-large" %>
-      </span>
-    </div>
-  <% end %>
-</div>
+          <small>
+            <%= t('activerecord.attributes.user.remember_me') %>?
+          </small>
+          <%= f.check_box :remember_me, as: :boolean %>
+        </span>
+      </div>
+      <div class="input-group input-group-lg padded_nicely">
+        <span class="input-group-addon"><%= fa_icon "lock" %></span>
+        <%= f.password_field :password, placeholder: 'Password', class: "form-control" %>
+
+        <span class="input-group-btn">
+          <%= f.button :submit, t(".sign_in"), class: "btn btn-primary btn-large" %>
+        </span>
+      </div>
+  </div>
+<% end %>
+
 <div class="well">
   <%= render "devise/shared/links" %>
 </div>
-</div>
-<br clear="both">

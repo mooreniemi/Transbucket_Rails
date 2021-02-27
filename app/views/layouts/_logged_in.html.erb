@@ -1,27 +1,27 @@
 <% if current_user.admin? %>
-<li class="bg-danger">
-  <%= link_to 'ModQueue', queendom_path %>
-</li>
+  <li class="bg-danger">
+    <%= link_to 'ModQueue', queendom_path %>
+  </li>
 <% end %>
 <li>
-  <%= link_to 'Submissions', pins_path %>
+  <%= link_to I18n.t(".header.submissions"), pins_path %>
 </li>
 <% if current_page?(pins_path) %>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-    Filter <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <%= render partial: 'pins/filter_controls' %>
-    </li>
-  </ul>
-</li>
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      <%= I18n.t(".header.filter") %> <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu">
+      <li>
+        <%= render partial: 'pins/filter_controls' %>
+      </li>
+    </ul>
+  </li>
 <% end %>
-<% unless current_user.gender == "cisgender" %>
-<li>
-  <%= link_to "Add #{fa_icon('plus-circle yellow')}".html_safe, new_pin_path %>
-</li>
+<% unless current_user.gender.cis? %>
+  <li>
+    <%= link_to "#{I18n.t(".header.add")} #{fa_icon('plus-circle yellow')}".html_safe, new_pin_path %>
+  </li>
 <% end %>
 </ul>
 <%= render partial: 'layouts/search' %>

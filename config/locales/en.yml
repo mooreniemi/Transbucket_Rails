@@ -20,4 +20,33 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  homepage:
+    title: "Community Photo-Sharing for Transition Procedures"
+    considering: "Are you considering or have had transition care?"
+    join: "You should join our community."
+    register: "Register to share or see real results."
+  header:
+    news: "News"
+    procedures: "Procedures"
+    surgeons: "Surgeons"
+    submissions: "Submissions"
+    account: "Account"
+    filter: "Filter"
+    add: "Add"
+    search: "Search"
+  footer:
+    about: "About"
+    tos: "Terms of Service"
+    pp: "Privacy Policy"
+  account_menu:
+    register: "Register"
+    login: "Login"
+    my_account: "My Account"
+    logout: "Logout"
+  explanations:
+    username: "Your username will be visible to all users and is what you use to log in. It is unique across the site."
+    email: "Your email will be visible to admins but not other users. Your email will be confirmed."
+    password: "Your password will be encrypted when stored, and can be recovered using your email."
+    name: "Your name will be visible to admins and used in communications with them. If you are a care provider and do not use your real name, you will be blocked from the site."
+    gender: "Your gender will be visible to everyone when you post results. It is also used to set some defaults for what content you see and your pronouns. It can be updated after registration."
+    tos: "By registering on Transbucket.com you agree to follow our Terms of Service."

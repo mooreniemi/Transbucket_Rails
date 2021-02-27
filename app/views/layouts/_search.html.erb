@@ -1,8 +1,8 @@
-<% cache do %>
+<% cache(I18n.locale) do %>
   <%= javascript_include_tag 'search' %>
   <%= form_tag pins_path, :class => 'navbar-form navbar-right', :method => :get do %>
     <div class="input-group">
-      <%= text_field_tag 'query', value = nil, :class => 'span2 search-query form-control', :placeholder => "Search" %>
+      <%= text_field_tag 'query', value = nil, :class => 'span2 search-query form-control', :placeholder => I18n.t(".header.search") %>
       <%#= autocomplete_field_tag 'pin', '', autocomplete_procedure_pin_index_path, :size => 75 %>
       <div class="input-group-btn">
         <%= button_tag '', :class => 'btn btn-default glyphicon glyphicon-search' %>

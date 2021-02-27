@@ -1,15 +1,16 @@
+<% title I18n.t('.homepage.title') %>
 <div class="row">
 <center>
   <div class="col-md-4">
-    <h3><%= title 'Are you considering transition care?' %></h3>
+    <h3><%= title I18n.t('.homepage.considering') %></h3>
     <%= link_to (image_tag("dysphoria2.png", :size => "200x200", :alt => "dysphoria", :padding => "10")), register_path %>
   </div>
   <div class="col-md-4">
-    <h3>You should join the community.</h3>
+    <h3><%= I18n.t('.homepage.join') %></h3>
     <%= link_to (image_tag("dysphoria3.png", :size => "200x200", :alt => "key", :padding => "10")), register_path %>
   </div>
   <div class="col-md-4">
-    <h3><%= link_to "Register to see real results.", register_path %></h3>
+    <h3><%= link_to I18n.t('.homepage.register'), register_path %></h3>
     <%= link_to (image_tag("register.png", :size => "200x200", :alt => "key", :padding => "10")), register_path %>
   </div>
 </center>

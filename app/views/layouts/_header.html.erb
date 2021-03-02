@@ -1,32 +1,30 @@
-<% cache(I18n.locale) do %>
-  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <%= link_to image_tag("small_logo.png", :size => "16x16", :alt => "Index"), root_path, :class => "navbar-brand" %>
-        <% unless user_signed_in? %>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to image_tag("small_logo.png", :size => "16x16", :alt => "Index"), root_path, :class => "navbar-brand" %>
+      <% unless user_signed_in? %>
         <a class="navbar-brand" href="<%= root_path %>">Transbucket.com</a>
-        <% end %>
-      </div>
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li>
-            <%= link_to I18n.t('.header.news'),  newsfeed_path %>
-          </li>
-          <li>
-            <%= link_to I18n.t('.header.procedures'),  procedures_path %>
-          </li>
-          <li>
-            <%= link_to I18n.t('.header.surgeons'),  surgeons_path %>
-          </li>
-        <% end %>
+      <% end %>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li>
+          <%= link_to I18n.t('.header.news'),  newsfeed_path %>
+        </li>
+        <li>
+          <%= link_to I18n.t('.header.procedures'),  procedures_path %>
+        </li>
+        <li>
+          <%= link_to I18n.t('.header.surgeons'),  surgeons_path %>
+        </li>
         <% if user_signed_in? %>
           <%= render partial: 'layouts/logged_in' %>
         <% end %>

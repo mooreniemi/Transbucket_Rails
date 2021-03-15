@@ -4,7 +4,7 @@ defaults: &defaults
   host: localhost
   encoding: unicode
   pool: 5
-  username: Alex
+  username: <%= ENV['POSTGRES_USER'] || "Alex" %>
   password:
   morphology: stem_en
   enable_star: true
@@ -16,7 +16,7 @@ development:
 
 test:
   <<: *defaults
-  database: psql_test<%= ENV['TEST_ENV_NUMBER'] %>
+  database: <%= ENV['TEST_DB'] || ("psql_test" + (ENV['TEST_ENV_NUMBER'] || "")) %>
 
 production:
   <<: *defaults

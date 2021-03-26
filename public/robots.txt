@@ -2,4 +2,5 @@
 # Also https://moz.com/learn/seo/robotstxt
 
 User-Agent: *
-Disallow: /users/
+Disallow: /users
+Disallow: /users/*

@@ -1,5 +1,8 @@
 # See http://www.robotstxt.org/wc/norobots.html for documentation on how to use the robots.txt file
 # Also https://moz.com/learn/seo/robotstxt
+# Verify using https://www.google.com/webmasters/tools/robots-testing-tool?utm_source=support.google.com/webmasters/&utm_medium=referral&utm_campaign=+6062598&siteUrl=http://www.transbucket.com&mesd=AB9YKzJG-PdGLhGCJr_g3Il-JpAEUkh8ILuKXCJb8BLKSMnUJv_T-sJFnH5kzZrzX_1gfZFwAchsUdqiXZTfwslJiFjVwt4SowPjC2W0t7oU2YOddKmfq1DjWnSqflUddpeUP6hmGJTw
+
+Sitemap: https://www.transbucket.com/sitemap.xml.gz
 
 User-Agent: *
 Disallow: /users

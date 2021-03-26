@@ -82,6 +82,8 @@ gem 'letsrate'
 
 gem 'font-awesome-rails'
 
+gem 'sitemap_generator'
+
 # TODO blocking ips, bots, etc
 # gem 'rack-attack'
 

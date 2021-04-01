@@ -6,6 +6,14 @@
     <%= csrf_meta_tags %>
     <%= display_meta_tags :reverse => true, :site => 'Transbucket.com' %>
     <% if Rails.env.production? %>
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-40933997-1"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-40933997-1');
+      </script>
       <script data-ad-client="ca-pub-3154444439610781" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <% end %>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -14,11 +22,11 @@
     <%= render 'layouts/header' %>
     <div class="container">
       <% if user_signed_in? %>
-      <div id="flash-message">
-        <% flash.each do |name, msg| %>
-        <%= content_tag(:div, msg, class: "alert", id: "flash-#{name}") %>
-        <% end %>
-      </div>
+        <div id="flash-message">
+          <% flash.each do |name, msg| %>
+            <%= content_tag(:div, msg, class: "alert", id: "flash-#{name}") %>
+          <% end %>
+        </div>
       <% end %>
       <%= yield %>
     </div>

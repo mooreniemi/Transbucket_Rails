@@ -1,30 +1,30 @@
 <% title @procedure.to_s  %>
 <% cache(@procedure) do %>
-<div class="panel panel-default" itemscope itemtype="https://schema.org/MedicalProcedure">
-  <div class="panel-heading">
-    <h2><%= @procedure.name %></h2>
-    <%= link_to "See all submissions", pins_path(procedure: @procedure.id) %>
+  <div class="panel panel-default" itemscope itemtype="https://schema.org/MedicalProcedure">
+    <div class="panel-heading">
+      <h2><%= @procedure.name %></h2>
+      <%= link_to "See all submissions", pins_path(procedure: @procedure.id) %>
+    </div>
+    <% if @procedure.body_type %>
+      <div class="panel-body" itemprop="bodyLocation">
+        <i>This procedure is classified as a "<%= @procedure.body_type %>" procedure.</i>
+      </div>
+    <% end %>
+    <% if @procedure.description %>
+      <div class="panel-body" itemprop="description" itemprop="howPerformed">
+        <%= @procedure.description %>
+      </div>
+    <% end %>
+    <!-- List group -->
+    <ul class="list-group">
+      <li class="list-group-item">
+        Average sensation: <%= @procedure.avg_sensation %>
+      </li>
+      <li class="list-group-item">
+        Average satisfaction: <%= @procedure.avg_satisfaction %>
+      </li>
+    </ul>
   </div>
-  <% if @procedure.body_type %>
-    <div class="panel-body" itemprop="bodyLocation">
-      <i>This procedure is classified as a "<%= @procedure.body_type %>" procedure.</i>
-    </div>
-  <% end %>
-  <% if @procedure.description %>
-    <div class="panel-body" itemprop="description" itemprop="howPerformed">
-      <%= @procedure.description %>
-    </div>
-  <% end %>
-  <!-- List group -->
-  <ul class="list-group">
-    <li class="list-group-item">
-      Average sensation: <%= @procedure.avg_sensation %>
-  </li>
-  <li class="list-group-item">
-    Average satisfaction: <%= @procedure.avg_satisfaction %>
-</li>
-  </ul>
-</div>
 <% end %>
 
 <% if current_user %>

@@ -11,6 +11,9 @@ jobs:
     executor: ruby/default
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - gem-cache-v1-{{ arch }}-{{ checksum "Gemfile.lock" }}
       - run: bundle -v
       - ruby/bundle-install
       - save_cache:

@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   root :to => 'pages#home'
 
   devise_for :users, controllers: { registrations: "registrations" }
+  # don't want 404 on requesting users index, it breaks google crawlers
+  # if user is signed in, login will actually redirect to pins
+  get "/users", to: redirect("/login")
 
   devise_scope :user do
     get "/register" => "devise/registrations#new"

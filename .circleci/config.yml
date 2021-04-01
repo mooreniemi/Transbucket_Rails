@@ -63,7 +63,7 @@ jobs:
             curl -XPUT -H "Content-Type: application/json" http://localhost:9200/_cluster/settings -d '{ "transient": { "cluster.routing.allocation.disk.threshold_enabled": false } }'
       - run: bundle exec rake db:create
       - run: bundle exec rake db:migrate
-      - run: bundle exec rspec
+      - run: bundle exec rspec || bundle exec rspec --only-failures || bundle exec rspec --only-failures
 
 workflows:
   version: 2

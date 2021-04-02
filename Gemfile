@@ -30,7 +30,7 @@ gem 'active_model_serializers'
 gem 'pg'
 gem 'delayed_job_active_record'
 
-gem 'paperclip', '~> 5.0.0'
+gem 'paperclip', '~> 5.2.0'
 gem 'aws-sdk'
 
 # for slug ids

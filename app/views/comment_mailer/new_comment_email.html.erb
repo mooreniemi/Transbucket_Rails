@@ -6,10 +6,15 @@
   <body>
     <h1>Hey, <%= @user.username %>!</h1>
     <p>
-      Another member has posted a comment on your submission.
+      Another member has posted a <%= @comment_type %> on your submission.
     </p>
     <p>
-      If you'd like to reply click <a href='<%= @url + "?utm_source=comment_reminder&utm_medium=email&utm_campaign=comment_reminder" %>'>this link</a>.
+      If you'd like to reply click <a href='<%= @url + "?utm_source=comment_reminder&utm_medium=email&utm_campaign=#{@comment_type}_reminder" %>'>this link</a>.</p>
+    <p>
+      If you have concerns about the content of what was commented on your post you can Flag it (3 Flags from different users will put it in review automatically) or if it is urgent, please email us for direct moderation.
     </p>
+    <p>
+      If you don't want to receive these notifications please edit your notification settings at <a href='<%= @unsub + "?utm_source=comment_reminder&utm_medium=email&utm_campaign=#{@comment_type}_reminder" %>'>this link</a>.</p>
+    <p>
   </body>
 </html>

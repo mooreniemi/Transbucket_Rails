@@ -111,7 +111,8 @@ group :development, :test do
   gem 'rspec-benchmark'
   gem 'parallel_tests'
 	gem 'bullet'
-	gem 'binding_of_caller'
+  # NOTE: with spring breaks rails console, so don't use it
+	# gem 'binding_of_caller'
 	gem 'guard'
 	gem 'guard-livereload'
 	gem 'pry-rescue'

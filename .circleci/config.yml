@@ -1,11 +1,11 @@
 version: 2.1
 orbs:
-  ruby: circleci/ruby@0.1.2 
+  ruby: circleci/ruby@0.1.2
 
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.3.3-node-browsers
+      - image: circleci/ruby:2.6.6-node-browsers
         environment:
           RAILS_ENV: development
     executor: ruby/default
@@ -23,7 +23,7 @@ jobs:
 
   test:
     docker:
-      - image: circleci/ruby:2.3.3-node-browsers
+      - image: circleci/ruby:2.6.6-node-browsers
         environment:
           POSTGRES_USER: postgres
           RAILS_ENV: test

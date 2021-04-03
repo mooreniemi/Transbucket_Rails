@@ -22,7 +22,7 @@
     <%= render partial: "latest_comment_snippet", locals: { pin: pin } if @comments.map(&:commentable_id).include?(pin.id) %>
     <% cache([pin, @safe_mode]) do %>
       <div class="image" itemprop="image">
-        <%= link_to (image_tag pin.cover_image(@safe_mode)), pin %>
+        <%= link_to (image_tag pin.cover_image(@safe_mode).url(:medium)), pin %>
       </div>
       <p class="description" itemprop="description">
         <%= pin.try(:procedure).try(:name) %> by <strong><%= pin.unknown_surgeon? ? 'unknown' : 'Dr. ' + pin.surgeon.to_s %></strong>

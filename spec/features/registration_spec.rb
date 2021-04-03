@@ -55,12 +55,11 @@ RSpec.describe "registration" do
     end
   end
 
-  context "without js" do
+  context "without js", :truncation => true do
     include_examples "registration"
   end
 
   context "with js", :js => true do
     include_examples "registration"
   end
-
 end

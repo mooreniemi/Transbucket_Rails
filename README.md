@@ -138,8 +138,11 @@ While we remain on Heroku, it will infer this step for us. (You won't need to do
 
 ## tests
 
-On the Ruby side, `rspec`, but you also need `phantomjs` in order to run
-UI integ tests.
+On the Ruby side, `rspec`, but you also need `chromium-chromedriver` in
+order to run UI integ tests, via Selenium. For example, on Ubuntu you can
+run: `sudo apt-get install chromium-chromedriver`. If you want to spy on
+what's happening during a Selenium run, you can edit
+`spec/support/capybara_config.rb` to switch off `_headless`.
 
 Spring is installed to speed up Rails loading times; you should see much shorter load times after the first run.
 

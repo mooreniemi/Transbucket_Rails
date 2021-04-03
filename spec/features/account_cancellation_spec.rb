@@ -25,7 +25,7 @@ RSpec.describe "cancel user account" do
       accept_confirm do
         click_button "Cancel my account"
       end
-
+      sleep 0.1 # FIXME: not ideal but does pass the test
       expect(User.where(email: user.email)).not_to exist
     end
 

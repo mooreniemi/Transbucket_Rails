@@ -1,6 +1,7 @@
 require "rails_helper"
 
-RSpec.describe "user profile" do
+# truncation strategy is required because emails are sent in transaction hook
+RSpec.describe "user profile", truncation: true do
   let!(:genders) { create_list(:gender, 5) }
   let(:user) { create(:user, :with_confirmation, :wants_notifications, gender: genders.last) }
   let!(:updated) { build(:user) }

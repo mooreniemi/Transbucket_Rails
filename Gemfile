@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
 # https://devcenter.heroku.com/articles/ruby-versions
-ruby '2.3.3'
+ruby '2.6.6'
 
-gem 'rails'
+gem 'rails', '4.2.8'
 # used for public areas of the site, see PagesController
 gem 'actionpack-page_caching'
 
@@ -127,7 +127,7 @@ group :test do
 	gem 'factory_girl_rails'
 	gem 'capybara'
   gem 'capybara-email'
-	gem 'poltergeist'
+	gem 'selenium-webdriver'
 	gem 'guard-rspec'
 	gem 'launchy'
 	gem 'rspec-console'

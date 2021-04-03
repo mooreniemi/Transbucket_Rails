@@ -46,12 +46,6 @@ jobs:
       - restore_cache:
           keys:
             - gem-cache-v1-{{ arch }}-{{ checksum "Gemfile.lock" }}
-      - run: sudo apt-get update
-      - run: sudo apt-get install libfontconfig1
-      - run: wget https://bitbucket.org/ariya/phantomjs/downloads/$PHANTOM_JS.tar.bz2
-      - run: tar -xjf $PHANTOM_JS.tar.bz2
-      - run: sudo mv $PHANTOM_JS /usr/local/share
-      - run: sudo ln -sf /usr/local/share/$PHANTOM_JS/bin/phantomjs /usr/local/bin
       - run: bundle -v
       - ruby/bundle-install
       - run:

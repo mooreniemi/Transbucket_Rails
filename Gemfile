@@ -127,7 +127,7 @@ group :test do
 	gem 'factory_girl_rails'
 	gem 'capybara'
   gem 'capybara-email'
-	gem 'poltergeist'
+	gem 'selenium-webdriver'
 	gem 'guard-rspec'
 	gem 'launchy'
 	gem 'rspec-console'

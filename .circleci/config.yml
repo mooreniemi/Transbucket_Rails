@@ -47,7 +47,7 @@ jobs:
           keys:
             - gem-cache-v1-{{ arch }}-{{ checksum "Gemfile.lock" }}
       - run: sudo apt-get update
-      - run: sudo apt-get install phantomjs
+      - run: sudo apt-get install chromium-chromedriver
       - run: bundle -v
       - ruby/bundle-install
       - run:

@@ -46,6 +46,8 @@ jobs:
       - restore_cache:
           keys:
             - gem-cache-v1-{{ arch }}-{{ checksum "Gemfile.lock" }}
+      - run: sudo apt-get update
+      - run: sudo apt-get install phantomjs
       - run: bundle -v
       - ruby/bundle-install
       - run:

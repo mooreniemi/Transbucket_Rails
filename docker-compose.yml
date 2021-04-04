@@ -8,20 +8,19 @@ services:
     networks:
       - db
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
     environment:
       cluster.name: "docker-cluster"
       discovery.type: single-node
       cluster.routing.allocation.disk.threshold_enabled: "false"
     ports:
-      - "9200:9200"
+      - 9200:9200
     volumes:
       - data01:/usr/share/elasticsearch_data
     networks:
       - elastic
   kib01:
-    image: docker.elastic.co/kibana/kibana:7.11.1
-    container_name: kib01
+    image: docker.elastic.co/kibana/kibana:7.12.0
     ports:
       - 5601:5601
     environment:
@@ -31,13 +30,10 @@ services:
       - elastic
   web:
     build: .
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/myapp
-    networks:
-      - elastic
     ports:
-      - "3000:3000"
+      - 3000:3000
     environment:
       BONSAI_URL: http://elasticsearch:9200
       POSTGRES_HOST: db

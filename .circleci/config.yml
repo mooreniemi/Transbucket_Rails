@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  ruby: circleci/ruby@0.1.2
+  ruby: circleci/ruby@1.1.2
 
 jobs:
   build:
@@ -11,28 +11,22 @@ jobs:
     executor: ruby/default
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - gem-cache-v1-{{ arch }}-{{ checksum "Gemfile.lock" }}
-      - run: bundle -v
-      - ruby/bundle-install
-      - save_cache:
-          key: gem-cache-v1-{{ arch }}-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
-
+      - ruby/install-deps
   test:
     docker:
       - image: circleci/ruby:2.6.6-node-browsers
         environment:
+          BUNDLE_JOBS: '3'
+          BUNDLE_RETRY: '3'
           POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
           RAILS_ENV: test
           TEST_DB: circle_test
-          PHANTOM_JS: phantomjs-2.1.1-linux-x86_64
-      - image: circleci/postgres:9.6-alpine
+      - image: circleci/postgres:13.1
         environment:
           POSTGRES_USER: postgres
-      - image: docker.elastic.co/elasticsearch/elasticsearch:7.11.1
+          POSTGRES_PASSWORD: password
+      - image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
         environment:
           cluster.name: transbucket-test
           xpack.security.enabled: false
@@ -43,11 +37,7 @@ jobs:
     executor: ruby/default
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - gem-cache-v1-{{ arch }}-{{ checksum "Gemfile.lock" }}
-      - run: bundle -v
-      - ruby/bundle-install
+      - ruby/install-deps
       - run:
           name: Wait for db
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
@@ -58,8 +48,7 @@ jobs:
           name: Lift elasticsearch disk watermark restrictions
           command: |
             curl -XPUT -H "Content-Type: application/json" http://localhost:9200/_cluster/settings -d '{ "transient": { "cluster.routing.allocation.disk.threshold_enabled": false } }'
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:migrate
+      - run: bundle exec rake db:create db:migrate
       - run: bundle exec rspec || bundle exec rspec --only-failures || bundle exec rspec --only-failures
 
 workflows:

@@ -9,7 +9,7 @@
 <% if current_page?(pins_path) %>
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      <%= I18n.t(".header.filter") %> <span class="caret"></span>
+      <%= I18n.t(".header.filter") %> <%= fa_icon "filter", { class: 'yellow' } %>
     </a>
     <ul class="dropdown-menu" role="menu">
       <li>

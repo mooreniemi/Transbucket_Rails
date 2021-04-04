@@ -70,6 +70,16 @@ describe "pin creation" do
         check_pin_data(pin_data)
         check_photos(new_images)
       end
+
+      it "creates a pin, selecting a surgeon but duplicating a procedure" do
+        self.send(:pin_create)
+        select_in_field("pin_surgeon_attributes_id", surgeon.to_s, js: js)
+        add_procedure(procedure, js: js)
+
+        click_button "Submit Now"
+
+        expect(find("#error_explanation")).to have_content("Procedure name has already been taken")
+      end
     end
   end
 

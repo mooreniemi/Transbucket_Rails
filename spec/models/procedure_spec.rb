@@ -1,6 +1,27 @@
 require 'rails_helper'
 
 describe Procedure do
+  describe "normalization" do
+    it 'is stored lowercase' do
+      procedure = build(:procedure)
+      procedure.name = "Something We Know Is Capitalized"
+      procedure.save!
+      expect(procedure.name).to eq("something we know is capitalized")
+    end
+    it 'is unique irrespective of case' do
+      procedure = build(:procedure)
+      procedure.name = "Something We Know Is Capitalized"
+      procedure.save!
+      procedure2 = build(:procedure)
+      procedure2.name = "something we know is capitalized"
+      expect {
+        procedure2.save!
+      }.to raise_error(
+        ActiveRecord::RecordInvalid,
+        "Validation failed: Name has already been taken"
+      )
+    end
+  end
   describe "#recalculate_avgs" do
     it 'calculates avg sensation' do
       procedure = create(:procedure, :uncomputed)

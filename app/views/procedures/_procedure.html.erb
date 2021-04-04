@@ -1,5 +1,5 @@
 <tr itemscope itemtype="https://schema.org/MedicalProcedure">
-  <td><%= link_to procedure.name, procedure_path(procedure) %></td>
+  <td><%= link_to procedure.name.titleize, procedure_path(procedure) %></td>
   <% if user_signed_in? %>
   <td><%= link_to @pins_per_procedure[procedure.id] || 0, pins_path(procedure: procedure.id) %></td>
 <% else %>

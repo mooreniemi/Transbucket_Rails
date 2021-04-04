@@ -12,7 +12,12 @@ class Procedure < ActiveRecord::Base
 
   # attr_accessible :name, :body_type, :gender, :avg_sensation, :avg_satisfaction
 
-  validates :name, uniqueness: true
+  # all procedures are stored lowercase
+  before_save { self.name.downcase! }
+
+  # but when we validate the incoming record we compare case insensitive
+  # because we haven't downcased incoming string yet
+  validates :name, uniqueness: { case_sensitive: false }
   validates :name, presence: true
 
   def to_s

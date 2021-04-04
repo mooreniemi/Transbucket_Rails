@@ -1,6 +1,4 @@
 $(document).ready(function() {
-  console.log("pins/index.js");
-
   $("#clear-filter").click(function() {
     $("#filter_dropdown select").val([]);
     $("#filter_dropdown select").trigger('chosen:updated');

@@ -1,6 +1,6 @@
 <%= javascript_include_tag "pins" %>
 <% if params[:query].present? %>
-  <% title 'Search Result for ' + params[:query].titleize %>
+  <% title "Search Result for '#{params[:query]}'" %>
 <% else %>
   <% title 'Recent Submissions' %>
 <% end %>

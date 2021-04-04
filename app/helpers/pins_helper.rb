@@ -6,14 +6,23 @@ module PinsHelper
     4 => "they/them/theirs"
   }
 
+  # used to mimic the shape of a PinImage
+  class FakeImage
+    def url(_size)
+      'http://placekitten.com/200/300'
+    end
+  end
+
   def uses_pronouns(author_gender)
     return "they/them/theirs" if author_gender.nil?
     PRONOUN_HASH[author_gender.id]
   end
 
+  # FIXME: this could be a lot more robust, and reflect user preference rather than last
   def cover_image(safe_mode = false)
-    kitty_url = 'http://placekitten.com/200/300'
-    image = safe_mode == true ? kitty_url : images.try(:last)
+    kitty_url = FakeImage.new
+    cover = images.try(:last) ? images.last : kitty_url
+    image = safe_mode == true ? kitty_url : cover
     image
   end
 

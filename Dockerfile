@@ -24,7 +24,7 @@ RUN CHROME_VERSION="$(google-chrome --version)" \
 WORKDIR /myapp
 COPY Gemfile /myapp/Gemfile
 COPY Gemfile.lock /myapp/Gemfile.lock
-RUN bundle install
+RUN echo -n "nproc = " && nproc && bundle install -j$(nproc)
 COPY . /myapp
 
 # Add a script to be executed every time the container starts.

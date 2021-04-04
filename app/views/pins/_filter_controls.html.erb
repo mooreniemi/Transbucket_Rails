@@ -2,8 +2,8 @@
 <%= form_tag pins_path, :method => 'get', :id => 'filter_dropdown' do %>
   <%= submit_tag "Filter", id: 'submit-filter', class: 'btn' %>
   <%= link_to "Clear", "#", id: 'clear-filter', class: 'btn' %>
-  <%= select_tag :scope, options_from_collection_for_select(Pin::SCOPES, 'to_s', 'humanize'), {multiple: true, class: "chosen-select"} %>
-  <%= select_tag :procedure, options_from_collection_for_select(Procedure.order('name asc'), "id", "name"), {multiple: true, class: "chosen-select"} %>
-  <%= select_tag :surgeon, options_from_collection_for_select(Surgeon.order('last_name asc'), "id", "to_s"), {multiple: true, class: "chosen-select"} %>
+  <%= select_tag :scope, options_from_collection_for_select(Pin::SCOPES, "to_s", "humanize", (params[:scope].present? ? params[:scope] : nil)), {multiple: true, class: "chosen-select"} %>
+  <%= select_tag :procedure, options_from_collection_for_select(Procedure.order('name asc'), "id", "name", (params[:procedure].present? ? params[:procedure] : nil)), {multiple: true, class: "chosen-select"} %>
+  <%= select_tag :surgeon, options_from_collection_for_select(Surgeon.order('last_name asc'), "id", "to_s", (params[:surgeon].present? ? params[:surgeon] : nil)), {multiple: true, class: "chosen-select"} %>
   <%= hidden_field_tag :user, params[:user] if params[:user].present? %>
 <% end %>

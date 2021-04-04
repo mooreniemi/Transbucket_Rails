@@ -1,13 +1,17 @@
 $(document).ready(function() {
+  console.log("pins/index.js");
+
   $("#clear-filter").click(function() {
     $("#filter_dropdown select").val([]);
     $("#filter_dropdown select").trigger('chosen:updated');
+    // FIXME: hard coding the pins path here
+    window.history.pushState("cleared filter", "Submissions", "/pins");
   });
 
   $("#scope").chosen({
     width: "100%",
     placeholder_text_multiple: "General tags"
-  });
+  })
 
   $("#procedure").chosen({
     width: "100%",

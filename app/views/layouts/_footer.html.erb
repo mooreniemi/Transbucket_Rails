@@ -1,10 +1,10 @@
 <div class="footer navbar-fixed-bottom submission_well">
   <% cache("#{I18n.locale}_#{Date.today.year}") do %>
     <small> &nbsp;
-      <b><%= Date.today.year %></b> - Transbucket.com |
       <%= link_to I18n.t('.footer.about'),  about_path %> |
       <%= link_to I18n.t('.footer.tos'), terms_path %> |
-      <%= link_to I18n.t('.footer.pp'), privacy_path %>
+      <%= link_to I18n.t('.footer.pp'), privacy_path %> |
+      <%= fa_icon "facebook", class: 'yellow' %> <a href="https://www.facebook.com/transbucket">Transbucket</a> <%= fa_icon "twitter", class: 'yellow' %> <a href="https://twitter.com/TransBucket">@TransBucket</a>
     </small>
   <% end %>
 </div>

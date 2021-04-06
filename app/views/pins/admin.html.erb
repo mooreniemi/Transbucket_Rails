@@ -15,10 +15,11 @@
   <th>delete</th>
   <% @queue[:pins].each do |e| %>
     <% user = User.find_by_id(e.user_id) || Struct::User.new("none", "deleted") %>
-    <tr><td><%= link_to e.id, pin_path(e) %> </td>
-      <td> <%= mail_to user.email, user.username %>
-      <td><%= link_to fa_icon("flag"), remove_pin_flag_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to republish this pin?", :disable_with => "unflag" %></td>
-      <td><%= link_to "×", pin_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this pin?", :disable_with => "×"%></td></tr>
+    <tr class="review-row" data-pin-id=<%= e.id %>>
+      <td><%= link_to e.id, pin_path(e) %></td>
+      <td><%= mail_to user.email, user.username %></td>
+      <td><%= link_to fa_icon("flag"), remove_pin_flag_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to republish this pin?", :disable_with => "unflag", id: "#{e.id}_unflag", class: "unflag-pin" %></td>
+      <td><%= link_to fa_icon("times"), pin_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this pin?", :disable_with => "×", id: "#{e.id}_delete", class: "delete-pin" %></td></tr>
   <% end %>
 </table>
 

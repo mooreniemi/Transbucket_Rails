@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  get '/404' => 'errors#not_found'
-  get '/422' => 'errors#server_error'
-  get '/500' => 'errors#server_error'
-
   root :to => 'pages#home'
 
   devise_for :users, controllers: { registrations: "registrations" }
@@ -53,16 +49,13 @@ Rails.application.routes.draw do
   get 'search_terms' => 'search#search_terms'
   get 'surgeons_only' => 'search#surgeons_only'
 
-  get 'bookmarks' => 'pages#bookmarks'
-  #reroute for old bookmarks
-  get '/members' => 'pages#bookmarks'
-  get '/therapies' => 'pages#bookmarks'
-  get '/surgeons' => 'pages#bookmarks'
-  get '/therapists' => 'pages#bookmarks'
-  get '/procedures' => 'pages#bookmarks'
-  get '/forum' => 'pages#bookmarks'
-  get '/members/*other' => 'pages#bookmarks'
-  get '/members/uploads/*other' => 'pages#bookmarks'
+  # reroute for old bookmarks
+  get '/members' => 'pages#home'
+  get '/therapies' => 'pages#home'
+  get '/therapists' => 'pages#home'
+  get '/forum' => 'pages#home'
+  get '/members/*other' => 'pages#home'
+  get '/members/uploads/*other' => 'pages#home'
 
   # the logs get very noisy with backtraces unless we ignore missing images
   if Rails.env.development?

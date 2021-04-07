@@ -2,7 +2,7 @@
 <h3><%= title 'Moderation Queue' %></h3>
 <div class="panel panel-default">
   <div class="panel-body">
-    <p>3 flags on a comment or pin land it in this queue. It is always possible users thought they were giving a thumbs up, so please make sure to check each pin or comment before deleting.</p>
+    <p>3 flags on a comment or pin land it in this queue. It is always possible users thought they were giving a thumbs up, so please make sure to check each pin or comment before deleting. Deletions prompt a confirmation, "unflagging" does not. This is because deletions can't be undone, but we can always send content back in for further review.</p>
     <p>Why is this page called "queendom"? Because hackers know to try and target any "admin/" or similar page. "queendom" is a partial anagram of moderation queue.</p>
   </div>
 </div>
@@ -15,11 +15,11 @@
   <th>delete</th>
   <% @queue[:pins].each do |e| %>
     <% user = User.find_by_id(e.user_id) || Struct::User.new("none", "deleted") %>
-    <tr class="review-row" data-pin-id=<%= e.id %>>
+    <tr class="review-pin-row" data-pin-id=<%= e.id %>>
       <td><%= link_to e.id, pin_path(e) %></td>
       <td><%= mail_to user.email, user.username %></td>
-      <td><%= link_to fa_icon("flag"), remove_pin_flag_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to republish this pin?", :disable_with => "unflag", id: "#{e.id}_unflag", class: "unflag-pin" %></td>
-      <td><%= link_to fa_icon("times"), pin_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this pin?", :disable_with => "×", id: "#{e.id}_delete", class: "delete-pin" %></td></tr>
+      <td><%= link_to fa_icon("flag"), remove_pin_flag_path(e), :method => :delete, :remote => true, :data => { confirm: "Are you sure you want to remove this comment?" }, "data-pin-id" => e.id, class: "unflag-pin" %></td>
+      <td><%= link_to fa_icon("times"), pin_path(e), :method => :delete, :remote => true, :data => { confirm: "Are you sure you want to remove this comment?" }, "data-pin-id" => e.id, class: "delete-pin" %></td></tr>
   <% end %>
 </table>
 
@@ -34,11 +34,13 @@
   <% @queue[:comments].each do |e| %>
     <% user = User.find_by_id(e.user_id) || Struct::User.new("none", "deleted") %>
 
-    <tr><td><%= link_to e.id, pin_path(e.commentable_id) %> </td>
-      <td> <%= mail_to user.email, user.username %>
+    <tr class="review-comment-row" data-comment-id=<%= e.id %>>
+      <td><%= link_to e.id, pin_path(e.commentable_id) %></td>
+      <td><%= mail_to user.email, user.username %></td>
       <td><%= e.body %></td>
-      <td><%= link_to fa_icon("flag"), remove_comment_flag_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to republish this comment?", :disable_with => "unflag" %></td>
-      <td><%= link_to "×", comment_path(e), :method => :delete, :remote => true, :confirm => "Are you sure you want to remove this comment?", :disable_with => "×"%></td></tr>
+      <td><%= link_to fa_icon("flag"), remove_comment_flag_path(e), :method => :delete, :remote => true, "data-comment-id" => e.id, :class => "unflag-comment" %></td>
+      <td><%= link_to fa_icon("times"), comment_path(e), :method => :delete, :remote => true, "data-comment-id" => e.id, :class => "delete-comment", :data => { confirm: "Are you sure you want to remove this comment?" } %></td>
+    </tr>
   <% end %>
 </table>
 

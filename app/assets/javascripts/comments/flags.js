@@ -1,9 +1,9 @@
 // FIXME: this is the bare minimum to give some feedback to users
 $(document).ready(function(){
   // on index page
-  $(".flag-pin").each(function(){
+  $(".flag-comment").each(function(){
     $(this).unbind().on('ajax:success', function(e, data, status, xhr){
-      var pinId = $(this).data('pin-id');
+      var commentId = $(this).data('comment-id');
 
       switch(data["status"]) {
         case "voted_down":
@@ -12,10 +12,10 @@ $(document).ready(function(){
           break;
         case "removed":
           // persists, item won't show up from server once in review
-          $('.item[data-pin-id="' + pinId + '"]').hide();
+          $('.comment[data-comment-id="' + commentId + '"]').hide();
           break;
         default:
-          console.log("unknown status reached while flagging " + pinId);
+          console.log("unknown status reached while flagging " + commentId);
       }
     }).on('ajax:error',function(e, xhr, status, error){
       console.log("error = " + JSON.stringify(error));
@@ -23,9 +23,9 @@ $(document).ready(function(){
   });
 
   // on admin page
-  $(".unflag-pin").each(function(){
+  $(".unflag-comment").each(function(){
     $(this).unbind().on('ajax:success', function(e, data, status, xhr){
-      var pinId = $(this).data('pin-id');
+      var commentId = $(this).data('comment-id');
 
       switch(data["status"]) {
         case "unflagged":
@@ -33,24 +33,23 @@ $(document).ready(function(){
           $(this).replaceWith('<i class="fa fa-check" aria-hidden="true"></i>');
           break;
         default:
-          console.log("unknown status reached while unflagging " + pinId);
+          console.log("unknown status reached while unflagging " + commentId);
       }
     }).on('ajax:error',function(e, xhr, status, error){
       console.log("error = " + JSON.stringify(error));
     });
   });
 
-  $(".delete-pin").each(function(){
+  $(".delete-comment").each(function(){
     $(this).unbind().on('ajax:success', function(e, data, status, xhr){
-      var pinId = $(this).data('pin-id');
-
+      var commentId = $(this).data('comment-id');
       switch(data["status"]) {
         case "destroyed":
           // persists, item won't show up from server once in review
-          $('.review-pin-row[data-pin-id="' + pinId + '"]').hide();
+          $('.review-comment-row[data-comment-id="' + commentId + '"]').hide();
           break;
         default:
-          console.log("unknown status reached while deleting " + pinId);
+          console.log("unknown status reached while deleting " + commentId);
       }
     }).on('ajax:error',function(e, xhr, status, error){
       console.log("error = " + JSON.stringify(error));

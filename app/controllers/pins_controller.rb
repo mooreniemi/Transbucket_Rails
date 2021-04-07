@@ -91,8 +91,13 @@ class PinsController < ApplicationController
     @pin.destroy
 
     respond_to do |format|
-      format.html { redirect_to pins_url }
-      format.json { head :ok }
+      if Pin.find_by_id(@pin.id)
+        flash[:error] = "Could not destroy #{@pin.id}!"
+        format.json { render json: @pin.errors.full_messages, status: :unprocessable_entity }
+      else
+        flash[:notice] = "Destroyed #{@pin.id}"
+        format.json { render json: { status: 'destroyed' }, status: :ok }
+      end
     end
   end
 
@@ -134,7 +139,7 @@ class PinsController < ApplicationController
     params.require(:pin).permit!
     # FIXME: why was this commented out? should it be removed?
     # params.require(:pin).permit(:surgeon_id, :procedure_id, :cost, :revision, :details, :sensation, :satisfaction,
-                                # pin_images: [:photo, :caption])
+    # pin_images: [:photo, :caption])
   end
 
   def pin_index_params

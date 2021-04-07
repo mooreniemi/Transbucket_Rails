@@ -34,7 +34,7 @@
     <div class="panel-footer">
       <div class="actions">
         <label class="label-with-popover" data-placement="right" data-content="Flags from 3 different users will remove content pending review by a moderator." data-title="Flag this content." data-trigger="hover">
-          <%= link_to(fa_icon("flag"), pin_flags_path(pin), :method => :post, remote: true) + " | " unless current_user == pin.user %>
+          <%= link_to(fa_icon("flag"), pin_flags_path(pin), method: :post, remote: true, "data-pin-id" => pin.id, class: "flag-pin") + " | " unless current_user == pin.user %>
         </label>
       <% if current_user == pin.user || current_user.admin? %>
         <%= link_to fa_icon("pencil-square-o"), edit_pin_path(pin) %>

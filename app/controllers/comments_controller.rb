@@ -34,7 +34,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment = Comment.find(params[:id])
     if @comment.destroy
-      render :nothing => true, :status => :ok
+      render :json => {'status': 'destroyed'}, :status => :ok
     else
       render :json => @comment.errors, :status => :unprocessable_entity
     end

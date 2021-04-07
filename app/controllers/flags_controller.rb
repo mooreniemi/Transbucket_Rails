@@ -11,9 +11,9 @@ class FlagsController < ApplicationController
     respond_to do |format|
       if @flag[:status].present?
         flash[:notice] = "Content flagged."
-        format.js { render json: @flag, status: :created }
+        format.json { render json: @flag, status: :created }
       else
-        format.js { render json: @flag.errors, status: :unprocessable_entity }
+        format.json { render json: @flag.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -24,16 +24,16 @@ class FlagsController < ApplicationController
 
     @content = find_content(type, id)
     @content.votes.down.destroy_all
-    @content.publish!
+    publish_status = @content.publish!
 
     respond_to do |format|
-      if @content.published?
+      if publish_status
         flash[:notice] = "Removed flags."
+        format.json { render json: { status: 'unflagged'}, status: :ok }
       else
-        format.js {render json: @content, status: :unprocessable_entity }
+        format.json { render json: @content, status: :unprocessable_entity }
       end
     end
-
   end
 
   private

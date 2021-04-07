@@ -23,7 +23,7 @@ jrei  :_           _:
 Transbucket.com (Transbucket_Rails)
 ===================================
 
-The TL;DR of technical specs is: Rails 4.2.6 (in Ruby 2.2.3), using
+The TL;DR of technical specs is: Rails 4.2.8 (in Ruby 2.6.6), using
 [bower_rails](https://github.com/rharriso/bower-rails) to manage
 Javascript dependencies, on Postgres database for storage, and with
 Elasticsearch for search.
@@ -33,6 +33,7 @@ Elasticsearch for search.
 **Table of Contents**
 
 - [setup](#setup)
+  - [docker-compose](#docker-compose)
   - [database setup](#database-setup)
     - [elasticsearch](#elasticsearch)
     - [postgres](#postgres)

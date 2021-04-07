@@ -18,8 +18,8 @@
     <tr class="review-pin-row" data-pin-id=<%= e.id %>>
       <td><%= link_to e.id, pin_path(e) %></td>
       <td><%= mail_to user.email, user.username %></td>
-      <td><%= link_to fa_icon("flag"), remove_pin_flag_path(e), :method => :delete, :remote => true, :data => { confirm: "Are you sure you want to remove this comment?" }, "data-pin-id" => e.id, class: "unflag-pin" %></td>
-      <td><%= link_to fa_icon("times"), pin_path(e), :method => :delete, :remote => true, :data => { confirm: "Are you sure you want to remove this comment?" }, "data-pin-id" => e.id, class: "delete-pin" %></td></tr>
+      <td><%= link_to fa_icon("flag"), remove_pin_flag_path(e), :method => :delete, :remote => true, "data-pin-id" => e.id, class: "unflag-pin" %></td>
+      <td><%= link_to fa_icon("times"), pin_path(e), :method => :delete, :remote => true, :data => { confirm: "Are you sure you want to remove this pin?" }, "data-pin-id" => e.id, class: "delete-pin" %></td></tr>
   <% end %>
 </table>
 

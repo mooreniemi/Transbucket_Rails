@@ -1,7 +1,11 @@
 class SurgeonsController < ApplicationController
   def index
     @surgeons = Surgeon.all.order(:last_name)
-    @pins_per_surgeon = Surgeon.joins(:pins).group("pins.surgeon_id").count
+    @pin_counts_per_surgeon = Surgeon.joins(:pins).group("pins.surgeon_id").count
+    @pins_per_surgeon = Hash[*Pin.select(:surgeon_id, 'array_agg(id)').group(:surgeon_id).pluck(:surgeon_id, 'array_agg(id)').flatten(1)]
+    @pins_by_complications = ActsAsTaggableOn::Tagging.includes(:tag).
+      where(context: 'complications').
+      pluck(:taggable_id, :name).group_by {|id, name| id }
   end
 
   def show

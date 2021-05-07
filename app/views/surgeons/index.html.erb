@@ -1,11 +1,14 @@
 <%= render partial: 'ads/test1' %>
 <% title "Surgeons" %>
 <div id="surgeons" style="background-color:#ffffff">
+  <p>A warning about "Complication Rate": complications are loosely structured tags on the site. This means one single procedure on a patient might have been submitted several times, and the submitter may have duplicated the tags on their submissions. This means the complication rate may be higher than reality. This complication rate can not be used as medical advice.</p>
   <table class="table table-hover table-bordered" bgcolor="#ffffcc">
     <th>Name</th>
     <th>Submissions</th>
+    <th>Complications</th>
+    <th>Complication Rate</th>
     <% @surgeons.each do |surgeon| %>
-    <%= render partial: 'surgeons/surgeon_row', locals: { surgeon: surgeon, pin_count: @pins_per_surgeon[surgeon.id] } %>
+    <%= render partial: 'surgeons/surgeon_row', locals: { surgeon: surgeon, pin_count: @pin_counts_per_surgeon[surgeon.id], complication_count: @pins_by_complications.values_at(*@pins_per_surgeon[surgeon.id]).compact.count } %>
     <% end %>
   </table>
 </div>

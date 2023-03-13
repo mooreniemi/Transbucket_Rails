@@ -2,6 +2,8 @@
   <td><%= link_to "#{surgeon.last_name}, #{surgeon.first_name}", surgeon_path(surgeon.id) %></td>
 <% if user_signed_in? %>
   <td><%= link_to pin_count || 0, pins_path(surgeon: surgeon.id)  %></td>
+  <td><%= complication_count || 0 %></td>
+  <td><%= (complication_count * 100 / pin_count if pin_count.present? && pin_count > 0) || 0 %>%</td>
 <% else %>
   <td><%= link_to "Register to see more", register_path  %></td>
 <% end %>

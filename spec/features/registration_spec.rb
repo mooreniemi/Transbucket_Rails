@@ -46,7 +46,9 @@ RSpec.describe "registration" do
 
       login_user(user, remember: true)
 
-      expect(current_path).to eq('/pins')
+      # current_path reads immediately with no retry, unlike have_current_path;
+      # under the js driver the post-sign-in redirect can still be in flight.
+      expect(page).to have_current_path('/pins')
 
       user_in_db = User.find_by!(email: user.email)
 

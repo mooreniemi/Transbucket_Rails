@@ -1,3 +1,5 @@
+require File.expand_path('../../config/boot', __FILE__)
+
 require 'support/controller_helpers'
 require 'rspec-benchmark'
 require 'factory_girl_rails'

@@ -17,8 +17,12 @@ describe "pin creation" do
     Warden.test_reset!
   end
 
-  shared_examples "the pin creation process" do |js: false|
-    let(:js) { js }
+  shared_examples "the pin creation process" do |opts = {}|
+    # rspec-core 3.3's include_examples passes options as a positional Hash
+    # (module_exec(*args, &shared_block)), which relied on Ruby's pre-3.0
+    # implicit hash-to-kwargs conversion to land in a `|js: false|` parameter.
+    # Ruby 3 removed that conversion, so this must destructure explicitly.
+    let(:js) { opts.fetch(:js, false) }
     let(:new_surgeon) { build(:surgeon) }
     let(:new_procedure) { build(:procedure) }
 

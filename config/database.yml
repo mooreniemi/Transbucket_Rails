@@ -1,7 +1,8 @@
-defaults: &defaults
+development:
   adapter: postgresql
   prepared_statements: false
   host: <%= ENV['POSTGRES_HOST'] || "localhost" %>
+  port: <%= ENV['POSTGRES_PORT'] || 5432 %>
   encoding: unicode
   pool: 5
   username: <%= ENV['POSTGRES_USER'] || "Alex" %>
@@ -9,15 +10,32 @@ defaults: &defaults
   morphology: stem_en
   enable_star: true
   min_infix_len: 3
-
-development:
-  <<: *defaults
   database: psql_development
 
 test:
-  <<: *defaults
+  adapter: postgresql
+  prepared_statements: false
+  host: <%= ENV['POSTGRES_HOST'] || "localhost" %>
+  port: <%= ENV['POSTGRES_PORT'] || 5432 %>
+  encoding: unicode
+  pool: 5
+  username: <%= ENV['POSTGRES_USER'] || "Alex" %>
+  password: <%= ENV['POSTGRES_PASSWORD'] || "" %>
+  morphology: stem_en
+  enable_star: true
+  min_infix_len: 3
   database: <%= ENV['TEST_DB'] || ("psql_test" + (ENV['TEST_ENV_NUMBER'] || "")) %>
 
 production:
-  <<: *defaults
+  adapter: postgresql
+  prepared_statements: false
+  host: <%= ENV['POSTGRES_HOST'] || "localhost" %>
+  port: <%= ENV['POSTGRES_PORT'] || 5432 %>
+  encoding: unicode
+  pool: 5
+  username: <%= ENV['POSTGRES_USER'] || "Alex" %>
+  password: <%= ENV['POSTGRES_PASSWORD'] || "" %>
+  morphology: stem_en
+  enable_star: true
+  min_infix_len: 3
   database: psql_production

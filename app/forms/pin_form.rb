@@ -47,7 +47,8 @@ class PinForm < Reform::Form
     self.surgeon = (surgeon && surgeon.id) ? OpenStruct.new(id: surgeon.id) : Surgeon.new
   end
 
-  def populate_procedure!(fragment:, **)
+  def populate_procedure!(options)
+    fragment = options[:fragment]
     id = fragment["id"]
     if id.nil? || id == 0 || id == ""
       self.procedure = Procedure.new
@@ -56,7 +57,8 @@ class PinForm < Reform::Form
     end
   end
 
-  def populate_surgeon!(fragment:, **)
+  def populate_surgeon!(options)
+    fragment = options[:fragment]
     id = fragment["id"]
     if id.nil? || id == 0 || id == ""
       self.surgeon = Surgeon.new
@@ -65,7 +67,8 @@ class PinForm < Reform::Form
     end
   end
 
-  def populate_pin_images!(fragment:, **)
+  def populate_pin_images!(options)
+    fragment = options[:fragment]
     item = pin_images.find { |image| image.id == fragment["id"].to_i }
 
     if fragment["_destroy"] == "1"

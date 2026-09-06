@@ -1,160 +1,240 @@
 #!/usr/bin/env ruby
 
-require "capybara"
-require "capybara/dsl"
-require "selenium-webdriver"
-require "json"
+require "net/http"
+require "nokogiri"
+require "securerandom"
 
 STAGING_URL = ENV.fetch("STAGING_URL", "https://transbucket-staging.herokuapp.com")
 USERNAME = ENV.fetch("STAGING_USER", "zoon")
 PASSWORD = ENV.fetch("STAGING_PASSWORD", "big fake password for testing")
 IMAGE_PATH = File.expand_path("../spec/fixtures/cat.jpg", __dir__)
 
-Capybara.register_driver :selenium_chrome_headless do |app|
-  options = Selenium::WebDriver::Chrome::Options.new
-  options.add_argument("--headless=new")
-  options.add_argument("--disable-gpu")
-  options.add_argument("--no-sandbox")
-  options.add_argument("--disable-dev-shm-usage")
-  options.add_argument("--window-size=1400,1800")
-
-  Capybara::Selenium::Driver.new(
-    app,
-    browser: :chrome,
-    options: options
-  )
-end
-
-Capybara.default_driver = :selenium_chrome_headless
-Capybara.default_max_wait_time = 20
-Capybara.app_host = STAGING_URL
-Capybara.run_server = false
-
 class StagingSmoke
-  include Capybara::DSL
+  def initialize
+    @cookies = {}
+  end
 
   def run
     login
     pin_id = create_pin
     edit_pin(pin_id)
+    verify_search_page
     puts "staging smoke ok pin=#{pin_id}"
-  ensure
-    Capybara.reset_sessions!
   end
 
-  def login
-    visit "/users/sign_in"
-    within("#new_user") do
-      fill_in "Username", with: USERNAME
-      fill_in "Password", with: PASSWORD
-    end
-    click_button "Sign in"
+  private
 
-    unless page.has_content?("Signed in successfully")
-      raise "login failed"
+  def login
+    token = csrf_token("/users/sign_in")
+    response = post(
+      "/users/sign_in",
+      {
+        "authenticity_token" => token,
+        "user[login]" => USERNAME,
+        "user[password]" => PASSWORD,
+        "commit" => "Sign in"
+      }
+    )
+
+    unless response.code.to_i.between?(200, 399)
+      raise "login failed with #{response.code}"
+    end
+
+    follow_redirect(response) if response.is_a?(Net::HTTPRedirection)
+    body = get("/pins").body
+
+    unless body.include?("Logout") && body.include?("My Account")
+      raise "login did not establish an authenticated session"
     end
   end
 
   def create_pin
-    visit "/pins/new"
-    wait_for_dropzone
-
-    upload_image("Smoke test image")
-
+    token = csrf_token("/pins/new")
     suffix = Time.now.to_i
-    add_surgeon(
-      last_name: "Smoke#{suffix}",
-      first_name: "User",
-      url: "https://example.com/surgeons/#{suffix}"
+    captions = ["Smoke test image 1", "Smoke test image 2"]
+
+    response = post_multipart(
+      "/pins",
+      {
+        "authenticity_token" => token,
+        "pin[cost]" => "123",
+        "pin[sensation]" => "4",
+        "pin[satisfaction]" => "5",
+        "pin[details]" => "Smoke test details",
+        "pin[surgeon_attributes][last_name]" => "Smoke#{suffix}",
+        "pin[surgeon_attributes][first_name]" => "User",
+        "pin[surgeon_attributes][url]" => "https://example.com/surgeons/#{suffix}",
+        "pin[procedure_attributes][name]" => "Smoke Procedure #{suffix}",
+        "pin[procedure_attributes][body_type]" => "Top",
+        "pin[procedure_attributes][gender]" => "FTM",
+        "pin_images[0][caption]" => captions[0],
+        "pin_images[0][photo]" => multipart_upload,
+        "pin_images[1][caption]" => captions[1],
+        "pin_images[1][photo]" => multipart_upload
+      }
     )
-    add_procedure(
-      name: "Smoke Procedure #{suffix}",
-      body_type: "Top",
-      gender: "FTM",
-      description: nil
-    )
 
-    fill_in "Cost", with: "123"
-    fill_details("Smoke test details")
-
-    click_button "Submit Now"
-
-    unless page.has_content?("Please respect pronouns")
-      warn "create failed url=#{current_url}"
-      if page.has_selector?("#error_explanation")
-        warn page.find("#error_explanation").text
-      end
-      warn page.text[0, 800]
-      raise "pin create failed"
+    location = response["location"]
+    unless response.code.to_i == 302 && location
+      raise "pin create failed with #{response.code}"
     end
 
-    current_url[%r{/pins/(\d+)}, 1] || raise("could not parse created pin id")
+    pin_id = location[%r{/pins/(\d+)}, 1] || raise("could not parse created pin id")
+    show = get("/pins/#{pin_id}").body
+
+    unless show.include?(captions[0]) && show.include?(captions[1])
+      raise "multi-image upload did not persist both captions"
+    end
+
+    pin_id
   end
 
   def edit_pin(pin_id)
-    visit "/pins/#{pin_id}/edit"
+    edit_path = "/pins/#{pin_id}/edit"
+    doc = html_document(get(edit_path).body)
+    token = csrf_token(edit_path, doc)
 
-    fill_in "Cost", with: "456"
-    fill_details("Smoke test details updated")
+    surgeon_id = selected_value(doc, "select#pin_surgeon_attributes_id")
+    procedure_id = selected_value(doc, "select#pin_procedure_attributes_id")
 
-    click_button "Submit Now"
+    response = post(
+      "/pins/#{pin_id}",
+      {
+        "_method" => "patch",
+        "authenticity_token" => token,
+        "pin[cost]" => "456",
+        "pin[details]" => "Smoke test details updated",
+        "pin[surgeon_attributes][id]" => surgeon_id,
+        "pin[procedure_attributes][id]" => procedure_id
+      },
+      method: :post
+    )
 
-    unless page.has_content?("Please respect pronouns")
-      raise "pin edit failed"
+    unless response.code.to_i == 302
+      raise "pin edit failed with #{response.code}"
     end
 
-    unless page.has_content?("456")
-      raise "updated cost missing"
-    end
-  end
+    show = get("/pins/#{pin_id}").body
 
-  def wait_for_dropzone
-    find(".dz-hidden-input", visible: false)
-  end
-
-  def upload_image(caption)
-    page.execute_script("$('.dz-hidden-input').attr('id', 'dz-file-input')")
-    attach_file("dz-file-input", IMAGE_PATH, visible: false)
-
-    unless page.has_selector?(".dz-image-preview img[alt]:not([alt=''])")
-      raise "image preview did not appear"
-    end
-
-    preview = all(".dz-image-preview").last
-    preview.fill_in("Caption", with: caption)
-  end
-
-  def add_surgeon(last_name:, first_name:, url:)
-    find("#add_new_surgeon").click
-
-    within("#surgeon_container") do
-      fill_in "Surgeon's last name", with: last_name
-      fill_in "Surgeon's first name", with: first_name
-      fill_in "Surgeon's URL", with: url
+    unless show.include?("456") && show.include?("Smoke test details updated")
+      raise "updated pin data missing"
     end
   end
 
-  def add_procedure(name:, body_type:, gender:, description:)
-    find("#add_new_procedure").click
-
-    within("#procedure_container") do
-      fill_in "Name of procedure", with: name
-      select body_type, from: "pin_procedure_attributes_body_type"
-      select gender, from: "pin_procedure_attributes_gender"
-      fill_in "Describe this procedure", with: description if description
+  def verify_search_page
+    response = get("/pins?query=does-not-exist-#{Time.now.to_i}")
+    unless response.code.to_i == 200
+      raise "search page failed with #{response.code}"
     end
   end
 
-  def fill_details(text)
-    page.execute_script("tinyMCE.activeEditor.setContent(#{text.inspect})")
+  def csrf_token(path, doc = nil)
+    doc ||= html_document(get(path).body)
+    node = doc.at_css("meta[name='csrf-token']")
+    node && node["content"] || raise("csrf token missing on #{path}")
+  end
 
-    within_frame("pin_details_ifr") do
-      unless page.has_text?(text)
-        raise "details editor did not update"
+  def selected_value(doc, selector)
+    node = doc.at_css("#{selector} option[selected]")
+    node && node["value"] || raise("selected value missing for #{selector}")
+  end
+
+  def multipart_upload
+    {
+      filename: File.basename(IMAGE_PATH),
+      content_type: "image/jpeg",
+      body: File.binread(IMAGE_PATH)
+    }
+  end
+
+  def html_document(body)
+    Nokogiri::HTML(body)
+  end
+
+  def follow_redirect(response)
+    location = response["location"]
+    get(location) if location
+  end
+
+  def get(path)
+    target = uri(path)
+    request(target, Net::HTTP::Get.new(target))
+  end
+
+  def post(path, params, method: :post)
+    target = uri(path)
+    req = case method
+    when :post
+      Net::HTTP::Post.new(target)
+    when :patch
+      Net::HTTP::Patch.new(target)
+    else
+      raise ArgumentError, "unsupported method #{method}"
+    end
+
+    req.set_form_data(params)
+    request(target, req)
+  end
+
+  def post_multipart(path, params)
+    target = uri(path)
+    boundary = "----TransbucketSmoke#{SecureRandom.hex(8)}"
+    req = Net::HTTP::Post.new(target)
+    req["Content-Type"] = "multipart/form-data; boundary=#{boundary}"
+    req.body = build_multipart_body(params, boundary)
+    request(target, req)
+  end
+
+  def build_multipart_body(params, boundary)
+    chunks = params.map do |key, value|
+      if value.is_a?(Hash) && value[:body]
+        [
+          "--#{boundary}",
+          %(Content-Disposition: form-data; name="#{key}"; filename="#{value[:filename]}"),
+          "Content-Type: #{value[:content_type]}",
+          "",
+          value[:body]
+        ].join("\r\n")
+      else
+        [
+          "--#{boundary}",
+          %(Content-Disposition: form-data; name="#{key}"),
+          "",
+          value.to_s
+        ].join("\r\n")
       end
     end
+
+    chunks << "--#{boundary}--"
+    chunks.join("\r\n")
   end
 
+  def request(target, req)
+    req["Cookie"] = cookie_header unless @cookies.empty?
+    req["User-Agent"] = "Transbucket staging smoke"
+
+    response = Net::HTTP.start(target.host, target.port, use_ssl: target.scheme == "https") do |http|
+      http.request(req)
+    end
+
+    store_cookies(response)
+    response
+  end
+
+  def uri(path)
+    URI.join(STAGING_URL, path)
+  end
+
+  def store_cookies(response)
+    Array(response.get_fields("set-cookie")).each do |cookie|
+      key, value = cookie.split(";", 2).first.split("=", 2)
+      @cookies[key] = value
+    end
+  end
+
+  def cookie_header
+    @cookies.map { |key, value| "#{key}=#{value}" }.join("; ")
+  end
 end
 
 StagingSmoke.new.run

@@ -19,6 +19,19 @@ describe PinPresenter do
     expect(presenter.pins).to eq(pins.to_a.reverse)
   end
 
+  it 'falls back to recent pins when search pagination fails' do
+    search_results = double("search_results")
+    paginated_results = double("paginated_results")
+
+    allow(search_results).to receive(:paginate).and_return(paginated_results)
+    allow(paginated_results).to receive(:records).and_raise(Faraday::ConnectionFailed.new("down"))
+    allow(Pin).to receive(:search).and_return(search_results)
+
+    presenter = PinPresenter.new(query: "breast")
+
+    expect(presenter.pins).to eq(pins.to_a.reverse)
+  end
+
   describe "filtering results" do
     let!(:surgeon) { create(:surgeon) }
     let!(:procedure) { create(:procedure) }

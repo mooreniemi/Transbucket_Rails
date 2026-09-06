@@ -10,9 +10,12 @@ class PinPresenter
     @filter = opts
 
     @pins = if @query.present?
-              # NOTE: could retry here with "or" but I think that is more confusing for users
-              search_results = Pin.search(PinSearchQuery.all_xfields(@query), PinSearchQuery::DEFAULT_OPTIONS)
-              search_results.paginate(page: @page).records
+              search_results = search_pins
+              if search_results
+                search_results.paginate(page: @page).records
+              else
+                Pin.includes(:user).recent.paginate(page: @page)
+              end
             elsif @user.present?
               Pin.includes(:user, :pin_images, :procedure, :surgeon).by_user(@user).paginate(:page => @page)
             elsif has_keywords?
@@ -28,5 +31,12 @@ class PinPresenter
   private
   def has_keywords?
     filter.values.reject(&:nil?).count > 0
+  end
+
+  def search_pins
+    Pin.search(PinSearchQuery.all_xfields(@query), PinSearchQuery::DEFAULT_OPTIONS)
+  rescue StandardError => e
+    Rails.logger.warn("Elasticsearch search unavailable for PinPresenter: #{e.class}: #{e.message}")
+    nil
   end
 end

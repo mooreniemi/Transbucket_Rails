@@ -11,6 +11,14 @@ describe PinPresenter do
     expect(PinPresenter.new.pins).to eq(pins.to_a.reverse)
   end
 
+  it 'falls back to recent pins when search is unavailable' do
+    allow(Pin).to receive(:search).and_raise(Faraday::ConnectionFailed.new("down"))
+
+    presenter = PinPresenter.new(query: "breast")
+
+    expect(presenter.pins).to eq(pins.to_a.reverse)
+  end
+
   describe "filtering results" do
     let!(:surgeon) { create(:surgeon) }
     let!(:procedure) { create(:procedure) }

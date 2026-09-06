@@ -26,15 +26,13 @@ class StagingSmoke
 
   def login
     token = csrf_token("/users/sign_in")
-    response = post(
-      "/users/sign_in",
-      {
-        "authenticity_token" => token,
-        "user[login]" => USERNAME,
-        "user[password]" => PASSWORD,
-        "commit" => "Sign in"
-      }
-    )
+    params = {
+      "user[login]" => USERNAME,
+      "user[password]" => PASSWORD,
+      "commit" => "Sign in"
+    }
+    params["authenticity_token"] = token if token
+    response = post("/users/sign_in", params)
 
     unless response.code.to_i.between?(200, 399)
       raise "login failed with #{response.code}"
@@ -53,26 +51,25 @@ class StagingSmoke
     suffix = Time.now.to_i
     captions = ["Smoke test image 1", "Smoke test image 2"]
 
-    response = post_multipart(
-      "/pins",
-      {
-        "authenticity_token" => token,
-        "pin[cost]" => "123",
-        "pin[sensation]" => "4",
-        "pin[satisfaction]" => "5",
-        "pin[details]" => "Smoke test details",
-        "pin[surgeon_attributes][last_name]" => "Smoke#{suffix}",
-        "pin[surgeon_attributes][first_name]" => "User",
-        "pin[surgeon_attributes][url]" => "https://example.com/surgeons/#{suffix}",
-        "pin[procedure_attributes][name]" => "Smoke Procedure #{suffix}",
-        "pin[procedure_attributes][body_type]" => "Top",
-        "pin[procedure_attributes][gender]" => "FTM",
-        "pin_images[0][caption]" => captions[0],
-        "pin_images[0][photo]" => multipart_upload,
-        "pin_images[1][caption]" => captions[1],
-        "pin_images[1][photo]" => multipart_upload
-      }
-    )
+    params = {
+      "pin[cost]" => "123",
+      "pin[sensation]" => "4",
+      "pin[satisfaction]" => "5",
+      "pin[details]" => "Smoke test details",
+      "pin[surgeon_attributes][last_name]" => "Smoke#{suffix}",
+      "pin[surgeon_attributes][first_name]" => "User",
+      "pin[surgeon_attributes][url]" => "https://example.com/surgeons/#{suffix}",
+      "pin[procedure_attributes][name]" => "Smoke Procedure #{suffix}",
+      "pin[procedure_attributes][body_type]" => "Top",
+      "pin[procedure_attributes][gender]" => "FTM",
+      "pin_images[0][caption]" => captions[0],
+      "pin_images[0][photo]" => multipart_upload,
+      "pin_images[1][caption]" => captions[1],
+      "pin_images[1][photo]" => multipart_upload
+    }
+    params["authenticity_token"] = token if token
+
+    response = post_multipart("/pins", params)
 
     location = response["location"]
     unless response.code.to_i == 302 && location
@@ -101,12 +98,11 @@ class StagingSmoke
       "/pins/#{pin_id}",
       {
         "_method" => "patch",
-        "authenticity_token" => token,
         "pin[cost]" => "456",
         "pin[details]" => "Smoke test details updated",
         "pin[surgeon_attributes][id]" => surgeon_id,
         "pin[procedure_attributes][id]" => procedure_id
-      },
+      }.tap { |params| params["authenticity_token"] = token if token },
       method: :post
     )
 
@@ -130,8 +126,8 @@ class StagingSmoke
 
   def csrf_token(path, doc = nil)
     doc ||= html_document(get(path).body)
-    node = doc.at_css("meta[name='csrf-token']")
-    node && node["content"] || raise("csrf token missing on #{path}")
+    node = doc.at_css("meta[name='csrf-token']") || doc.at_css("input[name='authenticity_token']")
+    node && (node["content"] || node["value"])
   end
 
   def selected_value(doc, selector)

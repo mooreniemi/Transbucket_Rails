@@ -11,10 +11,11 @@ class PinPresenter
 
     @pins = if @query.present?
               begin
-                Pin.search(PinSearchQuery.all_xfields(@query), PinSearchQuery::DEFAULT_OPTIONS)
-                   .paginate(page: @page)
-                   .records
-                   .to_a
+                search_results = Pin.search(PinSearchQuery.all_xfields(@query), PinSearchQuery::DEFAULT_OPTIONS)
+                                     .paginate(page: @page)
+                search_records = search_results.records
+                search_records.to_a
+                search_records
               rescue Elasticsearch::Transport::Transport::Errors::NotFound,
                      Elasticsearch::Transport::Transport::Errors::ServiceUnavailable,
                      Elasticsearch::Transport::Transport::Errors::GatewayTimeout,

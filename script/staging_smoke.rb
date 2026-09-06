@@ -3,10 +3,15 @@
 require "net/http"
 require "nokogiri"
 require "securerandom"
+require "uri"
 
+# This smoke works against either staging or localhost.
+# For localhost, the test DB needs the seeded `zoon` admin from
+# `db/seeds/test_users.rb`, Elasticsearch must be reachable, and a
+# delayed_job worker must be running so pin indexing jobs get processed.
 STAGING_URL = ENV.fetch("STAGING_URL", "https://transbucket-staging.herokuapp.com")
 USERNAME = ENV.fetch("STAGING_USER", "zoon")
-PASSWORD = ENV.fetch("STAGING_PASSWORD", "big fake password for testing")
+PASSWORD = ENV.fetch("STAGING_PASSWORD")
 IMAGE_PATH = File.expand_path("../spec/fixtures/cat.jpg", __dir__)
 
 class StagingSmoke
@@ -16,9 +21,10 @@ class StagingSmoke
 
   def run
     login
-    pin_id = create_pin
+    pin_id, search_term = create_pin
     edit_pin(pin_id)
     verify_search_page
+    verify_search_results(search_term, pin_id)
     puts "staging smoke ok pin=#{pin_id}"
   end
 
@@ -39,9 +45,9 @@ class StagingSmoke
     end
 
     follow_redirect(response) if response.is_a?(Net::HTTPRedirection)
-    body = get("/pins").body
+    auth_check = get("/pins/new")
 
-    unless body.include?("Logout") && body.include?("My Account")
+    unless auth_check.code.to_i == 200
       raise "login did not establish an authenticated session"
     end
   end
@@ -83,7 +89,7 @@ class StagingSmoke
       raise "multi-image upload did not persist both captions"
     end
 
-    pin_id
+    [pin_id, params["pin[procedure_attributes][name]"]]
   end
 
   def edit_pin(pin_id)
@@ -122,6 +128,30 @@ class StagingSmoke
     unless response.code.to_i == 200
       raise "search page failed with #{response.code}"
     end
+  end
+
+  def verify_search_results(search_term, pin_id)
+    # A 200 alone is not enough here; recent-fallback also returns 200.
+    # We wait until the created pin is the only result card on the page.
+    deadline = Time.now + 30
+    search_url = "/pins?query=#{URI.encode_www_form_component(search_term)}"
+
+    loop do
+      response = get(search_url)
+      unless response.code.to_i == 200
+        raise "search results failed with #{response.code}"
+      end
+
+      pins = response.body.scan(/data-pin-id="(\d+)"/).flatten
+      if pins == [pin_id.to_s]
+        return
+      end
+
+      break if Time.now >= deadline
+      sleep 2
+    end
+
+    raise "created pin #{pin_id} did not become searchable for #{search_term}"
   end
 
   def csrf_token(path, doc = nil)

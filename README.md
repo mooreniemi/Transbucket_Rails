@@ -263,6 +263,27 @@ after you have seeded the database. Essentially Elasticsearch is
 a secondary view of our database data. It is safe to delete it and reindex
 it.
 
+For staging validation we intentionally reuse the production Bonsai cluster
+and isolate by index prefix. That lets us recreate `staging_pins` freely
+without putting the database at risk. We do not share the database itself.
+
+For a fast local smoke loop, reseed the test DB and run the same script
+against localhost:
+
+```
+DISABLE_SPRING=1 OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES \
+POSTGRES_HOST=localhost POSTGRES_PORT=5433 POSTGRES_USER=postgres \
+POSTGRES_PASSWORD=password RAILS_ENV=test bundle exec rake db:seed
+
+DISABLE_SPRING=1 OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES \
+POSTGRES_HOST=localhost POSTGRES_PORT=5433 POSTGRES_USER=postgres \
+POSTGRES_PASSWORD=password RAILS_ENV=test bundle exec rake jobs:work
+
+STAGING_URL=http://127.0.0.1:3003 \
+STAGING_USER=zoon STAGING_PASSWORD='set your smoke password here' \
+bundle exec ruby script/staging_smoke.rb
+```
+
 ```
 rake environment elasticsearch:import:model CLASS='Pin' INCLUDE='PinImage,Surgeon,Procedure' FORCE=true
 

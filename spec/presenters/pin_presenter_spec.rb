@@ -34,6 +34,22 @@ describe PinPresenter do
     expect(presenter.pins).to eq(pins.to_a.reverse)
   end
 
+  it 'keeps successful search results paginated' do
+    search_results = double("search_results")
+    paginated_results = double("paginated_results")
+    records = double("records", total_pages: 1)
+
+    allow(search_results).to receive(:paginate).and_return(paginated_results)
+    allow(paginated_results).to receive(:records).and_return(records)
+    allow(records).to receive(:to_a).and_return([])
+    allow(Pin).to receive(:search).and_return(search_results)
+
+    presenter = PinPresenter.new(query: "breast")
+
+    expect(presenter.pins).to eq(records)
+    expect(presenter.pins.total_pages).to eq(1)
+  end
+
   describe "filtering results" do
     let!(:surgeon) { create(:surgeon) }
     let!(:procedure) { create(:procedure) }

@@ -12,7 +12,15 @@ namespace :procedure do
       175 => 77,   # glansplasty whitespace duplicate
       250 => 96,   # vaginectomy whitespace duplicate
       311 => 170,  # scrotoplasty whitespace duplicate
-      249 => 306   # lapascopic hysterectomy typo -> laparoscopic hysterectomy
+      249 => 306,  # lapascopic hysterectomy typo -> laparoscopic hysterectomy
+      211 => 4,    # double incision free nipple graft variant -> canonical double incision with grafts
+      212 => 4,    # double incision mastectomy with free nipple graft -> canonical double incision with grafts
+      213 => 4,    # double incision top surgery with free nipple graft -> canonical double incision with grafts
+      287 => 4,    # double incision mastectomy with free nipple graphs typo -> canonical double incision with grafts
+      292 => 4,    # double incision with free nipple grafts -> canonical double incision with grafts
+      97  => 4,    # nipple grafts shorthand -> canonical double incision with grafts
+      294 => 4,    # with nipple grafts typo -> canonical double incision with grafts
+      304 => 312   # ul abbreviation -> canonical urethral lengthening
     }
 
     case direction

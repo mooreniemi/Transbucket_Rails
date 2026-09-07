@@ -17,6 +17,10 @@ class PagesController < ApplicationController
   def newsfeed
     @newsfeed_entries = [
       {
+        body: "We cleaned up a set of procedure names so common shorthand and typo variants now point to the same canonical procedure pages, which makes browsing and search results more consistent.",
+        date: "September 2026"
+      },
+      {
         body: "Procedure search now matches prefixes, so typing the start of a name like phallo or orchi gets you to the right results faster.",
         date: "September 2026"
       },

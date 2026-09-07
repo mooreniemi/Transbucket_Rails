@@ -10,7 +10,8 @@ describe PagesController, :type => :controller do
       get 'newsfeed'
 
       expect(response).to be_success
-      expect(assigns(:newsfeed_entries).length).to eq(2)
+      expect(assigns(:newsfeed_entries).length).to eq(3)
+      expect(response.body).to include('We cleaned up a set of procedure names')
       expect(response.body).to include('Procedure search now matches prefixes')
       expect(response.body).to include('The Discord community invite now points to a permanent link.')
     end

@@ -5,7 +5,7 @@ ruby '3.1.6'
 
 gem 'rails', '4.2.11.3'
 # used for public areas of the site, see PagesController
-gem 'actionpack-page_caching'
+gem 'actionpack-page_caching', '~> 1.2.2'
 
 gem 'unicorn'
 gem 'turbolinks'

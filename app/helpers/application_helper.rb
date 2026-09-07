@@ -5,7 +5,9 @@ module ApplicationHelper
     set_meta_tags(
       description: description,
       canonical: canonical,
-      robots: robots
+      robots: robots,
+      og: { description: description },
+      twitter: { description: description }
     )
 
     nil

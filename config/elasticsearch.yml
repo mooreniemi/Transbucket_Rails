@@ -1,9 +1,11 @@
-development: &default
+development:
   transport_options:
     request:
       timeout: !!integer 1000
 test:
-  <<: *default
+  transport_options:
+    request:
+      timeout: !!integer 1000
 staging:
   transport_options:
     request:

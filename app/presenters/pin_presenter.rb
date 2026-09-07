@@ -10,9 +10,21 @@ class PinPresenter
     @filter = opts
 
     @pins = if @query.present?
-              # NOTE: could retry here with "or" but I think that is more confusing for users
-              search_results = Pin.search(PinSearchQuery.all_xfields(@query), PinSearchQuery::DEFAULT_OPTIONS)
-              search_results.paginate(page: @page).records
+              begin
+                search_results = Pin.search(PinSearchQuery.all_xfields(@query), PinSearchQuery::DEFAULT_OPTIONS)
+                                     .paginate(page: @page)
+                search_records = search_results.records
+                search_records.to_a
+                search_records
+              rescue Elasticsearch::Transport::Transport::Errors::NotFound,
+                     Elasticsearch::Transport::Transport::Errors::ServiceUnavailable,
+                     Elasticsearch::Transport::Transport::Errors::GatewayTimeout,
+                     Elasticsearch::Transport::Transport::Errors::BadGateway,
+                     Faraday::ConnectionFailed,
+                     Faraday::TimeoutError => e
+                Rails.logger.warn("Elasticsearch search unavailable for PinPresenter: #{e.class}: #{e.message}")
+                Pin.includes(:user).recent.paginate(page: @page)
+              end
             elsif @user.present?
               Pin.includes(:user, :pin_images, :procedure, :surgeon).by_user(@user).paginate(:page => @page)
             elsif has_keywords?

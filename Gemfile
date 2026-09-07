@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 
 # https://devcenter.heroku.com/articles/ruby-versions
-ruby '2.6.6'
+ruby '3.1.6'
 
-gem 'rails', '4.2.8'
+gem 'rails', '4.2.11.3'
 # used for public areas of the site, see PagesController
-gem 'actionpack-page_caching'
+gem 'actionpack-page_caching', '~> 1.2.2'
 
 gem 'unicorn'
 gem 'turbolinks'
@@ -27,11 +27,13 @@ gem 'elasticsearch-rails'
 
 gem 'active_model_serializers'
 
-gem 'pg'
+gem 'pg', '~> 1.5'
 gem 'delayed_job_active_record'
 
 gem 'paperclip', '~> 5.2.0'
-gem 'aws-sdk'
+gem 'aws-sdk', '~> 2.11'
+gem 'json', '2.6.3'
+gem 'webrick'
 
 # for slug ids
 gem 'friendly_id', '~> 5.1.0' # Note: You MUST use 5.0.0 or greater for Rails 4.0+
@@ -58,7 +60,7 @@ gem 'fuzzy_match'
 gem 'rake-progressbar'
 gem 'awesome_print'
 # we use Faker to create junk data sometimes on staging
-gem 'faker'
+gem 'faker', '~> 1.9.6', :require => false
 gem 'zip-codes'
 
 gem 'nested_form'
@@ -66,7 +68,7 @@ gem 'simple_form'
 gem 'reform'
 gem 'reform-rails'
 
-gem 'phony_rails'
+gem 'phony_rails', '~> 0.15'
 
 # pin submission wysiwyg
 gem 'tinymce-rails'
@@ -95,16 +97,16 @@ group :development do
   gem 'any_login'
 	gem 'letter_opener'
 	gem 'seed_dump'
-	gem 'thin'
+	gem 'thin', '~> 1.8'
 	gem 'quiet_assets'
-	gem 'meta_request'
 	gem 'better_errors'
 end
 
 group :development, :test do
+  gem 'matrix'
   gem 'stackprof'
-  gem 'ruby-prof'
-	gem 'rack-mini-profiler'
+  gem 'ruby-prof', '~> 1.4'
+	gem 'rack-mini-profiler', '~> 3.1'
   # gem 'flamegraph' # for rack-mini-profiler
   gem 'spring'
   gem 'spring-commands-rspec'

@@ -1,3 +1,5 @@
+require 'faker' # gemfile marks faker require: false so production boot skips it; factories need it loaded before FactoryGirl's after-initialize hook runs
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 

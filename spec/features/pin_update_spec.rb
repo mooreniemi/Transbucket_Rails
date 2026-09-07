@@ -20,7 +20,13 @@ describe "pin updating", :fake_images => true do
     Warden.test_reset!
   end
 
-  shared_examples "pin updating" do |js: false|
+  shared_examples "pin updating" do |opts = {}|
+    # rspec-core 3.3's include_examples passes options as a positional Hash
+    # (module_exec(*args, &shared_block)), which relied on Ruby's pre-3.0
+    # implicit hash-to-kwargs conversion to land in a `|js: false|` parameter.
+    # Ruby 3 removed that conversion, so this must destructure explicitly.
+    js = opts.fetch(:js, false)
+
     it "updates the pin with one less photo and new info" do
       ensure_on "/pins/#{pin.id}/edit"
       expect(find("select#pin_surgeon_attributes_id", visible: false).value.to_i).to eq(pin.surgeon.id)

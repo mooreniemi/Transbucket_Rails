@@ -20,3 +20,13 @@ public/system/*
 coverage/*
 spec/examples.txt
 cookie_file
+
+# local bundler state / vendored gems (machine-specific, not for source control)
+/.bundle/
+/vendor/bundle/
+
+# personal local docker-compose port overrides
+docker-compose.override.yml
+
+# ad-hoc production data exports / audit CSVs (scratch, not for source control)
+/data/

@@ -7,3 +7,4 @@ Sitemap: https://www.transbucket.com/sitemap.xml.gz
 User-Agent: *
 Disallow: /users
 Disallow: /users/*
+Disallow: /queendom

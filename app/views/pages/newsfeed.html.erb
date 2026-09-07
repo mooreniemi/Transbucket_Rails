@@ -1,13 +1,12 @@
+<% seo_meta description: 'Recent Transbucket release notes and user-facing updates.' %>
 <%= render partial: 'ads/test1' %>
-<h2><% title 'Newsfeed' %></h2>
-<div class="center">
-  <% for e in @rss do %>
-
-    <div class="rss_item">
-      <p><%= @coder.decode("#{e.description}").html_safe %></p>
-      <%= link_to @coder.decode("#{e.pubDate}").html_safe, @coder.decode("#{e.link}").html_safe %>
-    </div>
-    <br>
-
+<% title 'Newsfeed' %>
+<h1>Newsfeed</h1>
+<div class="center newsfeed">
+  <% @newsfeed_entries.each do |entry| %>
+    <article class="rss_item newsfeed-entry">
+      <p class="newsfeed-body"><%= entry[:body] %></p>
+      <p class="newsfeed-date"><%= entry[:date] %></p>
+    </article>
   <% end %>
 </div>

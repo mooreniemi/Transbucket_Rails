@@ -2,6 +2,24 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
+if RUBY_VERSION >= '3.0'
+  # Rails 4.2's Fanout#subscribe relies on `Proc.new` implicitly capturing
+  # the caller's block, which Ruby 3 no longer supports. Railties (e.g.
+  # rack-mini-profiler) call ActiveSupport::Notifications.subscribe during
+  # initialization, before config/initializers load, so this must be patched
+  # here rather than in an initializer.
+  class ActiveSupport::Notifications::Fanout
+    def subscribe(pattern = nil, callable = nil, &block)
+      subscriber = Subscribers.new pattern, (callable || block)
+      synchronize do
+        @subscribers << subscriber
+        @listeners_for.clear
+      end
+      subscriber
+    end
+  end
+end
+
 # https://github.com/elastic/elasticsearch-rails/tree/master/elasticsearch-rails#activesupport-instrumentation
 require 'elasticsearch/rails/instrumentation'
 

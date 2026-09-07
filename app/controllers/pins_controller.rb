@@ -132,14 +132,24 @@ class PinsController < ApplicationController
   end
 
   def pin_params
-    pin_images = params.delete(:pin_images)
+    # The JS (dropzone) upload path submits images as a top-level :pin_images
+    # param; the plain form path submits them nested as :pin_images_attributes,
+    # same as Rails' usual fields_for convention. Both get normalized to
+    # params[:pin][:pin_images] below.
+    pin_images = params.delete(:pin_images) || params[:pin].delete(:pin_images_attributes)
     params[:pin][:pin_images] = pin_images.values unless pin_images.nil?
     params[:pin][:surgeon] = id_or_attributes(params[:pin].delete(:surgeon_attributes))
     params[:pin][:procedure] = id_or_attributes(params[:pin].delete(:procedure_attributes))
-    params.require(:pin).permit!
-    # FIXME: why was this commented out? should it be removed?
-    # params.require(:pin).permit(:surgeon_id, :procedure_id, :cost, :revision, :details, :sensation, :satisfaction,
-    # pin_images: [:photo, :caption])
+    # Explicit whitelist, replacing a bare `permit!`. Notably excludes user_id
+    # (server-set only, see PinForm) and Procedure's avg_sensation/
+    # avg_satisfaction (computed server-side by Procedure#recalculate_avgs,
+    # never user-settable) -- both were previously reachable through permit!.
+    params.require(:pin).permit(
+      :cost, :revision, :sensation, :satisfaction, :complication_list, :details, :description,
+      surgeon: [:id, :last_name, :first_name, :url],
+      procedure: [:id, :name, :body_type, :gender, :description],
+      pin_images: [:id, :photo, :caption, :_destroy]
+    )
   end
 
   def pin_index_params

@@ -1,11 +1,34 @@
-<% title 'Submission #' + @pin.id.to_s %>
+<% surgeon_name = @pin.unknown_surgeon? ? 'unknown surgeon' : @pin.surgeon.to_s %>
+<% seo_meta description: "View #{@pin.procedure.name} by #{surgeon_name} on Transbucket.", canonical: pin_url(@pin) %>
+<% title "#{@pin.procedure.name} by #{surgeon_name}" %>
+<% json_ld_tag(
+  {
+    '@context' => 'https://schema.org',
+    '@type' => 'CreativeWork',
+    'name' => "#{@pin.procedure.name} by #{surgeon_name}",
+    'description' => @pin.details,
+    'url' => pin_url(@pin)
+  }.compact
+) %>
+<% json_ld_tag(
+  {
+    '@context' => 'https://schema.org',
+    '@type' => 'BreadcrumbList',
+    'itemListElement' => [
+      { '@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => root_url },
+      { '@type' => 'ListItem', 'position' => 2, 'name' => 'Submissions', 'item' => pins_url },
+      { '@type' => 'ListItem', 'position' => 3, 'name' => "#{@pin.procedure.name} by #{surgeon_name}", 'item' => pin_url(@pin) }
+    ]
+  }
+) %>
+<h1><%= "#{@pin.procedure.name} by #{surgeon_name}" %></h1>
 <% cache(["pin_show", @pin, @pin.pin_images.map(&:id), @pin.pin_images.maximum(:updated_at)]) do %>
   <div class="row">
     <div class="col-md-6">
       <div class="well">
         <% for pinimage in @pin.pin_images.reject {|p| p.photo_file_size.nil?} do %>
           <div class="thumbnail">
-            <%= image_tag pinimage.photo %>
+            <%= image_tag pinimage.photo, alt: pinimage.caption.presence || "#{@pin.procedure.name} by #{surgeon_name}" %>
             <div class="caption">
               <%= pinimage.caption.to_s %>
             </div>

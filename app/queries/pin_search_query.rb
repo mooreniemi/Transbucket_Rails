@@ -7,19 +7,33 @@ class PinSearchQuery
   def self.all_xfields(search_terms, operator: "and")
     return {
       query:
-      { multi_match:
-        { query: search_terms,
-          fields: [
-            "surgeon.pretty_name",
-            "procedure.name",
-            "procedure.description",
-            "description",
-            "details",
-            "pin_images.caption",
-            "complications.name"
+      {
+        bool: {
+          should: [
+            { multi_match:
+              { query: search_terms,
+                fields: [
+                  "surgeon.pretty_name",
+                  "procedure.name",
+                  "procedure.description",
+                  "description",
+                  "details",
+                  "pin_images.caption",
+                  "complications.name"
+                ],
+                type: "cross_fields",
+                operator: operator
+              }
+            },
+            { match_phrase_prefix:
+              { "procedure.name" => {
+                  query: search_terms,
+                  analyzer: "english"
+                }
+              }
+            }
           ],
-          type: "cross_fields",
-          operator: operator
+          minimum_should_match: 1
         }
       }
     }

@@ -33,7 +33,7 @@ describe CommentService do
 
 	it 'logs notification errors on comments' do
 		expect_any_instance_of(CommentService).to receive(:send_email_notification).
-			and_raise(Net::SMTPAuthenticationError)
+			and_raise(Net::SMTPAuthenticationError.new("535 authentication failed"))
 
     text = "comment text"
 

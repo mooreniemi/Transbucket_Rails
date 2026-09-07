@@ -7,6 +7,31 @@ div.rss_item {
   padding: 15px;
 }
 
+.newsfeed {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.newsfeed-intro,
+.newsfeed-note {
+  margin-bottom: 12px;
+}
+
+.newsfeed-entry {
+  margin: 0 0 12px 0;
+  text-align: left;
+}
+
+.newsfeed-body {
+  margin: 0;
+}
+
+.newsfeed-date {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: #666;
+}
+
 div.faq_item {
   background-color: #fff;
   padding: 15px;

@@ -15,6 +15,20 @@ class PagesController < ApplicationController
   end
 
   def newsfeed
+    @newsfeed_entries = [
+      {
+        body: "Newsfeed restarted. New updates will start from here.",
+        date: "September 7, 2026"
+      },
+      {
+        body: "Older Tumblr posts were condensed into a short archive.",
+        date: "August 2026"
+      },
+      {
+        body: "Site maintenance and staging notes were trimmed down.",
+        date: "August 2026"
+      }
+    ]
   end
 
   def bookmarks

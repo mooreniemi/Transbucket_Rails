@@ -1,6 +1,13 @@
 <%= render partial: 'ads/test1' %>
 <h2><% title 'Newsfeed' %></h2>
-<div class="center">
-  <p>The newsfeed has been reset and will start fresh today.</p>
-  <p>Older Tumblr posts have been retired.</p>
+<div class="center newsfeed">
+  <p class="newsfeed-intro">The newsfeed has been reset and will start fresh today.</p>
+  <p class="newsfeed-note">Older Tumblr posts were condensed into a short archive.</p>
+
+  <% @newsfeed_entries.each do |entry| %>
+    <article class="rss_item newsfeed-entry">
+      <p class="newsfeed-body"><%= entry[:body] %></p>
+      <p class="newsfeed-date"><%= entry[:date] %></p>
+    </article>
+  <% end %>
 </div>

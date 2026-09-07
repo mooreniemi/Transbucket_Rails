@@ -6,8 +6,9 @@ class SurgeonsController < ApplicationController
 
   def show
     @surgeon = Surgeon.friendly.find(params[:id])
-    # produces {[surgeon_id, procedure_id] => count }
-    @pins_by_surgeon_procedure = Pin.group(:surgeon_id, :procedure_id).count
+    # produces { procedure_id => count }, scoped to this surgeon rather than
+    # grouping the entire pins table just to read one surgeon's slice of it
+    @pins_by_surgeon_procedure = Pin.where(surgeon_id: @surgeon.id).group(:procedure_id).count
   end
 
   def new

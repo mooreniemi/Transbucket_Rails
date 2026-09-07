@@ -27,3 +27,6 @@ cookie_file
 
 # personal local docker-compose port overrides
 docker-compose.override.yml
+
+# ad-hoc production data exports / audit CSVs (scratch, not for source control)
+/data/

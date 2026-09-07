@@ -23,12 +23,18 @@
   </div>
 </div>
 <div id="procedures" style="background-color:#ffffff">
-  <table class="table table-hover table-bordered" bgcolor="#ffffcc">
-    <th>Name</th>
-    <th>Submissions</th>
-    <th>Average Satisfaction</th>
-    <th>Average Sensation</th>
-    <th>Discussion Threads</th>
-    <%= render @procedures %>
+  <table class="table table-hover table-bordered sticky-header-table" bgcolor="#ffffcc">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Submissions</th>
+        <th>Average Satisfaction</th>
+        <th>Average Sensation</th>
+        <th>Discussion Threads</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @procedures %>
+    </tbody>
   </table>
 </div>

@@ -23,11 +23,17 @@
   </div>
 </div>
 <div id="surgeons" style="background-color:#ffffff">
-  <table class="table table-hover table-bordered" bgcolor="#ffffcc">
-    <th>Name</th>
-    <th>Submissions</th>
-    <% @surgeons.each do |surgeon| %>
-    <%= render partial: 'surgeons/surgeon_row', locals: { surgeon: surgeon, pin_count: @pins_per_surgeon[surgeon.id] } %>
-    <% end %>
+  <table class="table table-hover table-bordered sticky-header-table" bgcolor="#ffffcc">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Submissions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @surgeons.each do |surgeon| %>
+      <%= render partial: 'surgeons/surgeon_row', locals: { surgeon: surgeon, pin_count: @pins_per_surgeon[surgeon.id] } %>
+      <% end %>
+    </tbody>
   </table>
 </div>

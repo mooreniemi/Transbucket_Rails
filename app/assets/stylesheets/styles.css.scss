@@ -12,6 +12,18 @@ body{
   background-color:#ccc;
 }
 
+// Keeps the procedures/surgeons index table headers visible while scrolling.
+// top offset matches body's padding-top above, which is sized for the
+// .navbar-fixed-top -- without it the sticky header would tuck in behind
+// the fixed nav instead of sitting just below it.
+.sticky-header-table thead th {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 60px;
+  background-color: #ffffcc;
+  z-index: 2;
+}
+
 .ms-container {
   height: 100px;
 }

@@ -1,5 +1,3 @@
-require "open-uri"
-
 class PagesController < ApplicationController
   caches_page :home, :about, :terms, :privacy, :bookmarks
   before_filter :force_request_format_to_html
@@ -17,9 +15,6 @@ class PagesController < ApplicationController
   end
 
   def newsfeed
-    # FIXME: we shouldn't need to parse the whole stream just to take the last n
-    @rss = SimpleRSS.parse(URI.open('https://transbucket.tumblr.com/rss#_=_').read).items.take(3)
-    @coder = HTMLEntities.new
   end
 
   def bookmarks

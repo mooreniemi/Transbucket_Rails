@@ -1,13 +1,6 @@
 <%= render partial: 'ads/test1' %>
 <h2><% title 'Newsfeed' %></h2>
 <div class="center">
-  <% for e in @rss do %>
-
-    <div class="rss_item">
-      <p><%= @coder.decode("#{e.description}").html_safe %></p>
-      <%= link_to @coder.decode("#{e.pubDate}").html_safe, @coder.decode("#{e.link}").html_safe %>
-    </div>
-    <br>
-
-  <% end %>
+  <p>The newsfeed has been reset and will start fresh today.</p>
+  <p>Older Tumblr posts have been retired.</p>
 </div>

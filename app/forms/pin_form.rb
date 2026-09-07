@@ -3,7 +3,13 @@ require 'reform'
 class PinForm < Reform::Form
   feature Sync::SkipUnchanged
 
-  property :user_id
+  # writeable: false (disposable's actual spelling, matching :_destroy below --
+  # NOT "writable", which is silently ignored) so this can never be set from
+  # submitted params -- only PinsController's current_user.pins.new/.find
+  # scoping sets it. A bare `property :user_id` here let any authenticated
+  # user reassign a pin to an arbitrary other user via a crafted
+  # `pin[user_id]` param.
+  property :user_id, writeable: false
   validates :user_id, presence: true
 
   property :surgeon, form: SurgeonForm,

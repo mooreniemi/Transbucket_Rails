@@ -32,6 +32,26 @@ describe PinForm do
     end
   end
 
+  context "user_id protection" do
+    it "does not let a submitted user_id override the model's actual owner, even after save" do
+      owner = create(:user)
+      other_user = create(:user)
+      scoped_form = PinForm.new(owner.pins.new)
+
+      scoped_form.validate(
+        pin.attributes.merge(
+          "user_id" => other_user.id,
+          "surgeon" => pin.surgeon.attributes,
+          "procedure" => pin.procedure.attributes,
+          "pin_images" => pin.pin_images.map { |image| { "photo" => image.photo, "caption" => image.caption } }
+        )
+      )
+      scoped_form.save
+
+      expect(scoped_form.model.reload.user_id).to eq(owner.id)
+    end
+  end
+
   context "with pin_images" do
     it "should have all the attributes on its pin_images" do
       confirm_attributes(form.pin_images.first, pin.pin_images.first)

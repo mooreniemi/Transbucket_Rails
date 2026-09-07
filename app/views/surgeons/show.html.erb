@@ -1,4 +1,24 @@
+<% seo_meta description: "View #{@surgeon.to_s} submissions, outcome summaries, and discussion on Transbucket.", canonical: surgeon_url(@surgeon) %>
 <% title @surgeon.to_s  %>
+<% json_ld_tag(
+  {
+    '@context' => 'https://schema.org',
+    '@type' => 'Physician',
+    'name' => @surgeon.to_s,
+    'url' => surgeon_url(@surgeon)
+  }.compact
+) %>
+<% json_ld_tag(
+  {
+    '@context' => 'https://schema.org',
+    '@type' => 'BreadcrumbList',
+    'itemListElement' => [
+      { '@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => root_url },
+      { '@type' => 'ListItem', 'position' => 2, 'name' => 'Surgeons', 'item' => surgeons_url },
+      { '@type' => 'ListItem', 'position' => 3, 'name' => @surgeon.to_s, 'item' => surgeon_url(@surgeon) }
+    ]
+  }
+) %>
 <% cache(@surgeon) do %>
 <div itemscope itemtype="https://schema.org/Physician">
   <div class="media">
@@ -6,6 +26,7 @@
       <%= fa_icon "user-md", class: "fa-5x media-object" %>
     </div>
     <div class="media-body">
+      <h1 class="media-heading"><%= @surgeon.to_s %></h1>
       <h4 class="media-heading">
         <%= link_to @surgeon.to_s, @surgeon.url %>
         <br><%= (fa_icon('star') * @surgeon.overall_satisfaction).html_safe unless @surgeon.overall_satisfaction.nil? %>

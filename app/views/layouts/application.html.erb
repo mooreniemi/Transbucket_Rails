@@ -4,7 +4,10 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
-    <%= display_meta_tags :reverse => true, :site => 'Transbucket.com' %>
+    <%= display_meta_tags :reverse => true, :site => 'Transbucket.com', :description => 'Community photo-sharing for transition procedures, surgeon profiles, and real-world submissions.' %>
+    <%= json_ld_tag(website_json_ld) %>
+    <%= json_ld_tag(organization_json_ld) %>
+    <%= yield :head %>
     <% if Rails.env.production? %>
       <!-- Global site tag (gtag.js) - Google Analytics -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=UA-40933997-1"></script>

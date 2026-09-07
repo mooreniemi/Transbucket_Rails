@@ -1,5 +1,27 @@
 <%= render partial: 'ads/test1' %>
+<% seo_meta description: 'Browse transition procedures on Transbucket to compare real submissions, surgeon links, and discussion threads.' %>
 <% title "Procedures" %>
+<% json_ld_tag(
+  {
+    '@context' => 'https://schema.org',
+    '@type' => 'ItemList',
+    'name' => 'Procedures on Transbucket',
+    'itemListElement' => @procedures.each_with_index.map do |procedure, index|
+      {
+        '@type' => 'ListItem',
+        'position' => index + 1,
+        'url' => procedure_url(procedure),
+        'name' => procedure.name
+      }
+    end
+  }
+) %>
+<div class="row">
+  <div class="col-md-12 center">
+    <h1>Procedures</h1>
+    <p class="lead">Browse procedure pages to compare real submissions, surgeon links, and discussion threads.</p>
+  </div>
+</div>
 <div id="procedures" style="background-color:#ffffff">
   <table class="table table-hover table-bordered" bgcolor="#ffffcc">
     <th>Name</th>

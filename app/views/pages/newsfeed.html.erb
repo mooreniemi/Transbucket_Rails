@@ -1,9 +1,8 @@
+<% seo_meta description: 'Recent Transbucket release notes and user-facing updates.' %>
 <%= render partial: 'ads/test1' %>
-<h2><% title 'Newsfeed' %></h2>
+<% title 'Newsfeed' %>
+<h1>Newsfeed</h1>
 <div class="center newsfeed">
-  <p class="newsfeed-intro">The newsfeed has been reset and will start fresh today.</p>
-  <p class="newsfeed-note">Older Tumblr posts were condensed into a short archive.</p>
-
   <% @newsfeed_entries.each do |entry| %>
     <article class="rss_item newsfeed-entry">
       <p class="newsfeed-body"><%= entry[:body] %></p>

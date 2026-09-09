@@ -10,13 +10,14 @@ require "uri"
 # `db/seeds/test_users.rb`, Elasticsearch must be reachable, and a
 # delayed_job worker must be running so pin indexing jobs get processed.
 STAGING_URL = ENV.fetch("STAGING_URL", "https://transbucket-staging.herokuapp.com")
-STAGING_LOCALE = ENV.fetch("STAGING_LOCALE", "en")
+STAGING_LOCALES = ENV.fetch("STAGING_LOCALES", ENV.fetch("STAGING_LOCALE", "en")).split(",").map(&:strip).reject(&:empty?)
 USERNAME = ENV.fetch("STAGING_USER", "zoon")
 PASSWORD = ENV.fetch("STAGING_PASSWORD")
 IMAGE_PATH = File.expand_path("../spec/fixtures/cat.jpg", __dir__)
 
 class StagingSmoke
-  def initialize
+  def initialize(locale)
+    @locale = locale
     @cookies = {}
   end
 
@@ -27,7 +28,7 @@ class StagingSmoke
     edit_pin(pin_id)
     verify_search_page
     verify_search_results(search_term, pin_id)
-    puts "staging smoke ok pin=#{pin_id}"
+    puts "staging smoke ok locale=#{@locale} pin=#{pin_id}"
   end
 
   private
@@ -271,7 +272,7 @@ class StagingSmoke
     return target unless target.host == URI.parse(STAGING_URL).host
     return target if target.path.match?(%r{\A/(en|de|es|fr|it|ja|zh-CN|zh-TW|pt-BR|nl|pl|ru|tr|vi|ar)(/|$)})
 
-    target.path = "/#{STAGING_LOCALE}#{target.path}"
+    target.path = "/#{@locale}#{target.path}"
     target
   end
 
@@ -287,4 +288,4 @@ class StagingSmoke
   end
 end
 
-StagingSmoke.new.run
+STAGING_LOCALES.each { |locale| StagingSmoke.new(locale).run }

@@ -1,11 +1,11 @@
 <%= render partial: 'ads/test1' %>
-<% seo_meta description: 'Browse transition procedures on Transbucket to compare real submissions, surgeon links, and discussion threads.' %>
-<% title "Procedures" %>
+<% seo_meta description: t('directory.procedures_intro') %>
+<% title t('directory.procedures_title') %>
 <% json_ld_tag(
   {
     '@context' => 'https://schema.org',
     '@type' => 'ItemList',
-    'name' => 'Procedures on Transbucket',
+    'name' => t('directory.procedures_title'),
     'itemListElement' => @procedures.each_with_index.map do |procedure, index|
       {
         '@type' => 'ListItem',
@@ -18,19 +18,19 @@
 ) %>
 <div class="row">
   <div class="col-md-12 center">
-    <h1>Procedures</h1>
-    <p class="lead">Browse procedure pages to compare real submissions, surgeon links, and discussion threads.</p>
+    <h1><%= t('directory.procedures_title') %></h1>
+    <p class="lead"><%= t('directory.procedures_intro') %></p>
   </div>
 </div>
 <div id="procedures" style="background-color:#ffffff">
   <table class="table table-hover table-bordered sticky-header-table" bgcolor="#ffffcc">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Submissions</th>
-        <th>Average Satisfaction</th>
-        <th>Average Sensation</th>
-        <th>Discussion Threads</th>
+        <th><%= t('directory.name') %></th>
+        <th><%= t('directory.submissions') %></th>
+        <th><%= t('directory.average_satisfaction') %></th>
+        <th><%= t('directory.average_sensation') %></th>
+        <th><%= t('directory.discussion_threads') %></th>
       </tr>
     </thead>
     <tbody>

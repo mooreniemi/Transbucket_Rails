@@ -1,19 +1,19 @@
 <%= javascript_include_tag "pins" %>
 <% if params[:query].present? || params[:surgeon].present? || params[:procedure].present? || params[:complication].present? || params[:user].present? %>
-  <% seo_meta description: 'Search Transbucket submissions by procedure, surgeon, complication, or user.', noindex: true %>
+  <% seo_meta description: t('directory.search_description'), noindex: true %>
 <% else %>
-  <% seo_meta description: 'Browse recent Transbucket submissions and compare real procedure outcomes.' %>
+  <% seo_meta description: t('directory.submissions_intro') %>
 <% end %>
 <% if params[:query].present? %>
-  <% title "Search Result for '#{params[:query]}'" %>
+  <% title "#{t('directory.search_results)}: #{params[:query]}" %>
 <% else %>
-  <% title 'Recent Submissions' %>
+  <% title t('directory.recent_submissions') %>
 <% end %>
 <% if params[:query].present? %>
-  <h1>Search Results</h1>
+  <h1><%= t('directory.search_results') %></h1>
 <% else %>
-  <h1>Recent Submissions</h1>
-  <p class="lead">Browse recent submissions or use the search box to find a procedure, surgeon, or complication.</p>
+  <h1><%= t('directory.recent_submissions') %></h1>
+  <p class="lead"><%= t('directory.submissions_intro') %></p>
 <% end %>
 <div id="pins">
   <%= render @presenter.pins %>

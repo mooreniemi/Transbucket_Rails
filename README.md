@@ -158,8 +158,9 @@ STAGING_USER=meowmeow STAGING_PASSWORD='...' \
   bundle exec ruby script/staging_smoke.rb
 ```
 
-Use `STAGING_LOCALE=de` (or another supported locale) to run the authenticated
-flow through that locale. The script writes one test pin to staging and
+Use `STAGING_LOCALES=en,de` (or another comma-separated set of supported
+locales) to run the authenticated submission flow through each locale. The
+script writes one test pin per locale to staging and
 requires a worker dyno for the search-indexing assertion; scale that worker
 back to zero afterward if it is not otherwise needed.
 

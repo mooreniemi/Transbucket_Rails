@@ -3,7 +3,7 @@
   <% if user_signed_in? %>
   <td><%= link_to @pins_per_procedure[procedure.id] || 0, pins_path(procedure: procedure.id) %></td>
 <% else %>
-  <td><%= link_to "Register to see more", register_path  %></td>
+  <td><%= link_to t('directory.register_to_see_more'), register_path  %></td>
   <% end %>
   <td><%= procedure.avg_satisfaction %></td>
   <td><%= procedure.avg_sensation %></td>

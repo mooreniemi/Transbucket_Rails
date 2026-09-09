@@ -20,7 +20,7 @@
     ]
   }
 ) %>
-<% cache(@procedure) do %>
+<% cache([I18n.locale, @procedure]) do %>
   <div class="panel panel-default" itemscope itemtype="https://schema.org/MedicalProcedure">
     <div class="panel-heading">
       <h1><%= @procedure.name %></h1>

@@ -1,5 +1,5 @@
 <% if comment.published? %>
-  <% cache(comment) do %>
+  <% cache([I18n.locale, comment]) do %>
     <div class="comment" id="comment-<%=comment.id %>" data-comment-id="<%= comment.id %>">
       <div class="panel panel-default">
         <div class="panel-body">
@@ -19,7 +19,7 @@
           <% if comment.user_id == current_user.id || current_user.admin? %>
             <%= link_to "×", comment_path(comment), :method => :delete, :remote => true, data: {confirm: t('public.pin.remove_confirm')}, :disable_with => "×", :class => 'close' %>
           <% end %>
-          <% cache(comment.children) do %>
+          <% cache([I18n.locale, comment.children]) do %>
             <% if comment.children.present? %>
               <hr class="thread">
               <%= render :partial => 'comments/comment', :collection => comment.children, :as => :comment %>

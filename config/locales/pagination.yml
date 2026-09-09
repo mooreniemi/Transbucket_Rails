@@ -1,0 +1,45 @@
+en:
+  views:
+    pagination: { first: "First", last: "Last", previous: "Previous", next: "Next", truncate: "…" }
+de:
+  views:
+    pagination: { first: "Erste", last: "Letzte", previous: "Zurück", next: "Weiter", truncate: "…" }
+es:
+  views:
+    pagination: { first: "Primera", last: "Última", previous: "Anterior", next: "Siguiente", truncate: "…" }
+fr:
+  views:
+    pagination: { first: "Première", last: "Dernière", previous: "Précédente", next: "Suivante", truncate: "…" }
+it:
+  views:
+    pagination: { first: "Prima", last: "Ultima", previous: "Precedente", next: "Successiva", truncate: "…" }
+ja:
+  views:
+    pagination: { first: "最初", last: "最後", previous: "前へ", next: "次へ", truncate: "…" }
+zh-CN:
+  views:
+    pagination: { first: "首页", last: "末页", previous: "上一页", next: "下一页", truncate: "…" }
+zh-TW:
+  views:
+    pagination: { first: "第一頁", last: "最後一頁", previous: "上一頁", next: "下一頁", truncate: "…" }
+pt-BR:
+  views:
+    pagination: { first: "Primeira", last: "Última", previous: "Anterior", next: "Próxima", truncate: "…" }
+nl:
+  views:
+    pagination: { first: "Eerste", last: "Laatste", previous: "Vorige", next: "Volgende", truncate: "…" }
+pl:
+  views:
+    pagination: { first: "Pierwsza", last: "Ostatnia", previous: "Poprzednia", next: "Następna", truncate: "…" }
+ru:
+  views:
+    pagination: { first: "Первая", last: "Последняя", previous: "Назад", next: "Далее", truncate: "…" }
+tr:
+  views:
+    pagination: { first: "İlk", last: "Son", previous: "Önceki", next: "Sonraki", truncate: "…" }
+vi:
+  views:
+    pagination: { first: "Đầu", last: "Cuối", previous: "Trước", next: "Sau", truncate: "…" }
+ar:
+  views:
+    pagination: { first: "الأولى", last: "الأخيرة", previous: "السابق", next: "التالي", truncate: "…" }

@@ -19,7 +19,7 @@
     ]
   }
 ) %>
-<% cache(@surgeon) do %>
+<% cache([I18n.locale, @surgeon]) do %>
 <div itemscope itemtype="https://schema.org/Physician">
   <div class="media">
     <div class="media-left">

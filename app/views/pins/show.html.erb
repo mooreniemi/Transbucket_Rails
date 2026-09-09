@@ -22,7 +22,7 @@
   }
 ) %>
 <h1><%= "#{@pin.procedure.name} by #{surgeon_name}" %></h1>
-<% cache(["pin_show", @pin, @pin.pin_images.map(&:id), @pin.pin_images.maximum(:updated_at)]) do %>
+<% cache([I18n.locale, "pin_show", @pin, @pin.pin_images.map(&:id), @pin.pin_images.maximum(:updated_at)]) do %>
   <div class="row">
     <div class="col-md-6">
       <div class="well">

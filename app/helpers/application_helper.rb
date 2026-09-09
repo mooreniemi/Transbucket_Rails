@@ -1,6 +1,19 @@
 module ApplicationHelper
+  def locale_url(locale)
+    url_for(request.query_parameters.merge(locale: locale))
+  end
+
+  def locale_alternate_links
+    links = ApplicationController::SUPPORTED_LOCALES.map do |locale|
+      tag(:link, rel: 'alternate', hreflang: locale, href: locale_url(locale))
+    end
+    links << tag(:link, rel: 'alternate', hreflang: 'x-default', href: locale_url('en'))
+    safe_join(links, "\n")
+  end
+
   def seo_meta(description:, canonical: nil, noindex: false)
     robots = noindex ? 'noindex,follow' : 'index,follow'
+    canonical ||= "#{request.base_url}#{request.path}"
 
     set_meta_tags(
       description: description,
@@ -24,14 +37,15 @@ module ApplicationHelper
   end
 
   def website_json_ld
+    search_url = pins_url(locale: I18n.locale)
     {
       '@context' => 'https://schema.org',
       '@type' => 'WebSite',
       'name' => 'Transbucket.com',
-      'url' => request.base_url,
+      'url' => root_url(locale: I18n.locale),
       'potentialAction' => {
         '@type' => 'SearchAction',
-        'target' => "#{request.base_url}/pins?query={search_term_string}",
+        'target' => "#{search_url}?query={search_term_string}",
         'query-input' => 'required name=search_term_string'
       }
     }

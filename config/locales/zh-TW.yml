@@ -212,8 +212,8 @@ zh-TW:
       short: "%m月%d日 %H:%M"
     pm: 下午
   homepage:
-    title: "社區照片共享以實現過渡程序"
-    considering: "您是否正在考慮或已接受過渡護理？"
+    title: "性別肯定手術社群照片分享"
+    considering: "您正在考慮或已經接受性別肯定醫療照護嗎？"
     join: "您應該加入我們的社區。"
     register: "註冊以分享或查看真實結果。"
   header:

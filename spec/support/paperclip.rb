@@ -20,7 +20,7 @@ RSpec.configure do |config|
   end
 end
 
-class TestFilesController < ApplicationController
+class TestFilesController < ActionController::Base
   def missing
     head :no_content
   end

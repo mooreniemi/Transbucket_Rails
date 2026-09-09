@@ -1,4 +1,4 @@
-<% seo_meta description: "View #{@procedure.name} submissions, average ratings, and discussion on Transbucket.", canonical: procedure_url(@procedure) %>
+<% seo_meta description: "View #{@procedure.name} submissions, average ratings, and discussion on Transbucket.", canonical: procedure_url(id: @procedure.id) %>
 <% title @procedure.to_s  %>
 <% json_ld_tag(
   {
@@ -6,7 +6,7 @@
     '@type' => 'MedicalProcedure',
     'name' => @procedure.name,
     'description' => @procedure.description,
-    'url' => procedure_url(@procedure)
+    'url' => procedure_url(id: @procedure.id)
   }.compact
 ) %>
 <% json_ld_tag(
@@ -16,7 +16,7 @@
     'itemListElement' => [
       { '@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => root_url },
       { '@type' => 'ListItem', 'position' => 2, 'name' => 'Procedures', 'item' => procedures_url },
-      { '@type' => 'ListItem', 'position' => 3, 'name' => @procedure.name, 'item' => procedure_url(@procedure) }
+      { '@type' => 'ListItem', 'position' => 3, 'name' => @procedure.name, 'item' => procedure_url(id: @procedure.id) }
     ]
   }
 ) %>

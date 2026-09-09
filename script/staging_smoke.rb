@@ -10,6 +10,7 @@ require "uri"
 # `db/seeds/test_users.rb`, Elasticsearch must be reachable, and a
 # delayed_job worker must be running so pin indexing jobs get processed.
 STAGING_URL = ENV.fetch("STAGING_URL", "https://transbucket-staging.herokuapp.com")
+STAGING_LOCALE = ENV.fetch("STAGING_LOCALE", "en")
 USERNAME = ENV.fetch("STAGING_USER", "zoon")
 PASSWORD = ENV.fetch("STAGING_PASSWORD")
 IMAGE_PATH = File.expand_path("../spec/fixtures/cat.jpg", __dir__)
@@ -248,7 +249,12 @@ class StagingSmoke
   end
 
   def uri(path)
-    URI.join(STAGING_URL, path)
+    target = URI.join(STAGING_URL, path)
+    return target unless target.host == URI.parse(STAGING_URL).host
+    return target if target.path.match?(%r{\A/(en|de|es|fr|it|ja|zh-CN|zh-TW|pt-BR|nl|pl|ru|tr|vi|ar)(/|$)})
+
+    target.path = "/#{STAGING_LOCALE}#{target.path}"
+    target
   end
 
   def store_cookies(response)

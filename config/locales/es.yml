@@ -218,8 +218,8 @@ es:
       short: "%-d de %b %H:%M"
     pm: pm
   homepage:
-    title: "Uso compartido de fotografías en la comunidad para los procedimientos de transición"
-    considering: "¿Está considerando o ha recibido atención de transición?"
+    title: "Galería comunitaria de procedimientos de afirmación de género"
+    considering: "¿Está considerando atención de afirmación de género o ya la ha recibido?"
     join: "Deberías unirte a nuestra comunidad."
     register: "Regístrese para ver resultados reales."
   header:

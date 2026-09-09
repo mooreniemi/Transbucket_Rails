@@ -19,7 +19,7 @@ describe "the flagging process" do
       visit '/pins'
       pin_item = find(".item[data-pin-id='" + pin.id.to_s + "']")
 
-      expect(pin_item).to have_no_selector('a[href="/pins/' + pin.id.to_s + '/flags"]')
+      expect(pin_item).to have_no_selector('a[href="/en/pins/' + pin.id.to_s + '/flags"]')
     end
 
     it "should not allow you to flag your own comment", :js => true do
@@ -46,7 +46,7 @@ describe "the flagging process" do
         login_as(user, :scope => :user)
 
         visit '/pins'
-        flag_link = find('a[href="/pins/' + pin.id.to_s + '/flags"]')
+        flag_link = find('a[href="/en/pins/' + pin.id.to_s + '/flags"]')
         flag_link.click
       end
 

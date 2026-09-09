@@ -213,8 +213,8 @@ it:
       short: "%d %b %H:%M"
     pm: pm
   homepage:
-    title: "Condivisione di foto della comunità per le procedure di transizione"
-    considering: "Stai considerando o hai ricevuto cure di transizione?"
+    title: "Foto della comunità sugli interventi di affermazione di genere"
+    considering: "Stai valutando cure di affermazione di genere o le hai già ricevute?"
     join: "Dovresti unirti alla nostra comunità."
     register: "Registrati per condividere o vedere risultati reali."
   header:

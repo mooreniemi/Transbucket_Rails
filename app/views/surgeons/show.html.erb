@@ -1,11 +1,11 @@
-<% seo_meta description: "View #{@surgeon.to_s} submissions, outcome summaries, and discussion on Transbucket.", canonical: surgeon_url(@surgeon) %>
+<% seo_meta description: "View #{@surgeon.to_s} submissions, outcome summaries, and discussion on Transbucket.", canonical: surgeon_url(id: @surgeon.id) %>
 <% title @surgeon.to_s  %>
 <% json_ld_tag(
   {
     '@context' => 'https://schema.org',
     '@type' => 'Physician',
     'name' => @surgeon.to_s,
-    'url' => surgeon_url(@surgeon)
+    'url' => surgeon_url(id: @surgeon.id)
   }.compact
 ) %>
 <% json_ld_tag(
@@ -15,7 +15,7 @@
     'itemListElement' => [
       { '@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => root_url },
       { '@type' => 'ListItem', 'position' => 2, 'name' => 'Surgeons', 'item' => surgeons_url },
-      { '@type' => 'ListItem', 'position' => 3, 'name' => @surgeon.to_s, 'item' => surgeon_url(@surgeon) }
+      { '@type' => 'ListItem', 'position' => 3, 'name' => @surgeon.to_s, 'item' => surgeon_url(id: @surgeon.id) }
     ]
   }
 ) %>

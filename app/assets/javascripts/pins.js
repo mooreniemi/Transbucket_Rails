@@ -119,9 +119,9 @@ $(document).ready(function() {
     myDropzone.on("successmultiple", function(file, responseText) {
       if (isEditing) {
         var pinId = $(formSelector).data("pin-id");
-        window.location.href = "/pins/" + pinId;
+        window.location.href = "/" + document.documentElement.lang + "/pins/" + pinId;
       } else {
-        window.location.href = "/pins/" + responseText.id;
+        window.location.href = "/" + document.documentElement.lang + "/pins/" + responseText.id;
       }
     });
 

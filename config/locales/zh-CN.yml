@@ -180,8 +180,8 @@ zh-CN:
       short: "%m月%d日 %H:%M"
     pm: 下午
   homepage:
-    title: "社区照片共享以实现过渡程序"
-    considering: "您是否正在考虑或已接受过渡护理？"
+    title: "性别肯定手术社区照片分享"
+    considering: "您正在考虑或已经接受性别肯定医疗服务吗？"
     join: "您应该加入我们的社区"
     register: "注册以分享或查看真实结果。"
   header:

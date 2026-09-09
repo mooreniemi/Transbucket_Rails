@@ -1,0 +1,196 @@
+en:
+  site:
+    description: "Community photo-sharing for transition and gender-affirming procedures, surgeon profiles, and real-world submissions."
+  homepage:
+    title: "Community Photo-Sharing for Transition and Gender-Affirming Procedures"
+    intro: "Browse real results from gender-affirming and transition-related procedures, surgeon pages, and community submissions."
+    considering: "Are you considering gender-affirming care or a transition-related procedure?"
+    join: "You should join our community."
+    register: "Register to share or see real results."
+  header:
+    news: "News"
+    procedures: "Procedures"
+    surgeons: "Surgeons"
+    submissions: "Submissions"
+    account: "Account"
+    filter: "Filter"
+    add: "Add"
+    search: "Search"
+  footer:
+    about: "About"
+    tos: "Terms of Service"
+    pp: "Privacy Policy"
+    discord_prefix: "Join the"
+  locale:
+    label: "Language"
+    names:
+      en: "English"
+      de: "Deutsch"
+      es: "Español"
+      fr: "Français"
+      it: "Italiano"
+      ja: "日本語"
+      zh-CN: "简体中文"
+      zh-TW: "繁體中文"
+      pt-BR: "Português (Brasil)"
+      nl: "Nederlands"
+      pl: "Polski"
+      ru: "Русский"
+      tr: "Türkçe"
+      vi: "Tiếng Việt"
+      ar: "العربية"
+de:
+  site:
+    description: "Gemeinschaftliche Fotosammlung für geschlechtsangleichende Eingriffe, Chirurgenprofile und echte Erfahrungsberichte."
+  homepage:
+    title: "Gemeinschaftliche Fotosammlung für geschlechtsangleichende Eingriffe"
+    intro: "Durchsuche echte Ergebnisse, Chirurgenprofile und Beiträge von Menschen, die ihre Erfahrungen mit Transition teilen."
+    considering: "Denkst du über geschlechtsangleichende Versorgung nach oder hast du bereits eine erhalten?"
+    join: "Du solltest unserer Gemeinschaft beitreten."
+    register: "Registriere dich, um Ergebnisse zu teilen oder anzusehen."
+  header: { news: "Neuigkeiten", procedures: "Eingriffe", surgeons: "Chirurgen", submissions: "Beiträge", account: "Konto", filter: "Filter", add: "Hinzufügen", search: "Suchen" }
+  footer: { about: "Über uns", tos: "Nutzungsbedingungen", pp: "Datenschutz", discord_prefix: "Tritt bei:" }
+  locale: { label: "Sprache" }
+es:
+  site: { description: "Galería comunitaria de fotos sobre procedimientos de afirmación de género, perfiles de cirujanos y experiencias reales." }
+  homepage:
+    title: "Galería comunitaria de procedimientos de afirmación de género"
+    intro: "Consulta resultados reales, perfiles de cirujanos y publicaciones de personas que comparten sus experiencias de transición."
+    considering: "¿Estás considerando atención de afirmación de género o ya la has recibido?"
+    join: "Únete a nuestra comunidad."
+    register: "Regístrate para compartir o ver resultados reales."
+  header: { news: "Noticias", procedures: "Procedimientos", surgeons: "Cirujanos", submissions: "Publicaciones", account: "Cuenta", filter: "Filtrar", add: "Añadir", search: "Buscar" }
+  footer: { about: "Acerca de", tos: "Condiciones de uso", pp: "Privacidad", discord_prefix: "Únete a" }
+  locale: { label: "Idioma" }
+fr:
+  site: { description: "Photos communautaires d’interventions d’affirmation de genre, profils de chirurgiens et témoignages réels." }
+  homepage:
+    title: "Photos communautaires d’interventions d’affirmation de genre"
+    intro: "Consultez des résultats réels, des profils de chirurgiens et des témoignages de personnes partageant leur expérience de transition."
+    considering: "Envisagez-vous des soins d’affirmation de genre ou en avez-vous déjà reçu ?"
+    join: "Rejoignez notre communauté."
+    register: "Inscrivez-vous pour partager ou consulter des résultats réels."
+  header: { news: "Actualités", procedures: "Procédures", surgeons: "Chirurgiens", submissions: "Contributions", account: "Compte", filter: "Filtrer", add: "Ajouter", search: "Rechercher" }
+  footer: { about: "À propos", tos: "Conditions d’utilisation", pp: "Confidentialité", discord_prefix: "Rejoignez" }
+  locale: { label: "Langue" }
+it:
+  site: { description: "Foto condivise dalla comunità per interventi di affermazione di genere, profili dei chirurghi e testimonianze reali." }
+  homepage:
+    title: "Foto della comunità sugli interventi di affermazione di genere"
+    intro: "Esplora risultati reali, profili dei chirurghi e contributi di persone che condividono la propria esperienza di transizione."
+    considering: "Stai valutando cure di affermazione di genere o le hai già ricevute?"
+    join: "Unisciti alla nostra comunità."
+    register: "Registrati per condividere o vedere risultati reali."
+  header: { news: "Novità", procedures: "Procedure", surgeons: "Chirurghi", submissions: "Contributi", account: "Account", filter: "Filtra", add: "Aggiungi", search: "Cerca" }
+  footer: { about: "Informazioni", tos: "Termini di servizio", pp: "Privacy", discord_prefix: "Unisciti a" }
+  locale: { label: "Lingua" }
+ja:
+  site: { description: "ジェンダー・アファーミング手術のコミュニティ写真、外科医のプロフィール、実際の体験を共有するサイトです。" }
+  homepage:
+    title: "ジェンダー・アファーミング手術のコミュニティ写真"
+    intro: "実際の手術結果、外科医のプロフィール、トランジションの体験を共有する投稿をご覧ください。"
+    considering: "ジェンダー・アファーミング医療を検討中、または受けたことがありますか？"
+    join: "コミュニティに参加しましょう。"
+    register: "登録して実際の結果を共有・閲覧しましょう。"
+  header: { news: "ニュース", procedures: "手術", surgeons: "外科医", submissions: "投稿", account: "アカウント", filter: "絞り込み", add: "追加", search: "検索" }
+  footer: { about: "概要", tos: "利用規約", pp: "プライバシー", discord_prefix: "参加する" }
+  locale: { label: "言語" }
+zh-CN:
+  site: { description: "分享性别肯定手术照片、医生资料和真实经历的社区。" }
+  homepage:
+    title: "性别肯定手术照片社区"
+    intro: "浏览真实的手术结果、医生资料，以及分享变性经历的社区投稿。"
+    considering: "你正在考虑或已经接受性别肯定医疗服务吗？"
+    join: "欢迎加入我们的社区。"
+    register: "注册后即可分享或查看真实结果。"
+  header: { news: "新闻", procedures: "手术项目", surgeons: "医生", submissions: "投稿", account: "账户", filter: "筛选", add: "添加", search: "搜索" }
+  footer: { about: "关于", tos: "服务条款", pp: "隐私政策", discord_prefix: "加入" }
+  locale: { label: "语言" }
+zh-TW:
+  site: { description: "分享性別肯定手術照片、醫師資料與真實經驗的社群。" }
+  homepage:
+    title: "性別肯定手術照片社群"
+    intro: "瀏覽真實手術成果、醫師資料，以及分享跨性別經驗的社群投稿。"
+    considering: "你正在考慮或已經接受性別肯定醫療照護嗎？"
+    join: "歡迎加入我們的社群。"
+    register: "註冊即可分享或查看真實成果。"
+  header: { news: "新聞", procedures: "手術項目", surgeons: "醫師", submissions: "投稿", account: "帳戶", filter: "篩選", add: "新增", search: "搜尋" }
+  footer: { about: "關於", tos: "服務條款", pp: "隱私權政策", discord_prefix: "加入" }
+  locale: { label: "語言" }
+pt-BR:
+  site: { description: "Fotos comunitárias de procedimentos de afirmação de gênero, perfis de cirurgiões e relatos reais." }
+  homepage:
+    title: "Fotos comunitárias de procedimentos de afirmação de gênero"
+    intro: "Veja resultados reais, perfis de cirurgiões e publicações de pessoas compartilhando suas experiências de transição."
+    considering: "Você está pensando em fazer um procedimento de afirmação de gênero ou já fez um?"
+    join: "Participe da nossa comunidade."
+    register: "Cadastre-se para compartilhar ou ver resultados reais."
+  header: { news: "Notícias", procedures: "Procedimentos", surgeons: "Cirurgiões", submissions: "Publicações", account: "Conta", filter: "Filtrar", add: "Adicionar", search: "Pesquisar" }
+  footer: { about: "Sobre", tos: "Termos de uso", pp: "Privacidade", discord_prefix: "Participe do" }
+  locale: { label: "Idioma" }
+nl:
+  site: { description: "Gemeenschapsfoto’s van genderbevestigende ingrepen, profielen van chirurgen en echte ervaringen." }
+  homepage:
+    title: "Gemeenschapsfoto’s van genderbevestigende ingrepen"
+    intro: "Bekijk echte resultaten, profielen van chirurgen en bijdragen van mensen die hun transitie-ervaring delen."
+    considering: "Overweeg je genderbevestigende zorg of heb je die al gehad?"
+    join: "Word lid van onze community."
+    register: "Registreer je om resultaten te delen of te bekijken."
+  header: { news: "Nieuws", procedures: "Procedures", surgeons: "Chirurgen", submissions: "Bijdragen", account: "Account", filter: "Filter", add: "Toevoegen", search: "Zoeken" }
+  footer: { about: "Over ons", tos: "Gebruiksvoorwaarden", pp: "Privacy", discord_prefix: "Word lid van" }
+  locale: { label: "Taal" }
+pl:
+  site: { description: "Społecznościowa galeria zdjęć zabiegów afirmujących płeć, profili chirurgów i prawdziwych doświadczeń." }
+  homepage:
+    title: "Społecznościowa galeria zabiegów afirmujących płeć"
+    intro: "Przeglądaj prawdziwe rezultaty, profile chirurgów i wpisy osób dzielących się doświadczeniami tranzycji."
+    considering: "Rozważasz opiekę afirmującą płeć lub już z niej korzystałeś?"
+    join: "Dołącz do naszej społeczności."
+    register: "Zarejestruj się, aby dzielić się rezultatami lub je oglądać."
+  header: { news: "Aktualności", procedures: "Zabiegi", surgeons: "Chirurdzy", submissions: "Wpisy", account: "Konto", filter: "Filtruj", add: "Dodaj", search: "Szukaj" }
+  footer: { about: "O nas", tos: "Warunki korzystania", pp: "Prywatność", discord_prefix: "Dołącz do" }
+  locale: { label: "Język" }
+ru:
+  site: { description: "Сообщество с фотографиями гендерно-аффирмативных операций, профилями хирургов и реальным опытом перехода." }
+  homepage:
+    title: "Сообщество фотографий гендерно-аффирмативных операций"
+    intro: "Смотрите реальные результаты операций, профили хирургов и публикации людей, которые делятся своим опытом перехода."
+    considering: "Вы рассматриваете гендерно-аффирмативную медицинскую помощь или уже получили её?"
+    join: "Присоединяйтесь к нашему сообществу."
+    register: "Зарегистрируйтесь, чтобы делиться результатами или смотреть их."
+  header: { news: "Новости", procedures: "Операции", surgeons: "Хирурги", submissions: "Публикации", account: "Аккаунт", filter: "Фильтр", add: "Добавить", search: "Поиск" }
+  footer: { about: "О сайте", tos: "Условия использования", pp: "Конфиденциальность", discord_prefix: "Присоединяйтесь к" }
+  locale: { label: "Язык" }
+tr:
+  site: { description: "Cinsiyet uyum süreciyle ilgili prosedürler, cerrah profilleri ve gerçek deneyimler için topluluk fotoğraf arşivi." }
+  homepage:
+    title: "Cinsiyet uyum süreci prosedürleri için topluluk fotoğrafları"
+    intro: "Gerçek sonuçlara, cerrah profillerine ve geçiş deneyimlerini paylaşan kişilerin gönderilerine göz atın."
+    considering: "Cinsiyet uyum süreciyle ilgili sağlık hizmetini düşünüyor veya daha önce aldınız mı?"
+    join: "Topluluğumuza katılın."
+    register: "Sonuç paylaşmak veya gerçek sonuçları görmek için kaydolun."
+  header: { news: "Haberler", procedures: "Prosedürler", surgeons: "Cerrahlar", submissions: "Gönderiler", account: "Hesap", filter: "Filtrele", add: "Ekle", search: "Ara" }
+  footer: { about: "Hakkımızda", tos: "Kullanım şartları", pp: "Gizlilik", discord_prefix: "Katılın:" }
+  locale: { label: "Dil" }
+vi:
+  site: { description: "Cộng đồng chia sẻ ảnh về các thủ thuật khẳng định giới, hồ sơ bác sĩ phẫu thuật và trải nghiệm thực tế." }
+  homepage:
+    title: "Cộng đồng ảnh về các thủ thuật khẳng định giới"
+    intro: "Xem kết quả thực tế, hồ sơ bác sĩ phẫu thuật và bài đăng của những người chia sẻ trải nghiệm chuyển giới."
+    considering: "Bạn đang cân nhắc hoặc đã thực hiện chăm sóc khẳng định giới?"
+    join: "Hãy tham gia cộng đồng của chúng tôi."
+    register: "Đăng ký để chia sẻ hoặc xem kết quả thực tế."
+  header: { news: "Tin tức", procedures: "Thủ thuật", surgeons: "Bác sĩ phẫu thuật", submissions: "Bài đăng", account: "Tài khoản", filter: "Lọc", add: "Thêm", search: "Tìm kiếm" }
+  footer: { about: "Giới thiệu", tos: "Điều khoản sử dụng", pp: "Quyền riêng tư", discord_prefix: "Tham gia" }
+  locale: { label: "Ngôn ngữ" }
+ar:
+  site: { description: "مجتمع لمشاركة صور إجراءات تأكيد النوع الاجتماعي وملفات الجراحين والتجارب الحقيقية." }
+  homepage:
+    title: "مجتمع صور إجراءات تأكيد النوع الاجتماعي"
+    intro: "تصفح النتائج الحقيقية وملفات الجراحين والمنشورات التي يشارك فيها الأشخاص تجارب التحول."
+    considering: "هل تفكر في رعاية تؤكد النوع الاجتماعي أو حصلت عليها؟"
+    join: "انضم إلى مجتمعنا."
+    register: "سجل حساباً لمشاركة النتائج الحقيقية أو مشاهدتها."
+  header: { news: "الأخبار", procedures: "الإجراءات", surgeons: "الجراحون", submissions: "المنشورات", account: "الحساب", filter: "تصفية", add: "إضافة", search: "بحث" }
+  footer: { about: "نبذة", tos: "شروط الاستخدام", pp: "الخصوصية", discord_prefix: "انضم إلى" }
+  locale: { label: "اللغة" }

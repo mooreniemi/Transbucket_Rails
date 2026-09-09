@@ -7,7 +7,7 @@ $("#new_surgeon_submit").click(function() {
 
     return $.ajax({
         type: "POST",
-        url: "/surgeons",
+        url: "<%= surgeons_path %>",
         data: formData,
         processData: false,  // tell jQuery not to process the data
         contentType: false,   // tell jQuery not to set contentType

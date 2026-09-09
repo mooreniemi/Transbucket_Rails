@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
-  caches_page :home, :about, :terms, :privacy, :bookmarks
+  # Page-cache keys use the full request path, so each locale gets its own cached document.
+  caches_page :home, :about, :terms, :privacy
   before_filter :force_request_format_to_html
 
   def home
@@ -15,20 +16,9 @@ class PagesController < ApplicationController
   end
 
   def newsfeed
-    @newsfeed_entries = [
-      {
-        body: "We cleaned up a set of procedure names so common shorthand and typo variants now point to the same canonical procedure pages, which makes browsing and search results more consistent.",
-        date: "September 2026"
-      },
-      {
-        body: "Procedure search now matches prefixes, so typing the start of a name like phallo or orchi gets you to the right results faster.",
-        date: "September 2026"
-      },
-      {
-        body: "The Discord community invite now points to a permanent link.",
-        date: "September 2026"
-      }
-    ]
+    @newsfeed_entries = %w(procedure_cleanup prefix_search discord_invite locales).map do |entry|
+      { body: I18n.t("newsfeed.entries.#{entry}"), date: I18n.t('newsfeed.date') }
+    end
   end
 
   def bookmarks

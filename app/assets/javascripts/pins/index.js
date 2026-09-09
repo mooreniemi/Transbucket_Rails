@@ -3,7 +3,7 @@ $(document).ready(function() {
     $("#filter_dropdown select").val([]);
     $("#filter_dropdown select").trigger('chosen:updated');
     // FIXME: hard coding the pins path here
-    window.history.pushState("cleared filter", "Submissions", "/pins");
+    window.history.pushState("cleared filter", "Submissions", "/" + document.documentElement.lang + "/pins");
   });
 
   $("#scope").chosen({

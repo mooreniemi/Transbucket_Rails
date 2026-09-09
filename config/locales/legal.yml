@@ -1,0 +1,45 @@
+en:
+  legal:
+    translation_notice: "Important: This legal page is currently available only in English. We do not provide machine-translated legal text because automated translations may contain errors. The English version is the authoritative version."
+de:
+  legal:
+    translation_notice: "Wichtig: Diese Rechtsseite ist derzeit nur auf Englisch verfügbar. Wir stellen keinen maschinell übersetzten Rechtstext bereit, da automatische Übersetzungen Fehler enthalten können. Die englische Fassung ist maßgeblich."
+es:
+  legal:
+    translation_notice: "Importante: Esta página legal está disponible actualmente solo en inglés. No ofrecemos textos legales traducidos automáticamente porque pueden contener errores. La versión en inglés es la versión autorizada."
+fr:
+  legal:
+    translation_notice: "Important : cette page juridique est actuellement disponible uniquement en anglais. Nous ne fournissons pas de traduction automatique du texte juridique, car elle pourrait contenir des erreurs. La version anglaise fait foi."
+it:
+  legal:
+    translation_notice: "Importante: questa pagina legale è attualmente disponibile solo in inglese. Non forniamo testi legali tradotti automaticamente perché potrebbero contenere errori. Fa fede la versione inglese."
+ja:
+  legal:
+    translation_notice: "重要：この法的ページは現在英語のみで提供しています。自動翻訳には誤りが含まれる可能性があるため、法律文書の機械翻訳は提供していません。英語版を正式な版とします。"
+zh-CN:
+  legal:
+    translation_notice: "重要提示：此法律页面目前仅提供英文版本。由于机器翻译可能包含错误，我们不提供自动翻译的法律文本。英文版本为正式版本。"
+zh-TW:
+  legal:
+    translation_notice: "重要：此法律頁面目前僅提供英文版本。由於機器翻譯可能包含錯誤，我們不提供自動翻譯的法律文字。英文版本為正式版本。"
+pt-BR:
+  legal:
+    translation_notice: "Importante: esta página legal está disponível atualmente apenas em inglês. Não fornecemos textos jurídicos traduzidos automaticamente porque eles podem conter erros. A versão em inglês é a versão oficial."
+nl:
+  legal:
+    translation_notice: "Belangrijk: deze juridische pagina is momenteel alleen in het Engels beschikbaar. We bieden geen automatisch vertaalde juridische tekst aan, omdat automatische vertalingen fouten kunnen bevatten. De Engelse versie is leidend."
+pl:
+  legal:
+    translation_notice: "Ważne: ta strona prawna jest obecnie dostępna tylko w języku angielskim. Nie udostępniamy automatycznie przetłumaczonych tekstów prawnych, ponieważ mogą zawierać błędy. Wersja angielska jest wersją obowiązującą."
+ru:
+  legal:
+    translation_notice: "Важно: эта юридическая страница сейчас доступна только на английском языке. Мы не предоставляем машинный перевод юридического текста, поскольку автоматический перевод может содержать ошибки. Официальной является английская версия."
+tr:
+  legal:
+    translation_notice: "Önemli: Bu hukuk sayfası şu anda yalnızca İngilizce olarak sunulmaktadır. Otomatik çeviriler hata içerebileceğinden makineyle çevrilmiş hukuk metni sunmuyoruz. Esas alınan sürüm İngilizce sürümdür."
+vi:
+  legal:
+    translation_notice: "Quan trọng: Trang pháp lý này hiện chỉ có bằng tiếng Anh. Chúng tôi không cung cấp văn bản pháp lý dịch bằng máy vì bản dịch tự động có thể có lỗi. Bản tiếng Anh là bản có giá trị chính thức."
+ar:
+  legal:
+    translation_notice: "مهم: هذه الصفحة القانونية متاحة حالياً باللغة الإنجليزية فقط. لا نقدم نصاً قانونياً مترجماً آلياً لأن الترجمات الآلية قد تتضمن أخطاء. النسخة الإنجليزية هي النسخة المعتمدة."

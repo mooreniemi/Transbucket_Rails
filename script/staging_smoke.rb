@@ -31,6 +31,13 @@ NEWSFEED_TITLES = {
   "vi" => "Tin tức",
   "ar" => "الأخبار"
 }.freeze
+REGISTRATION_MARKERS = {
+  "en" => "Username", "de" => "Benutzername", "es" => "Nombre de usuario",
+  "fr" => "Nom d’utilisateur", "it" => "Nome utente", "ja" => "ユーザー名",
+  "zh-CN" => "用户名", "zh-TW" => "使用者名稱", "pt-BR" => "Nome de usuário",
+  "nl" => "Gebruikersnaam", "pl" => "Nazwa użytkownika", "ru" => "Имя пользователя",
+  "tr" => "Kullanıcı adı", "vi" => "Tên người dùng", "ar" => "اسم المستخدم"
+}.freeze
 
 class StagingSmoke
   def initialize(locale)
@@ -40,6 +47,7 @@ class StagingSmoke
 
   def run
     verify_public_localization
+    verify_registration_localization
     login
     pin_id, search_term = create_pin
     edit_pin(pin_id)
@@ -65,6 +73,14 @@ class StagingSmoke
     newsfeed = get("/newsfeed")
     unless newsfeed.code.to_i == 200 && newsfeed.body.include?(expected_title)
       raise "localized newsfeed failed"
+    end
+  end
+
+  def verify_registration_localization
+    response = get("/register")
+    marker = REGISTRATION_MARKERS.fetch(@locale)
+    unless response.code.to_i == 200 && response.body.include?(marker)
+      raise "localized registration form failed for #{@locale}"
     end
   end
 
@@ -306,6 +322,7 @@ class StagingSmoke
       http.request(req)
     end
 
+    response.body.force_encoding(Encoding::UTF_8)
     store_cookies(response)
     response
   end

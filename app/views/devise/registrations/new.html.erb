@@ -1,4 +1,4 @@
-<% title t('.sign_up') %>
+<% title t('account_menu.register') %>
 <div class="col-md-6 center">
   <div class="top-block"><center><h1><%= fa_icon "lock" %></h1></center></div>
   <div class="login_well">
@@ -8,7 +8,7 @@
         <span class="explanation"><%= I18n.t(".explanations.username") %></span>
         <div class="input-group padded_nicely">
           <span class="input-group-addon"><%= fa_icon "users" %></span>
-          <%= f.text_field :username, placeholder: t('public.extra.username'), class: "form-control" %>
+          <%= f.text_field :username, placeholder: t('public.auth.username'), class: "form-control" %>
         </div>
       </div>
       <div id="email">
@@ -22,11 +22,11 @@
         <span class="explanation"><%= I18n.t(".explanations.password") %></span>
         <div class="input-group padded_nicely">
           <span class="input-group-addon"><%= fa_icon "lock" %></span>
-          <%= f.password_field :password, placeholder: t("activerecord.attributes.user.password"), class: "form-control" %>
+          <%= f.password_field :password, placeholder: t('public.auth.password'), class: "form-control" %>
         </div>
         <div class="input-group padded_nicely">
           <span class="input-group-addon"><%= fa_icon "lock" %><%= fa_icon "check" %></span>
-          <%= f.password_field :password_confirmation, placeholder: t('public.extra.password_confirmation'), class: "form-control" %>
+          <%= f.password_field :password_confirmation, placeholder: t('public.auth.password_confirmation'), class: "form-control" %>
         </div>
       </div>
       <div id="name">
@@ -39,13 +39,13 @@
       <div id="gender">
         <span class="explanation"><%= I18n.t(".explanations.gender") %></span>
         <div class="input-group padded_nicely">
-          <span class="input-group-addon"><%= fa_icon "key" %> <%= t('public.extra.gender') %>: </span>
+          <span class="input-group-addon"><%= fa_icon "key" %> <%= t('public.auth.gender') %>: </span>
           <%= f.select :gender_id, options_from_collection_for_select(Gender.all, "id", "name"), {}, { class: "form-control"} %>
         </div>
       </div>
       <p><%= I18n.t(".explanations.tos") %></p>
       <center>
-        <%= f.submit t(".sign_up"), class: "btn btn-primary btn-large" %>
+        <%= f.submit t('account_menu.register'), class: "btn btn-primary btn-large" %>
       </center>
     <% end %>
     <br clear="both">

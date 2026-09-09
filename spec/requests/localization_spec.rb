@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe 'locale-prefixed URLs', type: :request do
+  SUPPORTED_LOCALES = %w[en de es fr it ja zh-CN zh-TW pt-BR nl pl ru tr vi ar].freeze
+
   after { I18n.locale = :en }
 
   it 'redirects the legacy homepage to the English URL' do
@@ -62,5 +64,20 @@ describe 'locale-prefixed URLs', type: :request do
 
     expect(response).to be_success
     expect(response.body).to include('<html lang="pt-BR">')
+  end
+
+  it 'has every translation used by the signup form in every locale' do
+    signup_keys = %w[username email password name gender tos]
+
+    SUPPORTED_LOCALES.each do |locale|
+      signup_keys.each do |key|
+        expect(I18n.exists?("explanations.#{key}", locale)).to be(true), "missing explanations.#{key} for #{locale}"
+      end
+      %w[username password password_confirmation your_name gender].each do |key|
+        expect(I18n.exists?("public.auth.#{key}", locale)).to be(true), "missing public.auth.#{key} for #{locale}"
+      end
+      expect(I18n.exists?('account_menu.register', locale)).to be(true), "missing registration label for #{locale}"
+      expect(I18n.exists?('account_menu.login', locale)).to be(true), "missing login label for #{locale}"
+    end
   end
 end

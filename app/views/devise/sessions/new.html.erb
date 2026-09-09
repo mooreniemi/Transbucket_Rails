@@ -1,4 +1,4 @@
-<% title t(".sign_in") %>
+<% title t('account_menu.login') %>
 
 <div class="col-md-6 center">
   <div class="top-block">
@@ -19,7 +19,7 @@
       <%= f.error_notification %>
       <div class="input-group input-group-lg padded_nicely">
         <span class="input-group-addon"><%= fa_icon "users" %></span>
-        <%= f.text_field :login, placeholder: t('public.extra.username'), autofocus: true, class: "form-control" %>
+          <%= f.text_field :login, placeholder: t('public.auth.username'), autofocus: true, class: "form-control" %>
         <span class="input-group-addon">
           <small>
             <%= t('activerecord.attributes.user.remember_me') %>?
@@ -29,10 +29,10 @@
       </div>
       <div class="input-group input-group-lg padded_nicely">
         <span class="input-group-addon"><%= fa_icon "lock" %></span>
-        <%= f.password_field :password, placeholder: t('public.extra.password'), class: "form-control" %>
+          <%= f.password_field :password, placeholder: t('public.auth.password'), class: "form-control" %>
 
         <span class="input-group-btn">
-          <%= f.button :submit, t(".sign_in"), class: "btn btn-primary btn-large" %>
+          <%= f.button :submit, t('account_menu.login'), class: "btn btn-primary btn-large" %>
         </span>
       </div>
   </div>

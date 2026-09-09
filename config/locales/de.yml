@@ -235,15 +235,3 @@ de:
     about: "über die Website"
     tos: "Nutzungsbedingungen"
     pp: "Datenschutz-Bestimmungen"
-  account_menu:
-    register: "Anmelden"
-    login: "Einloggen"
-    my_account: "Mein Konto"
-    logout: "Ausloggen"
-  explanations:
-    username: "Ihr Benutzername ist für alle Benutzer sichtbar und wird zum Anmelden verwendet. Er ist auf der gesamten Website eindeutig."
-    email: "Ihre E-Mail ist für Administratoren sichtbar, jedoch nicht für andere Benutzer. Ihre E-Mail wird bestätigt."
-    password: "Ihr Passwort wird beim Speichern verschlüsselt und kann per E-Mail wiederhergestellt werden."
-    name: "Ihr Name ist für Administratoren sichtbar und wird für die Kommunikation mit ihnen verwendet. Wenn Sie ein Pflegedienstleister sind und nicht Ihren richtigen Namen verwenden, werden Sie von der Website blockiert."
-    gender: "Ihr Geschlecht ist für alle sichtbar, wenn Sie Ergebnisse veröffentlichen. Es wird auch verwendet, um einige Standardeinstellungen für den angezeigten Inhalt und Ihre Pronomen festzulegen. Es kann nach der Registrierung aktualisiert werden."
-    tos: "Durch die Registrierung auf Transbucket.com erklären Sie sich mit unseren Nutzungsbedingungen einverstanden."

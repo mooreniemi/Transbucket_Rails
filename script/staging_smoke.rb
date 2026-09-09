@@ -14,6 +14,23 @@ STAGING_LOCALES = ENV.fetch("STAGING_LOCALES", ENV.fetch("STAGING_LOCALE", "en")
 USERNAME = ENV.fetch("STAGING_USER", "zoon")
 PASSWORD = ENV.fetch("STAGING_PASSWORD")
 IMAGE_PATH = File.expand_path("../spec/fixtures/cat.jpg", __dir__)
+NEWSFEED_TITLES = {
+  "en" => "Newsfeed",
+  "de" => "Neuigkeiten",
+  "es" => "Novedades",
+  "fr" => "Actualités",
+  "it" => "Novità",
+  "ja" => "ニュース",
+  "zh-CN" => "新闻",
+  "zh-TW" => "最新消息",
+  "pt-BR" => "Novidades",
+  "nl" => "Nieuws",
+  "pl" => "Aktualności",
+  "ru" => "Новости",
+  "tr" => "Haberler",
+  "vi" => "Tin tức",
+  "ar" => "الأخبار"
+}.freeze
 
 class StagingSmoke
   def initialize(locale)
@@ -34,18 +51,19 @@ class StagingSmoke
   private
 
   def verify_public_localization
-    legacy = get("/")
+    legacy = get_legacy("/")
     unless legacy.code.to_i == 301 && URI.parse(legacy["location"]).path == "/en/"
       raise "legacy homepage did not redirect to /en/"
     end
 
-    localized = get("/de/")
-    unless localized.code.to_i == 200 && localized.body.include?('<html lang="de">') && localized.body.include?('hreflang="x-default"')
+    localized = get("/")
+    expected_title = NEWSFEED_TITLES.fetch(@locale)
+    unless localized.code.to_i == 200 && localized.body.include?(%(<html lang="#{@locale}">)) && localized.body.include?('hreflang="x-default"')
       raise "localized homepage metadata failed"
     end
 
-    newsfeed = get("/de/newsfeed")
-    unless newsfeed.code.to_i == 200 && newsfeed.body.include?("Neuigkeiten")
+    newsfeed = get("/newsfeed")
+    unless newsfeed.code.to_i == 200 && newsfeed.body.include?(expected_title)
       raise "localized newsfeed failed"
     end
   end
@@ -105,11 +123,31 @@ class StagingSmoke
     pin_id = location[%r{/pins/(\d+)}, 1] || raise("could not parse created pin id")
     show = get("/pins/#{pin_id}").body
 
-    unless show.include?(captions[0]) && show.include?(captions[1])
+    unless show.include?(captions[0]) && show.include?(captions[1]) && show.include?(localized_pin_label)
       raise "multi-image upload did not persist both captions"
     end
 
     [pin_id, params["pin[procedure_attributes][name]"]]
+  end
+
+  def localized_pin_label
+    {
+      "en" => "Surgeon",
+      "de" => "Chirurg",
+      "es" => "Cirujano",
+      "fr" => "Chirurgien",
+      "it" => "Chirurgo",
+      "ja" => "外科医",
+      "zh-CN" => "医生",
+      "zh-TW" => "醫師",
+      "pt-BR" => "Cirurgião",
+      "nl" => "Chirurg",
+      "pl" => "Chirurg",
+      "ru" => "Хирург",
+      "tr" => "Cerrah",
+      "vi" => "Bác sĩ phẫu thuật",
+      "ar" => "الجراح"
+    }.fetch(@locale)
   end
 
   def edit_pin(pin_id)
@@ -204,6 +242,11 @@ class StagingSmoke
 
   def get(path)
     target = uri(path)
+    request(target, Net::HTTP::Get.new(target))
+  end
+
+  def get_legacy(path)
+    target = URI.join(STAGING_URL, path)
     request(target, Net::HTTP::Get.new(target))
   end
 

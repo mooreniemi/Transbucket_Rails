@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe PinsController, :type => :controller do
+  render_views
+
   describe 'GET #index' do
     it "blocks unauthenticated access" do
       get :index, locale: 'en'
@@ -22,6 +24,13 @@ describe PinsController, :type => :controller do
 
         expect(response).to be_success
       end
+
+      it "renders the authenticated index with a locale and user filter" do
+        get :index, locale: 'ja', user: user.id
+
+        expect(response).to be_success
+        expect(response.body).to include('最近の投稿')
+      end
     end
 
     describe 'GET #show' do
@@ -31,6 +40,15 @@ describe PinsController, :type => :controller do
         get :show, id: pin.id
 
         expect(response).to be_success
+      end
+
+      it "renders localized labels on a pin page" do
+        pin = create(:pin, user: user)
+        get :show, id: pin.id, locale: 'ja'
+
+        expect(response).to be_success
+        expect(response.body).to include('外科医')
+        expect(response.body).to include('手術')
       end
     end
 

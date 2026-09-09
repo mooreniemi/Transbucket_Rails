@@ -7,17 +7,17 @@
         </div>
         <div class="panel-footer">
           <small>
-            by <strong>
+            <%= t('public.pin.by') %> <strong>
               <%= link_to comment.user.try(:username) || comment.user.try(:id), pins_path(user: comment.user) %>
             </strong> |
             <%= comment.updated_at.strftime('%b %d, %Y at %I:%M %p') %> |
             <% commentable = @pin ? @pin : @procedure %>
-            <%= link_to "#{fa_icon("comments")} reply".html_safe, new_comment_path(commentable_id: commentable.try(:id), commentable_type: commentable.try(:class), parent_id: comment.id), remote: true %>
+            <%= link_to "#{fa_icon("comments")} #{t('public.pin.reply')}".html_safe, new_comment_path(commentable_id: commentable.try(:id), commentable_type: commentable.try(:class), parent_id: comment.id), remote: true %>
             <%= " | " unless current_user == comment.user %>
             <%= link_to(fa_icon("flag"), comment_flags_path(comment), :method => :post, remote: true, class: "flag-comment", "data-comment-id" => comment.id) unless current_user == comment.user %>
           </small>
           <% if comment.user_id == current_user.id || current_user.admin? %>
-            <%= link_to "×", comment_path(comment), :method => :delete, :remote => true, data: {confirm: "Are you sure you want to remove this comment?"}, :disable_with => "×", :class => 'close' %>
+            <%= link_to "×", comment_path(comment), :method => :delete, :remote => true, data: {confirm: t('public.pin.remove_confirm')}, :disable_with => "×", :class => 'close' %>
           <% end %>
           <% cache(comment.children) do %>
             <% if comment.children.present? %>

@@ -13,8 +13,8 @@
     '@context' => 'https://schema.org',
     '@type' => 'BreadcrumbList',
     'itemListElement' => [
-      { '@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => root_url },
-      { '@type' => 'ListItem', 'position' => 2, 'name' => 'Surgeons', 'item' => surgeons_url },
+      { '@type' => 'ListItem', 'position' => 1, 'name' => t('header.home', default: 'Home'), 'item' => root_url },
+      { '@type' => 'ListItem', 'position' => 2, 'name' => t('header.surgeons'), 'item' => surgeons_url },
       { '@type' => 'ListItem', 'position' => 3, 'name' => @surgeon.to_s, 'item' => surgeon_url(id: @surgeon.id) }
     ]
   }
@@ -41,7 +41,7 @@
     <% if @surgeon.notes %>
       <div class="panel panel-default">
         <div class="panel-body">
-          Notes: <%= @surgeon.notes %></div>
+          <%= t('public.form.details') %>: <%= @surgeon.notes %></div>
       </div>
     <% end %>
 
@@ -53,8 +53,8 @@
         </h3>
       </div>
       <div class="panel-body">
-        Average patient satisfaction is <%= satisfaction.to_i.to_s %>
-      <label class="label-with-popover" data-placement="right" data-content="Overall procedure satisfaction across all surgeons is: <%= Procedure.find(procedure_id).avg_satisfaction %>" data-title="Satisfaction Compared" data-trigger="hover" data-original-title="" title="">
+        <%= t('public.pin.average_satisfaction') %>: <%= satisfaction.to_i.to_s %>
+      <label class="label-with-popover" data-placement="right" data-content="<%= t('public.pin.average_satisfaction') %>: <%= Procedure.find(procedure_id).avg_satisfaction %>" data-title="<%= t('public.pin.average_satisfaction') %>" data-trigger="hover" data-original-title="" title="">
         <%= fa_icon("bar-chart") %>
       </label>
     </div>

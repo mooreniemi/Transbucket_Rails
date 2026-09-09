@@ -14,8 +14,8 @@
     '@context' => 'https://schema.org',
     '@type' => 'BreadcrumbList',
     'itemListElement' => [
-      { '@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => root_url },
-      { '@type' => 'ListItem', 'position' => 2, 'name' => 'Procedures', 'item' => procedures_url },
+      { '@type' => 'ListItem', 'position' => 1, 'name' => t('header.home', default: 'Home'), 'item' => root_url },
+      { '@type' => 'ListItem', 'position' => 2, 'name' => t('header.procedures'), 'item' => procedures_url },
       { '@type' => 'ListItem', 'position' => 3, 'name' => @procedure.name, 'item' => procedure_url(id: @procedure.id) }
     ]
   }
@@ -24,11 +24,11 @@
   <div class="panel panel-default" itemscope itemtype="https://schema.org/MedicalProcedure">
     <div class="panel-heading">
       <h1><%= @procedure.name %></h1>
-      <%= link_to "See all submissions", pins_path(procedure: @procedure.id) %>
+      <%= link_to t('public.pin.see_all_submissions'), pins_path(procedure: @procedure.id) %>
     </div>
     <% if @procedure.body_type %>
       <div class="panel-body" itemprop="bodyLocation">
-        <i>This procedure is classified as a "<%= @procedure.body_type %>" procedure.</i>
+        <i><%= t('public.pin.classified_as', body_type: @procedure.body_type) %></i>
       </div>
     <% end %>
     <% if @procedure.description %>
@@ -39,20 +39,20 @@
     <!-- List group -->
     <ul class="list-group">
       <li class="list-group-item">
-        Average sensation: <%= @procedure.avg_sensation %>
+        <%= t('public.pin.average_sensation') %>: <%= @procedure.avg_sensation %>
       </li>
       <li class="list-group-item">
-        Average satisfaction: <%= @procedure.avg_satisfaction %>
+        <%= t('public.pin.average_satisfaction') %>: <%= @procedure.avg_satisfaction %>
       </li>
     </ul>
   </div>
 <% end %>
 
 <% if current_user %>
-  <h4><%= fa_icon("comments-o") %> discussion</h4>
+  <h4><%= fa_icon("comments-o") %> <%= t('public.pin.discussion') %></h4>
   <div id="comments-container">
     <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>
-    <%= link_to "<h5>#{fa_icon("comment-o")} add thread</h5>".html_safe, new_comment_path(commentable_id: @procedure.id, commentable_type: "Procedure"), remote: true %>
+    <%= link_to "<h5>#{fa_icon("comment-o")} #{t('public.pin.add_thread')}</h5>".html_safe, new_comment_path(commentable_id: @procedure.id, commentable_type: "Procedure"), remote: true %>
     <div id="commentable" class="reply-target">
     </div>
   </div>

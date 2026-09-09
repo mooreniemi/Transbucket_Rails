@@ -2,7 +2,7 @@
 <%= form_for @form, html: {multipart: true, class: "form-inline", data: {"pin-id" => @form.try(:id)}} do |pin_form| %>
   <div class="row">
     <div class="top-block">
-      <span class="h2"> <%= fa_icon "camera" %> Photos</span>
+      <span class="h2"> <%= fa_icon "camera" %> <%= t('public.form.photos') %></span>
     </div>
     <div id="pin_images">
       <div class="submission_well">
@@ -13,7 +13,7 @@
   <%= render partial: 'errors', locals: {form: @form} %>
   <div class="row">
     <div class="top-block">
-      <span class="h2"> <%= fa_icon "pencil" %> Details</span>
+      <span class="h2"> <%= fa_icon "pencil" %> <%= t('public.form.details') %></span>
     </div>
   </div>
   <div class="row submission_well">
@@ -27,7 +27,7 @@
   </div>
   <div class="row">
     <div class="submission_well col-md-12">
-      <%= pin_form.submit "Submit Now", class: 'btn btn-success btn-block', id: "submit-all" %>
+      <%= pin_form.submit t('public.form.submit_now'), class: 'btn btn-success btn-block', id: "submit-all" %>
     </div>
   </div>
 <% end %>

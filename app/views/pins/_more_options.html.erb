@@ -4,32 +4,32 @@
     <li class="active">
     </li>
   </ul>
-  <h3 class="text-muted">Your experience at a glance:</h3>
+  <h3 class="text-muted"><%= t('public.form.experience_glance') %></h3>
 </div>
 <div class="submission_well">
   <div class="input-group padded_nicely">
     <span class="input-group-addon"><%= fa_icon "money" %></span>
-    <%= f.text_field :cost, placeholder: "Cost", class: "form-control" %>
+    <%= f.text_field :cost, placeholder: t('public.form.cost'), class: "form-control" %>
   </div>
   <div class="input-group padded_nicely">
     <span class="input-group-addon">
     <%= f.check_box :revision %>
-    </span> <span class="form-control">Seeking a revision?</span>
+    </span> <span class="form-control"><%= t('public.form.seeking_revision') %></span>
   </div>
   <br>
   <div class="input-group padded_nicely">
-    <span class="input-group-addon">Sensation</span>
+    <span class="input-group-addon"><%= t('public.form.sensation') %></span>
     <!-- note: needs to be text field for chrome focus to work with form validation -->
     <!-- see comments here: http://plugins.krajee.com/star-rating#options -->
     <%= f.text_field :sensation, class: "form-control", required: false %>
   </div>
   <br>
   <div class="input-group padded_nicely">
-    <span class="input-group-addon">Satisfaction</span>
+    <span class="input-group-addon"><%= t('public.form.satisfaction') %></span>
     <%= f.text_field :satisfaction, class: "form-control", required: false %>
   </div>
   <div class="input-group padded_nicely">
-    <span class="input-group-addon">Complications</span>
-    <%= f.text_field :complication_list, class: "form-control", required: false, placeholder: "hematoma, fistula" %>
+    <span class="input-group-addon"><%= t('public.form.complications') %></span>
+    <%= f.text_field :complication_list, class: "form-control", required: false, placeholder: t('public.form.complications_placeholder') %>
   </div>
 </div>

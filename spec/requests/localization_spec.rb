@@ -55,6 +55,16 @@ describe 'locale-prefixed URLs', type: :request do
     expect(response.body).to include('"url":"http://www.example.com/de"')
   end
 
+  it 'keeps footer language links on the current page' do
+    get '/de/procedures'
+
+    expect(response.body).to include('href="/en/procedures"')
+
+    get '/de/newsfeed'
+
+    expect(response.body).to include('href="/en/newsfeed"')
+  end
+
   it 'rejects unsupported locale prefixes instead of treating them as English' do
     expect { get '/xx/' }.to raise_error(ActionController::RoutingError)
   end

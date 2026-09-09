@@ -1,5 +1,5 @@
 <div class="footer submission_well">
-  <% cache("#{I18n.locale}_#{Date.today.year}") do %>
+  <% cache(["footer", I18n.locale, request.fullpath, Date.today.year]) do %>
     <small> &nbsp;
       <span class="footer-links">
         <%= link_to I18n.t('.footer.about'),  about_path %> |

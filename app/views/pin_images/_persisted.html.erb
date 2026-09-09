@@ -6,7 +6,7 @@
   </div>
   <div class="caption">
     <div class="input-group">
-      <%= text_field_tag :caption, image.caption, placeholder: "Caption" %>
+      <%= text_field_tag :caption, image.caption, placeholder: t('public.extra.caption') %>
       <%= link_to('update caption'.html_safe, pin_image_path(image.id), method: "patch", remote: true, data: { disable_with: 'updating...' }) %>
     </div>
   </div>

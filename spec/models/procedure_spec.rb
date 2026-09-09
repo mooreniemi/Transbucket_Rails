@@ -35,6 +35,14 @@ describe Procedure do
       expect(procedure.reload.avg_sensation).to eq(4)
     end
   end
+  describe "#search_aliases" do
+    it 'includes aliases from supported locales without changing the canonical name' do
+      procedure = build(:procedure, name: 'phalloplasty')
+
+      expect(procedure.search_aliases).to include('phallo', 'faloplastia', 'phalloplastie')
+      expect(procedure.name).to eq('phalloplasty')
+    end
+  end
   it 'has #names' do
     create_list(:procedure, 3)
     names = Procedure.pluck(:name).sort

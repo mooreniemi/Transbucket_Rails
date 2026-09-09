@@ -283,6 +283,15 @@ For staging validation we intentionally reuse the production Bonsai cluster
 and isolate by index prefix. That lets us recreate `staging_pins` freely
 without putting the database at risk. We do not share the database itself.
 
+After changing the indexed Pin representation, rebuild only staging with:
+
+```
+heroku run rake environment elasticsearch:import:model CLASS='Pin' INCLUDE='PinImage,Surgeon,Procedure' FORCE=true -a transbucket-staging
+```
+
+This uses staging's `INDEX_PREFIX=staging` and recreates only `staging_pins`.
+Never run this command against the production app as part of staging testing.
+
 For a fast local smoke loop, reseed the test DB and run the same script
 against localhost:
 

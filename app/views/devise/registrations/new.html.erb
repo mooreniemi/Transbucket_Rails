@@ -8,7 +8,7 @@
         <span class="explanation"><%= I18n.t(".explanations.username") %></span>
         <div class="input-group padded_nicely">
           <span class="input-group-addon"><%= fa_icon "users" %></span>
-          <%= f.text_field :username, placeholder: "Username", class: "form-control" %>
+          <%= f.text_field :username, placeholder: t('public.extra.username'), class: "form-control" %>
         </div>
       </div>
       <div id="email">
@@ -26,20 +26,20 @@
         </div>
         <div class="input-group padded_nicely">
           <span class="input-group-addon"><%= fa_icon "lock" %><%= fa_icon "check" %></span>
-          <%= f.password_field :password_confirmation, placeholder: "Password confirmation", class: "form-control" %>
+          <%= f.password_field :password_confirmation, placeholder: t('public.extra.password_confirmation'), class: "form-control" %>
         </div>
       </div>
       <div id="name">
         <span class="explanation"><%= I18n.t(".explanations.name") %></span>
         <div class="input-group padded_nicely">
           <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-          <%= f.text_field :name, placeholder: "Your name", class: "form-control" %>
+          <%= f.text_field :name, placeholder: t('public.auth.your_name'), class: "form-control" %>
         </div>
       </div>
       <div id="gender">
         <span class="explanation"><%= I18n.t(".explanations.gender") %></span>
         <div class="input-group padded_nicely">
-          <span class="input-group-addon"><%= fa_icon "key" %> Gender: </span>
+          <span class="input-group-addon"><%= fa_icon "key" %> <%= t('public.extra.gender') %>: </span>
           <%= f.select :gender_id, options_from_collection_for_select(Gender.all, "id", "name"), {}, { class: "form-control"} %>
         </div>
       </div>

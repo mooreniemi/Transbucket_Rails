@@ -1,5 +1,5 @@
 <% seo_meta description: 'Browse Transbucket submissions by user.', noindex: true %>
-<h2><%= title 'Submissions By User Results' %></h2>
+<h2><%= title t('public.extra.submissions_by_user') %></h2>
 <div id="controls" class="row">
   <div class="page_container" class="col-md-6" style="float:left;">
     <%= will_paginate @pins unless @pins.nil? %>

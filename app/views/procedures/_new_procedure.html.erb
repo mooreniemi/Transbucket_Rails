@@ -2,20 +2,20 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <%= link_to fa_icon("times"), '#', class: 'cancel pull-right' %>
-      <h3 class="panel-title">Add a new procedure</h3>
+      <h3 class="panel-title"><%= t('public.extra.add_procedure') %></h3>
     </div>
     <div class="panel-body">
       <div class="input-group padded_nicely">
-        <%= procedure_form.text_field :name, placeholder: "Name of procedure" %>
+        <%= procedure_form.text_field :name, placeholder: t('public.extra.procedure_name') %>
       </div>
       <div class="input-group padded_nicely">
-        <%= procedure_form.select :body_type, options_for_select([ "Top", "Bottom", "Face", "Other" ]) %>
+        <%= procedure_form.select :body_type, options_for_select([[t('public.extra.top'), 'Top'], [t('public.extra.bottom'), 'Bottom'], [t('public.extra.face'), 'Face'], [t('public.extra.other'), 'Other']]) %>
       </div>
       <div class="input-group padded_nicely">
-        <%= procedure_form.select :gender, options_for_select([ "FTM", "MTF" ]) %>
+        <%= procedure_form.select :gender, options_for_select([[t('public.extra.ftm'), 'FTM'], [t('public.extra.mtf'), 'MTF']]) %>
       </div>
       <div class="input-group padded_nicely">
-        <%= procedure_form.text_field :description, placeholder: "Describe this procedure" %>
+        <%= procedure_form.text_field :description, placeholder: t('public.extra.describe_procedure') %>
       </div>
     </div>
   </div>

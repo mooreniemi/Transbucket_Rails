@@ -15,6 +15,7 @@ class PinSearchQuery
                 fields: [
                   "surgeon.pretty_name",
                   "procedure.name",
+                  "procedure.aliases",
                   "procedure.description",
                   "description",
                   "details",

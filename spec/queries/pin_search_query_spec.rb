@@ -29,6 +29,9 @@ describe PinSearchQuery do
           }
         )
       )
+
+      fields = clauses.first[:multi_match][:fields]
+      expect(fields).to include('procedure.aliases')
     end
   end
 end

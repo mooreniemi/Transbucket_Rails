@@ -48,6 +48,7 @@ class Pin < ActiveRecord::Base
           indexes :keyword, type: 'keyword'
         end
         indexes :description, type: 'text', analyzer: 'english'
+        indexes :aliases, type: 'text'
       end
       indexes :pin_images do
         indexes :caption, type: 'text', analyzer: 'english'
@@ -64,7 +65,7 @@ class Pin < ActiveRecord::Base
       ],
       include: {
         surgeon: { methods: [:pretty_name], only: [:pretty_name] },
-        procedure: { only: [:name, :description] },
+        procedure: { only: [:name, :description], methods: [:search_aliases] },
         pin_images: { only: [:caption] },
         complications: { only: [:name] }
       }

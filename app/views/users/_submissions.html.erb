@@ -1,4 +1,4 @@
-<h2>Your Submissions</h2>
+<h2><%= t('directory.your_submissions', default: t('public.extra.submissions_by_user')) %></h2>
 <div class="profile_well">
     <% if current_user.pins.length == 0 then %>
     <%= link_to 'Submit Now +', new_pin_path %>

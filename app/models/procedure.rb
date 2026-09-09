@@ -27,4 +27,13 @@ class Procedure < ActiveRecord::Base
   def self.names
     self.pluck(:name).sort
   end
+
+  # Search aliases are editorial data, not alternate procedure records. Keep
+  # the canonical procedure name unchanged while allowing localized searches.
+  def search_aliases
+    I18n.available_locales.flat_map do |locale|
+      aliases = I18n.t(:procedure_aliases, locale: locale, default: {})
+      aliases[name] || aliases[name.to_sym] || []
+    end.compact.uniq
+  end
 end

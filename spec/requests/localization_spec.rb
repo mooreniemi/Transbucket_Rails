@@ -52,4 +52,15 @@ describe 'locale-prefixed URLs', type: :request do
     expect(response.body).to include('hreflang="x-default" href="/en"')
     expect(response.body).to include('"url":"http://www.example.com/de"')
   end
+
+  it 'rejects unsupported locale prefixes instead of treating them as English' do
+    expect { get '/xx/' }.to raise_error(ActionController::RoutingError)
+  end
+
+  it 'uses the request locale for the document language' do
+    get '/pt-BR/'
+
+    expect(response).to be_success
+    expect(response.body).to include('<html lang="pt-BR">')
+  end
 end

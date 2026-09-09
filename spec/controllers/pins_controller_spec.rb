@@ -63,6 +63,15 @@ describe PinsController, :type => :controller do
       end
     end
 
+    describe 'GET #new' do
+      it 'renders the locale-specific TinyMCE language asset' do
+        get :new, locale: 'es'
+
+        expect(response).to be_success
+        expect(response.body).to include('language: "es"')
+      end
+    end
+
     describe 'POST #create' do
       it 'returns a valid pin on create' do
         surgeon = attributes_for(:surgeon)

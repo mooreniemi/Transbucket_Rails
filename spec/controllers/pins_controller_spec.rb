@@ -83,6 +83,17 @@ describe PinsController, :type => :controller do
         expect(response).to redirect_to(pin_url(assigns(:pin)))
       end
 
+      it 'keeps the selected locale after creating a pin' do
+        surgeon = attributes_for(:surgeon)
+        procedure = attributes_for(:procedure)
+        attrs = attributes_for(:pin).merge("surgeon_attributes" => surgeon, "procedure_attributes" => procedure)
+        image_attrs = attributes_for(:pin_image)
+
+        post :create, pin: attrs, pin_images: { "0" => image_attrs }, locale: 'es'
+
+        expect(response).to redirect_to(pin_url(assigns(:pin), locale: 'es'))
+      end
+
       it "refuses to create an invalid pin" do
         attrs = attributes_for(:pin, :invalid)
         image_attrs = attributes_for(:pin_image)

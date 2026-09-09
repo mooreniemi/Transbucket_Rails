@@ -97,7 +97,6 @@ group :development do
   gem 'any_login'
 	gem 'letter_opener'
 	gem 'seed_dump'
-	gem 'thin', '~> 1.8'
 	gem 'quiet_assets'
 	gem 'better_errors'
 end

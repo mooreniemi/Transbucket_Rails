@@ -38,6 +38,23 @@ REGISTRATION_MARKERS = {
   "nl" => "Gebruikersnaam", "pl" => "Nazwa użytkownika", "ru" => "Имя пользователя",
   "tr" => "Kullanıcı adı", "vi" => "Tên người dùng", "ar" => "اسم المستخدم"
 }.freeze
+ACCOUNT_MARKERS = {
+  "en" => ["Name", "Safe mode"],
+  "de" => ["Name", "Sicherer Modus"],
+  "es" => ["Nombre", "Modo seguro"],
+  "fr" => ["Nom", "Mode sécurisé"],
+  "it" => ["Nome", "Modalità sicura"],
+  "ja" => ["名前", "セーフモード"],
+  "zh-CN" => ["姓名", "安全模式"],
+  "zh-TW" => ["姓名", "安全模式"],
+  "pt-BR" => ["Nome", "Modo seguro"],
+  "nl" => ["Naam", "Veilige modus"],
+  "pl" => ["Imię", "Tryb bezpieczny"],
+  "ru" => ["Имя", "Безопасный режим"],
+  "tr" => ["Ad", "Güvenli mod"],
+  "vi" => ["Tên", "Chế độ an toàn"],
+  "ar" => ["الاسم", "الوضع الآمن"]
+}.freeze
 
 class StagingSmoke
   def initialize(locale)
@@ -49,6 +66,7 @@ class StagingSmoke
     verify_public_localization
     verify_registration_localization
     login
+    verify_account_localization
     pin_id, search_term = create_pin
     edit_pin(pin_id)
     verify_search_page
@@ -103,6 +121,14 @@ class StagingSmoke
 
     unless auth_check.code.to_i == 200
       raise "login did not establish an authenticated session"
+    end
+  end
+
+  def verify_account_localization
+    response = get("/users/edit")
+    profile_label, settings_label = ACCOUNT_MARKERS.fetch(@locale)
+    unless response.code.to_i == 200 && response.body.include?(profile_label) && response.body.include?(settings_label)
+      raise "localized account page failed for #{@locale}"
     end
   end
 

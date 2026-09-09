@@ -21,6 +21,7 @@ class StagingSmoke
   end
 
   def run
+    verify_public_localization
     login
     pin_id, search_term = create_pin
     edit_pin(pin_id)
@@ -30,6 +31,23 @@ class StagingSmoke
   end
 
   private
+
+  def verify_public_localization
+    legacy = get("/")
+    unless legacy.code.to_i == 301 && URI.parse(legacy["location"]).path == "/en/"
+      raise "legacy homepage did not redirect to /en/"
+    end
+
+    localized = get("/de/")
+    unless localized.code.to_i == 200 && localized.body.include?('<html lang="de">') && localized.body.include?('hreflang="x-default"')
+      raise "localized homepage metadata failed"
+    end
+
+    newsfeed = get("/de/newsfeed")
+    unless newsfeed.code.to_i == 200 && newsfeed.body.include?("Neuigkeiten")
+      raise "localized newsfeed failed"
+    end
+  end
 
   def login
     token = csrf_token("/users/sign_in")

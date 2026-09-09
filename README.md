@@ -148,6 +148,21 @@ If you need to deploying a branch to [staging](https://transbucket-staging.herok
 
 `git push staging your_branch:master`
 
+The locale-aware staging smoke test exercises legacy redirects, localized
+metadata and newsfeed output, then logs in and verifies multi-image pin
+creation, editing, and search indexing. Supply credentials through the shell;
+never commit or paste them into the repository or chat:
+
+```
+STAGING_USER=meowmeow STAGING_PASSWORD='...' \
+  bundle exec ruby script/staging_smoke.rb
+```
+
+Use `STAGING_LOCALE=de` (or another supported locale) to run the authenticated
+flow through that locale. The script writes one test pin to staging and
+requires a worker dyno for the search-indexing assertion; scale that worker
+back to zero afterward if it is not otherwise needed.
+
 Connecting to staging to debug or run tasks:
 
 `heroku run rails console --app transbucket-staging`

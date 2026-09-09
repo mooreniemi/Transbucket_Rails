@@ -12,7 +12,7 @@
   </div>
   <div class="input-group">
     <span class="input-group-addon"><%= fa_icon "key" %> <%= t('public.auth.gender') %>: </span>
-    <%= f.select :gender_id, options_from_collection_for_select(Gender.all, "id", "name", resource.gender.id), {}, { class: "form-control"} %>
+    <%= f.select :gender_id, localized_gender_options(resource.gender.id), {}, { class: "form-control"} %>
   </div>
   <small><%= t('public.extra.profile_help') %></small>
   <div class="input-group">

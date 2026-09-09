@@ -40,7 +40,7 @@
         <span class="explanation"><%= I18n.t(".explanations.gender") %></span>
         <div class="input-group padded_nicely">
           <span class="input-group-addon"><%= fa_icon "key" %> <%= t('public.auth.gender') %>: </span>
-          <%= f.select :gender_id, options_from_collection_for_select(Gender.all, "id", "name"), {}, { class: "form-control"} %>
+          <%= f.select :gender_id, localized_gender_options, {}, { class: "form-control"} %>
         </div>
       </div>
       <p><%= I18n.t(".explanations.tos") %></p>

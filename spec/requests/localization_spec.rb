@@ -80,4 +80,12 @@ describe 'locale-prefixed URLs', type: :request do
       expect(I18n.exists?('account_menu.login', locale)).to be(true), "missing login label for #{locale}"
     end
   end
+
+  it 'has visible labels for every stored gender in every locale' do
+    %w[FTM MTF GenderQueer None Cisgender].each do |gender|
+      SUPPORTED_LOCALES.each do |locale|
+        expect(I18n.exists?("gender_labels.#{gender}", locale)).to be(true), "missing gender label #{gender} for #{locale}"
+      end
+    end
+  end
 end

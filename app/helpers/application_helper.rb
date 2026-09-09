@@ -1,4 +1,10 @@
 module ApplicationHelper
+  def localized_gender_options(selected_id = nil)
+    Gender.all.map do |gender|
+      [I18n.t("gender_labels.#{gender.name}", default: gender.name), gender.id, { selected: gender.id == selected_id }]
+    end
+  end
+
   def locale_url(locale)
     url_for(request.query_parameters.merge(locale: locale))
   end

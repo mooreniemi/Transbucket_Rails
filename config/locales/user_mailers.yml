@@ -1,0 +1,150 @@
+en:
+  comment_mailer:
+    subject: "Transbucket.com: New %{comment_type} on %{id}"
+    types: { comment: "Comment", question: "Question" }
+    greeting: "Hey, %{username}!"
+    posted: "Another member has posted a %{comment_type} on your submission."
+    reply: "If you'd like to reply, click %{link}."
+    this_link: "this link"
+    flag_help: "If you have concerns about the comment, you can flag it. Three flags from different users send it for review automatically, or email us for urgent moderation."
+    unsubscribe: "To stop receiving these notifications, edit your notification settings at %{link}."
+de:
+  comment_mailer:
+    subject: "Transbucket.com: Neuer %{comment_type} zu %{id}"
+    types: { comment: "Kommentar", question: "Frage" }
+    greeting: "Hallo, %{username}!"
+    posted: "Ein anderes Mitglied hat einen %{comment_type} zu deinem Beitrag veröffentlicht."
+    reply: "Wenn du antworten möchtest, klicke auf %{link}."
+    this_link: "diesen Link"
+    flag_help: "Wenn du Bedenken zum Kommentar hast, kannst du ihn melden. Drei Meldungen verschiedener Personen senden ihn automatisch zur Prüfung."
+    unsubscribe: "Wenn du diese Benachrichtigungen nicht erhalten möchtest, bearbeite deine Benachrichtigungseinstellungen über %{link}."
+es:
+  comment_mailer:
+    subject: "Transbucket.com: Nuevo %{comment_type} en %{id}"
+    types: { comment: "comentario", question: "pregunta" }
+    greeting: "Hola, %{username}."
+    posted: "Otro miembro ha publicado un %{comment_type} en tu publicación."
+    reply: "Si quieres responder, haz clic en %{link}."
+    this_link: "este enlace"
+    flag_help: "Si te preocupa el comentario, puedes denunciarlo. Tres denuncias de personas distintas lo envían automáticamente a revisión."
+    unsubscribe: "Si no quieres recibir estas notificaciones, edita tus preferencias en %{link}."
+fr:
+  comment_mailer:
+    subject: "Transbucket.com : Nouveau %{comment_type} sur %{id}"
+    types: { comment: "commentaire", question: "question" }
+    greeting: "Bonjour, %{username} !"
+    posted: "Un autre membre a publié un %{comment_type} sur votre contribution."
+    reply: "Pour répondre, cliquez sur %{link}."
+    this_link: "ce lien"
+    flag_help: "Si le commentaire vous pose problème, vous pouvez le signaler. Trois signalements de personnes différentes l’envoient automatiquement en modération."
+    unsubscribe: "Pour ne plus recevoir ces notifications, modifiez vos préférences via %{link}."
+it:
+  comment_mailer:
+    subject: "Transbucket.com: Nuovo %{comment_type} su %{id}"
+    types: { comment: "commento", question: "domanda" }
+    greeting: "Ciao, %{username}!"
+    posted: "Un altro membro ha pubblicato un %{comment_type} sul tuo contributo."
+    reply: "Per rispondere, fai clic su %{link}."
+    this_link: "questo link"
+    flag_help: "Se il commento ti preoccupa, puoi segnalarlo. Tre segnalazioni di persone diverse lo inviano automaticamente alla revisione."
+    unsubscribe: "Per non ricevere più queste notifiche, modifica le impostazioni tramite %{link}."
+ja:
+  comment_mailer:
+    subject: "Transbucket.com：%{id}への新しい%{comment_type}"
+    types: { comment: "コメント", question: "質問" }
+    greeting: "%{username}さん、こんにちは"
+    posted: "別のメンバーがあなたの投稿に%{comment_type}を追加しました。"
+    reply: "返信するには、%{link}をクリックしてください。"
+    this_link: "このリンク"
+    flag_help: "コメントに問題がある場合は報告できます。異なる3人から報告されると自動的に審査に送られます。"
+    unsubscribe: "通知を停止するには、%{link}から通知設定を編集してください。"
+zh-CN:
+  comment_mailer:
+    subject: "Transbucket.com：%{id} 的新%{comment_type}"
+    types: { comment: "评论", question: "问题" }
+    greeting: "%{username}，您好"
+    posted: "另一位成员在您的投稿中发布了%{comment_type}。"
+    reply: "如需回复，请点击%{link}。"
+    this_link: "此链接"
+    flag_help: "如果您对评论有疑虑，可以举报。来自不同用户的三次举报会自动送审。"
+    unsubscribe: "如不想接收这些通知，请通过%{link}修改通知设置。"
+zh-TW:
+  comment_mailer:
+    subject: "Transbucket.com：%{id} 的新%{comment_type}"
+    types: { comment: "評論", question: "問題" }
+    greeting: "%{username}，您好"
+    posted: "另一位成員在您的投稿中發表了%{comment_type}。"
+    reply: "如要回覆，請點選%{link}。"
+    this_link: "此連結"
+    flag_help: "如果您對評論有疑慮，可以檢舉。來自不同使用者的三次檢舉會自動送審。"
+    unsubscribe: "如不想接收這些通知，請透過%{link}修改通知設定。"
+pt-BR:
+  comment_mailer:
+    subject: "Transbucket.com: Novo %{comment_type} em %{id}"
+    types: { comment: "comentário", question: "pergunta" }
+    greeting: "Olá, %{username}!"
+    posted: "Outra pessoa publicou um %{comment_type} na sua publicação."
+    reply: "Para responder, clique em %{link}."
+    this_link: "este link"
+    flag_help: "Se você tiver preocupações com o comentário, pode denunciá-lo. Três denúncias de pessoas diferentes o enviam automaticamente para revisão."
+    unsubscribe: "Para deixar de receber estas notificações, edite suas configurações em %{link}."
+nl:
+  comment_mailer:
+    subject: "Transbucket.com: Nieuwe %{comment_type} bij %{id}"
+    types: { comment: "reactie", question: "vraag" }
+    greeting: "Hoi, %{username}!"
+    posted: "Een ander lid heeft een %{comment_type} bij je bijdrage geplaatst."
+    reply: "Klik op %{link} om te reageren."
+    this_link: "deze link"
+    flag_help: "Als je je zorgen maakt over de reactie, kun je deze melden. Drie meldingen van verschillende gebruikers sturen deze automatisch ter beoordeling."
+    unsubscribe: "Bewerk je meldingsinstellingen via %{link} als je deze meldingen niet meer wilt ontvangen."
+pl:
+  comment_mailer:
+    subject: "Transbucket.com: Nowy %{comment_type} przy %{id}"
+    types: { comment: "komentarz", question: "pytanie" }
+    greeting: "Cześć, %{username}!"
+    posted: "Inny użytkownik dodał %{comment_type} do Twojego wpisu."
+    reply: "Aby odpowiedzieć, kliknij %{link}."
+    this_link: "ten link"
+    flag_help: "Jeśli komentarz budzi Twoje obawy, możesz go zgłosić. Trzy zgłoszenia od różnych użytkowników automatycznie przekazują go do sprawdzenia."
+    unsubscribe: "Aby przestać otrzymywać te powiadomienia, zmień ustawienia przez %{link}."
+ru:
+  comment_mailer:
+    subject: "Transbucket.com: Новый %{comment_type} к записи %{id}"
+    types: { comment: "комментарий", question: "вопрос" }
+    greeting: "Здравствуйте, %{username}!"
+    posted: "Другой участник оставил %{comment_type} к вашей публикации."
+    reply: "Чтобы ответить, перейдите по ссылке: %{link}."
+    this_link: "ссылка"
+    flag_help: "Если комментарий вызывает опасения, его можно пожаловаться. Три жалобы от разных пользователей автоматически отправят его на проверку."
+    unsubscribe: "Чтобы не получать эти уведомления, измените настройки через %{link}."
+tr:
+  comment_mailer:
+    subject: "Transbucket.com: %{id} için yeni %{comment_type}"
+    types: { comment: "yorum", question: "soru" }
+    greeting: "Merhaba, %{username}!"
+    posted: "Başka bir üye gönderinize %{comment_type} ekledi."
+    reply: "Yanıtlamak için %{link} bağlantısına tıklayın."
+    this_link: "bu bağlantıya"
+    flag_help: "Yorumla ilgili endişeniz varsa bildirebilirsiniz. Farklı kullanıcılardan gelen üç bildirim içeriği otomatik olarak incelemeye gönderir."
+    unsubscribe: "Bu bildirimleri almak istemiyorsanız ayarlarınızı %{link} üzerinden düzenleyin."
+vi:
+  comment_mailer:
+    subject: "Transbucket.com: %{comment_type} mới trên %{id}"
+    types: { comment: "bình luận", question: "câu hỏi" }
+    greeting: "Xin chào, %{username}!"
+    posted: "Một thành viên khác đã đăng %{comment_type} trên bài đăng của bạn."
+    reply: "Để trả lời, hãy nhấp vào %{link}."
+    this_link: "liên kết này"
+    flag_help: "Nếu lo ngại về bình luận, bạn có thể báo cáo. Ba báo cáo từ những người dùng khác nhau sẽ tự động chuyển nội dung đi xem xét."
+    unsubscribe: "Nếu không muốn nhận thông báo, hãy chỉnh cài đặt tại %{link}."
+ar:
+  comment_mailer:
+    subject: "Transbucket.com: %{comment_type} جديد على %{id}"
+    types: { comment: "تعليق", question: "سؤال" }
+    greeting: "مرحباً، %{username}!"
+    posted: "نشر عضو آخر %{comment_type} على منشورك."
+    reply: "للرد، انقر على %{link}."
+    this_link: "هذا الرابط"
+    flag_help: "إذا كانت لديك مخاوف بشأن التعليق، يمكنك الإبلاغ عنه. تؤدي ثلاثة بلاغات من مستخدمين مختلفين إلى مراجعته تلقائياً."
+    unsubscribe: "لإيقاف هذه الإشعارات، عدّل إعداداتك عبر %{link}."

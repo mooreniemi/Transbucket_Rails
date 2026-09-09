@@ -7,6 +7,11 @@ describe 'application locales' do
   REQUIRED_FILTER_SCOPES = %w(ftm mtf bottom top need_category).freeze
   REQUIRED_PROFILE_KEYS = %w(edit_title name email profile_help new_password current_password update submissions submit_now delete_confirm submission).freeze
   REQUIRED_SETTINGS_KEYS = %w(title safe_mode safe_mode_help notifications notifications_help update cancel_account cancel_warning cancel_confirm).freeze
+  REQUIRED_CONFIRMATION_KEYS = %w(subject greeting instruction action).freeze
+  REQUIRED_RESET_KEYS = %w(subject greeting instruction action instruction_2 instruction_3).freeze
+  REQUIRED_PASSWORD_CHANGE_KEYS = %w(subject greeting message).freeze
+  REQUIRED_UNLOCK_KEYS = %w(subject greeting message instruction action).freeze
+  REQUIRED_COMMENT_MAILER_KEYS = %w(subject greeting posted reply this_link flag_help unsubscribe).freeze
 
   def merge_translations(left, right)
     left.merge(right) do |_key, old_value, new_value|
@@ -39,6 +44,27 @@ describe 'application locales' do
       end
       REQUIRED_SETTINGS_KEYS.each do |key|
         value = @translations.fetch(locale).fetch('settings').fetch(key)
+        expect(value).not_to be_nil
+        expect(value).not_to eq('')
+      end
+      REQUIRED_CONFIRMATION_KEYS.each do |key|
+        value = @translations.fetch(locale).fetch('devise').fetch('mailer').fetch('confirmation_instructions').fetch(key)
+        expect(value).not_to be_nil
+        expect(value).not_to eq('')
+      end
+      {
+        'reset_password_instructions' => REQUIRED_RESET_KEYS,
+        'password_change' => REQUIRED_PASSWORD_CHANGE_KEYS,
+        'unlock_instructions' => REQUIRED_UNLOCK_KEYS
+      }.each do |mailer, keys|
+        keys.each do |key|
+          value = @translations.fetch(locale).fetch('devise').fetch('mailer').fetch(mailer).fetch(key)
+          expect(value).not_to be_nil
+          expect(value).not_to eq('')
+        end
+      end
+      REQUIRED_COMMENT_MAILER_KEYS.each do |key|
+        value = @translations.fetch(locale).fetch('comment_mailer').fetch(key)
         expect(value).not_to be_nil
         expect(value).not_to eq('')
       end

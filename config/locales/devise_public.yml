@@ -1,0 +1,105 @@
+en:
+  devise:
+    mailer:
+      confirmation_instructions: { subject: "Confirmation instructions", greeting: "Hello %{recipient}", instruction: "You can confirm your account email through the link below:", action: "Confirm my account" }
+      reset_password_instructions: { subject: "Reset password instructions", greeting: "Hello %{recipient}", instruction: "Someone has requested a link to change your password. You can do this through the link below:", action: "Change my password", instruction_2: "If you didn't request this, please ignore this email.", instruction_3: "Your password won't change until you access the link above and create a new one." }
+      password_change: { subject: "Your password has changed", greeting: "Hello %{recipient}", message: "We're contacting you to notify you that your password has been changed." }
+      unlock_instructions: { subject: "Unlock Instructions", greeting: "Hello %{recipient}", message: "Your account has been locked due to an excessive number of unsuccessful sign in attempts.", instruction: "Click the link below to unlock your account:", action: "Unlock my account" }
+de:
+  devise:
+    mailer:
+      confirmation_instructions: { subject: "Anleitung zur Kontobestätigung", greeting: "Hallo %{recipient}", instruction: "Bestätige deine Konto-E-Mail über den folgenden Link:", action: "Mein Konto bestätigen" }
+      reset_password_instructions: { subject: "Anleitung zum Zurücksetzen des Passworts", greeting: "Hallo %{recipient}", instruction: "Jemand hat einen Link zum Ändern deines Passworts angefordert. Du kannst dies über den folgenden Link tun:", action: "Mein Passwort ändern", instruction_2: "Wenn du dies nicht angefordert hast, ignoriere diese E-Mail.", instruction_3: "Dein Passwort wird erst geändert, wenn du den obigen Link öffnest und ein neues Passwort erstellst." }
+      password_change: { subject: "Dein Passwort wurde geändert", greeting: "Hallo %{recipient}", message: "Wir informieren dich darüber, dass dein Passwort geändert wurde." }
+      unlock_instructions: { subject: "Anleitung zum Entsperren", greeting: "Hallo %{recipient}", message: "Dein Konto wurde wegen zu vieler fehlgeschlagener Anmeldeversuche gesperrt.", instruction: "Klicke auf den folgenden Link, um dein Konto zu entsperren:", action: "Mein Konto entsperren" }
+es:
+  devise:
+    mailer:
+      confirmation_instructions: { subject: "Instrucciones de confirmación", greeting: "Hola %{recipient}", instruction: "Puedes confirmar el correo electrónico de tu cuenta mediante el siguiente enlace:", action: "Confirmar mi cuenta" }
+      reset_password_instructions: { subject: "Instrucciones para restablecer la contraseña", greeting: "Hola %{recipient}", instruction: "Alguien solicitó un enlace para cambiar tu contraseña. Puedes hacerlo mediante el siguiente enlace:", action: "Cambiar mi contraseña", instruction_2: "Si no lo solicitaste, ignora este correo.", instruction_3: "Tu contraseña no cambiará hasta que abras el enlace y crees una nueva." }
+      password_change: { subject: "Tu contraseña ha cambiado", greeting: "Hola %{recipient}", message: "Te informamos de que tu contraseña ha cambiado." }
+      unlock_instructions: { subject: "Instrucciones para desbloquear la cuenta", greeting: "Hola %{recipient}", message: "Tu cuenta se ha bloqueado por demasiados intentos de inicio de sesión fallidos.", instruction: "Haz clic en el siguiente enlace para desbloquear tu cuenta:", action: "Desbloquear mi cuenta" }
+fr:
+  devise:
+    mailer:
+      confirmation_instructions: { subject: "Instructions de confirmation", greeting: "Bonjour %{recipient}", instruction: "Vous pouvez confirmer l’adresse e-mail de votre compte avec le lien suivant :", action: "Confirmer mon compte" }
+      reset_password_instructions: { subject: "Instructions de réinitialisation du mot de passe", greeting: "Bonjour %{recipient}", instruction: "Une demande de changement de mot de passe a été effectuée. Vous pouvez le faire avec le lien suivant :", action: "Modifier mon mot de passe", instruction_2: "Si vous n’êtes pas à l’origine de cette demande, ignorez cet e-mail.", instruction_3: "Votre mot de passe ne changera qu’après avoir ouvert le lien et créé un nouveau mot de passe." }
+      password_change: { subject: "Votre mot de passe a été modifié", greeting: "Bonjour %{recipient}", message: "Nous vous informons que votre mot de passe a été modifié." }
+      unlock_instructions: { subject: "Instructions de déverrouillage", greeting: "Bonjour %{recipient}", message: "Votre compte a été verrouillé après trop de tentatives de connexion infructueuses.", instruction: "Cliquez sur le lien suivant pour déverrouiller votre compte :", action: "Déverrouiller mon compte" }
+it:
+  devise:
+    mailer:
+      confirmation_instructions: { subject: "Istruzioni per la conferma", greeting: "Ciao %{recipient}", instruction: "Puoi confermare l’e-mail del tuo account tramite il link seguente:", action: "Conferma il mio account" }
+      reset_password_instructions: { subject: "Istruzioni per reimpostare la password", greeting: "Ciao %{recipient}", instruction: "Qualcuno ha richiesto un link per cambiare la tua password. Puoi farlo tramite il link seguente:", action: "Cambia la mia password", instruction_2: "Se non hai fatto tu la richiesta, ignora questa e-mail.", instruction_3: "La password non cambierà finché non aprirai il link e ne creerai una nuova." }
+      password_change: { subject: "La tua password è stata modificata", greeting: "Ciao %{recipient}", message: "Ti informiamo che la tua password è stata modificata." }
+      unlock_instructions: { subject: "Istruzioni per sbloccare l’account", greeting: "Ciao %{recipient}", message: "Il tuo account è stato bloccato a causa di troppi tentativi di accesso falliti.", instruction: "Fai clic sul link seguente per sbloccare l’account:", action: "Sblocca il mio account" }
+ja:
+  devise:
+    mailer:
+      confirmation_instructions: { subject: "アカウント確認のご案内", greeting: "%{recipient}さん、こんにちは", instruction: "次のリンクからアカウントのメールアドレスを確認できます。", action: "アカウントを確認する" }
+      reset_password_instructions: { subject: "パスワード再設定のご案内", greeting: "%{recipient}さん、こんにちは", instruction: "パスワード変更のリンクがリクエストされました。次のリンクから変更できます。", action: "パスワードを変更する", instruction_2: "心当たりがない場合は、このメールを無視してください。", instruction_3: "上のリンクから新しいパスワードを作成するまで、パスワードは変更されません。" }
+      password_change: { subject: "パスワードが変更されました", greeting: "%{recipient}さん、こんにちは", message: "パスワードが変更されたことをお知らせします。" }
+      unlock_instructions: { subject: "アカウントロック解除のご案内", greeting: "%{recipient}さん、こんにちは", message: "ログインに何度も失敗したため、アカウントがロックされました。", instruction: "次のリンクからロックを解除してください。", action: "アカウントのロックを解除する" }
+zh-CN:
+  devise:
+    mailer:
+      confirmation_instructions: { subject: "账户确认说明", greeting: "%{recipient}，您好", instruction: "您可以通过以下链接确认账户邮箱：", action: "确认我的账户" }
+      reset_password_instructions: { subject: "重置密码说明", greeting: "%{recipient}，您好", instruction: "有人请求了更改密码的链接，您可以通过以下链接操作：", action: "更改我的密码", instruction_2: "如果不是您发起的请求，请忽略此邮件。", instruction_3: "在打开上方链接并创建新密码前，您的密码不会改变。" }
+      password_change: { subject: "您的密码已更改", greeting: "%{recipient}，您好", message: "您的密码已成功更改。" }
+      unlock_instructions: { subject: "账户解锁说明", greeting: "%{recipient}，您好", message: "由于多次登录失败，您的账户已被锁定。", instruction: "点击以下链接解锁账户：", action: "解锁我的账户" }
+zh-TW:
+  devise:
+    mailer:
+      confirmation_instructions: { subject: "帳戶確認說明", greeting: "%{recipient}，您好", instruction: "您可以透過以下連結確認帳戶電子郵件：", action: "確認我的帳戶" }
+      reset_password_instructions: { subject: "重設密碼說明", greeting: "%{recipient}，您好", instruction: "有人要求變更密碼的連結，您可以透過以下連結操作：", action: "變更我的密碼", instruction_2: "如果不是您提出的要求，請忽略此郵件。", instruction_3: "在開啟上方連結並建立新密碼前，您的密碼不會變更。" }
+      password_change: { subject: "您的密碼已變更", greeting: "%{recipient}，您好", message: "您的密碼已成功變更。" }
+      unlock_instructions: { subject: "帳戶解鎖說明", greeting: "%{recipient}，您好", message: "由於多次登入失敗，您的帳戶已被鎖定。", instruction: "點選以下連結解鎖帳戶：", action: "解鎖我的帳戶" }
+pt-BR:
+  devise:
+    mailer:
+      confirmation_instructions: { subject: "Instruções de confirmação", greeting: "Olá, %{recipient}", instruction: "Você pode confirmar o e-mail da sua conta pelo link abaixo:", action: "Confirmar minha conta" }
+      reset_password_instructions: { subject: "Instruções para redefinir a senha", greeting: "Olá, %{recipient}", instruction: "Alguém solicitou um link para alterar sua senha. Você pode fazer isso pelo link abaixo:", action: "Alterar minha senha", instruction_2: "Se você não solicitou isso, ignore este e-mail.", instruction_3: "Sua senha não será alterada até que você acesse o link e crie uma nova." }
+      password_change: { subject: "Sua senha foi alterada", greeting: "Olá, %{recipient}", message: "Estamos avisando que sua senha foi alterada." }
+      unlock_instructions: { subject: "Instruções para desbloquear a conta", greeting: "Olá, %{recipient}", message: "Sua conta foi bloqueada após muitas tentativas de login malsucedidas.", instruction: "Clique no link abaixo para desbloquear sua conta:", action: "Desbloquear minha conta" }
+nl:
+  devise:
+    mailer:
+      confirmation_instructions: { subject: "Instructies voor accountbevestiging", greeting: "Hallo %{recipient}", instruction: "Je kunt het e-mailadres van je account bevestigen via de onderstaande link:", action: "Mijn account bevestigen" }
+      reset_password_instructions: { subject: "Instructies voor wachtwoordherstel", greeting: "Hallo %{recipient}", instruction: "Iemand heeft een link aangevraagd om je wachtwoord te wijzigen. Dat kan via de onderstaande link:", action: "Mijn wachtwoord wijzigen", instruction_2: "Als jij dit niet hebt aangevraagd, kun je deze e-mail negeren.", instruction_3: "Je wachtwoord verandert pas nadat je de link hebt geopend en een nieuw wachtwoord hebt gemaakt." }
+      password_change: { subject: "Je wachtwoord is gewijzigd", greeting: "Hallo %{recipient}", message: "We laten je weten dat je wachtwoord is gewijzigd." }
+      unlock_instructions: { subject: "Instructies voor accountontgrendeling", greeting: "Hallo %{recipient}", message: "Je account is vergrendeld na te veel mislukte inlogpogingen.", instruction: "Klik op de onderstaande link om je account te ontgrendelen:", action: "Mijn account ontgrendelen" }
+pl:
+  devise:
+    mailer:
+      confirmation_instructions: { subject: "Instrukcje potwierdzenia", greeting: "Witaj %{recipient}", instruction: "Możesz potwierdzić adres e-mail konta za pomocą poniższego linku:", action: "Potwierdź moje konto" }
+      reset_password_instructions: { subject: "Instrukcje resetowania hasła", greeting: "Witaj %{recipient}", instruction: "Ktoś poprosił o link do zmiany hasła. Możesz to zrobić za pomocą poniższego linku:", action: "Zmień moje hasło", instruction_2: "Jeśli to nie Ty, zignoruj tę wiadomość.", instruction_3: "Hasło nie zmieni się, dopóki nie otworzysz linku i nie utworzysz nowego." }
+      password_change: { subject: "Twoje hasło zostało zmienione", greeting: "Witaj %{recipient}", message: "Informujemy, że Twoje hasło zostało zmienione." }
+      unlock_instructions: { subject: "Instrukcje odblokowania konta", greeting: "Witaj %{recipient}", message: "Twoje konto zostało zablokowane po zbyt wielu nieudanych próbach logowania.", instruction: "Kliknij poniższy link, aby odblokować konto:", action: "Odblokuj moje konto" }
+ru:
+  devise:
+    mailer:
+      confirmation_instructions: { subject: "Инструкции по подтверждению", greeting: "Здравствуйте, %{recipient}", instruction: "Подтвердить адрес электронной почты аккаунта можно по ссылке ниже:", action: "Подтвердить мой аккаунт" }
+      reset_password_instructions: { subject: "Инструкции по сбросу пароля", greeting: "Здравствуйте, %{recipient}", instruction: "Кто-то запросил ссылку для смены пароля. Это можно сделать по ссылке ниже:", action: "Изменить мой пароль", instruction_2: "Если вы этого не запрашивали, проигнорируйте письмо.", instruction_3: "Пароль не изменится, пока вы не откроете ссылку и не создадите новый." }
+      password_change: { subject: "Ваш пароль изменён", greeting: "Здравствуйте, %{recipient}", message: "Сообщаем, что ваш пароль был изменён." }
+      unlock_instructions: { subject: "Инструкции по разблокировке", greeting: "Здравствуйте, %{recipient}", message: "Ваш аккаунт заблокирован из-за большого числа неудачных попыток входа.", instruction: "Перейдите по ссылке ниже, чтобы разблокировать аккаунт:", action: "Разблокировать мой аккаунт" }
+tr:
+  devise:
+    mailer:
+      confirmation_instructions: { subject: "Hesap doğrulama talimatları", greeting: "Merhaba %{recipient}", instruction: "Hesabınızın e-posta adresini aşağıdaki bağlantıdan doğrulayabilirsiniz:", action: "Hesabımı doğrula" }
+      reset_password_instructions: { subject: "Parola sıfırlama talimatları", greeting: "Merhaba %{recipient}", instruction: "Birisi parolanızı değiştirmek için bağlantı istedi. Bunu aşağıdaki bağlantıdan yapabilirsiniz:", action: "Parolamı değiştir", instruction_2: "Bu isteği siz yapmadıysanız bu e-postayı yok sayın.", instruction_3: "Yukarıdaki bağlantıyı açıp yeni bir parola oluşturana kadar parolanız değişmez." }
+      password_change: { subject: "Parolanız değiştirildi", greeting: "Merhaba %{recipient}", message: "Parolanızın değiştirildiğini bildirmek için iletiyoruz." }
+      unlock_instructions: { subject: "Hesap kilidi açma talimatları", greeting: "Merhaba %{recipient}", message: "Çok sayıda başarısız giriş denemesi nedeniyle hesabınız kilitlendi.", instruction: "Hesabınızın kilidini açmak için aşağıdaki bağlantıya tıklayın:", action: "Hesabımın kilidini aç" }
+vi:
+  devise:
+    mailer:
+      confirmation_instructions: { subject: "Hướng dẫn xác nhận", greeting: "Xin chào %{recipient}", instruction: "Bạn có thể xác nhận email tài khoản bằng liên kết bên dưới:", action: "Xác nhận tài khoản của tôi" }
+      reset_password_instructions: { subject: "Hướng dẫn đặt lại mật khẩu", greeting: "Xin chào %{recipient}", instruction: "Có người đã yêu cầu liên kết để đổi mật khẩu. Bạn có thể thực hiện qua liên kết bên dưới:", action: "Đổi mật khẩu của tôi", instruction_2: "Nếu bạn không yêu cầu, hãy bỏ qua email này.", instruction_3: "Mật khẩu sẽ không đổi cho đến khi bạn mở liên kết và tạo mật khẩu mới." }
+      password_change: { subject: "Mật khẩu của bạn đã được đổi", greeting: "Xin chào %{recipient}", message: "Mật khẩu của bạn đã được đổi." }
+      unlock_instructions: { subject: "Hướng dẫn mở khóa tài khoản", greeting: "Xin chào %{recipient}", message: "Tài khoản đã bị khóa do có quá nhiều lần đăng nhập không thành công.", instruction: "Nhấp vào liên kết bên dưới để mở khóa tài khoản:", action: "Mở khóa tài khoản của tôi" }
+ar:
+  devise:
+    mailer:
+      confirmation_instructions: { subject: "تعليمات تأكيد الحساب", greeting: "مرحباً %{recipient}", instruction: "يمكنك تأكيد البريد الإلكتروني لحسابك عبر الرابط أدناه:", action: "تأكيد حسابي" }
+      reset_password_instructions: { subject: "تعليمات إعادة تعيين كلمة المرور", greeting: "مرحباً %{recipient}", instruction: "طلب شخص ما رابطاً لتغيير كلمة المرور. يمكنك فعل ذلك عبر الرابط أدناه:", action: "تغيير كلمة المرور", instruction_2: "إذا لم تطلب ذلك، فتجاهل هذه الرسالة.", instruction_3: "لن تتغير كلمة المرور حتى تفتح الرابط وتنشئ كلمة مرور جديدة." }
+      password_change: { subject: "تم تغيير كلمة المرور", greeting: "مرحباً %{recipient}", message: "نحيطك علماً بأنه تم تغيير كلمة المرور الخاصة بك." }
+      unlock_instructions: { subject: "تعليمات إلغاء قفل الحساب", greeting: "مرحباً %{recipient}", message: "تم قفل حسابك بسبب كثرة محاولات تسجيل الدخول الفاشلة.", instruction: "انقر على الرابط أدناه لإلغاء قفل حسابك:", action: "إلغاء قفل حسابي" }

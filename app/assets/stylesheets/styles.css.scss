@@ -142,6 +142,16 @@ p {
   padding: 15px;
 }
 
+.footer-links,
+.locale-picker {
+  display: block;
+}
+
+.locale-picker {
+  margin-top: 8px;
+  line-height: 1.8;
+}
+
 .padded_nicely {
   padding: 10px;
   margin: auto;

@@ -7,6 +7,7 @@ class Procedure < ActiveRecord::Base
   has_many :pins
   has_many :skills
   has_many :surgeons, through: :skills
+  has_many :translations, class_name: 'ProcedureTranslation', dependent: :destroy
 
   acts_as_commentable
 
@@ -21,7 +22,12 @@ class Procedure < ActiveRecord::Base
   validates :name, presence: true
 
   def to_s
-    name
+    localized_name
+  end
+
+  def localized_name(locale = I18n.locale)
+    translation = translations.detect { |candidate| candidate.locale == locale.to_s }
+    translation ? translation.name : name
   end
 
   def self.names
@@ -31,9 +37,11 @@ class Procedure < ActiveRecord::Base
   # Search aliases are editorial data, not alternate procedure records. Keep
   # the canonical procedure name unchanged while allowing localized searches.
   def search_aliases
-    I18n.available_locales.flat_map do |locale|
+    translated_names = translations.map(&:name)
+    editorial_aliases = I18n.available_locales.flat_map do |locale|
       aliases = I18n.t(:procedure_aliases, locale: locale, default: {})
       aliases[name] || aliases[name.to_sym] || []
-    end.compact.uniq
+    end
+    (translated_names + editorial_aliases).compact.uniq
   end
 end

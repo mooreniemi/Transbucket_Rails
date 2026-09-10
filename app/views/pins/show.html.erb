@@ -1,5 +1,5 @@
 <% surgeon_name = @pin.unknown_surgeon? ? t('public.pin.unknown_surgeon') : t('public.pin.doctor_prefix') + @pin.surgeon.to_s %>
-<% pin_title = "#{@pin.procedure.name} #{t('public.pin.by')} #{surgeon_name}" %>
+<% pin_title = "#{@pin.procedure.localized_name} #{t('public.pin.by')} #{surgeon_name}" %>
 <% seo_meta description: "#{pin_title} on Transbucket.", canonical: pin_url(id: @pin.id) %>
 <% title pin_title %>
 <% json_ld_tag(
@@ -54,7 +54,7 @@
         <%= fa_icon "plus-square" %> <%= t('public.pin.procedure') %>
       </dt>
       <dd>
-        <%= link_to @pin.procedure.name, pins_path({procedure: [@pin.procedure.id]}) %>
+        <%= link_to @pin.procedure.localized_name, pins_path({procedure: [@pin.procedure.id]}) %>
       </dd>
       <dt>
           <%= fa_icon "usd" %> <%= t('public.pin.cost') %>

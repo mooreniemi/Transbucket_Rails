@@ -42,6 +42,24 @@ describe Procedure do
       expect(procedure.search_aliases).to include('phallo', 'faloplastia', 'phalloplastie')
       expect(procedure.name).to eq('phalloplasty')
     end
+
+    it 'includes database translations without changing the canonical name' do
+      procedure = create(:procedure, name: 'phalloplasty')
+      procedure.translations.create!(locale: 'es', name: 'faloplastia')
+
+      expect(procedure.reload.search_aliases).to include('faloplastia')
+      expect(procedure.name).to eq('phalloplasty')
+    end
+  end
+
+  describe '#localized_name' do
+    it 'uses a translation for the requested locale and falls back to canonical name' do
+      procedure = create(:procedure, name: 'double incision')
+      procedure.translations.create!(locale: 'es', name: 'doble incisión')
+
+      expect(procedure.localized_name(:es)).to eq('doble incisión')
+      expect(procedure.localized_name(:de)).to eq('double incision')
+    end
   end
   it 'has #names' do
     create_list(:procedure, 3)

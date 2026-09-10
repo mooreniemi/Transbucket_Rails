@@ -32,6 +32,13 @@ class PinSearchQuery
                   analyzer: "english"
                 }
               }
+            },
+            { match_phrase_prefix:
+              { "procedure.aliases" => {
+                  query: search_terms,
+                  analyzer: "standard"
+                }
+              }
             }
           ],
           minimum_should_match: 1

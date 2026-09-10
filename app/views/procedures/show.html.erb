@@ -1,10 +1,11 @@
-<% seo_meta description: "View #{@procedure.name} submissions, average ratings, and discussion on Transbucket.", canonical: procedure_url(id: @procedure.id) %>
-<% title @procedure.to_s  %>
+<% procedure_name = @procedure.localized_name %>
+<% seo_meta description: "View #{procedure_name} submissions, average ratings, and discussion on Transbucket.", canonical: procedure_url(id: @procedure.id) %>
+<% title procedure_name  %>
 <% json_ld_tag(
   {
     '@context' => 'https://schema.org',
     '@type' => 'MedicalProcedure',
-    'name' => @procedure.name,
+    'name' => procedure_name,
     'description' => @procedure.description,
     'url' => procedure_url(id: @procedure.id)
   }.compact
@@ -16,14 +17,14 @@
     'itemListElement' => [
       { '@type' => 'ListItem', 'position' => 1, 'name' => t('header.home'), 'item' => root_url },
       { '@type' => 'ListItem', 'position' => 2, 'name' => t('header.procedures'), 'item' => procedures_url },
-      { '@type' => 'ListItem', 'position' => 3, 'name' => @procedure.name, 'item' => procedure_url(id: @procedure.id) }
+      { '@type' => 'ListItem', 'position' => 3, 'name' => procedure_name, 'item' => procedure_url(id: @procedure.id) }
     ]
   }
 ) %>
 <% cache([I18n.locale, @procedure]) do %>
   <div class="panel panel-default" itemscope itemtype="https://schema.org/MedicalProcedure">
     <div class="panel-heading">
-      <h1><%= @procedure.name %></h1>
+      <h1><%= procedure_name %></h1>
       <%= link_to t('public.pin.see_all_submissions'), pins_path(procedure: @procedure.id) %>
     </div>
     <% if @procedure.body_type %>

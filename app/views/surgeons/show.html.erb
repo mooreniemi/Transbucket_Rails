@@ -48,7 +48,7 @@
     <% @surgeon.satisfaction_by_procedure.each do |procedure_id, satisfaction| %>
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title"><%= Procedure.find(procedure_id).name.to_s %>
+          <h3 class="panel-title"><%= Procedure.find(procedure_id).localized_name %>
           <%= link_to @pins_by_surgeon_procedure[procedure_id], pins_path(procedure: procedure_id, surgeon: @surgeon.id), { style: 'border-radius: 100%; background: #ffffcc; display:inline-block; padding:5px;' } %>
         </h3>
       </div>

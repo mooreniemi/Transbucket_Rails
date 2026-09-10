@@ -15,7 +15,7 @@
     <label class="control-label"><%= t('public.pin.procedure') %></label>
     <div id="procedure_form" class="controls">
       <%= f.fields_for :procedure do |procedure_form| %>
-        <%= procedure_form.select :id, options_from_collection_for_select(Procedure.order('name ASC'), 'id', 'to_s', procedure_form.object.id) %>
+        <%= procedure_form.select :id, options_from_collection_for_select(Procedure.order('name ASC'), 'id', 'localized_name', procedure_form.object.id) %>
 
         <a id="add_new_procedure" href="#" class="add-button"><%= fa_icon("plus-circle") %></a>
         <%= render partial: 'procedures/new_procedure', locals: {procedure_form: procedure_form} %>

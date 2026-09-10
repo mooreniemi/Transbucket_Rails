@@ -6,10 +6,24 @@ $btnPrimaryBackground: purple;
 
 @import 'bootstrap-responsive';*/
 
+// Sticky footer: body is a flex column at least viewport-tall, .container
+// (the main content wrapper in layouts/application.html.erb) grows to fill
+// whatever space the page content doesn't use, so .footer always lands at
+// the bottom of the viewport on short pages instead of floating mid-page.
+html {
+  height: 100%;
+}
+
 body{
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
   padding-top: 60px;
-  padding-bottom: 70px;
   background-color:#ccc;
+}
+
+.container {
+  flex: 1 0 auto;
 }
 
 // Keeps the procedures/surgeons index table headers visible while scrolling.
@@ -140,6 +154,10 @@ p {
 .submission_well {
   background-color: #fff;
   padding: 15px;
+}
+
+.footer {
+  flex-shrink: 0;
 }
 
 .footer-links,

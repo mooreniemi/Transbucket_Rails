@@ -10,7 +10,7 @@
             <%= t('public.pin.by') %> <strong>
               <%= link_to comment.user.try(:username) || comment.user.try(:id), pins_path(user: comment.user) %>
             </strong> |
-            <%= comment.updated_at.strftime('%b %d, %Y at %I:%M %p') %> |
+            <%= content_tag(:time, l(comment.updated_at, format: :long), datetime: comment.updated_at.utc.iso8601, class: 'local-time') %> |
             <% commentable = @pin ? @pin : @procedure %>
             <%= link_to "#{fa_icon("comments")} #{t('public.pin.reply')}".html_safe, new_comment_path(commentable_id: commentable.try(:id), commentable_type: commentable.try(:class), parent_id: comment.id), remote: true %>
             <%= " | " unless current_user == comment.user %>

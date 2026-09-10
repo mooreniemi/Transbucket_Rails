@@ -26,6 +26,8 @@ class Procedure < ActiveRecord::Base
   end
 
   def localized_name(locale = I18n.locale)
+    return name unless ProcedureTranslation.table_exists?
+
     translation = translations.detect { |candidate| candidate.locale == locale.to_s }
     translation ? translation.name : name
   end
@@ -37,11 +39,18 @@ class Procedure < ActiveRecord::Base
   # Search aliases are editorial data, not alternate procedure records. Keep
   # the canonical procedure name unchanged while allowing localized searches.
   def search_aliases
+    return editorial_aliases unless ProcedureTranslation.table_exists?
+
     translated_names = translations.map(&:name)
-    editorial_aliases = I18n.available_locales.flat_map do |locale|
+    (translated_names + editorial_aliases).compact.uniq
+  end
+
+  private
+
+  def editorial_aliases
+    I18n.available_locales.flat_map do |locale|
       aliases = I18n.t(:procedure_aliases, locale: locale, default: {})
       aliases[name] || aliases[name.to_sym] || []
-    end
-    (translated_names + editorial_aliases).compact.uniq
+    end.compact.uniq
   end
 end

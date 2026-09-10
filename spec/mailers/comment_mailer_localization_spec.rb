@@ -11,7 +11,7 @@ RSpec.describe CommentMailer do
       expect(mail.subject).to eq("Transbucket.com: Nuevo comentario en #{pin.id}")
       expect(mail.body.raw_source).to include('Hola')
       expect(mail.body.raw_source).to include('/es/pins/')
-      expect(mail.body.raw_source).to include('Configuración')
+      expect(mail.body.raw_source).to include('tus preferencias')
     end
   end
 end

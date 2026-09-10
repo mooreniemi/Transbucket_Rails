@@ -7,18 +7,24 @@ namespace :procedure do
     direction = (ENV['DIRECTION'] || 'up').to_s
     backup_path = Pathname.new(ENV['BACKUP_PATH'] || Rails.root.join('tmp', 'procedure_translations_backup.yml'))
     locales = ApplicationController::SUPPORTED_LOCALES
+    supplemental_catalog = YAML.load_file(Rails.root.join('config', 'locales', 'zz_procedure_names.yml'))
 
     # These are full procedure names whose first locale alias is a reviewed
     # display translation. Search-only abbreviations remain search aliases.
-    approved_names = %w[
-      phalloplasty
-      vaginoplasty
-      orchiectomy
-      hysterectomy
-      mastectomy
-      breast augmentation
-      facial feminization surgery
-      urethral lengthening
+    approved_names = [
+      'phalloplasty',
+      'vaginoplasty',
+      'orchiectomy',
+      'hysterectomy',
+      'mastectomy',
+      'breast augmentation',
+      'facial feminization surgery',
+      'urethral lengthening',
+      'double incision with grafts',
+      'periareolar mastectomy (keyhole)',
+      'bilateral mastectomy',
+      'metoidioplasty',
+      "metoidioplasty ('meta')"
     ]
 
     case direction
@@ -29,6 +35,9 @@ namespace :procedure do
       Procedure.where(name: approved_names).find_each do |procedure|
         locales.each do |locale|
           aliases = I18n.t(:procedure_aliases, locale: locale, default: {})
+          aliases = aliases.merge(
+            (supplemental_catalog[locale.to_s] || {}).fetch('procedure_aliases', {})
+          )
           translated_name = aliases[procedure.name] || aliases[procedure.name.to_sym]
           translated_name = Array(translated_name).first
           next if translated_name.blank? || translated_name == procedure.name

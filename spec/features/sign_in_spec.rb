@@ -9,7 +9,7 @@ describe "the sign-in process" do
       fill_in 'Username', :with => username
       fill_in 'Password', :with => user.password
     end
-    click_button 'Sign in'
+    click_button I18n.t('account_menu.login', locale: :en)
     expect(page).to have_content 'Signed in successfully'
   end
 

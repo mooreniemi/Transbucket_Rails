@@ -9,12 +9,12 @@
       <%= t('comment_mailer.posted', comment_type: t("comment_mailer.types.#{@comment_type}")) %>
     </p>
     <p>
-      <%= t('comment_mailer.reply', link: link_to(t('comment_mailer.this_link'), @url + "?utm_source=comment_reminder&utm_medium=email&utm_campaign=#{@comment_type}_reminder") ) %></p>
+      <%= raw t('comment_mailer.reply', link: link_to(t('comment_mailer.this_link'), @url + "?utm_source=comment_reminder&utm_medium=email&utm_campaign=#{@comment_type}_reminder") ) %></p>
     <p>
       <%= t('comment_mailer.flag_help') %>
     </p>
     <p>
-      <%= t('comment_mailer.unsubscribe', link: link_to(t('comment_mailer.this_link'), @unsub + "?utm_source=comment_reminder&utm_medium=email&utm_campaign=#{@comment_type}_reminder") ) %></p>
+      <%= raw t('comment_mailer.unsubscribe', link: link_to(t('comment_mailer.this_link'), @unsub + "?utm_source=comment_reminder&utm_medium=email&utm_campaign=#{@comment_type}_reminder") ) %></p>
     <p>
   </body>
 </html>

@@ -20,8 +20,9 @@ describe 'application locales' do
 
   before do
     locale_files = Dir[File.expand_path('../config/locales/*.yml', __dir__)].sort
-    expect(locale_files.map { |file| File.basename(file) }).to eq(['catalog.yml'])
-    @translations = YAML.load_file(locale_files.first)
+    expect(locale_files.map { |file| File.basename(file) }).to eq(['catalog.yml', 'zz_procedure_names.yml'])
+    @translations = YAML.load_file(locale_files.find { |file| file.end_with?('catalog.yml') })
+    @procedure_names = YAML.load_file(locale_files.find { |file| file.end_with?('zz_procedure_names.yml') })
   end
 
   it 'defines the first-pass public UI keys for every supported locale' do
@@ -95,6 +96,22 @@ describe 'application locales' do
         value = @translations.fetch(locale).fetch('comment_mailer').fetch(key)
         expect(value).not_to be_nil
         expect(value).not_to eq('')
+      end
+    end
+  end
+
+  it 'defines reviewed high-volume procedure labels for every supported locale' do
+    required_names = [
+      'double incision with grafts',
+      'periareolar mastectomy (keyhole)',
+      'bilateral mastectomy',
+      "metoidioplasty ('meta')"
+    ]
+
+    SUPPORTED_LOCALES.each do |locale|
+      aliases = @procedure_names.fetch(locale).fetch('procedure_aliases')
+      required_names.each do |name|
+        expect(aliases.fetch(name)).not_to be_empty
       end
     end
   end

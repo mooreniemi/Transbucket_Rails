@@ -6,7 +6,7 @@ namespace :procedure do
   task translations: :environment do
     direction = (ENV['DIRECTION'] || 'up').to_s
     backup_path = Pathname.new(ENV['BACKUP_PATH'] || Rails.root.join('tmp', 'procedure_translations_backup.yml'))
-    locales = I18n.available_locales.map(&:to_s)
+    locales = ApplicationController::SUPPORTED_LOCALES
 
     # These are full procedure names whose first locale alias is a reviewed
     # display translation. Search-only abbreviations remain search aliases.

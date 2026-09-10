@@ -48,7 +48,7 @@ class Procedure < ActiveRecord::Base
   private
 
   def editorial_aliases
-    I18n.available_locales.flat_map do |locale|
+    ApplicationController::SUPPORTED_LOCALES.flat_map do |locale|
       aliases = I18n.t(:procedure_aliases, locale: locale, default: {})
       aliases[name] || aliases[name.to_sym] || []
     end.compact.uniq

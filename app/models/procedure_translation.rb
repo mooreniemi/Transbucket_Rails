@@ -2,7 +2,7 @@ class ProcedureTranslation < ActiveRecord::Base
   belongs_to :procedure
 
   validates :procedure, presence: true
-  validates :locale, presence: true, inclusion: { in: ->(_record) { I18n.available_locales.map(&:to_s) } }
+  validates :locale, presence: true, inclusion: { in: ->(_record) { ApplicationController::SUPPORTED_LOCALES } }
   validates :name, presence: true, uniqueness: { scope: [:procedure_id, :locale] }
   validates :procedure_id, uniqueness: { scope: :locale }
 

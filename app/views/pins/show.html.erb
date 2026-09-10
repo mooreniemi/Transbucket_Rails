@@ -15,7 +15,7 @@
     '@context' => 'https://schema.org',
     '@type' => 'BreadcrumbList',
     'itemListElement' => [
-      { '@type' => 'ListItem', 'position' => 1, 'name' => t('header.home', default: 'Home'), 'item' => root_url },
+      { '@type' => 'ListItem', 'position' => 1, 'name' => t('header.home'), 'item' => root_url },
       { '@type' => 'ListItem', 'position' => 2, 'name' => t('header.submissions'), 'item' => pins_url },
       { '@type' => 'ListItem', 'position' => 3, 'name' => "#{@pin.procedure.name} by #{surgeon_name}", 'item' => pin_url(id: @pin.id) }
     ]

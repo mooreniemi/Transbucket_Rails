@@ -10,7 +10,7 @@ class FlagsController < ApplicationController
 
     respond_to do |format|
       if @flag[:status].present?
-        flash[:notice] = "Content flagged."
+        flash[:notice] = t('flash.content_flagged')
         format.json { render json: @flag, status: :created }
       else
         format.json { render json: @flag.errors, status: :unprocessable_entity }
@@ -28,7 +28,7 @@ class FlagsController < ApplicationController
 
     respond_to do |format|
       if publish_status
-        flash[:notice] = "Removed flags."
+        flash[:notice] = t('flash.removed_flags')
         format.json { render json: { status: 'unflagged'}, status: :ok }
       else
         format.json { render json: @content, status: :unprocessable_entity }

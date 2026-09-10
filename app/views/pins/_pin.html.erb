@@ -38,7 +38,7 @@
         </label>
       <% if current_user == pin.user || current_user.admin? %>
         <%= link_to fa_icon("pencil-square-o"), edit_pin_path(pin) %>
-        | <%= link_to fa_icon("trash-o"), pin, method: :delete, data: { confirm: 'Are you sure?' } %>
+        | <%= link_to fa_icon("trash-o"), pin, method: :delete, data: { confirm: t('public.confirmations.are_you_sure') } %>
       <% if pin.pending? %>
         | <%= link_to 'Remove Flag', remove_pin_flag_path(pin), remote: true %>
       <% end %>

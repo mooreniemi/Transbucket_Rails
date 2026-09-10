@@ -56,7 +56,7 @@ class PinsController < ApplicationController
         @pin = @form.model
         @pin.procedure.recalculate_avgs
 
-        format.html { redirect_to @pin, notice: 'Pin was successfully created.' }
+        format.html { redirect_to @pin, notice: t('flash.pin_created') }
         format.json { render json: @pin, status: :created, location: @pin }
       else
         format.html { render action: 'new' }
@@ -76,7 +76,7 @@ class PinsController < ApplicationController
         @pin = @form.model
         @pin.procedure.recalculate_avgs
 
-        format.html { redirect_to @pin, notice: 'Pin was successfully updated.' }
+        format.html { redirect_to @pin, notice: t('flash.pin_updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -92,10 +92,10 @@ class PinsController < ApplicationController
 
     respond_to do |format|
       if Pin.find_by_id(@pin.id)
-        flash[:error] = "Could not destroy #{@pin.id}!"
+        flash[:error] = t('flash.destroy_failed', id: @pin.id)
         format.json { render json: @pin.errors.full_messages, status: :unprocessable_entity }
       else
-        flash[:notice] = "Destroyed #{@pin.id}"
+        flash[:notice] = t('flash.destroyed', id: @pin.id)
         format.json { render json: { status: 'destroyed' }, status: :ok }
       end
     end

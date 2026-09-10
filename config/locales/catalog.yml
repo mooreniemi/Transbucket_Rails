@@ -483,6 +483,7 @@ en:
       reply: reply
       remove: Remove
       remove_confirm: Are you sure you want to remove this comment?
+      doctor_prefix: 'Dr. '
     form:
       photos: Photos
       details: Details
@@ -1006,6 +1007,7 @@ de:
       reply: antworten
       remove: Entfernen
       remove_confirm: Diesen Kommentar wirklich entfernen?
+      doctor_prefix: 'Dr. '
     form:
       photos: Fotos
       details: Details
@@ -1544,6 +1546,7 @@ es:
       reply: responder
       remove: Eliminar
       remove_confirm: "¿Seguro que quieres eliminar este comentario?"
+      doctor_prefix: 'Dr. '
     form:
       photos: Fotos
       details: Detalles
@@ -2079,6 +2082,7 @@ fr:
       reply: répondre
       remove: Supprimer
       remove_confirm: Supprimer ce commentaire ?
+      doctor_prefix: 'Dr. '
     form:
       photos: Photos
       details: Détails
@@ -2596,6 +2600,7 @@ it:
       reply: rispondi
       remove: Rimuovi
       remove_confirm: Vuoi davvero rimuovere questo commento?
+      doctor_prefix: 'Dott. '
     form:
       photos: Foto
       details: Dettagli
@@ -3076,6 +3081,7 @@ ja:
       reply: 返信
       remove: 削除
       remove_confirm: このコメントを削除してもよろしいですか？
+      doctor_prefix: 'Dr. '
     form:
       photos: 写真
       details: 詳細
@@ -3539,6 +3545,7 @@ zh-CN:
       reply: 回复
       remove: 删除
       remove_confirm: 确定要删除此评论吗？
+      doctor_prefix: '医生 '
     form:
       photos: 照片
       details: 详细信息
@@ -4027,6 +4034,7 @@ zh-TW:
       reply: 回覆
       remove: 刪除
       remove_confirm: 確定要刪除此評論嗎？
+      doctor_prefix: '醫師 '
     form:
       photos: 照片
       details: 詳細資料
@@ -4327,6 +4335,7 @@ pt-BR:
       reply: responder
       remove: Remover
       remove_confirm: Tem certeza de que deseja remover este comentário?
+      doctor_prefix: 'Dr. '
     form:
       photos: Fotos
       details: Detalhes
@@ -4630,6 +4639,7 @@ nl:
       reply: antwoorden
       remove: Verwijderen
       remove_confirm: Deze reactie verwijderen?
+      doctor_prefix: 'Dr. '
     form:
       photos: Foto’s
       details: Details
@@ -4933,6 +4943,7 @@ pl:
       reply: odpowiedz
       remove: Usuń
       remove_confirm: Czy na pewno usunąć ten komentarz?
+      doctor_prefix: 'dr '
     form:
       photos: Zdjęcia
       details: Szczegóły
@@ -5237,6 +5248,7 @@ ru:
       reply: ответить
       remove: Удалить
       remove_confirm: Удалить этот комментарий?
+      doctor_prefix: 'д-р '
     form:
       photos: Фотографии
       details: Подробности
@@ -5535,6 +5547,7 @@ tr:
       reply: yanıtla
       remove: Kaldır
       remove_confirm: Bu yorumu kaldırmak istediğinizden emin misiniz?
+      doctor_prefix: 'Dr. '
     form:
       photos: Fotoğraflar
       details: Ayrıntılar
@@ -5834,6 +5847,7 @@ vi:
       reply: trả lời
       remove: Xóa
       remove_confirm: Bạn có chắc muốn xóa bình luận này không?
+      doctor_prefix: 'BS. '
     form:
       photos: Ảnh
       details: Chi tiết
@@ -6125,6 +6139,7 @@ ar:
       reply: رد
       remove: حذف
       remove_confirm: هل تريد حذف هذا التعليق؟
+      doctor_prefix: 'د. '
     form:
       photos: الصور
       details: التفاصيل

@@ -33,7 +33,7 @@ describe PinSearchQuery do
       expect(clauses).to include(
         hash_including(
           match_phrase_prefix: {
-            'procedure.aliases' => hash_including(
+            'procedure.search_aliases' => hash_including(
               query: 'orchi',
               analyzer: 'standard'
             )
@@ -42,7 +42,7 @@ describe PinSearchQuery do
       )
 
       fields = clauses.first[:multi_match][:fields]
-      expect(fields).to include('procedure.aliases')
+      expect(fields).to include('procedure.search_aliases')
     end
   end
 end

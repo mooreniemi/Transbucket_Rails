@@ -48,7 +48,7 @@ class Pin < ActiveRecord::Base
           indexes :keyword, type: 'keyword'
         end
         indexes :description, type: 'text', analyzer: 'english'
-        indexes :aliases, type: 'text'
+        indexes :search_aliases, type: 'text'
       end
       indexes :pin_images do
         indexes :caption, type: 'text', analyzer: 'english'

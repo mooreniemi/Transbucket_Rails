@@ -16,7 +16,7 @@ class PagesController < ApplicationController
   end
 
   def newsfeed
-    @newsfeed_entries = %w(procedure_cleanup prefix_search discord_invite locales).map do |entry|
+    @newsfeed_entries = %w(locales discord_invite prefix_search procedure_cleanup).map do |entry|
       { body: I18n.t("newsfeed.entries.#{entry}"), date: I18n.t('newsfeed.date') }
     end
   end

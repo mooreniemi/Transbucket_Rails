@@ -20,9 +20,21 @@ describe 'application locales' do
 
   before do
     locale_files = Dir[File.expand_path('../config/locales/*.yml', __dir__)].sort
-    expect(locale_files.map { |file| File.basename(file) }).to eq(['catalog.yml', 'zz_procedure_names.yml'])
+    expect(locale_files.map { |file| File.basename(file) }).to eq(['about.yml', 'catalog.yml', 'zz_procedure_names.yml'])
     @translations = YAML.load_file(locale_files.find { |file| file.end_with?('catalog.yml') })
+    @about_translations = YAML.load_file(locale_files.find { |file| file.end_with?('about.yml') })
     @procedure_names = YAML.load_file(locale_files.find { |file| file.end_with?('zz_procedure_names.yml') })
+  end
+
+  it 'defines every About page translation for every supported locale' do
+    keys = %w(title meta_description origin welcome_heading welcome community_note funding_heading funding help_heading help github_link contact contact_form)
+    SUPPORTED_LOCALES.each do |locale|
+      keys.each do |key|
+        value = @about_translations.fetch(locale).fetch('about').fetch(key)
+        expect(value).not_to be_nil
+        expect(value).not_to eq('')
+      end
+    end
   end
 
   it 'defines the first-pass public UI keys for every supported locale' do

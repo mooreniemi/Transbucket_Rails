@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  scope '(:locale)', locale: /en|de|es|fr|it|ja|zh-CN|zh-TW|pt-BR|nl|pl|ru|tr|vi|ar/ do
+  scope '(:locale)', locale: /en|de|es|fr|it|ja|zh-CN|zh-TW|pt-BR|nl|pl|ru|tr|vi|ar|sv/ do
     root :to => 'pages#home'
 
     devise_for :users, controllers: { registrations: "registrations" }

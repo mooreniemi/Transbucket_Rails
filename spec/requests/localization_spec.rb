@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'locale-prefixed URLs', type: :request do
-  SUPPORTED_LOCALES = %w[en de es fr it ja zh-CN zh-TW pt-BR nl pl ru tr vi ar].freeze
+  REQUEST_SUPPORTED_LOCALES = %w[en de es fr it ja zh-CN zh-TW pt-BR nl pl ru tr vi ar sv].freeze
 
   after { I18n.locale = :en }
 
@@ -76,10 +76,19 @@ describe 'locale-prefixed URLs', type: :request do
     expect(response.body).to include('<html lang="pt-BR">')
   end
 
+  it 'serves the Swedish homepage and keeps its locale in links' do
+    get '/sv/'
+
+    expect(response).to be_success
+    expect(response.body).to include('<html lang="sv">')
+    expect(response.body).to include('Verkliga erfarenheter av könsbekräftande ingrepp')
+    expect(response.body).to include('href="/sv/procedures"')
+  end
+
   it 'has every translation used by the signup form in every locale' do
     signup_keys = %w[username email password name gender tos]
 
-    SUPPORTED_LOCALES.each do |locale|
+    REQUEST_SUPPORTED_LOCALES.each do |locale|
       signup_keys.each do |key|
         expect(I18n.exists?("explanations.#{key}", locale)).to be(true), "missing explanations.#{key} for #{locale}"
       end
@@ -93,7 +102,7 @@ describe 'locale-prefixed URLs', type: :request do
 
   it 'has visible labels for every stored gender in every locale' do
     %w[FTM MTF GenderQueer None Cisgender].each do |gender|
-      SUPPORTED_LOCALES.each do |locale|
+      REQUEST_SUPPORTED_LOCALES.each do |locale|
         expect(I18n.exists?("gender_labels.#{gender}", locale)).to be(true), "missing gender label #{gender} for #{locale}"
       end
     end

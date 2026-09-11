@@ -14,4 +14,14 @@ RSpec.describe CommentMailer do
       expect(mail.body.raw_source).to include('tus preferencias')
     end
   end
+
+  it 'renders Swedish comment notifications and their links' do
+    I18n.with_locale(:sv) do
+      mail = described_class.new_comment_email(user.id, pin.id)
+
+      expect(mail.subject).to eq("Transbucket.com: Ny kommentar på #{pin.id}")
+      expect(mail.body.raw_source).to include('Hej')
+      expect(mail.body.raw_source).to include('/sv/pins/')
+    end
+  end
 end

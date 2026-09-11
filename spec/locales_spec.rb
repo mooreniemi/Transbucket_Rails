@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'yaml'
 
 describe 'application locales' do
-  SUPPORTED_LOCALES = %w(en de es fr it ja zh-CN zh-TW pt-BR nl pl ru tr vi ar).freeze
+  SUPPORTED_LOCALES = %w(en de es fr it ja zh-CN zh-TW pt-BR nl pl ru tr vi ar sv).freeze
   REQUIRED_KEYS = %w(site.description homepage.title homepage.intro header.home header.search footer.discord_prefix locale.label legal.translation_notice account_menu.login filter_menu.apply filter_menu.clear filter_menu.scope filter_menu.procedure filter_menu.surgeon directory.procedures_title directory.procedures_intro directory.surgeons_title directory.surgeons_intro directory.submissions directory.submissions_intro directory.recent_submissions directory.search_results directory.search_description directory.name directory.average_satisfaction directory.average_sensation directory.discussion_threads directory.register_to_see_more newsfeed.title newsfeed.description newsfeed.date newsfeed.entries.procedure_cleanup newsfeed.entries.prefix_search newsfeed.entries.discord_invite newsfeed.entries.locales views.pagination.first views.pagination.last views.pagination.previous views.pagination.next views.pagination.truncate).freeze
   REQUIRED_PUBLIC_ACTION_KEYS = %w(confirmations.are_you_sure actions.deleting actions.updating actions.update_caption).freeze
   REQUIRED_PUBLIC_PIN_KEYS = %w(doctor_prefix updated).freeze
@@ -20,10 +20,18 @@ describe 'application locales' do
 
   before do
     locale_files = Dir[File.expand_path('../config/locales/*.yml', __dir__)].sort
-    expect(locale_files.map { |file| File.basename(file) }).to eq(['about.yml', 'catalog.yml', 'zz_procedure_names.yml'])
+    expect(locale_files.map { |file| File.basename(file) }).to eq(['about.yml', 'catalog.yml', 'sv.yml', 'zz_procedure_names.yml'])
     @translations = YAML.load_file(locale_files.find { |file| file.end_with?('catalog.yml') })
+    swedish = YAML.load_file(locale_files.find { |file| file.end_with?('sv.yml') })
+    @translations['sv'] = deep_merge(@translations.fetch('en'), swedish.fetch('sv'))
     @about_translations = YAML.load_file(locale_files.find { |file| file.end_with?('about.yml') })
     @procedure_names = YAML.load_file(locale_files.find { |file| file.end_with?('zz_procedure_names.yml') })
+  end
+
+  def deep_merge(base, overrides)
+    base.merge(overrides) do |_key, original, override|
+      original.is_a?(Hash) && override.is_a?(Hash) ? deep_merge(original, override) : override
+    end
   end
 
   it 'defines every About page translation for every supported locale' do
@@ -128,5 +136,12 @@ describe 'application locales' do
         expect(aliases.fetch(name)).not_to be_empty
       end
     end
+  end
+
+  it 'defines Swedish overrides for the public mailers' do
+    %w[confirmation_instructions reset_password_instructions unlock_instructions password_change].each do |mailer|
+      expect(I18n.t("devise.mailer.#{mailer}.subject", locale: :sv)).not_to match(/[A-Za-z]{4,} instructions|Your password/)
+    end
+    expect(I18n.t('comment_mailer.greeting', locale: :sv)).to include('Hej')
   end
 end

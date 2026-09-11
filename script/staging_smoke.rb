@@ -360,7 +360,7 @@ class StagingSmoke
   def uri(path)
     target = URI.join(STAGING_URL, path)
     return target unless target.host == URI.parse(STAGING_URL).host
-    return target if target.path.match?(%r{\A/(en|de|es|fr|it|ja|zh-CN|zh-TW|pt-BR|nl|pl|ru|tr|vi|ar)(/|$)})
+    return target if target.path.match?(%r{\A/(en|de|es|fr|it|ja|zh-CN|zh-TW|pt-BR|nl|pl|ru|tr|vi|ar|sv)(/|$)})
 
     target.path = "/#{@locale}#{target.path}"
     target

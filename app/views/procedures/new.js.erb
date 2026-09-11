@@ -8,7 +8,7 @@ $("#new_procedure_submit").click(function() {
 
     return $.ajax({
         type: "POST",
-        url: "/procedures",
+        url: "<%= procedures_path %>",
         data: formData,
         processData: false,  // tell jQuery not to process the data
         contentType: false,   // tell jQuery not to set contentType

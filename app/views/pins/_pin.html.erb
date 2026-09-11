@@ -20,12 +20,12 @@
   <div class="panel panel-default">
     <div class="panel-body">
     <%= render partial: "latest_comment_snippet", locals: { pin: pin } if @comments.map(&:commentable_id).include?(pin.id) %>
-    <% cache([pin, @safe_mode]) do %>
+    <% cache([I18n.locale, pin, @safe_mode]) do %>
       <div class="image" itemprop="image">
         <%= link_to (image_tag pin.cover_image(@safe_mode).url(:medium)), pin %>
       </div>
       <p class="description" itemprop="description">
-        <%= pin.try(:procedure).try(:name) %> by <strong><%= pin.unknown_surgeon? ? 'unknown' : 'Dr. ' + pin.surgeon.to_s %></strong>
+        <%= pin.try(:procedure).try(:localized_name) %> <%= t('public.pin.by') %> <strong><%= pin.unknown_surgeon? ? t('public.pin.unknown') : t('public.pin.doctor_prefix') + pin.surgeon.to_s %></strong>
       </p>
     <% end %>
     <!-- end cache fragment  -->
@@ -38,7 +38,7 @@
         </label>
       <% if current_user == pin.user || current_user.admin? %>
         <%= link_to fa_icon("pencil-square-o"), edit_pin_path(pin) %>
-        | <%= link_to fa_icon("trash-o"), pin, method: :delete, data: { confirm: 'Are you sure?' } %>
+        | <%= link_to fa_icon("trash-o"), pin, method: :delete, data: { confirm: t('public.confirmations.are_you_sure') } %>
       <% if pin.pending? %>
         | <%= link_to 'Remove Flag', remove_pin_flag_path(pin), remote: true %>
       <% end %>

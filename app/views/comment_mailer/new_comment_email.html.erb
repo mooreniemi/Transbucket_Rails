@@ -4,17 +4,17 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Hey, <%= @user.username %>!</h1>
+    <h1><%= t('comment_mailer.greeting', username: @user.username) %></h1>
     <p>
-      Another member has posted a <%= @comment_type %> on your submission.
+      <%= t('comment_mailer.posted', comment_type: t("comment_mailer.types.#{@comment_type}")) %>
     </p>
     <p>
-      If you'd like to reply click <a href='<%= @url + "?utm_source=comment_reminder&utm_medium=email&utm_campaign=#{@comment_type}_reminder" %>'>this link</a>.</p>
+      <%= raw t('comment_mailer.reply', link: link_to(t('comment_mailer.this_link'), @url + "?utm_source=comment_reminder&utm_medium=email&utm_campaign=#{@comment_type}_reminder") ) %></p>
     <p>
-      If you have concerns about the content of what was commented on your post you can Flag it (3 Flags from different users will put it in review automatically) or if it is urgent, please email us for direct moderation.
+      <%= t('comment_mailer.flag_help') %>
     </p>
     <p>
-      If you don't want to receive these notifications please edit your notification settings at <a href='<%= @unsub + "?utm_source=comment_reminder&utm_medium=email&utm_campaign=#{@comment_type}_reminder" %>'>this link</a>.</p>
+      <%= raw t('comment_mailer.unsubscribe', link: link_to(t('comment_mailer.this_link'), @unsub + "?utm_source=comment_reminder&utm_medium=email&utm_campaign=#{@comment_type}_reminder") ) %></p>
     <p>
   </body>
 </html>

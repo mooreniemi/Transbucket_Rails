@@ -1,4 +1,5 @@
 require "rails_helper"
+require "cgi"
 
 RSpec.describe "surgeons/show" do
   let(:surgeon) { create(:surgeon) }
@@ -10,7 +11,7 @@ RSpec.describe "surgeons/show" do
 
       render
 
-      expect(rendered).to match Regexp.new(surgeon.to_s)
+      expect(rendered).to include(CGI.escapeHTML(surgeon.to_s))
     end
   end
 
@@ -30,7 +31,7 @@ RSpec.describe "surgeons/show" do
       render
 
       expect(rendered).to match(Regexp.new(pin.procedure.name))
-      expect(rendered).to match(Regexp.new("Average patient satisfaction"))
+      expect(rendered).to match(Regexp.new(I18n.t('public.pin.average_satisfaction')))
     end
   end
 end

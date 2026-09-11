@@ -20,13 +20,13 @@ RSpec.describe "registration" do
     fill_in "Password", :with => user.password
     check "user_remember_me" if remember
 
-    click_button "Sign in"
+    click_button I18n.t('account_menu.login', locale: :en)
   end
 
   shared_examples "registration" do
     it "displays errors upon incorrect input" do
       self.send(:fill_out_sign_up, user, invalid: true)
-      click_button "Sign up"
+      click_button I18n.t('account_menu.register', locale: :en)
       expect(page).to have_content("Email can't be blank")
     end
 
@@ -35,7 +35,7 @@ RSpec.describe "registration" do
 
       clear_emails
 
-      click_button "Sign up"
+      click_button I18n.t('account_menu.register', locale: :en)
 
       expect(page).to have_content("A message with a confirmation link")
 
@@ -48,7 +48,7 @@ RSpec.describe "registration" do
 
       # current_path reads immediately with no retry, unlike have_current_path;
       # under the js driver the post-sign-in redirect can still be in flight.
-      expect(page).to have_current_path('/pins')
+      expect(page).to have_current_path('/en/pins')
 
       user_in_db = User.find_by!(email: user.email)
 

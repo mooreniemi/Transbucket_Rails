@@ -1,11 +1,13 @@
 require 'rails_helper'
 
 describe PinsController, :type => :controller do
+  render_views
+
   describe 'GET #index' do
     it "blocks unauthenticated access" do
-      get :index
+      get :index, locale: 'en'
 
-      expect(response).to redirect_to(new_user_session_path)
+      expect(response).to redirect_to(new_user_session_path(locale: 'en'))
     end
   end
 
@@ -22,6 +24,13 @@ describe PinsController, :type => :controller do
 
         expect(response).to be_success
       end
+
+      it "renders the authenticated index with a locale and user filter" do
+        get :index, locale: 'ja', user: user.id
+
+        expect(response).to be_success
+        expect(response.body).to include('最近の投稿')
+      end
     end
 
     describe 'GET #show' do
@@ -31,6 +40,15 @@ describe PinsController, :type => :controller do
         get :show, id: pin.id
 
         expect(response).to be_success
+      end
+
+      it "renders localized labels on a pin page" do
+        pin = create(:pin, user: user)
+        get :show, id: pin.id, locale: 'ja'
+
+        expect(response).to be_success
+        expect(response.body).to include('外科医')
+        expect(response.body).to include('手術')
       end
     end
 
@@ -45,6 +63,15 @@ describe PinsController, :type => :controller do
       end
     end
 
+    describe 'GET #new' do
+      it 'renders the locale-specific TinyMCE language asset' do
+        get :new, locale: 'es'
+
+        expect(response).to be_success
+        expect(response.body).to include('language: "es"')
+      end
+    end
+
     describe 'POST #create' do
       it 'returns a valid pin on create' do
         surgeon = attributes_for(:surgeon)
@@ -54,6 +81,17 @@ describe PinsController, :type => :controller do
 
         post(:create, {pin: attrs, pin_images: {"0" => image_attrs}})
         expect(response).to redirect_to(pin_url(assigns(:pin)))
+      end
+
+      it 'keeps the selected locale after creating a pin' do
+        surgeon = attributes_for(:surgeon)
+        procedure = attributes_for(:procedure)
+        attrs = attributes_for(:pin).merge("surgeon_attributes" => surgeon, "procedure_attributes" => procedure)
+        image_attrs = attributes_for(:pin_image)
+
+        post :create, pin: attrs, pin_images: { "0" => image_attrs }, locale: 'es'
+
+        expect(response).to redirect_to(pin_url(assigns(:pin), locale: 'es'))
       end
 
       it "refuses to create an invalid pin" do

@@ -1,13 +1,14 @@
-<% surgeon_name = @pin.unknown_surgeon? ? 'unknown surgeon' : @pin.surgeon.to_s %>
-<% seo_meta description: "View #{@pin.procedure.name} by #{surgeon_name} on Transbucket.", canonical: pin_url(@pin) %>
-<% title "#{@pin.procedure.name} by #{surgeon_name}" %>
+<% surgeon_name = @pin.unknown_surgeon? ? t('public.pin.unknown_surgeon') : t('public.pin.doctor_prefix') + @pin.surgeon.to_s %>
+<% pin_title = "#{@pin.procedure.localized_name} #{t('public.pin.by')} #{surgeon_name}" %>
+<% seo_meta description: "#{pin_title} on Transbucket.", canonical: pin_url(id: @pin.id) %>
+<% title pin_title %>
 <% json_ld_tag(
   {
     '@context' => 'https://schema.org',
     '@type' => 'CreativeWork',
-    'name' => "#{@pin.procedure.name} by #{surgeon_name}",
+    'name' => pin_title,
     'description' => @pin.details,
-    'url' => pin_url(@pin)
+    'url' => pin_url(id: @pin.id)
   }.compact
 ) %>
 <% json_ld_tag(
@@ -15,20 +16,20 @@
     '@context' => 'https://schema.org',
     '@type' => 'BreadcrumbList',
     'itemListElement' => [
-      { '@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => root_url },
-      { '@type' => 'ListItem', 'position' => 2, 'name' => 'Submissions', 'item' => pins_url },
-      { '@type' => 'ListItem', 'position' => 3, 'name' => "#{@pin.procedure.name} by #{surgeon_name}", 'item' => pin_url(@pin) }
+      { '@type' => 'ListItem', 'position' => 1, 'name' => t('header.home'), 'item' => root_url },
+      { '@type' => 'ListItem', 'position' => 2, 'name' => t('header.submissions'), 'item' => pins_url },
+      { '@type' => 'ListItem', 'position' => 3, 'name' => pin_title, 'item' => pin_url(id: @pin.id) }
     ]
   }
 ) %>
-<h1><%= "#{@pin.procedure.name} by #{surgeon_name}" %></h1>
-<% cache(["pin_show", @pin, @pin.pin_images.map(&:id), @pin.pin_images.maximum(:updated_at)]) do %>
+<h1><%= pin_title %></h1>
+<% cache([I18n.locale, "pin_show", @pin, @pin.pin_images.map(&:id), @pin.pin_images.maximum(:updated_at)]) do %>
   <div class="row">
     <div class="col-md-6">
       <div class="well">
         <% for pinimage in @pin.pin_images.reject {|p| p.photo_file_size.nil?} do %>
           <div class="thumbnail">
-            <%= image_tag pinimage.photo, alt: pinimage.caption.presence || "#{@pin.procedure.name} by #{surgeon_name}" %>
+            <%= image_tag pinimage.photo, alt: pinimage.caption.presence || pin_title %>
             <div class="caption">
               <%= pinimage.caption.to_s %>
             </div>
@@ -37,33 +38,33 @@
         <br>
         <%= link_to fa_icon("arrow-left"), pins_path %>
         <% if current_user == @pin.user || current_user.admin == true %>
-          | <%= link_to fa_icon("pencil-square-o"), edit_pin_path(@pin) %>
+          | <%= link_to fa_icon("pencil-square-o"), edit_pin_path(id: @pin.id) %>
       <% end %>
     </div>
   </div>
   <div class="col-md-6">
     <dl class="dl-horizontal">
       <dt>
-        <%= fa_icon "user-md" %> Surgeon
+        <%= fa_icon "user-md" %> <%= t('public.pin.surgeon') %>
       </dt>
       <dd>
-        <%= link_to @pin.unknown_surgeon? ? 'unknown' : 'Dr. ' + @pin.surgeon.to_s, surgeon_path(@pin.surgeon) %>
+        <%= link_to @pin.unknown_surgeon? ? t('public.pin.unknown') : @pin.surgeon.to_s, surgeon_path(id: @pin.surgeon.id) %>
       </dd>
       <dt>
-        <%= fa_icon "plus-square" %> Procedure
+        <%= fa_icon "plus-square" %> <%= t('public.pin.procedure') %>
       </dt>
       <dd>
-        <%= link_to @pin.procedure.name, pins_path({procedure: [@pin.procedure.id]}) %>
+        <%= link_to @pin.procedure.localized_name, pins_path({procedure: [@pin.procedure.id]}) %>
       </dd>
       <dt>
-        <%= fa_icon "usd" %> Cost
+          <%= fa_icon "usd" %> <%= t('public.pin.cost') %>
       </dt>
       <dd>
         <%= number_with_delimiter(@pin.cost) %>
       </dd>
       <% if @pin.complications.present? %>
         <dt>
-          <%= fa_icon "medkit" %> Complications
+          <%= fa_icon "medkit" %> <%= t('public.pin.complications') %>
         </dt>
         <dd>
           <% @pin.complications.each do |complication| %>
@@ -73,27 +74,27 @@
       <% end %>
       <% if @pin.revision %>
         <dt>
-          <%= fa_icon "exclamation-circle" %> Wants revision
+          <%= fa_icon "exclamation-circle" %> <%= t('public.pin.wants_revision') %>
         </dt>
         <dd></dd>
       <% end %>
       <% if @pin.sensation.present? %>
         <dt>
-          Post-op Sensation</dt>
+          <%= t('public.pin.post_op_sensation') %></dt>
         <dd>
           <%= number_field(:pin, :sensation, {class: "rating", disabled: "disabled", data: {size: 'xs'}}) %>
         </dd>
         <br>
       <% end %>
       <% if @pin.satisfaction.present? %>
-        <dt>Post-op Satisfaction</dt>
+        <dt><%= t('public.pin.post_op_satisfaction') %></dt>
         <dd>
           <%= number_field(:pin, :satisfaction, {class: "rating", disabled: "disabled", data: {size: 'xs'}}) %>
         </dd>
         <br clear="both">
       <% end %>
       <% if @pin.user.present? %>
-        <dt>Submitter</dt>
+        <dt><%= t('public.pin.submitter') %></dt>
         <dd><strong><%= link_to @pin.user.username.presence || @pin.user.id, pins_path(user: @pin.user) %></strong></dd>
       <% end %>
     </dl>
@@ -105,12 +106,13 @@
     <% end %>
   </div>
   <br clear="both" />
+  </div>
 <% end %>
 <div id="comments-container">
-  <h4><%= fa_icon("comments-o") %> discussion</h4>
+  <h4><%= fa_icon("comments-o") %> <%= t('public.pin.discussion') %></h4>
   <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>
-    <h5>Please respect pronouns when writing to the submission author. The author's preferred pronouns are: <%= uses_pronouns(@pin.user.try(:gender)) %>.</h5>
-  <%= link_to "<h5>#{fa_icon("comments-o")} add thread</h5>".html_safe, new_comment_path(commentable_id: @pin.id, commentable_type: "Pin"), remote: true %>
+    <h5><%= t('public.pin.respect_pronouns') %> <%= uses_pronouns(@pin.user.try(:gender)) %>.</h5>
+  <%= link_to "<h5>#{fa_icon("comments-o")} #{t('public.pin.add_thread')}</h5>".html_safe, new_comment_path(commentable_id: @pin.id, commentable_type: "Pin"), remote: true %>
   <div id="commentable" class="reply-target">
   </div>
 </div>

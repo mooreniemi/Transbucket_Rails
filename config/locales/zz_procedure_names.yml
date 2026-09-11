@@ -1,0 +1,107 @@
+# Reviewed display names for the highest-volume procedure families.
+# Canonical procedure records remain English; these labels are presentation/search data.
+en:
+  procedure_aliases:
+    double incision with grafts: double incision with grafts
+    periareolar mastectomy (keyhole): periareolar mastectomy (keyhole)
+    bilateral mastectomy: bilateral mastectomy
+    metoidioplasty: metoidioplasty
+    metoidioplasty ('meta'): metoidioplasty
+de:
+  procedure_aliases:
+    double incision with grafts: Doppelinzision mit Transplantaten
+    periareolar mastectomy (keyhole): periareoläre Mastektomie (Keyhole)
+    bilateral mastectomy: bilaterale Mastektomie
+    metoidioplasty: Metoidioplastik
+    metoidioplasty ('meta'): Metoidioplastik
+es:
+  procedure_aliases:
+    double incision with grafts: doble incisión con injertos
+    periareolar mastectomy (keyhole): mastectomía periareolar (keyhole)
+    bilateral mastectomy: mastectomía bilateral
+    metoidioplasty: metoidioplastia
+    metoidioplasty ('meta'): metoidioplastia
+fr:
+  procedure_aliases:
+    double incision with grafts: double incision avec greffes
+    periareolar mastectomy (keyhole): mastectomie périaréolaire (keyhole)
+    bilateral mastectomy: mastectomie bilatérale
+    metoidioplasty: métaïdioplastie
+    metoidioplasty ('meta'): métaïdioplastie
+it:
+  procedure_aliases:
+    double incision with grafts: doppia incisione con innesti
+    periareolar mastectomy (keyhole): mastectomia periareolare (keyhole)
+    bilateral mastectomy: mastectomia bilaterale
+    metoidioplasty: metoidioplastica
+    metoidioplasty ('meta'): metoidioplastica
+ja:
+  procedure_aliases:
+    double incision with grafts: ダブルインシジョン（移植あり）
+    periareolar mastectomy (keyhole): 乳輪周囲切開法（キーホール）
+    bilateral mastectomy: 両側乳房切除術
+    metoidioplasty: メタ形成術
+    metoidioplasty ('meta'): メタ形成術
+zh-CN:
+  procedure_aliases:
+    double incision with grafts: 双切口加移植物
+    periareolar mastectomy (keyhole): 乳晕周围切口乳房切除术（钥匙孔）
+    bilateral mastectomy: 双侧乳房切除术
+    metoidioplasty: 阴蒂成形术
+    metoidioplasty ('meta'): 阴蒂成形术
+zh-TW:
+  procedure_aliases:
+    double incision with grafts: 雙切口加移植物
+    periareolar mastectomy (keyhole): 乳暈周圍切口乳房切除術（鑰匙孔）
+    bilateral mastectomy: 雙側乳房切除術
+    metoidioplasty: 陰蒂成形術
+    metoidioplasty ('meta'): 陰蒂成形術
+pt-BR:
+  procedure_aliases:
+    double incision with grafts: incisão dupla com enxertos
+    periareolar mastectomy (keyhole): mastectomia periareolar (keyhole)
+    bilateral mastectomy: mastectomia bilateral
+    metoidioplasty: metoidioplastia
+    metoidioplasty ('meta'): metoidioplastia
+nl:
+  procedure_aliases:
+    double incision with grafts: dubbele incisie met transplantaten
+    periareolar mastectomy (keyhole): periareolaire mastectomie (keyhole)
+    bilateral mastectomy: bilaterale mastectomie
+    metoidioplasty: metoidioplastiek
+    metoidioplasty ('meta'): metoidioplastiek
+pl:
+  procedure_aliases:
+    double incision with grafts: podwójne nacięcie z przeszczepami
+    periareolar mastectomy (keyhole): mastektomia okołootoczkowa (keyhole)
+    bilateral mastectomy: obustronna mastektomia
+    metoidioplasty: metoidioplastyka
+    metoidioplasty ('meta'): metoidioplastyka
+ru:
+  procedure_aliases:
+    double incision with grafts: двойной разрез с трансплантатами
+    periareolar mastectomy (keyhole): периареолярная мастэктомия (keyhole)
+    bilateral mastectomy: двусторонняя мастэктомия
+    metoidioplasty: метоидиопластика
+    metoidioplasty ('meta'): метоидиопластика
+tr:
+  procedure_aliases:
+    double incision with grafts: greftli çift insizyon
+    periareolar mastectomy (keyhole): periareolar mastektomi (keyhole)
+    bilateral mastectomy: bilateral mastektomi
+    metoidioplasty: metoidioplasti
+    metoidioplasty ('meta'): metoidioplasti
+vi:
+  procedure_aliases:
+    double incision with grafts: rạch đôi có ghép
+    periareolar mastectomy (keyhole): phẫu thuật cắt tuyến vú quanh quầng vú (keyhole)
+    bilateral mastectomy: phẫu thuật cắt tuyến vú hai bên
+    metoidioplasty: phẫu thuật tạo hình dương vật từ âm vật
+    metoidioplasty ('meta'): phẫu thuật tạo hình dương vật từ âm vật
+ar:
+  procedure_aliases:
+    double incision with grafts: شق مزدوج مع ترقيع
+    periareolar mastectomy (keyhole): استئصال الثدي حول الهالة (ثقب المفتاح)
+    bilateral mastectomy: استئصال الثديين
+    metoidioplasty: رأب القضيب باستخدام البظر
+    metoidioplasty ('meta'): رأب القضيب باستخدام البظر

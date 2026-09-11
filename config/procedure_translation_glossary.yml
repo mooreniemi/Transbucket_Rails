@@ -1,0 +1,121 @@
+# Editorial source map for procedure-name localization.
+# Only entries marked reviewed are eligible for procedure:translations.
+# Procedure names remain canonical English database values.
+# National and academic sources are terminology references; do not copy
+# outdated diagnostic or stigmatizing language into public labels.
+
+double incision with grafts:
+  priority: tier_1
+  status: reviewed
+  sources:
+    - https://transcare.ucsf.edu/guidelines/chest-surgery-masculinizing
+    - https://gendersurgery.chelwest.nhs.uk/
+
+periareolar mastectomy (keyhole):
+  priority: tier_1
+  status: needs_review
+  sources:
+    - https://gendersurgery.chelwest.nhs.uk/faqs/
+
+bilateral mastectomy:
+  priority: tier_1
+  status: needs_review
+  sources:
+    - https://www.england.nhs.uk/wp-content/uploads/2019/07/NHS-England-Service-Specification-for-Specialised-Gender-Dysphoria-Services-Surgical-v4.pdf
+
+metoidioplasty ('meta'):
+  priority: tier_1
+  status: reviewed
+  sources:
+    - https://transcare.ucsf.edu/guidelines/phalloplasty
+    - https://gendersurgery.chelwest.nhs.uk/
+
+phalloplasty:
+  priority: tier_1
+  status: reviewed
+  sources:
+    - https://transcare.ucsf.edu/guidelines/phalloplasty
+    - https://gendersurgery.chelwest.nhs.uk/phalloplasty-surgery/
+    - https://rkyfz.pku.edu.cn/article/info?id=378900030
+    - https://mediasphera.ru/issues/plasticheskaya-khirurgiya-i-esteticheskaya-meditsina/2023/3/1268673462023031046
+
+rff phalloplasty:
+  priority: tier_1
+  status: needs_review
+  sources:
+    - https://gendersurgery.chelwest.nhs.uk/phalloplasty-surgery/
+
+double incision without grafts:
+  priority: tier_1
+  status: needs_review
+  sources:
+    - https://transcare.ucsf.edu/guidelines/chest-surgery-masculinizing
+
+double incision with free nipple grafts and liposuction:
+  priority: tier_1
+  status: needs_review
+  sources:
+    - https://www.england.nhs.uk/wp-content/uploads/2019/07/NHS-England-Service-Specification-for-Specialised-Gender-Dysphoria-Services-Surgical-v4.pdf
+
+double incision:
+  priority: tier_1
+  status: needs_review
+  sources:
+    - https://transcare.ucsf.edu/guidelines/chest-surgery-masculinizing
+
+vaginoplasty:
+  priority: tier_1
+  status: reviewed
+  sources:
+    - https://transcare.ucsf.edu/guidelines/vaginoplasty
+    - https://transcare.ucsf.edu/genital-surgical-procedures-vaginoplasty-orchietcomy-and-phalloplasty
+    - https://rkyfz.pku.edu.cn/article/info?id=378900030
+    - https://gesund.bund.de/ops-code-suche/5-705
+
+hysterectomy:
+  priority: tier_1
+  status: reviewed
+  sources:
+    - https://www.england.nhs.uk/wp-content/uploads/2019/07/NHS-England-Service-Specification-for-Specialised-Gender-Dysphoria-Services-Surgical-v4.pdf
+
+bilateral mastectomy with nipple grafts:
+  priority: tier_1
+  status: needs_review
+  sources:
+    - https://www.england.nhs.uk/wp-content/uploads/2019/07/NHS-England-Service-Specification-for-Specialised-Gender-Dysphoria-Services-Surgical-v4.pdf
+
+double incision with nipple retention:
+  priority: tier_1
+  status: needs_review
+  sources:
+    - https://transcare.ucsf.edu/guidelines/chest-surgery-masculinizing
+
+t anchor double incision:
+  priority: tier_1
+  status: needs_review
+  sources:
+    - https://transcare.ucsf.edu/guidelines/chest-surgery-masculinizing
+
+double incision with nipple grafts + mansculpting liposuction:
+  priority: tier_1
+  status: needs_review
+  sources:
+    - https://transcare.ucsf.edu/guidelines/chest-surgery-masculinizing
+
+abdominal flap phalloplasty:
+  priority: tier_1
+  status: needs_review
+  sources:
+    - https://transcare.ucsf.edu/guidelines/phalloplasty
+
+metoidioplasty, scrotoplasty, urethral lengthening, mons resection, testicular implants:
+  priority: tier_1
+  status: needs_review
+  sources:
+    - https://transcare.ucsf.edu/guidelines/phalloplasty
+    - https://www.england.nhs.uk/wp-content/uploads/2019/07/NHS-England-Service-Specification-for-Specialised-Gender-Dysphoria-Services-Surgical-v4.pdf
+
+other:
+  priority: exclude
+  status: canonical_only
+  sources: []

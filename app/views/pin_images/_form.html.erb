@@ -1,5 +1,5 @@
 <div class="dropzone well" id="dropper" data-pin-id="<%= @form.try(:id) %>">
-  <div class="dz-message">Drop files here to upload</div>
+  <div class="dz-message"><%= t('public.form.drop_files') %></div>
   <div class="fallback">
     <%= f.fields_for :pin_images do |pin_image_form| %>
       <div class="pin-image-fields" data-pin-image-id="<%= pin_image_form.object.try(:id) %>">
@@ -8,10 +8,10 @@
           <%= pin_image_form.file_field :photo %>
         </div>
         <div class="form-group">
-          <%= pin_image_form.text_field :caption, placeholder: "Caption", class: "form-control pin-image-caption" %>
+          <%= pin_image_form.text_field :caption, placeholder: t('public.form.caption'), class: "form-control pin-image-caption" %>
         </div>
         <div class="form-group">
-          <%= pin_image_form.label :_destroy, "Remove" %>:
+          <%= pin_image_form.label :_destroy, t('public.form.remove') %>:
           <%= pin_image_form.check_box :_destroy %>
         </div>
       </div>
@@ -25,7 +25,7 @@
 
     <div class="caption">
       <div class="input-group input-group-md">
-        <input class="form-control pin-image-caption" type="text" placeholder="Caption"></input>
+        <input class="form-control pin-image-caption" type="text" placeholder="<%= t('public.form.caption') %>"></input>
       </div>
 
       <div class="text-center">

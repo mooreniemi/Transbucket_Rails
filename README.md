@@ -148,6 +148,22 @@ If you need to deploying a branch to [staging](https://transbucket-staging.herok
 
 `git push staging your_branch:master`
 
+The locale-aware staging smoke test exercises legacy redirects, localized
+metadata and newsfeed output, then logs in and verifies multi-image pin
+creation, editing, and search indexing. Supply credentials through the shell;
+never commit or paste them into the repository or chat:
+
+```
+STAGING_USER=meowmeow STAGING_PASSWORD='...' \
+  bundle exec ruby script/staging_smoke.rb
+```
+
+Use `STAGING_LOCALES=en,de` (or another comma-separated set of supported
+locales) to run the authenticated submission flow through each locale. The
+script writes one test pin per locale to staging and
+requires a worker dyno for the search-indexing assertion; scale that worker
+back to zero afterward if it is not otherwise needed.
+
 Connecting to staging to debug or run tasks:
 
 `heroku run rails console --app transbucket-staging`
@@ -266,6 +282,15 @@ it.
 For staging validation we intentionally reuse the production Bonsai cluster
 and isolate by index prefix. That lets us recreate `staging_pins` freely
 without putting the database at risk. We do not share the database itself.
+
+After changing the indexed Pin representation, rebuild only staging with:
+
+```
+heroku run rake environment elasticsearch:import:model CLASS='Pin' INCLUDE='PinImage,Surgeon,Procedure' FORCE=true -a transbucket-staging
+```
+
+This uses staging's `INDEX_PREFIX=staging` and recreates only `staging_pins`.
+Never run this command against the production app as part of staging testing.
 
 For a fast local smoke loop, reseed the test DB and run the same script
 against localhost:

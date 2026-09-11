@@ -45,6 +45,7 @@ module Transbucket
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :en
+    config.i18n.fallbacks = true
     config.active_record.whitelist_attributes = false
 
     config.active_record.raise_in_transactional_callbacks = true
@@ -54,6 +55,7 @@ module Transbucket
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'jquery-ui', 'themes', 'smoothness', 'images')
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'tinymce', 'skins', 'lightgray', 'img')
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'tinymce', 'skins', 'lightgray', 'fonts')
+    config.assets.precompile << 'tinymce/langs/*.js'
 
     config.generators do |g|
       g.test_framework :rspec,

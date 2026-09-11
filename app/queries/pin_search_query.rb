@@ -15,6 +15,7 @@ class PinSearchQuery
                 fields: [
                   "surgeon.pretty_name",
                   "procedure.name",
+                  "procedure.search_aliases",
                   "procedure.description",
                   "description",
                   "details",
@@ -29,6 +30,13 @@ class PinSearchQuery
               { "procedure.name" => {
                   query: search_terms,
                   analyzer: "english"
+                }
+              }
+            },
+            { match_phrase_prefix:
+              { "procedure.search_aliases" => {
+                  query: search_terms,
+                  analyzer: "standard"
                 }
               }
             }

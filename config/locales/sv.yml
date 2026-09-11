@@ -1,0 +1,55 @@
+sv:
+  header:
+    news: Nyheter
+    procedures: Ingrepp
+    surgeons: Kirurger
+    submissions: Bidrag
+    account: Konto
+    search: Sök
+  locale:
+    label: Språk
+    names:
+      sv: Svenska
+  homepage:
+    title: Transbucket
+    intro: Verkliga erfarenheter av könsbekräftande ingrepp
+  directory:
+    procedures_title: Ingrepp
+    procedures_intro: Bläddra bland ingrepp för att jämföra verkliga bidrag, kirurg­ers länkar och diskussioner.
+    surgeons_title: Kirurger
+    surgeons_intro: Bläddra bland kirur­gsidor för att jämföra bidrag, resultat och diskussioner.
+    submissions: Bidrag
+    name: Namn
+    average_satisfaction: Genomsnittlig tillfredsställelse
+    average_sensation: Genomsnittlig känsel
+  newsfeed:
+    title: Nyheter
+    description: Senaste uppdateringarna från Transbucket.
+    date: Datum
+  public:
+    pin:
+      by: av
+      doctor_prefix: Dr. 
+      unknown: okänd kirurg
+      average_satisfaction: Genomsnittlig tillfredsställelse
+    form:
+      surgeon_url: Kirurgens webbplats
+    extra:
+      sign_in: Logga in
+      sign_up: Registrera dig
+      username: Användarnamn
+      password: Lösenord
+      gender: Kön
+      name: Namn
+      email: E-post
+  settings:
+    safe_mode: Säkert läge
+    safe_mode_help: Dölj känsliga bilder
+    notifications: Aviseringar
+    update: Uppdatera
+    cancel_account: Avsluta konto
+  profile:
+    name: Namn
+    email: E-post
+    username: Användarnamn
+    gender: Kön

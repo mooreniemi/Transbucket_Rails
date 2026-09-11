@@ -223,3 +223,18 @@ ar:
     github_link: فتح issue على GitHub
     contact: يمكنك التواصل مع Alex عبر %{contact_link} أو %{email_link}. يمكنك أيضاً العثور علينا عبر %{facebook_link} و%{twitter_link}.
     contact_form: نموذج التواصل
+sv:
+  about:
+    title: Om Transbucket
+    meta_description: En gemenskapsresurs för att undersöka ingrepp och verkliga resultat.
+    origin: grundades 2009 efter att Transster.com stängde. Grundarna överlämnade senare ansvaret till Alex.
+    welcome_heading: Vem är välkommen här?
+    welcome: Vi välkomnar alla som kan ha nytta av verkliga erfarenheter av kirurgi, inklusive FTM-, MTF-, genderqueer-, agender-, detrans-, desisted-, post-trans- och cispersoner.
+    community_note: Varje foto och kommentar föreställer en verklig person. Visa omtanke och respektera andra.
+    funding_heading: Varför finns det annonser?
+    funding: Annonser hjälper till att täcka kostnaderna för webbhotellet så att Transbucket kan fortsätta vara tillgängligt.
+    help_heading: Hur kan jag hjälpa till?
+    help: Du kan hjälpa till med utveckling, moderering eller hållbar finansiering. Du kan
+    github_link: öppna ett ärende på GitHub
+    contact: Kontakta Alex via %{contact_link} eller %{email_link}. Du hittar oss också på %{facebook_link} och %{twitter_link}.
+    contact_form: kontaktformuläret

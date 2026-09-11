@@ -29,14 +29,16 @@ NEWSFEED_TITLES = {
   "ru" => "Новости",
   "tr" => "Haberler",
   "vi" => "Tin tức",
-  "ar" => "الأخبار"
+  "ar" => "الأخبار",
+  "sv" => "Nyheter"
 }.freeze
 REGISTRATION_MARKERS = {
   "en" => "Username", "de" => "Benutzername", "es" => "Nombre de usuario",
   "fr" => "Nom d’utilisateur", "it" => "Nome utente", "ja" => "ユーザー名",
   "zh-CN" => "用户名", "zh-TW" => "使用者名稱", "pt-BR" => "Nome de usuário",
   "nl" => "Gebruikersnaam", "pl" => "Nazwa użytkownika", "ru" => "Имя пользователя",
-  "tr" => "Kullanıcı adı", "vi" => "Tên người dùng", "ar" => "اسم المستخدم"
+  "tr" => "Kullanıcı adı", "vi" => "Tên người dùng", "ar" => "اسم المستخدم",
+  "sv" => "Användarnamn"
 }.freeze
 ACCOUNT_MARKERS = {
   "en" => ["Name", "Safe mode"],
@@ -53,7 +55,8 @@ ACCOUNT_MARKERS = {
   "ru" => ["Имя", "Безопасный режим"],
   "tr" => ["Ad", "Güvenli mod"],
   "vi" => ["Tên", "Chế độ an toàn"],
-  "ar" => ["الاسم", "الوضع الآمن"]
+  "ar" => ["الاسم", "الوضع الآمن"],
+  "sv" => ["Namn", "Säkert läge"]
 }.freeze
 
 class StagingSmoke
@@ -188,7 +191,8 @@ class StagingSmoke
       "ru" => "Хирург",
       "tr" => "Cerrah",
       "vi" => "Bác sĩ phẫu thuật",
-      "ar" => "الجراح"
+      "ar" => "الجراح",
+      "sv" => "Kirurg"
     }.fetch(@locale)
   end
 

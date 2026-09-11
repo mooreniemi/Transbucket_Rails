@@ -46,4 +46,13 @@ describe PagesController, :type => :controller do
       expect(response.body).not_to include('Procedure search now matches prefixes')
     end
   end
+
+  describe 'GET about' do
+    it 'does not label the informational page as legal content' do
+      get 'about', locale: 'de'
+
+      expect(response).to be_success
+      expect(response.body).not_to include(I18n.t('legal.translation_notice', locale: :de))
+    end
+  end
 end

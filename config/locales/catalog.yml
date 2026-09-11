@@ -24,6 +24,8 @@ en:
         greeting: Hello %{recipient}
         instruction: 'You can confirm your account email through the link below:'
         action: Confirm my account
+        reminder_notice: This is a reminder -- we noticed you haven't confirmed your account yet.
+        reminder_help: If you need any help confirming your account, just reply to this email and let us know.
       reset_password_instructions:
         subject: Reset password instructions
         greeting: Hello %{recipient}
@@ -853,6 +855,8 @@ de:
         greeting: Hallo %{recipient}
         instruction: 'Bestätige deine Konto-E-Mail über den folgenden Link:'
         action: Mein Konto bestätigen
+        reminder_notice: Dies ist eine Erinnerung – uns ist aufgefallen, dass du dein Konto noch nicht bestätigt hast.
+        reminder_help: Falls du Hilfe bei der Bestätigung deines Kontos brauchst, antworte einfach auf diese E-Mail und lass es uns wissen.
       reset_password_instructions:
         subject: Anleitung zum Zurücksetzen des Passworts
         greeting: Hallo %{recipient}
@@ -1403,6 +1407,8 @@ es:
         instruction: 'Puedes confirmar el correo electrónico de tu cuenta mediante
           el siguiente enlace:'
         action: Confirmar mi cuenta
+        reminder_notice: "Este es un recordatorio: notamos que aún no has confirmado tu cuenta."
+        reminder_help: Si necesitas ayuda para confirmar tu cuenta, simplemente responde a este correo y avísanos.
       reset_password_instructions:
         subject: Instrucciones para restablecer la contraseña
         greeting: Hola %{recipient}
@@ -1932,6 +1938,8 @@ fr:
         instruction: 'Vous pouvez confirmer l’adresse e-mail de votre compte avec
           le lien suivant :'
         action: Confirmer mon compte
+        reminder_notice: "Ceci est un rappel : nous avons remarqué que vous n'avez pas encore confirmé votre compte."
+        reminder_help: Si vous avez besoin d'aide pour confirmer votre compte, répondez simplement à cet e-mail pour nous le faire savoir.
       reset_password_instructions:
         subject: Instructions de réinitialisation du mot de passe
         greeting: Bonjour %{recipient}
@@ -2461,6 +2469,8 @@ it:
         greeting: Ciao %{recipient}
         instruction: 'Puoi confermare l’e-mail del tuo account tramite il link seguente:'
         action: Conferma il mio account
+        reminder_notice: "Questo è un promemoria: abbiamo notato che non hai ancora confermato il tuo account."
+        reminder_help: Se hai bisogno di aiuto per confermare il tuo account, rispondi semplicemente a questa email per farcelo sapere.
       reset_password_instructions:
         subject: Istruzioni per reimpostare la password
         greeting: Ciao %{recipient}
@@ -2957,6 +2967,8 @@ ja:
         greeting: "%{recipient}さん、こんにちは"
         instruction: 次のリンクからアカウントのメールアドレスを確認できます。
         action: アカウントを確認する
+        reminder_notice: これはリマインダーです。まだアカウントの確認が完了していないようです。
+        reminder_help: アカウントの確認でお困りの場合は、このメールに返信してお知らせください。
       reset_password_instructions:
         subject: パスワード再設定のご案内
         greeting: "%{recipient}さん、こんにちは"
@@ -3422,6 +3434,8 @@ zh-CN:
         greeting: "%{recipient}，您好"
         instruction: 您可以通过以下链接确认账户邮箱：
         action: 确认我的账户
+        reminder_notice: 这是一封提醒邮件——我们注意到您还没有确认您的账户。
+        reminder_help: 如果您在确认账户时需要帮助，请直接回复此邮件告诉我们。
       reset_password_instructions:
         subject: 重置密码说明
         greeting: "%{recipient}，您好"
@@ -3912,6 +3926,8 @@ zh-TW:
         greeting: "%{recipient}，您好"
         instruction: 您可以透過以下連結確認帳戶電子郵件：
         action: 確認我的帳戶
+        reminder_notice: 這是一封提醒郵件——我們注意到您尚未確認您的帳戶。
+        reminder_help: 如果您在確認帳戶時需要協助，請直接回覆此郵件告訴我們。
       reset_password_instructions:
         subject: 重設密碼說明
         greeting: "%{recipient}，您好"
@@ -4194,6 +4210,8 @@ pt-BR:
         greeting: Olá, %{recipient}
         instruction: 'Você pode confirmar o e-mail da sua conta pelo link abaixo:'
         action: Confirmar minha conta
+        reminder_notice: Este é um lembrete — notamos que você ainda não confirmou sua conta.
+        reminder_help: Se precisar de ajuda para confirmar sua conta, basta responder a este e-mail e nos avisar.
       reset_password_instructions:
         subject: Instruções para redefinir a senha
         greeting: Olá, %{recipient}
@@ -4501,6 +4519,8 @@ nl:
         instruction: 'Je kunt het e-mailadres van je account bevestigen via de onderstaande
           link:'
         action: Mijn account bevestigen
+        reminder_notice: Dit is een herinnering — we hebben gemerkt dat je je account nog niet hebt bevestigd.
+        reminder_help: Als je hulp nodig hebt bij het bevestigen van je account, reageer dan gewoon op deze e-mail om het ons te laten weten.
       reset_password_instructions:
         subject: Instructies voor wachtwoordherstel
         greeting: Hallo %{recipient}
@@ -4807,6 +4827,8 @@ pl:
         greeting: Witaj %{recipient}
         instruction: 'Możesz potwierdzić adres e-mail konta za pomocą poniższego linku:'
         action: Potwierdź moje konto
+        reminder_notice: To przypomnienie — zauważyliśmy, że nie potwierdziłeś jeszcze swojego konta.
+        reminder_help: Jeśli potrzebujesz pomocy w potwierdzeniu konta, po prostu odpowiedz na tę wiadomość, aby nas o tym poinformować.
       reset_password_instructions:
         subject: Instrukcje resetowania hasła
         greeting: Witaj %{recipient}
@@ -5113,6 +5135,8 @@ ru:
         instruction: 'Подтвердить адрес электронной почты аккаунта можно по ссылке
           ниже:'
         action: Подтвердить мой аккаунт
+        reminder_notice: Это напоминание — мы заметили, что вы ещё не подтвердили свой аккаунт.
+        reminder_help: Если вам нужна помощь с подтверждением аккаунта, просто ответьте на это письмо, и мы вам поможем.
       reset_password_instructions:
         subject: Инструкции по сбросу пароля
         greeting: Здравствуйте, %{recipient}
@@ -5414,6 +5438,8 @@ tr:
         greeting: Merhaba %{recipient}
         instruction: 'Hesabınızın e-posta adresini aşağıdaki bağlantıdan doğrulayabilirsiniz:'
         action: Hesabımı doğrula
+        reminder_notice: Bu bir hatırlatmadır — hesabınızı henüz onaylamadığınızı fark ettik.
+        reminder_help: Hesabınızı onaylarken yardıma ihtiyacınız olursa, bu e-postayı yanıtlayarak bize bildirmeniz yeterli.
       reset_password_instructions:
         subject: Parola sıfırlama talimatları
         greeting: Merhaba %{recipient}
@@ -5716,6 +5742,8 @@ vi:
         greeting: Xin chào %{recipient}
         instruction: 'Bạn có thể xác nhận email tài khoản bằng liên kết bên dưới:'
         action: Xác nhận tài khoản của tôi
+        reminder_notice: Đây là email nhắc nhở — chúng tôi nhận thấy bạn chưa xác nhận tài khoản của mình.
+        reminder_help: Nếu bạn cần trợ giúp để xác nhận tài khoản, chỉ cần trả lời email này để cho chúng tôi biết.
       reset_password_instructions:
         subject: Hướng dẫn đặt lại mật khẩu
         greeting: Xin chào %{recipient}
@@ -6012,6 +6040,8 @@ ar:
         greeting: مرحباً %{recipient}
         instruction: 'يمكنك تأكيد البريد الإلكتروني لحسابك عبر الرابط أدناه:'
         action: تأكيد حسابي
+        reminder_notice: هذه رسالة تذكير — لاحظنا أنك لم تؤكد حسابك بعد.
+        reminder_help: إذا كنت بحاجة إلى مساعدة لتأكيد حسابك، فما عليك سوى الرد على هذه الرسالة لإعلامنا.
       reset_password_instructions:
         subject: تعليمات إعادة تعيين كلمة المرور
         greeting: مرحباً %{recipient}

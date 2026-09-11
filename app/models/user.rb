@@ -14,6 +14,12 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
   attr_accessor :login
 
+  # Virtual, not persisted -- set by UnconfirmedReminderService right before
+  # calling send_confirmation_instructions so the mailer view (which only
+  # has access to @resource, not arbitrary opts) can tell a reminder apart
+  # from the original confirmation email.
+  attr_accessor :confirmation_reminder
+
   validates :username,
     :uniqueness => {
       :case_sensitive => false

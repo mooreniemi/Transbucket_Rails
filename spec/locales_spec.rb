@@ -12,7 +12,7 @@ describe 'application locales' do
   REQUIRED_FILTER_SCOPES = %w(ftm mtf bottom top need_category).freeze
   REQUIRED_PROFILE_KEYS = %w(edit_title name email profile_help new_password current_password update submissions submit_now delete_confirm submission).freeze
   REQUIRED_SETTINGS_KEYS = %w(title safe_mode safe_mode_help notifications notifications_help update cancel_account cancel_warning cancel_confirm).freeze
-  REQUIRED_CONFIRMATION_KEYS = %w(subject greeting instruction action).freeze
+  REQUIRED_CONFIRMATION_KEYS = %w(subject greeting instruction action reminder_notice reminder_help).freeze
   REQUIRED_RESET_KEYS = %w(subject greeting instruction action instruction_2 instruction_3).freeze
   REQUIRED_PASSWORD_CHANGE_KEYS = %w(subject greeting message).freeze
   REQUIRED_UNLOCK_KEYS = %w(subject greeting message instruction action).freeze

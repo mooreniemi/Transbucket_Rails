@@ -35,6 +35,18 @@ describe Surgeon do
     end
   end
 
+  describe "#website_url" do
+    it "normalizes a host-only URL" do
+      surgeon = build(:surgeon, url: " www.example.org/path ")
+      expect(surgeon.website_url).to eq("https://www.example.org/path")
+    end
+
+    it "rejects non-web URLs" do
+      surgeon = build(:surgeon, url: "javascript:alert(1)")
+      expect(surgeon.website_url).to be_nil
+    end
+  end
+
   describe ".names" do
     it 'provides a list of names formatted for SearchController' do
       surgeons = create_list(:surgeon, 2)

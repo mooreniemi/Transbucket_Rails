@@ -1,11 +1,22 @@
-<% seo_meta description: "View #{@surgeon.to_s} submissions, outcome summaries, and discussion on Transbucket.", canonical: surgeon_url(id: @surgeon.id) %>
+<% seo_meta description: "#{@surgeon.to_s}: #{t('directory.surgeons_intro')}", canonical: surgeon_url(id: @surgeon.id) %>
 <% title @surgeon.to_s  %>
+<% surgeon_address = {
+  '@type' => 'PostalAddress',
+  'streetAddress' => @surgeon.address,
+  'addressLocality' => @surgeon.city,
+  'addressRegion' => @surgeon.state,
+  'postalCode' => @surgeon.zip,
+  'addressCountry' => @surgeon.country
+}.compact %>
+<% surgeon_address = nil if surgeon_address.keys == ['@type'] %>
 <% json_ld_tag(
   {
     '@context' => 'https://schema.org',
     '@type' => 'Physician',
     'name' => @surgeon.to_s,
-    'url' => surgeon_url(id: @surgeon.id)
+    'url' => surgeon_url(id: @surgeon.id),
+    'sameAs' => @surgeon.website_url,
+    'address' => surgeon_address
   }.compact
 ) %>
 <% json_ld_tag(
@@ -19,7 +30,7 @@
     ]
   }
 ) %>
-<% cache([I18n.locale, @surgeon]) do %>
+<% cache([I18n.locale, @surgeon, user_signed_in?]) do %>
 <div itemscope itemtype="https://schema.org/Physician">
   <div class="media">
     <div class="media-left">
@@ -28,9 +39,11 @@
     <div class="media-body">
       <h1 class="media-heading"><%= @surgeon.to_s %></h1>
       <h4 class="media-heading">
-        <%= link_to @surgeon.to_s, @surgeon.url %>
+        <% if @surgeon.website_url %>
+          <%= link_to t('public.form.surgeon_url'), @surgeon.website_url %>
+        <% end %>
         <br><%= (fa_icon('star') * @surgeon.overall_satisfaction).html_safe unless @surgeon.overall_satisfaction.nil? %>
-    </h4>
+      </h4>
     <% if @surgeon.address %>
       <address>
         <%= @surgeon.address %><br>
@@ -45,18 +58,31 @@
       </div>
     <% end %>
 
-    <% @surgeon.satisfaction_by_procedure.each do |procedure_id, satisfaction| %>
+    <% if @procedure_count > 0 %>
+      <p class="lead"><%= t('directory.procedures_intro') %></p>
+    <% end %>
+    <% if user_signed_in? %>
+      <p><%= t('directory.submissions') %>: <%= @submission_count %></p>
+    <% end %>
+    <% @pins_by_surgeon_procedure.each do |procedure_id, _count| %>
+      <% procedure = @procedures_by_id[procedure_id] %>
+      <% next unless procedure %>
+      <% satisfaction = @satisfaction_by_procedure[procedure_id] %>
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title"><%= Procedure.find(procedure_id).localized_name %>
-          <%= link_to @pins_by_surgeon_procedure[procedure_id], pins_path(procedure: procedure_id, surgeon: @surgeon.id), { style: 'border-radius: 100%; background: #ffffcc; display:inline-block; padding:5px;' } %>
+          <h3 class="panel-title"><%= procedure.localized_name %>
+          <% if user_signed_in? %>
+            <%= link_to @pins_by_surgeon_procedure[procedure_id], pins_path(procedure: procedure_id, surgeon: @surgeon.id), { style: 'border-radius: 100%; background: #ffffcc; display:inline-block; padding:5px;' } %>
+          <% end %>
         </h3>
       </div>
       <div class="panel-body">
-        <%= t('public.pin.average_satisfaction') %>: <%= satisfaction.to_i.to_s %>
-      <label class="label-with-popover" data-placement="right" data-content="<%= t('public.pin.average_satisfaction') %>: <%= Procedure.find(procedure_id).avg_satisfaction %>" data-title="<%= t('public.pin.average_satisfaction') %>" data-trigger="hover" data-original-title="" title="">
-        <%= fa_icon("bar-chart") %>
-      </label>
+        <% if satisfaction %>
+          <%= t('public.pin.average_satisfaction') %>: <%= satisfaction.to_i.to_s %>
+          <label class="label-with-popover" data-placement="right" data-content="<%= t('public.pin.average_satisfaction') %>: <%= satisfaction %>" data-title="<%= t('public.pin.average_satisfaction') %>" data-trigger="hover" data-original-title="" title="">
+            <%= fa_icon("bar-chart") %>
+          </label>
+        <% end %>
     </div>
   </div>
 <% end %>

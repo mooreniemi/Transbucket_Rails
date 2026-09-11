@@ -29,6 +29,9 @@ RSpec.describe SurgeonsController, :type => :controller do
       expect(counts[procedure_a.id]).to eq(2)
       expect(counts[procedure_b.id]).to eq(1)
       expect(counts.values.sum).to eq(3)
+      expect(assigns(:procedure_count)).to eq(2)
+      expect(assigns(:submission_count)).to eq(3)
+      expect(assigns(:procedures_by_id)).to include(procedure_a.id => procedure_a, procedure_b.id => procedure_b)
     end
   end
 end

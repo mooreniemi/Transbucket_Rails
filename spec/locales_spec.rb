@@ -105,6 +105,7 @@ describe 'application locales' do
       'double incision with grafts',
       'periareolar mastectomy (keyhole)',
       'bilateral mastectomy',
+      'metoidioplasty',
       "metoidioplasty ('meta')"
     ]
 

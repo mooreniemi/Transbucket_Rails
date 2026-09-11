@@ -5,7 +5,7 @@ describe ProcedureTranslation do
     procedure = create(:procedure, name: 'double incision')
     translation = procedure.translations.create!(locale: 'es', name: '  Doble Incisión  ')
 
-    expect(translation.name).to eq('doble incisión')
+    expect(translation.name).to eq('Doble Incisión')
     expect {
       procedure.translations.create!(locale: 'xx', name: 'unknown')
     }.to raise_error(ActiveRecord::RecordInvalid)

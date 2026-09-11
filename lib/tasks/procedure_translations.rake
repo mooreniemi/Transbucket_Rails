@@ -12,6 +12,7 @@ namespace :procedure do
     # display translation. Search-only abbreviations remain search aliases.
     approved_names = [
       'phalloplasty',
+      'rff phalloplasty',
       'vaginoplasty',
       'orchiectomy',
       'hysterectomy',

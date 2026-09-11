@@ -27,6 +27,12 @@ sv:
     description: Senaste uppdateringarna från Transbucket.
     date: Datum
   public:
+    auth:
+      username: Användarnamn
+      password: Lösenord
+      password_confirmation: Bekräfta lösenord
+      your_name: Ditt namn
+      gender: Kön
     pin:
       by: av
       doctor_prefix: Dr. 
@@ -53,6 +59,22 @@ sv:
     email: E-post
     username: Användarnamn
     gender: Kön
+  explanations:
+    username: Ditt användarnamn visas för alla användare och används när du loggar in. Det är unikt på webbplatsen.
+    email: Din e-postadress visas för administratörer men inte för andra användare. Din e-postadress kommer att bekräftas.
+    password: Ditt lösenord krypteras när det lagras och kan återställas med hjälp av din e-postadress.
+    name: Ditt namn visas för administratörer och används i kommunikationen med dem.
+    gender: Ditt kön visas för alla när du publicerar resultat och används för vissa standardinställningar.
+    tos: Genom att registrera dig på Transbucket.com godkänner du våra användarvillkor.
+  account_menu:
+    register: Registrera dig
+    login: Logga in
+    my_account: Mitt konto
+    logout: Logga ut
+  activerecord:
+    attributes:
+      user:
+        email: E-post
   devise:
     mailer:
       confirmation_instructions:

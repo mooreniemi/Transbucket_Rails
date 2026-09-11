@@ -1,9 +1,14 @@
 module PinsHelper
+  # Keyed by Gender#name rather than id -- ids aren't stable across
+  # environments (or even within one, if genders are ever reseeded), so an
+  # id-keyed hash risks silently misgendering users if a Gender's id ever
+  # doesn't match what this hash assumed.
   PRONOUN_HASH = {
-    1 => "he/him/his",
-    2 => "she/her/hers",
-    3 => "they/them/theirs",
-    4 => "they/them/theirs"
+    "FTM" => "he/him/his",
+    "MTF" => "she/her/hers",
+    "GenderQueer" => "they/them/theirs",
+    "None" => "they/them/theirs",
+    "Cisgender" => "they/them/theirs"
   }
 
   # used to mimic the shape of a PinImage
@@ -15,7 +20,7 @@ module PinsHelper
 
   def uses_pronouns(author_gender)
     return "they/them/theirs" if author_gender.nil?
-    PRONOUN_HASH[author_gender.id]
+    PRONOUN_HASH.fetch(author_gender.name, "they/them/theirs")
   end
 
   # FIXME: this could be a lot more robust, and reflect user preference rather than last

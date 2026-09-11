@@ -2,6 +2,7 @@
 # Canonical procedure records remain English; these labels are presentation/search data.
 en:
   procedure_aliases:
+    rff phalloplasty: radial forearm free flap phalloplasty
     double incision with grafts: double incision with grafts
     periareolar mastectomy (keyhole): periareolar mastectomy (keyhole)
     bilateral mastectomy: bilateral mastectomy
@@ -9,6 +10,7 @@ en:
     metoidioplasty ('meta'): metoidioplasty
 de:
   procedure_aliases:
+    rff phalloplasty: Phalloplastik mit freiem radialem Unterarmlappen
     double incision with grafts: Doppelinzision mit Transplantaten
     periareolar mastectomy (keyhole): periareoläre Mastektomie (Keyhole)
     bilateral mastectomy: bilaterale Mastektomie
@@ -16,6 +18,7 @@ de:
     metoidioplasty ('meta'): Metoidioplastik
 es:
   procedure_aliases:
+    rff phalloplasty: faloplastia con colgajo libre de antebrazo radial
     double incision with grafts: doble incisión con injertos
     periareolar mastectomy (keyhole): mastectomía periareolar (keyhole)
     bilateral mastectomy: mastectomía bilateral
@@ -23,6 +26,7 @@ es:
     metoidioplasty ('meta'): metoidioplastia
 fr:
   procedure_aliases:
+    rff phalloplasty: phalloplastie par lambeau libre de l'avant-bras radial
     double incision with grafts: double incision avec greffes
     periareolar mastectomy (keyhole): mastectomie périaréolaire (keyhole)
     bilateral mastectomy: mastectomie bilatérale
@@ -30,6 +34,7 @@ fr:
     metoidioplasty ('meta'): métaïdioplastie
 it:
   procedure_aliases:
+    rff phalloplasty: falloplastica con lembo libero dell'avambraccio radiale
     double incision with grafts: doppia incisione con innesti
     periareolar mastectomy (keyhole): mastectomia periareolare (keyhole)
     bilateral mastectomy: mastectomia bilaterale
@@ -37,6 +42,7 @@ it:
     metoidioplasty ('meta'): metoidioplastica
 ja:
   procedure_aliases:
+    rff phalloplasty: 橈側前腕遊離皮弁による陰茎形成術
     double incision with grafts: ダブルインシジョン（移植あり）
     periareolar mastectomy (keyhole): 乳輪周囲切開法（キーホール）
     bilateral mastectomy: 両側乳房切除術
@@ -44,6 +50,7 @@ ja:
     metoidioplasty ('meta'): メタ形成術
 zh-CN:
   procedure_aliases:
+    rff phalloplasty: 桡侧前臂游离皮瓣阴茎成形术
     double incision with grafts: 双切口加移植物
     periareolar mastectomy (keyhole): 乳晕周围切口乳房切除术（钥匙孔）
     bilateral mastectomy: 双侧乳房切除术
@@ -51,6 +58,7 @@ zh-CN:
     metoidioplasty ('meta'): 阴蒂成形术
 zh-TW:
   procedure_aliases:
+    rff phalloplasty: 橈側前臂游離皮瓣陰莖成形術
     double incision with grafts: 雙切口加移植物
     periareolar mastectomy (keyhole): 乳暈周圍切口乳房切除術（鑰匙孔）
     bilateral mastectomy: 雙側乳房切除術
@@ -58,6 +66,7 @@ zh-TW:
     metoidioplasty ('meta'): 陰蒂成形術
 pt-BR:
   procedure_aliases:
+    rff phalloplasty: faloplastia com retalho livre do antebraço radial
     double incision with grafts: incisão dupla com enxertos
     periareolar mastectomy (keyhole): mastectomia periareolar (keyhole)
     bilateral mastectomy: mastectomia bilateral
@@ -65,6 +74,7 @@ pt-BR:
     metoidioplasty ('meta'): metoidioplastia
 nl:
   procedure_aliases:
+    rff phalloplasty: falloplastiek met vrije radiale onderarmflap
     double incision with grafts: dubbele incisie met transplantaten
     periareolar mastectomy (keyhole): periareolaire mastectomie (keyhole)
     bilateral mastectomy: bilaterale mastectomie
@@ -72,6 +82,7 @@ nl:
     metoidioplasty ('meta'): metoidioplastiek
 pl:
   procedure_aliases:
+    rff phalloplasty: falloplastyka z wolnym płatem promieniowym przedramienia
     double incision with grafts: podwójne nacięcie z przeszczepami
     periareolar mastectomy (keyhole): mastektomia okołootoczkowa (keyhole)
     bilateral mastectomy: obustronna mastektomia
@@ -79,6 +90,7 @@ pl:
     metoidioplasty ('meta'): metoidioplastyka
 ru:
   procedure_aliases:
+    rff phalloplasty: фаллопластика со свободным лоскутом лучевого предплечья
     double incision with grafts: двойной разрез с трансплантатами
     periareolar mastectomy (keyhole): периареолярная мастэктомия (keyhole)
     bilateral mastectomy: двусторонняя мастэктомия
@@ -86,6 +98,7 @@ ru:
     metoidioplasty ('meta'): метоидиопластика
 tr:
   procedure_aliases:
+    rff phalloplasty: radial önkol serbest flebi ile falloplasti
     double incision with grafts: greftli çift insizyon
     periareolar mastectomy (keyhole): periareolar mastektomi (keyhole)
     bilateral mastectomy: bilateral mastektomi
@@ -93,6 +106,7 @@ tr:
     metoidioplasty ('meta'): metoidioplasti
 vi:
   procedure_aliases:
+    rff phalloplasty: tạo hình dương vật bằng vạt tự do cẳng tay quay
     double incision with grafts: rạch đôi có ghép
     periareolar mastectomy (keyhole): phẫu thuật cắt tuyến vú quanh quầng vú (keyhole)
     bilateral mastectomy: phẫu thuật cắt tuyến vú hai bên
@@ -100,6 +114,7 @@ vi:
     metoidioplasty ('meta'): phẫu thuật tạo hình dương vật từ âm vật
 ar:
   procedure_aliases:
+    rff phalloplasty: رأب القضيب باستخدام سديلة حرة من الساعد الكعبري
     double incision with grafts: شق مزدوج مع ترقيع
     periareolar mastectomy (keyhole): استئصال الثدي حول الهالة (ثقب المفتاح)
     bilateral mastectomy: استئصال الثديين

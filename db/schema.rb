@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20260910000000) do
+ActiveRecord::Schema.define(version: 20260911020000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -261,4 +261,10 @@ ActiveRecord::Schema.define(version: 20260910000000) do
 
   add_foreign_key "procedure_translations", "procedures"
 
+  # Expression indexes aren't reflected by this Rails/pg adapter's schema
+  # dumper (add_index can't express lower(...) either), so they're written
+  # here by hand -- otherwise a fresh db:schema:load would silently come up
+  # without them. See db/migrate/20260911020000_add_functional_indexes_for_user_login.rb.
+  execute 'CREATE INDEX IF NOT EXISTS index_users_on_lower_username ON users (lower(username));'
+  execute 'CREATE INDEX IF NOT EXISTS index_users_on_lower_email ON users (lower(email));'
 end

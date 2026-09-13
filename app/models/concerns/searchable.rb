@@ -13,8 +13,16 @@ module Searchable
     }
 
     after_commit :index_document_async, on: [:create, :update]
-    after_commit :delete_document_async, on: :destroy
+    after_commit :enqueue_delete_document, on: :destroy
     handle_asynchronously :index_document_async
+  end
+
+  class_methods do
+    # A destroyed Active Record object cannot be serialized by delayed_job.
+    # Pass the stable index name and document ID instead.
+    def delete_document_async(index_name, document_id)
+      __elasticsearch__.client.delete(index: index_name, id: document_id)
+    end
     handle_asynchronously :delete_document_async
   end
 
@@ -22,7 +30,7 @@ module Searchable
     __elasticsearch__.index_document
   end
 
-  def delete_document_async
-    __elasticsearch__.delete_document
+  def enqueue_delete_document
+    self.class.delete_document_async(self.class.index_name, id)
   end
 end

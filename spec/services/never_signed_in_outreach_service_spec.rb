@@ -3,7 +3,7 @@ require 'rails_helper'
 describe NeverSignedInOutreachService do
   let(:unconfirmed_user) { create(:user) }
   let!(:never_contacted) { create(:user, :with_confirmation, created_at: 2.days.ago) }
-  let!(:already_contacted) { create(:user, :with_confirmation, created_at: 2.days.ago, reset_password_sent_at: 1.day.ago) }
+  let!(:already_contacted) { create(:user, :with_confirmation, created_at: 2.days.ago, never_signed_in_outreach_sent_at: 1.day.ago) }
   let!(:has_signed_in) { create(:user, :with_confirmation, created_at: 2.days.ago, sign_in_count: 1) }
   let!(:too_old) { create(:user, :with_confirmation, created_at: 1.year.ago) }
 
@@ -33,13 +33,19 @@ describe NeverSignedInOutreachService do
   end
 
   describe '#call' do
-    it 'sends a password reset email and stamps reset_password_sent_at' do
-      expect { service.call }.to change { never_contacted.reload.reset_password_sent_at }.from(nil)
+    it 'sends a password reset email and stamps never_signed_in_outreach_sent_at' do
+      expect { service.call }.to change { never_contacted.reload.never_signed_in_outreach_sent_at }.from(nil)
+    end
+
+    it 'does not mark a user as contacted unless the send actually succeeds' do
+      allow_any_instance_of(User).to receive(:send_reset_password_instructions).and_raise(Net::SMTPError)
+
+      expect { service.call rescue nil }.not_to change { never_contacted.reload.never_signed_in_outreach_sent_at }
     end
 
     it 'does not touch users outside the scope' do
       service.call
-      expect(already_contacted.reload.reset_password_sent_at).to be_within(1.minute).of(1.day.ago)
+      expect(already_contacted.reload.never_signed_in_outreach_sent_at).to be_within(1.minute).of(1.day.ago)
     end
 
     it 'returns the number of users contacted' do

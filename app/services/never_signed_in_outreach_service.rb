@@ -6,6 +6,13 @@
 # one-click path back in without needing to remember a password they may
 # never have used. Runs synchronously for the same reason as
 # UnconfirmedReminderService: no worker dyno in production.
+#
+# Tracks completion via its own never_signed_in_outreach_sent_at column
+# rather than Devise's reset_password_sent_at -- Devise sets that one
+# *before* attempting delivery (see Devise::Models::Recoverable
+# #set_reset_password_token), so a failed send would still get marked
+# done and never retried if we relied on it. Our own column is only set
+# after send_reset_password_instructions returns successfully.
 class NeverSignedInOutreachService
   MAX_LIMIT = 5000
 
@@ -19,7 +26,7 @@ class NeverSignedInOutreachService
   def scope
     users = User.where.not(confirmed_at: nil)
                 .where(sign_in_count: 0)
-                .where(reset_password_sent_at: nil)
+                .where(never_signed_in_outreach_sent_at: nil)
     users = users.where('created_at >= ?', @since) if @since
     users = users.where('created_at <= ?', @until_time) if @until_time
     users.order(created_at: :desc).limit(@limit)
@@ -29,6 +36,7 @@ class NeverSignedInOutreachService
     contacted = 0
     scope.to_a.each do |user|
       user.send_reset_password_instructions
+      user.update_column(:never_signed_in_outreach_sent_at, Time.current)
       contacted += 1
       sleep @sleep_between if @sleep_between.positive?
     end

@@ -60,6 +60,13 @@ jobs:
           command: |
             curl -XPUT -H "Content-Type: application/json" http://localhost:9200/_cluster/settings -d '{ "transient": { "cluster.routing.allocation.disk.threshold_enabled": false } }'
       - run: bundle exec rake db:create db:migrate
+      # public/assets is gitignored and never precompiled here otherwise, so
+      # JS-driven feature specs that load TinyMCE get a real 404 for its
+      # skin CSS/fonts (served under /assets/tinymce/...) instead of the
+      # content Capybara's headless Chrome expects -- a gap only a truly
+      # fresh checkout hits, never a local machine with a leftover
+      # public/assets from an earlier precompile or asset request.
+      - run: bundle exec rake assets:precompile
       - run: bundle exec rspec || bundle exec rspec --only-failures || bundle exec rspec --only-failures
 
 workflows:

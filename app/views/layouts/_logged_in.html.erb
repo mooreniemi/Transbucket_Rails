@@ -18,7 +18,7 @@
     </ul>
   </li>
 <% end %>
-<% unless current_user.gender.cis? %>
+<% unless current_user.gender&.cis? %>
   <li>
     <%= link_to "#{I18n.t(".header.add")} #{fa_icon('plus-circle yellow')}".html_safe, new_pin_path %>
   </li>

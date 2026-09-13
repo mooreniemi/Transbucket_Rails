@@ -196,6 +196,7 @@ en:
     average_sensation: Average Sensation
     discussion_threads: Discussion Threads
     register_to_see_more: Register to see more
+    login_or_register_to_see_more: "%{login} or %{register} to see more"
   filter_scopes:
     ftm: FTM
     mtf: MTF
@@ -910,6 +911,7 @@ de:
     average_sensation: Durchschnittliche Empfindung
     discussion_threads: Diskussionen
     register_to_see_more: Registrieren, um mehr zu sehen
+    login_or_register_to_see_more: "%{login} oder %{register}, um mehr zu sehen"
   filter_scopes:
     ftm: FTM
     mtf: MTF
@@ -1459,6 +1461,7 @@ es:
     average_sensation: Sensación media
     discussion_threads: Debates
     register_to_see_more: Regístrate para ver más
+    login_or_register_to_see_more: "%{login} o %{register} para ver más"
   filter_scopes:
     ftm: FTM
     mtf: MTF
@@ -1994,6 +1997,7 @@ fr:
     average_sensation: Sensation moyenne
     discussion_threads: Discussions
     register_to_see_more: Inscrivez-vous pour voir plus
+    login_or_register_to_see_more: "%{login} ou %{register} pour voir plus"
   filter_scopes:
     ftm: FTM
     mtf: MTF
@@ -2525,6 +2529,7 @@ it:
     average_sensation: Sensazione media
     discussion_threads: Discussioni
     register_to_see_more: Registrati per vedere altro
+    login_or_register_to_see_more: "%{login} o %{register} per vedere altro"
   filter_scopes:
     ftm: FTM
     mtf: MTF
@@ -3018,6 +3023,7 @@ ja:
     average_sensation: 平均感覚
     discussion_threads: ディスカッション
     register_to_see_more: 登録して詳しく見る
+    login_or_register_to_see_more: "%{login}または%{register}して詳しく見る"
   filter_scopes:
     ftm: FTM
     mtf: MTF
@@ -3487,6 +3493,7 @@ zh-CN:
     average_sensation: 平均感觉
     discussion_threads: 讨论
     register_to_see_more: 注册后查看更多
+    login_or_register_to_see_more: "%{login}或%{register}后查看更多"
   filter_scopes:
     ftm: FTM
     mtf: MTF
@@ -3981,6 +3988,7 @@ zh-TW:
     average_sensation: 平均感覺
     discussion_threads: 討論
     register_to_see_more: 註冊後查看更多
+    login_or_register_to_see_more: "%{login}或%{register}後查看更多"
   filter_scopes:
     ftm: FTM
     mtf: MTF
@@ -4278,6 +4286,7 @@ pt-BR:
     average_sensation: Sensação média
     discussion_threads: Discussões
     register_to_see_more: Cadastre-se para ver mais
+    login_or_register_to_see_more: "%{login} ou %{register} para ver mais"
   filter_scopes:
     ftm: FTM
     mtf: MTF
@@ -4589,6 +4598,7 @@ nl:
     average_sensation: Gemiddelde gevoeligheid
     discussion_threads: Discussies
     register_to_see_more: Registreer om meer te zien
+    login_or_register_to_see_more: "%{login} of %{register} om meer te zien"
   filter_scopes:
     ftm: FTM
     mtf: MTF
@@ -4900,6 +4910,7 @@ pl:
     average_sensation: Średnie odczuwanie
     discussion_threads: Dyskusje
     register_to_see_more: Zarejestruj się, aby zobaczyć więcej
+    login_or_register_to_see_more: "%{login} lub %{register}, aby zobaczyć więcej"
   filter_scopes:
     ftm: FTM
     mtf: MTF
@@ -5209,6 +5220,7 @@ ru:
     average_sensation: Средняя чувствительность
     discussion_threads: Обсуждения
     register_to_see_more: Зарегистрируйтесь, чтобы увидеть больше
+    login_or_register_to_see_more: "%{login} или %{register}, чтобы увидеть больше"
   filter_scopes:
     ftm: FTM
     mtf: MTF
@@ -5514,6 +5526,7 @@ tr:
     average_sensation: Ortalama his
     discussion_threads: Tartışmalar
     register_to_see_more: Daha fazlasını görmek için kayıt olun
+    login_or_register_to_see_more: "%{login} veya daha fazlasını görmek için %{register}"
   filter_scopes:
     ftm: FTM
     mtf: MTF
@@ -5820,6 +5833,7 @@ vi:
     average_sensation: Cảm giác trung bình
     discussion_threads: Thảo luận
     register_to_see_more: Đăng ký để xem thêm
+    login_or_register_to_see_more: "%{login} hoặc %{register} để xem thêm"
   filter_scopes:
     ftm: FTM
     mtf: MTF
@@ -6117,6 +6131,7 @@ ar:
     average_sensation: متوسط الإحساس
     discussion_threads: المناقشات
     register_to_see_more: سجل لرؤية المزيد
+    login_or_register_to_see_more: "%{login} أو %{register} لرؤية المزيد"
   filter_scopes:
     ftm: FTM
     mtf: MTF

@@ -37,11 +37,21 @@ class ApplicationController < ActionController::Base
   # can send in the language they actually use, instead of always English.
   # Only writes when it actually changes, so this isn't a write on every
   # request once it's already in sync.
+  #
+  # This is a non-essential side effect of every authenticated request (via
+  # the prepend_before_filter above), so it must never be able to take a
+  # real request down: guards against an unsaved current_user (seen in one
+  # controller spec that stubs User.find with a built-not-created record --
+  # can't happen with a real Warden session, but cheap to guard anyway) and
+  # rescues anything else rather than letting it propagate.
   def capture_user_locale
     return unless user_signed_in?
+    return if current_user.new_record?
     return if current_user.locale == I18n.locale.to_s
 
     current_user.update_column(:locale, I18n.locale.to_s)
+  rescue ActiveRecord::ActiveRecordError => e
+    Rails.logger.error("capture_user_locale failed for user #{current_user.id}: #{e.message}")
   end
 
   def redirect_legacy_locale

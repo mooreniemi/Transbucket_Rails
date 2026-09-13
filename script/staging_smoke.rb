@@ -109,6 +109,11 @@ class StagingSmoke
   end
 
   def login
+    login_page = get("/users/sign_in")
+    unless login_page.code.to_i == 200 && login_page.body.include?('id="new_user"')
+      raise "localized login form failed for #{@locale}"
+    end
+
     token = csrf_token("/users/sign_in")
     params = {
       "user[login]" => USERNAME,

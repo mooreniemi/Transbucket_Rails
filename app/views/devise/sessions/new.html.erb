@@ -15,7 +15,7 @@
         <%= content_tag(:div, msg, class: 'alert', id: "flash-#{name}") %>
       <% end %>
     </div>
-    <%= simple_form_for(resource, as: resource_name, url: user_session_path, html: { class: 'form-horizontal'}) do |f| %>
+    <%= simple_form_for(resource, as: resource_name, url: "/#{I18n.locale}/users/sign_in", html: { class: 'form-horizontal'}) do |f| %>
       <%= f.error_notification %>
       <div class="input-group input-group-lg padded_nicely">
         <span class="input-group-addon"><%= fa_icon "users" %></span>

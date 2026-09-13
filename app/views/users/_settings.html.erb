@@ -34,5 +34,5 @@
 <h2><%= t('settings.cancel_account') %></h2>
 <div class="well">
   <h3><%= t('settings.cancel_warning') %></h3>
-  <%= button_to t('settings.cancel_account'), user_registration_path, :data => { :confirm => t('settings.cancel_confirm') }, :method => :delete, :class => 'btn' %>
+  <%= button_to t('settings.cancel_account'), "/#{I18n.locale}/users", :data => { :confirm => t('settings.cancel_confirm') }, :method => :delete, :class => 'btn' %>
 </div>

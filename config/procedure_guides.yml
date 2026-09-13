@@ -176,6 +176,36 @@ alt phalloplasty:
     - phalloplasty
     - rff phalloplasty
 
+abdominal flap phalloplasty:
+  summary: Abdominal flap phalloplasty uses tissue from the lower abdomen to create a penis. It is one of several phalloplasty approaches documented in the community.
+  sources:
+    - name: "UCSF: Phalloplasty and metoidioplasty overview"
+      url: https://transcare.ucsf.edu/guidelines/phalloplasty
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/phallo on Reddit
+      url: https://www.reddit.com/r/phallo/
+  related_procedures:
+    - phalloplasty
+    - rff phalloplasty
+    - alt phalloplasty
+
+scrotectomy:
+  summary: Scrotectomy removes scrotal tissue. It may be performed as an individual procedure or as part of a broader gender-affirming surgical plan.
+  sources:
+    - name: "UCSF: Genital surgical procedures"
+      url: https://transcare.ucsf.edu/genital-surgical-procedures-vaginoplasty-orchietcomy-and-phalloplasty
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/Transgender_Surgeries on Reddit
+      url: https://www.reddit.com/r/Transgender_Surgeries/
+  related_procedures:
+    - scrotoplasty
+    - phalloplasty
+    - metoidioplasty ('meta')
+
 glansplasty:
   summary: Glansplasty shapes the tip of a reconstructed penis to create a defined glans. It may be performed as part of a staged phalloplasty plan.
   sources:

@@ -3,7 +3,9 @@ require 'yaml'
 
 describe 'procedure guides' do
   HIGH_PRIORITY_PROCEDURES = [
+    'abdominal flap phalloplasty',
     'scrotoplasty',
+    'scrotectomy',
     'laparoscopic hysterectomy',
     'vaginectomy',
     'monsplasty',

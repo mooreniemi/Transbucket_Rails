@@ -129,6 +129,23 @@ p {
   padding: 0px;
 }
 
+.navbar-form .input-group {
+  display: inline-flex;
+  vertical-align: top;
+  align-items: stretch;
+}
+
+.navbar-form .input-group-btn {
+  display: flex;
+}
+
+.navbar-form .search-submit {
+  height: 34px;
+  margin: 0;
+  border-left: 0;
+  border-radius: 0 4px 4px 0;
+}
+
 .comment_box {
   position:absolute;
   top:5px;

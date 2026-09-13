@@ -71,6 +71,8 @@ RSpec.describe SurgeonsController, :type => :controller do
         sensation: { 5 => 2 },
         satisfaction: { 2 => 1, 4 => 1 }
       )
+      expect(assigns(:sensation_by_procedure)[procedure.id]).to eq(5.0)
+      expect(assigns(:satisfaction_by_procedure)[procedure.id]).to eq(3.0)
     end
 
     it 'does not expose overall rating averages to anonymous users' do
@@ -80,6 +82,20 @@ RSpec.describe SurgeonsController, :type => :controller do
 
       expect(assigns(:overall_satisfaction)).to be_nil
       expect(assigns(:overall_sensation)).to be_nil
+    end
+
+    it 'loads the three latest published submissions for signed-in users' do
+      user = create(:user)
+      surgeon = create(:surgeon)
+      procedure = create(:procedure)
+      old_pin = create(:pin, surgeon: surgeon, procedure: procedure, state: 'published', updated_at: 3.days.ago)
+      newest_pin = create(:pin, surgeon: surgeon, procedure: procedure, state: 'published', updated_at: 1.day.ago)
+      create(:pin, surgeon: surgeon, procedure: procedure, state: 'pending', updated_at: Time.current)
+
+      sign_in user
+      get :show, id: surgeon.id
+
+      expect(assigns(:latest_pins)).to eq([newest_pin, old_pin])
     end
 
     it 'scopes per-procedure pin counts to the surgeon being viewed' do

@@ -71,8 +71,19 @@ describe ProceduresController, :type => :controller do
 
       get :show, id: procedure.id
 
-      expect(assigns(:related_procedures)).to include(related.name => related)
+      expect(assigns(:related_procedures)).to include(related)
       expect(response).to be_success
+    end
+
+    it 'finds related procedures that share a meaningful procedure term' do
+      procedure = create(:procedure, name: 'phalloplasty')
+      related = create(:procedure, name: 'groin flap phalloplasty')
+      unrelated = create(:procedure, name: 'hysterectomy')
+
+      get :show, id: procedure.id
+
+      expect(assigns(:related_procedures)).to include(related)
+      expect(assigns(:related_procedures)).not_to include(unrelated)
     end
   end
 end

@@ -19,13 +19,19 @@ class SurgeonsController < ApplicationController
     @pins_by_surgeon_procedure = pins.group(:procedure_id).count
     @procedures_by_id = Procedure.where(id: @pins_by_surgeon_procedure.keys).index_by(&:id)
     @satisfaction_by_procedure = pins.where.not(satisfaction: 0).group(:procedure_id).average(:satisfaction)
+    @sensation_by_procedure = pins.where.not(sensation: 0).group(:procedure_id).average(:sensation)
     @procedure_count = @procedures_by_id.length
     @submission_count = @pins_by_surgeon_procedure.values.sum
+    @latest_pins = nil
     @overall_satisfaction = nil
     @overall_sensation = nil
     @rating_distributions = nil
     @rating_distributions_by_procedure = nil
     if user_signed_in?
+      @latest_pins = pins.where(state: 'published').
+        includes(:pin_images, :surgeon, :procedure).
+        order(updated_at: :desc).
+        limit(3)
       @overall_satisfaction = pins.where.not(satisfaction: [nil, 0]).average(:satisfaction)
       @overall_sensation = pins.where.not(sensation: [nil, 0]).average(:sensation)
       @rating_distributions = rating_distributions_for(pins)

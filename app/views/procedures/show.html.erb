@@ -59,16 +59,16 @@
             <% end %>
           </ul>
         <% end %>
-        <% if @related_procedures.present? %>
-          <h2><%= t('procedure_guide.related_title', default: 'Related procedures') %></h2>
-          <ul>
-            <% guide.fetch('related_procedures', []).each do |related_name| %>
-              <% related = @related_procedures[related_name] %>
-              <% next unless related %>
-              <li><%= link_to related.localized_name, procedure_path(related) %></li>
-            <% end %>
-          </ul>
-        <% end %>
+      </div>
+    <% end %>
+    <% if @related_procedures.present? %>
+      <div class="panel-body procedure-related-links">
+        <h2><%= t('procedure_guide.related_title', default: 'Related procedures') %></h2>
+        <ul>
+          <% @related_procedures.each do |related| %>
+            <li><%= link_to related.localized_name, procedure_path(related) %></li>
+          <% end %>
+        </ul>
       </div>
     <% end %>
     <!-- List group -->
@@ -93,8 +93,8 @@
   <% end %>
   <% if @rating_distributions.present? %>
     <div class="procedure-rating-distributions">
-      <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, rating: :sensation, title: t('public.rating.sensation.distribution'), scope_params: { procedure: @procedure.id }, heading_id: 'procedure-sensation-distribution-heading' } %>
-      <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, rating: :satisfaction, title: t('public.rating.satisfaction.distribution'), scope_params: { procedure: @procedure.id }, heading_id: 'procedure-satisfaction-distribution-heading' } %>
+      <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, average: @rating_averages[:sensation], rating: :sensation, title: t('public.rating.sensation.distribution'), scope_params: { procedure: @procedure.id }, heading_id: 'procedure-sensation-distribution-heading' } %>
+      <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, average: @rating_averages[:satisfaction], rating: :satisfaction, title: t('public.rating.satisfaction.distribution'), scope_params: { procedure: @procedure.id }, heading_id: 'procedure-satisfaction-distribution-heading' } %>
     </div>
   <% end %>
   <h4><%= fa_icon("comments-o") %> <%= t('public.pin.discussion') %></h4>

@@ -68,8 +68,8 @@
     <% if user_signed_in? && @rating_distributions.present? %>
       <div class="surgeon-rating-distributions">
         <h2><%= t('public.rating.overall_distribution') %></h2>
-        <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, rating: :sensation, title: t('public.rating.sensation.distribution'), scope_params: { surgeon: @surgeon.id }, heading_id: 'surgeon-sensation-distribution-heading' } %>
-        <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, rating: :satisfaction, title: t('public.rating.satisfaction.distribution'), scope_params: { surgeon: @surgeon.id }, heading_id: 'surgeon-satisfaction-distribution-heading' } %>
+        <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, average: @overall_sensation, rating: :sensation, title: t('public.rating.sensation.distribution'), scope_params: { surgeon: @surgeon.id }, heading_id: 'surgeon-sensation-distribution-heading' } %>
+        <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, average: @overall_satisfaction, rating: :satisfaction, title: t('public.rating.satisfaction.distribution'), scope_params: { surgeon: @surgeon.id }, heading_id: 'surgeon-satisfaction-distribution-heading' } %>
       </div>
     <% end %>
 
@@ -101,13 +101,29 @@
         <% procedure_distribution = (@rating_distributions_by_procedure || {})[procedure_id] %>
         <% if user_signed_in? && procedure_distribution.present? %>
           <div class="surgeon-procedure-rating-distributions">
-            <%= render partial: 'shared/rating_distribution', locals: { distribution: procedure_distribution, rating: :sensation, title: t('public.rating.sensation.distribution'), scope_params: { surgeon: @surgeon.id, procedure: procedure_id }, heading_id: "surgeon-#{procedure_id}-sensation-distribution-heading" } %>
-            <%= render partial: 'shared/rating_distribution', locals: { distribution: procedure_distribution, rating: :satisfaction, title: t('public.rating.satisfaction.distribution'), scope_params: { surgeon: @surgeon.id, procedure: procedure_id }, heading_id: "surgeon-#{procedure_id}-satisfaction-distribution-heading" } %>
+            <%= render partial: 'shared/rating_distribution', locals: { distribution: procedure_distribution, average: @sensation_by_procedure[procedure_id], rating: :sensation, title: t('public.rating.sensation.distribution'), scope_params: { surgeon: @surgeon.id, procedure: procedure_id }, heading_id: "surgeon-#{procedure_id}-sensation-distribution-heading" } %>
+            <%= render partial: 'shared/rating_distribution', locals: { distribution: procedure_distribution, average: @satisfaction_by_procedure[procedure_id], rating: :satisfaction, title: t('public.rating.satisfaction.distribution'), scope_params: { surgeon: @surgeon.id, procedure: procedure_id }, heading_id: "surgeon-#{procedure_id}-satisfaction-distribution-heading" } %>
           </div>
+        <% end %>
+        <% unless user_signed_in? %>
+          <p class="directory-login-prompt">
+            <%= link_to t('account_menu.login'), new_user_session_path %>
+            <%= t('directory.register_to_see_more') %>
+            <%= link_to t('account_menu.register'), register_path %>.
+          </p>
         <% end %>
     </div>
   </div>
 <% end %>
 </div>
 </div>
+<% end %>
+
+<% if user_signed_in? && @latest_pins.present? %>
+  <section class="procedure-recent-submissions" aria-labelledby="surgeon-recent-submissions-heading">
+    <h2 id="surgeon-recent-submissions-heading"><%= t('directory.recent_submissions') %></h2>
+    <div class="procedure-recent-pin-list">
+      <%= render partial: 'procedures/recent_pin', collection: @latest_pins, as: :pin %>
+    </div>
+  </section>
 <% end %>

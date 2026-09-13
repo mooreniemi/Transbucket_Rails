@@ -11,7 +11,7 @@ class ProceduresController < ApplicationController
   def show
     @procedure = Procedure.includes(comment_threads: [:children]).friendly.find(params[:id])
     guide = @procedure.editorial_guide
-    @related_procedures = Procedure.where(name: guide.fetch('related_procedures', [])).index_by(&:name) if guide
+    @related_procedures = @procedure.related_procedures
     # procedure pages are public, but comments should be private
     if current_user
       @comments = @procedure.comments_asc
@@ -24,6 +24,10 @@ class ProceduresController < ApplicationController
       @rating_distributions = {
         sensation: @procedure.pins.where(sensation: 1..5).group(:sensation).count,
         satisfaction: @procedure.pins.where(satisfaction: 1..5).group(:satisfaction).count
+      }
+      @rating_averages = {
+        sensation: @procedure.pins.where(sensation: 1..5).average(:sensation),
+        satisfaction: @procedure.pins.where(satisfaction: 1..5).average(:satisfaction)
       }
     end
   end

@@ -1,7 +1,8 @@
 <% distribution ||= {} %>
+<% average ||= nil %>
 <% heading_id ||= "rating-distribution-#{rating}" %>
 <section class="rating-distribution" aria-labelledby="<%= heading_id %>">
-  <h4 id="<%= heading_id %>"><%= title %></h4>
+  <h4 id="<%= heading_id %>"><%= title %><% if average %> (<%= rating == :sensation ? t('public.pin.average_sensation') : t('public.pin.average_satisfaction') %>: <%= average.to_f.round(1) %>/5)<% end %></h4>
   <% counts = distribution.fetch(rating, {}) %>
   <% max_count = counts.values.max.to_i %>
   <ol class="rating-distribution-list">

@@ -509,6 +509,7 @@ en:
       surgeon_url: Surgeon's URL
     auth:
       username: Username
+      username_or_email: Username or email
       password: Password
       password_confirmation: Password confirmation
       your_name: Your name
@@ -1036,6 +1037,7 @@ de:
       surgeon_url: URL des Chirurgen
     auth:
       username: Benutzername
+      username_or_email: Benutzername oder E-Mail
       password: Passwort
       password_confirmation: Passwort bestätigen
       your_name: Dein Name
@@ -1578,6 +1580,7 @@ es:
       surgeon_url: URL del cirujano
     auth:
       username: Nombre de usuario
+      username_or_email: Nombre de usuario o correo electrónico
       password: Contraseña
       password_confirmation: Confirmación de contraseña
       your_name: Tu nombre
@@ -2117,6 +2120,7 @@ fr:
       surgeon_url: URL du chirurgien
     auth:
       username: Nom d’utilisateur
+      username_or_email: Nom d’utilisateur ou e-mail
       password: Mot de passe
       password_confirmation: Confirmation du mot de passe
       your_name: Votre nom
@@ -2638,6 +2642,7 @@ it:
       surgeon_url: URL del chirurgo
     auth:
       username: Nome utente
+      username_or_email: Nome utente o email
       password: Password
       password_confirmation: Conferma password
       your_name: Il tuo nome
@@ -3122,6 +3127,7 @@ ja:
       surgeon_url: 外科医のURL
     auth:
       username: ユーザー名
+      username_or_email: ユーザー名またはメールアドレス
       password: パスワード
       password_confirmation: パスワード確認
       your_name: 氏名
@@ -3589,6 +3595,7 @@ zh-CN:
       surgeon_url: 医生网址
     auth:
       username: 用户名
+      username_or_email: 用户名或邮箱
       password: 密码
       password_confirmation: 确认密码
       your_name: 姓名
@@ -4081,6 +4088,7 @@ zh-TW:
       surgeon_url: 醫師網址
     auth:
       username: 使用者名稱
+      username_or_email: 使用者名稱或電子郵件
       password: 密碼
       password_confirmation: 確認密碼
       your_name: 姓名
@@ -4385,6 +4393,7 @@ pt-BR:
       surgeon_url: URL do cirurgião
     auth:
       username: Nome de usuário
+      username_or_email: Nome de usuário ou e-mail
       password: Senha
       password_confirmation: Confirmação da senha
       your_name: Seu nome
@@ -4692,6 +4701,7 @@ nl:
       surgeon_url: URL van chirurg
     auth:
       username: Gebruikersnaam
+      username_or_email: Gebruikersnaam of e-mail
       password: Wachtwoord
       password_confirmation: Wachtwoord bevestigen
       your_name: Je naam
@@ -4999,6 +5009,7 @@ pl:
       surgeon_url: URL chirurga
     auth:
       username: Nazwa użytkownika
+      username_or_email: Nazwa użytkownika lub e-mail
       password: Hasło
       password_confirmation: Potwierdzenie hasła
       your_name: Twoje imię
@@ -5307,6 +5318,7 @@ ru:
       surgeon_url: URL хирурга
     auth:
       username: Имя пользователя
+      username_or_email: Имя пользователя или email
       password: Пароль
       password_confirmation: Подтверждение пароля
       your_name: Ваше имя
@@ -5609,6 +5621,7 @@ tr:
       surgeon_url: Cerrahın URL’si
     auth:
       username: Kullanıcı adı
+      username_or_email: Kullanıcı adı veya e-posta
       password: Şifre
       password_confirmation: Şifre onayı
       your_name: Adınız
@@ -5912,6 +5925,7 @@ vi:
       surgeon_url: URL bác sĩ phẫu thuật
     auth:
       username: Tên người dùng
+      username_or_email: Tên người dùng hoặc email
       password: Mật khẩu
       password_confirmation: Xác nhận mật khẩu
       your_name: Tên của bạn
@@ -6207,6 +6221,7 @@ ar:
       surgeon_url: رابط الجراح
     auth:
       username: اسم المستخدم
+      username_or_email: اسم المستخدم أو البريد الإلكتروني
       password: كلمة المرور
       password_confirmation: تأكيد كلمة المرور
       your_name: اسمك

@@ -19,7 +19,7 @@
       <%= f.error_notification %>
       <div class="input-group input-group-lg padded_nicely">
         <span class="input-group-addon"><%= fa_icon "users" %></span>
-          <%= f.text_field :login, placeholder: t('public.auth.username'), autofocus: true, class: "form-control" %>
+          <%= f.text_field :login, placeholder: t('public.auth.username_or_email'), autofocus: true, class: "form-control" %>
         <span class="input-group-addon">
           <small>
             <%= t('activerecord.attributes.user.remember_me') %>?

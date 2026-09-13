@@ -6,7 +6,7 @@ describe "the sign-in process" do
   def signin_with(username)
     visit '/users/sign_in'
     within("#new_user") do
-      fill_in 'Username', :with => username
+      fill_in 'Username or email', :with => username
       fill_in 'Password', :with => user.password
     end
     click_button I18n.t('account_menu.login', locale: :en)

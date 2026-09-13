@@ -3,6 +3,7 @@
   <div class="col-md-10 col-md-offset-1 center">
     <h1><%= I18n.t('.homepage.title') %></h1>
     <p class="lead"><%= I18n.t('.homepage.intro') %></p>
+    <%= link_to t('account_menu.login'), new_user_session_path, class: "btn btn-default" %>
   </div>
 </div>
 <div class="row">

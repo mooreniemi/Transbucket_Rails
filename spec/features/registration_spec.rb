@@ -15,14 +15,6 @@ RSpec.describe "registration" do
     select user.gender.name, :from => "user_gender_id"
   end
 
-  def login_user(user, remember: false)
-    fill_in "Username", :with => user.username
-    fill_in "Password", :with => user.password
-    check "user_remember_me" if remember
-
-    click_button I18n.t('account_menu.login', locale: :en)
-  end
-
   shared_examples "registration" do
     it "displays errors upon incorrect input" do
       self.send(:fill_out_sign_up, user, invalid: true)
@@ -44,10 +36,9 @@ RSpec.describe "registration" do
 
       expect(page).to have_content("Your account was successfully confirmed")
 
-      login_user(user, remember: true)
-
-      # current_path reads immediately with no retry, unlike have_current_path;
-      # under the js driver the post-sign-in redirect can still be in flight.
+      # Confirming now signs the user in directly (see ConfirmationsController),
+      # so there's no separate login step -- the confirmation link itself lands
+      # them signed in on /en/pins.
       expect(page).to have_current_path('/en/pins')
 
       user_in_db = User.find_by!(email: user.email)

@@ -29,6 +29,7 @@ sv:
   public:
     auth:
       username: Användarnamn
+      username_or_email: Användarnamn eller e-post
       password: Lösenord
       password_confirmation: Bekräfta lösenord
       your_name: Ditt namn

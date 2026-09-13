@@ -1,11 +1,12 @@
 version: 2.1
 orbs:
   ruby: circleci/ruby@1.1.2
+  node: circleci/node@5.2.0
 
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.6.6-node-browsers
+      - image: cimg/ruby:3.1.6
         environment:
           RAILS_ENV: development
     executor: ruby/default
@@ -14,7 +15,7 @@ jobs:
       - ruby/install-deps
   test:
     docker:
-      - image: circleci/ruby:2.6.6-node-browsers
+      - image: cimg/ruby:3.1.6-browsers
         environment:
           BUNDLE_JOBS: '3'
           BUNDLE_RETRY: '3'
@@ -37,6 +38,12 @@ jobs:
     executor: ruby/default
     steps:
       - checkout
+      # cimg/ruby's -browsers variant has no Node.js (no combined
+      # node+browsers tag exists), but the asset pipeline needs one at
+      # runtime to compile the app's .coffee files via ExecJS, and
+      # capybara/selenium-webdriver specs (8 files tagged js: true) need
+      # the browsers variant's Chrome -- so both are required here.
+      - node/install
       - ruby/install-deps
       - run:
           name: Wait for db

@@ -1,4 +1,4 @@
-class AddFunctionalIndexesForUserLogin < ActiveRecord::Migration
+class AddFunctionalIndexesForUserLogin < ActiveRecord::Migration[4.2]
   disable_ddl_transaction!
 
   # Devise's find_first_by_auth_conditions (see User.find_first_by_auth_conditions)

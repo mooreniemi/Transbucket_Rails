@@ -1,4 +1,4 @@
-class AddAttachmentImageToAssets < ActiveRecord::Migration
+class AddAttachmentImageToAssets < ActiveRecord::Migration[4.2]
   def self.up
     change_table :assets do |t|
       t.attachment :image

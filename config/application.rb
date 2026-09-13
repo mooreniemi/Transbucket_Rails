@@ -186,6 +186,351 @@ if RUBY_VERSION >= '3.0'
   %w(get post patch put head delete cookies assigns follow_redirect!).each do |verb|
     ActionDispatch::Integration::Runner.send(:ruby2_keywords, verb)
   end
+
+  # Same bare-splat-forwarding shape once more: AbstractAdapter#create_table
+  # calls `create_table_definition(table_name, options[:temporary],
+  # options[:options], options[:as], comment: comment)`. The PostgreSQL
+  # adapter's own override, `create_table_definition(*args)`, only shows up
+  # (and only breaks) on a truly fresh `db:create db:migrate` -- exactly
+  # what CI runs and what local development, which reuses an
+  # already-migrated database, never exercises.
+  require 'active_record/connection_adapters/postgresql/schema_statements'
+  ActiveRecord::ConnectionAdapters::PostgreSQL::SchemaStatements.send(:ruby2_keywords, :create_table_definition)
+
+  # Same explicit-positional-Hash-into-a-kwargs-only-method bug as
+  # SpecializedString/Cache::Entry/MessageEncryptor above: TableDefinition
+  # #column calls `new_column_definition(name, type, options)` -- a plain
+  # Hash -- against new_column_definition(name, type, **options). Every
+  # column-type helper (t.string, t.integer, ...) routes through #column,
+  # so this breaks the very first table Rails creates on a truly fresh
+  # database (ar_internal_metadata) -- again only on a real db:migrate from
+  # scratch, never on a local dev db that's already migrated.
+  class ActiveRecord::ConnectionAdapters::TableDefinition
+    def column(name, type, options = {})
+      name = name.to_s
+      type = type.to_sym if type
+      options = options.dup
+
+      if @columns_hash[name] && @columns_hash[name].primary_key?
+        raise ArgumentError, "you can't redefine the primary key column '#{name}'. To define a custom primary key, pass { id: false } to create_table."
+      end
+
+      index_options = options.delete(:index)
+      index(name, index_options.is_a?(Hash) ? index_options : {}) if index_options
+      @columns_hash[name] = new_column_definition(name, type, **options)
+      self
+    end
+  end
+
+  # Two compounding bugs on the same call: SchemaCreation#visit_ColumnDefinition
+  # calls `type_to_sql(o.type, o.options)`, passing a plain Hash positionally
+  # rather than as real keywords, and `type_to_sql` is itself only exposed via
+  # `delegate ... to: :@conn`, whose generated `def type_to_sql(*args, &block)`
+  # doesn't preserve keyword-ness across the forward. Both must be fixed: the
+  # call site needs **o.options so Ruby treats it as real keywords, and the
+  # delegate method needs ruby2_keywords so the kwargs it captures into *args
+  # come back out as kwargs (not a re-flattened positional Hash) when it
+  # forwards to the real, kwargs-only type_to_sql on the connection.
+  ActiveRecord::ConnectionAdapters::AbstractAdapter::SchemaCreation.send(:ruby2_keywords, :type_to_sql)
+
+  class ActiveRecord::ConnectionAdapters::AbstractAdapter::SchemaCreation
+    private
+
+    def visit_ColumnDefinition(o)
+      o.sql_type = type_to_sql(o.type, **o.options)
+      column_sql = "#{quote_column_name(o.name)} #{o.sql_type}".dup
+      add_column_options!(column_sql, column_options(o)) unless o.type == :primary_key
+      column_sql
+    end
+  end
+
+  # SchemaStatements#create_table calls
+  # `td.primary_key pk, options.fetch(:id, :primary_key), options` -- passing
+  # its own **options Hash positionally into
+  # `TableDefinition#primary_key(name, type = :primary_key, **options)`,
+  # which only takes 2 positional args. Same "positional Hash into a
+  # kwargs-only method" bug as elsewhere in this file; the whole method is
+  # copied here (unchanged except that one line) since it's a hardcoded call
+  # site, not a forwarding shape ruby2_keywords could fix.
+  module ActiveRecord::ConnectionAdapters::SchemaStatements
+    def create_table(table_name, comment: nil, **options)
+      td = create_table_definition table_name, options[:temporary], options[:options], options[:as], comment: comment
+
+      if options[:id] != false && !options[:as]
+        pk = options.fetch(:primary_key) do
+          ActiveRecord::Base.get_primary_key table_name.to_s.singularize
+        end
+
+        if pk.is_a?(Array)
+          td.primary_keys pk
+        else
+          td.primary_key pk, options.fetch(:id, :primary_key), **options
+        end
+      end
+
+      yield td if block_given?
+
+      if options[:force]
+        drop_table(table_name, options.merge(if_exists: true))
+      end
+
+      result = execute schema_creation.accept td
+
+      unless supports_indexes_in_create?
+        td.indexes.each do |column_name, index_options|
+          add_index(table_name, column_name, index_options)
+        end
+      end
+
+      if supports_comments? && !supports_comments_in_create?
+        change_table_comment(table_name, comment) if comment.present?
+
+        td.columns.each do |column|
+          change_column_comment(table_name, column.name, column.comment) if column.comment.present?
+        end
+      end
+
+      result
+    end
+  end
+
+  # V5_1's `super` (fixed below) doesn't land directly on the real
+  # create_table -- Compatibility::Current has no create_table of its own, so
+  # the call falls through to ActiveRecord::Migration#method_missing, which
+  # captures everything via a plain `*arguments` splat and forwards with
+  # `connection.send(method, *arguments, &block)`. Without ruby2_keywords
+  # here, any real keywords V5_1 sends get re-flattened into an unflagged
+  # positional Hash by the time they reach the kwargs-only create_table.
+  ActiveRecord::Migration.send(:ruby2_keywords, :method_missing)
+
+  # Migration::Compatibility::V5_1#create_table (used by every migration
+  # declared `ActiveRecord::Migration[4.2]` et al, since V4_2 < V5_0 < V5_1)
+  # takes the old `options = {}` positional-Hash shape and, for non-MySQL
+  # adapters, forwards with a bare `super` -- which re-passes table_name and
+  # options positionally into the real create_table above, now kwargs-only.
+  # Every other version shim in this chain (V4_2, V5_0) forwards to a sibling
+  # that's the same old-style shape, so V5_1 is the only crossing point.
+  class ActiveRecord::Migration::Compatibility::V5_1
+    def create_table(table_name, options = {})
+      if connection.adapter_name == "Mysql2"
+        super(table_name, options: "ENGINE=InnoDB", **options)
+      else
+        super(table_name, **options)
+      end
+    end
+  end
+
+  # Same bug again: PostgreSQL::SchemaStatements#add_index calls
+  # `add_index_options(table_name, column_name, options)` -- a plain Hash --
+  # against `add_index_options(table_name, column_name, comment: nil,
+  # **options)`, which is kwargs-only past the first two args.
+  module ActiveRecord::ConnectionAdapters::PostgreSQL::SchemaStatements
+    def add_index(table_name, column_name, options = {}) #:nodoc:
+      index_name, index_type, index_columns_and_opclasses, index_options, index_algorithm, index_using, comment = add_index_options(table_name, column_name, **options)
+      execute("CREATE #{index_type} INDEX #{index_algorithm} #{quote_column_name(index_name)} ON #{quote_table_name(table_name)} #{index_using} (#{index_columns_and_opclasses})#{index_options}").tap do
+        execute "COMMENT ON INDEX #{quote_column_name(index_name)} IS #{quote(comment)}" if comment
+      end
+    end
+  end
+
+  # The exact same positional-Hash-into-kwargs bug cascades three more
+  # levels down the call chain add_index_options kicks off:
+  # add_index_options -> quoted_columns_for_index -> (PostgreSQL's)
+  # add_options_for_index_columns -> add_index_opclass, and separately
+  # the base add_options_for_index_columns -> add_index_sort_order (reached
+  # via the PostgreSQL override's own `super`). Each passes **options at
+  # its call site now instead of a bare Hash.
+  module ActiveRecord::ConnectionAdapters::SchemaStatements
+    def add_index_options(table_name, column_name, comment: nil, **options) # :nodoc:
+      column_names = index_column_names(column_name)
+
+      options.assert_valid_keys(:unique, :order, :name, :where, :length, :internal, :using, :algorithm, :type, :opclass)
+
+      index_type = options[:type].to_s if options.key?(:type)
+      index_type ||= options[:unique] ? "UNIQUE" : ""
+      index_name = options[:name].to_s if options.key?(:name)
+      index_name ||= index_name(table_name, column_names)
+
+      if options.key?(:algorithm)
+        algorithm = index_algorithms.fetch(options[:algorithm]) {
+          raise ArgumentError.new("Algorithm must be one of the following: #{index_algorithms.keys.map(&:inspect).join(', ')}")
+        }
+      end
+
+      using = "USING #{options[:using]}" if options[:using].present?
+
+      if supports_partial_index?
+        index_options = options[:where] ? " WHERE #{options[:where]}" : ""
+      end
+
+      validate_index_length!(table_name, index_name, options.fetch(:internal, false))
+
+      if data_source_exists?(table_name) && index_name_exists?(table_name, index_name)
+        raise ArgumentError, "Index name '#{index_name}' on table '#{table_name}' already exists"
+      end
+      index_columns = quoted_columns_for_index(column_names, **options).join(", ")
+
+      [index_name, index_type, index_columns, index_options, algorithm, using, comment]
+    end
+
+    private
+
+    def quoted_columns_for_index(column_names, **options)
+      return [column_names] if column_names.is_a?(String)
+
+      quoted_columns = Hash[column_names.map { |name| [name.to_sym, quote_column_name(name).dup] }]
+      add_options_for_index_columns(quoted_columns, **options).values
+    end
+
+    def add_options_for_index_columns(quoted_columns, **options)
+      if supports_index_sort_order?
+        quoted_columns = add_index_sort_order(quoted_columns, **options)
+      end
+
+      quoted_columns
+    end
+  end
+
+  module ActiveRecord::ConnectionAdapters::PostgreSQL::SchemaStatements
+    def add_options_for_index_columns(quoted_columns, **options)
+      quoted_columns = add_index_opclass(quoted_columns, **options)
+      super
+    end
+  end
+
+  # AlterTable#add_column (used for a standalone `add_column` on an existing
+  # table, as opposed to a column declared inside create_table) calls
+  # `@td.new_column_definition(name, type, options)` -- a plain Hash --
+  # against the same kwargs-only new_column_definition fixed for
+  # TableDefinition#column earlier.
+  class ActiveRecord::ConnectionAdapters::AlterTable
+    def add_column(name, type, options)
+      name = name.to_s
+      type = type.to_sym
+      @adds << ActiveRecord::ConnectionAdapters::AddColumnDefinition.new(@td.new_column_definition(name, type, **options))
+    end
+  end
+
+  # TableDefinition#references calls `ReferenceDefinition.new(ref_name,
+  # options)` -- a plain Hash -- against
+  # `ReferenceDefinition#initialize(name, polymorphic:, index:, foreign_key:,
+  # type:, **options)`, kwargs-only past name. Used by `t.references`/
+  # `t.belongs_to` inside any create_table block, and by add_reference.
+  class ActiveRecord::ConnectionAdapters::TableDefinition
+    def references(*args, **options)
+      args.each do |ref_name|
+        ActiveRecord::ConnectionAdapters::ReferenceDefinition.new(ref_name, **options).add_to(self)
+      end
+    end
+    alias :belongs_to :references
+  end
+
+  # PostgreSQL::SchemaStatements#change_column_for_alter calls
+  # `td.new_column_definition(column_name, type, options)` -- a plain
+  # Hash -- against the same kwargs-only new_column_definition fixed above.
+  module ActiveRecord::ConnectionAdapters::PostgreSQL::SchemaStatements
+    private
+
+    def change_column_for_alter(table_name, column_name, type, options = {})
+      td = create_table_definition(table_name)
+      cd = td.new_column_definition(column_name, type, **options)
+      sqls = [schema_creation.accept(ActiveRecord::ConnectionAdapters::ChangeColumnDefinition.new(cd, column_name))]
+      sqls << Proc.new { change_column_comment(table_name, column_name, options[:comment]) } if options.key?(:comment)
+      sqls
+    end
+  end
+
+  # PostgreSQL::SchemaCreation#visit_ChangeColumnDefinition calls
+  # `type_to_sql(column.type, column.options)` and
+  # `type_to_sql(options[:cast_as], options)` -- both plain Hashes -- against
+  # the same kwargs-only, ruby2_keywords-delegate type_to_sql fixed above
+  # (this subclass inherits that fix, only the call sites need **options).
+  # Requiring the file first (as with the MiddlewareStack/create_table_definition
+  # patches above) avoids Ruby creating this constant early with the wrong
+  # superclass -- it isn't otherwise loaded until the postgresql adapter is.
+  require 'active_record/connection_adapters/postgresql/schema_creation'
+  class ActiveRecord::ConnectionAdapters::PostgreSQL::SchemaCreation
+    private
+
+    def visit_ChangeColumnDefinition(o)
+      column = o.column
+      column.sql_type = type_to_sql(column.type, **column.options)
+      quoted_column_name = quote_column_name(o.name)
+
+      change_column_sql = "ALTER COLUMN #{quoted_column_name} TYPE #{column.sql_type}".dup
+
+      options = column_options(column)
+
+      if options[:collation]
+        change_column_sql << " COLLATE \"#{options[:collation]}\""
+      end
+
+      if options[:using]
+        change_column_sql << " USING #{options[:using]}"
+      elsif options[:cast_as]
+        cast_as_type = type_to_sql(options[:cast_as], **options)
+        change_column_sql << " USING CAST(#{quoted_column_name} AS #{cast_as_type})"
+      end
+
+      if options.key?(:default)
+        if options[:default].nil?
+          change_column_sql << ", ALTER COLUMN #{quoted_column_name} DROP DEFAULT"
+        else
+          quoted_default = quote_default_expression(options[:default], column)
+          change_column_sql << ", ALTER COLUMN #{quoted_column_name} SET DEFAULT #{quoted_default}"
+        end
+      end
+
+      if options.key?(:null)
+        change_column_sql << ", ALTER COLUMN #{quoted_column_name} #{options[:null] ? 'DROP' : 'SET'} NOT NULL"
+      end
+
+      change_column_sql
+    end
+  end
+
+  # SchemaMigration.create_table and InternalMetadata.create_table call
+  # `t.string :version, version_options` / `t.string :key, key_options` --
+  # a Hash passed as a second POSITIONAL argument into the dynamically
+  # generated `def string(*args, **options); args.each { |name| column(name,
+  # :string, options) }; end`. Since it wasn't passed via **, Ruby 3 folds it
+  # into *args instead of **options, so `args` ends up `[:version,
+  # {primary_key: true, ...}]` and the loop happily creates a SECOND column
+  # literally named after the Hash's #to_s ("{:primary_key=>true}") -- no
+  # exception, just silently corrupt schema. This only creates these two
+  # tables on a truly fresh database (both guarded by `unless
+  # table_exists?`), which is exactly what a from-scratch `db:create
+  # db:migrate` does and local dev never does, so it was masked until every
+  # earlier bug in this chain got fixed and migrations could reach this far.
+  class ActiveRecord::SchemaMigration
+    class << self
+      def create_table
+        unless table_exists?
+          version_options = connection.internal_string_options_for_primary_key
+
+          connection.create_table(table_name, id: false) do |t|
+            t.string :version, **version_options
+          end
+        end
+      end
+    end
+  end
+
+  class ActiveRecord::InternalMetadata
+    class << self
+      def create_table
+        unless table_exists?
+          key_options = connection.internal_string_options_for_primary_key
+
+          connection.create_table(table_name, id: false) do |t|
+            t.string :key, **key_options
+            t.string :value
+            t.timestamps
+          end
+        end
+      end
+    end
+  end
 end
 
 # https://github.com/elastic/elasticsearch-rails/tree/master/elasticsearch-rails#activesupport-instrumentation

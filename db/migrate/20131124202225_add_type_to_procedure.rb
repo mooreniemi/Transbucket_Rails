@@ -1,4 +1,4 @@
-class AddTypeToProcedure < ActiveRecord::Migration
+class AddTypeToProcedure < ActiveRecord::Migration[4.2]
   def change
     add_column :procedures, :type, :string
     add_column :procedures, :gender, :string

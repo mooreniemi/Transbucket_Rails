@@ -79,6 +79,10 @@ hr.style-two {
 // Keeps the three homepage CTA circles aligned on the same line regardless
 // of how many lines each column's heading wraps to at a given viewport
 // width, by pushing each image to the bottom of its (equal-height) column.
+// The auto-margin has to go on the <a> itself (the actual flex item and
+// direct child of .homepage-cta) -- setting it on the nested <img> instead
+// does nothing, since only a flex item's own margin gets the "consume the
+// leftover space" treatment.
 .homepage-cta-row {
   display: flex;
   flex-wrap: wrap;
@@ -91,7 +95,7 @@ hr.style-two {
   margin-bottom: 20px;
 }
 
-.homepage-cta img {
+.homepage-cta > a {
   margin-top: auto;
 }
 

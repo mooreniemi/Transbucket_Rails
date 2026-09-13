@@ -60,6 +60,20 @@
   min-width: 150px;
 }
 
+.rating-field {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.rating-field-label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.rating-field .rating-container {
+  min-height: 30px;
+}
+
 .rating-container.rating-xs .filled-stars,
 .rating-container.rating-xs .empty-stars {
   font-size: 1.35em;

@@ -1,12 +1,14 @@
 <% procedure_name = @procedure.localized_name %>
-<% seo_meta description: "View #{procedure_name} submissions, average ratings, and discussion on Transbucket.", canonical: procedure_url(id: @procedure.id) %>
+<% guide = @procedure.editorial_guide %>
+<% seo_description = guide ? guide['summary'] : "View #{procedure_name} submissions and discussion on Transbucket." %>
+<% seo_meta description: seo_description, canonical: procedure_url(id: @procedure.id) %>
 <% title procedure_name  %>
 <% json_ld_tag(
   {
     '@context' => 'https://schema.org',
     '@type' => 'MedicalProcedure',
     'name' => procedure_name,
-    'description' => @procedure.description,
+    'description' => guide ? guide['summary'] : @procedure.description,
     'url' => procedure_url(id: @procedure.id)
   }.compact
 ) %>
@@ -25,6 +27,9 @@
   <div class="panel panel-default" itemscope itemtype="https://schema.org/MedicalProcedure">
     <div class="panel-heading">
       <h1><%= procedure_name %></h1>
+      <% if guide %>
+        <p class="procedure-summary"><%= guide['summary'] %></p>
+      <% end %>
       <%= link_to t('public.pin.see_all_submissions'), pins_path(procedure: @procedure.id) %>
     </div>
     <% if @procedure.body_type %>
@@ -32,24 +37,63 @@
         <i><%= t('public.pin.classified_as', body_type: @procedure.body_type) %></i>
       </div>
     <% end %>
-    <% if @procedure.description %>
+    <% if @procedure.description && !guide %>
       <div class="panel-body" itemprop="description" itemprop="howPerformed">
         <%= @procedure.description %>
       </div>
     <% end %>
+    <% if guide %>
+      <div class="panel-body procedure-guide" itemprop="description">
+        <h2><%= t('procedure_guide.sources_title', default: 'Reviewed sources') %></h2>
+        <ul>
+          <% guide['sources'].each do |source| %>
+            <li><%= link_to source['name'], source['url'], rel: 'noopener noreferrer' %></li>
+          <% end %>
+        </ul>
+        <% if guide['community_links'].present? %>
+          <h2><%= t('procedure_guide.community_title') %></h2>
+          <p><%= t('procedure_guide.community_note') %></p>
+          <ul>
+            <% guide['community_links'].each do |community| %>
+              <li><%= link_to community['name'], community['url'], rel: 'ugc nofollow noopener noreferrer' %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    <% end %>
     <!-- List group -->
-    <ul class="list-group">
-      <li class="list-group-item">
-        <%= t('public.pin.average_sensation') %>: <%= @procedure.avg_sensation %>
-      </li>
-      <li class="list-group-item">
-        <%= t('public.pin.average_satisfaction') %>: <%= @procedure.avg_satisfaction %>
-      </li>
-    </ul>
   </div>
 <% end %>
 
 <% if current_user %>
+  <% if @procedure.avg_sensation || @procedure.avg_satisfaction %>
+    <ul class="list-group">
+      <% if @procedure.avg_sensation %><li class="list-group-item"><%= t('public.pin.average_sensation') %>: <%= @procedure.avg_sensation %></li><% end %>
+      <% if @procedure.avg_satisfaction %><li class="list-group-item"><%= t('public.pin.average_satisfaction') %>: <%= @procedure.avg_satisfaction %></li><% end %>
+    </ul>
+  <% end %>
+  <% if @rating_distributions.present? %>
+    <div class="procedure-rating-distributions">
+      <% { sensation: 'public.pin.average_sensation', satisfaction: 'public.pin.average_satisfaction' }.each do |rating, label| %>
+        <section class="procedure-rating-distribution" aria-labelledby="<%= rating %>-distribution-heading">
+          <h4 id="<%= rating %>-distribution-heading"><%= t(label) %></h4>
+          <% counts = @rating_distributions[rating] %>
+          <% max_count = counts.values.max.to_i %>
+          <ol class="rating-distribution-list">
+            <% 5.downto(1) do |score| %>
+              <% count = counts[score].to_i %>
+              <% width = max_count.positive? ? (count.to_f / max_count * 100).round : 0 %>
+              <li class="rating-distribution-row">
+                <span class="rating-distribution-score"><%= score %>/5</span>
+                <span class="rating-distribution-track" aria-hidden="true"><span class="rating-distribution-bar" style="width: <%= width %>%"></span></span>
+                <span class="rating-distribution-count"><%= count %></span>
+              </li>
+            <% end %>
+          </ol>
+        </section>
+      <% end %>
+    </div>
+  <% end %>
   <h4><%= fa_icon("comments-o") %> <%= t('public.pin.discussion') %></h4>
   <div id="comments-container">
     <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>

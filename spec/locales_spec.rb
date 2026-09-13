@@ -4,6 +4,7 @@ require 'yaml'
 describe 'application locales' do
   SUPPORTED_LOCALES = %w(en de es fr it ja zh-CN zh-TW pt-BR nl pl ru tr vi ar sv).freeze
   REQUIRED_KEYS = %w(site.description homepage.title homepage.intro header.home header.search footer.discord_prefix locale.label legal.translation_notice account_menu.login filter_menu.apply filter_menu.clear filter_menu.scope filter_menu.procedure filter_menu.surgeon directory.procedures_title directory.procedures_intro directory.surgeons_title directory.surgeons_intro directory.submissions directory.submissions_intro directory.recent_submissions directory.search_results directory.search_description directory.name directory.average_satisfaction directory.average_sensation directory.discussion_threads directory.register_to_see_more newsfeed.title newsfeed.description newsfeed.date newsfeed.entries.procedure_cleanup newsfeed.entries.prefix_search newsfeed.entries.discord_invite newsfeed.entries.locales views.pagination.first views.pagination.last views.pagination.previous views.pagination.next views.pagination.truncate).freeze
+  REQUIRED_PROCEDURE_GUIDE_KEYS = %w(procedure_guide.sources_title procedure_guide.community_title procedure_guide.community_note).freeze
   REQUIRED_PUBLIC_ACTION_KEYS = %w(confirmations.are_you_sure actions.deleting actions.updating actions.update_caption).freeze
   REQUIRED_PUBLIC_PIN_KEYS = %w(doctor_prefix updated).freeze
   REQUIRED_PUBLIC_AUTH_KEYS = %w(username username_or_email password).freeze
@@ -21,10 +22,14 @@ describe 'application locales' do
 
   before do
     locale_files = Dir[File.expand_path('../config/locales/*.yml', __dir__)].sort
-    expect(locale_files.map { |file| File.basename(file) }).to eq(['about.yml', 'catalog.yml', 'form_guidance.yml', 'rating.yml', 'sv.yml', 'zz_procedure_names.yml'])
+    expect(locale_files.map { |file| File.basename(file) }).to eq(['about.yml', 'catalog.yml', 'form_guidance.yml', 'procedure_guide.yml', 'rating.yml', 'sv.yml', 'zz_procedure_names.yml'])
     @translations = YAML.load_file(locale_files.find { |file| file.end_with?('catalog.yml') })
     swedish = YAML.load_file(locale_files.find { |file| file.end_with?('sv.yml') })
     @translations['sv'] = deep_merge(@translations.fetch('en'), swedish.fetch('sv'))
+    procedure_guide = YAML.load_file(locale_files.find { |file| file.end_with?('procedure_guide.yml') })
+    procedure_guide.each do |locale, values|
+      @translations[locale] = deep_merge(@translations.fetch(locale), values)
+    end
     @about_translations = YAML.load_file(locale_files.find { |file| file.end_with?('about.yml') })
     @procedure_names = YAML.load_file(locale_files.find { |file| file.end_with?('zz_procedure_names.yml') })
   end
@@ -49,6 +54,11 @@ describe 'application locales' do
   it 'defines the first-pass public UI keys for every supported locale' do
     SUPPORTED_LOCALES.each do |locale|
       REQUIRED_KEYS.each do |key|
+        value = key.split('.').reduce(@translations.fetch(locale)) { |hash, part| hash.fetch(part) }
+        expect(value).not_to be_nil
+        expect(value).not_to eq('')
+      end
+      REQUIRED_PROCEDURE_GUIDE_KEYS.each do |key|
         value = key.split('.').reduce(@translations.fetch(locale)) { |hash, part| hash.fetch(part) }
         expect(value).not_to be_nil
         expect(value).not_to eq('')

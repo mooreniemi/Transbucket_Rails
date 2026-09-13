@@ -11,6 +11,10 @@ class ProceduresController < ApplicationController
     if current_user
       @comments = @procedure.comments_asc
       @new_comment = Comment.build_from(@procedure, current_user, "")
+      @rating_distributions = {
+        sensation: @procedure.pins.where(sensation: 1..5).group(:sensation).count,
+        satisfaction: @procedure.pins.where(satisfaction: 1..5).group(:satisfaction).count
+      }
     end
   end
 

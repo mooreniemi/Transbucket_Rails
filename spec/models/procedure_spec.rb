@@ -61,6 +61,22 @@ describe Procedure do
       expect(procedure.localized_name(:de)).to eq('double incision')
     end
   end
+
+  describe '#editorial_guide' do
+    it 'returns only configured source-backed guidance' do
+      procedure = build(:procedure, name: 'phalloplasty')
+
+      expect(procedure.editorial_guide['summary']).to include('Phalloplasty')
+      expect(procedure.editorial_guide['sources']).to all(satisfy { |source| source['url'].start_with?('https://') })
+      expect(procedure.editorial_guide['community_links']).to all(satisfy { |link| link['url'].start_with?('https://www.reddit.com/r/') })
+    end
+
+    it 'does not invent guidance for an unreviewed procedure' do
+      procedure = build(:procedure, name: 'an unreviewed procedure')
+
+      expect(procedure.editorial_guide).to be_nil
+    end
+  end
   it 'has #names' do
     create_list(:procedure, 3)
     names = Procedure.pluck(:name).sort

@@ -12,7 +12,28 @@ describe ProceduresController, :type => :controller do
     end
   end
   describe "#show" do
-    xit 'shows a procedure detail page by id or friendly slug' do
+    it 'prepares rating distributions only for authenticated users' do
+      procedure = create(:procedure)
+      user = create(:user)
+      create(:pin, procedure: procedure, sensation: 5, satisfaction: 4)
+      create(:pin, procedure: procedure, sensation: 5, satisfaction: 4)
+      create(:pin, procedure: procedure, sensation: 2, satisfaction: 1)
+
+      sign_in user
+      get :show, id: procedure.id
+
+      expect(assigns(:rating_distributions)).to eq(
+        sensation: { 2 => 1, 5 => 2 },
+        satisfaction: { 1 => 1, 4 => 2 }
+      )
+    end
+
+    it 'does not prepare rating distributions for anonymous users' do
+      procedure = create(:procedure)
+
+      get :show, id: procedure.id
+
+      expect(assigns(:rating_distributions)).to be_nil
     end
   end
 end

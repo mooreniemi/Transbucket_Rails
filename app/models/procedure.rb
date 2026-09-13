@@ -32,6 +32,14 @@ class Procedure < ActiveRecord::Base
     translation ? translation.name : name
   end
 
+  def editorial_guide
+    self.class.editorial_guides[name]
+  end
+
+  def self.editorial_guides
+    @editorial_guides ||= YAML.load_file(Rails.root.join('config', 'procedure_guides.yml')).freeze
+  end
+
   def self.names
     self.pluck(:name).sort
   end

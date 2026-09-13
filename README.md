@@ -82,6 +82,18 @@ When running the services directly on the host with
 Rails commands and tests, together with the `postgres` / `password` connection
 settings shown in the smoke commands below.
 
+For the supported host-Rails workflow, start only the backing services and use
+the wrapper for tests:
+
+```sh
+docker-compose up -d db elasticsearch
+script/local_rspec spec/controllers/procedures_controller_spec.rb
+```
+
+This uses the local `psql_test` database. Full Compose mode remains available
+when Rails itself needs to run in the `web` container; do not combine its
+internal `db:5432` settings with a host Rails process.
+
 To stop the environment, run:
 ```sh
 docker-compose down

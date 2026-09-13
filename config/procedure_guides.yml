@@ -175,6 +175,49 @@ alt phalloplasty:
   related_procedures:
     - phalloplasty
     - rff phalloplasty
+
+glansplasty:
+  summary: Glansplasty shapes the tip of a reconstructed penis to create a defined glans. It may be performed as part of a staged phalloplasty plan.
+  sources:
+    - name: "UCSF: Phalloplasty and metoidioplasty overview"
+      url: https://transcare.ucsf.edu/guidelines/phalloplasty
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/phallo on Reddit
+      url: https://www.reddit.com/r/phallo/
+  related_procedures:
+    - phalloplasty
+    - rff phalloplasty
+    - alt phalloplasty
+
+monsplasty:
+  summary: Monsplasty reshapes or reduces tissue at the pubic mound. It may be performed on its own or as part of a broader gender-affirming surgical plan.
+  sources:
+    - name: "UCSF: Overview of gender-affirming care"
+      url: https://transcare.ucsf.edu/guidelines/overview
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/Transgender_Surgeries on Reddit
+      url: https://www.reddit.com/r/Transgender_Surgeries/
+  related_procedures:
+    - metoidioplasty ('meta')
+    - phalloplasty
+
+tracheal shave:
+  summary: A tracheal shave, also called chondrolaryngoplasty, reduces the prominence of the thyroid cartilage at the front of the neck.
+  sources:
+    - name: "Johns Hopkins: Facial feminization surgery and tracheal shave"
+      url: https://www.hopkinsmedicine.org/health/wellness-and-prevention/facial-feminization-surgery
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/Transgender_Surgeries on Reddit
+      url: https://www.reddit.com/r/Transgender_Surgeries/
+  related_procedures:
+    - facial feminization surgery
+
 facial feminization surgery:
   summary: Facial feminization surgery is a group of procedures that can reshape facial features as part of gender-affirming care. The procedures chosen depend on a person's goals, anatomy, and consultation with a qualified surgeon.
   sources:

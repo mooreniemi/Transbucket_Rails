@@ -21,6 +21,7 @@ describe 'application locales' do
   REQUIRED_COMMENT_MAILER_KEYS = %w(subject greeting posted reply this_link flag_help unsubscribe).freeze
 
   before do
+    I18n.available_locales = SUPPORTED_LOCALES.map(&:to_sym)
     locale_files = Dir[File.expand_path('../config/locales/*.yml', __dir__)].sort
     expect(locale_files.map { |file| File.basename(file) }).to eq(['about.yml', 'catalog.yml', 'form_guidance.yml', 'procedure_guide.yml', 'rating.yml', 'sv.yml', 'zz_procedure_names.yml'])
     @translations = YAML.load_file(locale_files.find { |file| file.end_with?('catalog.yml') })
@@ -155,9 +156,11 @@ describe 'application locales' do
   end
 
   it 'defines Swedish overrides for the public mailers' do
+    swedish = @translations.fetch('sv')
     %w[confirmation_instructions reset_password_instructions unlock_instructions password_change].each do |mailer|
-      expect(I18n.t("devise.mailer.#{mailer}.subject", locale: :sv)).not_to match(/[A-Za-z]{4,} instructions|Your password/)
+      subject = swedish.fetch('devise').fetch('mailer').fetch(mailer).fetch('subject')
+      expect(subject).not_to match(/[A-Za-z]{4,} instructions|Your password/)
     end
-    expect(I18n.t('comment_mailer.greeting', locale: :sv)).to include('Hej')
+    expect(swedish.fetch('comment_mailer').fetch('greeting')).to include('Hej')
   end
 end

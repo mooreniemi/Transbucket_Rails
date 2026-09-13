@@ -1,7 +1,7 @@
 <% procedure_name = @procedure.localized_name %>
 <% guide = @procedure.editorial_guide %>
 <% seo_description = guide ? guide['summary'] : "View #{procedure_name} submissions and discussion on Transbucket." %>
-<% seo_meta description: seo_description, canonical: procedure_url(@procedure) %>
+<% seo_meta description: seo_description, canonical: procedure_url(id: @procedure.to_param) %>
 <% title "#{procedure_name} #{t('procedure_guide.title_suffix', default: 'results and experiences')} | Transbucket" %>
 <% json_ld_tag(
   {
@@ -9,7 +9,7 @@
     '@type' => 'MedicalProcedure',
     'name' => procedure_name,
     'description' => guide ? guide['summary'] : @procedure.description,
-    'url' => procedure_url(@procedure)
+    'url' => procedure_url(id: @procedure.to_param)
   }.compact
 ) %>
 <% json_ld_tag(
@@ -19,7 +19,7 @@
     'itemListElement' => [
       { '@type' => 'ListItem', 'position' => 1, 'name' => t('header.home'), 'item' => root_url },
       { '@type' => 'ListItem', 'position' => 2, 'name' => t('header.procedures'), 'item' => procedures_url },
-      { '@type' => 'ListItem', 'position' => 3, 'name' => procedure_name, 'item' => procedure_url(@procedure) }
+      { '@type' => 'ListItem', 'position' => 3, 'name' => procedure_name, 'item' => procedure_url(id: @procedure.to_param) }
     ]
   }
 ) %>

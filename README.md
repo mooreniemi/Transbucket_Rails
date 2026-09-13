@@ -76,6 +76,12 @@ docker-compose exec web \
     bundle exec rake environment elasticsearch:import:model CLASS=Pin INDEX=development_pins FORCE=y
 ```
 
+When running the services directly on the host with
+`docker-compose.override.yml`, Docker exposes Postgres on host port `5433`
+(the container still listens on `5432`). Use `POSTGRES_PORT=5433` for local
+Rails commands and tests, together with the `postgres` / `password` connection
+settings shown in the smoke commands below.
+
 To stop the environment, run:
 ```sh
 docker-compose down
@@ -136,15 +142,15 @@ If you need to test against an actual S3 instance, you can uncomment the config 
 
 ## [ci](https://circleci.com/dashboard)
 
-Currently using [CircleCI](https://circleci.com/), which runs the app on [Ubuntu 12](https://circleci.com/docs/build-image-precise/). If you need to change a setting, try changing it via the UI first, then edit the `circle.yml` file.
+Currently using [CircleCI](https://circleci.com/) (config version 2.1, `.circleci/config.yml`), running `cimg/ruby:3.1.6` images with the `browser-tools` orb for the Selenium/Capybara feature specs. It runs `build` then `test` on a push to any branch -- there's no branch filter restricting it to PRs specifically, and no deploy job of any kind. CI is test-only; it has no effect on staging or production.
 
 For master branch: [![CircleCI](https://circleci.com/gh/mooreniemi/Transbucket_Rails/tree/master.svg?style=svg&circle-token=22981fbc246ebdb12d14ef593592e163d093caf7)](https://circleci.com/gh/mooreniemi/Transbucket_Rails/tree/master)
 
 ## [staging](https://dashboard-preview.heroku.com/apps/transbucket-staging)
 
-Staging is meant to run in the production environment, as close to actual production as possible. Every successful build on CI (based on every `git push` you do) will trigger a deployment on staging automatically.
+Staging is meant to run in the production environment, as close to actual production as possible. Deploys to staging are always manual -- nothing in CI deploys it automatically.
 
-If you need to deploying a branch to [staging](https://transbucket-staging.herokuapp.com/) manually:
+To deploy a branch to [staging](https://transbucket-staging.herokuapp.com/):
 
 `git push staging your_branch:master`
 
@@ -169,6 +175,12 @@ Connecting to staging to debug or run tasks:
 `heroku run rails console --app transbucket-staging`
 
 ## [production](transbucket.com)
+
+Production deploy is manual, and separate from CI/CD -- passing CircleCI tests does not deploy anything. To deploy master to production:
+
+`git push production master`
+
+(The `production` remote points at Heroku's `transbucket` app git URL.) There is currently no automated or gated path from a green CircleCI build to a production deploy.
 
 For staging and production, assets need to be recompiled. It's wise to clean them first:
 

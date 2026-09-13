@@ -38,6 +38,20 @@ body{
   z-index: 2;
 }
 
+.directory-sort-button {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+  text-align: left;
+}
+
+.directory-sort-button:focus {
+  outline: 2px solid #337ab7;
+  outline-offset: 2px;
+}
+
 .ms-container {
   height: 100px;
 }

@@ -1,7 +1,14 @@
 class SurgeonsController < ApplicationController
   def index
-    @surgeons = Surgeon.all.order(:last_name)
+    @surgeons = Surgeon.all.order(:last_name, :first_name)
     @pins_per_surgeon = Surgeon.joins(:pins).group("pins.surgeon_id").count
+    @avg_satisfaction_by_surgeon = {}
+    @avg_sensation_by_surgeon = {}
+    if user_signed_in?
+      @avg_satisfaction_by_surgeon = Pin.where.not(satisfaction: [nil, 0]).group(:surgeon_id).average(:satisfaction)
+      @avg_sensation_by_surgeon = Pin.where.not(sensation: [nil, 0]).group(:surgeon_id).average(:sensation)
+    end
+
   end
 
   def show

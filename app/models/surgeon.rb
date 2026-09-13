@@ -36,7 +36,7 @@ class Surgeon < ActiveRecord::Base
   end
 
   def to_s
-    first_name.nil? ? last_name : last_name.capitalize + ', ' + first_name.capitalize
+    first_name.nil? ? last_name : pretty_name
   end
 
   def website_url

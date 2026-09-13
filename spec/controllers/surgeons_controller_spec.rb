@@ -8,6 +8,33 @@ RSpec.describe SurgeonsController, :type => :controller do
       expect(assigns(:surgeons)).to match_array(surgeons)
       expect(response).to render_template(:index)
     end
+
+    it 'loads rating averages for signed-in users' do
+      user = create(:user)
+      low = create(:surgeon, first_name: 'Low', last_name: 'Rating')
+      high = create(:surgeon, first_name: 'High', last_name: 'Rating')
+      procedure = create(:procedure)
+      create(:pin, surgeon: low, procedure: procedure, sensation: 1, satisfaction: 2)
+      create(:pin, surgeon: high, procedure: procedure, sensation: 5, satisfaction: 4)
+
+      sign_in user
+      get :index
+
+      expect(assigns(:avg_sensation_by_surgeon)[high.id]).to eq(5.0)
+      expect(assigns(:avg_satisfaction_by_surgeon)[low.id]).to eq(2.0)
+    end
+
+    it 'does not expose rating aggregates to anonymous users' do
+      low = create(:surgeon, first_name: 'Low', last_name: 'Rating')
+      high = create(:surgeon, first_name: 'High', last_name: 'Rating')
+      procedure = create(:procedure)
+      create(:pin, surgeon: low, procedure: procedure, sensation: 1)
+      create(:pin, surgeon: high, procedure: procedure, sensation: 5)
+
+      get :index
+
+      expect(assigns(:avg_sensation_by_surgeon)).to eq({})
+    end
     xit 'links surgeons to queries for all pins of that surgeon' do
     end
   end

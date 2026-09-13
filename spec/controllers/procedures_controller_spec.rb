@@ -8,6 +8,7 @@ describe ProceduresController, :type => :controller do
       expect(assigns(:procedures)).to match_array(procedures)
       expect(response).to render_template(:index)
     end
+
     xit 'links procedures to queries for all pins of that procedure' do
     end
   end

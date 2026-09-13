@@ -1,7 +1,13 @@
-<tr itemscope itemtype="https://schema.org/Physician">
+<tr itemscope itemtype="https://schema.org/Physician"
+    data-sort-name="<%= [surgeon.last_name, surgeon.first_name].compact.join(' ') %>"
+    data-sort-submissions="<%= pin_count || 0 %>"
+    data-sort-satisfaction="<%= avg_satisfaction || '' %>"
+    data-sort-sensation="<%= avg_sensation || '' %>">
   <td><%= link_to "#{surgeon.last_name}, #{surgeon.first_name}", surgeon_path(surgeon.id) %></td>
 <% if user_signed_in? %>
   <td><%= link_to pin_count || 0, pins_path(surgeon: surgeon.id)  %></td>
+  <td><%= avg_satisfaction && avg_satisfaction.round(1) %></td>
+  <td><%= avg_sensation && avg_sensation.round(1) %></td>
 <% else %>
   <td><%= link_to t('directory.register_to_see_more'), register_path  %></td>
 <% end %>

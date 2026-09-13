@@ -3,6 +3,7 @@ class ProceduresController < ApplicationController
     @procedures = Procedure.all.order(:name)
     @pins_per_procedure = Procedure.joins(:pins).group("pins.procedure_id").count
     @comments_per_procedure = Procedure.joins(:comment_threads).group("comments.commentable_id").count
+
   end
 
   def show

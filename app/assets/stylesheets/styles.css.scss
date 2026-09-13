@@ -59,6 +59,25 @@ hr.style-two {
   border: 2px solid #FCC000;
 }
 
+// Keeps the three homepage CTA circles aligned on the same line regardless
+// of how many lines each column's heading wraps to at a given viewport
+// width, by pushing each image to the bottom of its (equal-height) column.
+.homepage-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.homepage-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.homepage-cta img {
+  margin-top: auto;
+}
+
 .hide {
   display: none;
 }

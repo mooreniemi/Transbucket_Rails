@@ -87,6 +87,9 @@ describe 'locale-prefixed URLs', type: :request do
   end
 
   it 'renders the login and registration forms for every locale' do
+    original_caching = ActionController::Base.perform_caching
+    ActionController::Base.perform_caching = true
+
     REQUEST_SUPPORTED_LOCALES.each do |locale|
       get "/#{locale}/users/sign_in"
       expect(response).to be_success, "login form failed for #{locale}"
@@ -96,6 +99,8 @@ describe 'locale-prefixed URLs', type: :request do
       expect(response).to be_success, "registration form failed for #{locale}"
       expect(response.body).to include('id="new_user"'), "registration form missing for #{locale}"
     end
+  ensure
+    ActionController::Base.perform_caching = original_caching
   end
 
   it 'has every translation used by the signup form in every locale' do

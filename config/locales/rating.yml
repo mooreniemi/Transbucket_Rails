@@ -1,0 +1,154 @@
+en:
+  public:
+    rating:
+      sensation:
+        help: Rate how much sensation you experience after this procedure, from none (1) to excellent (5).
+        labels:
+          1: None
+          2: Very limited
+          3: Some
+          4: Good
+          5: Excellent
+      satisfaction:
+        help: Rate how satisfied you are with your outcome, from very dissatisfied (1) to very satisfied (5).
+        labels:
+          1: Very dissatisfied
+          2: Dissatisfied
+          3: Unsure
+          4: Satisfied
+          5: Very satisfied
+de:
+  public:
+    rating:
+      sensation:
+        help: Bewerte, wie viel Empfindung du nach diesem Eingriff hast, von keiner (1) bis ausgezeichnet (5).
+        labels: { 1: Keine, 2: Sehr eingeschränkt, 3: Etwas, 4: Gut, 5: Ausgezeichnet }
+      satisfaction:
+        help: Bewerte, wie zufrieden du mit deinem Ergebnis bist, von sehr unzufrieden (1) bis sehr zufrieden (5).
+        labels: { 1: Sehr unzufrieden, 2: Unzufrieden, 3: Unsicher, 4: Zufrieden, 5: Sehr zufrieden }
+es:
+  public:
+    rating:
+      sensation:
+        help: Indica cuánta sensibilidad tienes después de este procedimiento, desde ninguna (1) hasta excelente (5).
+        labels: { 1: Ninguna, 2: Muy limitada, 3: Algo, 4: Buena, 5: Excelente }
+      satisfaction:
+        help: Indica tu satisfacción con el resultado, desde muy insatisfecho (1) hasta muy satisfecho (5).
+        labels: { 1: Muy insatisfecho, 2: Insatisfecho, 3: No estoy seguro, 4: Satisfecho, 5: Muy satisfecho }
+fr:
+  public:
+    rating:
+      sensation:
+        help: Évaluez la sensibilité ressentie après cette intervention, de aucune (1) à excellente (5).
+        labels: { 1: Aucune, 2: Très limitée, 3: Moyenne, 4: Bonne, 5: Excellente }
+      satisfaction:
+        help: Évaluez votre satisfaction quant au résultat, de très insatisfait·e (1) à très satisfait·e (5).
+        labels: { 1: Très insatisfait·e, 2: Insatisfait·e, 3: Incertain·e, 4: Satisfait·e, 5: Très satisfait·e }
+it:
+  public:
+    rating:
+      sensation:
+        help: Valuta quanta sensibilità provi dopo questa procedura, da nessuna (1) a eccellente (5).
+        labels: { 1: Nessuna, 2: Molto limitata, 3: Parziale, 4: Buona, 5: Eccellente }
+      satisfaction:
+        help: Valuta quanto sei soddisfattə del risultato, da per niente (1) a completamente (5).
+        labels: { 1: Per niente, 2: Poco, 3: Incertə, 4: Soddisfattə, 5: Molto soddisfattə }
+ja:
+  public:
+    rating:
+      sensation:
+        help: この手術後の感覚を、ない（1）から非常に良い（5）まで評価してください。
+        labels: { 1: なし, 2: とても弱い, 3: 少しある, 4: 良い, 5: 非常に良い }
+      satisfaction:
+        help: 結果への満足度を、とても不満（1）からとても満足（5）まで評価してください。
+        labels: { 1: とても不満, 2: 不満, 3: 迷っている, 4: 満足, 5: とても満足 }
+zh-CN:
+  public:
+    rating:
+      sensation:
+        help: 请评价术后的感觉，从没有感觉（1）到极佳（5）。
+        labels: { 1: 没有感觉, 2: 非常有限, 3: 一般, 4: 良好, 5: 极佳 }
+      satisfaction:
+        help: 请评价您对结果的满意度，从非常不满意（1）到非常满意（5）。
+        labels: { 1: 非常不满意, 2: 不满意, 3: 不确定, 4: 满意, 5: 非常满意 }
+zh-TW:
+  public:
+    rating:
+      sensation:
+        help: 請評估手術後的感覺，從沒有感覺（1）到極佳（5）。
+        labels: { 1: 沒有感覺, 2: 非常有限, 3: 一般, 4: 良好, 5: 極佳 }
+      satisfaction:
+        help: 請評估您對結果的滿意度，從非常不滿意（1）到非常滿意（5）。
+        labels: { 1: 非常不滿意, 2: 不滿意, 3: 不確定, 4: 滿意, 5: 非常滿意 }
+pt-BR:
+  public:
+    rating:
+      sensation:
+        help: Avalie quanta sensação você sente após este procedimento, de nenhuma (1) a excelente (5).
+        labels: { 1: Nenhuma, 2: Muito limitada, 3: Alguma, 4: Boa, 5: Excelente }
+      satisfaction:
+        help: Avalie sua satisfação com o resultado, de muito insatisfeito (1) a muito satisfeito (5).
+        labels: { 1: Muito insatisfeito, 2: Insatisfeito, 3: Incerto, 4: Satisfeito, 5: Muito satisfeito }
+nl:
+  public:
+    rating:
+      sensation:
+        help: Beoordeel hoeveel gevoel je na deze ingreep ervaart, van geen (1) tot uitstekend (5).
+        labels: { 1: Geen, 2: Zeer beperkt, 3: Enigszins, 4: Goed, 5: Uitstekend }
+      satisfaction:
+        help: Beoordeel hoe tevreden je bent met het resultaat, van zeer ontevreden (1) tot zeer tevreden (5).
+        labels: { 1: Zeer ontevreden, 2: Ontevreden, 3: Onzeker, 4: Tevreden, 5: Zeer tevreden }
+pl:
+  public:
+    rating:
+      sensation:
+        help: Oceń odczuwanie po tym zabiegu, od braku czucia (1) do doskonałego czucia (5).
+        labels: { 1: Brak, 2: Bardzo ograniczone, 3: Pewne, 4: Dobre, 5: Doskonałe }
+      satisfaction:
+        help: Oceń zadowolenie z efektu, od bardzo niezadowolonej osoby (1) do bardzo zadowolonej (5).
+        labels: { 1: Bardzo niezadowolona osoba, 2: Niezadowolona, 3: Niepewna, 4: Zadowolona, 5: Bardzo zadowolona }
+ru:
+  public:
+    rating:
+      sensation:
+        help: "Оцените чувствительность после этой процедуры: от отсутствия (1) до отличной (5)."
+        labels: { 1: Отсутствует, 2: Очень слабая, 3: Некоторая, 4: Хорошая, 5: Отличная }
+      satisfaction:
+        help: "Оцените удовлетворённость результатом: от очень низкой (1) до очень высокой (5)."
+        labels: { 1: Очень низкая, 2: Низкая, 3: Не уверены, 4: Высокая, 5: Очень высокая }
+tr:
+  public:
+    rating:
+      sensation:
+        help: Bu işlemden sonra hissettiğiniz duyumu yoktan (1) mükemmele (5) kadar değerlendirin.
+        labels: { 1: Yok, 2: Çok sınırlı, 3: Biraz, 4: İyi, 5: Mükemmel }
+      satisfaction:
+        help: Sonuçtan memnuniyetinizi hiç memnun değilimden (1) çok memnuna (5) kadar değerlendirin.
+        labels: { 1: Hiç memnun değilim, 2: Memnun değilim, 3: Kararsızım, 4: Memnunum, 5: Çok memnunum }
+vi:
+  public:
+    rating:
+      sensation:
+        help: Đánh giá cảm giác sau thủ thuật này, từ không có (1) đến tuyệt vời (5).
+        labels: { 1: Không có, 2: Rất hạn chế, 3: Có một phần, 4: Tốt, 5: Tuyệt vời }
+      satisfaction:
+        help: Đánh giá mức độ hài lòng với kết quả, từ rất không hài lòng (1) đến rất hài lòng (5).
+        labels: { 1: Rất không hài lòng, 2: Không hài lòng, 3: Chưa chắc, 4: Hài lòng, 5: Rất hài lòng }
+ar:
+  public:
+    rating:
+      sensation:
+        help: قيّم مقدار الإحساس بعد هذا الإجراء، من دون إحساس (1) إلى ممتاز (5).
+        labels: { 1: لا يوجد, 2: محدود جداً, 3: بعض الإحساس, 4: جيد, 5: ممتاز }
+      satisfaction:
+        help: قيّم مدى رضاك عن النتيجة، من غير راضٍ جداً (1) إلى راضٍ جداً (5).
+        labels: { 1: غير راضٍ جداً, 2: غير راضٍ, 3: غير متأكد, 4: راضٍ, 5: راضٍ جداً }
+sv:
+  public:
+    rating:
+      sensation:
+        help: Betygsätt hur mycket känsel du har efter ingreppet, från ingen (1) till utmärkt (5).
+        labels: { 1: Ingen, 2: Mycket begränsad, 3: Viss, 4: God, 5: Utmärkt }
+      satisfaction:
+        help: Betygsätt hur nöjd du är med resultatet, från mycket missnöjd (1) till mycket nöjd (5).
+        labels: { 1: Mycket missnöjd, 2: Missnöjd, 3: Osäker, 4: Nöjd, 5: Mycket nöjd }

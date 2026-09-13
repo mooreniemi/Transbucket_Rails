@@ -1,0 +1,80 @@
+en:
+  public:
+    form:
+      complications_help: Use short tags separated by commas. Add symptoms, timing, and other detail below.
+      complications_validation: Use short comma-separated tags. Each tag must be 80 characters or fewer and cannot contain line breaks.
+de:
+  public:
+    form:
+      complications_help: Verwende kurze, durch Kommas getrennte Tags. Symptome, Zeitangaben und weitere Details gehören unten in den Text.
+      complications_validation: Verwende kurze, durch Kommas getrennte Tags. Jeder Tag darf höchstens 80 Zeichen lang sein und keine Zeilenumbrüche enthalten.
+es:
+  public:
+    form:
+      complications_help: Usa etiquetas breves separadas por comas. Añade los síntomas, el momento y otros detalles abajo.
+      complications_validation: Usa etiquetas breves separadas por comas. Cada etiqueta debe tener 80 caracteres o menos y no puede contener saltos de línea.
+fr:
+  public:
+    form:
+      complications_help: Utilisez des tags courts séparés par des virgules. Ajoutez les symptômes, la durée et les détails ci-dessous.
+      complications_validation: Utilisez des tags courts séparés par des virgules. Chaque tag doit comporter au plus 80 caractères et ne pas contenir de saut de ligne.
+it:
+  public:
+    form:
+      complications_help: Usa tag brevi separati da virgole. Aggiungi sotto sintomi, tempistiche e altri dettagli.
+      complications_validation: Usa tag brevi separati da virgole. Ogni tag deve avere al massimo 80 caratteri e non contenere interruzioni di riga.
+ja:
+  public:
+    form:
+      complications_help: 短いタグをカンマで区切って入力してください。症状や時期などの詳しい内容は下に入力してください。
+      complications_validation: 短いタグをカンマで区切って入力してください。各タグは80文字以内で、改行を含めないでください。
+zh-CN:
+  public:
+    form:
+      complications_help: 请使用逗号分隔的简短标签。症状、时间和其他详细信息请填写在下方。
+      complications_validation: 请使用逗号分隔的简短标签。每个标签不得超过80个字符，也不能包含换行。
+zh-TW:
+  public:
+    form:
+      complications_help: 請使用逗號分隔的簡短標籤。症狀、時間和其他詳細資訊請填寫在下方。
+      complications_validation: 請使用逗號分隔的簡短標籤。每個標籤不得超過80個字元，也不能包含換行。
+pt-BR:
+  public:
+    form:
+      complications_help: Use tags curtas separadas por vírgulas. Adicione sintomas, período e outros detalhes abaixo.
+      complications_validation: Use tags curtas separadas por vírgulas. Cada tag deve ter no máximo 80 caracteres e não pode conter quebras de linha.
+nl:
+  public:
+    form:
+      complications_help: Gebruik korte tags, gescheiden door komma's. Voeg symptomen, timing en andere details hieronder toe.
+      complications_validation: Gebruik korte tags, gescheiden door komma's. Elke tag mag maximaal 80 tekens bevatten en geen regeleinden.
+pl:
+  public:
+    form:
+      complications_help: Użyj krótkich tagów oddzielonych przecinkami. Objawy, czas trwania i inne szczegóły dodaj poniżej.
+      complications_validation: Użyj krótkich tagów oddzielonych przecinkami. Każdy tag może mieć najwyżej 80 znaków i nie może zawierać znaków nowej linii.
+ru:
+  public:
+    form:
+      complications_help: Используйте короткие теги через запятую. Симптомы, сроки и другие подробности добавьте ниже.
+      complications_validation: Используйте короткие теги через запятую. Каждый тег должен содержать не более 80 символов и не включать переносы строк.
+tr:
+  public:
+    form:
+      complications_help: Virgülle ayrılmış kısa etiketler kullanın. Belirtileri, zamanlamayı ve diğer ayrıntıları aşağıya ekleyin.
+      complications_validation: Virgülle ayrılmış kısa etiketler kullanın. Her etiket en fazla 80 karakter olmalı ve satır sonu içermemelidir.
+vi:
+  public:
+    form:
+      complications_help: Dùng các thẻ ngắn, ngăn cách bằng dấu phẩy. Thêm triệu chứng, thời điểm và chi tiết khác ở bên dưới.
+      complications_validation: Dùng các thẻ ngắn, ngăn cách bằng dấu phẩy. Mỗi thẻ không quá 80 ký tự và không được chứa xuống dòng.
+ar:
+  public:
+    form:
+      complications_help: استخدم وسومًا قصيرة تفصل بينها فواصل. أضف الأعراض والتوقيت والتفاصيل الأخرى أدناه.
+      complications_validation: استخدم وسومًا قصيرة تفصل بينها فواصل. يجب ألا يتجاوز كل وسم 80 حرفًا وألا يحتوي على أسطر جديدة.
+sv:
+  public:
+    form:
+      complications_help: Använd korta taggar separerade med kommatecken. Lägg till symtom, tidsförlopp och andra detaljer nedan.
+      complications_validation: Använd korta taggar separerade med kommatecken. Varje tagg får vara högst 80 tecken och får inte innehålla radbrytningar.

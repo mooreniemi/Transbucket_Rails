@@ -21,15 +21,18 @@
     <%= f.label :sensation, t('public.form.sensation'), class: 'rating-field-label' %>
     <!-- note: needs to be text field for chrome focus to work with form validation -->
     <!-- see comments here: http://plugins.krajee.com/star-rating#options -->
-    <%= f.text_field :sensation, class: "form-control rating-input", required: false, autocomplete: 'off' %>
+    <%= f.text_field :sensation, class: "form-control rating-input", required: false, autocomplete: 'off', data: { rating_captions: t('public.rating.sensation.labels').to_json, rating_help: t('public.rating.sensation.help') } %>
+    <small class="rating-hint"><%= t('public.rating.sensation.help') %></small>
   </div>
   <br>
   <div class="rating-field padded_nicely">
     <%= f.label :satisfaction, t('public.form.satisfaction'), class: 'rating-field-label' %>
-    <%= f.text_field :satisfaction, class: "form-control rating-input", required: false, autocomplete: 'off' %>
+    <%= f.text_field :satisfaction, class: "form-control rating-input", required: false, autocomplete: 'off', data: { rating_captions: t('public.rating.satisfaction.labels').to_json, rating_help: t('public.rating.satisfaction.help') } %>
+    <small class="rating-hint"><%= t('public.rating.satisfaction.help') %></small>
   </div>
   <div class="input-group padded_nicely">
     <span class="input-group-addon"><%= t('public.form.complications') %></span>
-    <%= f.text_field :complication_list, class: "form-control", required: false, placeholder: t('public.form.complications_placeholder') %>
+    <%= f.text_field :complication_list, class: "form-control", required: false, placeholder: t('public.form.complications_placeholder'), data: { complication_original: f.object.complication_list.to_s, complication_validation: t('public.form.complications_validation') } %>
   </div>
+  <small class="field-hint"><%= t('public.form.complications_help') %></small>
 </div>

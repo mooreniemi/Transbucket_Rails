@@ -74,9 +74,24 @@
   min-height: 30px;
 }
 
+.rating-hint {
+  display: block;
+  max-width: 420px;
+  margin-top: 4px;
+  color: #666;
+  line-height: 1.4;
+}
+
+.field-hint {
+  display: block;
+  margin: -4px 10px 12px;
+  color: #666;
+  line-height: 1.4;
+}
+
 .rating-container.rating-xs .filled-stars,
 .rating-container.rating-xs .empty-stars {
-  font-size: 1.35em;
+  font-size: 14px;
 }
 
 @media (max-width: 767px) {

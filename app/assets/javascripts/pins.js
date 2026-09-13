@@ -3,6 +3,25 @@ $(document).ready(function() {
   if (!!path) {
     // dropzone setup
 
+    var complicationInput = $('#pin_complication_list');
+    if (complicationInput.length) {
+      var originalComplications = complicationInput.data('complication-original'),
+          complicationValidation = complicationInput.data('complication-validation');
+
+      function validateComplications() {
+        var value = complicationInput.val(),
+            tags = value.split(',').map(function(tag) { return $.trim(tag); }).filter(Boolean),
+            valid = value === originalComplications || (!/[\r\n]/.test(value) && tags.every(function(tag) {
+              return tag.length <= 80;
+            }));
+
+        complicationInput[0].setCustomValidity(valid ? '' : complicationValidation);
+      }
+
+      complicationInput.on('input change', validateComplications);
+      validateComplications();
+    }
+
     var isEditing = path[0] !== "pins/new",
         formSelector = ".form-inline",
         template = $('#preview-template').html(),

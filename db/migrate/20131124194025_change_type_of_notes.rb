@@ -1,4 +1,4 @@
-class ChangeTypeOfNotes < ActiveRecord::Migration
+class ChangeTypeOfNotes < ActiveRecord::Migration[4.2]
   def self.up
      change_column :surgeons, :notes, :text
     end

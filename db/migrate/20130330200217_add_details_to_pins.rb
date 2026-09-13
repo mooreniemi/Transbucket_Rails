@@ -1,4 +1,4 @@
-class AddDetailsToPins < ActiveRecord::Migration
+class AddDetailsToPins < ActiveRecord::Migration[4.2]
   def change
   	add_column :pins, :procedure, :string
   	add_column :pins, :revision, :boolean

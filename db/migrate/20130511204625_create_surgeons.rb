@@ -1,4 +1,4 @@
-class CreateSurgeons < ActiveRecord::Migration
+class CreateSurgeons < ActiveRecord::Migration[4.2]
   def change
     create_table :surgeons do |t|
       t.string :name

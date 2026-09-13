@@ -1,4 +1,4 @@
-class CreateProcedureTranslations < ActiveRecord::Migration
+class CreateProcedureTranslations < ActiveRecord::Migration[4.2]
   def change
     create_table :procedure_translations do |t|
       t.references :procedure, null: false

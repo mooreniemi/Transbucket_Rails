@@ -31,4 +31,16 @@ RSpec.describe TransbucketDeviseMailer do
     expect(mail.subject).to eq('Instruktioner för återställning av lösenord')
     expect(mail.body.raw_source).to include('Ändra mitt lösenord')
   end
+
+  it 'provides the Swedish unlock translations for the configured mailer' do
+    expect(I18n.t('devise.mailer.unlock_instructions.subject', locale: :sv)).to eq('Instruktioner för upplåsning')
+    expect(I18n.t('devise.mailer.unlock_instructions.action', locale: :sv)).to eq('Lås upp mitt konto')
+  end
+
+  it 'renders password-change notifications in the requested locale' do
+    mail = described_class.password_change(user, locale: :sv)
+
+    expect(mail.subject).to eq('Ditt lösenord har ändrats')
+    expect(mail.body.raw_source).to include('Vi kontaktar dig för att meddela att ditt lösenord har ändrats.')
+  end
 end

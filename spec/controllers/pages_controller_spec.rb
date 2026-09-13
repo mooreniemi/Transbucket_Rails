@@ -5,9 +5,21 @@ describe PagesController, :type => :controller do
 
   after { I18n.locale = I18n.default_locale }
 
+  it 'renders pages when fragment caching is enabled' do
+    allow(controller).to receive(:perform_caching).and_return(true)
+    original_cache = Rails.cache
+    Rails.cache = ActiveSupport::Cache::MemoryStore.new
+
+    get 'home', params: { locale: 'en' }
+
+    expect(response).to be_success
+  ensure
+    Rails.cache = original_cache
+  end
+
   describe 'locale selection' do
     it 'uses an explicitly selected supported locale' do
-      get 'home', locale: 'de'
+      get 'home', params: { locale: 'de' }
 
       expect(response).to be_success
       expect(I18n.locale.to_s).to eq('de')
@@ -16,7 +28,7 @@ describe PagesController, :type => :controller do
     end
 
     it 'falls back to English for unsupported locales' do
-      get 'home', locale: 'xx'
+      get 'home', params: { locale: 'xx' }
 
       expect(response).to be_success
       expect(I18n.locale.to_s).to eq('en')
@@ -28,7 +40,7 @@ describe PagesController, :type => :controller do
     it 'renders a static archive without fetching tumblr' do
       expect(URI).not_to receive(:open)
 
-      get 'newsfeed'
+      get 'newsfeed', params: { locale: 'en' }
 
       expect(response).to be_success
       expect(assigns(:newsfeed_entries).length).to eq(12)
@@ -51,7 +63,7 @@ describe PagesController, :type => :controller do
     end
 
     it 'localizes the release notes' do
-      get 'newsfeed', locale: 'de'
+      get 'newsfeed', params: { locale: 'de' }
 
       expect(response).to be_success
       expect(response.body).to include('Die Verfahrenssuche findet jetzt Präfixe')
@@ -82,7 +94,7 @@ describe PagesController, :type => :controller do
 
   describe 'GET about' do
     it 'does not label the informational page as legal content' do
-      get 'about', locale: 'de'
+      get 'about', params: { locale: 'de' }
 
       expect(response).to be_success
       expect(response.body).not_to include(I18n.t('legal.translation_notice', locale: :de))

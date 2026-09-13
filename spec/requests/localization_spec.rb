@@ -6,21 +6,21 @@ describe 'locale-prefixed URLs', type: :request do
   after { I18n.locale = :en }
 
   it 'redirects the legacy homepage to the English URL' do
-    get '/', query: 'phallo'
+    get '/', params: { query: 'phallo' }
 
     expect(response).to redirect_to('/en/?query=phallo')
     expect(response.status).to eq(301)
   end
 
   it 'redirects legacy public paths while preserving the query string' do
-    get '/procedures', query: 'phallo'
+    get '/procedures', params: { query: 'phallo' }
 
     expect(response).to redirect_to('/en/procedures?query=phallo')
     expect(response.status).to eq(301)
   end
 
   it 'converts query-string locales to prefixed paths' do
-    get '/procedures', locale: 'de', query: 'phallo'
+    get '/procedures', params: { locale: 'de', query: 'phallo' }
 
     expect(response).to redirect_to('/de/procedures?query=phallo')
     expect(response.status).to eq(301)
@@ -34,13 +34,13 @@ describe 'locale-prefixed URLs', type: :request do
   end
 
   it 'does not redirect form submissions from legacy paths' do
-    post '/contact', message: { name: 'Test', email: 'test@example.com', subject: 'Test', body: 'Test' }
+    post '/contact', params: { message: { name: 'Test', email: 'test@example.com', subject: 'Test', body: 'Test' } }
 
     expect(response.status).not_to eq(301)
   end
 
   it 'does not redirect form submissions with a query-string locale' do
-    post '/contact', locale: 'de', message: { name: 'Test', email: 'test@example.com', subject: 'Test', body: 'Test' }
+    post '/contact', params: { locale: 'de', message: { name: 'Test', email: 'test@example.com', subject: 'Test', body: 'Test' } }
 
     expect(response.status).not_to eq(301)
   end

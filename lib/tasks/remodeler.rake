@@ -5,7 +5,7 @@ namespace :migrate do
     #INSERT INTO users (id, username, encrypted_password, name, gender, email, created_at, updated_at) SELECT ID, username, password, name, sex, email, dateJoined, lastLogin FROM old_users;
 
 
-    old_emails = OldUser.uniq.pluck(:email)
+    old_emails = OldUser.distinct.pluck(:email)
     bar = RakeProgressbar.new(old_emails.count)
 
     old_users = []

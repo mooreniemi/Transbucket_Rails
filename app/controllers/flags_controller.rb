@@ -1,8 +1,7 @@
 class FlagsController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :require_moderator!, only: :destroy
-  after_filter :flash_to_headers
-  respond_to :js
+  before_action :authenticate_user!
+  before_action :require_moderator!, only: :destroy
+  after_action :flash_to_headers
 
   def create
     type, id = content_reference

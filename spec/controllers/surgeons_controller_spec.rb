@@ -6,7 +6,7 @@ RSpec.describe SurgeonsController, :type => :controller do
 
     it 'gives a list of surgeons' do
       surgeons = create_list(:surgeon, 2)
-      get :index
+      get :index, params: { locale: 'en' }
       expect(assigns(:surgeons)).to match_array(surgeons)
       expect(response).to render_template(:index)
     end
@@ -20,7 +20,7 @@ RSpec.describe SurgeonsController, :type => :controller do
       create(:pin, surgeon: high, procedure: procedure, sensation: 5, satisfaction: 4)
 
       sign_in user
-      get :index
+      get :index, params: { locale: 'en' }
 
       expect(assigns(:avg_sensation_by_surgeon)[high.id]).to eq(5.0)
       expect(assigns(:avg_satisfaction_by_surgeon)[low.id]).to eq(2.0)
@@ -33,7 +33,7 @@ RSpec.describe SurgeonsController, :type => :controller do
       create(:pin, surgeon: low, procedure: procedure, sensation: 1)
       create(:pin, surgeon: high, procedure: procedure, sensation: 5)
 
-      get :index
+      get :index, params: { locale: 'en' }
 
       expect(assigns(:avg_sensation_by_surgeon)).to eq({})
     end
@@ -72,7 +72,7 @@ RSpec.describe SurgeonsController, :type => :controller do
       create(:pin, surgeon: surgeon, procedure: procedure, sensation: 5, satisfaction: 1)
 
       sign_in user
-      get :show, id: surgeon.id
+      get :show, params: { id: surgeon.id, locale: 'en' }
 
       expect(assigns(:overall_satisfaction)).to eq(3.0)
       expect(assigns(:overall_sensation)).to eq(4.0)
@@ -86,7 +86,7 @@ RSpec.describe SurgeonsController, :type => :controller do
       create(:pin, surgeon: surgeon, procedure: procedure, sensation: 5, satisfaction: 2)
 
       sign_in user
-      get :show, id: surgeon.id
+      get :show, params: { id: surgeon.id, locale: 'en' }
 
       expect(assigns(:rating_distributions)).to eq(
         sensation: { 5 => 2 },
@@ -103,7 +103,7 @@ RSpec.describe SurgeonsController, :type => :controller do
     it 'does not expose overall rating averages to anonymous users' do
       surgeon = create(:surgeon)
 
-      get :show, id: surgeon.id
+      get :show, params: { id: surgeon.id, locale: 'en' }
 
       expect(assigns(:overall_satisfaction)).to be_nil
       expect(assigns(:overall_sensation)).to be_nil
@@ -118,7 +118,7 @@ RSpec.describe SurgeonsController, :type => :controller do
       create(:pin, surgeon: surgeon, procedure: procedure, state: 'pending', updated_at: Time.current)
 
       sign_in user
-      get :show, id: surgeon.id
+      get :show, params: { id: surgeon.id, locale: 'en' }
 
       expect(assigns(:latest_pins)).to eq([newest_pin, old_pin])
     end
@@ -134,7 +134,7 @@ RSpec.describe SurgeonsController, :type => :controller do
       # pins belonging to a different surgeon must not affect this surgeon's counts
       create_list(:pin, 5, surgeon: other_surgeon, procedure: procedure_a)
 
-      get :show, id: surgeon.id
+      get :show, params: { id: surgeon.id, locale: 'en' }
 
       counts = assigns(:pins_by_surgeon_procedure)
       expect(counts[procedure_a.id]).to eq(2)

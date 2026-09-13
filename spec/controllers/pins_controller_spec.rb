@@ -5,7 +5,7 @@ describe PinsController, :type => :controller do
 
   describe 'GET #index' do
     it "blocks unauthenticated access" do
-      get :index, locale: 'en'
+      get :index, params: { locale: 'en' }
 
       expect(response).to redirect_to(new_user_session_path(locale: 'en'))
     end
@@ -20,7 +20,7 @@ describe PinsController, :type => :controller do
 
     describe "GET #index" do
       it "allows authenticated access" do
-        get :index
+        get :index, params: { locale: 'en' }
 
         expect(response).to be_success
       end
@@ -58,7 +58,7 @@ describe PinsController, :type => :controller do
       end
 
       it "renders the authenticated index with a locale and user filter" do
-        get :index, locale: 'ja', user: user.id
+        get :index, params: { locale: 'ja', user: user.id }
 
         expect(response).to be_success
         expect(response.body).to include('最近の投稿')
@@ -158,14 +158,14 @@ describe PinsController, :type => :controller do
       it "retrieves pin for view" do
 
         pin = create(:pin, user: user)
-        get :show, id: pin.id
+        get :show, params: { id: pin.id, locale: 'en' }
 
         expect(response).to be_success
       end
 
       it "renders localized labels on a pin page" do
         pin = create(:pin, user: user)
-        get :show, id: pin.id, locale: 'ja'
+        get :show, params: { id: pin.id, locale: 'ja' }
 
         expect(response).to be_success
         expect(response.body).to include('外科医')
@@ -195,7 +195,7 @@ describe PinsController, :type => :controller do
         create(:surgeon, id: 911)
 
         pin = create(:pin, user: user)
-        get :edit, id: pin.id
+        get :edit, params: { id: pin.id, locale: 'en' }
 
         expect(response).to be_success
       end
@@ -239,7 +239,7 @@ describe PinsController, :type => :controller do
 
     describe 'GET #new' do
       it 'renders the locale-specific TinyMCE language asset' do
-        get :new, locale: 'es'
+        get :new, params: { locale: 'es' }
 
         expect(response).to be_success
         expect(response.body).to include('language: "es"')
@@ -266,7 +266,7 @@ describe PinsController, :type => :controller do
         attrs = attributes_for(:pin).merge({"surgeon_attributes" => surgeon, "procedure_attributes" => procedure})
         image_attrs = attributes_for(:pin_image)
 
-        post(:create, {pin: attrs, pin_images: {"0" => image_attrs}})
+        post :create, params: { pin: attrs, pin_images: {"0" => image_attrs} }
         expect(response).to redirect_to(pin_url(assigns(:pin)))
       end
 
@@ -276,7 +276,7 @@ describe PinsController, :type => :controller do
         attrs = attributes_for(:pin).merge("surgeon_attributes" => surgeon, "procedure_attributes" => procedure)
         image_attrs = attributes_for(:pin_image)
 
-        post :create, pin: attrs, pin_images: { "0" => image_attrs }, locale: 'es'
+        post :create, params: { pin: attrs, pin_images: { "0" => image_attrs }, locale: 'es' }
 
         expect(response).to redirect_to(pin_url(assigns(:pin), locale: 'es'))
       end
@@ -285,7 +285,7 @@ describe PinsController, :type => :controller do
         attrs = attributes_for(:pin, :invalid)
         image_attrs = attributes_for(:pin_image)
 
-        post(:create, {pin: attrs, pin_images: {"0" => image_attrs}})
+        post :create, params: { pin: attrs, pin_images: {"0" => image_attrs} }
         expect(assigns(:form).errors).not_to be_empty
       end
     end
@@ -309,8 +309,11 @@ describe PinsController, :type => :controller do
         surgeon = attributes_for(:surgeon)
         procedure = attributes_for(:procedure)
         updated_attrs = build(:pin, user: user).attributes.merge({"surgeon_attributes" => surgeon, "procedure_attributes" => procedure})
+        # Rails 5 preserves an empty rich-text form field as an empty string;
+        # Rails 4's parameter handling represented the same value as nil.
+        updated_attrs["details"] = ""
 
-        put :update, :id => pin.id, :pin => updated_attrs
+        put :update, params: { :id => pin.id, :pin => updated_attrs }
 
         pin.reload
         expect(response).to redirect_to(pin_url(assigns(:pin)))
@@ -345,7 +348,7 @@ describe PinsController, :type => :controller do
       xit "deletes a pin and redirects to pins index" do
         pin = create(:pin, user: user)
 
-        delete :destroy, :id => pin.id
+        delete :destroy, params: { :id => pin.id }
         expect(response).to redirect_to(pins_url)
       end
 
@@ -373,7 +376,7 @@ describe PinsController, :type => :controller do
 
     describe "GET #edit" do
       it "is forbidden to edit" do
-        get :edit, id: pin.id
+        get :edit, params: { id: pin.id, locale: 'en' }
 
         expect(response).to be_forbidden
       end
@@ -383,7 +386,7 @@ describe PinsController, :type => :controller do
       it "is forbidden to update" do
         updated_attrs = build(:pin).attributes
 
-        put :update, :id => pin.id, :pin => updated_attrs
+        put :update, params: { :id => pin.id, :pin => updated_attrs }
 
         expect(response).to be_forbidden
       end
@@ -391,7 +394,7 @@ describe PinsController, :type => :controller do
 
     describe "DELETE #destroy" do
       it "is forbidden to destroy" do
-        delete :destroy, :id => pin.id
+        delete :destroy, params: { :id => pin.id }
 
         expect(response).to be_forbidden
       end

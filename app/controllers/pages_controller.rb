@@ -16,8 +16,8 @@ class PagesController < ApplicationController
 
   # Page-cache keys use the full request path, so each locale gets its own cached document.
   caches_page :home, :about, :terms, :privacy
-  before_filter :force_request_format_to_html
-  before_filter :authenticate_user!, only: :compare
+  before_action :force_request_format_to_html
+  before_action :authenticate_user!, only: :compare
 
   def home
   end

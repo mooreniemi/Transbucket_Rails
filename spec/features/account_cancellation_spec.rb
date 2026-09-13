@@ -1,4 +1,5 @@
 require "rails_helper"
+require "timeout"
 
 RSpec.describe "cancel user account" do
   let(:user) { create(:user, :with_confirmation, :wants_notifications) }
@@ -25,7 +26,9 @@ RSpec.describe "cancel user account" do
       accept_confirm do
         click_button "Cancel my account"
       end
-      sleep 0.1 # FIXME: not ideal but does pass the test
+      Timeout.timeout(5) do
+        sleep 0.05 while User.where(email: user.email).exists?
+      end
       expect(User.where(email: user.email)).not_to exist
     end
 

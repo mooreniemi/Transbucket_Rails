@@ -44,7 +44,11 @@ class PinImagesController < ApplicationController
 
   private
   def upload_params
-    pin_image_params.map(&:last)
+    # ActionController::Parameters stopped being Hash-like in Rails 5, and
+    # the nested keys here are dynamic numeric upload indices ("0", "1", ...)
+    # rather than a fixed, permit-able attribute list, so this converts to a
+    # plain Hash rather than permitting each key by name.
+    pin_image_params.to_unsafe_h.map(&:last)
   end
 
   def pin_image_params

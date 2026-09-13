@@ -77,6 +77,16 @@ describe Procedure do
       expect(procedure.editorial_guide).to be_nil
     end
   end
+  describe '#related_procedures' do
+    it 'matches meaningful shared terms without matching generic words' do
+      procedure = create(:procedure, name: 'laparoscopic hysterectomy')
+      matching = create(:procedure, name: 'hysterectomy and oophorectomy')
+      unrelated = create(:procedure, name: 'facial feminization surgery')
+
+      expect(procedure.related_procedures).to include(matching)
+      expect(procedure.related_procedures).not_to include(unrelated)
+    end
+  end
   it 'has #names' do
     create_list(:procedure, 3)
     names = Procedure.pluck(:name).sort

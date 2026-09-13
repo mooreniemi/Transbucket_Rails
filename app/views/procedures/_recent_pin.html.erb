@@ -1,0 +1,8 @@
+<article class="procedure-recent-pin">
+  <%= link_to image_tag(pin.cover_image(@safe_mode).url(:medium), alt: pin.procedure.try(:localized_name)), pin %>
+  <div class="procedure-recent-pin-details">
+    <h3><%= link_to pin.procedure.try(:localized_name), pin %></h3>
+    <p><%= t('public.pin.by') %> <strong><%= pin.unknown_surgeon? ? t('public.pin.unknown') : t('public.pin.doctor_prefix') + pin.surgeon.to_s %></strong></p>
+    <p class="procedure-recent-pin-date"><%= t('public.pin.updated', time: distance_of_time_in_words(Time.now, pin.updated_at)) %></p>
+  </div>
+</article>

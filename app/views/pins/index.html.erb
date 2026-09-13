@@ -1,5 +1,5 @@
 <%= javascript_include_tag "pins" %>
-<% if params[:query].present? || params[:surgeon].present? || params[:procedure].present? || params[:complication].present? || params[:user].present? %>
+<% if params[:query].present? || params[:surgeon].present? || params[:procedure].present? || params[:complication].present? || params[:user].present? || params[:satisfaction].present? || params[:sensation].present? %>
   <% seo_meta description: t('directory.search_description'), noindex: true %>
 <% else %>
   <% seo_meta description: t('directory.submissions_intro') %>

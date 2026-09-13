@@ -235,6 +235,7 @@ en:
       locales: Transbucket now supports German, Spanish, French, Italian, Japanese,
         Simplified and Traditional Chinese, Portuguese, Dutch, Polish, Russian, Turkish,
         Vietnamese, and Arabic. Use the language links in the footer to switch.
+      directory_improvements: Procedure and surgeon pages now make sorting and rating distributions easier to use.
   views:
     pagination:
       first: First
@@ -952,6 +953,7 @@ de:
         Japanisch, vereinfachtes und traditionelles Chinesisch, Portugiesisch, Niederländisch,
         Polnisch, Russisch, Türkisch, Vietnamesisch und Arabisch. Verwende die Sprachlinks
         im Footer zum Wechseln.
+      directory_improvements: Verfahrens- und Chirurgenseiten bieten jetzt eine einfachere Sortierung und Bewertungsverteilung.
   views:
     pagination:
       first: Erste
@@ -1497,6 +1499,7 @@ es:
       locales: Transbucket ahora admite alemán, español, francés, italiano, japonés,
         chino simplificado y tradicional, portugués, neerlandés, polaco, ruso, turco,
         vietnamita y árabe. Usa los enlaces de idioma del pie de página para cambiar.
+      directory_improvements: Las páginas de procedimientos y cirujanos ahora facilitan ordenar y consultar la distribución de valoraciones.
   views:
     pagination:
       first: Primera
@@ -2034,6 +2037,7 @@ fr:
       locales: Transbucket prend maintenant en charge l’allemand, l’espagnol, le français,
         l’italien, le japonais, le chinois simplifié et traditionnel, le portugais,
         le néerlandais, le polonais, le russe, le turc, le vietnamien et l’arabe.
+      directory_improvements: Les pages d’interventions et de chirurgiens facilitent maintenant le tri et la consultation des évaluations.
         Utilisez les liens de langue dans le pied de page pour changer de langue.
   views:
     pagination:
@@ -2561,6 +2565,7 @@ it:
       locales: Transbucket supporta ora tedesco, spagnolo, francese, italiano, giapponese,
         cinese semplificato e tradizionale, portoghese, olandese, polacco, russo,
         turco, vietnamita e arabo. Usa i link della lingua nel piè di pagina per cambiare.
+      directory_improvements: Le pagine di procedure e chirurghi ora semplificano l’ordinamento e la consultazione delle valutazioni.
   views:
     pagination:
       first: Prima
@@ -3045,6 +3050,7 @@ ja:
       prefix_search: 手術検索が前方一致に対応しました。phalloやorchiのように名前の先頭を入力すると、該当する結果をより早く見つけられます。
       discord_invite: Discordコミュニティの招待リンクが恒久リンクになりました。
       locales: Transbucketはドイツ語、スペイン語、フランス語、イタリア語、日本語、簡体字・繁体字中国語、ポルトガル語、オランダ語、ポーランド語、ロシア語、トルコ語、ベトナム語、アラビア語に対応しました。フッターの言語リンクから切り替えられます。
+      directory_improvements: 手術と外科医のページで、並べ替えと評価の分布をより簡単に確認できるようになりました。
   views:
     pagination:
       first: 最初
@@ -3513,6 +3519,7 @@ zh-CN:
       prefix_search: 手术搜索现在支持前缀匹配。输入 phallo 或 orchi 等名称开头即可更快找到相关结果。
       discord_invite: Discord 社区邀请链接现在是永久链接。
       locales: Transbucket 现在支持德语、西班牙语、法语、意大利语、日语、简体中文和繁体中文、葡萄牙语、荷兰语、波兰语、俄语、土耳其语、越南语和阿拉伯语。可使用页脚的语言链接切换。
+      directory_improvements: 手术和外科医生页面现在可以更轻松地排序和查看评分分布。
   views:
     pagination:
       first: 首页
@@ -4006,6 +4013,7 @@ zh-TW:
       prefix_search: 手術搜尋現在支援前綴比對。輸入 phallo 或 orchi 等名稱開頭即可更快找到相關結果。
       discord_invite: Discord 社群邀請連結現在是永久連結。
       locales: Transbucket 現在支援德語、西班牙語、法語、義大利語、日語、簡體中文與繁體中文、葡萄牙語、荷蘭語、波蘭語、俄語、土耳其語、越南語與阿拉伯語。可使用頁尾的語言連結切換。
+      directory_improvements: 手術與外科醫師頁面現在可以更輕鬆地排序和查看評分分布。
   views:
     pagination:
       first: 第一頁
@@ -4310,6 +4318,7 @@ pt-BR:
       locales: O Transbucket agora oferece alemão, espanhol, francês, italiano, japonês,
         chinês simplificado e tradicional, português, holandês, polonês, russo, turco,
         vietnamita e árabe. Use os links de idioma no rodapé para trocar.
+      directory_improvements: As páginas de procedimentos e cirurgiões agora facilitam a ordenação e a consulta da distribuição das avaliações.
   views:
     pagination:
       first: Primeira
@@ -4620,6 +4629,7 @@ nl:
       locales: Transbucket ondersteunt nu Duits, Spaans, Frans, Italiaans, Japans,
         vereenvoudigd en traditioneel Chinees, Portugees, Nederlands, Pools, Russisch,
         Turks, Vietnamees en Arabisch. Gebruik de taallinks in de footer om te wisselen.
+      directory_improvements: Op procedure- en chirurgpagina’s kun je nu eenvoudiger sorteren en beoordelingsverdelingen bekijken.
   views:
     pagination:
       first: Eerste
@@ -4930,6 +4940,7 @@ pl:
         włoski, japoński, chiński uproszczony i tradycyjny, portugalski, niderlandzki,
         polski, rosyjski, turecki, wietnamski i arabski. Użyj linków językowych w
         stopce, aby zmienić język.
+      directory_improvements: Strony zabiegów i chirurgów ułatwiają teraz sortowanie oraz sprawdzanie rozkładu ocen.
   views:
     pagination:
       first: Pierwsza
@@ -5239,6 +5250,7 @@ ru:
         японский, упрощённый и традиционный китайский, португальский, нидерландский,
         польский, русский, турецкий, вьетнамский и арабский языки. Для смены языка
         используйте ссылки в нижнем колонтитуле.
+      directory_improvements: На страницах процедур и хирургов стало проще сортировать данные и просматривать распределение оценок.
   views:
     pagination:
       first: Первая
@@ -5542,6 +5554,7 @@ tr:
         Basitleştirilmiş ve Geleneksel Çince, Portekizce, Felemenkçe, Lehçe, Rusça,
         Türkçe, Vietnamca ve Arapçayı destekliyor. Değiştirmek için alt bilgideki
         dil bağlantılarını kullanın.
+      directory_improvements: Prosedür ve cerrah sayfalarında sıralama yapmak ve puan dağılımlarını görmek artık daha kolay.
   views:
     pagination:
       first: İlk
@@ -5846,6 +5859,7 @@ vi:
       locales: Transbucket hiện hỗ trợ tiếng Đức, Tây Ban Nha, Pháp, Ý, Nhật, Trung
         giản thể và phồn thể, Bồ Đào Nha, Hà Lan, Ba Lan, Nga, Thổ Nhĩ Kỳ, Việt và
         Ả Rập. Dùng các liên kết ngôn ngữ ở chân trang để chuyển đổi.
+      directory_improvements: Các trang thủ thuật và bác sĩ phẫu thuật giờ dễ sắp xếp và xem phân bố đánh giá hơn.
   views:
     pagination:
       first: Đầu
@@ -6142,6 +6156,7 @@ ar:
       locales: يدعم Transbucket الآن الألمانية والإسبانية والفرنسية والإيطالية واليابانية
         والصينية المبسطة والتقليدية والبرتغالية والهولندية والبولندية والروسية والتركية
         والفيتنامية والعربية. استخدم روابط اللغة في أسفل الصفحة للتبديل.
+      directory_improvements: أصبحت صفحات الإجراءات والجراحين أسهل في الفرز وعرض توزيع التقييمات.
   views:
     pagination:
       first: الأولى

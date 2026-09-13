@@ -42,6 +42,21 @@ describe ProceduresController, :type => :controller do
       )
     end
 
+    it 'loads the latest published submissions for authenticated users' do
+      procedure = create(:procedure)
+      user = create(:user)
+      latest = create(:pin, procedure: procedure, updated_at: 1.day.ago)
+      create(:pin, procedure: procedure, updated_at: 2.days.ago)
+      create(:pin, procedure: procedure, updated_at: 3.days.ago)
+      create(:pin, procedure: procedure, updated_at: 4.days.ago)
+
+      sign_in user
+      get :show, id: procedure.id
+
+      expect(assigns(:latest_pins).length).to eq(3)
+      expect(assigns(:latest_pins)).to include(latest)
+    end
+
     it 'does not prepare rating distributions for anonymous users' do
       procedure = create(:procedure)
 
@@ -56,8 +71,19 @@ describe ProceduresController, :type => :controller do
 
       get :show, id: procedure.id
 
-      expect(assigns(:related_procedures)).to include(related.name => related)
+      expect(assigns(:related_procedures)).to include(related)
       expect(response).to be_success
+    end
+
+    it 'finds related procedures that share a meaningful procedure term' do
+      procedure = create(:procedure, name: 'phalloplasty')
+      related = create(:procedure, name: 'groin flap phalloplasty')
+      unrelated = create(:procedure, name: 'hysterectomy')
+
+      get :show, id: procedure.id
+
+      expect(assigns(:related_procedures)).to include(related)
+      expect(assigns(:related_procedures)).not_to include(unrelated)
     end
   end
 end

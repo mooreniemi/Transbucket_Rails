@@ -1,0 +1,23 @@
+<% distribution ||= {} %>
+<% average ||= nil %>
+<% heading_id ||= "rating-distribution-#{rating}" %>
+<section class="rating-distribution" aria-labelledby="<%= heading_id %>">
+  <h4 id="<%= heading_id %>"><%= title %><% if average %> (<%= rating == :sensation ? t('public.pin.average_sensation') : t('public.pin.average_satisfaction') %>: <%= average.to_f.round(1) %>/5)<% end %></h4>
+  <% counts = distribution.fetch(rating, {}) %>
+  <% max_count = counts.values.max.to_i %>
+  <ol class="rating-distribution-list">
+    <% 5.downto(1) do |score| %>
+      <% count = counts[score].to_i %>
+      <% width = max_count.positive? ? (count.to_f / max_count * 100).round : 0 %>
+      <li class="rating-distribution-row">
+        <span class="rating-distribution-score"><%= score %>/5</span>
+        <span class="rating-distribution-track" aria-hidden="true"><span class="rating-distribution-bar" style="width: <%= width %>%"></span></span>
+        <% if count.positive? %>
+          <%= link_to count, pins_path(scope_params.merge(rating => score, locale: I18n.locale)), class: 'rating-distribution-count rating-distribution-count-link', aria: { label: t('public.rating.view_submissions', count: count, score: score) } %>
+        <% else %>
+          <span class="rating-distribution-count">0</span>
+        <% end %>
+      </li>
+    <% end %>
+  </ol>
+</section>

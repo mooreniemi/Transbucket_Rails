@@ -1,6 +1,6 @@
 class PinFilterQuery
   attr_accessor :pins
-  VALID_FILTERS = [:procedures, :surgeons, :general, :complications]
+  VALID_FILTERS = [:procedures, :surgeons, :general, :complications, :satisfaction, :sensation]
   PERMITTED_SCOPES = [:ftm, :mtf, :top, :bottom, :need_category]
   attr_reader(*VALID_FILTERS)
 
@@ -9,6 +9,8 @@ class PinFilterQuery
     @surgeons = keywords[:surgeon]
     @complications = add_default(keywords[:complication])
     @general = format_scope(keywords.fetch(:scope,nil))
+    @satisfaction = format_rating(keywords[:satisfaction])
+    @sensation = format_rating(keywords[:sensation])
   end
 
   def filtered
@@ -24,11 +26,14 @@ class PinFilterQuery
     args = general.present? ? general.join('.') : 'Pin'
     Rails.cache.fetch(cache_key_for(active_filters, keywords)) do
       # FIXME not crazy about eval here, how can we make sure this is safe from delete
-      Pin.includes(:user, :pin_images, :surgeon, :procedure).instance_eval { eval args }.
+      filtered = Pin.includes(:user, :pin_images, :surgeon, :procedure).instance_eval { eval args }.
         tagged_with(*complications).
         by_procedure([procedures].flatten).
         by_surgeon([surgeons].flatten).
         recent
+      filtered = filtered.where(satisfaction: satisfaction) if satisfaction
+      filtered = filtered.where(sensation: sensation) if sensation
+      filtered
     end
   end
 
@@ -47,5 +52,10 @@ class PinFilterQuery
     scope.collect!(&:parameterize).collect!(&:underscore).collect!(&:to_sym).
       collect! {|s| s if PERMITTED_SCOPES.include?(s) }
     scope
+  end
+
+  def format_rating(value)
+    value = Array(value).first.to_s
+    value.to_i if value.match?(/\A[1-5]\z/)
   end
 end

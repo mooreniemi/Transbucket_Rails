@@ -37,4 +37,15 @@ describe PinFilterQuery, "#filtered" do
       end
     end
   end
+
+  it 'filters by an exact rating bucket' do
+    matching = create(:pin, procedure: procedure, satisfaction: 5, sensation: 2)
+    create(:pin, procedure: procedure, satisfaction: 4, sensation: 2)
+
+    expect(PinFilterQuery.new(satisfaction: 5, procedure: procedure.id).filtered).to contain_exactly(matching)
+  end
+
+  it 'ignores ratings outside the supported scale' do
+    expect(PinFilterQuery.new(satisfaction: 6, procedure: procedure.id).filtered).to include(pin)
+  end
 end

@@ -12,6 +12,7 @@ RSpec.describe "surgeons/show" do
       assign(:satisfaction_by_procedure, {})
       assign(:procedure_count, 0)
       assign(:submission_count, 0)
+      assign(:latest_pins, nil)
       allow(view).to receive(:user_signed_in?).and_return(false)
 
       render
@@ -36,12 +37,15 @@ RSpec.describe "surgeons/show" do
       assign(:satisfaction_by_procedure, { pin.procedure_id => pin.satisfaction.to_f })
       assign(:procedure_count, 1)
       assign(:submission_count, 1)
+      assign(:latest_pins, nil)
       allow(view).to receive(:user_signed_in?).and_return(false)
 
       render
 
       expect(rendered).to match(Regexp.new(pin.procedure.name))
       expect(rendered).to match(Regexp.new(I18n.t('public.pin.average_satisfaction')))
+      expect(rendered).to include(I18n.t('account_menu.login'))
+      expect(rendered).to include(I18n.t('account_menu.register'))
     end
 
     it "shows the submission total only to signed-in users" do

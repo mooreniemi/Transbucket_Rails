@@ -46,6 +46,7 @@ RSpec.describe "surgeons/show" do
       expect(rendered).to match(Regexp.new(I18n.t('public.pin.average_satisfaction')))
       expect(rendered).to include(I18n.t('account_menu.login'))
       expect(rendered).to include(I18n.t('account_menu.register'))
+      expect(rendered).not_to include('Register to see more Register')
     end
 
     it "shows the submission total only to signed-in users" do

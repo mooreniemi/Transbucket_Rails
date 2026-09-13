@@ -22,6 +22,7 @@ sv:
     name: Namn
     average_satisfaction: Genomsnittlig tillfredsställelse
     average_sensation: Genomsnittlig känsel
+    login_or_register_to_see_more: "%{login} eller %{register} för att se mer"
   newsfeed:
     title: Nyheter
     description: Senaste uppdateringarna från Transbucket.

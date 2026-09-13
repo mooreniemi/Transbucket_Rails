@@ -107,9 +107,9 @@
         <% end %>
         <% unless user_signed_in? %>
           <p class="directory-login-prompt">
-            <%= link_to t('account_menu.login'), new_user_session_path %>
-            <%= t('directory.register_to_see_more') %>
-            <%= link_to t('account_menu.register'), register_path %>.
+            <%= t('directory.login_or_register_to_see_more',
+                  login: link_to(t('account_menu.login'), new_user_session_path),
+                  register: link_to(t('account_menu.register'), register_path)).html_safe %>
           </p>
         <% end %>
     </div>

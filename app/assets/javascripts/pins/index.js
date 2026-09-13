@@ -30,10 +30,11 @@ $(document).ready(function() {
 
   // TODO hack
   if (container) {
-    // initialize Masonry after all images have loaded
+    // Card boxes have stable dimensions, so position them immediately and
+    // only refresh after image loading in case intrinsic content changes.
+    msnry = new Masonry(container, {});
     imagesLoaded(container, function() {
-      // https://masonry.desandro.com/options.html
-      msnry = new Masonry(container, {});
+      msnry.layout();
     });
   }
 });

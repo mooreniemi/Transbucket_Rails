@@ -1,6 +1,6 @@
 <% if Rails.env.production? && rand(1..15) == 7 %>
   <% Rails.logger.debug "Serving ad with #{pin.id}" %>
-  <div class="item ad">
+  <div class="item ad pin-ad-slot" aria-hidden="true">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- test1 -->
     <ins class="adsbygoogle"
@@ -21,8 +21,8 @@
     <div class="panel-body">
     <%= render partial: "latest_comment_snippet", locals: { pin: pin } if @comments.map(&:commentable_id).include?(pin.id) %>
     <% cache([I18n.locale, pin, @safe_mode]) do %>
-      <div class="image" itemprop="image">
-        <%= link_to (image_tag pin.cover_image(@safe_mode).url(:medium)), pin %>
+      <div class="image pin-card-image" itemprop="image">
+        <%= link_to (image_tag pin.cover_image(@safe_mode).url(:medium), alt: pin.procedure.try(:localized_name)), pin %>
       </div>
       <p class="description" itemprop="description">
         <%= pin.try(:procedure).try(:localized_name) %> <%= t('public.pin.by') %> <strong><%= pin.unknown_surgeon? ? t('public.pin.unknown') : t('public.pin.doctor_prefix') + pin.surgeon.to_s %></strong>

@@ -29,7 +29,7 @@
       <div class="well">
         <% for pinimage in @pin.pin_images.reject {|p| p.photo_file_size.nil?} do %>
           <div class="thumbnail">
-            <%= image_tag pinimage.photo, alt: pinimage.caption.presence || pin_title %>
+            <%= image_tag pinimage.photo, class: 'pin-gallery-image', alt: pinimage.caption.presence || pin_title %>
             <div class="caption">
               <%= pinimage.caption.to_s %>
             </div>

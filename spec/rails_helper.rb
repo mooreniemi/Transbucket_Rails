@@ -17,8 +17,6 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
-require 'support/monkey_patch_rails_four'
-
 RSpec.configure do |config|
   config.around do |example|
     I18n.locale = I18n.default_locale

@@ -1,6 +1,13 @@
 require 'rails_helper'
 
 describe Flag do
+  # Creating a Pin/Comment also enqueues its own async Elasticsearch
+  # reindex job (see Searchable#index_document_async), so counting all of
+  # Delayed::Job is fragile. Scope to the job this spec actually cares about.
+  def admin_review_job_count
+    Delayed::Job.all.count { |job| job.payload_object.method_name == :admin_review_without_delay }
+  end
+
   it '3 flags should make a pin pending' do
     pin = create(:pin)
 
@@ -31,7 +38,7 @@ describe Flag do
     Flag.new(user3, comment).flag_on
 
     expect(comment.pending?).to eq(true)
-    expect(Delayed::Job.all.count).to eq(1)
+    expect(admin_review_job_count).to eq(1)
   end
 
   it "comment's parent pin author can send directly to pending" do
@@ -42,6 +49,6 @@ describe Flag do
 
     Flag.new(pin_author, comment).flag_on
     expect(comment.pending?).to eq(true)
-    expect(Delayed::Job.all.count).to eq(1)
+    expect(admin_review_job_count).to eq(1)
   end
 end

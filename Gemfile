@@ -3,15 +3,13 @@ source 'https://rubygems.org'
 # https://devcenter.heroku.com/articles/ruby-versions
 ruby '3.1.6'
 
-gem 'rails', '4.2.11.3'
+gem 'rails', '5.2.8.1'
 # used for public areas of the site, see PagesController
 gem 'actionpack-page_caching', '~> 1.2.2'
 
 gem 'unicorn'
 gem 'turbolinks'
 gem 'bower-rails', '~> 0.7.3'
-
-gem 'protected_attributes'
 
 # for ci
 gem 'rspec_junit_formatter', '0.2.2'
@@ -22,7 +20,12 @@ gem 'will_paginate-bootstrap'
 
 # FIXME: if using AWS
 # gem 'faraday_middleware-aws-sigv4'
-gem 'elasticsearch-model'
+# elasticsearch-model/-rails have no version constraint of their own, so an
+# unpinned `bundle update` can silently jump the client to the 8.x line --
+# a different wire protocol/API generation that the ES 7.12.0 server pinned
+# everywhere (CircleCI, docker-compose, staging/production) doesn't speak.
+gem 'elasticsearch', '7.4.0'
+gem 'elasticsearch-model', '7.1.0'
 gem 'elasticsearch-rails'
 # elasticsearch-transport pulls in faraday with no version constraint of its
 # own, so an unpinned `bundle update` would silently jump to faraday 2.x --
@@ -48,7 +51,7 @@ gem 'figaro'
 
 # for i18n, pulls out header
 gem 'http_accept_language'
-gem 'rails-i18n', '~> 4.0'
+gem 'rails-i18n', '~> 5.1'
 gem 'i18n_generators'
 
 # for authentication
@@ -76,14 +79,22 @@ gem 'reform-rails'
 gem 'phony_rails', '~> 0.15'
 
 # pin submission wysiwyg
-gem 'tinymce-rails'
+gem 'tinymce-rails', '4.2.6'
 
 gem 'htmlentities'
 gem 'simple-rss'
 gem 'meta-tags', :require => 'meta_tags'
 
 gem 'acts_as_votable', '~> 0.7.1'
-gem 'acts-as-taggable-on'
+# Pinned rather than left open: an unpinned `bundle update` drifts this
+# several major versions further (through real tag_list API changes) with
+# no Rails-5 need to do so. Versions 4.0.0 through 6.5.0 all pass a plain
+# Hash positionally to `belongs_to :tagger, {polymorphic: true, ...}` --
+# legal under Rails 4.2's belongs_to(name, scope=nil, options={}), but
+# Rails 5.2's belongs_to(name, scope=nil, **options) binds that Hash to
+# `scope` instead, raising NoMethodError on Hash#arity. Fixed upstream in
+# 7.0.0 (real `polymorphic:, optional:` keyword syntax).
+gem 'acts-as-taggable-on', '7.0.0'
 gem 'acts_as_commentable_with_threading'
 gem 'letsrate'
 
@@ -102,7 +113,6 @@ group :development do
   gem 'any_login'
 	gem 'letter_opener'
 	gem 'seed_dump'
-	gem 'quiet_assets'
 	gem 'better_errors'
 end
 
@@ -116,7 +126,7 @@ group :development, :test do
   gem 'spring-commands-rspec'
   gem 'rspec-benchmark'
   gem 'parallel_tests'
-	gem 'bullet'
+	gem 'bullet', '~> 6.1'
   # NOTE: with spring breaks rails console, so don't use it
 	# gem 'binding_of_caller'
 	gem 'guard'
@@ -129,10 +139,15 @@ end
 
 group :test do
 	gem 'simplecov', :require => false
-	gem 'database_cleaner'
-	gem 'rspec-rails'
+	gem 'database_cleaner', '~> 2.1'
+	gem 'rspec-rails', '~> 3.9'
+	# assigns/assert_template were extracted out of Rails core in 5.0.
+	gem 'rails-controller-testing'
 	gem 'factory_girl_rails'
-	gem 'capybara'
+	# Pinned: an unpinned `bundle update` drifts capybara to 3.40+, which
+	# needs selenium-webdriver 4.x's Selenium::WebDriver::ShadowRoot --
+	# undefined on this app's selenium-webdriver (3.142.7).
+	gem 'capybara', '3.35.3'
   gem 'capybara-email'
 	gem 'selenium-webdriver'
 	gem 'guard-rspec'
@@ -143,8 +158,8 @@ end
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-	gem 'sass-rails', '4.0.3'
-	gem 'coffee-rails', '~> 4.0.0'
+	gem 'sass-rails', '~> 5.0'
+	gem 'coffee-rails', '~> 5.0'
 	# other versions yanked https://rubygems.org/gems/bootstrap-sass/versions
 	gem 'bootstrap-sass', '3.4.1'
 	gem 'autoprefixer-rails'
@@ -154,6 +169,7 @@ end
 group :production do
 	# for assets, see https://devcenter.heroku.com/articles/rails-4-asset-pipeline
 	gem 'rails_12factor'
-	gem 'newrelic_rpm'
+# The pre-Rails-5 agent crashes while loading the Rails 5 framework adapter.
+gem 'newrelic_rpm', '10.7.1'
   gem 'scout_apm'
 end

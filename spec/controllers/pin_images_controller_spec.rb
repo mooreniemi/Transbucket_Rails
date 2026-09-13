@@ -11,26 +11,26 @@ describe PinImagesController, type: :controller do
 
   context 'when nobody is signed in' do
     it 'refuses to accept an upload' do
-      expect { post :create, pin_images: upload, format: :json }.not_to change { PinImage.count }
+      expect { post :create, params: { pin_images: upload }, format: :json }.not_to change { PinImage.count }
       expect(response).to have_http_status(:unauthorized)
     end
 
     it 'refuses to delete a photo' do
-      xhr :delete, :destroy, pin_id: pin.id, id: image.id, format: :js
+      delete :destroy, params: { pin_id: pin.id, id: image.id }, format: :js, xhr: true
 
       expect(response).to have_http_status(:unauthorized)
       expect(PinImage.exists?(image.id)).to eq(true)
     end
 
     it 'refuses to change a caption' do
-      put :update, id: image.id, caption: 'hijacked', format: :json
+      put :update, params: { id: image.id, caption: 'hijacked' }, format: :json
 
       expect(response).to have_http_status(:unauthorized)
       expect(image.reload.caption).not_to eq('hijacked')
     end
 
     it 'refuses to list a post\'s photos' do
-      get :index, pin_id: pin.id, format: :json
+      get :index, params: { pin_id: pin.id }, format: :json
 
       expect(response).to have_http_status(:unauthorized)
     end
@@ -40,38 +40,38 @@ describe PinImagesController, type: :controller do
     before { sign_in(stranger) }
 
     it 'cannot delete their photo' do
-      xhr :delete, :destroy, pin_id: pin.id, id: image.id, format: :js
+      delete :destroy, params: { pin_id: pin.id, id: image.id }, format: :js, xhr: true
 
       expect(response).to have_http_status(:forbidden)
       expect(PinImage.exists?(image.id)).to eq(true)
     end
 
     it 'cannot change their caption' do
-      put :update, id: image.id, caption: 'hijacked', format: :json
+      put :update, params: { id: image.id, caption: 'hijacked' }, format: :json
 
       expect(response).to have_http_status(:forbidden)
       expect(image.reload.caption).not_to eq('hijacked')
     end
 
     it 'can still upload photos for their own post' do
-      expect { post :create, pin_images: upload, format: :json }.to change { PinImage.count }.by(1)
+      expect { post :create, params: { pin_images: upload }, format: :json }.to change { PinImage.count }.by(1)
       expect(response).to have_http_status(:ok)
     end
 
     it 'stores the caption sent with an uploaded PNG' do
-      png = ActionDispatch::Http::UploadedFile.new(
-        filename: 'cat.png', type: 'image/png', tempfile: File.new("#{Rails.root}/spec/support/cat.png")
-      )
+      # Rails 5 controller specs need Rack::Test::UploadedFile; an
+      # ActionDispatch::Http::UploadedFile param gets stringified.
+      png = Rack::Test::UploadedFile.new("#{Rails.root}/spec/support/cat.png", 'image/png')
       caption = attributes_for(:pin_image)[:caption]
 
-      expect { post :create, pin_images: { '0' => { photo: png, caption: caption } }, format: :json }.to change { PinImage.count }.by(1)
+      expect { post :create, params: { pin_images: { '0' => { photo: png, caption: caption } } }, format: :json }.to change { PinImage.count }.by(1)
       expect(PinImage.last.caption).to eq(caption)
     end
 
     it 'can caption a photo they just uploaded and have not attached to a post yet' do
       fresh = PinImage.create!(photo: fixture_file_upload('cat.jpg', 'image/jpeg'), caption: 'before')
 
-      put :update, id: fresh.id, caption: 'after', format: :json
+      put :update, params: { id: fresh.id, caption: 'after' }, format: :json
 
       expect(response).to have_http_status(:ok)
       expect(fresh.reload.caption).to eq('after')
@@ -82,14 +82,14 @@ describe PinImagesController, type: :controller do
     before { sign_in(owner) }
 
     it 'can delete their photo' do
-      xhr :delete, :destroy, pin_id: pin.id, id: image.id, format: :js
+      delete :destroy, params: { pin_id: pin.id, id: image.id }, format: :js, xhr: true
 
       expect(response).to be_success
       expect(PinImage.exists?(image.id)).to eq(false)
     end
 
     it 'can change their caption, and gets a proper JSON answer' do
-      put :update, id: image.id, caption: 'mine', format: :json
+      put :update, params: { id: image.id, caption: 'mine' }, format: :json
 
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body)).to eq('id' => image.id, 'caption' => 'mine')
@@ -108,10 +108,10 @@ describe PinImagesController, type: :controller do
     it 'lets an admin change and delete anyone\'s photos' do
       sign_in(create(:user, :with_confirmation, admin: true))
 
-      put :update, id: image.id, caption: 'admin edit', format: :json
+      put :update, params: { id: image.id, caption: 'admin edit' }, format: :json
       expect(response).to have_http_status(:ok)
 
-      xhr :delete, :destroy, pin_id: pin.id, id: image.id, format: :js
+      delete :destroy, params: { pin_id: pin.id, id: image.id }, format: :js, xhr: true
       expect(PinImage.exists?(image.id)).to eq(false)
     end
 
@@ -120,10 +120,10 @@ describe PinImagesController, type: :controller do
       moderator.grant_trust!('moderator', granted_by: create(:user, admin: true))
       sign_in(moderator)
 
-      put :update, id: image.id, caption: 'nope', format: :json
+      put :update, params: { id: image.id, caption: 'nope' }, format: :json
       expect(response).to have_http_status(:forbidden)
 
-      xhr :delete, :destroy, pin_id: pin.id, id: image.id, format: :js
+      delete :destroy, params: { pin_id: pin.id, id: image.id }, format: :js, xhr: true
       expect(PinImage.exists?(image.id)).to eq(false)
     end
   end

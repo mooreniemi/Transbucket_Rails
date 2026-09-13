@@ -11,8 +11,8 @@ module Constants
   BOTTOM = ["vaginoplasty", "phalloplasty", "metoidioplasty", "orchiectomy"]
   BOTTOM_IDS = [7, 1, 5, 55]
 
-  PROCEDURES = Pin.uniq.pluck(:procedure_id)
-  SURGEONS = Pin.uniq.pluck(:surgeon_id)
+  PROCEDURES = Pin.distinct.pluck(:procedure_id)
+  SURGEONS = Pin.distinct.pluck(:surgeon_id)
 
   SCOPES = ["ftm", "mtf", "bottom", "top", "need_category"]
 end

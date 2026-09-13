@@ -1,7 +1,6 @@
 class CommentsController < ApplicationController
-  respond_to :js
-  before_filter :authenticate_user!
-  before_filter :authorize_destroy, only: :destroy
+  before_action :authenticate_user!
+  before_action :authorize_destroy, only: :destroy
 
   # Comments are only ever polymorphically attached to these two types (see
   # app/views/pins/show.html.erb and app/views/procedures/show.html.erb).
@@ -79,10 +78,5 @@ class CommentsController < ApplicationController
 
   def render_invalid_commentable_type
     render json: { error: "invalid commentable_type" }, status: :bad_request
-  end
-
-  def authorize_destroy
-    comment = Comment.find(params[:id])
-    head :forbidden unless comment.user_id == current_user.id || current_user.moderator?
   end
 end

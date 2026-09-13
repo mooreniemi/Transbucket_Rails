@@ -5,7 +5,7 @@ describe SearchController, :type => :controller do
     expect(Procedure).to receive(:names).and_return(["foo"])
     expect(Surgeon).to receive(:names).and_return(["Dippity"])
 
-    get 'search_terms', term: "foo"
+    get 'search_terms', params: { term: "foo", locale: 'en' }
     expect(JSON.parse(response.body)["match"]).to include("foo")
   end
 end

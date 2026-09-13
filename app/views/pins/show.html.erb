@@ -36,10 +36,7 @@
       <div class="pin-gallery-panel">
         <% for pinimage in @pin.pin_images.reject {|p| p.photo_file_size.nil?} do %>
           <div class="thumbnail pin-gallery-item">
-            <div class="pin-gallery-photo<%= ' safe-blur' if @safe_mode %>">
-              <%= image_tag pinimage.photo, class: 'pin-gallery-image', alt: pinimage.caption.presence || pin_title %>
-              <%= render 'shared/safe_reveal' if @safe_mode %>
-            </div>
+            <%= image_tag pinimage.photo.url, class: 'pin-gallery-image', alt: pinimage.caption.presence || pin_title %>
             <div class="caption pin-gallery-caption">
               <%= pinimage.caption.to_s %>
             </div>
@@ -105,7 +102,7 @@
       <% end %>
       <% if @pin.user.present? %>
         <dt><%= t('public.pin.submitter') %></dt>
-        <dd><strong><%= link_to @pin.user.username.presence || @pin.user.id, pins_path(user: @pin.user) %></strong><%= render 'shared/trust_badge', user: @pin.user %></dd>
+        <dd><strong><%= link_to @pin.user.username.presence || @pin.user.id, pins_path(user: @pin.user) %></strong></dd>
       <% end %>
     </dl>
     <% if @pin.details.present? %>

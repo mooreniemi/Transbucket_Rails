@@ -1,7 +1,7 @@
 <% procedure_name = @procedure.localized_name %>
 <% guide = @procedure.editorial_guide %>
 <% seo_description = guide ? guide['summary'] : "View #{procedure_name} submissions and discussion on Transbucket." %>
-<% seo_meta description: seo_description, canonical: procedure_url(id: @procedure.id) %>
+<% seo_meta description: seo_description, canonical: procedure_url(@procedure) %>
 <% title procedure_name  %>
 <% json_ld_tag(
   {
@@ -9,7 +9,7 @@
     '@type' => 'MedicalProcedure',
     'name' => procedure_name,
     'description' => guide ? guide['summary'] : @procedure.description,
-    'url' => procedure_url(id: @procedure.id)
+    'url' => procedure_url(@procedure)
   }.compact
 ) %>
 <% json_ld_tag(
@@ -19,7 +19,7 @@
     'itemListElement' => [
       { '@type' => 'ListItem', 'position' => 1, 'name' => t('header.home'), 'item' => root_url },
       { '@type' => 'ListItem', 'position' => 2, 'name' => t('header.procedures'), 'item' => procedures_url },
-      { '@type' => 'ListItem', 'position' => 3, 'name' => procedure_name, 'item' => procedure_url(id: @procedure.id) }
+      { '@type' => 'ListItem', 'position' => 3, 'name' => procedure_name, 'item' => procedure_url(@procedure) }
     ]
   }
 ) %>
@@ -56,6 +56,16 @@
           <ul>
             <% guide['community_links'].each do |community| %>
               <li><%= link_to community['name'], community['url'], rel: 'ugc nofollow noopener noreferrer' %></li>
+            <% end %>
+          </ul>
+        <% end %>
+        <% if @related_procedures.present? %>
+          <h2><%= t('procedure_guide.related_title', default: 'Related procedures') %></h2>
+          <ul>
+            <% guide.fetch('related_procedures', []).each do |related_name| %>
+              <% related = @related_procedures[related_name] %>
+              <% next unless related %>
+              <li><%= link_to related.localized_name, procedure_path(related) %></li>
             <% end %>
           </ul>
         <% end %>

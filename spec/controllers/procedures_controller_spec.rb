@@ -35,5 +35,15 @@ describe ProceduresController, :type => :controller do
 
       expect(assigns(:rating_distributions)).to be_nil
     end
+
+    it 'preloads configured related procedures without requiring every reference to exist' do
+      procedure = create(:procedure, name: 'phalloplasty')
+      related = create(:procedure, name: 'rff phalloplasty')
+
+      get :show, id: procedure.id
+
+      expect(assigns(:related_procedures)).to include(related.name => related)
+      expect(response).to be_success
+    end
   end
 end

@@ -7,6 +7,8 @@ class ProceduresController < ApplicationController
 
   def show
     @procedure = Procedure.includes(comment_threads: [:children]).friendly.find(params[:id])
+    guide = @procedure.editorial_guide
+    @related_procedures = Procedure.where(name: guide.fetch('related_procedures', [])).index_by(&:name) if guide
     # procedure pages are public, but comments should be private
     if current_user
       @comments = @procedure.comments_asc

@@ -51,7 +51,8 @@ describe 'locale-prefixed URLs', type: :request do
     expect(response.body).to include('href="/de/procedures"')
     expect(response.body).to include('href="/de/surgeons"')
     expect(response.body).to include('rel="canonical" href="http://www.example.com/de"')
-    expect(response.body).to include('hreflang="x-default" href="/en"')
+    expect(response.body).to include('hreflang="x-default" href="http://www.example.com/en"')
+    expect(response.body).to include('hreflang="de" href="http://www.example.com/de"')
     expect(response.body).to include('"url":"http://www.example.com/de"')
   end
 

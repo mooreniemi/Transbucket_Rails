@@ -11,9 +11,9 @@ module ApplicationHelper
 
   def locale_alternate_links
     links = ApplicationController::SUPPORTED_LOCALES.map do |locale|
-      tag(:link, rel: 'alternate', hreflang: locale, href: locale_url(locale))
+      tag(:link, rel: 'alternate', hreflang: locale, href: url_for(request.query_parameters.merge(locale: locale, only_path: false)))
     end
-    links << tag(:link, rel: 'alternate', hreflang: 'x-default', href: locale_url('en'))
+    links << tag(:link, rel: 'alternate', hreflang: 'x-default', href: url_for(request.query_parameters.merge(locale: 'en', only_path: false)))
     safe_join(links, "\n")
   end
 

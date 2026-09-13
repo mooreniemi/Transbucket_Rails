@@ -20,20 +20,21 @@ SitemapGenerator::Sitemap.create do
   #
   # Add '/articles'
   #
-  add procedures_path, :priority => 0.7, :changefreq => 'weekly'
-  add surgeons_path, :priority => 0.7, :changefreq => 'weekly'
-  add newsfeed_path, :changefreq => 'weekly'
-  add about_path, :priority => 0.2, :changefreq => 'yearly'
-  #
-  # Add all articles:
-  #
-  #   Article.find_each do |article|
-  #     add article_path(article), :lastmod => article.updated_at
-  #   end
+  ApplicationController::SUPPORTED_LOCALES.each do |locale|
+    add root_path(locale: locale), :priority => 1.0, :changefreq => 'always'
+    add procedures_path(locale: locale), :priority => 0.7, :changefreq => 'weekly'
+    add surgeons_path(locale: locale), :priority => 0.7, :changefreq => 'weekly'
+    add newsfeed_path(locale: locale), :changefreq => 'weekly'
+    add about_path(locale: locale), :priority => 0.2, :changefreq => 'yearly'
+  end
   Procedure.find_each do |procedure|
-    add procedure_path(procedure), :lastmod => procedure.updated_at
+    ApplicationController::SUPPORTED_LOCALES.each do |locale|
+      add procedure_path(procedure, locale: locale), :lastmod => procedure.updated_at
+    end
   end
   Surgeon.find_each do |surgeon|
-    add surgeon_path(surgeon), :lastmod => surgeon.updated_at
+    ApplicationController::SUPPORTED_LOCALES.each do |locale|
+      add surgeon_path(surgeon, locale: locale), :lastmod => surgeon.updated_at
+    end
   end
 end

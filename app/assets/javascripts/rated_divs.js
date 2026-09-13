@@ -16,7 +16,7 @@ $(document).ready(function() {
         });
 
         field.on('rating.hover', function(event, value, caption) {
-            hint.text(caption);
+            hint.text(captions[value] || $('<div>').html(caption).text());
         }).on('rating.hoverleave rating.change', function() {
             hint.text(help);
         });

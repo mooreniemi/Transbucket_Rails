@@ -22,8 +22,6 @@ describe ProceduresController, :type => :controller do
       expect(assigns(:avg_satisfaction_by_procedure)[procedure.id]).to eq(3.0)
     end
 
-    xit 'links procedures to queries for all pins of that procedure' do
-    end
   end
   describe "#show" do
     it 'prepares rating distributions only for authenticated users' do

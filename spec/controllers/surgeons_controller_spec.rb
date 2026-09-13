@@ -35,8 +35,6 @@ RSpec.describe SurgeonsController, :type => :controller do
 
       expect(assigns(:avg_sensation_by_surgeon)).to eq({})
     end
-    xit 'links surgeons to queries for all pins of that surgeon' do
-    end
   end
   describe "#show" do
     it 'loads overall rating averages for signed-in users' do

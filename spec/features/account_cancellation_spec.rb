@@ -6,7 +6,7 @@ RSpec.describe "cancel user account" do
 
   before(:each) do
     login_as(user, :scope => :user)
-    visit '/users/edit'
+    visit '/en/users/edit'
   end
 
   after :each do

@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
     redirect_to "#{localized_path}#{query}", status: :moved_permanently
   end
 
-  def default_url_options
+  def default_url_options(_options = nil)
     { locale: I18n.locale }
   end
 

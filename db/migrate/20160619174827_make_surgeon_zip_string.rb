@@ -1,4 +1,4 @@
-class MakeSurgeonZipString < ActiveRecord::Migration
+class MakeSurgeonZipString < ActiveRecord::Migration[4.2]
   def up
     change_column :surgeons, :zip, :string
   end

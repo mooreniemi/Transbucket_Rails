@@ -1,4 +1,4 @@
-class ChangeSurgeonIdTypeOnPin < ActiveRecord::Migration
+class ChangeSurgeonIdTypeOnPin < ActiveRecord::Migration[4.2]
   def up
   	change_column :pins, :surgeon_id, 'integer USING CAST(surgeon_id AS integer)'
   end

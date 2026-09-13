@@ -2,7 +2,7 @@
 <% guide = @procedure.editorial_guide %>
 <% seo_description = guide ? guide['summary'] : "View #{procedure_name} submissions and discussion on Transbucket." %>
 <% seo_meta description: seo_description, canonical: procedure_url(@procedure) %>
-<% title procedure_name  %>
+<% title "#{procedure_name} #{t('procedure_guide.title_suffix', default: 'results and experiences')} | Transbucket" %>
 <% json_ld_tag(
   {
     '@context' => 'https://schema.org',

@@ -1,96 +1,112 @@
 en:
   procedure_guide:
-    sources_title: Reviewed sources
+    sources_title: Medical guidance and references
+    title_suffix: results and experiences
     community_title: Community discussions
     community_note: These external discussions are personal experiences, not medical advice.
     related_title: Related procedures
 de:
   procedure_guide:
-    sources_title: Geprüfte Quellen
+    sources_title: Medizinische Informationen und Quellen
+    title_suffix: Ergebnisse und Erfahrungen
     community_title: Diskussionen aus der Community
     community_note: Diese externen Diskussionen sind persönliche Erfahrungen und keine medizinische Beratung.
     related_title: Ähnliche Eingriffe
 es:
   procedure_guide:
-    sources_title: Fuentes revisadas
+    sources_title: Información médica y referencias
+    title_suffix: resultados y experiencias
     community_title: Debates de la comunidad
     community_note: Estas conversaciones externas son experiencias personales, no consejos médicos.
     related_title: Procedimientos relacionados
 fr:
   procedure_guide:
-    sources_title: Sources vérifiées
+    sources_title: Informations médicales et références
+    title_suffix: résultats et expériences
     community_title: Discussions de la communauté
     community_note: Ces discussions externes présentent des expériences personnelles et ne constituent pas un avis médical.
     related_title: Interventions associées
 it:
   procedure_guide:
-    sources_title: Fonti verificate
+    sources_title: Informazioni mediche e riferimenti
+    title_suffix: risultati ed esperienze
     community_title: Discussioni della community
     community_note: Queste discussioni esterne riportano esperienze personali e non costituiscono un parere medico.
     related_title: Procedure correlate
 ja:
   procedure_guide:
-    sources_title: 確認済みの情報源
+    sources_title: 医療情報と参考資料
+    title_suffix: 結果と体験談
     community_title: コミュニティの議論
     community_note: これらの外部の議論は個人の体験であり、医学的助言ではありません。
     related_title: 関連する手術
 zh-CN:
   procedure_guide:
-    sources_title: 经审核的资料来源
+    sources_title: 医学信息和参考资料
+    title_suffix: 结果和经验
     community_title: 社区讨论
     community_note: 这些外部讨论是个人经历，不构成医疗建议。
     related_title: 相关手术
 zh-TW:
   procedure_guide:
-    sources_title: 已審閱的資料來源
+    sources_title: 醫療資訊與參考資料
+    title_suffix: 結果與經驗
     community_title: 社群討論
     community_note: 這些外部討論是個人經驗，不構成醫療建議。
     related_title: 相關手術
 pt-BR:
   procedure_guide:
-    sources_title: Fontes revisadas
+    sources_title: Informações médicas e referências
+    title_suffix: resultados e experiências
     community_title: Discussões da comunidade
     community_note: Estas discussões externas são experiências pessoais, não aconselhamento médico.
     related_title: Procedimentos relacionados
 nl:
   procedure_guide:
-    sources_title: Beoordeelde bronnen
+    sources_title: Medische informatie en referenties
+    title_suffix: resultaten en ervaringen
     community_title: Discussies uit de community
     community_note: Deze externe discussies zijn persoonlijke ervaringen en geen medisch advies.
     related_title: Gerelateerde procedures
 pl:
   procedure_guide:
-    sources_title: Zweryfikowane źródła
+    sources_title: Informacje medyczne i źródła
+    title_suffix: wyniki i doświadczenia
     community_title: Dyskusje społeczności
     community_note: Te zewnętrzne dyskusje opisują osobiste doświadczenia i nie są poradą medyczną.
     related_title: Powiązane procedury
 ru:
   procedure_guide:
-    sources_title: Проверенные источники
+    sources_title: Медицинская информация и источники
+    title_suffix: результаты и опыт
     community_title: Обсуждения сообщества
     community_note: Эти внешние обсуждения отражают личный опыт и не являются медицинской рекомендацией.
     related_title: Связанные процедуры
 tr:
   procedure_guide:
-    sources_title: İncelenmiş kaynaklar
+    sources_title: Tıbbi bilgiler ve kaynaklar
+    title_suffix: sonuçlar ve deneyimler
     community_title: Topluluk tartışmaları
     community_note: Bu harici tartışmalar kişisel deneyimlerdir ve tıbbi tavsiye değildir.
     related_title: İlgili prosedürler
 vi:
   procedure_guide:
-    sources_title: Nguồn đã được xem xét
+    sources_title: Thông tin y tế và tài liệu tham khảo
+    title_suffix: kết quả và trải nghiệm
     community_title: Thảo luận cộng đồng
     community_note: Những cuộc thảo luận bên ngoài này là trải nghiệm cá nhân, không phải lời khuyên y tế.
     related_title: Các thủ thuật liên quan
 ar:
   procedure_guide:
-    sources_title: مصادر تمت مراجعتها
+    sources_title: معلومات ومراجع طبية
+    title_suffix: النتائج والتجارب
     community_title: نقاشات المجتمع
     community_note: هذه المناقشات الخارجية تجارب شخصية وليست نصيحة طبية.
     related_title: الإجراءات ذات الصلة
 sv:
   procedure_guide:
-    sources_title: Granskade källor
+    sources_title: Medicinsk information och referenser
+    title_suffix: resultat och erfarenheter
     community_title: Diskussioner i communityn
     community_note: Dessa externa diskussioner är personliga erfarenheter, inte medicinsk rådgivning.
     related_title: Relaterade ingrepp

@@ -86,6 +86,18 @@ describe 'locale-prefixed URLs', type: :request do
     expect(response.body).to include('href="/sv/procedures"')
   end
 
+  it 'renders the login and registration forms for every locale' do
+    REQUEST_SUPPORTED_LOCALES.each do |locale|
+      get "/#{locale}/users/sign_in"
+      expect(response).to be_success, "login form failed for #{locale}"
+      expect(response.body).to include('id="new_user"'), "login form missing for #{locale}"
+
+      get "/#{locale}/register"
+      expect(response).to be_success, "registration form failed for #{locale}"
+      expect(response.body).to include('id="new_user"'), "registration form missing for #{locale}"
+    end
+  end
+
   it 'has every translation used by the signup form in every locale' do
     signup_keys = %w[username email password name gender tos]
 

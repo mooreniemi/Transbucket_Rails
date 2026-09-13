@@ -4,7 +4,7 @@
   <div class="top-block"><center><h1><%= fa_icon "lock" %></h1></center></div>
   <div class="login_well">
 
-    <%= simple_form_for(resource, as: resource_name, url: "/#{I18n.locale}/users/password", html: { method: :post }) do |f| %>
+    <%= simple_form_for(resource, url: "/#{I18n.locale}/users/password", html: { method: :post }) do |f| %>
       <%= f.error_notification %>
 
       <div class="input-group padded_nicely">

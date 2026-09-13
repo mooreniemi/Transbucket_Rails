@@ -115,8 +115,18 @@ class StagingSmoke
     params["authenticity_token"] = token if token
     response = post("/users/sign_in", params)
 
-    unless response.code.to_i.between?(200, 399)
-      raise "login failed with #{response.code}"
+    unless response.is_a?(Net::HTTPRedirection)
+      if response.code.to_i == 422
+        raise "login rejected with 422 (CSRF failure; check the GET session cookie and authenticity token pairing)"
+      end
+
+      raise "valid login credentials were rejected with #{response.code} (expected a redirect; check STAGING_USER/STAGING_PASSWORD)"
+    end
+
+    location = response["location"]
+    expected_path = "/#{@locale}/pins"
+    unless location && URI.parse(URI.join(STAGING_URL, location).to_s).path == expected_path
+      raise "login redirected to #{location.inspect}, expected #{expected_path}"
     end
 
     follow_redirect(response) if response.is_a?(Net::HTTPRedirection)

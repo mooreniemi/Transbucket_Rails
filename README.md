@@ -188,11 +188,36 @@ Connecting to staging to debug or run tasks:
 
 ## [production](transbucket.com)
 
-Production deploy is manual, and separate from CI/CD -- passing CircleCI tests does not deploy anything. To deploy master to production:
+Production deploy is manual, and separate from CI/CD -- passing CircleCI tests does not deploy anything. The Heroku production deploy target is `main`; deploy master with:
 
-`git push production master`
+`git push production master:main`
 
 (The `production` remote points at Heroku's `transbucket` app git URL.) There is currently no automated or gated path from a green CircleCI build to a production deploy.
+
+### Pre-production release gate
+
+Before every production deploy, run the relevant local suite and deploy the exact tested commit to staging. After the staging release completes, run the authenticated smoke with credentials supplied only in the local shell:
+
+```
+STAGING_USER=meowmeow STAGING_PASSWORD='(local secret)' \
+  STAGING_URL=https://transbucket-staging.herokuapp.com \
+  bundle exec ruby script/staging_smoke.rb
+```
+
+The smoke must report `staging smoke ok`; it verifies a real GET-to-POST login with CSRF protection, pin creation with two images, editing, and search. If search indexing is enabled asynchronously on staging, temporarily scale the staging worker for the smoke and scale it back to zero afterward. Never put staging credentials in CI, the repository, or logged deploy commands.
+
+Only after that gate passes may the production cookie-domain configuration be set and the tested commit be pushed to the production `main` ref:
+
+```
+heroku config:set SESSION_COOKIE_DOMAIN=.transbucket.com --app transbucket
+git push production master:main
+```
+
+After deployment, verify fresh GET-to-POST login flows on both `https://transbucket.com` and `https://www.transbucket.com`. The latter should redirect GET/HEAD requests to the apex host. If verification fails, deploy the previous known-good production commit and restore the prior production configuration.
+
+### Authentication monitoring follow-up
+
+This repository does not contain New Relic alert definitions. An alert for `ActionController::InvalidAuthenticityToken` and elevated `422` responses on `POST /users/sign_in` is an optional external follow-up only if it is already included at no additional cost in the current plan. Do not add paid monitoring; the required safeguards are the repository tests and authenticated staging smoke gate.
 
 For staging and production, assets need to be recompiled. It's wise to clean them first:
 

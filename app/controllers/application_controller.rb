@@ -3,9 +3,10 @@ class ApplicationController < ActionController::Base
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
-  protect_from_forgery with: :exception
+  prepend_before_filter :redirect_canonical_host
   prepend_before_filter :redirect_legacy_locale
   prepend_before_filter :set_locale
+  protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def after_sign_in_path_for(resource_or_scope)
@@ -21,6 +22,14 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def redirect_canonical_host
+    return unless Rails.env.production?
+    return unless request.get? || request.head?
+    return unless request.host == 'www.transbucket.com'
+
+    redirect_to "https://transbucket.com#{request.fullpath}", status: :moved_permanently
+  end
 
   def set_locale
     requested_locale = params[:locale].presence

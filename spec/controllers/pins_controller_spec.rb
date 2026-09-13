@@ -345,7 +345,7 @@ describe PinsController, :type => :controller do
     end
 
     describe "DELETE #destroy" do
-      xit "deletes a pin and redirects to pins index" do
+      it "deletes a pin and redirects to pins index" do
         pin = create(:pin, user: user)
 
         delete :destroy, params: { :id => pin.id }

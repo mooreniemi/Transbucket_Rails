@@ -120,9 +120,11 @@ class PinsController < ApplicationController
     respond_to do |format|
       if Pin.find_by_id(@pin.id)
         flash[:error] = t('flash.destroy_failed', id: @pin.id)
+        format.html { redirect_to pins_url }
         format.json { render json: @pin.errors.full_messages, status: :unprocessable_entity }
       else
         flash[:notice] = t('flash.destroyed', id: @pin.id)
+        format.html { redirect_to pins_url }
         format.json { render json: { status: 'destroyed' }, status: :ok }
       end
     end

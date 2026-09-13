@@ -37,15 +37,12 @@ RSpec.describe SurgeonsController, :type => :controller do
 
       expect(assigns(:avg_sensation_by_surgeon)).to eq({})
     end
-
     it 'places the directory ad container after the surgeon directory content' do
       create(:surgeon)
 
       get :index
 
       expect(response.body.index('directory-table-wrap')).to be < response.body.index('directory-after-content-ad')
-    end
-    xit 'links surgeons to queries for all pins of that surgeon' do
     end
   end
   describe "#show" do

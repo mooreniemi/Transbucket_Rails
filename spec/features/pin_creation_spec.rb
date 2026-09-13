@@ -27,7 +27,7 @@ describe "pin creation" do
     let(:new_procedure) { build(:procedure) }
 
     def pin_create
-      visit '/pins/new'
+      visit '/en/pins/new'
 
       add_images(new_images, js: js)
       enter_details(pin_data, js: js)

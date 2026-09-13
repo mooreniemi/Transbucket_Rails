@@ -19,10 +19,11 @@ ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
   config.around do |example|
+    original_locale = I18n.locale
     I18n.locale = I18n.default_locale
     example.run
   ensure
-    I18n.locale = I18n.default_locale
+    I18n.locale = original_locale
   end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

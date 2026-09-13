@@ -1,5 +1,5 @@
-<% seo_meta description: "#{@surgeon.to_s}: #{t('directory.surgeons_intro')}", canonical: surgeon_url(id: @surgeon.id) %>
-<% title @surgeon.to_s  %>
+<% seo_meta description: "#{@surgeon.to_s}: #{t('directory.surgeons_intro')}", canonical: surgeon_url(id: @surgeon.to_param) %>
+<% title "#{@surgeon.to_s} | Transbucket" %>
 <% surgeon_address = {
   '@type' => 'PostalAddress',
   'streetAddress' => @surgeon.address,
@@ -14,7 +14,7 @@
     '@context' => 'https://schema.org',
     '@type' => 'Physician',
     'name' => @surgeon.to_s,
-    'url' => surgeon_url(id: @surgeon.id),
+    'url' => surgeon_url(id: @surgeon.to_param),
     'sameAs' => @surgeon.website_url,
     'address' => surgeon_address
   }.compact
@@ -26,7 +26,7 @@
     'itemListElement' => [
       { '@type' => 'ListItem', 'position' => 1, 'name' => t('header.home'), 'item' => root_url },
       { '@type' => 'ListItem', 'position' => 2, 'name' => t('header.surgeons'), 'item' => surgeons_url },
-      { '@type' => 'ListItem', 'position' => 3, 'name' => @surgeon.to_s, 'item' => surgeon_url(id: @surgeon.id) }
+      { '@type' => 'ListItem', 'position' => 3, 'name' => @surgeon.to_s, 'item' => surgeon_url(id: @surgeon.to_param) }
     ]
   }
 ) %>

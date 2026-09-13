@@ -4,8 +4,8 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  prepend_before_filter :redirect_legacy_locale
-  prepend_before_filter :set_locale
+  prepend_before_action :redirect_legacy_locale
+  prepend_before_action :set_locale
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def after_sign_in_path_for(resource_or_scope)
@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
   # request once it's already in sync.
   #
   # This is a non-essential side effect of every authenticated request (via
-  # the prepend_before_filter above), so it must never be able to take a
+  # the prepend_before_action above), so it must never be able to take a
   # real request down: guards against an unsaved current_user (seen in one
   # controller spec that stubs User.find with a built-not-created record --
   # can't happen with a real Warden session, but cheap to guard anyway) and

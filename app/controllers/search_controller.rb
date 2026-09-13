@@ -1,5 +1,4 @@
 class SearchController < ApplicationController
-  respond_to :json
 
   def search_terms
     matches = FuzzyMatch.new(all_keywords).find(term)

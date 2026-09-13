@@ -4,7 +4,7 @@ describe ProceduresController, :type => :controller do
   describe "#index" do
     it 'gives a list of procedures and their average sensation and satisfaction' do
       procedures = create_list(:procedure, 2)
-      get :index
+      get :index, params: { locale: 'en' }
       expect(assigns(:procedures)).to match_array(procedures)
       expect(response).to render_template(:index)
     end
@@ -16,7 +16,7 @@ describe ProceduresController, :type => :controller do
       create(:pin, procedure: procedure, sensation: 5, satisfaction: 2)
 
       sign_in user
-      get :index
+      get :index, params: { locale: 'en' }
 
       expect(assigns(:avg_sensation_by_procedure)[procedure.id]).to eq(4.0)
       expect(assigns(:avg_satisfaction_by_procedure)[procedure.id]).to eq(3.0)
@@ -34,7 +34,7 @@ describe ProceduresController, :type => :controller do
       create(:pin, procedure: procedure, sensation: 2, satisfaction: 1)
 
       sign_in user
-      get :show, id: procedure.id
+      get :show, params: { id: procedure.id, locale: 'en' }
 
       expect(assigns(:rating_distributions)).to eq(
         sensation: { 2 => 1, 5 => 2 },
@@ -51,7 +51,7 @@ describe ProceduresController, :type => :controller do
       create(:pin, procedure: procedure, updated_at: 4.days.ago)
 
       sign_in user
-      get :show, id: procedure.id
+      get :show, params: { id: procedure.id, locale: 'en' }
 
       expect(assigns(:latest_pins).length).to eq(3)
       expect(assigns(:latest_pins)).to include(latest)
@@ -60,7 +60,7 @@ describe ProceduresController, :type => :controller do
     it 'does not prepare rating distributions for anonymous users' do
       procedure = create(:procedure)
 
-      get :show, id: procedure.id
+      get :show, params: { id: procedure.id, locale: 'en' }
 
       expect(assigns(:rating_distributions)).to be_nil
     end
@@ -69,7 +69,7 @@ describe ProceduresController, :type => :controller do
       procedure = create(:procedure, name: 'phalloplasty')
       related = create(:procedure, name: 'rff phalloplasty')
 
-      get :show, id: procedure.id
+      get :show, params: { id: procedure.id, locale: 'en' }
 
       expect(assigns(:related_procedures)).to include(related)
       expect(response).to be_success
@@ -80,7 +80,7 @@ describe ProceduresController, :type => :controller do
       related = create(:procedure, name: 'groin flap phalloplasty')
       unrelated = create(:procedure, name: 'hysterectomy')
 
-      get :show, id: procedure.id
+      get :show, params: { id: procedure.id, locale: 'en' }
 
       expect(assigns(:related_procedures)).to include(related)
       expect(assigns(:related_procedures)).not_to include(unrelated)

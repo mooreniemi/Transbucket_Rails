@@ -1,5 +1,4 @@
 class CommentsController < ApplicationController
-  respond_to :js
 
   # Comments are only ever polymorphically attached to these two types (see
   # app/views/pins/show.html.erb and app/views/procedures/show.html.erb).

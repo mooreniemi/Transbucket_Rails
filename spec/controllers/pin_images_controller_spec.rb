@@ -5,14 +5,13 @@ describe PinImagesController, type: :controller do
     allow(User).to receive(:find).and_return(build(:user))
     sign_in
   end
+  # Rack::Test::UploadedFile (not ActionDispatch::Http::UploadedFile, which
+  # models a real server-received upload) is what controller-spec params
+  # need: Rails 5's request encoding recognizes it and passes the file
+  # through, where it silently stringified an ActionDispatch::Http::
+  # UploadedFile instead.
   let(:test_photo) do
-    ActionDispatch::Http::UploadedFile.new(
-      {
-        :filename => 'cat.png',
-        :type => 'image/png',
-        :tempfile => File.new("#{Rails.root}/spec/support/cat.png")
-      }
-    )
+    Rack::Test::UploadedFile.new("#{Rails.root}/spec/support/cat.png", 'image/png')
   end
   describe 'POST #create' do
     it 'returns a valid pin on_image create' do
@@ -22,7 +21,7 @@ describe PinImagesController, type: :controller do
 
       caption = params["0"][:caption]
 
-      expect{post :create, pin_images: params}.to change{PinImage.count}.by(1)
+      expect{post :create, params: { pin_images: params }}.to change{PinImage.count}.by(1)
       expect(PinImage.last.caption).to eq(caption)
     end
   end

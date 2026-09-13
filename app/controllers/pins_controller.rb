@@ -1,9 +1,8 @@
 class PinsController < ApplicationController
   include SanitizeNames
-  before_filter :authenticate_user!
-  before_filter :validate_user, :only => [:edit, :update, :destroy]
-  before_filter :get_pin, :except => [:index, :new, :create, :admin]
-  respond_to :json
+  before_action :authenticate_user!
+  before_action :validate_user, :only => [:edit, :update, :destroy]
+  before_action :get_pin, :except => [:index, :new, :create, :admin]
 
   # GET /pins
   # GET /pins.json

@@ -1,7 +1,6 @@
 class FlagsController < ApplicationController
-  before_filter :authenticate_user!
-  after_filter :flash_to_headers
-  respond_to :js
+  before_action :authenticate_user!
+  after_action :flash_to_headers
 
   def create
     type = params.keys.last.split('_').first

@@ -55,7 +55,24 @@ hr.style-two {
   color: #FCC000;
 }
 
-.btn-register-trim {
+// Bootstrap's .navbar-nav > li > a has higher specificity than .btn, so a
+// plain .btn placed in a <li> here ends up with .navbar-nav's own
+// (much larger) padding *plus* .navbar-btn's centering margin stacked on
+// top of that -- a visibly bloated, oversized box. Matching (and beating)
+// that selector's specificity directly avoids fighting the cascade.
+.navbar-nav > li > a.nav-auth-link {
+  margin: 8px 4px;
+  padding: 6px 14px;
+  line-height: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.navbar-nav > li > a.nav-auth-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-nav > li > a.nav-auth-link-register {
   border: 2px solid #FCC000;
 }
 

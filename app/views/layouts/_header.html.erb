@@ -28,6 +28,11 @@
         <% if user_signed_in? %>
           <%= render partial: 'layouts/logged_in' %>
         <% end %>
+      </ul>
+      <% if user_signed_in? %>
+        <%= render partial: 'layouts/search' %>
+      <% end %>
+      <ul class="nav navbar-nav navbar-right">
         <%= render partial: 'layouts/account_menu' %>
       </ul>
     </div><!-- /.navbar-collapse -->

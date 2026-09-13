@@ -10,7 +10,7 @@
 
   <div class="login_well">
 
-    <%= simple_form_for(resource, as: resource_name, url: "/#{I18n.locale}/users/password", html: { method: :put, class: 'form-horizontal' }) do |f| %>
+    <%= simple_form_for(resource, url: "/#{I18n.locale}/users/password", html: { method: :put, class: 'form-horizontal' }) do |f| %>
       <%= f.error_notification %>
 
       <%= f.input :reset_password_token, as: :hidden %>

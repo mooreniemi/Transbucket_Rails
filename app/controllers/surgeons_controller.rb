@@ -23,9 +23,13 @@ class SurgeonsController < ApplicationController
     @submission_count = @pins_by_surgeon_procedure.values.sum
     @overall_satisfaction = nil
     @overall_sensation = nil
+    @rating_distributions = nil
+    @rating_distributions_by_procedure = nil
     if user_signed_in?
       @overall_satisfaction = pins.where.not(satisfaction: [nil, 0]).average(:satisfaction)
       @overall_sensation = pins.where.not(sensation: [nil, 0]).average(:sensation)
+      @rating_distributions = rating_distributions_for(pins)
+      @rating_distributions_by_procedure = rating_distributions_by_procedure_for(pins)
     end
   end
 
@@ -50,5 +54,26 @@ class SurgeonsController < ApplicationController
   private
   def surgeon_params
     params.require(:surgeon).permit(:last_name, :first_name, :url)
+  end
+
+  def rating_distributions_for(pins)
+    {
+      sensation: pins.where(sensation: 1..5).group(:sensation).count,
+      satisfaction: pins.where(satisfaction: 1..5).group(:satisfaction).count
+    }
+  end
+
+  def rating_distributions_by_procedure_for(pins)
+    distributions = Hash.new do |hash, procedure_id|
+      hash[procedure_id] = { sensation: {}, satisfaction: {} }
+    end
+
+    pins.where(sensation: 1..5).group(:procedure_id, :sensation).count.each do |(procedure_id, score), count|
+      distributions[procedure_id][:sensation][score] = count
+    end
+    pins.where(satisfaction: 1..5).group(:procedure_id, :satisfaction).count.each do |(procedure_id, score), count|
+      distributions[procedure_id][:satisfaction][score] = count
+    end
+    distributions
   end
 end

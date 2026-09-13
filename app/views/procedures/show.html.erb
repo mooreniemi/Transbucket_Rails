@@ -75,6 +75,15 @@
   </div>
 <% end %>
 
+<% if current_user && @latest_pins.present? %>
+  <section class="procedure-recent-submissions" aria-labelledby="procedure-recent-submissions-heading">
+    <h2 id="procedure-recent-submissions-heading"><%= t('directory.recent_submissions') %></h2>
+    <div class="procedure-recent-pin-list">
+      <%= render partial: 'procedures/recent_pin', collection: @latest_pins, as: :pin %>
+    </div>
+  </section>
+<% end %>
+
 <% if current_user %>
   <% if @procedure.avg_sensation || @procedure.avg_satisfaction %>
     <ul class="list-group">
@@ -84,24 +93,8 @@
   <% end %>
   <% if @rating_distributions.present? %>
     <div class="procedure-rating-distributions">
-      <% { sensation: 'public.pin.average_sensation', satisfaction: 'public.pin.average_satisfaction' }.each do |rating, label| %>
-        <section class="procedure-rating-distribution" aria-labelledby="<%= rating %>-distribution-heading">
-          <h4 id="<%= rating %>-distribution-heading"><%= t(label) %></h4>
-          <% counts = @rating_distributions[rating] %>
-          <% max_count = counts.values.max.to_i %>
-          <ol class="rating-distribution-list">
-            <% 5.downto(1) do |score| %>
-              <% count = counts[score].to_i %>
-              <% width = max_count.positive? ? (count.to_f / max_count * 100).round : 0 %>
-              <li class="rating-distribution-row">
-                <span class="rating-distribution-score"><%= score %>/5</span>
-                <span class="rating-distribution-track" aria-hidden="true"><span class="rating-distribution-bar" style="width: <%= width %>%"></span></span>
-                <span class="rating-distribution-count"><%= count %></span>
-              </li>
-            <% end %>
-          </ol>
-        </section>
-      <% end %>
+      <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, rating: :sensation, title: t('public.rating.sensation.distribution'), scope_params: { procedure: @procedure.id }, heading_id: 'procedure-sensation-distribution-heading' } %>
+      <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, rating: :satisfaction, title: t('public.rating.satisfaction.distribution'), scope_params: { procedure: @procedure.id }, heading_id: 'procedure-satisfaction-distribution-heading' } %>
     </div>
   <% end %>
   <h4><%= fa_icon("comments-o") %> <%= t('public.pin.discussion') %></h4>

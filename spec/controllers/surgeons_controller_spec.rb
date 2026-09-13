@@ -53,6 +53,26 @@ RSpec.describe SurgeonsController, :type => :controller do
       expect(assigns(:overall_sensation)).to eq(4.0)
     end
 
+    it 'loads overall and per-procedure rating distributions for signed-in users' do
+      user = create(:user)
+      surgeon = create(:surgeon)
+      procedure = create(:procedure)
+      create(:pin, surgeon: surgeon, procedure: procedure, sensation: 5, satisfaction: 4)
+      create(:pin, surgeon: surgeon, procedure: procedure, sensation: 5, satisfaction: 2)
+
+      sign_in user
+      get :show, id: surgeon.id
+
+      expect(assigns(:rating_distributions)).to eq(
+        sensation: { 5 => 2 },
+        satisfaction: { 2 => 1, 4 => 1 }
+      )
+      expect(assigns(:rating_distributions_by_procedure)[procedure.id]).to eq(
+        sensation: { 5 => 2 },
+        satisfaction: { 2 => 1, 4 => 1 }
+      )
+    end
+
     it 'does not expose overall rating averages to anonymous users' do
       surgeon = create(:surgeon)
 

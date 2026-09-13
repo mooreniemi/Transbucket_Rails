@@ -16,6 +16,11 @@ class ProceduresController < ApplicationController
     if current_user
       @comments = @procedure.comments_asc
       @new_comment = Comment.build_from(@procedure, current_user, "")
+      @safe_mode = current_user.preference.present? && UserPolicy.new(current_user).safe_mode?
+      @latest_pins = @procedure.pins.where(state: 'published').
+        includes(:pin_images, :surgeon, :procedure).
+        order(updated_at: :desc).
+        limit(3)
       @rating_distributions = {
         sensation: @procedure.pins.where(sensation: 1..5).group(:sensation).count,
         satisfaction: @procedure.pins.where(satisfaction: 1..5).group(:satisfaction).count

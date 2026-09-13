@@ -65,6 +65,14 @@
       </div>
     <% end %>
 
+    <% if user_signed_in? && @rating_distributions.present? %>
+      <div class="surgeon-rating-distributions">
+        <h2><%= t('public.rating.overall_distribution') %></h2>
+        <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, rating: :sensation, title: t('public.rating.sensation.distribution'), scope_params: { surgeon: @surgeon.id }, heading_id: 'surgeon-sensation-distribution-heading' } %>
+        <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, rating: :satisfaction, title: t('public.rating.satisfaction.distribution'), scope_params: { surgeon: @surgeon.id }, heading_id: 'surgeon-satisfaction-distribution-heading' } %>
+      </div>
+    <% end %>
+
     <% if @procedure_count > 0 %>
       <p class="lead"><%= t('directory.procedures_intro') %></p>
     <% end %>
@@ -89,6 +97,13 @@
           <label class="label-with-popover" data-placement="right" data-content="<%= t('public.pin.average_satisfaction') %>: <%= satisfaction %>" data-title="<%= t('public.pin.average_satisfaction') %>" data-trigger="hover" data-original-title="" title="">
             <%= fa_icon("bar-chart") %>
           </label>
+        <% end %>
+        <% procedure_distribution = (@rating_distributions_by_procedure || {})[procedure_id] %>
+        <% if user_signed_in? && procedure_distribution.present? %>
+          <div class="surgeon-procedure-rating-distributions">
+            <%= render partial: 'shared/rating_distribution', locals: { distribution: procedure_distribution, rating: :sensation, title: t('public.rating.sensation.distribution'), scope_params: { surgeon: @surgeon.id, procedure: procedure_id }, heading_id: "surgeon-#{procedure_id}-sensation-distribution-heading" } %>
+            <%= render partial: 'shared/rating_distribution', locals: { distribution: procedure_distribution, rating: :satisfaction, title: t('public.rating.satisfaction.distribution'), scope_params: { surgeon: @surgeon.id, procedure: procedure_id }, heading_id: "surgeon-#{procedure_id}-satisfaction-distribution-heading" } %>
+          </div>
         <% end %>
     </div>
   </div>

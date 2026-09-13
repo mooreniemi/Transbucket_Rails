@@ -42,6 +42,21 @@ describe ProceduresController, :type => :controller do
       )
     end
 
+    it 'loads the latest published submissions for authenticated users' do
+      procedure = create(:procedure)
+      user = create(:user)
+      latest = create(:pin, procedure: procedure, updated_at: 1.day.ago)
+      create(:pin, procedure: procedure, updated_at: 2.days.ago)
+      create(:pin, procedure: procedure, updated_at: 3.days.ago)
+      create(:pin, procedure: procedure, updated_at: 4.days.ago)
+
+      sign_in user
+      get :show, id: procedure.id
+
+      expect(assigns(:latest_pins).length).to eq(3)
+      expect(assigns(:latest_pins)).to include(latest)
+    end
+
     it 'does not prepare rating distributions for anonymous users' do
       procedure = create(:procedure)
 

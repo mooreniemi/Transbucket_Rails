@@ -26,6 +26,8 @@ sv:
     title: Nyheter
     description: Senaste uppdateringarna från Transbucket.
     date: Datum
+    entries:
+      directory_improvements: Sidorna för ingrepp och kirurger gör det nu enklare att sortera och se betygsfördelningar.
   public:
     auth:
       username: Användarnamn

@@ -1,0 +1,25 @@
+.directory-sort-button {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  font-weight: bold;
+  padding: 0;
+  text-align: inherit;
+}
+
+.directory-sort-button:hover,
+.directory-sort-button:focus {
+  color: #337ab7;
+  text-decoration: underline;
+}
+
+.directory-sort-button .fa-sort {
+  color: #777;
+  margin-left: 4px;
+}
+
+.directory-sort-button:hover .fa-sort,
+.directory-sort-button:focus .fa-sort {
+  color: #337ab7;
+}

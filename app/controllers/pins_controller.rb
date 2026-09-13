@@ -160,6 +160,8 @@ class PinsController < ApplicationController
       procedure: params[:procedure],
       complication: params[:complication],
       user: params[:user],
+      satisfaction: params[:satisfaction],
+      sensation: params[:sensation],
       current_user: current_user,
       page: params[:page]
     }

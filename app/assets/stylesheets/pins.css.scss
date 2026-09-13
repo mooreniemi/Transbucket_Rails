@@ -93,8 +93,52 @@
   margin: .75rem 0 0;
 }
 
-.procedure-rating-distribution h4 {
+.procedure-recent-submissions {
+  margin: 1.5rem 0;
+}
+
+.procedure-recent-pin-list {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.procedure-recent-pin {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 1rem;
+}
+
+.procedure-recent-pin img {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+
+.procedure-recent-pin h3 {
+  font-size: 1.1rem;
+  margin: .75rem 0 .35rem;
+}
+
+.procedure-recent-pin p {
+  margin: .25rem 0;
+}
+
+.procedure-recent-pin-date {
+  color: #666;
+  font-size: .9rem;
+}
+
+.rating-distribution h4 {
   margin-top: 0;
+}
+
+.surgeon-rating-distributions {
+  margin: 1.5rem 0;
+}
+
+.surgeon-procedure-rating-distributions {
+  margin-top: 1rem;
 }
 
 .rating-distribution-list {
@@ -120,6 +164,11 @@
   text-align: right;
 }
 
+.rating-distribution-count-link {
+  color: #337ab7;
+  text-decoration: underline;
+}
+
 .rating-distribution-track {
   background: #e9ecef;
   border-radius: 2px;
@@ -137,6 +186,10 @@
 
 @media (max-width: 600px) {
   .procedure-rating-distributions {
+    grid-template-columns: 1fr;
+  }
+
+  .procedure-recent-pin-list {
     grid-template-columns: 1fr;
   }
 }

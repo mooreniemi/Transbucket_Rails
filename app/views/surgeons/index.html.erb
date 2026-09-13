@@ -26,11 +26,11 @@
   <table class="table table-hover table-bordered sticky-header-table sortable-directory-table" data-sortable-directory="surgeons" bgcolor="#ffffcc">
     <thead>
       <tr>
-        <th><button type="button" class="directory-sort-button" data-sort-key="name" aria-sort="none"><%= t('directory.name') %></button></th>
-        <th><button type="button" class="directory-sort-button" data-sort-key="submissions" aria-sort="none"><%= t('directory.submissions') %></button></th>
+        <th><button type="button" class="directory-sort-button" data-sort-key="name" aria-sort="none"><%= t('directory.name') %> <%= fa_icon('sort', aria: { hidden: true }) %></button></th>
+        <th><button type="button" class="directory-sort-button" data-sort-key="submissions" aria-sort="none"><%= t('directory.submissions') %> <%= fa_icon('sort', aria: { hidden: true }) %></button></th>
         <% if user_signed_in? %>
-          <th><button type="button" class="directory-sort-button" data-sort-key="satisfaction" aria-sort="none"><%= t('directory.average_satisfaction') %></button></th>
-          <th><button type="button" class="directory-sort-button" data-sort-key="sensation" aria-sort="none"><%= t('directory.average_sensation') %></button></th>
+          <th><button type="button" class="directory-sort-button" data-sort-key="satisfaction" aria-sort="none"><%= t('directory.average_satisfaction') %> <%= fa_icon('sort', aria: { hidden: true }) %></button></th>
+          <th><button type="button" class="directory-sort-button" data-sort-key="sensation" aria-sort="none"><%= t('directory.average_sensation') %> <%= fa_icon('sort', aria: { hidden: true }) %></button></th>
         <% end %>
       </tr>
     </thead>

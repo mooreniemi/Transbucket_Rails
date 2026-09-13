@@ -42,7 +42,14 @@
         <% if @surgeon.website_url %>
           <%= link_to t('public.form.surgeon_url'), @surgeon.website_url %>
         <% end %>
-        <br><%= (fa_icon('star') * @surgeon.overall_satisfaction).html_safe unless @surgeon.overall_satisfaction.nil? %>
+        <% if user_signed_in? %>
+          <% if @overall_satisfaction %>
+            <br><%= t('public.pin.average_satisfaction') %>: <%= @overall_satisfaction.to_f.round(1) %>/5
+          <% end %>
+          <% if @overall_sensation %>
+            <br><%= t('public.pin.average_sensation') %>: <%= @overall_sensation.to_f.round(1) %>/5
+          <% end %>
+        <% end %>
       </h4>
     <% if @surgeon.address %>
       <address>

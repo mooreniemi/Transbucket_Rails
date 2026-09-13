@@ -3,6 +3,8 @@ class ProceduresController < ApplicationController
     @procedures = Procedure.all.order(:name)
     @pins_per_procedure = Procedure.joins(:pins).group("pins.procedure_id").count
     @comments_per_procedure = Procedure.joins(:comment_threads).group("comments.commentable_id").count
+    @avg_satisfaction_by_procedure = Pin.where.not(satisfaction: [nil, 0]).group(:procedure_id).average(:satisfaction)
+    @avg_sensation_by_procedure = Pin.where.not(sensation: [nil, 0]).group(:procedure_id).average(:sensation)
 
   end
 

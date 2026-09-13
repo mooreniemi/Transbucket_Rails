@@ -34,7 +34,13 @@
       </tr>
     </thead>
     <tbody>
-      <%= render @procedures %>
+      <% @procedures.each do |procedure| %>
+        <%= render partial: 'procedures/procedure', locals: {
+          procedure: procedure,
+          avg_satisfaction: @avg_satisfaction_by_procedure[procedure.id],
+          avg_sensation: @avg_sensation_by_procedure[procedure.id]
+        } %>
+      <% end %>
     </tbody>
   </table>
 </div>

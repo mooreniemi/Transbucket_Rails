@@ -9,6 +9,19 @@ describe ProceduresController, :type => :controller do
       expect(response).to render_template(:index)
     end
 
+    it 'loads rating averages in grouped queries for the directory rows' do
+      user = create(:user)
+      procedure = create(:procedure)
+      create(:pin, procedure: procedure, sensation: 3, satisfaction: 4)
+      create(:pin, procedure: procedure, sensation: 5, satisfaction: 2)
+
+      sign_in user
+      get :index
+
+      expect(assigns(:avg_sensation_by_procedure)[procedure.id]).to eq(4.0)
+      expect(assigns(:avg_satisfaction_by_procedure)[procedure.id]).to eq(3.0)
+    end
+
     xit 'links procedures to queries for all pins of that procedure' do
     end
   end

@@ -39,6 +39,29 @@ RSpec.describe SurgeonsController, :type => :controller do
     end
   end
   describe "#show" do
+    it 'loads overall rating averages for signed-in users' do
+      user = create(:user)
+      surgeon = create(:surgeon)
+      procedure = create(:procedure)
+      create(:pin, surgeon: surgeon, procedure: procedure, sensation: 3, satisfaction: 5)
+      create(:pin, surgeon: surgeon, procedure: procedure, sensation: 5, satisfaction: 1)
+
+      sign_in user
+      get :show, id: surgeon.id
+
+      expect(assigns(:overall_satisfaction)).to eq(3.0)
+      expect(assigns(:overall_sensation)).to eq(4.0)
+    end
+
+    it 'does not expose overall rating averages to anonymous users' do
+      surgeon = create(:surgeon)
+
+      get :show, id: surgeon.id
+
+      expect(assigns(:overall_satisfaction)).to be_nil
+      expect(assigns(:overall_sensation)).to be_nil
+    end
+
     it 'scopes per-procedure pin counts to the surgeon being viewed' do
       surgeon = create(:surgeon)
       other_surgeon = create(:surgeon)

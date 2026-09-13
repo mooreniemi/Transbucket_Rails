@@ -21,6 +21,12 @@ class SurgeonsController < ApplicationController
     @satisfaction_by_procedure = pins.where.not(satisfaction: 0).group(:procedure_id).average(:satisfaction)
     @procedure_count = @procedures_by_id.length
     @submission_count = @pins_by_surgeon_procedure.values.sum
+    @overall_satisfaction = nil
+    @overall_sensation = nil
+    if user_signed_in?
+      @overall_satisfaction = pins.where.not(satisfaction: [nil, 0]).average(:satisfaction)
+      @overall_sensation = pins.where.not(sensation: [nil, 0]).average(:sensation)
+    end
   end
 
   def new

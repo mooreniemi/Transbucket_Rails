@@ -9,6 +9,6 @@
     </li>
   <% else %>
     <li><%= link_to t('account_menu.login'), new_user_session_path, class: "btn btn-default navbar-btn" %></li>
-    <li><%= link_to t('account_menu.register'), register_path, class: "btn btn-primary navbar-btn" %></li>
+    <li><%= link_to t('account_menu.register'), register_path, class: "btn btn-primary navbar-btn btn-register-trim" %></li>
   <% end %>
 </ul>

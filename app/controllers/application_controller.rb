@@ -28,6 +28,20 @@ class ApplicationController < ActionController::Base
     saved_locale = session[:locale]
     saved_locale = nil unless SUPPORTED_LOCALES.include?(saved_locale)
     I18n.locale = requested_locale || saved_locale || http_accept_language.compatible_language_from(SUPPORTED_LOCALES) || I18n.default_locale
+
+    capture_user_locale
+  end
+
+  # Persists the resolved locale onto the signed-in user's record so
+  # background/bulk mailers (which have no request or session to read from)
+  # can send in the language they actually use, instead of always English.
+  # Only writes when it actually changes, so this isn't a write on every
+  # request once it's already in sync.
+  def capture_user_locale
+    return unless user_signed_in?
+    return if current_user.locale == I18n.locale.to_s
+
+    current_user.update_column(:locale, I18n.locale.to_s)
   end
 
   def redirect_legacy_locale

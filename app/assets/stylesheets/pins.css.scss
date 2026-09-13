@@ -3,3 +3,80 @@
     width: 150px;
   }
 }
+
+.pin-page-title {
+  margin-bottom: 20px;
+}
+
+.pin-gallery-panel {
+  background-color: #fff;
+  padding: 15px;
+}
+
+.pin-gallery-item {
+  margin-bottom: 15px;
+}
+
+.pin-gallery-caption:empty {
+  display: none;
+}
+
+.pin-page-actions {
+  margin-top: 8px;
+}
+
+.pin-meta {
+  margin: 0;
+  background-color: #fff;
+  padding: 15px;
+}
+
+.pin-meta dt,
+.pin-meta dd {
+  min-height: 32px;
+  padding-top: 6px;
+}
+
+.pin-rating-value {
+  white-space: nowrap;
+}
+
+.pin-rating-stars {
+  color: #d49b00;
+  letter-spacing: 2px;
+}
+
+.pin-rating-score {
+  color: #666;
+  font-size: 12px;
+  margin-left: 8px;
+}
+
+.pin-details {
+  margin-top: 20px;
+}
+
+.rating-input {
+  min-width: 150px;
+}
+
+.rating-container.rating-xs .filled-stars,
+.rating-container.rating-xs .empty-stars {
+  font-size: 1.35em;
+}
+
+@media (max-width: 767px) {
+  .pin-meta {
+    margin-top: 20px;
+  }
+
+  .pin-meta dt {
+    float: none;
+    width: auto;
+    text-align: left;
+  }
+
+  .pin-meta dd {
+    margin-left: 0;
+  }
+}

@@ -22,28 +22,29 @@
     ]
   }
 ) %>
-<h1><%= pin_title %></h1>
+<h1 class="pin-page-title"><%= pin_title %></h1>
 <% cache([I18n.locale, "pin_show", @pin, @pin.pin_images.map(&:id), @pin.pin_images.maximum(:updated_at)]) do %>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="well">
+  <div class="row pin-show-grid">
+    <div class="col-md-7">
+      <div class="pin-gallery-panel">
         <% for pinimage in @pin.pin_images.reject {|p| p.photo_file_size.nil?} do %>
-          <div class="thumbnail">
+          <div class="thumbnail pin-gallery-item">
             <%= image_tag pinimage.photo, class: 'pin-gallery-image', alt: pinimage.caption.presence || pin_title %>
-            <div class="caption">
+            <div class="caption pin-gallery-caption">
               <%= pinimage.caption.to_s %>
             </div>
           </div>
         <% end %>
-        <br>
-        <%= link_to fa_icon("arrow-left"), pins_path %>
+        <div class="pin-page-actions">
+          <%= link_to fa_icon("arrow-left"), pins_path, title: t('header.submissions'), aria: { label: t('header.submissions') } %>
         <% if current_user == @pin.user || current_user.admin == true %>
-          | <%= link_to fa_icon("pencil-square-o"), edit_pin_path(id: @pin.id) %>
+          | <%= link_to fa_icon("pencil-square-o"), edit_pin_path(id: @pin.id), title: t('public.extra.editing_submission'), aria: { label: t('public.extra.editing_submission') } %>
       <% end %>
+        </div>
     </div>
   </div>
-  <div class="col-md-6">
-    <dl class="dl-horizontal">
+  <div class="col-md-5">
+    <dl class="dl-horizontal pin-meta">
       <dt>
         <%= fa_icon "user-md" %> <%= t('public.pin.surgeon') %>
       </dt>
@@ -79,19 +80,18 @@
         <dd></dd>
       <% end %>
       <% if @pin.sensation.present? %>
-        <dt>
-          <%= t('public.pin.post_op_sensation') %></dt>
-        <dd>
-          <%= number_field(:pin, :sensation, {class: "rating", disabled: "disabled", data: {size: 'xs'}}) %>
+        <dt><%= t('public.pin.post_op_sensation') %></dt>
+        <dd class="pin-rating-value" aria-label="<%= @pin.sensation %>/5">
+          <span class="pin-rating-stars" aria-hidden="true"><%= (1..5).map { |star| fa_icon(star <= @pin.sensation.to_i ? 'star' : 'star-o') }.join.html_safe %></span>
+          <span class="pin-rating-score"><%= @pin.sensation %>/5</span>
         </dd>
-        <br>
       <% end %>
       <% if @pin.satisfaction.present? %>
         <dt><%= t('public.pin.post_op_satisfaction') %></dt>
-        <dd>
-          <%= number_field(:pin, :satisfaction, {class: "rating", disabled: "disabled", data: {size: 'xs'}}) %>
+        <dd class="pin-rating-value" aria-label="<%= @pin.satisfaction %>/5">
+          <span class="pin-rating-stars" aria-hidden="true"><%= (1..5).map { |star| fa_icon(star <= @pin.satisfaction.to_i ? 'star' : 'star-o') }.join.html_safe %></span>
+          <span class="pin-rating-score"><%= @pin.satisfaction %>/5</span>
         </dd>
-        <br clear="both">
       <% end %>
       <% if @pin.user.present? %>
         <dt><%= t('public.pin.submitter') %></dt>
@@ -99,7 +99,7 @@
       <% end %>
     </dl>
     <% if @pin.details.present? %>
-      <div id="details">
+      <div id="details" class="pin-details">
         <%= fa_icon "quote-left" %>
         <%= @pin.details.try(:html_safe) %>
       </div>

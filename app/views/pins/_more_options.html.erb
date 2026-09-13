@@ -21,12 +21,12 @@
     <span class="input-group-addon"><%= t('public.form.sensation') %></span>
     <!-- note: needs to be text field for chrome focus to work with form validation -->
     <!-- see comments here: http://plugins.krajee.com/star-rating#options -->
-    <%= f.text_field :sensation, class: "form-control", required: false %>
+    <%= f.text_field :sensation, class: "form-control rating-input", required: false, autocomplete: 'off' %>
   </div>
   <br>
   <div class="input-group padded_nicely">
     <span class="input-group-addon"><%= t('public.form.satisfaction') %></span>
-    <%= f.text_field :satisfaction, class: "form-control", required: false %>
+    <%= f.text_field :satisfaction, class: "form-control rating-input", required: false, autocomplete: 'off' %>
   </div>
   <div class="input-group padded_nicely">
     <span class="input-group-addon"><%= t('public.form.complications') %></span>

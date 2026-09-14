@@ -44,12 +44,13 @@ class SurgeonsController < ApplicationController
   def compare
     @comparison_options = Surgeon.order(:last_name, :first_name)
     @comparison_scope_memberships = comparison_scope_memberships(@comparison_options, :surgeon_id, :procedure_id, Procedure)
+    @deduplicate = params[:deduplicate] != '0'
     @first_surgeon = find_comparison_record(params[:first_id])
     @second_surgeon = find_comparison_record(params[:second_id])
     surgeons = [@first_surgeon, @second_surgeon].compact
     @comparison_scope_options = common_procedures_for(surgeons)
     @comparison_procedure = find_common_procedure(params[:procedure_id], surgeons)
-    @comparison_data = surgeon_comparison_data(surgeons, @comparison_procedure)
+    @comparison_data = surgeon_comparison_data(surgeons, @comparison_procedure, @deduplicate)
   end
 
   def new
@@ -135,13 +136,14 @@ class SurgeonsController < ApplicationController
       end
   end
 
-  def surgeon_comparison_data(surgeons, procedure = nil)
+  def surgeon_comparison_data(surgeons, procedure = nil, deduplicate = true)
     data = surgeons.each_with_object({}) do |surgeon, result|
       result[surgeon] = { distributions: { sensation: {}, satisfaction: {} }, averages: {} }
     end
     ids = surgeons.map(&:id)
     pins = Pin.where(surgeon_id: ids)
     pins = pins.where(procedure_id: procedure.id) if procedure
+    pins = deduplicated_pins(pins, :procedure_id) if deduplicate
 
     pins.where(sensation: 1..5).group(:surgeon_id, :sensation).count.each do |(surgeon_id, score), count|
       data[surgeons.find { |surgeon| surgeon.id == surgeon_id }][:distributions][:sensation][score] = count
@@ -192,5 +194,14 @@ class SurgeonsController < ApplicationController
       }
     end
     data
+  end
+
+  def deduplicated_pins(pins, scope_column)
+    eligible = pins.where.not(user_id: nil).where.not(scope_column => nil)
+    representative_ids = eligible.select("DISTINCT ON (user_id, #{scope_column}, surgeon_id) pins.id").
+      reorder(nil).
+      order("user_id, #{scope_column}, surgeon_id, created_at DESC, id DESC")
+    null_scope_sql = "pins.user_id IS NULL OR pins.#{scope_column} IS NULL"
+    pins.where("#{null_scope_sql} OR pins.id IN (?)", representative_ids)
   end
 end

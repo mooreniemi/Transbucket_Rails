@@ -37,12 +37,13 @@ class ProceduresController < ApplicationController
   def compare
     @comparison_options = Procedure.order(:name)
     @comparison_scope_memberships = comparison_scope_memberships(@comparison_options, :procedure_id, :surgeon_id, Surgeon)
+    @deduplicate = params[:deduplicate] != '0'
     @first_procedure = find_comparison_record(params[:first_id])
     @second_procedure = find_comparison_record(params[:second_id])
     procedures = [@first_procedure, @second_procedure].compact
     @comparison_scope_options = common_surgeons_for(procedures)
     @comparison_surgeon = find_common_surgeon(params[:surgeon_id], procedures)
-    @comparison_data = procedure_comparison_data(procedures, @comparison_surgeon)
+    @comparison_data = procedure_comparison_data(procedures, @comparison_surgeon, @deduplicate)
   end
 
   def new
@@ -107,13 +108,14 @@ class ProceduresController < ApplicationController
       end
   end
 
-  def procedure_comparison_data(procedures, surgeon = nil)
+  def procedure_comparison_data(procedures, surgeon = nil, deduplicate = true)
     data = procedures.each_with_object({}) do |procedure, result|
       result[procedure] = { distributions: { sensation: {}, satisfaction: {} }, averages: {} }
     end
     ids = procedures.map(&:id)
     pins = Pin.where(procedure_id: ids)
     pins = pins.where(surgeon_id: surgeon.id) if surgeon
+    pins = deduplicated_pins(pins, :surgeon_id) if deduplicate
 
     pins.where(sensation: 1..5).group(:procedure_id, :sensation).count.each do |(procedure_id, score), count|
       data[procedures.find { |procedure| procedure.id == procedure_id }][:distributions][:sensation][score] = count
@@ -164,5 +166,14 @@ class ProceduresController < ApplicationController
       }
     end
     data
+  end
+
+  def deduplicated_pins(pins, scope_column)
+    eligible = pins.where.not(user_id: nil).where.not(scope_column => nil)
+    representative_ids = eligible.select("DISTINCT ON (user_id, #{scope_column}, procedure_id) pins.id").
+      reorder(nil).
+      order("user_id, #{scope_column}, procedure_id, created_at DESC, id DESC")
+    null_scope_sql = "pins.user_id IS NULL OR pins.#{scope_column} IS NULL"
+    pins.where("#{null_scope_sql} OR pins.id IN (?)", representative_ids)
   end
 end

@@ -111,6 +111,18 @@
   margin-bottom: 0;
 }
 
+.comparison-actions {
+  align-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+}
+
+.comparison-actions label {
+  font-size: .9rem;
+  margin: 0;
+}
+
 .rating-comparison-row {
   align-items: start;
   border-bottom: 1px solid #eee;

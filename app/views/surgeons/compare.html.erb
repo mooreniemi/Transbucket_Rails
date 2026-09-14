@@ -1,9 +1,9 @@
 <% page_title = t('comparison.surgeons_title', default: 'Compare surgeons') %>
 <% title page_title %>
 <% seo_meta title: page_title, description: t('comparison.surgeons_description', default: 'Compare surgeon rating distributions on Transbucket.'), noindex: true %>
-<%= render partial: 'shared/comparison_form', locals: { resource_type: 'surgeons', options: @comparison_options, first: @first_surgeon, second: @second_surgeon, label_method: :to_s, action: compare_surgeons_path, scope_options: @comparison_scope_options, scope_first: @comparison_procedure, scope_param: :procedure_id, scope_label: t('comparison.scope_procedure', default: 'Optional shared procedure'), scope_memberships: @comparison_scope_memberships } %>
+<%= render partial: 'shared/comparison_form', locals: { resource_type: 'surgeons', options: @comparison_options, first: @first_surgeon, second: @second_surgeon, label_method: :to_s, action: compare_surgeons_path, scope_options: @comparison_scope_options, scope_first: @comparison_procedure, scope_param: :procedure_id, scope_label: t('comparison.scope_procedure', default: 'Optional shared procedure'), scope_memberships: @comparison_scope_memberships, deduplicate: @deduplicate } %>
 <% if @first_surgeon && @second_surgeon && @first_surgeon != @second_surgeon %>
-  <% cache([I18n.locale, 'surgeon-rating-comparison', @first_surgeon, @second_surgeon, @comparison_procedure]) do %>
+  <% cache([I18n.locale, 'surgeon-rating-comparison', @first_surgeon, @second_surgeon, @comparison_procedure, @deduplicate]) do %>
     <div class="rating-comparison-results">
       <% [[:sensation, @first_surgeon, @second_surgeon], [:satisfaction, @first_surgeon, @second_surgeon]].each do |rating, first, second| %>
         <section class="rating-comparison-row row" aria-labelledby="surgeon-comparison-<%= rating %>-heading">

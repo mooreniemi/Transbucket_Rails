@@ -15,6 +15,7 @@ RSpec.describe 'comparison scope selectors', js: true, fake_images: true do
 
     login_as(user, scope: :user)
     visit '/procedures/compare'
+    expect(page).to have_checked_field('deduplicate_comparison')
     find("#first_id option[value='#{first.to_param}']").select_option
     expect(page).to have_css("#surgeon_id option[value='#{shared.to_param}']:not([disabled])")
     expect(page).to have_css("#surgeon_id option[value='#{first_only.to_param}']:not([disabled])")
@@ -36,6 +37,7 @@ RSpec.describe 'comparison scope selectors', js: true, fake_images: true do
 
     login_as(user, scope: :user)
     visit '/surgeons/compare'
+    expect(page).to have_checked_field('deduplicate_comparison')
     find("#first_id option[value='#{first.to_param}']").select_option
     expect(page).to have_css("#procedure_id option[value='#{shared.to_param}']:not([disabled])")
     expect(page).to have_css("#procedure_id option[value='#{first_only.to_param}']:not([disabled])")

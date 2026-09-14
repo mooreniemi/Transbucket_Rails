@@ -175,5 +175,29 @@ RSpec.describe SurgeonsController, :type => :controller do
       expect(assigns(:comparison_data)[first][:averages][:sensation]).to eq(5.0)
       expect(assigns(:comparison_data)[second][:stats][:submissions]).to eq(1)
     end
+
+    it 'groups repeat submissions by submitter and procedure by default' do
+      viewer = create(:user)
+      submitter = create(:user)
+      other_submitter = create(:user)
+      first = create(:surgeon)
+      second = create(:surgeon)
+      procedure = create(:procedure)
+      create(:pin, user: submitter, surgeon: first, procedure: procedure, sensation: 1, updated_at: 2.days.ago)
+      create(:pin, user: submitter, surgeon: first, procedure: procedure, sensation: 5, updated_at: 1.day.ago)
+      create(:pin, user: other_submitter, surgeon: first, procedure: procedure, sensation: 4)
+      create(:pin, user: submitter, surgeon: second, procedure: procedure, sensation: 3)
+
+      sign_in viewer
+      get :compare, first_id: first.to_param, second_id: second.to_param
+
+      expect(assigns(:comparison_data)[first][:stats][:submissions]).to eq(2)
+      expect(assigns(:comparison_data)[first][:distributions][:sensation]).to eq(4 => 1, 5 => 1)
+
+      get :compare, first_id: first.to_param, second_id: second.to_param, deduplicate: '0'
+
+      expect(assigns(:comparison_data)[first][:stats][:submissions]).to eq(3)
+      expect(assigns(:comparison_data)[first][:distributions][:sensation]).to eq(1 => 1, 4 => 1, 5 => 1)
+    end
   end
 end

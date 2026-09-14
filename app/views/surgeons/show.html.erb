@@ -42,14 +42,6 @@
         <% if @surgeon.website_url %>
           <%= link_to t('public.form.surgeon_url'), @surgeon.website_url %>
         <% end %>
-        <% if user_signed_in? %>
-          <% if @overall_satisfaction %>
-            <br><%= t('public.pin.average_satisfaction') %>: <%= @overall_satisfaction.to_f.round(1) %>/5
-          <% end %>
-          <% if @overall_sensation %>
-            <br><%= t('public.pin.average_sensation') %>: <%= @overall_sensation.to_f.round(1) %>/5
-          <% end %>
-        <% end %>
       </h4>
     <% if @surgeon.address %>
       <address>
@@ -63,6 +55,15 @@
         <div class="panel-body">
           <%= t('public.form.details') %>: <%= @surgeon.notes %></div>
       </div>
+    <% end %>
+
+    <% if user_signed_in? && @latest_pins.present? %>
+      <section class="procedure-recent-submissions" aria-labelledby="surgeon-recent-submissions-heading">
+        <h2 id="surgeon-recent-submissions-heading"><%= t('directory.recent_submissions') %></h2>
+        <div class="procedure-recent-pin-list">
+          <%= render partial: 'procedures/recent_pin', collection: @latest_pins, as: :pin %>
+        </div>
+      </section>
     <% end %>
 
     <% if user_signed_in? && @rating_distributions.present? %>
@@ -117,13 +118,4 @@
 <% end %>
 </div>
 </div>
-<% end %>
-
-<% if user_signed_in? && @latest_pins.present? %>
-  <section class="procedure-recent-submissions" aria-labelledby="surgeon-recent-submissions-heading">
-    <h2 id="surgeon-recent-submissions-heading"><%= t('directory.recent_submissions') %></h2>
-    <div class="procedure-recent-pin-list">
-      <%= render partial: 'procedures/recent_pin', collection: @latest_pins, as: :pin %>
-    </div>
-  </section>
 <% end %>

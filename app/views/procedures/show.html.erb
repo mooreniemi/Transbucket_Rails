@@ -85,12 +85,6 @@
 <% end %>
 
 <% if current_user %>
-  <% if @procedure.avg_sensation || @procedure.avg_satisfaction %>
-    <ul class="list-group">
-      <% if @procedure.avg_sensation %><li class="list-group-item"><%= t('public.pin.average_sensation') %>: <%= @procedure.avg_sensation %></li><% end %>
-      <% if @procedure.avg_satisfaction %><li class="list-group-item"><%= t('public.pin.average_satisfaction') %>: <%= @procedure.avg_satisfaction %></li><% end %>
-    </ul>
-  <% end %>
   <% if @rating_distributions.present? %>
     <div class="procedure-rating-distributions">
       <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, average: @rating_averages[:sensation], rating: :sensation, title: t('public.rating.sensation.distribution'), scope_params: { procedure: @procedure.id }, heading_id: 'procedure-sensation-distribution-heading' } %>

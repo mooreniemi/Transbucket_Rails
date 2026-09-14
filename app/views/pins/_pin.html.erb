@@ -25,7 +25,7 @@
         <%= link_to (image_tag pin.cover_image(@safe_mode).url(:medium), alt: pin.procedure.try(:localized_name)), pin %>
       </div>
       <p class="description" itemprop="description">
-        <%= pin.try(:procedure).try(:localized_name) %> <%= t('public.pin.by') %> <strong><%= pin.unknown_surgeon? ? t('public.pin.unknown') : t('public.pin.doctor_prefix') + pin.surgeon.to_s %></strong>
+        <%= pin.try(:procedure).try(:localized_name) %> <%= t('public.pin.by') %> <strong><%= pin.unknown_surgeon? ? t('public.pin.unknown') : "#{t('public.pin.doctor_prefix')}#{link_to pin.surgeon.to_s, surgeon_path(id: pin.surgeon.id)}".html_safe %></strong>
       </p>
     <% end %>
     <!-- end cache fragment  -->

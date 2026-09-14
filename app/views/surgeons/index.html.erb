@@ -1,6 +1,7 @@
 <%= render partial: 'ads/test1' %>
-<% seo_meta description: t('directory.surgeons_intro') %>
-<% title t('directory.surgeons_title') %>
+<% page_title = t('directory.surgeons_title') %>
+<% seo_meta title: page_title, description: t('directory.surgeons_intro') %>
+<% title page_title %>
 <% json_ld_tag(
   {
     '@context' => 'https://schema.org',

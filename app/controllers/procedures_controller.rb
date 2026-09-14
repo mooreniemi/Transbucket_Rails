@@ -38,7 +38,10 @@ class ProceduresController < ApplicationController
     @comparison_options = Procedure.order(:name)
     @first_procedure = find_comparison_record(params[:first_id])
     @second_procedure = find_comparison_record(params[:second_id])
-    @comparison_data = procedure_comparison_data([@first_procedure, @second_procedure].compact)
+    procedures = [@first_procedure, @second_procedure].compact
+    @comparison_scope_options = common_surgeons_for(procedures)
+    @comparison_surgeon = find_common_surgeon(params[:surgeon_id], procedures)
+    @comparison_data = procedure_comparison_data(procedures, @comparison_surgeon)
   end
 
   def new
@@ -72,12 +75,30 @@ class ProceduresController < ApplicationController
     nil
   end
 
-  def procedure_comparison_data(procedures)
+  def find_common_surgeon(identifier, procedures)
+    return if identifier.blank? || procedures.length < 2
+
+    surgeon = Surgeon.friendly.find(identifier)
+    common_surgeons_for(procedures).include?(surgeon) ? surgeon : nil
+  rescue ActiveRecord::RecordNotFound
+    nil
+  end
+
+  def common_surgeons_for(procedures)
+    return Surgeon.order(:last_name, :first_name) if procedures.length < 2
+
+    ids = procedures.map { |procedure| Pin.where(procedure_id: procedure.id).where.not(surgeon_id: nil).distinct.pluck(:surgeon_id) }
+    common_ids = ids.reduce { |common, current| common & current } || []
+    Surgeon.where(id: common_ids).order(:last_name, :first_name)
+  end
+
+  def procedure_comparison_data(procedures, surgeon = nil)
     data = procedures.each_with_object({}) do |procedure, result|
       result[procedure] = { distributions: { sensation: {}, satisfaction: {} }, averages: {} }
     end
     ids = procedures.map(&:id)
     pins = Pin.where(procedure_id: ids)
+    pins = pins.where(surgeon_id: surgeon.id) if surgeon
 
     pins.where(sensation: 1..5).group(:procedure_id, :sensation).count.each do |(procedure_id, score), count|
       data[procedures.find { |procedure| procedure.id == procedure_id }][:distributions][:sensation][score] = count
@@ -92,6 +113,40 @@ class ProceduresController < ApplicationController
     pins.where(satisfaction: 1..5).group(:procedure_id).average(:satisfaction).each do |procedure_id, average|
       procedure = procedures.find { |candidate| candidate.id == procedure_id }
       data[procedure][:averages][:satisfaction] = average
+    end
+    published_pins = pins.published
+    submission_counts = published_pins.group(:procedure_id).count
+    surgeon_counts = published_pins.where.not(surgeon_id: nil).group(:procedure_id).distinct.count(:surgeon_id)
+    complication_counts = published_pins.
+      joins('INNER JOIN taggings ON taggings.taggable_id = pins.id AND taggings.taggable_type = \'Pin\' AND taggings.context = \'complications\'').
+      joins('INNER JOIN tags ON tags.id = taggings.tag_id').
+      group('pins.procedure_id', 'tags.name').count
+
+    data.each do |procedure, values|
+      procedure_id = procedure.id
+      values[:stats] = {
+        submissions: submission_counts[procedure_id].to_i,
+        surgeons: surgeon_counts[procedure_id].to_i,
+        outcomes: [:sensation, :satisfaction].each_with_object({}) do |rating, outcomes|
+          counts = values[:distributions][rating]
+          rated = counts.values.sum
+          good = counts.select { |score, _count| score >= 3 }.values.sum
+          challenging = counts[1].to_i
+          outcomes[rating] = {
+            good: rated.zero? ? nil : (good.to_f / rated * 100).round(1),
+            challenging: rated.zero? ? nil : (challenging.to_f / rated * 100).round(1)
+          }
+        end,
+        complications: complication_counts.each_with_object([]) do |((group_procedure_id, name), count), complications|
+          next unless group_procedure_id == procedure_id
+
+          complications << {
+            name: name,
+            count: count,
+            rate: (count.to_f / submission_counts[procedure_id].to_i * 100).round(1)
+          }
+        end.sort_by { |complication| -complication[:count] }.first(10)
+      }
     end
     data
   end

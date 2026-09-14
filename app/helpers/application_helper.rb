@@ -17,7 +17,7 @@ module ApplicationHelper
     safe_join(links, "\n")
   end
 
-  def seo_meta(description:, canonical: nil, noindex: false)
+  def seo_meta(description:, title: nil, canonical: nil, noindex: false, image: nil, type: 'website')
     robots = noindex ? 'noindex,follow' : 'index,follow'
     canonical ||= "#{request.base_url}#{request.path}"
 
@@ -25,8 +25,8 @@ module ApplicationHelper
       description: description,
       canonical: canonical,
       robots: robots,
-      og: { description: description },
-      twitter: { description: description }
+      og: { title: title, description: description, url: canonical, type: type, image: image }.compact,
+      twitter: { title: title, description: description, image: image }.compact
     )
 
     nil

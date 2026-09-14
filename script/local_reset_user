@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+export POSTGRES_HOST="${POSTGRES_HOST:-127.0.0.1}"
+export POSTGRES_PORT="${POSTGRES_PORT:-5433}"
+export POSTGRES_USER="${POSTGRES_USER:-postgres}"
+export POSTGRES_PASSWORD="${POSTGRES_PASSWORD:-password}"
+export RAILS_ENV="${RAILS_ENV:-development}"
+export DISABLE_SPRING=1
+
+rbenv exec bundle exec rails runner \
+  'user = User.find_by!(username: "meowmeow"); user.password = "local-login"; user.password_confirmation = "local-login"; user.save!; puts "Local login: meowmeow / local-login"'

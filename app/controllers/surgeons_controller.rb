@@ -45,7 +45,10 @@ class SurgeonsController < ApplicationController
     @comparison_options = Surgeon.order(:last_name, :first_name)
     @first_surgeon = find_comparison_record(params[:first_id])
     @second_surgeon = find_comparison_record(params[:second_id])
-    @comparison_data = surgeon_comparison_data([@first_surgeon, @second_surgeon].compact)
+    surgeons = [@first_surgeon, @second_surgeon].compact
+    @comparison_scope_options = common_procedures_for(surgeons)
+    @comparison_procedure = find_common_procedure(params[:procedure_id], surgeons)
+    @comparison_data = surgeon_comparison_data(surgeons, @comparison_procedure)
   end
 
   def new
@@ -100,12 +103,30 @@ class SurgeonsController < ApplicationController
     nil
   end
 
-  def surgeon_comparison_data(surgeons)
+  def find_common_procedure(identifier, surgeons)
+    return if identifier.blank? || surgeons.length < 2
+
+    procedure = Procedure.friendly.find(identifier)
+    common_procedures_for(surgeons).include?(procedure) ? procedure : nil
+  rescue ActiveRecord::RecordNotFound
+    nil
+  end
+
+  def common_procedures_for(surgeons)
+    return Procedure.order(:name) if surgeons.length < 2
+
+    ids = surgeons.map { |surgeon| Pin.where(surgeon_id: surgeon.id).where.not(procedure_id: nil).distinct.pluck(:procedure_id) }
+    common_ids = ids.reduce { |common, current| common & current } || []
+    Procedure.where(id: common_ids).order(:name)
+  end
+
+  def surgeon_comparison_data(surgeons, procedure = nil)
     data = surgeons.each_with_object({}) do |surgeon, result|
       result[surgeon] = { distributions: { sensation: {}, satisfaction: {} }, averages: {} }
     end
     ids = surgeons.map(&:id)
     pins = Pin.where(surgeon_id: ids)
+    pins = pins.where(procedure_id: procedure.id) if procedure
 
     pins.where(sensation: 1..5).group(:surgeon_id, :sensation).count.each do |(surgeon_id, score), count|
       data[surgeons.find { |surgeon| surgeon.id == surgeon_id }][:distributions][:sensation][score] = count
@@ -120,6 +141,40 @@ class SurgeonsController < ApplicationController
     pins.where(satisfaction: 1..5).group(:surgeon_id).average(:satisfaction).each do |surgeon_id, average|
       surgeon = surgeons.find { |candidate| candidate.id == surgeon_id }
       data[surgeon][:averages][:satisfaction] = average
+    end
+    published_pins = pins.published
+    submission_counts = published_pins.group(:surgeon_id).count
+    procedure_counts = published_pins.where.not(procedure_id: nil).group(:surgeon_id).distinct.count(:procedure_id)
+    complication_counts = published_pins.
+      joins('INNER JOIN taggings ON taggings.taggable_id = pins.id AND taggings.taggable_type = \'Pin\' AND taggings.context = \'complications\'').
+      joins('INNER JOIN tags ON tags.id = taggings.tag_id').
+      group('pins.surgeon_id', 'tags.name').count
+
+    data.each do |surgeon, values|
+      surgeon_id = surgeon.id
+      values[:stats] = {
+        submissions: submission_counts[surgeon_id].to_i,
+        procedures: procedure_counts[surgeon_id].to_i,
+        outcomes: [:sensation, :satisfaction].each_with_object({}) do |rating, outcomes|
+          counts = values[:distributions][rating]
+          rated = counts.values.sum
+          good = counts.select { |score, _count| score >= 3 }.values.sum
+          challenging = counts[1].to_i
+          outcomes[rating] = {
+            good: rated.zero? ? nil : (good.to_f / rated * 100).round(1),
+            challenging: rated.zero? ? nil : (challenging.to_f / rated * 100).round(1)
+          }
+        end,
+        complications: complication_counts.each_with_object([]) do |((group_surgeon_id, name), count), complications|
+          next unless group_surgeon_id == surgeon_id
+
+          complications << {
+            name: name,
+            count: count,
+            rate: (count.to_f / submission_counts[surgeon_id].to_i * 100).round(1)
+          }
+        end.sort_by { |complication| -complication[:count] }.first(10)
+      }
     end
     data
   end

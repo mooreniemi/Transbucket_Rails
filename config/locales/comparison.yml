@@ -1,6 +1,19 @@
 en:
   comparison:
     title: Compare
+    metric: Metric
+    rating_distribution: Rating distribution
+    submissions: Submissions
+    submission_count: Published submissions
+    procedures_count: Procedures represented
+    surgeons_count: Surgeons represented
+    good_outcomes: Rated 3/5 or higher (of rated submissions)
+    challenging_outcomes: Rated 1/5 (of rated submissions)
+    not_enough_data: Not enough data
+    common_complications: Common complications
+    none_reported: None reported
+    scope_surgeon: Optional shared surgeon
+    scope_procedure: Optional shared procedure
     first: First
     second: Second
     submit: Compare

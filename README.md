@@ -146,9 +146,23 @@ Staging and production both deploy and depend on [Heroku](https://heroku.com/). 
 
 Environment variables are kept in an untracked file (`config/application.yml`) managed by [Figaro](https://github.com/laserlemon/figaro#heroku). Running `heroku config --app transbucket` will give you the production env, and `heroku config --app transbucket-staging` staging's env. When you want to push local changes to Heroku (be VERY careful with this), you use `figaro heroku:set -e production`.
 
-## [development (local)](http://localhost:3000)
+## [development (local)](http://127.0.0.1:3003)
 
-To run locally, I use `rails s -p 3003` (because I am often running servers on other ports). Then navigate to [localhost:3003](http://localhost:3000/) to browse. You can also just run it without specifiying the port.
+Use the Docker-backed host-Rails workflow:
+
+```
+script/local_setup
+script/local_server
+```
+
+`local_setup` starts only Docker Postgres and Elasticsearch, runs the local
+development database setup, and resets the confirmed `meowmeow` account.
+`local_server` runs Rails on `http://127.0.0.1:3003` with Postgres on host
+port `5433`. Do not use the default `rails server` command for this workflow:
+it falls back to Postgres port `5432` and the local `Alex` role.
+
+Use `meowmeow` / `local-login` in the browser. `local_reset_user` can be run
+again at any time and changes only the local Docker development database.
 
 If you need to test against an actual S3 instance, you can uncomment the config block in `config/environments/development.rb` and set the required environment varialbles. (You can grab those with `heroku config --app transbucket-staging`. Otherwise you'll just store on your local file system.
 
@@ -354,7 +368,7 @@ POSTGRES_HOST=localhost POSTGRES_PORT=5433 POSTGRES_USER=postgres \
 POSTGRES_PASSWORD=password RAILS_ENV=test bundle exec rake jobs:work
 
 STAGING_URL=http://127.0.0.1:3003 \
-STAGING_USER=zoon STAGING_PASSWORD='set your smoke password here' \
+STAGING_USER=meowmeow STAGING_PASSWORD='local-login' \
 bundle exec ruby script/staging_smoke.rb
 ```
 

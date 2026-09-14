@@ -1,23 +1,83 @@
-<% title t('comparison.procedures_title', default: 'Compare procedures') %>
-<% seo_meta description: t('comparison.procedures_description', default: 'Compare procedure rating distributions on Transbucket.') %>
-<%= render partial: 'shared/comparison_form', locals: { resource_type: 'procedures', options: @comparison_options, first: @first_procedure, second: @second_procedure, label_method: :localized_name, action: compare_procedures_path } %>
+<% page_title = t('comparison.procedures_title', default: 'Compare procedures') %>
+<% title page_title %>
+<% seo_meta title: page_title, description: t('comparison.procedures_description', default: 'Compare procedure rating distributions on Transbucket.'), noindex: true %>
+<%= render partial: 'shared/comparison_form', locals: { resource_type: 'procedures', options: @comparison_options, first: @first_procedure, second: @second_procedure, label_method: :localized_name, action: compare_procedures_path, scope_options: @comparison_scope_options, scope_first: @comparison_surgeon, scope_param: :surgeon_id, scope_label: t('comparison.scope_surgeon', default: 'Optional shared surgeon') } %>
 <% if @first_procedure && @second_procedure && @first_procedure != @second_procedure %>
-  <% cache([I18n.locale, 'procedure-rating-comparison', @first_procedure, @second_procedure]) do %>
+  <% cache([I18n.locale, 'procedure-rating-comparison', @first_procedure, @second_procedure, @comparison_surgeon]) do %>
     <div class="rating-comparison-results">
       <% [[:sensation, @first_procedure, @second_procedure], [:satisfaction, @first_procedure, @second_procedure]].each do |rating, first, second| %>
-        <section class="rating-comparison-row" aria-labelledby="procedure-comparison-<%= rating %>-heading">
-          <h2 id="procedure-comparison-<%= rating %>-heading"><%= t("public.rating.#{rating}.distribution") %></h2>
-          <div class="row">
-            <% [[first, 'first'], [second, 'second']].each do |procedure, position| %>
-              <% values = @comparison_data[procedure] %>
-              <div class="col-md-6" id="procedure-comparison-<%= position %>-<%= rating %>">
-                <h3><%= link_to procedure.localized_name, procedure_path(procedure) %></h3>
-                <%= render partial: 'shared/rating_distribution', locals: { distribution: values[:distributions], average: values[:averages][rating], rating: rating, title: t("public.rating.#{rating}.distribution"), scope_params: { procedure: procedure.id }, heading_id: "procedure-comparison-#{position}-#{rating}" } %>
+        <section class="rating-comparison-row row" aria-labelledby="procedure-comparison-<%= rating %>-heading">
+          <h2 class="col-md-2" id="procedure-comparison-<%= rating %>-heading"><%= t("public.form.#{rating}") %></h2>
+          <% [[first, 'first'], [second, 'second']].each do |procedure, position| %>
+            <% values = @comparison_data[procedure] %>
+            <div class="col-md-5" id="procedure-comparison-<%= position %>-<%= rating %>">
+              <h3 class="rating-comparison-entity-label"><%= t("comparison.#{position}", default: position.capitalize) %>: <%= link_to procedure.localized_name, procedure_path(procedure) %></h3>
+              <p class="rating-comparison-average"><%= rating == :sensation ? t('public.pin.average_sensation') : t('public.pin.average_satisfaction') %>: <%= values[:averages][rating].to_f.round(1) %>/5</p>
+              <div class="rating-comparison-chart">
+                <%= render partial: 'shared/rating_distribution', locals: { distribution: values[:distributions], average: nil, rating: rating, title: t('comparison.rating_distribution', default: 'Rating distribution'), scope_params: { procedure: procedure.id }, heading_id: "procedure-comparison-#{position}-#{rating}" } %>
               </div>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
         </section>
       <% end %>
+      <section class="comparison-stats" aria-labelledby="procedure-comparison-submissions-heading">
+        <h2 id="procedure-comparison-submissions-heading"><%= t('comparison.submissions', default: 'Submissions') %></h2>
+        <div class="comparison-stats-table-wrap">
+          <table class="comparison-stats-table">
+            <thead>
+              <tr>
+                <th scope="col"><%= t('comparison.metric', default: 'Metric') %></th>
+                <th scope="col"><%= t('comparison.first', default: 'First') %>: <%= link_to @first_procedure.localized_name, procedure_path(@first_procedure) %></th>
+                <th scope="col"><%= t('comparison.second', default: 'Second') %>: <%= link_to @second_procedure.localized_name, procedure_path(@second_procedure) %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% first_stats = @comparison_data[@first_procedure][:stats] %>
+              <% second_stats = @comparison_data[@second_procedure][:stats] %>
+              <tr>
+                <th scope="row"><%= t('comparison.submission_count', default: 'Published submissions') %></th>
+                <td><%= first_stats[:submissions] %></td>
+                <td><%= second_stats[:submissions] %></td>
+              </tr>
+              <tr>
+                <th scope="row"><%= t('comparison.surgeons_count', default: 'Surgeons represented') %></th>
+                <td><%= first_stats[:surgeons] %></td>
+                <td><%= second_stats[:surgeons] %></td>
+              </tr>
+              <% [
+                [t('comparison.good_outcomes', default: 'Rated 3/5 or higher'), :good],
+                [t('comparison.challenging_outcomes', default: 'Rated 1/5'), :challenging]
+              ].each do |label, outcome| %>
+                <tr>
+                  <th scope="row"><%= label %></th>
+                  <% [first_stats, second_stats].each do |stats| %>
+                    <td>
+                      <%= t('public.form.sensation') %>: <%= stats[:outcomes][:sensation][outcome] ? "#{stats[:outcomes][:sensation][outcome]}%" : t('comparison.not_enough_data', default: 'Not enough data') %><br>
+                      <%= t('public.form.satisfaction') %>: <%= stats[:outcomes][:satisfaction][outcome] ? "#{stats[:outcomes][:satisfaction][outcome]}%" : t('comparison.not_enough_data', default: 'Not enough data') %>
+                    </td>
+                  <% end %>
+                </tr>
+              <% end %>
+              <tr>
+                <th scope="row"><%= t('comparison.common_complications', default: 'Common complications') %></th>
+                <% [[@first_procedure, first_stats], [@second_procedure, second_stats]].each do |procedure, stats| %>
+                  <td>
+                    <% if stats[:complications].present? %>
+                      <ul class="comparison-complication-list">
+                        <% stats[:complications].each do |complication| %>
+                          <li><%= link_to complication[:name], pins_path(procedure: procedure.id, complication: complication[:name]) %> (<%= complication[:rate] %>%)</li>
+                        <% end %>
+                      </ul>
+                    <% else %>
+                      <%= t('comparison.none_reported', default: 'None reported') %>
+                    <% end %>
+                  </td>
+                <% end %>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
     </div>
   <% end %>
 <% end %>

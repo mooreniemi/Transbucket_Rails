@@ -1,6 +1,7 @@
-<% seo_meta description: I18n.t('newsfeed.description') %>
+<% page_title = I18n.t('newsfeed.title') %>
+<% seo_meta title: page_title, description: I18n.t('newsfeed.description') %>
 <%= render partial: 'ads/test1' %>
-<% title I18n.t('newsfeed.title') %>
+<% title page_title %>
 <h1><%= I18n.t('newsfeed.title') %></h1>
 <div class="center newsfeed">
   <% @newsfeed_entries.each do |entry| %>

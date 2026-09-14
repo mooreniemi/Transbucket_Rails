@@ -135,5 +135,45 @@ RSpec.describe SurgeonsController, :type => :controller do
       expect(assigns(:comparison_data)[first][:distributions][:sensation]).to eq(5 => 1)
       expect(assigns(:comparison_data)[second][:distributions][:satisfaction]).to eq(1 => 1)
     end
+
+    it 'builds grouped procedure and complication stats for compared surgeons' do
+      user = create(:user)
+      first = create(:surgeon)
+      second = create(:surgeon)
+      procedure = create(:procedure)
+      pin = create(:pin, surgeon: first, procedure: procedure, sensation: 1, satisfaction: 2)
+      pin.complication_list = 'hematoma'
+      pin.save!
+      create(:pin, surgeon: first, procedure: procedure, sensation: 5, satisfaction: 5)
+
+      sign_in user
+      get :compare, first_id: first.to_param, second_id: second.to_param
+
+      stats = assigns(:comparison_data)[first][:stats]
+      expect(stats[:submissions]).to eq(2)
+      expect(stats[:procedures]).to eq(1)
+      expect(stats[:outcomes][:sensation][:good]).to eq(50.0)
+      expect(stats[:complications].first[:name]).to eq('hematoma')
+      expect(stats[:complications].first[:rate]).to eq(50.0)
+    end
+
+    it 'applies an optional shared procedure scope to all compared surgeon stats' do
+      user = create(:user)
+      first = create(:surgeon)
+      second = create(:surgeon)
+      shared_procedure = create(:procedure)
+      other_procedure = create(:procedure)
+      create(:pin, surgeon: first, procedure: shared_procedure, sensation: 5, satisfaction: 5)
+      create(:pin, surgeon: first, procedure: other_procedure, sensation: 1, satisfaction: 1)
+      create(:pin, surgeon: second, procedure: shared_procedure, sensation: 4, satisfaction: 4)
+
+      sign_in user
+      get :compare, first_id: first.to_param, second_id: second.to_param, procedure_id: shared_procedure.to_param
+
+      expect(assigns(:comparison_procedure)).to eq(shared_procedure)
+      expect(assigns(:comparison_data)[first][:stats][:submissions]).to eq(1)
+      expect(assigns(:comparison_data)[first][:averages][:sensation]).to eq(5.0)
+      expect(assigns(:comparison_data)[second][:stats][:submissions]).to eq(1)
+    end
   end
 end

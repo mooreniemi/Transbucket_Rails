@@ -1,4 +1,6 @@
-<% seo_meta description: I18n.t('site.description') %>
+<% page_title = I18n.t('site.name', default: 'Transbucket') %>
+<% seo_meta title: page_title, description: I18n.t('site.description') %>
+<% title page_title %>
 <% if user_signed_in? %>
   <script type="text/javascript">
     window.location.href="<%= pins_path %>"  // hacky but works

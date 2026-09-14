@@ -23,7 +23,7 @@ describe 'application locales' do
   before do
     I18n.available_locales = SUPPORTED_LOCALES.map(&:to_sym)
     locale_files = Dir[File.expand_path('../config/locales/*.yml', __dir__)].sort
-    expect(locale_files.map { |file| File.basename(file) }).to eq(['about.yml', 'catalog.yml', 'form_guidance.yml', 'procedure_guide.yml', 'rating.yml', 'sv.yml', 'zz_procedure_names.yml'])
+    expect(locale_files.map { |file| File.basename(file) }).to eq(['about.yml', 'catalog.yml', 'comparison.yml', 'form_guidance.yml', 'procedure_guide.yml', 'rating.yml', 'sv.yml', 'zz_procedure_names.yml'])
     @translations = YAML.load_file(locale_files.find { |file| file.end_with?('catalog.yml') })
     swedish = YAML.load_file(locale_files.find { |file| file.end_with?('sv.yml') })
     @translations['sv'] = deep_merge(@translations.fetch('en'), swedish.fetch('sv'))

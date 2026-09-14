@@ -1,6 +1,7 @@
 <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-<% seo_meta description: t('about.meta_description') %>
-<% title t('about.title') %>
+<% page_title = t('about.title') %>
+<% seo_meta title: page_title, description: t('about.meta_description') %>
+<% title page_title %>
 <div class="row">
   <div class="col-md-12 center">
     <h1><%= t('about.title') %></h1>

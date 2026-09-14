@@ -100,5 +100,47 @@ describe ProceduresController, :type => :controller do
       expect(assigns(:comparison_data)[first][:distributions][:sensation]).to eq(5 => 1)
       expect(assigns(:comparison_data)[second][:distributions][:satisfaction]).to eq(1 => 1)
     end
+
+    it 'builds grouped surgeon and complication stats for compared procedures' do
+      user = create(:user)
+      first = create(:procedure)
+      second = create(:procedure)
+      surgeon = create(:surgeon)
+      pin = create(:pin, procedure: first, surgeon: surgeon, sensation: 1, satisfaction: 2)
+      pin.complication_list = 'hematoma, fistula'
+      pin.save!
+      create(:pin, procedure: first, surgeon: surgeon, sensation: 5, satisfaction: 5)
+      create(:pin, procedure: second)
+
+      sign_in user
+      get :compare, first_id: first.to_param, second_id: second.to_param
+
+      expect(assigns(:comparison_data)[first][:stats][:submissions]).to eq(2)
+      expect(assigns(:comparison_data)[first][:stats][:surgeons]).to eq(1)
+      expect(assigns(:comparison_data)[first][:stats][:outcomes][:sensation][:good]).to eq(50.0)
+      expect(assigns(:comparison_data)[first][:stats][:outcomes][:satisfaction][:challenging]).to eq(0.0)
+      complications = assigns(:comparison_data)[first][:stats][:complications]
+      expect(complications.map { |complication| complication[:name] }).to contain_exactly('hematoma', 'fistula')
+      expect(complications.map { |complication| complication[:rate] }).to all(eq(50.0))
+    end
+
+    it 'applies an optional shared surgeon scope to all compared procedure stats' do
+      user = create(:user)
+      first = create(:procedure)
+      second = create(:procedure)
+      shared_surgeon = create(:surgeon)
+      other_surgeon = create(:surgeon)
+      create(:pin, procedure: first, surgeon: shared_surgeon, sensation: 5, satisfaction: 5)
+      create(:pin, procedure: first, surgeon: other_surgeon, sensation: 1, satisfaction: 1)
+      create(:pin, procedure: second, surgeon: shared_surgeon, sensation: 4, satisfaction: 4)
+
+      sign_in user
+      get :compare, first_id: first.to_param, second_id: second.to_param, surgeon_id: shared_surgeon.to_param
+
+      expect(assigns(:comparison_surgeon)).to eq(shared_surgeon)
+      expect(assigns(:comparison_data)[first][:stats][:submissions]).to eq(1)
+      expect(assigns(:comparison_data)[first][:averages][:sensation]).to eq(5.0)
+      expect(assigns(:comparison_data)[second][:stats][:submissions]).to eq(1)
+    end
   end
 end

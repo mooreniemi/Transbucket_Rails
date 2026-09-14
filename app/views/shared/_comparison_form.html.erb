@@ -3,6 +3,10 @@
 <% second ||= nil %>
 <% label_method ||= :to_s %>
 <% action ||= '#' %>
+<% scope_options ||= [] %>
+<% scope_first ||= nil %>
+<% scope_param ||= nil %>
+<% scope_label ||= nil %>
 <section class="rating-comparison-form" aria-labelledby="<%= resource_type %>-comparison-heading">
   <h2 id="<%= resource_type %>-comparison-heading"><%= t('comparison.title', default: 'Compare') %></h2>
   <%= form_tag action, method: :get do %>
@@ -14,6 +18,12 @@
       <%= label_tag :second_id, t('comparison.second', default: 'Second') %>
       <%= select_tag :second_id, options_from_collection_for_select(options, :to_param, label_method, second.try(:to_param)), include_blank: true, required: true, class: 'form-control' %>
     </div>
+    <% if scope_param %>
+      <div class="form-group">
+        <%= label_tag scope_param, scope_label %>
+        <%= select_tag scope_param, options_from_collection_for_select(scope_options, :to_param, label_method == :localized_name ? :to_s : :localized_name, scope_first.try(:to_param)), include_blank: true, class: 'form-control' %>
+      </div>
+    <% end %>
     <%= submit_tag t('comparison.submit', default: 'Compare'), class: 'btn btn-primary' %>
   <% end %>
 </section>

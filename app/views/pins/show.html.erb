@@ -1,6 +1,7 @@
 <% surgeon_name = @pin.unknown_surgeon? ? t('public.pin.unknown_surgeon') : t('public.pin.doctor_prefix') + @pin.surgeon.to_s %>
 <% pin_title = "#{@pin.procedure.localized_name} #{t('public.pin.by')} #{surgeon_name}" %>
-<% seo_meta description: "#{pin_title} on Transbucket.", canonical: pin_url(id: @pin.id) %>
+<% pin_image = @pin.pin_images.find { |image| image.photo_file_size.present? } %>
+<% seo_meta title: pin_title, description: "#{pin_title} on Transbucket.", canonical: pin_url(id: @pin.id), image: (pin_image ? image_url(pin_image.photo) : nil), type: 'article' %>
 <% title pin_title %>
 <% json_ld_tag(
   {

@@ -1,5 +1,6 @@
-<% seo_meta description: "#{@surgeon.to_s}: #{t('directory.surgeons_intro')}", canonical: surgeon_url(id: @surgeon.to_param) %>
-<% title "#{@surgeon.to_s} | Transbucket" %>
+<% page_title = "#{@surgeon.to_s} | Transbucket" %>
+<% seo_meta title: page_title, description: "#{@surgeon.to_s}: #{t('directory.surgeons_intro')}", canonical: surgeon_url(id: @surgeon.to_param), type: 'profile' %>
+<% title page_title %>
 <% surgeon_address = {
   '@type' => 'PostalAddress',
   'streetAddress' => @surgeon.address,
@@ -42,7 +43,6 @@
         <% if @surgeon.website_url %>
           <%= link_to t('public.form.surgeon_url'), @surgeon.website_url %>
         <% end %>
-        <%= link_to t('comparison.title', default: 'Compare'), compare_surgeons_path(first_id: @surgeon.to_param), class: 'btn btn-default' %>
       </h4>
     <% if @surgeon.address %>
       <address>
@@ -68,11 +68,15 @@
     <% end %>
 
     <% if user_signed_in? && @rating_distributions.present? %>
-      <div class="surgeon-rating-distributions">
-        <h2><%= t('public.rating.overall_distribution') %></h2>
+      <section class="surgeon-stats surgeon-rating-distributions" aria-labelledby="surgeon-stats-heading">
+        <div class="stats-heading">
+          <h2 id="surgeon-stats-heading"><%= t('directory.stats', default: 'Stats') %></h2>
+          <%= link_to t('comparison.title', default: 'Compare'), compare_surgeons_path(first_id: @surgeon.to_param), class: 'btn btn-default' %>
+        </div>
+        <h3><%= t('public.rating.overall_distribution') %></h3>
         <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, average: @overall_sensation, rating: :sensation, title: t('public.rating.sensation.distribution'), scope_params: { surgeon: @surgeon.id }, heading_id: 'surgeon-sensation-distribution-heading' } %>
         <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, average: @overall_satisfaction, rating: :satisfaction, title: t('public.rating.satisfaction.distribution'), scope_params: { surgeon: @surgeon.id }, heading_id: 'surgeon-satisfaction-distribution-heading' } %>
-      </div>
+      </section>
     <% end %>
 
     <% if @procedure_count > 0 %>

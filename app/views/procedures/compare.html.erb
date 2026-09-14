@@ -1,7 +1,7 @@
 <% page_title = t('comparison.procedures_title', default: 'Compare procedures') %>
 <% title page_title %>
 <% seo_meta title: page_title, description: t('comparison.procedures_description', default: 'Compare procedure rating distributions on Transbucket.'), noindex: true %>
-<%= render partial: 'shared/comparison_form', locals: { resource_type: 'procedures', options: @comparison_options, first: @first_procedure, second: @second_procedure, label_method: :localized_name, action: compare_procedures_path, scope_options: @comparison_scope_options, scope_first: @comparison_surgeon, scope_param: :surgeon_id, scope_label: t('comparison.scope_surgeon', default: 'Optional shared surgeon') } %>
+<%= render partial: 'shared/comparison_form', locals: { resource_type: 'procedures', options: @comparison_options, first: @first_procedure, second: @second_procedure, label_method: :localized_name, action: compare_procedures_path, scope_options: @comparison_scope_options, scope_first: @comparison_surgeon, scope_param: :surgeon_id, scope_label: t('comparison.scope_surgeon', default: 'Optional shared surgeon'), scope_memberships: @comparison_scope_memberships } %>
 <% if @first_procedure && @second_procedure && @first_procedure != @second_procedure %>
   <% cache([I18n.locale, 'procedure-rating-comparison', @first_procedure, @second_procedure, @comparison_surgeon]) do %>
     <div class="rating-comparison-results">

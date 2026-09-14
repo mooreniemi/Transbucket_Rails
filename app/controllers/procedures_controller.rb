@@ -36,6 +36,7 @@ class ProceduresController < ApplicationController
 
   def compare
     @comparison_options = Procedure.order(:name)
+    @comparison_scope_memberships = comparison_scope_memberships(@comparison_options, :procedure_id, :surgeon_id, Surgeon)
     @first_procedure = find_comparison_record(params[:first_id])
     @second_procedure = find_comparison_record(params[:second_id])
     procedures = [@first_procedure, @second_procedure].compact
@@ -90,6 +91,20 @@ class ProceduresController < ApplicationController
     ids = procedures.map { |procedure| Pin.where(procedure_id: procedure.id).where.not(surgeon_id: nil).distinct.pluck(:surgeon_id) }
     common_ids = ids.reduce { |common, current| common & current } || []
     Surgeon.where(id: common_ids).order(:last_name, :first_name)
+  end
+
+  def comparison_scope_memberships(records, record_column, scope_column, scope_class)
+    ids = records.map(&:id)
+    return {} if ids.empty?
+
+    pairs = Pin.where(record_column => ids).where.not(scope_column => nil).distinct.pluck(record_column, scope_column)
+    scopes = scope_class.where(id: pairs.map(&:last)).index_by(&:id)
+    pairs.
+      group_by(&:first).
+      each_with_object({}) do |(record_id, pairs), memberships|
+        record = records.find { |candidate| candidate.id == record_id }
+        memberships[record.to_param] = pairs.map { |pair| scopes[pair.last].to_param }
+      end
   end
 
   def procedure_comparison_data(procedures, surgeon = nil)

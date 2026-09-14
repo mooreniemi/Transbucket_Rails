@@ -31,6 +31,7 @@
         <p class="procedure-summary"><%= guide['summary'] %></p>
       <% end %>
       <%= link_to t('public.pin.see_all_submissions'), pins_path(procedure: @procedure.id) %>
+      <%= link_to t('comparison.title', default: 'Compare'), compare_procedures_path(first_id: @procedure.to_param), class: 'btn btn-default' %>
     </div>
     <% if @procedure.body_type %>
       <div class="panel-body" itemprop="bodyLocation">

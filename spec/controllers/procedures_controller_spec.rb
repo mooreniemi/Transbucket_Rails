@@ -85,5 +85,20 @@ describe ProceduresController, :type => :controller do
       expect(assigns(:related_procedures)).to include(related)
       expect(assigns(:related_procedures)).not_to include(unrelated)
     end
+
+    it 'builds grouped rating data for two compared procedures' do
+      user = create(:user)
+      first = create(:procedure)
+      second = create(:procedure)
+      create(:pin, procedure: first, sensation: 5, satisfaction: 4)
+      create(:pin, procedure: second, sensation: 2, satisfaction: 1)
+
+      sign_in user
+      get :compare, first_id: first.to_param, second_id: second.to_param
+
+      expect(response).to be_success
+      expect(assigns(:comparison_data)[first][:distributions][:sensation]).to eq(5 => 1)
+      expect(assigns(:comparison_data)[second][:distributions][:satisfaction]).to eq(1 => 1)
+    end
   end
 end

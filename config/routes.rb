@@ -30,7 +30,9 @@ Rails.application.routes.draw do
       resources :flags, :only => [:create]
     end
 
+    get 'surgeons/compare' => 'surgeons#compare', as: 'compare_surgeons'
     resources :surgeons
+    get 'procedures/compare' => 'procedures#compare', as: 'compare_procedures'
     resources :procedures
 
     # TODO redundant?

@@ -119,5 +119,21 @@ RSpec.describe SurgeonsController, :type => :controller do
       expect(assigns(:submission_count)).to eq(3)
       expect(assigns(:procedures_by_id)).to include(procedure_a.id => procedure_a, procedure_b.id => procedure_b)
     end
+
+    it 'builds grouped rating data for two compared surgeons' do
+      user = create(:user)
+      first = create(:surgeon)
+      second = create(:surgeon)
+      procedure = create(:procedure)
+      create(:pin, surgeon: first, procedure: procedure, sensation: 5, satisfaction: 4)
+      create(:pin, surgeon: second, procedure: procedure, sensation: 2, satisfaction: 1)
+
+      sign_in user
+      get :compare, first_id: first.to_param, second_id: second.to_param
+
+      expect(response).to be_success
+      expect(assigns(:comparison_data)[first][:distributions][:sensation]).to eq(5 => 1)
+      expect(assigns(:comparison_data)[second][:distributions][:satisfaction]).to eq(1 => 1)
+    end
   end
 end

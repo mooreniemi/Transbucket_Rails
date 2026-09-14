@@ -1,4 +1,6 @@
 class SurgeonsController < ApplicationController
+  before_filter :authenticate_user!, only: :compare
+
   def index
     @surgeons = Surgeon.all.order(:last_name, :first_name)
     @pins_per_surgeon = Surgeon.joins(:pins).group("pins.surgeon_id").count
@@ -13,6 +15,7 @@ class SurgeonsController < ApplicationController
 
   def show
     @surgeon = Surgeon.friendly.find(params[:id])
+    @comparison_options = Surgeon.order(:last_name, :first_name)
     pins = Pin.where(surgeon_id: @surgeon.id)
     # Keep counts scoped to this surgeon, then load all referenced procedures
     # in one query instead of finding each procedure from the view.
@@ -36,6 +39,13 @@ class SurgeonsController < ApplicationController
       @rating_distributions = rating_distributions_for(pins)
       @rating_distributions_by_procedure = rating_distributions_by_procedure_for(pins)
     end
+  end
+
+  def compare
+    @comparison_options = Surgeon.order(:last_name, :first_name)
+    @first_surgeon = find_comparison_record(params[:first_id])
+    @second_surgeon = find_comparison_record(params[:second_id])
+    @comparison_data = surgeon_comparison_data([@first_surgeon, @second_surgeon].compact)
   end
 
   def new
@@ -80,5 +90,37 @@ class SurgeonsController < ApplicationController
       distributions[procedure_id][:satisfaction][score] = count
     end
     distributions
+  end
+
+  def find_comparison_record(identifier)
+    return if identifier.blank?
+
+    Surgeon.friendly.find(identifier)
+  rescue ActiveRecord::RecordNotFound
+    nil
+  end
+
+  def surgeon_comparison_data(surgeons)
+    data = surgeons.each_with_object({}) do |surgeon, result|
+      result[surgeon] = { distributions: { sensation: {}, satisfaction: {} }, averages: {} }
+    end
+    ids = surgeons.map(&:id)
+    pins = Pin.where(surgeon_id: ids)
+
+    pins.where(sensation: 1..5).group(:surgeon_id, :sensation).count.each do |(surgeon_id, score), count|
+      data[surgeons.find { |surgeon| surgeon.id == surgeon_id }][:distributions][:sensation][score] = count
+    end
+    pins.where(satisfaction: 1..5).group(:surgeon_id, :satisfaction).count.each do |(surgeon_id, score), count|
+      data[surgeons.find { |surgeon| surgeon.id == surgeon_id }][:distributions][:satisfaction][score] = count
+    end
+    pins.where(sensation: 1..5).group(:surgeon_id).average(:sensation).each do |surgeon_id, average|
+      surgeon = surgeons.find { |candidate| candidate.id == surgeon_id }
+      data[surgeon][:averages][:sensation] = average
+    end
+    pins.where(satisfaction: 1..5).group(:surgeon_id).average(:satisfaction).each do |surgeon_id, average|
+      surgeon = surgeons.find { |candidate| candidate.id == surgeon_id }
+      data[surgeon][:averages][:satisfaction] = average
+    end
+    data
   end
 end

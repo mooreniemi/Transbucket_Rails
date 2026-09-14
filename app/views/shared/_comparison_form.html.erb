@@ -1,0 +1,19 @@
+<% options ||= [] %>
+<% first ||= nil %>
+<% second ||= nil %>
+<% label_method ||= :to_s %>
+<% action ||= '#' %>
+<section class="rating-comparison-form" aria-labelledby="<%= resource_type %>-comparison-heading">
+  <h2 id="<%= resource_type %>-comparison-heading"><%= t('comparison.title', default: 'Compare') %></h2>
+  <%= form_tag action, method: :get do %>
+    <div class="form-group">
+      <%= label_tag :first_id, t('comparison.first', default: 'First') %>
+      <%= select_tag :first_id, options_from_collection_for_select(options, :to_param, label_method, first.try(:to_param)), include_blank: true, required: true, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= label_tag :second_id, t('comparison.second', default: 'Second') %>
+      <%= select_tag :second_id, options_from_collection_for_select(options, :to_param, label_method, second.try(:to_param)), include_blank: true, required: true, class: 'form-control' %>
+    </div>
+    <%= submit_tag t('comparison.submit', default: 'Compare'), class: 'btn btn-primary' %>
+  <% end %>
+</section>

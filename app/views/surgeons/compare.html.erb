@@ -1,0 +1,23 @@
+<% title t('comparison.surgeons_title', default: 'Compare surgeons') %>
+<% seo_meta description: t('comparison.surgeons_description', default: 'Compare surgeon rating distributions on Transbucket.') %>
+<%= render partial: 'shared/comparison_form', locals: { resource_type: 'surgeons', options: @comparison_options, first: @first_surgeon, second: @second_surgeon, label_method: :to_s, action: compare_surgeons_path } %>
+<% if @first_surgeon && @second_surgeon && @first_surgeon != @second_surgeon %>
+  <% cache([I18n.locale, 'surgeon-rating-comparison', @first_surgeon, @second_surgeon]) do %>
+    <div class="rating-comparison-results">
+      <% [[:sensation, @first_surgeon, @second_surgeon], [:satisfaction, @first_surgeon, @second_surgeon]].each do |rating, first, second| %>
+        <section class="rating-comparison-row" aria-labelledby="surgeon-comparison-<%= rating %>-heading">
+          <h2 id="surgeon-comparison-<%= rating %>-heading"><%= t("public.rating.#{rating}.distribution") %></h2>
+          <div class="row">
+            <% [[first, 'first'], [second, 'second']].each do |surgeon, position| %>
+              <% values = @comparison_data[surgeon] %>
+              <div class="col-md-6" id="surgeon-comparison-<%= position %>-<%= rating %>">
+                <h3><%= link_to surgeon.to_s, surgeon_path(surgeon) %></h3>
+                <%= render partial: 'shared/rating_distribution', locals: { distribution: values[:distributions], average: values[:averages][rating], rating: rating, title: t("public.rating.#{rating}.distribution"), scope_params: { surgeon: surgeon.id }, heading_id: "surgeon-comparison-#{position}-#{rating}" } %>
+              </div>
+            <% end %>
+          </div>
+        </section>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

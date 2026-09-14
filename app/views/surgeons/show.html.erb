@@ -42,6 +42,7 @@
         <% if @surgeon.website_url %>
           <%= link_to t('public.form.surgeon_url'), @surgeon.website_url %>
         <% end %>
+        <%= link_to t('comparison.title', default: 'Compare'), compare_surgeons_path(first_id: @surgeon.to_param), class: 'btn btn-default' %>
       </h4>
     <% if @surgeon.address %>
       <address>

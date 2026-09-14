@@ -1,0 +1,10 @@
+en:
+  comparison:
+    title: Compare
+    first: First
+    second: Second
+    submit: Compare
+    procedures_title: Compare procedures
+    procedures_description: Compare procedure rating distributions on Transbucket.
+    surgeons_title: Compare surgeons
+    surgeons_description: Compare surgeon rating distributions on Transbucket.

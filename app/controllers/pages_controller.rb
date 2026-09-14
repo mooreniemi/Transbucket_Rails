@@ -17,11 +17,13 @@ class PagesController < ApplicationController
 
   def newsfeed
     @newsfeed_entries = %w(comparison_stats directory_improvements locales discord_invite prefix_search procedure_cleanup).map do |entry|
-      entry_data = { body: I18n.t("newsfeed.entries.#{entry}", default: I18n.t("newsfeed.entries.#{entry}", locale: :en)), date: I18n.t('newsfeed.date') }
+      links = newsfeed_links_for(entry)
+      body_key = "newsfeed.entries.#{entry}"
+      body = I18n.t(body_key, default: I18n.t(body_key, locale: :en)) unless entry == 'comparison_stats'
+      entry_data = { body: body, body_key: (body_key if entry == 'comparison_stats'), date: I18n.t('newsfeed.date'), links: links }
       if entry == 'comparison_stats'
         entry_data[:images] = %w(procedure-comparison-demo surgeon-comparison-demo).map { |image| "newsfeed/#{image}.png" }
       end
-      entry_data[:links] = newsfeed_links_for(entry)
       entry_data
     end
   end

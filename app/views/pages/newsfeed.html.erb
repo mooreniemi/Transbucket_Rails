@@ -7,8 +7,12 @@
   <% @newsfeed_entries.each do |entry| %>
     <article class="rss_item newsfeed-entry">
       <p class="newsfeed-body">
-        <%= entry[:body] %>
-        <% if entry[:links].present? %>
+        <% if entry[:body_key] == 'newsfeed.entries.comparison_stats' %>
+          <%= t(entry[:body_key], compare_procedures: link_to(entry[:links][0][0], entry[:links][0][1]), compare_surgeons: link_to(entry[:links][1][0], entry[:links][1][1]), default: t(entry[:body_key], locale: :en, compare_procedures: link_to(entry[:links][0][0], entry[:links][0][1]), compare_surgeons: link_to(entry[:links][1][0], entry[:links][1][1]))).html_safe %>
+        <% else %>
+          <%= entry[:body] %>
+        <% end %>
+        <% if entry[:links].present? && !entry[:body_key] %>
           (<%= entry[:links].map { |link| link_to(link[0], link[1]) }.join(' / ').html_safe %>)
         <% end %>
       </p>

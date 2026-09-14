@@ -235,7 +235,7 @@ en:
       join_discord: Join Discord
       search_pins: Search pins
     entries:
-      comparison_stats: You can now compare procedures or surgeons side by side, including rating distributions, averages, outcome percentages, and shared-scope filters. These screenshots use fictional demo data to protect privacy.
+      comparison_stats: You can now %{compare_procedures} or %{compare_surgeons} side by side, including rating distributions, averages, outcome percentages, and shared-scope filters. These screenshots use fictional demo data to protect privacy.
       procedure_cleanup: We cleaned up a set of procedure names so common shorthand
         and typo variants now point to the same canonical procedure pages, which makes
         browsing and search results more consistent.

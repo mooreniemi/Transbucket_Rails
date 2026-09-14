@@ -39,6 +39,9 @@ describe PagesController, :type => :controller do
       expect(response.body).to include('Procedure search now matches prefixes')
       expect(response.body).to include('The Discord community invite now points to a permanent link.')
       expect(response.body).to include('Transbucket now supports German, Spanish, French, Italian')
+      expect(response.body).to include('href="/en/procedures/compare"')
+      expect(response.body).to include('href="/en/surgeons/compare"')
+      expect(response.body).not_to include('(Compare procedures / compare surgeons)')
     end
 
     it 'localizes the release notes' do

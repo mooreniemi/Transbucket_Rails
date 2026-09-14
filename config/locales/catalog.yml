@@ -226,7 +226,14 @@ en:
     title: Newsfeed
     description: Recent Transbucket release notes and user-facing updates.
     date: September 2026
-    view_link: Explore this update
+    links:
+      compare_procedures: Compare procedures
+      compare_surgeons: compare surgeons
+      browse_procedures: Browse procedures
+      browse_surgeons: browse surgeons
+      choose_language: Choose a language
+      join_discord: Join Discord
+      search_pins: Search pins
     entries:
       comparison_stats: You can now compare procedures or surgeons side by side, including rating distributions, averages, outcome percentages, and shared-scope filters. These screenshots use fictional demo data to protect privacy.
       procedure_cleanup: We cleaned up a set of procedure names so common shorthand

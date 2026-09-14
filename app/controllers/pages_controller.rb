@@ -21,7 +21,7 @@ class PagesController < ApplicationController
       if entry == 'comparison_stats'
         entry_data[:images] = %w(procedure-comparison-demo surgeon-comparison-demo).map { |image| "newsfeed/#{image}.png" }
       end
-      entry_data[:link] = newsfeed_link_for(entry)
+      entry_data[:links] = newsfeed_links_for(entry)
       entry_data
     end
   end
@@ -38,13 +38,19 @@ class PagesController < ApplicationController
     request.format = :html
   end
 
-  def newsfeed_link_for(entry)
+  def newsfeed_links_for(entry)
     case entry
-    when 'comparison_stats' then compare_procedures_path(locale: I18n.locale)
-    when 'directory_improvements', 'procedure_cleanup' then procedures_path(locale: I18n.locale)
-    when 'locales' then home_path(locale: I18n.locale)
-    when 'prefix_search' then pins_path(locale: I18n.locale)
-    when 'discord_invite' then 'https://discord.gg/fRW4RnPqgv'
+    when 'comparison_stats'
+      [[t('newsfeed.links.compare_procedures', default: 'Compare procedures'), compare_procedures_path(locale: I18n.locale)],
+       [t('newsfeed.links.compare_surgeons', default: 'compare surgeons'), compare_surgeons_path(locale: I18n.locale)]]
+    when 'directory_improvements'
+      [[t('newsfeed.links.browse_procedures', default: 'Browse procedures'), procedures_path(locale: I18n.locale)],
+       [t('newsfeed.links.browse_surgeons', default: 'browse surgeons'), surgeons_path(locale: I18n.locale)]]
+    when 'locales' then [[t('newsfeed.links.choose_language', default: 'Choose a language'), home_path(locale: I18n.locale)]]
+    when 'discord_invite' then [[t('newsfeed.links.join_discord', default: 'Join Discord'), 'https://discord.gg/fRW4RnPqgv']]
+    when 'prefix_search' then [[t('newsfeed.links.search_pins', default: 'Search pins'), pins_path(locale: I18n.locale)]]
+    when 'procedure_cleanup' then [[t('newsfeed.links.browse_procedures', default: 'Browse procedures'), procedures_path(locale: I18n.locale)]]
+    else []
     end
   end
 end

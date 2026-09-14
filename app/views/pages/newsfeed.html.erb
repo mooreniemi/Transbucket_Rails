@@ -7,6 +7,12 @@
   <% @newsfeed_entries.each do |entry| %>
     <article class="rss_item newsfeed-entry">
       <p class="newsfeed-body"><%= entry[:body] %></p>
+      <% entry[:images].to_a.each do |image| %>
+        <%= image_tag image, class: 'newsfeed-screenshot', alt: t('newsfeed.comparison_image_alt', default: 'Example comparison page using fictional demo data') %>
+      <% end %>
+      <% if entry[:link] %>
+        <p class="newsfeed-link"><%= link_to t('newsfeed.view_link', default: 'Explore this update'), entry[:link] %></p>
+      <% end %>
       <p class="newsfeed-date"><%= entry[:date] %></p>
     </article>
   <% end %>

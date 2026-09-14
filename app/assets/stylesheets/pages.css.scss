@@ -32,6 +32,21 @@ div.rss_item {
   color: #666;
 }
 
+.newsfeed-screenshot {
+  display: block;
+  height: auto;
+  margin: 12px 0 0;
+  max-width: 100%;
+}
+
+.newsfeed-screenshot + .newsfeed-screenshot {
+  margin-top: 18px;
+}
+
+.newsfeed-link {
+  margin: 10px 0 0;
+}
+
 div.faq_item {
   background-color: #fff;
   padding: 15px;

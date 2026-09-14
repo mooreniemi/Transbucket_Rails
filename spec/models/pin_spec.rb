@@ -17,6 +17,16 @@ describe Pin do
   it 'is published as its initial state' do
     expect(build(:pin).state).to eq('published')
   end
+  describe '.recent' do
+    it 'orders published pins by update time and then id' do
+      timestamp = 1.day.ago
+      older_id = create(:pin, updated_at: timestamp, state: 'published')
+      newer_id = create(:pin, updated_at: timestamp, state: 'published')
+      create(:pin, updated_at: timestamp, state: 'pending')
+
+      expect(Pin.recent).to eq([newer_id, older_id])
+    end
+  end
   describe '#comments_asc' do
     it 'returns comments for pin in desc order' do
       pin = create(:pin, :with_comments)

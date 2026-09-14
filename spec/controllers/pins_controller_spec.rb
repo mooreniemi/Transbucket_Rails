@@ -50,6 +50,14 @@ describe PinsController, :type => :controller do
         expect(response.body).to include('外科医')
         expect(response.body).to include('手術')
       end
+
+      it 'links the procedure label to the procedure page' do
+        pin = create(:pin, user: user)
+        get :show, id: pin.id
+
+        expect(response.body).to include("href=\"#{procedure_path(pin.procedure)}\"")
+        expect(response.body).not_to include("procedure=#{pin.procedure.id}")
+      end
     end
 
     describe 'GET #edit' do

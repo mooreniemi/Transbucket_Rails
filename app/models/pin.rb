@@ -112,7 +112,7 @@ class Pin < ActiveRecord::Base
   end
 
   def self.recent
-    published.order('updated_at desc')
+    published.order(updated_at: :desc, id: :desc)
   end
 
   def self.by_gender(gender_name)

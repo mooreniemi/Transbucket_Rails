@@ -28,9 +28,8 @@ class SurgeonsController < ApplicationController
     @rating_distributions = nil
     @rating_distributions_by_procedure = nil
     if user_signed_in?
-      @latest_pins = pins.where(state: 'published').
+      @latest_pins = pins.recent.
         includes(:pin_images, :surgeon, :procedure).
-        order(updated_at: :desc).
         limit(3)
       @overall_satisfaction = pins.where.not(satisfaction: [nil, 0]).average(:satisfaction)
       @overall_sensation = pins.where.not(sensation: [nil, 0]).average(:sensation)

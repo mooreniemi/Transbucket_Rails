@@ -112,15 +112,15 @@
 }
 
 .comparison-actions {
-  align-items: start;
+  align-items: center;
   display: flex;
-  flex-direction: column;
-  gap: .35rem;
+  gap: .75rem;
 }
 
 .comparison-actions label {
   font-size: .9rem;
   margin: 0;
+  white-space: nowrap;
 }
 
 .rating-comparison-row {
@@ -204,6 +204,10 @@
   .rating-comparison-form .form-group,
   .rating-comparison-form .btn {
     margin-bottom: 1rem;
+  }
+
+  .comparison-actions {
+    flex-wrap: wrap;
   }
 
   .rating-comparison-row h2 {

@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/tanstack-react';
-import { fn } from 'storybook/test';
+import { expect, fn } from 'storybook/test';
 
 import { Button } from './button';
+
+const onClickSpy = fn();
 
 const meta = {
   title: 'Components/Button',
@@ -14,7 +16,7 @@ const meta = {
     children: 'Label',
     isDisabled: false,
     isPending: false,
-    onClick: fn(),
+    onClick: onClickSpy,
   },
   argTypes: {
     size: {
@@ -42,7 +44,12 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {};
+export const Primary: Story = {
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.click(canvas.getByRole('button'));
+    expect(onClickSpy).toHaveBeenCalledTimes(1);
+  }
+};
 
 export const Secondary: Story = {
   args: { variant: 'secondary' },
@@ -66,6 +73,9 @@ export const Link: Story = {
 
 export const Pending: Story = {
   args: { isPending: true },
+  play: async ({ canvas }) => {
+    expect(canvas.getByRole('button')).toHaveAttribute('aria-disabled', 'true');
+  }
 };
 
 export const LinkButton: Story = {

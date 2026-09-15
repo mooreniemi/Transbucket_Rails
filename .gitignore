@@ -33,3 +33,4 @@ docker-compose.override.yml
 
 react/.agents/skills
 react/skills-lock.json
+react/chromatic.log

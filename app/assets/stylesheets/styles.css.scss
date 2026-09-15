@@ -20,6 +20,21 @@ body{
   min-height: 100%;
   padding-top: 60px;
   background-color:#ccc;
+  color: #222;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+// Bootstrap 3 defaults to 14px for controls and navigation. Keep interactive
+// text at the same readable size as the document body.
+.form-control,
+.btn,
+.navbar-nav > li > a {
+  font-size: 1rem;
+}
+
+small {
+  font-size: .875rem;
 }
 
 .container {
@@ -214,7 +229,7 @@ p {
 }
 
 .comment_box p {
-  font-size: 14px;
+  font-size: 1rem;
   color: #000000;
 }
 
@@ -227,7 +242,7 @@ p {
 }
 
 .actions {
-  font-size: 14px;
+  font-size: 1rem;
 }
 
 .actions a:link, a:visited, a:hover {
@@ -277,7 +292,7 @@ p {
 }
 #details p {
   display: inline;
-  font-size: 14px;
+  font-size: 1rem;
 }
 
 .center {

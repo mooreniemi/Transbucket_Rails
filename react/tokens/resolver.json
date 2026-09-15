@@ -1,0 +1,29 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/resolver.json",
+  "version": "2025.10",
+  "name": "Transbucket design tokens",
+  "sets": {
+    "core": {
+      "sources": [
+        { "$ref": "core/transbucket.tokens.json" },
+        { "$ref": "core/colors.tokens.json" }
+      ]
+    }
+  },
+  "modifiers": {
+    "theme": {
+      "description": "Color theme selection",
+      "contexts": {
+        "light": [
+          { "$ref": "core/transbucket.tokens.json" },
+          { "$ref": "core/colors.tokens.json" }
+        ]
+      },
+      "default": "light"
+    }
+  },
+  "resolutionOrder": [
+    { "$ref": "#/sets/core" },
+    { "$ref": "#/modifiers/theme" }
+  ]
+}

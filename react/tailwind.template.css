@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@theme {
+  /* Remove Tailwind's built-in red/blue/yellow scales entirely -- the
+   * brand's versions (mapped below via @tz) fully replace them rather
+   * than sitting alongside the defaults. */
+  --color-red-*: initial;
+  --color-blue-*: initial;
+  --color-yellow-*: initial;
+  @tz (theme: "light");
+}

@@ -14,3 +14,9 @@ todos.json
 
 *storybook.log
 storybook-static
+.swatchbook
+
+# Terrazzo token build output -- regenerated from tokens/core/*.json by the
+# tokens:build script (wired into predev/prebuild/prestorybook). Never
+# hand-edit anything in here.
+src/generated

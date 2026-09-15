@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/tanstack-react';
+import { expect } from 'storybook/test';
 
 import { Input } from './input';
 
@@ -38,7 +39,11 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  play: async ({ canvas }) => {
+   expect(canvas.getByRole('textbox')).toHaveValue('');
+  }
+};
 
 export const WithDescription: Story = {
   args: {
@@ -51,10 +56,16 @@ export const Invalid: Story = {
     isInvalid: true,
     errorMessage: 'Please enter a valid email address.',
   },
+  play: async ({ canvas }) => {
+   expect(canvas.getByRole('textbox')).toBeInvalid();
+  }
 };
 
 export const Disabled: Story = {
   args: {
     isDisabled: true,
   },
+  play: async ({ canvas }) => {
+   expect(canvas.getByRole('textbox')).toBeDisabled();
+  }
 };

@@ -101,6 +101,30 @@
 }
 
 .rating-comparison-form form {
+  display: block;
+}
+
+.comparison-normalization {
+  align-items: center;
+  display: flex;
+  gap: .4rem;
+  margin-bottom: .75rem;
+}
+
+.comparison-normalization label {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.comparison-normalization-help {
+  color: #444;
+  font-size: 1rem;
+  line-height: 1.45;
+  margin: 0 0 1.25rem;
+  max-width: 760px;
+}
+
+.comparison-selector-row {
   align-items: end;
   display: grid;
   gap: 1rem;
@@ -115,12 +139,6 @@
   align-items: center;
   display: flex;
   gap: .75rem;
-}
-
-.comparison-actions label {
-  font-size: .9rem;
-  margin: 0;
-  white-space: nowrap;
 }
 
 .rating-comparison-row {
@@ -197,7 +215,7 @@
 }
 
 @media (max-width: 767px) {
-  .rating-comparison-form form {
+  .comparison-selector-row {
     display: block;
   }
 
@@ -207,7 +225,7 @@
   }
 
   .comparison-actions {
-    flex-wrap: wrap;
+    margin-top: .25rem;
   }
 
   .rating-comparison-row h2 {

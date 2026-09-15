@@ -1,9 +1,8 @@
 "use client"
 
 import type * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
+import { tv, type VariantProps } from "tailwind-variants"
 import { LoaderCircle } from "lucide-react"
-import { cn } from "#/lib/utils"
 import {
   Button as ButtonPrimitive,
   Link as LinkPrimitive,
@@ -11,38 +10,36 @@ import {
   type LinkProps as LinkPrimitiveProps,
 } from "react-aria-components"
 
-const buttonVariants = cva(
-  "group/button inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-blue-500 focus-visible:ring-3 focus-visible:ring-blue-500/50 disabled:pointer-events-none disabled:opacity-50 data-pending:pointer-events-none data-pending:opacity-70 aria-invalid:border-red-500 aria-invalid:ring-3 aria-invalid:ring-red-500/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4",
-  {
-    variants: {
-      variant: {
-        primary: "bg-blue-500 text-black-900 hover:bg-blue-500/80",
-        outline:
-          "border-blue-300 bg-white hover:bg-black-100 aria-expanded:bg-black-100",
-        secondary:
-          "bg-blue-300 text-black-900 hover:bg-blue-300/80 aria-expanded:bg-blue-300",
-        ghost: "hover:bg-black-100 aria-expanded:bg-black-100",
-        destructive:
-          "bg-red-500/10 text-red-500 hover:bg-red-500/20 focus-visible:border-red-500/40 focus-visible:ring-red-500/20",
-        link: "text-blue-500 underline-offset-4 hover:underline",
-      },
-      size: {
-        md: "h-8 px-2.5",
-        xs: "h-6 rounded-[min(var(--radius-md),10px)] px-2 text-xs [&_svg:not([class*=size-])]:size-3",
-        sm: "h-7 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] [&_svg:not([class*=size-])]:size-3.5",
-        lg: "h-9 px-2.5",
-        icon: "size-8",
-        "icon-xs": "size-6 rounded-[min(var(--radius-md),10px)] [&_svg:not([class*=size-])]:size-3",
-        "icon-sm": "size-7 rounded-[min(var(--radius-md),12px)]",
-        "icon-lg": "size-9",
-      },
+const buttonVariants = tv({
+  base: "group/button inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-blue-500 focus-visible:ring-3 focus-visible:ring-blue-500/50 disabled:pointer-events-none disabled:opacity-50 data-pending:pointer-events-none data-pending:opacity-70 aria-invalid:border-red-500 aria-invalid:ring-3 aria-invalid:ring-red-500/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4",
+  variants: {
+    variant: {
+      primary: "bg-blue-500 text-black-900 hover:bg-blue-500/80",
+      outline:
+        "border-blue-300 bg-white hover:bg-black-100 aria-expanded:bg-black-100",
+      secondary:
+        "bg-blue-300 text-black-900 hover:bg-blue-300/80 aria-expanded:bg-blue-300",
+      ghost: "hover:bg-black-100 aria-expanded:bg-black-100",
+      destructive:
+        "bg-red-500/10 text-red-500 hover:bg-red-500/20 focus-visible:border-red-500/40 focus-visible:ring-red-500/20",
+      link: "text-blue-500 underline-offset-4 hover:underline",
     },
-    defaultVariants: {
-      variant: "primary",
-      size: "md",
+    size: {
+      md: "h-8 px-2.5",
+      xs: "h-6 rounded-[min(var(--radius-md),10px)] px-2 text-xs [&_svg:not([class*=size-])]:size-3",
+      sm: "h-7 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] [&_svg:not([class*=size-])]:size-3.5",
+      lg: "h-9 px-2.5",
+      icon: "size-8",
+      "icon-xs": "size-6 rounded-[min(var(--radius-md),10px)] [&_svg:not([class*=size-])]:size-3",
+      "icon-sm": "size-7 rounded-[min(var(--radius-md),12px)]",
+      "icon-lg": "size-9",
     },
-  }
-)
+  },
+  defaultVariants: {
+    variant: "primary",
+    size: "md",
+  },
+})
 
 type ButtonType = Omit<ButtonPrimitiveProps, "className" | "children">
   & React.RefAttributes<HTMLButtonElement>
@@ -76,7 +73,7 @@ function Button({
         data-slot="button"
         data-variant={variant}
         data-size={size}
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={buttonVariants({ variant, size, className })}
         {...props}
       />
     );
@@ -89,7 +86,7 @@ function Button({
         data-variant={variant}
         data-size={size}
         isPending={isPending}
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={buttonVariants({ variant, size, className })}
         {...rest}
       >
         {isPending && <LoaderCircle className="animate-spin" aria-hidden="true" />}

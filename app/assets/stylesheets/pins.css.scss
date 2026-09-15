@@ -125,6 +125,22 @@
   max-width: 760px;
 }
 
+.comparison-interpretation,
+.comparison-evidence {
+  color: #444;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.comparison-interpretation {
+  margin: 0 0 1.25rem;
+  max-width: 760px;
+}
+
+.comparison-evidence {
+  margin: 1rem 0 0;
+}
+
 .comparison-selector-row {
   align-items: end;
   display: grid;

@@ -18,6 +18,8 @@
               </div>
             </div>
           <% end %>
+          <% evidence = @comparison_evidence[rating] %>
+          <p class="comparison-evidence col-md-12"><%= t(evidence[:insufficient_data] ? 'comparison.insufficient_data' : (evidence[:significant] ? 'comparison.signal_detected' : 'comparison.no_clear_difference'), first_count: evidence[:first_rated], second_count: evidence[:second_rated], p_value: evidence[:p_value] || 'n/a', default: 'Evidence is limited or uncertain in this sample (rated submissions: %{first_count} and %{second_count}; Fisher exact p=%{p_value}). This is not a prediction of an individual outcome.') %></p>
         </section>
       <% end %>
       <section class="comparison-stats" aria-labelledby="surgeon-comparison-submissions-heading">
@@ -65,7 +67,7 @@
                     <% if stats[:complications].present? %>
                       <ul class="comparison-complication-list">
                         <% stats[:complications].each do |complication| %>
-                          <li><%= link_to complication[:name], pins_path(surgeon: surgeon.id, complication: complication[:name]) %> (<%= complication[:rate] %>%)</li>
+                          <li><%= link_to complication[:name], pins_path(surgeon: surgeon.id, complication: complication[:name]) %> (<%= t('comparison.complication_rate', rate: complication[:rate], default: '%{rate}% of submissions') %>)</li>
                         <% end %>
                       </ul>
                     <% else %>

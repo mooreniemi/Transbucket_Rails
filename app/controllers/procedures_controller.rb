@@ -44,6 +44,10 @@ class ProceduresController < ApplicationController
     @comparison_scope_options = common_surgeons_for(procedures)
     @comparison_surgeon = find_common_surgeon(params[:surgeon_id], procedures)
     @comparison_data = procedure_comparison_data(procedures, @comparison_surgeon, @deduplicate)
+    @comparison_evidence = ComparisonStatistics.for(
+      @comparison_data[@first_procedure] || { distributions: { sensation: {}, satisfaction: {} } },
+      @comparison_data[@second_procedure] || { distributions: { sensation: {}, satisfaction: {} } }
+    )
   end
 
   def new

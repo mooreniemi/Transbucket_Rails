@@ -18,6 +18,7 @@
       <%= label_tag :deduplicate_comparison, t('comparison.deduplicate', default: 'Group repeat submissions') %>
     </div>
     <p class="comparison-normalization-help" id="deduplicate_comparison_help"><%= t('comparison.deduplicate_help', default: 'On: count at most one latest post per identified submitter, surgeon, and procedure group, so repeat posts do not inflate averages. Off: count every post.') %></p>
+    <p class="comparison-interpretation"><%= t('comparison.interpretation', default: 'This tool summarizes patterns in the available submissions. It cannot predict what any individual person will experience.') %></p>
     <div class="comparison-selector-row">
       <div class="form-group">
         <%= label_tag :first_id, t('comparison.first', default: 'First') %>

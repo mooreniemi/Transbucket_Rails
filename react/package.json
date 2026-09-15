@@ -17,14 +17,19 @@
     "prestorybook": "npm run tokens:build",
     "storybook": "storybook dev -p 6006",
     "prebuild-storybook": "npm run tokens:build",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=chpt_63f5a92ed13004a"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-devtools": "latest",
     "@tanstack/react-router": "latest",
     "@tanstack/react-router-devtools": "latest",
+    "class-variance-authority": "^0.7.1",
+    "cn": "^0.3.0",
+    "lucide-react": "^1.46.0",
     "react": "^19.2.0",
+    "react-aria-components": "^1.21.1",
     "react-dom": "^19.2.0",
     "tailwindcss": "^4.1.18"
   },
@@ -50,6 +55,7 @@
     "@vitejs/plugin-react": "^6.0.1",
     "@vitest/browser-playwright": "latest",
     "@vitest/coverage-v8": "latest",
+    "chromatic": "^18.9.0",
     "playwright": "latest",
     "storybook": "^10.6.0",
     "typescript": "^6.0.2",

@@ -30,3 +30,6 @@ docker-compose.override.yml
 
 # ad-hoc production data exports / audit CSVs (scratch, not for source control)
 /data/
+
+react/.agents/skills
+react/skills-lock.json

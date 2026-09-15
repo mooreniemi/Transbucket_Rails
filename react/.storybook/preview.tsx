@@ -1,19 +1,20 @@
 import { definePreview } from '@storybook/tanstack-react';
 import addonDocs from '@storybook/addon-docs';
+import addonA11y from '@storybook/addon-a11y';
+import addonVitest from '@storybook/addon-vitest';
+import addonChromatic from '@chromatic-com/storybook';
 import swatchbookAddon from '@unpunnyfuns/swatchbook-addon';
 import '../src/styles.css';
-// Preview-only: live-updates Tailwind utility classes as the toolbar flips
-// token axes. Not a replacement for the production build's generated
-// tailwind-theme.css (still produced by terrazzo.config.ts).
-import 'virtual:swatchbook/tailwind.css';
 
 // definePreview() needs each addon's own preview-composition function called
 // here explicitly -- registering an addon only in main.ts's addons array
 // (as a string) is not enough for definePreview() to pick up its preview
-// annotations (e.g. addon-docs's docs.renderer). This was the actual cause
-// of definePreview() breaking all Docs pages earlier, not a framework bug.
+// annotations. This is what broke Docs pages earlier (missing addonDocs())
+// and what left the Accessibility/Interactions/Visual tests panels stuck
+// "scan in progress" forever (missing addonA11y()/addonVitest()) -- both
+// are the same root cause, not separate bugs.
 export default definePreview({
-  addons: [addonDocs(), swatchbookAddon()],
+  addons: [addonDocs(), addonA11y(), addonVitest(), addonChromatic(), swatchbookAddon()],
   parameters: {
     controls: {
       matchers: {

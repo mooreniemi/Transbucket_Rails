@@ -3,7 +3,7 @@
 import { useEffect, useState, type ComponentPropsWithoutRef, type ReactNode } from "react"
 import { Menu as MenuIcon, X } from "lucide-react"
 import { cn } from "#/lib/utils"
-import { Button as ButtonPrimitive } from "react-aria-components"
+import { Button as ButtonPrimitive, Link } from "react-aria-components"
 import { HeaderContext, NavVariantContext, useHeaderContext } from "./headerContext"
 import logo from "#/assets/keys_optimized.png"
 
@@ -16,9 +16,22 @@ export interface HeaderProps extends Omit<ComponentPropsWithoutRef<"header">, "c
   children?: ReactNode
   /** Right-aligned content, e.g. a sign-in link. Shown next to the desktop nav and inside the mobile menu. */
   sectionRight?: ReactNode
+  /**
+   * Target for the built-in skip-navigation link, e.g. "#main-content".
+   * Pair it with a target element carrying that id and tabIndex={-1} so
+   * focus actually lands there. Every page that renders a Header gets one
+   * of these for free -- pass false to omit it (e.g. in isolated previews).
+   */
+  skipNavHref?: string | false
 }
 
-function Header({ className, sectionRight, children, ...props }: HeaderProps) {
+function Header({
+  className,
+  sectionRight,
+  children,
+  skipNavHref = "#main-content",
+  ...props
+}: HeaderProps) {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false)
 
   useEffect(() => {
@@ -39,6 +52,7 @@ function Header({ className, sectionRight, children, ...props }: HeaderProps) {
           className,
         )}
       >
+        {skipNavHref && <SkipNav href={skipNavHref} />}
         <div className="flex items-center gap-4">
           <a href="/">
             <img src={logo} alt="" className="h-8 w-auto inline"/>
@@ -64,12 +78,19 @@ function Header({ className, sectionRight, children, ...props }: HeaderProps) {
         <div
           inert={!isMobileNavOpen}
           className={cn(
-            "absolute inset-x-0 top-full max-md:grid md:hidden border-b border-black-300 bg-white transition-[grid-template-rows] duration-200",
-            isMobileNavOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+            // max-height, not grid-template-rows: 0fr/1fr -- a lone
+            // flexible grid track inside an auto-height (absolutely
+            // positioned) container doesn't reliably resolve to a true
+            // 0px, since fr units need a definite space to divide; it
+            // stayed pinned near the content's min-content height and
+            // leaked a sliver of the active link's background. A
+            // max-height transition doesn't have that failure mode.
+            "absolute inset-x-0 top-full max-md:block md:hidden overflow-hidden border-b border-black-300 bg-white transition-[max-height] duration-200",
+            isMobileNavOpen ? "max-h-96" : "max-h-0",
           )}
         >
           <NavVariantContext.Provider value="mobile">
-            <nav aria-label="Primary" className="flex flex-col gap-1 overflow-hidden p-2">
+            <nav aria-label="Primary" className="flex flex-col gap-1 p-2">
               {children}
               {sectionRight}
             </nav>
@@ -77,6 +98,26 @@ function Header({ className, sectionRight, children, ...props }: HeaderProps) {
         </div>
       </header>
     </HeaderContext.Provider>
+  )
+}
+
+// Hidden until focused (first Tab press on the page), then jumps keyboard
+// users past the header straight to the target passed as skipNavHref.
+function SkipNav({ href }: { href: string }) {
+  return (
+    <Link
+      href={href}
+      // Padding/background/rounding live on the inner span, not here --
+      // Tailwind's own not-sr-only utility resets padding to 0 as part of
+      // undoing sr-only, and .focus\:not-sr-only:focus (class+pseudo)
+      // outranks a plain .px-6/.py-4 (class only), so padding on this
+      // element would always lose to that reset while focused.
+      className="sr-only rounded-md outline-none focus:not-sr-only focus:fixed focus:top-4 focus:right-4 focus:z-50 focus-visible:ring-3 focus-visible:ring-blue-300/50"
+    >
+      <span className="block rounded-md bg-blue-300 px-3 py-2 text-sm font-medium text-black-900">
+        Skip to main content
+      </span>
+    </Link>
   )
 }
 

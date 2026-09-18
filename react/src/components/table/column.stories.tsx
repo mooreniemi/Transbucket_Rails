@@ -8,7 +8,7 @@ import { Row } from './row';
 import { Cell } from './cell';
 
 const meta = {
-  title: 'Components/Table/column',
+  title: 'Components/Data/Table/Column',
   component: Column,
   args: {
     children: 'Column content',

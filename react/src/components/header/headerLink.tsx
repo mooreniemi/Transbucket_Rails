@@ -21,7 +21,7 @@ function HeaderLink({ className, onPress, ...props }: HeaderLinkProps) {
         setMobileNavOpen(false)
       }}
       className={cn(
-        "rounded-md px-3 py-2 text-sm font-medium text-black-900 outline-none transition-colors hover:bg-black-100 focus-visible:ring-3 focus-visible:ring-blue-500/50 aria-expanded:bg-black-100 aria-[current=page]:bg-black-100 aria-[current=page]:font-semibold",
+        "rounded-md px-3 py-2 text-sm font-medium text-black-900 outline-none transition-colors hover:bg-black-100 focus-visible:ring-3 focus-visible:ring-blue-500/50 aria-expanded:bg-black-100 aria-[current=page]:font-semibold aria-[current=page]:underline aria-[current=page]:decoration-yellow-500 aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-10",
         className,
       )}
     />

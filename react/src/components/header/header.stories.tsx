@@ -9,18 +9,24 @@ const meta = {
   title: 'Components/Navigation/Header',
   component: Header,
   render: () => (
-    <Header
-      sectionRight={<HeaderLink href="#">Sign in</HeaderLink>}
-    >
-      <HeaderLink href="#" aria-current="page">Explore</HeaderLink>
-      <HeaderMenu label="Procedures">
-        <HeaderMenuItem href="#">Phalloplasty</HeaderMenuItem>
-        <HeaderMenuItem href="#">Vaginoplasty</HeaderMenuItem>
-        <HeaderMenuItem href="#">Mastectomy</HeaderMenuItem>
-        <HeaderMenuItem href="#">Facial feminization</HeaderMenuItem>
-      </HeaderMenu>
-      <HeaderLink href="#">Surgeons</HeaderLink>
-    </Header>
+    <div>
+      <Header
+        sectionRight={<HeaderLink href="#">Sign in</HeaderLink>}
+      >
+        <HeaderLink href="#" aria-current="page">Explore</HeaderLink>
+        <HeaderMenu label="Procedures">
+          <HeaderMenuItem href="#">Phalloplasty</HeaderMenuItem>
+          <HeaderMenuItem href="#">Vaginoplasty</HeaderMenuItem>
+          <HeaderMenuItem href="#">Mastectomy</HeaderMenuItem>
+          <HeaderMenuItem href="#">Facial feminization</HeaderMenuItem>
+        </HeaderMenu>
+        <HeaderLink href="#">Surgeons</HeaderLink>
+      </Header>
+      <main id="main-content" tabIndex={-1} className="p-4 outline-none">
+        <h1 className="text-lg font-semibold text-black-900">Main content</h1>
+        <p className="text-sm text-black-600">Tab from the top of the page to reveal the skip link.</p>
+      </main>
+    </div>
   ),
 } satisfies Meta<typeof Header>;
 
@@ -28,6 +34,17 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+export const SkipNav: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const link = canvas.getByRole('link', { name: 'Skip to main content' });
+    expect(link).toHaveAttribute('href', '#main-content');
+
+    await userEvent.tab();
+    expect(link).toHaveFocus();
+  },
+};
 
 export const MobileMenuOpen: Story = {
   play: async ({ canvasElement }) => {

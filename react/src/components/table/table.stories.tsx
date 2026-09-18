@@ -18,7 +18,7 @@ const pins = [
 ];
 
 const meta = {
-  title: 'Components/Table',
+  title: 'Components/Data/Table',
   component: Table,
   subcomponents: { TableHeader, TableBody, Column, Row, Cell },
   args: {

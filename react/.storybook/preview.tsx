@@ -15,12 +15,17 @@ import '../src/styles.css';
 // are the same root cause, not separate bugs.
 export default definePreview({
   addons: [addonDocs(), addonA11y(), addonVitest(), addonChromatic(), swatchbookAddon()],
+  tags: ['autodocs'],
   parameters: {
     controls: {
       matchers: {
        color: /(background|color)$/i,
        date: /Date$/i,
       },
+    },
+
+    docs: {
+      codePanel: true,
     },
 
     a11y: {

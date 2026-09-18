@@ -1,18 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/tanstack-react';
 import { expect } from 'storybook/test';
 
-import { Input } from './input';
+import { Checkbox } from './checkbox';
 
 const meta = {
-  title: 'Components/Forms/Input',
-  component: Input,
+  title: 'Components/Forms/Checkbox',
+  component: Checkbox,
   args: {
-    label: 'Email',
-    placeholder: 'you@example.com',
+    children: 'I agree to the terms and conditions',
     isDisabled: false,
     isRequired: false,
     isInvalid: false,
-    type: 'email',
+    isIndeterminate: false,
   },
   argTypes: {
     isDisabled: {
@@ -24,36 +23,49 @@ const meta = {
     isInvalid: {
       control: { type: 'boolean' },
     },
-    type: {
-      table: {
-        disable: true
-      }
+    isIndeterminate: {
+      control: { type: 'boolean' },
     },
   },
-} satisfies Meta<typeof Input>;
+} satisfies Meta<typeof Checkbox>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   play: async ({ canvas }) => {
-   expect(canvas.getByRole('textbox')).toHaveValue('');
+   expect(canvas.getByRole('checkbox')).not.toBeChecked();
   }
+};
+
+export const Selected: Story = {
+  args: {
+    defaultSelected: true,
+  },
+  play: async ({ canvas }) => {
+   expect(canvas.getByRole('checkbox')).toBeChecked();
+  }
+};
+
+export const Indeterminate: Story = {
+  args: {
+    isIndeterminate: true,
+  },
 };
 
 export const WithDescription: Story = {
   args: {
-    description: "We'll never share your email.",
+    description: 'You must accept before continuing.',
   },
 };
 
 export const Invalid: Story = {
   args: {
     isInvalid: true,
-    errorMessage: 'Please enter a valid email address.',
+    errorMessage: 'You must agree to continue.',
   },
   play: async ({ canvas }) => {
-   expect(canvas.getByRole('textbox')).toBeInvalid();
+   expect(canvas.getByRole('checkbox')).toBeInvalid();
   }
 };
 
@@ -62,6 +74,6 @@ export const Disabled: Story = {
     isDisabled: true,
   },
   play: async ({ canvas }) => {
-   expect(canvas.getByRole('textbox')).toBeDisabled();
+   expect(canvas.getByRole('checkbox')).toBeDisabled();
   }
 };

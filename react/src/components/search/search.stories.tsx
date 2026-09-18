@@ -1,18 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/tanstack-react';
 import { expect } from 'storybook/test';
 
-import { Input } from './input';
+import { Search } from './search';
 
 const meta = {
-  title: 'Components/Forms/Input',
-  component: Input,
+  title: 'Components/Forms/Search',
+  component: Search,
   args: {
-    label: 'Email',
-    placeholder: 'you@example.com',
+    label: 'Search',
+    placeholder: 'Search pins',
     isDisabled: false,
     isRequired: false,
     isInvalid: false,
-    type: 'email',
   },
   argTypes: {
     isDisabled: {
@@ -24,37 +23,38 @@ const meta = {
     isInvalid: {
       control: { type: 'boolean' },
     },
-    type: {
-      table: {
-        disable: true
-      }
-    },
   },
-} satisfies Meta<typeof Input>;
+} satisfies Meta<typeof Search>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   play: async ({ canvas }) => {
-   expect(canvas.getByRole('textbox')).toHaveValue('');
+   expect(canvas.getByRole('searchbox')).toHaveValue('');
+  }
+};
+
+export const WithDefaultValue: Story = {
+  args: {
+    defaultValue: 'vaginoplasty',
+  },
+  play: async ({ canvas }) => {
+   expect(canvas.getByRole('searchbox')).toHaveValue('vaginoplasty');
   }
 };
 
 export const WithDescription: Story = {
   args: {
-    description: "We'll never share your email.",
+    description: 'Search by patient, procedure, or surgeon.',
   },
 };
 
 export const Invalid: Story = {
   args: {
     isInvalid: true,
-    errorMessage: 'Please enter a valid email address.',
+    errorMessage: 'Please enter a search term.',
   },
-  play: async ({ canvas }) => {
-   expect(canvas.getByRole('textbox')).toBeInvalid();
-  }
 };
 
 export const Disabled: Story = {
@@ -62,6 +62,6 @@ export const Disabled: Story = {
     isDisabled: true,
   },
   play: async ({ canvas }) => {
-   expect(canvas.getByRole('textbox')).toBeDisabled();
+   expect(canvas.getByRole('searchbox')).toBeDisabled();
   }
 };

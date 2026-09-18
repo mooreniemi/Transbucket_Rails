@@ -6,12 +6,8 @@ import { Button } from './button';
 const onClickSpy = fn();
 
 const meta = {
-  title: 'Components/Button',
+  title: 'Components/Forms/Button',
   component: Button,
-  tags: ['autodocs'],
-  parameters: {
-    layout: 'fullscreen',
-  },
   args: {
     children: 'Label',
     isDisabled: false,

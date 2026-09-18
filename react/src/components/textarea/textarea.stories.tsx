@@ -1,18 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/tanstack-react';
 import { expect } from 'storybook/test';
 
-import { Input } from './input';
+import { Textarea } from './textarea';
 
 const meta = {
-  title: 'Components/Forms/Input',
-  component: Input,
+  title: 'Components/Forms/Textarea',
+  component: Textarea,
   args: {
-    label: 'Email',
-    placeholder: 'you@example.com',
+    label: 'Comment',
+    placeholder: 'Enter a comment',
     isDisabled: false,
     isRequired: false,
     isInvalid: false,
-    type: 'email',
   },
   argTypes: {
     isDisabled: {
@@ -24,13 +23,11 @@ const meta = {
     isInvalid: {
       control: { type: 'boolean' },
     },
-    type: {
-      table: {
-        disable: true
-      }
+    rows: {
+      control: { type: 'number' },
     },
   },
-} satisfies Meta<typeof Input>;
+} satisfies Meta<typeof Textarea>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -43,14 +40,14 @@ export const Default: Story = {
 
 export const WithDescription: Story = {
   args: {
-    description: "We'll never share your email.",
+    description: 'Maximum 500 characters.',
   },
 };
 
 export const Invalid: Story = {
   args: {
     isInvalid: true,
-    errorMessage: 'Please enter a valid email address.',
+    errorMessage: 'Comment is required.',
   },
   play: async ({ canvas }) => {
    expect(canvas.getByRole('textbox')).toBeInvalid();

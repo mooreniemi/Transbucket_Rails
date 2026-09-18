@@ -14,7 +14,7 @@ import {
 } from "react-aria-components"
 
 const checkboxStyles = tv({
-  base: "group flex items-center gap-2 font-sans text-sm transition [-webkit-tap-highlight-color:transparent]",
+  base: "flex items-center gap-2 font-sans text-sm transition [-webkit-tap-highlight-color:transparent]",
   variants: {
     isDisabled: {
       true: "cursor-not-allowed text-black-600",
@@ -24,7 +24,7 @@ const checkboxStyles = tv({
 })
 
 const boxStyles = tv({
-  base: "flex size-4.5 shrink-0 items-center justify-center rounded-sm border border-black-300 bg-white transition group-focus-visible:border-blue-500 group-focus-visible:ring-3 group-focus-visible:ring-blue-500/50",
+  base: "flex size-4.5 shrink-0 items-center justify-center rounded-sm border border-black-300 bg-white transition",
   variants: {
     isSelected: {
       true: "border-blue-500 bg-blue-500",
@@ -34,6 +34,9 @@ const boxStyles = tv({
     },
     isDisabled: {
       true: "border-black-200 bg-black-100",
+    },
+    isFocusVisible: {
+      true: "border-blue-500 ring-3 ring-blue-500/50",
     },
   },
 })
@@ -59,13 +62,14 @@ function Checkbox({
       <CheckboxButtonPrimitive
         className={(renderProps) => checkboxStyles({ isDisabled: renderProps.isDisabled })}
       >
-        {({ isSelected, isIndeterminate, isInvalid, isDisabled }) => (
+        {({ isSelected, isIndeterminate, isInvalid, isDisabled, isFocusVisible }) => (
           <>
             <div
               className={boxStyles({
                 isSelected: isSelected || isIndeterminate,
                 isInvalid,
                 isDisabled,
+                isFocusVisible,
               })}
             >
               {isIndeterminate ? (

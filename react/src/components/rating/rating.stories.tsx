@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/tanstack-react';
-import { expect } from 'storybook/test';
 
 import { Rating } from './rating';
 

@@ -49,7 +49,24 @@ const config: StorybookConfig = {
   viteFinal(viteConfig) {
     const plugins = Array.isArray(viteConfig.plugins) ? [...viteConfig.plugins] : [];
     plugins.push(tailwindcss());
-    return { ...viteConfig, plugins };
+    return {
+      ...viteConfig,
+      plugins,
+      server: {
+        ...viteConfig.server,
+        watch: {
+          ...viteConfig.server?.watch,
+          // The Chromatic addon rewrites this file in the project root every
+          // few seconds during dev; without ignoring it, Vite's watcher sees
+          // each rewrite as a change and reloads, which re-runs the addon's
+          // init and rewrites the file again -- an infinite reload loop.
+          ignored: [
+            ...(Array.isArray(viteConfig.server?.watch?.ignored) ? viteConfig.server.watch.ignored : []),
+            "**/chromatic-diagnostics.json",
+          ],
+        },
+      },
+    };
   },
 };
 export default config;

@@ -16,7 +16,7 @@ const meta = {
   render: (args) => (
     <Table>
         <TableHeader>
-            <Column>Test</Column>
+            <Column isRowHeader>Test</Column>
         </TableHeader>
         <TableBody>
             <Row><Cell {...args} /></Row>

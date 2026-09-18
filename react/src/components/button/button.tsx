@@ -11,7 +11,11 @@ import {
 } from "react-aria-components"
 
 const buttonVariants = tv({
-  base: "group/button inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-blue-500 focus-visible:ring-3 focus-visible:ring-blue-500/50 disabled:pointer-events-none disabled:opacity-50 data-pending:pointer-events-none data-pending:opacity-70 aria-invalid:border-red-500 aria-invalid:ring-3 aria-invalid:ring-red-500/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4",
+  // disabled: covers native <button disabled>; aria-disabled: covers
+  // react-aria-components' Link, which renders as a <span aria-disabled>
+  // (not a disableable native element, so :disabled never matches it) when
+  // its own isDisabled is set.
+  base: "group/button inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-blue-500 focus-visible:ring-3 focus-visible:ring-blue-500/50 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-pending:pointer-events-none data-pending:opacity-70 aria-invalid:border-red-500 aria-invalid:ring-3 aria-invalid:ring-red-500/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4",
   variants: {
     variant: {
       primary: "bg-blue-500 text-black-900 hover:bg-blue-500/80",

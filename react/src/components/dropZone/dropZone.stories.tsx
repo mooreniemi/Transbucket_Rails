@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/tanstack-react';
 import { expect } from 'storybook/test';
 
-import { DropZone, FileTrigger, Text } from './drop-zone';
+import { DropZone, FileTrigger, Text } from './dropZone';
 import { Button } from '../button';
 
 const meta = {

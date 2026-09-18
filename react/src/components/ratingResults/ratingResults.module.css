@@ -1,0 +1,11 @@
+.linearGradientGrey {
+    stop-color: var(--ds-color-black-300);
+}
+
+.linearGradientYellow {
+    stop-color: var(--ds-color-yellow-500);
+}
+
+.fillYellow {
+    fill: var(--ds-color-yellow-500);
+}

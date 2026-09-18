@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/tanstack-react';
 import { expect } from 'storybook/test';
 
-import { CheckboxGroup } from './checkbox-group';
+import { CheckboxGroup } from './checkboxGroup';
 import { Checkbox } from '../checkbox/checkbox';
 
 const meta = {

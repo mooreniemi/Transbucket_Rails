@@ -35,7 +35,7 @@ const starLabelStyles = tv({
       true: "cursor-default pointer-events-none",
     },
     isFocusVisible: {
-      true: "outline-[1.5px] outline-blue-600 -outline-offset-[1.5px]",
+      true: "outline-[3px] outline-blue-600 -outline-offset-[1.5px] rounded-md",
     },
   },
 });

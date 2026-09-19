@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   NEWSFEED_ENTRY_TIMESTAMPS = {
+    'mobile_directory_layout' => Time.utc(2026, 9, 19, 22, 40),
     'automatic_photo_resizing' => Time.utc(2026, 9, 19, 22, 30),
     'recent_for_you' => Time.utc(2026, 9, 19, 20, 46),
     'complication_cleanup' => Time.utc(2026, 9, 19, 20, 20),
@@ -87,6 +88,8 @@ class PagesController < ApplicationController
     when 'directory_improvements'
       [[t('newsfeed.links.browse_procedures', default: 'Browse procedures'), procedures_path(locale: I18n.locale)],
        [t('newsfeed.links.browse_surgeons', default: 'browse surgeons'), surgeons_path(locale: I18n.locale)]]
+    when 'mobile_directory_layout'
+      [[t('newsfeed.links.browse_surgeons', default: 'Browse surgeons'), surgeons_path(locale: I18n.locale)]]
     when 'locales' then [[t('newsfeed.links.choose_language', default: 'Choose a language'), home_path(locale: I18n.locale)]]
     when 'discord_invite' then [[t('newsfeed.links.join_discord', default: 'Join Discord'), 'https://discord.gg/fRW4RnPqgv']]
     when 'prefix_search' then [[t('newsfeed.links.search_pins', default: 'Search pins'), pins_path(locale: I18n.locale)]]

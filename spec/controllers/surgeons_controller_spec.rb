@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe SurgeonsController, :type => :controller do
   describe "#index" do
+    render_views
+
     it 'gives a list of surgeons' do
       surgeons = create_list(:surgeon, 2)
       get :index
@@ -34,6 +36,14 @@ RSpec.describe SurgeonsController, :type => :controller do
       get :index
 
       expect(assigns(:avg_sensation_by_surgeon)).to eq({})
+    end
+
+    it 'places the directory ad container after the surgeon directory content' do
+      create(:surgeon)
+
+      get :index
+
+      expect(response.body.index('directory-table-wrap')).to be < response.body.index('directory-after-content-ad')
     end
     xit 'links surgeons to queries for all pins of that surgeon' do
     end

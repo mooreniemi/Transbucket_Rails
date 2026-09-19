@@ -70,6 +70,16 @@ RSpec.describe 'directory table sorting', js: true, fake_images: true do
     expect(styles['label']).to include(I18n.t('directory.name'))
   end
 
+  it 'shows the first surgeon card in the initial mobile viewport' do
+    create(:surgeon)
+    page.current_window.resize_to(375, 800)
+
+    visit '/surgeons'
+
+    first_row_top = page.evaluate_script("document.querySelector('#surgeons tbody tr').getBoundingClientRect().top")
+    expect(first_row_top).to be < 800
+  end
+
   it 'shows and sorts surgeon rating columns for signed-in users' do
     user = create(:user, :with_confirmation)
     lower = create(:surgeon, first_name: 'Alpha', last_name: 'Surgeon')

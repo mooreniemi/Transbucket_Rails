@@ -37,7 +37,12 @@ namespace :complications do
         after = before.map { |tag| normalize.call(tag) }.compact.uniq
         next if before == after
 
-        changes << { 'pin_id' => pin.id, 'before' => before, 'after' => after }
+        changes << {
+          'pin_id' => pin.id,
+          'user_id' => pin.user_id,
+          'before' => before,
+          'after' => after
+        }
       end
 
       puts "Planned complication cleanup changes: #{changes.length}"

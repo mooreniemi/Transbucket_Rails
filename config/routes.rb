@@ -28,6 +28,7 @@ Rails.application.routes.draw do
 
     # FIXME duplicative
     resources :pin_images
+    get 'pins/complication_suggestions' => 'pins#complication_suggestions', as: :complication_suggestions
     resources :pins do
       resources :pin_images
       resources :flags, :only => [:create]

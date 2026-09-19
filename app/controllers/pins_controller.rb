@@ -2,7 +2,7 @@ class PinsController < ApplicationController
   include SanitizeNames
   before_filter :authenticate_user!
   before_filter :validate_user, :only => [:edit, :update, :destroy]
-  before_filter :get_pin, :except => [:index, :new, :create, :admin]
+  before_filter :get_pin, :except => [:index, :new, :create, :admin, :complication_suggestions]
   respond_to :json
 
   # GET /pins
@@ -37,6 +37,26 @@ class PinsController < ApplicationController
       format.html # new.html.erb
       format.json { render json: @form.model }
     end
+  end
+
+  def complication_suggestions
+    term = params[:term].to_s.strip.downcase[0, 80]
+    return render json: [] if term.blank?
+
+    # Only suggest tags that are actually used in Pin complication taggings.
+    # Keep this prefix-based and bounded so the endpoint stays cheap as the
+    # tag vocabulary grows.
+    term = term.gsub(/[%_\\]/, '')
+    suggestions = ActsAsTaggableOn::Tag.
+      joins('INNER JOIN taggings ON taggings.tag_id = tags.id').
+      where(taggings: { taggable_type: 'Pin', context: 'complications' }).
+      where('LOWER(tags.name) LIKE ?', "#{term}%").
+      select('DISTINCT tags.name').
+      order('tags.name').
+      limit(8).
+      map(&:name)
+
+    render json: suggestions
   end
 
   # GET /pins/1/edit

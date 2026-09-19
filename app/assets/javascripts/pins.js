@@ -10,26 +10,99 @@ $(document).ready(function() {
       var hasComplications = complicationToggles.filter(':checked').val() === '1';
       complicationTags.toggleClass('hide', !hasComplications);
       complicationInput.prop('disabled', !hasComplications);
+      complicationInput.siblings('.complication-tag-input').prop('disabled', !hasComplications);
       complicationTags.attr('aria-hidden', hasComplications ? 'false' : 'true');
     }
     complicationToggles.on('change', updateComplicationVisibility);
     updateComplicationVisibility();
 
-    if (complicationInput.length) {
+    if (complicationInput.length && $('#pin_complication_input').length) {
+      var complicationTextInput = $('#pin_complication_input'),
+          complicationChips = $('#pin-complication-chips');
       var originalComplications = complicationInput.data('complication-original'),
           complicationValidation = complicationInput.data('complication-validation');
 
+      function currentTags() {
+        return complicationInput.val().split(',').map(function(tag) {
+          return $.trim(tag);
+        }).filter(Boolean);
+      }
+
+      function renderComplicationChips() {
+        complicationChips.empty();
+        currentTags().forEach(function(tag, index) {
+          var chip = $('<span class="complication-chip">').text(tag),
+              remove = $('<button type="button" class="complication-chip-remove" aria-label="Remove ' + $('<div>').text(tag).html() + '">').text('×');
+          remove.on('click', function() {
+            var tags = currentTags();
+            tags.splice(index, 1);
+            complicationInput.val(tags.join(', ')).trigger('input');
+            renderComplicationChips();
+          });
+          chip.append(remove).appendTo(complicationChips);
+        });
+      }
+
+      function commitComplicationText() {
+        var pieces = complicationTextInput.val().split(','),
+            tags = currentTags(),
+            remainder = pieces.pop(),
+            invalid = [];
+        pieces.forEach(function(piece) {
+          var tag = $.trim(piece);
+          if (!tag) return;
+          if (tag.length > 80 || /[\r\n]/.test(tag)) {
+            invalid.push(tag);
+          } else if (tags.every(function(existing) { return existing.toLowerCase() !== tag.toLowerCase(); })) {
+            tags.push(tag);
+          }
+        });
+        complicationInput.val(tags.join(', ')).trigger('input');
+        complicationTextInput.val(invalid.concat(remainder || '').filter(Boolean).join(', '));
+        renderComplicationChips();
+      }
+
       function validateComplications() {
-        var value = complicationInput.val(),
+        var value = complicationInput.val() + (complicationTextInput.val() ? ', ' + complicationTextInput.val() : ''),
             tags = value.split(',').map(function(tag) { return $.trim(tag); }).filter(Boolean),
             valid = value === originalComplications || (!/[\r\n]/.test(value) && tags.every(function(tag) {
               return tag.length <= 80;
             }));
 
-        complicationInput[0].setCustomValidity(valid ? '' : complicationValidation);
+        complicationTextInput[0].setCustomValidity(valid ? '' : complicationValidation);
       }
 
-      complicationInput.on('input change', validateComplications);
+      complicationTextInput.on('input', function() {
+        if (complicationTextInput.val().indexOf(',') !== -1) commitComplicationText();
+        validateComplications();
+      });
+      complicationTextInput.on('keydown', function(event) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          commitComplicationText();
+          validateComplications();
+        }
+      });
+      complicationTextInput.closest('form').on('submit', function() {
+        commitComplicationText();
+        validateComplications();
+      });
+      complicationInput.on('input change', function() {
+        renderComplicationChips();
+        validateComplications();
+      });
+      complicationTextInput.autocomplete({
+        source: complicationTextInput.data('complication-suggestions-url'),
+        minLength: 2,
+        select: function(event, ui) {
+          event.preventDefault();
+          complicationTextInput.val(ui.item.value + ',');
+          commitComplicationText();
+          validateComplications();
+        }
+      });
+      complicationInput.val(originalComplications || '');
+      renderComplicationChips();
       validateComplications();
     }
 

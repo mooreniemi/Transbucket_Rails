@@ -36,6 +36,14 @@ describe "pin creation" do
     end
 
     context "with no surgeons or procedures" do
+      it "shows the complication tag editor without a redundant side label" do
+        visit '/pins/new'
+
+        expect(page).to have_field('pin_complication_input', disabled: true)
+        expect(page).to have_no_selector('.complication-tag-editor .input-group-addon')
+        expect(page).to have_text(I18n.t('public.form.complications_help'))
+      end
+
       it "returns errors upon submission" do
         self.send(:pin_create)
         click_button "Submit Now"
@@ -47,6 +55,18 @@ describe "pin creation" do
     context "with surgeon and procedure initialized" do
       let!(:surgeon) { create(:surgeon) }
       let!(:procedure) { create(:procedure) }
+
+      it "accepts comma-separated complication tags" do
+        visit '/pins/new'
+        find('input[data-complications-toggle][value="1"]').click if js
+
+        if js
+          fill_in 'pin_complication_input', with: 'hematoma, fistula,'
+          expect(page).to have_selector('.complication-chip', count: 2)
+        else
+          expect(page).to have_field('pin_complication_input', disabled: true)
+        end
+      end
 
       it "creates a new pin with data and images" do
         self.send(:pin_create)

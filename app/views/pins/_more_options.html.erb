@@ -50,9 +50,10 @@
     </label>
   </fieldset>
   <div id="pin-complication-tags" class="complication-tags <%= 'hide' unless complications_present %>">
-    <div class="input-group padded_nicely">
-      <span class="input-group-addon"><%= t('public.form.complication_tags') %></span>
-      <%= f.text_field :complication_list, class: "form-control", required: false, disabled: !complications_present, placeholder: t('public.form.complications_placeholder'), data: { complication_original: f.object.complication_list.to_s, complication_validation: t('public.form.complications_validation') } %>
+    <div class="complication-tag-editor padded_nicely">
+      <div id="pin-complication-chips" class="complication-chips" aria-live="polite"></div>
+      <%= f.hidden_field :complication_list, id: 'pin_complication_list', disabled: !complications_present, data: { complication_original: f.object.complication_list.to_s, complication_validation: t('public.form.complications_validation') } %>
+      <%= text_field_tag 'pin_complication_input', '', id: 'pin_complication_input', class: "form-control complication-tag-input", required: false, disabled: !complications_present, autocomplete: 'off', placeholder: t('public.form.complications_placeholder'), data: { complication_suggestions_url: complication_suggestions_path } %>
     </div>
     <small class="field-hint"><%= t('public.form.complications_help') %></small>
   </div>

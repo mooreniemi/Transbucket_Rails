@@ -160,6 +160,19 @@ describe PinsController, :type => :controller do
       end
     end
 
+    describe 'GET #complication_suggestions' do
+      it 'returns existing Pin complication tags matching the term' do
+        pin = create(:pin, user: user)
+        pin.complication_list = 'hematoma, infection'
+        pin.save!
+
+        get :complication_suggestions, term: 'hema', format: :json
+
+        expect(response).to be_success
+        expect(JSON.parse(response.body)).to eq(['hematoma'])
+      end
+    end
+
     describe 'POST #create' do
       it 'returns a valid pin on create' do
         surgeon = attributes_for(:surgeon)

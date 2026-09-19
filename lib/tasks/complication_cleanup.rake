@@ -1,7 +1,14 @@
 require 'yaml'
 
 namespace :complications do
-  SENTINEL_TAGS = %w[0 n/a na no none nothing no\ complications none\ so\ far none\ to\ date].freeze
+  SENTINEL_TAGS = %w[0 n/a na no none nothing no\ complications none\ so\ far none\ to\ date too.].freeze
+  PLACEHOLDER_TAG_PATTERNS = [
+    /\A(?:absolutely\s+)?none(?:\s+(?:so\s+far|as\s+of\s+yet|at\s+this\s+time|from\s+stage\s+\d+|in\s+this\s+stage|to\s+date|to\s+complain\s+about|yet|what[-\s]?so[-\s]?ever))?[.!\s:-]*\z/i,
+    /\Anone[^a-z0-9]*\z/i,
+    /\A(?:\d+\s+months?\s+postop|very\s+early\s+on)\s*[-:;]\s*none(?:\s+(?:so\s+far|yet))?[.!\s:-]*\z/i,
+    /\A(?:aucune\s*\/\s*none|nulla\s*\/\s*nothing)\z/i,
+    /\Ano\s+(?:issues?(?:\s+after\s+surgery)?|complications)[.!\s]*\z/i
+  ].freeze
   CANONICAL_TAGS = {
     'hematoma' => 'hematoma',
     'haematoma' => 'hematoma',
@@ -24,7 +31,7 @@ namespace :complications do
 
     normalize = lambda do |tag|
       key = tag.to_s.strip.downcase
-      next nil if SENTINEL_TAGS.include?(key)
+      next nil if SENTINEL_TAGS.include?(key) || PLACEHOLDER_TAG_PATTERNS.any? { |pattern| pattern.match?(key) }
 
       CANONICAL_TAGS.fetch(key, tag.to_s.strip)
     end

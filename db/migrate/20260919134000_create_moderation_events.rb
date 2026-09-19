@@ -1,4 +1,4 @@
-class CreateModerationEvents < ActiveRecord::Migration
+class CreateModerationEvents < ActiveRecord::Migration[4.2]
   def change
     create_table :moderation_events do |t|
       t.integer :user_id

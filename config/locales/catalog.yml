@@ -240,7 +240,7 @@ en:
       comparison_stats: You can now %{compare_procedures} or %{compare_surgeons} side by side, including rating distributions, averages, outcome percentages, and shared-scope filters. These screenshots use fictional demo data to protect privacy.
       complication_cleanup: We clarified and grouped complication tags so comparison pages can show more useful rates. Original pin descriptions stay unchanged, and the tag changes are reversible if an owner spots an error or has concerns.
       complication_image_alt: Complication tag editor using short tags and suggestions
-      recent_for_you: The submissions page now separates <a href="%{recent_submissions}">Recent submissions</a> from <a href="%{for_you}">For You</a>, so you can browse the newest posts or a feed personalized to your interests.
+      recent_for_you: The submissions page now separates %{recent_submissions} from %{for_you}, so you can browse the newest posts or a feed personalized to your interests.
       recent_for_you_image_alt: Recent and For You submission feeds using fictional demo data
       procedure_cleanup: We cleaned up a set of procedure names so common shorthand
         and typo variants now point to the same canonical procedure pages, which makes

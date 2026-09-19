@@ -19,6 +19,9 @@ Rails.application.routes.draw do
     resources :comments, :only => [:new, :create, :destroy] do
       resources :flags, :only => [:create]
     end
+    resources :content_events, only: [:create] do
+      collection { post :batch }
+    end
 
     get 'contact' => 'contact#new'
     post 'contact' => 'contact#create'

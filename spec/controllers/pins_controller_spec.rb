@@ -31,6 +31,77 @@ describe PinsController, :type => :controller do
         expect(response).to be_success
         expect(response.body).to include('最近の投稿')
       end
+
+      it 'shows a For You tab for MTF and FTM users' do
+        user.update_attributes!(gender: create(:gender, name: 'MTF'))
+
+        get :index
+
+        expect(response.body).to include('Recent')
+        expect(response.body).to include('For You')
+        expect(response.body).to include('feed=for_you')
+      end
+
+      it 'does not show a For You tab when the profile cannot define one' do
+        user.update_attributes!(gender: create(:gender, name: 'GenderQueer'))
+
+        get :index
+
+        expect(response.body).not_to include('For You')
+      end
+
+      it 'keeps the moderator navigation compact while preserving its accessible label' do
+        user.update_attributes!(admin: true)
+
+        get :index
+
+        expect(response.body).to include('>MQ</a>')
+        expect(response.body).to include('title="Moderation queue"')
+        expect(response.body).not_to include('>ModQueue</a>')
+      end
+
+      it 'labels the personalized feed For You' do
+        user.update_attributes!(gender: create(:gender, name: 'MTF'))
+
+        get :index, feed: 'for_you'
+
+        expect(response.body).to include('<h1>For You</h1>')
+        expect(response.body).not_to include('<h1>Recent Submissions</h1>')
+      end
+
+      it 'renders each published Pin card with its own impression and open telemetry target' do
+        first_pin = create(:pin, user: user)
+        second_pin = create(:pin, user: user)
+
+        get :index
+
+        [first_pin, second_pin].each do |pin|
+          card = response.body[/<div class="item" data-pin-id="#{pin.id}".*?<\/div>\s*<\/div>/m]
+          expect(card).to include('data-event-type="impression"')
+          expect(card).to include("data-content-id=\"#{pin.id}\"")
+          expect(card).to include('data-content-event-open="true"')
+          expect(card).to include("href=\"#{pin_path(pin)}\"")
+        end
+      end
+    end
+
+    describe 'GET #admin' do
+      it 'renders current flaggers and lifetime moderation counts' do
+        admin = create(:user, admin: true)
+        pin = create(:pin)
+        flaggers = create_list(:user, 3)
+        flaggers.each { |flagger| Flag.new(flagger, pin).flag_on }
+        sign_in(admin)
+
+        get :admin
+
+        expect(response).to be_success
+        expect(response.body).to include('Top flaggers (lifetime)')
+        expect(response.body).to include('Most flagged (lifetime)')
+        expect(response.body).to include('<td>2</td>')
+        expect(response.body).to include('<td>3</td>')
+        expect(response.body).to include(flaggers.first.username)
+      end
     end
 
     describe 'GET #show' do
@@ -49,6 +120,15 @@ describe PinsController, :type => :controller do
         expect(response).to be_success
         expect(response.body).to include('外科医')
         expect(response.body).to include('手術')
+      end
+
+      it 'preserves line breaks in the in-depth experience' do
+        pin = create(:pin, user: user, details: "First paragraph\nSecond paragraph")
+
+        get :show, id: pin.id
+
+        expect(response.body).to match(/First paragraph\s*<br/)
+        expect(response.body).to include('Second paragraph')
       end
 
       it 'links the procedure label to the procedure page' do

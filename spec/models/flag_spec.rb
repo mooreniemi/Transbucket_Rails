@@ -13,6 +13,7 @@ describe Flag do
     Flag.new(user3, pin).flag_on
 
     expect(pin.pending?).to eq(true)
+    expect(ModerationEvent.where(action: 'flag', content_type: 'Pin', content_id: pin.id).count).to eq(3)
     # TODO
     # expect(Delayed::Job.all.count).to eq(1)
   end

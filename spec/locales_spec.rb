@@ -19,6 +19,7 @@ describe 'application locales' do
   REQUIRED_PASSWORD_CHANGE_KEYS = %w(subject greeting message).freeze
   REQUIRED_UNLOCK_KEYS = %w(subject greeting message instruction action).freeze
   REQUIRED_COMMENT_MAILER_KEYS = %w(subject greeting posted reply this_link flag_help unsubscribe).freeze
+  REQUIRED_COMPLICATION_FORM_KEYS = %w(cost_question insurance_question insurance_yes insurance_no revision_question sensation_question satisfaction_question complication_tags complications_question complications_yes complications_no complications_help complications_validation).freeze
 
   before do
     I18n.available_locales = SUPPORTED_LOCALES.map(&:to_sym)
@@ -29,6 +30,10 @@ describe 'application locales' do
     @translations['sv'] = deep_merge(@translations.fetch('en'), swedish.fetch('sv'))
     procedure_guide = YAML.load_file(locale_files.find { |file| file.end_with?('procedure_guide.yml') })
     procedure_guide.each do |locale, values|
+      @translations[locale] = deep_merge(@translations.fetch(locale), values)
+    end
+    form_guidance = YAML.load_file(locale_files.find { |file| file.end_with?('form_guidance.yml') })
+    form_guidance.each do |locale, values|
       @translations[locale] = deep_merge(@translations.fetch(locale), values)
     end
     @about_translations = YAML.load_file(locale_files.find { |file| file.end_with?('about.yml') })
@@ -81,6 +86,11 @@ describe 'application locales' do
       end
       REQUIRED_PUBLIC_AUTH_KEYS.each do |key|
         value = @translations.fetch(locale).fetch('public').fetch('auth').fetch(key)
+        expect(value).not_to be_nil
+        expect(value).not_to eq('')
+      end
+      REQUIRED_COMPLICATION_FORM_KEYS.each do |key|
+        value = @translations.fetch(locale).fetch('public').fetch('form').fetch(key)
         expect(value).not_to be_nil
         expect(value).not_to eq('')
       end

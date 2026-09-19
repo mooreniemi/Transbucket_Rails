@@ -1,6 +1,11 @@
 <% page_title = "#{@surgeon.to_s} | Transbucket" %>
 <% seo_meta title: page_title, description: "#{@surgeon.to_s}: #{t('directory.surgeons_intro')}", canonical: surgeon_url(id: @surgeon.to_param), type: 'profile' %>
 <% title page_title %>
+<%= content_tag :div, '', hidden: true, 'data-content-event' => true,
+  'data-content-event-url' => content_events_path,
+  'data-content-type' => 'Surgeon',
+  'data-content-id' => @surgeon.id,
+  'data-event-type' => 'view' %>
 <% surgeon_address = {
   '@type' => 'PostalAddress',
   'streetAddress' => @surgeon.address,

@@ -4,6 +4,11 @@
 <% page_title = "#{procedure_name} #{t('procedure_guide.title_suffix', default: 'results and experiences')} | Transbucket" %>
 <% seo_meta title: page_title, description: seo_description, canonical: procedure_url(id: @procedure.to_param), type: 'article' %>
 <% title page_title %>
+<%= content_tag :div, '', hidden: true, 'data-content-event' => true,
+  'data-content-event-url' => content_events_path,
+  'data-content-type' => 'Procedure',
+  'data-content-id' => @procedure.id,
+  'data-event-type' => 'view' %>
 <% json_ld_tag(
   {
     '@context' => 'https://schema.org',

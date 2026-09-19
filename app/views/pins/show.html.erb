@@ -3,6 +3,11 @@
 <% pin_image = @pin.pin_images.find { |image| image.photo_file_size.present? } %>
 <% seo_meta title: pin_title, description: "#{pin_title} on Transbucket.", canonical: pin_url(id: @pin.id), image: (pin_image ? image_url(pin_image.photo) : nil), type: 'article' %>
 <% title pin_title %>
+<%= content_tag :div, '', hidden: true, 'data-content-event' => true,
+  'data-content-event-url' => content_events_path,
+  'data-content-type' => 'Pin',
+  'data-content-id' => @pin.id,
+  'data-event-type' => 'view' %>
 <% json_ld_tag(
   {
     '@context' => 'https://schema.org',
@@ -102,7 +107,7 @@
     <% if @pin.details.present? %>
       <div id="details" class="pin-details">
         <%= fa_icon "quote-left" %>
-        <%= @pin.details.try(:html_safe) %>
+        <%= simple_format(@pin.details) %>
       </div>
     <% end %>
   </div>

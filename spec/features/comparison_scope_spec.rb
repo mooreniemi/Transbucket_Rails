@@ -104,11 +104,11 @@ RSpec.describe 'comparison scope selectors', js: true, fake_images: true do
       expect(page).to have_content('hematoma')
       expect(page).to have_content('67% of submissions')
       expect(page).to have_content('50% of submissions')
-      expect(page).to have_content('Both (First +17 points)')
+      expect(page).to have_content('Both (first procedure +17 points)')
       expect(page).to have_content('fistula')
-      expect(page).to have_content('First only')
+      expect(page).to have_content('first procedure only')
       expect(page).to have_content('infection')
-      expect(page).to have_content('Second only')
+      expect(page).to have_content('second procedure only')
     end
   end
 end

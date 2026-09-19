@@ -112,7 +112,18 @@ class Pin < ActiveRecord::Base
   end
 
   def self.recent
-    published.order(updated_at: :desc, id: :desc)
+    published.
+      joins('LEFT OUTER JOIN pin_images ON pin_images.pin_id = pins.id').
+      group('pins.id').
+      order(<<~SQL.squish)
+        GREATEST(
+          pins.created_at,
+          COALESCE(MAX(pin_images.created_at), pins.created_at),
+          COALESCE(MAX(pin_images.updated_at), pins.created_at),
+          COALESCE(MAX(pin_images.photo_updated_at), pins.created_at)
+        ) DESC,
+        pins.id DESC
+      SQL
   end
 
   def self.by_gender(gender_name)

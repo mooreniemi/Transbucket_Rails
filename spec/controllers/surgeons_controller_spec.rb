@@ -39,6 +39,21 @@ RSpec.describe SurgeonsController, :type => :controller do
     end
   end
   describe "#show" do
+    describe 'activity marker' do
+      render_views
+
+      it 'renders a best-effort view-event marker for public surgeon pages' do
+        surgeon = create(:surgeon)
+
+        get :show, id: surgeon.id
+
+        expect(response.body).to include('data-content-event="true"')
+        expect(response.body).to include('data-content-type="Surgeon"')
+        expect(response.body).to include("data-content-id=\"#{surgeon.id}\"")
+        expect(response.body).to include(content_events_path(locale: :en))
+      end
+    end
+
     it 'loads overall rating averages for signed-in users' do
       user = create(:user)
       surgeon = create(:surgeon)

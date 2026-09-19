@@ -14,6 +14,7 @@
       <div class="input-group padded_nicely">
         <%= surgeon_form.text_field :url, placeholder: t('public.form.surgeon_url') %>
       </div>
+      <div id="surgeon-suggestion" class="entity-suggestion hide" aria-live="polite" data-label="<%= t('public.form.similar_existing') %>" data-use="<%= t('public.form.use_existing') %>"></div>
     </div>
   </div>
 </div>

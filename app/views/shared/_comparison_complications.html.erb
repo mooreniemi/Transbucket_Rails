@@ -32,14 +32,14 @@ end %>
                 <% if first_rate.nil? %>
                   <%= t('comparison.not_reported', default: 'Not reported') %>
                 <% else %>
-                  <%= link_to t('comparison.complication_rate', rate: first_rate, default: '%{rate}% of submissions'), pins_path(first_filter.merge(complication: name)) %>
+                  <%= link_to t('comparison.complication_rate', rate: display_complication_rate(first_complication), default: '%{rate} of submissions'), pins_path(first_filter.merge(complication: name)) %>
                 <% end %>
               </td>
               <td>
                 <% if second_rate.nil? %>
                   <%= t('comparison.not_reported', default: 'Not reported') %>
                 <% else %>
-                  <%= link_to t('comparison.complication_rate', rate: second_rate, default: '%{rate}% of submissions'), pins_path(second_filter.merge(complication: name)) %>
+                  <%= link_to t('comparison.complication_rate', rate: display_complication_rate(second_complication), default: '%{rate} of submissions'), pins_path(second_filter.merge(complication: name)) %>
                 <% end %>
               </td>
               <td>
@@ -47,12 +47,12 @@ end %>
                   <% difference = first_rate - second_rate %>
                   <%= t('comparison.shared_complication', default: 'Both') %>
                   <% unless difference.zero? %>
-                    (<%= difference.positive? ? t('comparison.first_more_frequent', rate: difference, default: 'First +%{rate} points') : t('comparison.second_more_frequent', rate: difference.abs, default: 'Second +%{rate} points') %>)
+                    (<%= difference.positive? ? "#{first_name} +#{difference} points" : "#{second_name} +#{difference.abs} points" %>)
                   <% end %>
                 <% elsif first_rate %>
-                  <%= t('comparison.first_only', default: 'First only') %>
+                  <%= "#{first_name} only" %>
                 <% else %>
-                  <%= t('comparison.second_only', default: 'Second only') %>
+                  <%= "#{second_name} only" %>
                 <% end %>
               </td>
             </tr>

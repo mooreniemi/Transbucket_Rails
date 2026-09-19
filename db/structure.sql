@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict HKUgXsb8TJgfEwmtW4uVWF2yLZcIpHfMf0irP8RRUVNQdV4FbENn24VzH43RGk4
+\restrict hKohc6fgTwCjE07FKdk1Hl5hWSNwcEbHZBpP3kMOtVaWBidASVg0adB9BncP0pH
 
 -- Dumped from database version 16.15 (Debian 16.15-1.pgdg13+2)
 -- Dumped by pg_dump version 16.15 (Homebrew)
@@ -101,6 +101,46 @@ CREATE SEQUENCE public.comments_id_seq
 --
 
 ALTER SEQUENCE public.comments_id_seq OWNED BY public.comments.id;
+
+
+--
+-- Name: content_events; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.content_events (
+    id integer NOT NULL,
+    user_id integer,
+    visitor_hash character varying(64),
+    network_hash character varying(64),
+    content_type character varying NOT NULL,
+    content_id integer NOT NULL,
+    event_type character varying NOT NULL,
+    source character varying DEFAULT 'server'::character varying NOT NULL,
+    locale character varying(10),
+    occurred_at timestamp without time zone NOT NULL,
+    client_context jsonb DEFAULT '{}'::jsonb NOT NULL,
+    event_context jsonb DEFAULT '{}'::jsonb NOT NULL
+);
+
+
+--
+-- Name: content_events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.content_events_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: content_events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.content_events_id_seq OWNED BY public.content_events.id;
 
 
 --
@@ -241,6 +281,40 @@ ALTER SEQUENCE public.messages_id_seq OWNED BY public.messages.id;
 
 
 --
+-- Name: moderation_events; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.moderation_events (
+    id integer NOT NULL,
+    user_id integer,
+    action character varying NOT NULL,
+    content_type character varying NOT NULL,
+    content_id integer NOT NULL,
+    occurred_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: moderation_events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.moderation_events_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: moderation_events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.moderation_events_id_seq OWNED BY public.moderation_events.id;
+
+
+--
 -- Name: pin_images; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -299,7 +373,8 @@ CREATE TABLE public.pins (
     username character varying,
     state character varying,
     sensation integer,
-    satisfaction integer
+    satisfaction integer,
+    covered_by_insurance boolean
 );
 
 
@@ -723,6 +798,13 @@ ALTER TABLE ONLY public.comments ALTER COLUMN id SET DEFAULT nextval('public.com
 
 
 --
+-- Name: content_events id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.content_events ALTER COLUMN id SET DEFAULT nextval('public.content_events_id_seq'::regclass);
+
+
+--
 -- Name: delayed_jobs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -748,6 +830,13 @@ ALTER TABLE ONLY public.genders ALTER COLUMN id SET DEFAULT nextval('public.gend
 --
 
 ALTER TABLE ONLY public.messages ALTER COLUMN id SET DEFAULT nextval('public.messages_id_seq'::regclass);
+
+
+--
+-- Name: moderation_events id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.moderation_events ALTER COLUMN id SET DEFAULT nextval('public.moderation_events_id_seq'::regclass);
 
 
 --
@@ -851,6 +940,14 @@ ALTER TABLE ONLY public.comments
 
 
 --
+-- Name: content_events content_events_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.content_events
+    ADD CONSTRAINT content_events_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: delayed_jobs delayed_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -880,6 +977,14 @@ ALTER TABLE ONLY public.genders
 
 ALTER TABLE ONLY public.messages
     ADD CONSTRAINT messages_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: moderation_events moderation_events_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.moderation_events
+    ADD CONSTRAINT moderation_events_pkey PRIMARY KEY (id);
 
 
 --
@@ -1000,6 +1105,48 @@ CREATE INDEX index_comments_on_user_id ON public.comments USING btree (user_id);
 
 
 --
+-- Name: index_content_events_on_content_event_time; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_content_events_on_content_event_time ON public.content_events USING btree (content_type, content_id, event_type, occurred_at);
+
+
+--
+-- Name: index_content_events_on_network_hash_and_occurred_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_content_events_on_network_hash_and_occurred_at ON public.content_events USING btree (network_hash, occurred_at);
+
+
+--
+-- Name: index_content_events_on_user_deduplication; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_content_events_on_user_deduplication ON public.content_events USING btree (user_id, content_type, content_id, event_type, occurred_at);
+
+
+--
+-- Name: index_content_events_on_user_id_and_occurred_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_content_events_on_user_id_and_occurred_at ON public.content_events USING btree (user_id, occurred_at);
+
+
+--
+-- Name: index_content_events_on_visitor_deduplication; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_content_events_on_visitor_deduplication ON public.content_events USING btree (visitor_hash, content_type, content_id, event_type, occurred_at);
+
+
+--
+-- Name: index_content_events_on_visitor_hash_and_occurred_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_content_events_on_visitor_hash_and_occurred_at ON public.content_events USING btree (visitor_hash, occurred_at);
+
+
+--
 -- Name: index_friendly_id_slugs_on_slug_and_sluggable_type; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1025,6 +1172,27 @@ CREATE INDEX index_friendly_id_slugs_on_sluggable_id ON public.friendly_id_slugs
 --
 
 CREATE INDEX index_friendly_id_slugs_on_sluggable_type ON public.friendly_id_slugs USING btree (sluggable_type);
+
+
+--
+-- Name: index_moderation_events_on_action_and_occurred_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_moderation_events_on_action_and_occurred_at ON public.moderation_events USING btree (action, occurred_at);
+
+
+--
+-- Name: index_moderation_events_on_content_time; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_moderation_events_on_content_time ON public.moderation_events USING btree (content_type, content_id, occurred_at);
+
+
+--
+-- Name: index_moderation_events_on_user_action_time; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_moderation_events_on_user_action_time ON public.moderation_events USING btree (user_id, action, occurred_at);
 
 
 --
@@ -1179,7 +1347,7 @@ ALTER TABLE ONLY public.procedure_translations
 -- PostgreSQL database dump complete
 --
 
-\unrestrict HKUgXsb8TJgfEwmtW4uVWF2yLZcIpHfMf0irP8RRUVNQdV4FbENn24VzH43RGk4
+\unrestrict hKohc6fgTwCjE07FKdk1Hl5hWSNwcEbHZBpP3kMOtVaWBidASVg0adB9BncP0pH
 
 SET search_path TO "$user", public;
 
@@ -1320,4 +1488,16 @@ INSERT INTO schema_migrations (version) VALUES ('20260911030000');
 INSERT INTO schema_migrations (version) VALUES ('20260913153501');
 
 INSERT INTO schema_migrations (version) VALUES ('20260913160000');
+
+INSERT INTO schema_migrations (version) VALUES ('20260918120000');
+
+INSERT INTO schema_migrations (version) VALUES ('20260919130000');
+
+INSERT INTO schema_migrations (version) VALUES ('20260919131000');
+
+INSERT INTO schema_migrations (version) VALUES ('20260919132000');
+
+INSERT INTO schema_migrations (version) VALUES ('20260919133000');
+
+INSERT INTO schema_migrations (version) VALUES ('20260919134000');
 

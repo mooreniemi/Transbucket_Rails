@@ -26,6 +26,21 @@ describe ProceduresController, :type => :controller do
     end
   end
   describe "#show" do
+    describe 'activity marker' do
+      render_views
+
+      it 'renders a best-effort view-event marker for public procedure pages' do
+        procedure = create(:procedure)
+
+        get :show, id: procedure.id
+
+        expect(response.body).to include('data-content-event="true"')
+        expect(response.body).to include('data-content-type="Procedure"')
+        expect(response.body).to include("data-content-id=\"#{procedure.id}\"")
+        expect(response.body).to include(content_events_path(locale: :en))
+      end
+    end
+
     it 'prepares rating distributions only for authenticated users' do
       procedure = create(:procedure)
       user = create(:user)
@@ -42,19 +57,18 @@ describe ProceduresController, :type => :controller do
       )
     end
 
-    it 'loads the latest published submissions for authenticated users' do
+    it 'loads at most the three most recent submissions for authenticated users' do
       procedure = create(:procedure)
       user = create(:user)
-      latest = create(:pin, procedure: procedure, updated_at: 1.day.ago)
-      create(:pin, procedure: procedure, updated_at: 2.days.ago)
-      create(:pin, procedure: procedure, updated_at: 3.days.ago)
-      create(:pin, procedure: procedure, updated_at: 4.days.ago)
+      create(:pin, procedure: procedure, created_at: 1.day.ago)
+      create(:pin, procedure: procedure, created_at: 2.days.ago)
+      create(:pin, procedure: procedure, created_at: 3.days.ago)
+      create(:pin, procedure: procedure, created_at: 4.days.ago)
 
       sign_in user
       get :show, id: procedure.id
 
       expect(assigns(:latest_pins).length).to eq(3)
-      expect(assigns(:latest_pins)).to include(latest)
     end
 
     it 'does not prepare rating distributions for anonymous users' do

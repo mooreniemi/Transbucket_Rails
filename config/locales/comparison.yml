@@ -21,7 +21,7 @@ en:
     insufficient_data: 'Evidence is limited because the rated sample sizes are %{first_count} and %{second_count}; differences may be unstable. This is not a prediction of an individual outcome.'
     no_clear_difference: 'This sample does not show a clear difference (rated submissions: %{first_count} and %{second_count}; Fisher exact p=%{p_value}). This is not a prediction of an individual outcome.'
     signal_detected: 'This sample shows a statistical difference (Fisher exact p=%{p_value}), but this does not establish cause or predict an individual outcome.'
-    complication_rate: '%{rate}% of submissions'
+    complication_rate: '%{rate} of submissions'
     first: First
     second: Second
     submit: Compare

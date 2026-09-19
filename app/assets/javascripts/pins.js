@@ -4,6 +4,17 @@ $(document).ready(function() {
     // dropzone setup
 
     var complicationInput = $('#pin_complication_list');
+    var complicationTags = $('#pin-complication-tags');
+    var complicationToggles = $('input[data-complications-toggle]');
+    function updateComplicationVisibility() {
+      var hasComplications = complicationToggles.filter(':checked').val() === '1';
+      complicationTags.toggleClass('hide', !hasComplications);
+      complicationInput.prop('disabled', !hasComplications);
+      complicationTags.attr('aria-hidden', hasComplications ? 'false' : 'true');
+    }
+    complicationToggles.on('change', updateComplicationVisibility);
+    updateComplicationVisibility();
+
     if (complicationInput.length) {
       var originalComplications = complicationInput.data('complication-original'),
           complicationValidation = complicationInput.data('complication-validation');
@@ -39,6 +50,61 @@ $(document).ready(function() {
       add_form.find("input[type=text]").val("");
       add_form.addClass('hide');
     });
+
+    function normalizedEntityName(value) {
+      return (value || '').toString().toLowerCase().normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+    }
+
+    function editDistance(left, right) {
+      var previous = [], current, i, j, cost;
+      for (j = 0; j <= right.length; j++) previous[j] = j;
+      for (i = 1; i <= left.length; i++) {
+        current = [i];
+        for (j = 1; j <= right.length; j++) {
+          cost = left.charAt(i - 1) === right.charAt(j - 1) ? 0 : 1;
+          current[j] = Math.min(current[j - 1] + 1, previous[j] + 1, previous[j - 1] + cost);
+        }
+        previous = current;
+      }
+      return previous[right.length];
+    }
+
+    function bindEntitySuggestion(inputSelector, selectSelector, suggestionSelector, containerSelector) {
+      var input = $(inputSelector), select = $(selectSelector), suggestion = $(suggestionSelector);
+      if (!input.length || !select.length || !suggestion.length) return;
+
+      function renderSuggestion() {
+        var typed = normalizedEntityName(input.val()), best = null;
+        suggestion.empty().addClass('hide');
+        if (typed.length < 4) return;
+
+        select.find('option[value]').each(function() {
+          var option = $(this), candidate = normalizedEntityName(option.text()), distance;
+          if (!candidate || candidate === typed) return;
+          distance = editDistance(typed, candidate);
+          if (candidate.indexOf(typed) === 0) distance -= 2;
+          if (candidate.indexOf(typed) !== -1) distance -= 1;
+          if (!best || distance < best.distance) best = { distance: distance, option: option };
+        });
+
+        if (!best || best.distance > Math.max(2, Math.floor(typed.length * 0.35))) return;
+        $('<span>').text(suggestion.data('label') + ' ' + best.option.text() + ' ').appendTo(suggestion);
+        $('<button type="button" class="btn btn-link btn-sm">').text(suggestion.data('use')).appendTo(suggestion)
+          .on('click', function() {
+            select.val(best.option.val()).trigger('chosen:updated').trigger('change');
+            input.val('');
+            $(containerSelector).addClass('hide');
+            suggestion.empty().addClass('hide');
+          });
+        suggestion.removeClass('hide');
+      }
+
+      input.on('input blur', renderSuggestion);
+    }
+
+    bindEntitySuggestion('#pin_surgeon_attributes_last_name', '#pin_surgeon_attributes_id', '#surgeon-suggestion', '#surgeon_container');
+    bindEntitySuggestion('#pin_procedure_attributes_name', '#pin_procedure_attributes_id', '#procedure-suggestion', '#procedure_container');
 
     $("#pin_procedure_attributes_id").chosen({
       width: "80%",

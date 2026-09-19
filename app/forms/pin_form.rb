@@ -23,11 +23,13 @@ class PinForm < Reform::Form
   validates :procedure, presence: true
 
   property :cost
+  property :covered_by_insurance
   property :sensation
   property :satisfaction
   property :description
   property :revision
   property :complication_list
+  property :complications_present, virtual: true
   property :details
 
   property :state
@@ -89,6 +91,7 @@ class PinForm < Reform::Form
 
   def save
     super
+    model.complication_list = nil if complications_present.present? && complications_present.to_s != '1'
     model.save!
   end
 end

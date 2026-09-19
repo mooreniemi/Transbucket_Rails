@@ -15,7 +15,7 @@ en:
         labels:
           1: Very dissatisfied
           2: Dissatisfied
-          3: Unsure
+          3: Neither satisfied nor dissatisfied
           4: Satisfied
           5: Very satisfied
         distribution: Satisfaction ratings
@@ -30,7 +30,7 @@ de:
         distribution: Bewertungen der Empfindung
       satisfaction:
         help: Bewerte, wie zufrieden du mit deinem Ergebnis bist, von sehr unzufrieden (1) bis sehr zufrieden (5).
-        labels: { 1: Sehr unzufrieden, 2: Unzufrieden, 3: Unsicher, 4: Zufrieden, 5: Sehr zufrieden }
+        labels: { 1: Sehr unzufrieden, 2: Unzufrieden, 3: Weder zufrieden noch unzufrieden, 4: Zufrieden, 5: Sehr zufrieden }
         distribution: Bewertungen der Zufriedenheit
       view_submissions: "%{count} Beiträge mit %{score} von 5 anzeigen"
       overall_distribution: Gesamtverteilung der Bewertungen
@@ -43,7 +43,7 @@ es:
         distribution: Valoraciones de sensibilidad
       satisfaction:
         help: Indica tu satisfacción con el resultado, desde muy insatisfecho (1) hasta muy satisfecho (5).
-        labels: { 1: Muy insatisfecho, 2: Insatisfecho, 3: No estoy seguro, 4: Satisfecho, 5: Muy satisfecho }
+        labels: { 1: Muy insatisfecho, 2: Insatisfecho, 3: Ni satisfecho ni insatisfecho, 4: Satisfecho, 5: Muy satisfecho }
         distribution: Valoraciones de satisfacción
       view_submissions: Ver %{count} publicaciones con una valoración de %{score} sobre 5
       overall_distribution: Distribución general de valoraciones
@@ -56,7 +56,7 @@ fr:
         distribution: Évaluations de la sensibilité
       satisfaction:
         help: Évaluez votre satisfaction quant au résultat, de très insatisfait·e (1) à très satisfait·e (5).
-        labels: { 1: Très insatisfait·e, 2: Insatisfait·e, 3: Incertain·e, 4: Satisfait·e, 5: Très satisfait·e }
+        labels: { 1: Très insatisfait·e, 2: Insatisfait·e, 3: Ni satisfait·e ni insatisfait·e, 4: Satisfait·e, 5: Très satisfait·e }
         distribution: Évaluations de la satisfaction
       view_submissions: Voir %{count} contributions notées %{score} sur 5
       overall_distribution: Répartition générale des évaluations
@@ -69,7 +69,7 @@ it:
         distribution: Valutazioni della sensibilità
       satisfaction:
         help: Valuta quanto sei soddisfattə del risultato, da per niente (1) a completamente (5).
-        labels: { 1: Per niente, 2: Poco, 3: Incertə, 4: Soddisfattə, 5: Molto soddisfattə }
+        labels: { 1: Per niente, 2: Poco, 3: Né soddisfattə né insoddisfattə, 4: Soddisfattə, 5: Molto soddisfattə }
         distribution: Valutazioni della soddisfazione
       view_submissions: Vedi %{count} contributi con valutazione %{score} su 5
       overall_distribution: Distribuzione generale delle valutazioni
@@ -82,7 +82,7 @@ ja:
         distribution: 感覚の評価
       satisfaction:
         help: 結果への満足度を、とても不満（1）からとても満足（5）まで評価してください。
-        labels: { 1: とても不満, 2: 不満, 3: 迷っている, 4: 満足, 5: とても満足 }
+        labels: { 1: とても不満, 2: 不満, 3: どちらでもない, 4: 満足, 5: とても満足 }
         distribution: 満足度の評価
       view_submissions: 5点満点で%{score}の投稿%{count}件を見る
       overall_distribution: 評価の全体分布
@@ -95,7 +95,7 @@ zh-CN:
         distribution: 感觉评分
       satisfaction:
         help: 请评价您对结果的满意度，从非常不满意（1）到非常满意（5）。
-        labels: { 1: 非常不满意, 2: 不满意, 3: 不确定, 4: 满意, 5: 非常满意 }
+        labels: { 1: 非常不满意, 2: 不满意, 3: 一般, 4: 满意, 5: 非常满意 }
         distribution: 满意度评分
       view_submissions: 查看 %{count} 个 %{score}/5 评分的投稿
       overall_distribution: 总体评分分布
@@ -108,7 +108,7 @@ zh-TW:
         distribution: 感覺評分
       satisfaction:
         help: 請評估您對結果的滿意度，從非常不滿意（1）到非常滿意（5）。
-        labels: { 1: 非常不滿意, 2: 不滿意, 3: 不確定, 4: 滿意, 5: 非常滿意 }
+        labels: { 1: 非常不滿意, 2: 不滿意, 3: 一般, 4: 滿意, 5: 非常滿意 }
         distribution: 滿意度評分
       view_submissions: 查看 %{count} 個 %{score}/5 評分的投稿
       overall_distribution: 總體評分分布
@@ -121,7 +121,7 @@ pt-BR:
         distribution: Avaliações de sensação
       satisfaction:
         help: Avalie sua satisfação com o resultado, de muito insatisfeito (1) a muito satisfeito (5).
-        labels: { 1: Muito insatisfeito, 2: Insatisfeito, 3: Incerto, 4: Satisfeito, 5: Muito satisfeito }
+        labels: { 1: Muito insatisfeito, 2: Insatisfeito, 3: Nem satisfeito nem insatisfeito, 4: Satisfeito, 5: Muito satisfeito }
         distribution: Avaliações de satisfação
       view_submissions: Ver %{count} publicações com avaliação %{score} de 5
       overall_distribution: Distribuição geral das avaliações
@@ -134,7 +134,7 @@ nl:
         distribution: Gevoelsbeoordelingen
       satisfaction:
         help: Beoordeel hoe tevreden je bent met het resultaat, van zeer ontevreden (1) tot zeer tevreden (5).
-        labels: { 1: Zeer ontevreden, 2: Ontevreden, 3: Onzeker, 4: Tevreden, 5: Zeer tevreden }
+        labels: { 1: Zeer ontevreden, 2: Ontevreden, 3: Noch tevreden noch ontevreden, 4: Tevreden, 5: Zeer tevreden }
         distribution: Tevredenheidsbeoordelingen
       view_submissions: Bekijk %{count} bijdragen met een score van %{score} op 5
       overall_distribution: Algemene verdeling van beoordelingen
@@ -147,7 +147,7 @@ pl:
         distribution: Oceny odczuwania
       satisfaction:
         help: Oceń zadowolenie z efektu, od bardzo niezadowolonej osoby (1) do bardzo zadowolonej (5).
-        labels: { 1: Bardzo niezadowolona osoba, 2: Niezadowolona, 3: Niepewna, 4: Zadowolona, 5: Bardzo zadowolona }
+        labels: { 1: Bardzo niezadowolona osoba, 2: Niezadowolona, 3: Ani zadowolona, ani niezadowolona, 4: Zadowolona, 5: Bardzo zadowolona }
         distribution: Oceny zadowolenia
       view_submissions: Zobacz %{count} wpisów z oceną %{score} na 5
       overall_distribution: Ogólny rozkład ocen
@@ -160,7 +160,7 @@ ru:
         distribution: Оценки чувствительности
       satisfaction:
         help: "Оцените удовлетворённость результатом: от очень низкой (1) до очень высокой (5)."
-        labels: { 1: Очень низкая, 2: Низкая, 3: Не уверены, 4: Высокая, 5: Очень высокая }
+        labels: { 1: Очень низкая, 2: Низкая, 3: Средняя, 4: Высокая, 5: Очень высокая }
         distribution: Оценки удовлетворённости
       view_submissions: Показать публикации (%{count}) с оценкой %{score} из 5
       overall_distribution: Общее распределение оценок
@@ -173,7 +173,7 @@ tr:
         distribution: Duyum değerlendirmeleri
       satisfaction:
         help: Sonuçtan memnuniyetinizi hiç memnun değilimden (1) çok memnuna (5) kadar değerlendirin.
-        labels: { 1: Hiç memnun değilim, 2: Memnun değilim, 3: Kararsızım, 4: Memnunum, 5: Çok memnunum }
+        labels: { 1: Hiç memnun değilim, 2: Memnun değilim, 3: Ne memnunum ne değilim, 4: Memnunum, 5: Çok memnunum }
         distribution: Memnuniyet değerlendirmeleri
       view_submissions: "%{score}/5 puan alan %{count} gönderiyi görüntüle"
       overall_distribution: Genel puan dağılımı
@@ -186,7 +186,7 @@ vi:
         distribution: Đánh giá cảm giác
       satisfaction:
         help: Đánh giá mức độ hài lòng với kết quả, từ rất không hài lòng (1) đến rất hài lòng (5).
-        labels: { 1: Rất không hài lòng, 2: Không hài lòng, 3: Chưa chắc, 4: Hài lòng, 5: Rất hài lòng }
+        labels: { 1: Rất không hài lòng, 2: Không hài lòng, 3: Bình thường, 4: Hài lòng, 5: Rất hài lòng }
         distribution: Đánh giá mức độ hài lòng
       view_submissions: Xem %{count} bài đăng được đánh giá %{score}/5
       overall_distribution: Phân bố đánh giá tổng thể
@@ -199,7 +199,7 @@ ar:
         distribution: تقييمات الإحساس
       satisfaction:
         help: قيّم مدى رضاك عن النتيجة، من غير راضٍ جداً (1) إلى راضٍ جداً (5).
-        labels: { 1: غير راضٍ جداً, 2: غير راضٍ, 3: غير متأكد, 4: راضٍ, 5: راضٍ جداً }
+        labels: { 1: غير راضٍ جداً, 2: غير راضٍ, 3: لا راضٍ ولا غير راضٍ, 4: راضٍ, 5: راضٍ جداً }
         distribution: تقييمات الرضا
       view_submissions: عرض %{count} من المشاركات بتقييم %{score} من 5
       overall_distribution: التوزيع العام للتقييمات
@@ -212,7 +212,7 @@ sv:
         distribution: Känselbetyg
       satisfaction:
         help: Betygsätt hur nöjd du är med resultatet, från mycket missnöjd (1) till mycket nöjd (5).
-        labels: { 1: Mycket missnöjd, 2: Missnöjd, 3: Osäker, 4: Nöjd, 5: Mycket nöjd }
+        labels: { 1: Mycket missnöjd, 2: Missnöjd, 3: Varken nöjd eller missnöjd, 4: Nöjd, 5: Mycket nöjd }
         distribution: Nöjdhetsbetyg
       view_submissions: Visa %{count} bidrag med betyget %{score} av 5
       overall_distribution: Övergripande betygsfördelning

@@ -104,6 +104,7 @@ class PinsController < ApplicationController
   def admin
     @pins = Pin.where(state: 'pending').order("created_at desc")
     @comments = Comment.where(state: 'pending').order("created_at desc")
+    @moderation_stats = moderation_stats(@pins, @comments)
     @queue = { pins: @pins, comments: @comments }
 
     respond_to do |format|
@@ -113,6 +114,46 @@ class PinsController < ApplicationController
   end
 
   private
+
+  def moderation_stats(pins, comments)
+    {
+      current_flags: current_flag_counts(pins, comments),
+      lifetime_flags: lifetime_flag_counts(pins, comments),
+      current_flaggers: current_flaggers(pins, comments),
+      top_flaggers: ModerationEvent.where(action: 'flag').select('user_id, COUNT(*) AS flag_count').group(:user_id).order('COUNT(*) DESC').limit(10),
+      top_flagged: ModerationEvent.where(action: 'flag').select('content_type, content_id, COUNT(*) AS flag_count').group(:content_type, :content_id).order('COUNT(*) DESC').limit(10)
+    }
+  end
+
+  def current_flag_counts(pins, comments)
+    counts = {}
+    ActsAsVotable::Vote.where(votable_type: 'Pin', votable_id: pins.map(&:id), vote_flag: false).group(:votable_id).count.each do |id, count|
+      counts[['Pin', id]] = count
+    end
+    ActsAsVotable::Vote.where(votable_type: 'Comment', votable_id: comments.map(&:id), vote_flag: false).group(:votable_id).count.each do |id, count|
+      counts[['Comment', id]] = count
+    end
+    counts
+  end
+
+  def lifetime_flag_counts(pins, comments)
+    ids_by_type = { 'Pin' => pins.map(&:id), 'Comment' => comments.map(&:id) }
+    ids_by_type.each_with_object({}) do |(type, ids), counts|
+      ModerationEvent.where(action: 'flag', content_type: type, content_id: ids).group(:content_id).count.each do |id, count|
+        counts[[type, id]] = count
+      end
+    end
+  end
+
+  def current_flaggers(pins, comments)
+    ids_by_type = { 'Pin' => pins.map(&:id), 'Comment' => comments.map(&:id) }
+    ids_by_type.each_with_object({}) do |(type, ids), flaggers|
+      ActsAsVotable::Vote.where(votable_type: type, votable_id: ids, vote_flag: false).includes(:voter).group_by(&:votable_id).each do |id, votes|
+        flaggers[[type, id]] = votes
+      end
+    end
+  end
+
   def get_pin
     @pin = Pin.includes(comment_threads: [:children]).find(params[:id])
   end
@@ -145,7 +186,7 @@ class PinsController < ApplicationController
     # avg_satisfaction (computed server-side by Procedure#recalculate_avgs,
     # never user-settable) -- both were previously reachable through permit!.
     params.require(:pin).permit(
-      :cost, :revision, :sensation, :satisfaction, :complication_list, :details, :description,
+      :cost, :covered_by_insurance, :revision, :sensation, :satisfaction, :complication_list, :complications_present, :details, :description,
       surgeon: [:id, :last_name, :first_name, :url],
       procedure: [:id, :name, :body_type, :gender, :description],
       pin_images: [:id, :photo, :caption, :_destroy]
@@ -162,6 +203,7 @@ class PinsController < ApplicationController
       user: params[:user],
       satisfaction: params[:satisfaction],
       sensation: params[:sensation],
+      feed: params[:feed],
       current_user: current_user,
       page: params[:page]
     }

@@ -68,7 +68,7 @@ end %>
             </tbody>
           </table>
         </div>
-        <%= render partial: 'shared/comparison_complications', locals: { first_stats: first_stats, second_stats: second_stats, first_label: "#{t('comparison.first', default: 'First')}: #{@first_procedure.localized_name}", second_label: "#{t('comparison.second', default: 'Second')}: #{@second_procedure.localized_name}", first_filter: { procedure: @first_procedure.id }, second_filter: { procedure: @second_procedure.id } } %>
+        <%= render partial: 'shared/comparison_complications', locals: { first_stats: first_stats, second_stats: second_stats, first_label: "#{t('comparison.first', default: 'First')}: #{@first_procedure.localized_name}", second_label: "#{t('comparison.second', default: 'Second')}: #{@second_procedure.localized_name}", first_name: @first_procedure.localized_name, second_name: @second_procedure.localized_name, first_filter: { procedure: @first_procedure.id }, second_filter: { procedure: @second_procedure.id } } %>
       </section>
     </div>
   <% end %>

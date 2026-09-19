@@ -18,13 +18,26 @@ describe Pin do
     expect(build(:pin).state).to eq('published')
   end
   describe '.recent' do
-    it 'orders published pins by update time and then id' do
+    it 'orders published pins by submission or attachment activity and then id' do
       timestamp = 1.day.ago
-      older_id = create(:pin, updated_at: timestamp, state: 'published')
-      newer_id = create(:pin, updated_at: timestamp, state: 'published')
+      older_id = create(:pin, created_at: timestamp, updated_at: timestamp, state: 'published')
+      newer_id = create(:pin, created_at: timestamp, updated_at: timestamp, state: 'published')
+      [older_id, newer_id].each do |pin|
+        pin.pin_images.update_all(created_at: timestamp, updated_at: timestamp, photo_updated_at: nil)
+      end
       create(:pin, updated_at: timestamp, state: 'pending')
 
       expect(Pin.recent).to eq([newer_id, older_id])
+    end
+
+    it 'resurfaces a pin when an attachment is updated' do
+      older_pin = create(:pin, created_at: 2.days.ago)
+      newer_pin = create(:pin, created_at: 1.day.ago)
+      older_pin.pin_images.update_all(created_at: 2.days.ago, updated_at: 2.days.ago, photo_updated_at: 2.days.ago)
+      newer_pin.pin_images.update_all(created_at: 1.day.ago, updated_at: 1.day.ago, photo_updated_at: 1.day.ago)
+      older_pin.pin_images.first.update_column(:photo_updated_at, 1.hour.ago)
+
+      expect(Pin.recent.first).to eq(older_pin)
     end
   end
   describe '#comments_asc' do

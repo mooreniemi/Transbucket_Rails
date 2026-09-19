@@ -17,6 +17,7 @@
       <div class="input-group padded_nicely">
         <%= procedure_form.text_field :description, placeholder: t('public.extra.describe_procedure') %>
       </div>
+      <div id="procedure-suggestion" class="entity-suggestion hide" aria-live="polite" data-label="<%= t('public.form.similar_existing') %>" data-use="<%= t('public.form.use_existing') %>"></div>
     </div>
   </div>
 </div>

@@ -4,8 +4,7 @@ class FlagsController < ApplicationController
   respond_to :js
 
   def create
-    type = params.keys.last.split('_').first
-    id = params.values.last
+    type, id = content_reference
     @flag = Flag.new(current_user, find_content(type, id)).flag_on
 
     respond_to do |format|
@@ -19,10 +18,10 @@ class FlagsController < ApplicationController
   end
 
   def destroy
-    type = params.keys.last.split('_').first
-    id = params.values.last
+    type, id = content_reference
 
     @content = find_content(type, id)
+    ModerationEventRecorder.record(action: :unflag, user: current_user, content: @content)
     @content.votes.down.destroy_all
     publish_status = @content.publish!
 
@@ -37,6 +36,14 @@ class FlagsController < ApplicationController
   end
 
   private
+
+  def content_reference
+    return ['pin', params[:pin_id]] if params[:pin_id].present?
+    return ['comment', params[:comment_id]] if params[:comment_id].present?
+
+    key = params.keys.last.to_s
+    [key.split('_').first, params[key]]
+  end
 
   def find_content(type, id)
     if type == "pin"

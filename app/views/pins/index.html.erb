@@ -7,16 +7,28 @@
 <% if params[:query].present? %>
   <% title "#{t('directory.search_results')}: #{params[:query]}" %>
 <% else %>
-  <% title t('directory.recent_submissions') %>
+  <% title @presenter.showing_for_you? ? t('directory.for_you', default: 'For You') : t('directory.recent_submissions') %>
 <% end %>
 <% if params[:query].present? %>
   <h1><%= t('directory.search_results') %></h1>
 <% else %>
-  <h1><%= t('directory.recent_submissions') %></h1>
+  <h1><%= @presenter.showing_for_you? ? t('directory.for_you', default: 'For You') : t('directory.recent_submissions') %></h1>
   <p class="lead"><%= t('directory.submissions_intro') %></p>
+  <% if @presenter.show_feed_navigation? %>
+    <ul class="nav nav-tabs submission-feed-tabs" role="tablist">
+      <li role="presentation" class="<%= 'active' unless @presenter.showing_for_you? %>">
+        <%= link_to t('directory.recent', default: 'Recent'), pins_path(feed: 'recent') %>
+      </li>
+      <li role="presentation" class="<%= 'active' if @presenter.showing_for_you? %>">
+        <%= link_to t('directory.for_you', default: 'For You'), pins_path(feed: 'for_you') %>
+      </li>
+    </ul>
+  <% end %>
 <% end %>
 <div id="pins">
-  <%= render @presenter.pins %>
+  <% @presenter.pins.each_with_index do |pin, index| %>
+    <%= render partial: 'pin', locals: { pin: pin, event_context: @presenter.list_event_context.merge(rank: index + 1) } %>
+  <% end %>
 </div>
 <div id="paginator">
   <%= will_paginate @presenter.pins, renderer: BootstrapPagination::Rails unless @presenter.pins.empty? %>

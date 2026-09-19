@@ -1,4 +1,11 @@
 module ApplicationHelper
+  def display_complication_rate(complication)
+    rate = complication[:rate].to_i
+    return '<1%' if rate.zero? && complication[:count].to_i.positive?
+
+    "#{rate}%"
+  end
+
   def localized_gender_options(selected_id = nil)
     Gender.all.map do |gender|
       [I18n.t("gender_labels.#{gender.name}", default: gender.name), gender.id, { selected: gender.id == selected_id }]

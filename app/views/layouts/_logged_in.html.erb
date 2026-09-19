@@ -1,6 +1,6 @@
 <% if current_user.admin? %>
   <li class="bg-danger">
-    <%= link_to 'ModQueue', queendom_path %>
+    <%= link_to 'MQ', queendom_path, title: 'Moderation queue', aria: { label: 'Moderation queue' } %>
   </li>
 <% end %>
 <li>

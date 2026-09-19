@@ -43,6 +43,7 @@
 
 .pin-rating-stars {
   color: #d49b00;
+  font-size: 1rem;
   letter-spacing: 2px;
 }
 
@@ -71,7 +72,19 @@
 }
 
 .rating-field .rating-container {
-  min-height: 30px;
+  font-size: 14px !important;
+  line-height: 1;
+  min-height: 24px;
+}
+
+.rating-field .rating-container.rating-xs .filled-stars,
+.rating-field .rating-container.rating-xs .empty-stars {
+  font-size: 14px !important;
+}
+
+.rating-field .rating-container .star,
+.rating-field .rating-container .glyphicon {
+  font-size: 14px !important;
 }
 
 .rating-hint {
@@ -81,6 +94,31 @@
   color: #666;
   font-size: 1rem;
   line-height: 1.4;
+  min-height: 2.8em;
+}
+
+.controls {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+}
+
+.controls > .chosen-container {
+  flex: 1 1 calc(100% - 38px);
+  margin-top: 0;
+}
+
+.controls > .add-button {
+  align-items: center;
+  display: inline-flex;
+  height: 34px;
+  justify-content: center;
+  width: 30px;
+}
+
+.controls > .add-form {
+  flex-basis: 100%;
 }
 
 .procedure-rating-distributions {
@@ -202,6 +240,40 @@
   line-height: 1.3;
   margin-top: 0;
   min-height: 2.6em;
+}
+
+.binary-question,
+.complication-toggle {
+  border: 0;
+  margin: 1rem 0 .5rem;
+  padding: 0;
+}
+
+.binary-question legend,
+.complication-toggle legend {
+  font-size: 18px;
+  margin-bottom: .5rem;
+  width: auto;
+}
+
+.complication-tags {
+  margin-bottom: 1rem;
+}
+
+.entity-suggestion {
+  background: #f4f8fb;
+  border: 1px solid #c8d8e5;
+  border-radius: 4px;
+  color: #234;
+  font-size: 1rem;
+  line-height: 1.4;
+  margin: .5rem 0;
+  padding: .6rem .75rem;
+}
+
+.entity-suggestion .btn {
+  font-size: 1rem;
+  padding: 0;
 }
 
 .rating-comparison-average {
@@ -430,4 +502,7 @@
   .pin-meta dd {
     margin-left: 0;
   }
+}
+.submission-feed-tabs {
+  margin-bottom: 20px;
 }

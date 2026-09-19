@@ -4,13 +4,13 @@
     data-sort-satisfaction="<%= avg_satisfaction || '' %>"
     data-sort-sensation="<%= avg_sensation || '' %>"
     data-sort-discussions="<%= @comments_per_procedure[procedure.id] || 0 %>">
-  <td><%= link_to procedure.localized_name.titleize, procedure_path(procedure) %></td>
+  <td data-label="<%= t('directory.name') %>"><%= link_to procedure.localized_name.titleize, procedure_path(procedure) %></td>
   <% if user_signed_in? %>
-  <td><%= link_to @pins_per_procedure[procedure.id] || 0, pins_path(procedure: procedure.id) %></td>
+  <td data-label="<%= t('directory.submissions') %>"><%= link_to @pins_per_procedure[procedure.id] || 0, pins_path(procedure: procedure.id) %></td>
 <% else %>
-  <td><%= link_to t('directory.register_to_see_more'), register_path  %></td>
+  <td data-label="<%= t('directory.submissions') %>"><%= link_to t('directory.register_to_see_more'), register_path  %></td>
   <% end %>
-  <td><%= avg_satisfaction && avg_satisfaction.round(1) %></td>
-  <td><%= avg_sensation && avg_sensation.round(1) %></td>
-  <td><%= @comments_per_procedure[procedure.id] || 0 %></td>
+  <td data-label="<%= t('directory.average_satisfaction') %>"><%= avg_satisfaction && avg_satisfaction.round(1) %></td>
+  <td data-label="<%= t('directory.average_sensation') %>"><%= avg_sensation && avg_sensation.round(1) %></td>
+  <td data-label="<%= t('directory.discussion_threads') %>"><%= @comments_per_procedure[procedure.id] || 0 %></td>
 </tr>

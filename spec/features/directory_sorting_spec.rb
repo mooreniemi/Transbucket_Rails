@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'directory table sorting', js: true, fake_images: true do
+  before do
+    page.current_window.resize_to(1280, 900)
+  end
+
   after do
     Warden.test_reset!
   end
@@ -25,6 +29,45 @@ RSpec.describe 'directory table sorting', js: true, fake_images: true do
 
     find('button[data-sort-key="submissions"]').click
     expect(row_names('#procedures tbody tr').first).to eq('Zeta Procedure')
+  end
+
+  it 'keeps directory headers sticky without trapping them in a scrolling wrapper' do
+    procedure = create(:procedure)
+
+    visit '/procedures'
+
+    styles = page.evaluate_script(<<-JAVASCRIPT)
+      (function() {
+        return {
+          headerPosition: window.getComputedStyle(document.querySelector('#procedures thead th')).position,
+          wrapperOverflow: window.getComputedStyle(document.querySelector('#procedures')).overflow
+        };
+      }())
+    JAVASCRIPT
+
+    expect(styles['headerPosition']).to eq('sticky')
+    expect(styles['wrapperOverflow']).to eq('visible')
+    expect(first('#procedures tbody tr td')['data-label']).to eq(I18n.t('directory.name'))
+  end
+
+  it 'uses labeled rows on narrow screens' do
+    create(:procedure)
+    page.current_window.resize_to(375, 800)
+
+    visit '/procedures'
+
+    styles = page.evaluate_script(<<-JAVASCRIPT)
+      (function() {
+        var cell = document.querySelector('#procedures tbody tr td');
+        return {
+          headerPosition: window.getComputedStyle(document.querySelector('#procedures thead')).position,
+          label: window.getComputedStyle(cell, ':before').content
+        };
+      }())
+    JAVASCRIPT
+
+    expect(styles['headerPosition']).to eq('absolute')
+    expect(styles['label']).to include(I18n.t('directory.name'))
   end
 
   it 'shows and sorts surgeon rating columns for signed-in users' do

@@ -1,6 +1,7 @@
 en:
   comparison:
     title: Compare
+    comparing: Compare %{first} and %{second}
     metric: Metric
     rating_distribution: Rating distribution
     submissions: Submissions

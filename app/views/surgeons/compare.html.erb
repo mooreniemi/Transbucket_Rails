@@ -1,7 +1,12 @@
-<% page_title = t('comparison.surgeons_title', default: 'Compare surgeons') %>
+<% comparison_heading = if @first_surgeon && @second_surgeon && @first_surgeon != @second_surgeon
+  t('comparison.comparing', first: @first_surgeon.to_s, second: @second_surgeon.to_s, default: 'Compare %{first} and %{second}')
+else
+  t('comparison.surgeons_title', default: 'Compare surgeons')
+end %>
+<% page_title = comparison_heading %>
 <% title page_title %>
 <% seo_meta title: page_title, description: t('comparison.surgeons_description', default: 'Compare surgeon rating distributions on Transbucket.'), noindex: true %>
-<%= render partial: 'shared/comparison_form', locals: { resource_type: 'surgeons', options: @comparison_options, first: @first_surgeon, second: @second_surgeon, label_method: :to_s, action: compare_surgeons_path, scope_options: @comparison_scope_options, scope_first: @comparison_procedure, scope_param: :procedure_id, scope_label: t('comparison.scope_procedure', default: 'Optional shared procedure'), scope_memberships: @comparison_scope_memberships, deduplicate: @deduplicate } %>
+<%= render partial: 'shared/comparison_form', locals: { resource_type: 'surgeons', comparison_heading: comparison_heading, options: @comparison_options, first: @first_surgeon, second: @second_surgeon, label_method: :to_s, action: compare_surgeons_path, scope_options: @comparison_scope_options, scope_first: @comparison_procedure, scope_param: :procedure_id, scope_label: t('comparison.scope_procedure', default: 'Optional shared procedure'), scope_memberships: @comparison_scope_memberships, deduplicate: @deduplicate } %>
 <% if @first_surgeon && @second_surgeon && @first_surgeon != @second_surgeon %>
   <% cache([I18n.locale, 'surgeon-rating-comparison', @first_surgeon, @second_surgeon, @comparison_procedure, @deduplicate]) do %>
     <div class="rating-comparison-results">
@@ -60,25 +65,10 @@
                   <% end %>
                 </tr>
               <% end %>
-              <tr>
-                <th scope="row"><%= t('comparison.common_complications', default: 'Common complications') %></th>
-                <% [[@first_surgeon, first_stats], [@second_surgeon, second_stats]].each do |surgeon, stats| %>
-                  <td>
-                    <% if stats[:complications].present? %>
-                      <ul class="comparison-complication-list">
-                        <% stats[:complications].each do |complication| %>
-                          <li><%= link_to complication[:name], pins_path(surgeon: surgeon.id, complication: complication[:name]) %> (<%= t('comparison.complication_rate', rate: complication[:rate], default: '%{rate}% of submissions') %>)</li>
-                        <% end %>
-                      </ul>
-                    <% else %>
-                      <%= t('comparison.none_reported', default: 'None reported') %>
-                    <% end %>
-                  </td>
-                <% end %>
-              </tr>
             </tbody>
           </table>
         </div>
+        <%= render partial: 'shared/comparison_complications', locals: { first_stats: first_stats, second_stats: second_stats, first_label: "#{t('comparison.first', default: 'First')}: #{@first_surgeon}", second_label: "#{t('comparison.second', default: 'Second')}: #{@second_surgeon}", first_filter: { surgeon: @first_surgeon.id }, second_filter: { surgeon: @second_surgeon.id } } %>
       </section>
     </div>
   <% end %>

@@ -33,6 +33,17 @@ body{
   font-size: 1rem;
 }
 
+select.form-control {
+  font-size: 17px;
+}
+
+// Bootstrap's default fixed-navigation text is 14px. Keep it compact without
+// making the primary navigation smaller than ordinary readable interface text.
+body .navbar .nav > li > a,
+body .navbar .navbar-brand {
+  font-size: 17px;
+}
+
 small {
   font-size: .875rem;
 }
@@ -41,15 +52,13 @@ small {
   flex: 1 0 auto;
 }
 
-// Keeps the procedures/surgeons index table headers visible while scrolling.
-// top offset matches body's padding-top above, which is sized for the
-// .navbar-fixed-top -- without it the sticky header would tuck in behind
-// the fixed nav instead of sitting just below it.
+// Keep directory headers visible below the fixed navigation while scrolling.
 .sticky-header-table thead th {
   position: -webkit-sticky;
   position: sticky;
   top: 60px;
-  background-color: #ffffcc;
+  background-color: #006d82;
+  color: #fff;
   z-index: 2;
 }
 

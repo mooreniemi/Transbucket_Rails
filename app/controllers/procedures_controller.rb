@@ -154,8 +154,8 @@ class ProceduresController < ApplicationController
           good = counts.select { |score, _count| score >= 3 }.values.sum
           challenging = counts[1].to_i
           outcomes[rating] = {
-            good: rated.zero? ? nil : (good.to_f / rated * 100).round(1),
-            challenging: rated.zero? ? nil : (challenging.to_f / rated * 100).round(1)
+            good: rated.zero? ? nil : (good.to_f / rated * 100).round,
+            challenging: rated.zero? ? nil : (challenging.to_f / rated * 100).round
           }
         end,
         complications: complication_counts.each_with_object([]) do |((group_procedure_id, name), count), complications|
@@ -164,9 +164,9 @@ class ProceduresController < ApplicationController
           complications << {
             name: name,
             count: count,
-            rate: (count.to_f / submission_counts[procedure_id].to_i * 100).round(1)
+            rate: (count.to_f / submission_counts[procedure_id].to_i * 100).round
           }
-        end.sort_by { |complication| -complication[:count] }.first(10)
+        end.sort_by { |complication| [-complication[:count], complication[:name].downcase] }
       }
     end
     data

@@ -117,11 +117,11 @@ describe ProceduresController, :type => :controller do
 
       expect(assigns(:comparison_data)[first][:stats][:submissions]).to eq(2)
       expect(assigns(:comparison_data)[first][:stats][:surgeons]).to eq(1)
-      expect(assigns(:comparison_data)[first][:stats][:outcomes][:sensation][:good]).to eq(50.0)
-      expect(assigns(:comparison_data)[first][:stats][:outcomes][:satisfaction][:challenging]).to eq(0.0)
+      expect(assigns(:comparison_data)[first][:stats][:outcomes][:sensation][:good]).to eq(50)
+      expect(assigns(:comparison_data)[first][:stats][:outcomes][:satisfaction][:challenging]).to eq(0)
       complications = assigns(:comparison_data)[first][:stats][:complications]
       expect(complications.map { |complication| complication[:name] }).to contain_exactly('hematoma', 'fistula')
-      expect(complications.map { |complication| complication[:rate] }).to all(eq(50.0))
+      expect(complications.map { |complication| complication[:rate] }).to all(eq(50))
     end
 
     it 'applies an optional shared surgeon scope to all compared procedure stats' do

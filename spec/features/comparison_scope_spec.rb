@@ -46,4 +46,36 @@ RSpec.describe 'comparison scope selectors', js: true, fake_images: true do
     expect(page).to have_css("#procedure_id option[value='#{shared.to_param}']:not([disabled])")
     expect(page).to have_no_css("#procedure_id option[value='#{first_only.to_param}']:not([disabled])")
   end
+
+  it 'compares shared and distinct complication rates' do
+    user = create(:user, :with_confirmation)
+    first = create(:procedure, name: 'First procedure')
+    second = create(:procedure, name: 'Second procedure')
+
+    [
+      [first, 'hematoma, fistula'],
+      [first, 'hematoma'],
+      [first, ''],
+      [second, 'hematoma, infection'],
+      [second, '']
+    ].each do |procedure, complications|
+      pin = create(:pin, procedure: procedure)
+      pin.complication_list = complications
+      pin.save!
+    end
+
+    login_as(user, scope: :user)
+    visit "/procedures/compare?first_id=#{first.to_param}&second_id=#{second.to_param}"
+
+    within('.comparison-complications') do
+      expect(page).to have_content('hematoma')
+      expect(page).to have_content('67% of submissions')
+      expect(page).to have_content('50% of submissions')
+      expect(page).to have_content('Both (First +17 points)')
+      expect(page).to have_content('fistula')
+      expect(page).to have_content('First only')
+      expect(page).to have_content('infection')
+      expect(page).to have_content('Second only')
+    end
+  end
 end

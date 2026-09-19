@@ -3,12 +3,12 @@
     data-sort-submissions="<%= pin_count || 0 %>"
     data-sort-satisfaction="<%= avg_satisfaction || '' %>"
     data-sort-sensation="<%= avg_sensation || '' %>">
-  <td><%= link_to "#{surgeon.last_name}, #{surgeon.first_name}", surgeon_path(surgeon.id) %></td>
+  <td data-label="<%= t('directory.name') %>"><%= link_to "#{surgeon.last_name}, #{surgeon.first_name}", surgeon_path(surgeon.id) %></td>
 <% if user_signed_in? %>
-  <td><%= link_to pin_count || 0, pins_path(surgeon: surgeon.id)  %></td>
-  <td><%= avg_satisfaction && avg_satisfaction.round(1) %></td>
-  <td><%= avg_sensation && avg_sensation.round(1) %></td>
+  <td data-label="<%= t('directory.submissions') %>"><%= link_to pin_count || 0, pins_path(surgeon: surgeon.id)  %></td>
+  <td data-label="<%= t('directory.average_satisfaction') %>"><%= avg_satisfaction && avg_satisfaction.round(1) %></td>
+  <td data-label="<%= t('directory.average_sensation') %>"><%= avg_sensation && avg_sensation.round(1) %></td>
 <% else %>
-  <td><%= link_to t('directory.register_to_see_more'), register_path  %></td>
+  <td data-label="<%= t('directory.submissions') %>"><%= link_to t('directory.register_to_see_more'), register_path  %></td>
 <% end %>
 </tr>

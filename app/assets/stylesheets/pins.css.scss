@@ -106,35 +106,38 @@
 }
 
 .comparison-normalization {
-  align-items: center;
-  display: flex;
-  gap: .4rem;
-  margin-bottom: .75rem;
+  margin-bottom: 1.25rem;
 }
 
 .comparison-normalization label {
-  font-size: 1rem;
+  display: inline;
+  font-size: 18px;
   margin: 0;
 }
 
 .comparison-normalization-help {
-  color: #444;
-  font-size: 1rem;
-  line-height: 1.45;
-  margin: 0 0 1.25rem;
-  max-width: 760px;
+  color: #222;
+  display: inline;
+  font-size: 18px;
+  line-height: 1.5;
+  margin-left: .35rem;
 }
 
-.comparison-interpretation,
-.comparison-evidence {
-  color: #444;
-  font-size: 1rem;
+.comparison-interpretation {
+  color: #222;
+  font-size: 18px;
   line-height: 1.5;
 }
 
 .comparison-interpretation {
   margin: 0 0 1.25rem;
   max-width: 760px;
+}
+
+.comparison-evidence {
+  color: #222;
+  font-size: 18px;
+  line-height: 1.5;
 }
 
 .comparison-evidence {
@@ -166,19 +169,19 @@
 }
 
 .rating-comparison-row h2 {
-  font-size: 1.5rem;
+  font-size: 26px;
   line-height: 1.3;
   margin: .5rem 0 1rem;
 }
 
 .rating-comparison-entity-label {
-  font-size: 1.15rem;
+  font-size: 22px;
   margin-top: 0;
 }
 
 .rating-comparison-average {
-  color: #aaa;
-  font-size: 1rem;
+  color: #333;
+  font-size: 20px;
   margin: -.35rem 0 .75rem;
 }
 
@@ -191,7 +194,7 @@
 }
 
 .comparison-stats h2 {
-  font-size: 1.5rem;
+  font-size: 28px;
 }
 
 .comparison-stats-table-wrap {
@@ -214,21 +217,33 @@
 
 .comparison-stats-table thead th {
   border-bottom: 2px solid #ddd;
-  font-size: 1.05rem;
+  font-size: 18px;
 }
 
 .comparison-stats-table tbody th {
-  font-size: 1.1rem;
+  font-size: 18px;
   width: 25%;
 }
 
 .comparison-stats-table td {
-  font-size: 1rem;
+  font-size: 18px;
 }
 
 .comparison-complication-list {
   margin: 0;
   padding-left: 1.25rem;
+}
+
+.comparison-complications {
+  margin-top: 2rem;
+}
+
+.comparison-complications h2 {
+  font-size: 24px;
+}
+
+.comparison-complications-table {
+  min-width: 52rem;
 }
 
 @media (max-width: 767px) {

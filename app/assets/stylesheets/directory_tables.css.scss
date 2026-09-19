@@ -1,3 +1,26 @@
+.directory-table-wrap {
+  background-color: #fff;
+  color: #222;
+  color-scheme: only light;
+  overflow: visible;
+}
+
+.directory-table-wrap .table {
+  margin-bottom: 0;
+}
+
+.sticky-header-table .directory-sort-button,
+.sticky-header-table .directory-sort-button:hover,
+.sticky-header-table .directory-sort-button:focus {
+  color: #fff;
+}
+
+.sticky-header-table .directory-sort-button .fa-sort,
+.sticky-header-table .directory-sort-button:hover .fa-sort,
+.sticky-header-table .directory-sort-button:focus .fa-sort {
+  color: #d9e8f3;
+}
+
 .directory-sort-button {
   background: transparent;
   border: 0;
@@ -22,4 +45,46 @@
 .directory-sort-button:hover .fa-sort,
 .directory-sort-button:focus .fa-sort {
   color: #337ab7;
+}
+
+@media (max-width: 767px) {
+  .directory-table-wrap .table,
+  .directory-table-wrap .table tbody,
+  .directory-table-wrap .table tr,
+  .directory-table-wrap .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .directory-table-wrap .table thead {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  .directory-table-wrap .table tr {
+    border: 1px solid #b8c6d1;
+    margin: 0 0 1rem;
+    padding: .35rem 0;
+  }
+
+  .directory-table-wrap .table td {
+    border: 0;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(9rem, 42%) 1fr;
+    padding: .65rem 1rem;
+    text-align: left;
+  }
+
+  .directory-table-wrap .table td:before {
+    color: #222;
+    content: attr(data-label);
+    font-weight: bold;
+  }
 }

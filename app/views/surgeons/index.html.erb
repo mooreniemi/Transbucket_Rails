@@ -23,8 +23,8 @@
     <p class="lead"><%= t('directory.surgeons_intro') %></p>
   </div>
 </div>
-<div id="surgeons" style="background-color:#ffffff">
-  <table class="table table-hover table-bordered sticky-header-table sortable-directory-table" data-sortable-directory="surgeons" bgcolor="#ffffcc">
+<div id="surgeons" class="directory-table-wrap">
+  <table class="table table-hover table-bordered sticky-header-table sortable-directory-table" data-sortable-directory="surgeons">
     <thead>
       <tr>
         <th><button type="button" class="directory-sort-button" data-sort-key="name" aria-sort="none"><%= t('directory.name') %> <%= fa_icon('sort', aria: { hidden: true }) %></button></th>

@@ -120,6 +120,8 @@
 .pin-entity-controls {
   align-items: center;
   flex-wrap: nowrap;
+  position: relative;
+  z-index: 10;
 }
 
 .pin-entity-controls > .chosen-container {
@@ -131,6 +133,11 @@
 .pin-entity-controls > .add-button {
   flex: 0 0 34px;
   margin: 0;
+}
+
+.pin-entity-controls > .add-form {
+  position: relative;
+  z-index: 20;
 }
 
 .controls > .add-form {

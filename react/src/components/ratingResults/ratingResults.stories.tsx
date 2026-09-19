@@ -13,7 +13,7 @@ const meta = {
         },
         {
             id: "2",
-            rating: 3
+            rating: 2
         },
         {
             id: "3",

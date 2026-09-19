@@ -6,6 +6,13 @@
     stop-color: var(--ds-color-yellow-500);
 }
 
-.fillYellow {
-    fill: var(--ds-color-yellow-500);
+.plot {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem;
+    align-items: middle;
+
+    &:not(:first-child) {
+        margin-top: 0.5rem;
+    }
 }

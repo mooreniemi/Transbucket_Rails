@@ -24,9 +24,11 @@ const buttonVariants = tv({
       secondary:
         "bg-blue-300 text-black-900 hover:bg-blue-300/80 aria-expanded:bg-blue-300",
       ghost: "hover:bg-black-100 aria-expanded:bg-black-100",
-      destructive:
-        "bg-red-500/10 text-red-500 hover:bg-red-500/20 focus-visible:border-red-500/40 focus-visible:ring-red-500/20",
       link: "text-blue-500 underline-offset-4 hover:underline",
+    },
+    theme: {
+      default: "",
+      destructive: "focus-visible:border-red-500/40 focus-visible:ring-red-500/20"
     },
     size: {
       md: "h-8 px-2.5",
@@ -42,7 +44,30 @@ const buttonVariants = tv({
   defaultVariants: {
     variant: "primary",
     size: "md",
+    theme: "default",
   },
+  compoundVariants: [
+    {
+      variant: 'primary',
+      theme: 'destructive',
+      className: 'bg-red-500 text-white hover:bg-red-500/80',
+    },
+    {
+      variant: "outline",
+      theme: "destructive",
+      className: "border-red-300 text-red-500"
+    },
+    {
+      variant: "secondary",
+      theme: "destructive",
+      className: "bg-red-500/10 text-red-500 hover:bg-red-500/20"
+    },
+    {
+      variant: "link",
+      theme: "destructive",
+      className: "text-red-500"
+    }
+  ]
 })
 
 type ButtonType = Omit<ButtonPrimitiveProps, "className" | "children">
@@ -69,6 +94,7 @@ function Button({
   className,
   variant = "primary",
   size = "md",
+  theme = "default",
   ...props
 }: ButtonType | LinkButtonType) {
   if (isLink(props)) {
@@ -77,7 +103,7 @@ function Button({
         data-slot="button"
         data-variant={variant}
         data-size={size}
-        className={buttonVariants({ variant, size, className })}
+        className={buttonVariants({ variant, size, theme, className })}
         {...props}
       />
     );
@@ -90,7 +116,7 @@ function Button({
         data-variant={variant}
         data-size={size}
         isPending={isPending}
-        className={buttonVariants({ variant, size, className })}
+        className={buttonVariants({ variant, size, theme, className })}
         {...rest}
       >
         {isPending && <LoaderCircle className="animate-spin" aria-hidden="true" />}

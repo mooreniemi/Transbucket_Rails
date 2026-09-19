@@ -20,7 +20,11 @@ const meta = {
       control: { type: 'select' },
     },
     variant: {
-      options: ['primary', 'destructive', 'outline', 'secondary', 'ghost', 'link'],
+      options: ['primary', 'outline', 'secondary', 'ghost', 'link'],
+      control: { type: 'select' },
+    },
+    theme: {
+      options: ['default', 'destructive'],
       control: { type: 'select' },
     },
     isPending: {
@@ -60,7 +64,7 @@ export const Ghost: Story = {
 };
 
 export const Destructive: Story = {
-  args: { variant: 'destructive' },
+  args: { theme: 'destructive' },
 };
 
 export const Link: Story = {

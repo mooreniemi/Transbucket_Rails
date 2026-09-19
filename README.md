@@ -208,6 +208,20 @@ Production deploy is manual, and separate from CI/CD -- passing CircleCI tests d
 
 (The `production` remote points at Heroku's `transbucket` app git URL.) There is currently no automated or gated path from a green CircleCI build to a production deploy.
 
+Before deploying, confirm the exact commit and Heroku ref:
+
+```
+git fetch production main
+git rev-parse master origin/master production/main
+```
+
+`master` and `origin/master` should be the tested commit. A normal deploy is a
+fast-forward push. If Heroku rejects the push because `production/main` is
+stale or divergent, stop and inspect the two histories before changing the
+remote ref; do not use an unconditional force push. The one-time
+`--force-with-lease` reconciliation used in September 2026 is not part of the
+normal deploy path.
+
 ### Pre-production release gate
 
 Before every production deploy, run the relevant local suite and deploy the exact tested commit to staging. After the staging release completes, run the authenticated smoke with credentials supplied only in the local shell:

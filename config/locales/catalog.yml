@@ -236,7 +236,9 @@ en:
       search_pins: Search pins
       recent_submissions: Recent submissions
       for_you: For You
+      submit_photo: Submit a photo
     entries:
+      automatic_photo_resizing: Phone photos are now automatically resized before upload when needed, so they can meet Transbucket's upload limit without requiring separate image-editing software.
       comparison_stats: You can now %{compare_procedures} or %{compare_surgeons} side by side, including rating distributions, averages, outcome percentages, and shared-scope filters. These screenshots use fictional demo data to protect privacy.
       complication_cleanup: We clarified and grouped complication tags so comparison pages can show more useful rates. Original pin descriptions stay unchanged, and the tag changes are reversible if an owner spots an error or has concerns.
       complication_image_alt: Complication tag editor using short tags and suggestions

@@ -31,14 +31,17 @@ describe PagesController, :type => :controller do
       get 'newsfeed'
 
       expect(response).to be_success
-      expect(assigns(:newsfeed_entries).length).to eq(6)
-      expect(assigns(:newsfeed_entries).first[:images].length).to eq(2)
-      expect(assigns(:newsfeed_entries).all? { |entry| entry[:links].present? }).to eq(true)
+      expect(assigns(:newsfeed_entries).length).to eq(9)
+      expect(assigns(:newsfeed_entries).first[:body]).to eq(I18n.t('newsfeed.entries.automatic_photo_resizing'))
+      expect(assigns(:newsfeed_entries).find { |entry| entry[:body_key] == 'newsfeed.entries.comparison_stats' }[:images].length).to eq(2)
+      expect(assigns(:newsfeed_entries).first[:links]).to eq([['Submit a photo', '/en/pins/new']])
       expect(assigns(:newsfeed_entries).map { |entry| entry[:body] }).to include(I18n.t('newsfeed.entries.directory_improvements'))
       expect(response.body).to include('We cleaned up a set of procedure names')
       expect(response.body).to include('Procedure search now matches prefixes')
       expect(response.body).to include('The Discord community invite now points to a permanent link.')
       expect(response.body).to include('Transbucket now supports German, Spanish, French, Italian')
+      expect(response.body).to include('Phone photos are now automatically resized before upload')
+      expect(response.body).to include('href="/en/pins/new"')
       expect(response.body).to include('href="/en/procedures/compare"')
       expect(response.body).to include('href="/en/surgeons/compare"')
       expect(response.body).not_to include('(Compare procedures / compare surgeons)')

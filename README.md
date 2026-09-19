@@ -174,6 +174,14 @@ For master branch: [![CircleCI](https://circleci.com/gh/mooreniemi/Transbucket_R
 
 ## [staging](https://dashboard-preview.heroku.com/apps/transbucket-staging)
 
+### Product release notes
+
+Every user-facing feature must include a corresponding entry in the in-app
+newsfeed (`PagesController::NEWSFEED_ENTRY_TIMESTAMPS` and the `newsfeed`
+translations). This makes shipped improvements discoverable after release.
+Do not create newsfeed entries for admin-only tools, authorization/security
+repairs, maintenance, or other internal changes.
+
 Staging is meant to run in the production environment, as close to actual production as possible. Deploys to staging are always manual -- nothing in CI deploys it automatically.
 
 To deploy a branch to [staging](https://transbucket-staging.herokuapp.com/):

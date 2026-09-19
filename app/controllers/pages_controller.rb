@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   NEWSFEED_ENTRY_TIMESTAMPS = {
+    'automatic_photo_resizing' => Time.utc(2026, 9, 19, 22, 30),
     'recent_for_you' => Time.utc(2026, 9, 19, 20, 46),
     'complication_cleanup' => Time.utc(2026, 9, 19, 20, 20),
     'comparison_stats' => Time.utc(2026, 9, 18, 23, 0),
@@ -81,6 +82,8 @@ class PagesController < ApplicationController
     when 'recent_for_you'
       [[t('newsfeed.links.recent_submissions', default: 'Recent submissions'), pins_path(feed: 'recent', locale: I18n.locale)],
        [t('newsfeed.links.for_you', default: 'For You'), pins_path(feed: 'for_you', locale: I18n.locale)]]
+    when 'automatic_photo_resizing'
+      [[t('newsfeed.links.submit_photo', default: 'Submit a photo'), new_pin_path(locale: I18n.locale)]]
     when 'directory_improvements'
       [[t('newsfeed.links.browse_procedures', default: 'Browse procedures'), procedures_path(locale: I18n.locale)],
        [t('newsfeed.links.browse_surgeons', default: 'browse surgeons'), surgeons_path(locale: I18n.locale)]]

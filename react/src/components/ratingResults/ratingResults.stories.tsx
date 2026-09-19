@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/tanstack-react';
 import { RatingResults } from './ratingResults';
 
 const meta = {
-  title: 'Components/Data/RatingResults',
+  title: 'Components/Data/Rating Results',
   component: RatingResults,
   args: {
     data: [

@@ -3,6 +3,7 @@
 import type { ComponentPropsWithoutRef } from "react"
 import { Link, type LinkProps } from "react-aria-components"
 import { cn } from "#/lib/utils"
+import { formatDateTime } from "#/lib/dateTime"
 
 export interface GalleryProps extends ComponentPropsWithoutRef<"div"> {}
 
@@ -15,12 +16,6 @@ function Gallery({ className, ...props }: GalleryProps) {
     <div {...props} className={cn("columns-1 gap-4 sm:columns-2 md:columns-3 lg:columns-4", className)} />
   )
 }
-
-// timeZone: "UTC" because a date-only string like "2026-08-02" parses as
-// UTC midnight -- formatting in the viewer's local zone can roll it back
-// to the previous day west of UTC. Formatting in UTC always matches the
-// calendar date that was passed in, string or Date.
-const dateFormatter = new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeZone: "UTC" })
 
 export interface GalleryItemProps extends Omit<LinkProps, "className" | "children"> {
   className?: string
@@ -56,7 +51,7 @@ function GalleryItem({
         <span className="text-sm font-medium text-black-900">{procedure}</span>
         <span className="text-sm text-black-600">{doctor}</span>
         <time dateTime={date.toISOString()} className="text-xs text-black-600 italic">
-          Updated {dateFormatter.format(date)}
+          Updated {formatDateTime(date)}
         </time>
       </div>
     </Link>

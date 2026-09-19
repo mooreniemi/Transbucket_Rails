@@ -6,7 +6,7 @@ import { DropZone, FileTrigger, Text } from './dropZone';
 import { Button } from '../button';
 
 const meta = {
-  title: 'Components/Forms/DropZone',
+  title: 'Components/Forms/Drop zone',
   component: DropZone,
 } satisfies Meta<typeof DropZone>;
 

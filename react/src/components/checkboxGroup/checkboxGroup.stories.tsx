@@ -5,7 +5,7 @@ import { CheckboxGroup } from './checkboxGroup';
 import { Checkbox } from '../checkbox/checkbox';
 
 const meta = {
-  title: 'Components/Forms/CheckboxGroup',
+  title: 'Components/Forms/Checkbox Group',
   component: CheckboxGroup,
   args: {
     label: 'Notifications',

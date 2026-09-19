@@ -57,7 +57,9 @@ export function RatingResults ({ data }: RatingResults) {
                         <div className={styles.plot} key={value}>
                             <span className="min-w-8">{value} <Star className="fill-yellow-500 inline" size={16} strokeWidth={0} /></span>
                             <div className="bg-black-300">
-                                <a href="#" className="bg-blue-500 text-center block hover:ring-4 hover:ring-blue-500/50" style={{ width }}>{count ? count : ''}</a>
+                                {count > 0 && (
+                                    <a href="#" className="bg-blue-500 text-center block hover:ring-4 hover:ring-blue-500/50" style={{ width }}>{count}</a>
+                                )}
                             </div>
                         </div>
                     );

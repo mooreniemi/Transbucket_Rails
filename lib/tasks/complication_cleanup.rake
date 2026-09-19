@@ -6,6 +6,7 @@ namespace :complications do
     /\A(?:absolutely\s+)?none(?:\s+(?:so\s+far|as\s+of\s+yet|at\s+this\s+time|from\s+stage\s+\d+|in\s+this\s+stage|to\s+date|to\s+complain\s+about|yet|what[-\s]?so[-\s]?ever))?[.!\s:-]*\z/i,
     /\Anone[^a-z0-9]*\z/i,
     /\A(?:\d+\s+months?\s+postop|very\s+early\s+on)\s*[-:;]\s*none(?:\s+(?:so\s+far|yet))?[.!\s:-]*\z/i,
+    /\Aso\s+far\s+none[.!\s:-]*\z/i,
     /\A(?:aucune\s*\/\s*none|nulla\s*\/\s*nothing)\z/i,
     /\Ano\s+(?:issues?(?:\s+after\s+surgery)?|complications)[.!\s]*\z/i
   ].freeze

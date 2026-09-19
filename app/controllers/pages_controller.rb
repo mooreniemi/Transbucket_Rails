@@ -1,4 +1,15 @@
 class PagesController < ApplicationController
+  NEWSFEED_ENTRY_TIMESTAMPS = {
+    'recent_for_you' => Time.utc(2026, 9, 19, 20, 46),
+    'complication_cleanup' => Time.utc(2026, 9, 19, 20, 20),
+    'comparison_stats' => Time.utc(2026, 9, 18, 23, 0),
+    'directory_improvements' => Time.utc(2026, 9, 13, 21, 0),
+    'locales' => Time.utc(2026, 9, 10, 23, 0),
+    'discord_invite' => Time.utc(2026, 9, 6, 22, 0),
+    'prefix_search' => Time.utc(2026, 9, 6, 20, 30),
+    'procedure_cleanup' => Time.utc(2026, 9, 6, 20, 0)
+  }.freeze
+
   # Page-cache keys use the full request path, so each locale gets its own cached document.
   caches_page :home, :about, :terms, :privacy
   before_filter :force_request_format_to_html
@@ -26,11 +37,17 @@ class PagesController < ApplicationController
   end
 
   def newsfeed
-    @newsfeed_entries = %w(comparison_stats complication_cleanup recent_for_you directory_improvements locales discord_invite prefix_search procedure_cleanup).map do |entry|
+    @newsfeed_entries = NEWSFEED_ENTRY_TIMESTAMPS.sort_by { |_entry, timestamp| -timestamp.to_i }.map do |entry, published_at|
       links = newsfeed_links_for(entry)
       body_key = "newsfeed.entries.#{entry}"
       body = I18n.t(body_key, default: I18n.t(body_key, locale: :en)) unless entry == 'comparison_stats'
-      entry_data = { body: body, body_key: (body_key if %w[comparison_stats recent_for_you].include?(entry)), date: I18n.t('newsfeed.date'), links: links }
+      entry_data = {
+        body: body,
+        body_key: (body_key if %w[comparison_stats recent_for_you].include?(entry)),
+        date: I18n.l(published_at.in_time_zone, format: :long),
+        published_at: published_at,
+        links: links
+      }
       if entry == 'comparison_stats'
         entry_data[:images] = %w(procedure-comparison-demo surgeon-comparison-demo).map { |image| "newsfeed/#{image}.png" }
       elsif entry == 'complication_cleanup'

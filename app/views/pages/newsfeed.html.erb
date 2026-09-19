@@ -21,7 +21,7 @@
       <% entry[:images].to_a.each do |image| %>
         <%= image_tag image, class: 'newsfeed-screenshot', alt: entry[:image_alt] || t('newsfeed.comparison_image_alt', default: 'Example comparison page using fictional demo data') %>
       <% end %>
-      <p class="newsfeed-date"><%= entry[:date] %></p>
+      <p class="newsfeed-date"><time datetime="<%= entry[:published_at].iso8601 %>"><%= entry[:date] %></time></p>
     </article>
   <% end %>
 </div>

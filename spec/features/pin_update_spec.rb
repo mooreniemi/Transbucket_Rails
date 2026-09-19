@@ -80,6 +80,20 @@ describe "pin updating", :fake_images => true do
 
       include_examples "pin updating", js: false
     end
+
+    context 'with a legacy oversized photo' do
+      before do
+        pin.pin_images.first.update_column(:photo_file_size, PinImage::UPLOAD_SIZE_LIMIT + 1)
+      end
+
+      it 'updates the pin without requiring the existing photo to be replaced' do
+        ensure_on "/pins/#{pin.id}/edit"
+        fill_in 'pin_cost', with: 123
+        click_button 'Submit Now'
+
+        expect(pin.reload.cost).to eq(123)
+      end
+    end
   end
 
   context "with js", :js => true do

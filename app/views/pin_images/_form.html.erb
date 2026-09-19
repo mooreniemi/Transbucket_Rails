@@ -1,4 +1,4 @@
-<div class="dropzone well" id="dropper" data-pin-id="<%= @form.try(:id) %>">
+<div class="dropzone well" id="dropper" data-pin-id="<%= @form.try(:id) %>" data-upload-size-limit="<%= PinImage::UPLOAD_SIZE_LIMIT %>">
   <div class="dz-message"><%= t('public.form.drop_files') %></div>
   <div class="fallback">
     <%= f.fields_for :pin_images do |pin_image_form| %>

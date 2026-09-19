@@ -110,7 +110,8 @@ $(document).ready(function() {
         formSelector = ".form-inline",
         template = $('#preview-template').html(),
         fileCounter = 0,
-        queueCounter = 0;
+        queueCounter = 0,
+        preprocessingUploads = 0;
 
     $(".add-button").click(function() {
       var controls = $(this).parents('.controls'),
@@ -202,6 +203,76 @@ $(document).ready(function() {
       });
     }
 
+    // Phone photos are commonly several megabytes, while PinImage keeps a
+    // deliberately small storage limit. Resize JPEG and PNG photos in the
+    // browser before Dropzone sees them, so users don't need a separate image
+    // editor just to submit a pin. GIFs are left untouched to preserve their
+    // animation.
+    function resizePhotoForUpload(file, maxBytes, callback) {
+      var supportedType = /^image\/(jpe?g|png)$/i.test(file.type);
+
+      if (file.size <= maxBytes || !supportedType || !window.FileReader || !window.Blob || !HTMLCanvasElement.prototype.toBlob) {
+        callback(file);
+        return;
+      }
+
+      var reader = new FileReader(), image = new Image();
+      reader.onerror = function() { callback(file); };
+      image.onerror = function() { callback(file); };
+      reader.onload = function(event) {
+        image.onload = function() {
+          var maxDimension = 1600,
+              scale = Math.min(1, maxDimension / Math.max(image.width, image.height)),
+              width = Math.max(1, Math.round(image.width * scale)),
+              height = Math.max(1, Math.round(image.height * scale)),
+              canvas = document.createElement('canvas'),
+              attempts = 0;
+
+          function makeUpload(blob) {
+            var name = file.name.replace(/\.[^.]+$/, '') + '.jpg';
+            try {
+              return new File([blob], name, { type: 'image/jpeg' });
+            } catch (e) {
+              blob.name = name;
+              return blob;
+            }
+          }
+
+          function compress() {
+            var quality = Math.max(0.5, 0.9 - (attempts * 0.1));
+            canvas.width = width;
+            canvas.height = height;
+            var context = canvas.getContext('2d');
+            context.fillStyle = '#ffffff';
+            context.fillRect(0, 0, width, height);
+            context.drawImage(image, 0, 0, width, height);
+
+            canvas.toBlob(function(blob) {
+              if (!blob) {
+                callback(file);
+              } else if (blob.size <= maxBytes) {
+                callback(makeUpload(blob));
+              } else if (attempts < 5) {
+                attempts += 1;
+                compress();
+              } else if (width > 640 && height > 640) {
+                attempts = 0;
+                width = Math.round(width * 0.8);
+                height = Math.round(height * 0.8);
+                compress();
+              } else {
+                callback(file);
+              }
+            }, 'image/jpeg', quality);
+          }
+
+          compress();
+        };
+        image.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
     var dropzoneOptions = {
       previewsContainer: "#dropper",
       clickable: "#dropper",
@@ -233,11 +304,25 @@ $(document).ready(function() {
 
     var myDropzone = new Dropzone(formSelector, dropzoneOptions);
 
+    // This version of Dropzone predates its transformFile hook. Wrapping
+    // addFile keeps the existing queue and preview behaviour while handing it
+    // the compressed File rather than the original camera image.
+    var addFile = myDropzone.addFile;
+    myDropzone.addFile = function(file) {
+      var targetBytes = parseInt($('#dropper').data('upload-size-limit'), 10) - (64 * 1024);
+      preprocessingUploads += 1;
+      $('#submit-all').prop('disabled', true);
+      resizePhotoForUpload(file, targetBytes, function(resizedFile) {
+        preprocessingUploads -= 1;
+        addFile.call(myDropzone, resizedFile);
+      });
+    };
+
     myDropzone.on("addedfile", function(file) {
       $(".dz-message:visible").hide();
       file.index = fileCounter++;
       $(".dz-preview:last-child").attr('id', "file-" + file.index);
-      $('#submit-all').prop("disabled", false);
+      if (preprocessingUploads === 0) $('#submit-all').prop("disabled", false);
       onAddedPreview();
     });
 

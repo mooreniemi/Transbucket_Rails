@@ -61,7 +61,10 @@ class PinsController < ApplicationController
 
   # GET /pins/1/edit
   def edit
-    @form = PinForm.new(current_user.pins.find(params[:id]))
+    # validate_user has already authorized @pin for either its owner or an
+    # admin. Re-scoping through current_user.pins here turned an authorized
+    # admin request into RecordNotFound for another user's pin.
+    @form = PinForm.new(@pin)
     @form.prepopulate!
   end
 
@@ -88,7 +91,7 @@ class PinsController < ApplicationController
   # PUT /pins/1
   # PUT /pins/1.json
   def update
-    @form = PinForm.new(current_user.pins.find(params[:id]))
+    @form = PinForm.new(@pin)
 
     respond_to do |format|
       if @form.validate(pin_params)

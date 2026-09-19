@@ -149,6 +149,42 @@ describe PinsController, :type => :controller do
 
         expect(response).to be_success
       end
+
+      it 'allows an admin to edit another user\'s pin' do
+        admin = create(:user, admin: true)
+        pin = create(:pin, user: create(:user))
+
+        sign_in(admin)
+        get :edit, id: pin.id, locale: 'en'
+
+        expect(response).to be_success
+      end
+    end
+
+    describe 'cached pin actions' do
+      around do |example|
+        previous_setting = ActionController::Base.perform_caching
+        ActionController::Base.perform_caching = true
+        Rails.cache.clear
+        example.run
+      ensure
+        Rails.cache.clear
+        ActionController::Base.perform_caching = previous_setting
+      end
+
+      it 'does not show an edit link cached for the owner to another user' do
+        owner = create(:user)
+        viewer = create(:user)
+        pin = create(:pin, user: owner)
+
+        sign_in(owner)
+        get :show, id: pin.id, locale: 'en'
+        expect(response.body).to include(edit_pin_path(pin))
+
+        sign_in(viewer)
+        get :show, id: pin.id, locale: 'en'
+        expect(response.body).not_to include(edit_pin_path(pin))
+      end
     end
 
     describe 'GET #new' do
@@ -237,6 +273,21 @@ describe PinsController, :type => :controller do
         expect(pin.procedure.id).to_not eq(old_procedure_id)
         expect(pin.surgeon.url).to eq(surgeon[:url])
         expect(pin.procedure.name).to eq(procedure[:name])
+      end
+
+      it 'allows an admin to update another user\'s pin' do
+        admin = create(:user, admin: true)
+        pin = create(:pin, :with_surgeon_and_procedure, :real_pin_images, user: create(:user))
+
+        sign_in(admin)
+        put :update, id: pin.id, pin: {
+          cost: 123,
+          surgeon_attributes: { id: pin.surgeon.id },
+          procedure_attributes: { id: pin.procedure.id }
+        }
+
+        expect(response).to redirect_to(pin_url(pin))
+        expect(pin.reload.cost).to eq(123)
       end
     end
 

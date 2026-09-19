@@ -1,4 +1,12 @@
 module ApplicationHelper
+  # Pin submission is a focused workflow. Keep every state of that workflow
+  # (including validation failures rendered by create/update) free of ads.
+  # This guard lives at the ad partials rather than only in the form templates,
+  # so a future shared view cannot accidentally reintroduce an ad there.
+  def ads_allowed?
+    !(controller_path == 'pins' && %w[new edit create update].include?(action_name))
+  end
+
   def display_complication_rate(complication)
     rate = complication[:rate].to_i
     return '<1%' if rate.zero? && complication[:count].to_i.positive?

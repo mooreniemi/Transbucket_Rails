@@ -1,4 +1,4 @@
-<% if Rails.env.production? && rand(1..15) == 7 %>
+<% if Rails.env.production? && ads_allowed? && rand(1..15) == 7 %>
   <% Rails.logger.debug "Serving ad with #{pin.id}" %>
   <div class="item ad pin-ad-slot" aria-hidden="true">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>

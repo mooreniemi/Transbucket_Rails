@@ -1,4 +1,4 @@
-<% if Rails.env.production? %>
+<% if Rails.env.production? && ads_allowed? %>
   <div class="row padded_nicely">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- test1 -->

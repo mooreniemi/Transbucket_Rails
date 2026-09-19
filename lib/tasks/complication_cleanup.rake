@@ -28,12 +28,13 @@ namespace :complications do
     direction = (ENV['DIRECTION'] || 'up').to_s
     backup_path = Pathname.new(ENV['BACKUP_PATH'] || Rails.root.join('tmp', 'complication_cleanup_backup.yml'))
     dry_run = ENV['DRY_RUN'].to_s == '1'
+    placeholder_only = ENV['PLACEHOLDER_ONLY'].to_s == '1'
 
     normalize = lambda do |tag|
       key = tag.to_s.strip.downcase
       next nil if SENTINEL_TAGS.include?(key) || PLACEHOLDER_TAG_PATTERNS.any? { |pattern| pattern.match?(key) }
 
-      CANONICAL_TAGS.fetch(key, tag.to_s.strip)
+      placeholder_only ? tag.to_s.strip : CANONICAL_TAGS.fetch(key, tag.to_s.strip)
     end
 
     case direction

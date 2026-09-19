@@ -26,13 +26,16 @@ class PagesController < ApplicationController
   end
 
   def newsfeed
-    @newsfeed_entries = %w(comparison_stats directory_improvements locales discord_invite prefix_search procedure_cleanup).map do |entry|
+    @newsfeed_entries = %w(comparison_stats complication_cleanup directory_improvements locales discord_invite prefix_search procedure_cleanup).map do |entry|
       links = newsfeed_links_for(entry)
       body_key = "newsfeed.entries.#{entry}"
       body = I18n.t(body_key, default: I18n.t(body_key, locale: :en)) unless entry == 'comparison_stats'
       entry_data = { body: body, body_key: (body_key if entry == 'comparison_stats'), date: I18n.t('newsfeed.date'), links: links }
       if entry == 'comparison_stats'
         entry_data[:images] = %w(procedure-comparison-demo surgeon-comparison-demo).map { |image| "newsfeed/#{image}.png" }
+      elsif entry == 'complication_cleanup'
+        entry_data[:images] = ['newsfeed/complication-tags-demo.jpg']
+        entry_data[:image_alt] = I18n.t('newsfeed.complication_image_alt', default: 'Complication tag editor using short tags and suggestions')
       end
       entry_data
     end

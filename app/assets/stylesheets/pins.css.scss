@@ -140,6 +140,18 @@
   z-index: 20;
 }
 
+.pin-entity-field {
+  position: relative;
+}
+
+.pin-entity-field-surgeon {
+  z-index: 30;
+}
+
+.pin-entity-field-procedure {
+  z-index: 20;
+}
+
 .controls > .add-form {
   flex-basis: 100%;
 }

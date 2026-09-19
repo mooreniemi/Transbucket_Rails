@@ -236,6 +236,8 @@ en:
       search_pins: Search pins
     entries:
       comparison_stats: You can now %{compare_procedures} or %{compare_surgeons} side by side, including rating distributions, averages, outcome percentages, and shared-scope filters. These screenshots use fictional demo data to protect privacy.
+      complication_cleanup: We clarified and grouped complication tags so comparison pages can show more useful rates. Original pin descriptions stay unchanged, and the tag changes are reversible if an owner spots an error or has concerns.
+      complication_image_alt: Complication tag editor using short tags and suggestions
       procedure_cleanup: We cleaned up a set of procedure names so common shorthand
         and typo variants now point to the same canonical procedure pages, which makes
         browsing and search results more consistent.

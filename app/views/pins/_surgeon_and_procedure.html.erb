@@ -1,6 +1,6 @@
 <div class="row">
   <% f.hidden_field :id %>
-  <div class="form-group col-md-6">
+  <div class="form-group col-md-6 pin-entity-field pin-entity-field-surgeon">
     <label class="control-label"><%= t('public.pin.surgeon') %></label>
     <div id="surgeon_form" class="controls pin-entity-controls">
       <%= f.fields_for :surgeon do |surgeon_form| %>
@@ -11,7 +11,7 @@
       <% end %>
     </div>
   </div>
-  <div class="form-group col-md-6">
+  <div class="form-group col-md-6 pin-entity-field pin-entity-field-procedure">
     <label class="control-label"><%= t('public.pin.procedure') %></label>
     <div id="procedure_form" class="controls pin-entity-controls">
       <%= f.fields_for :procedure do |procedure_form| %>

@@ -26,16 +26,19 @@ class PagesController < ApplicationController
   end
 
   def newsfeed
-    @newsfeed_entries = %w(comparison_stats complication_cleanup directory_improvements locales discord_invite prefix_search procedure_cleanup).map do |entry|
+    @newsfeed_entries = %w(comparison_stats complication_cleanup recent_for_you directory_improvements locales discord_invite prefix_search procedure_cleanup).map do |entry|
       links = newsfeed_links_for(entry)
       body_key = "newsfeed.entries.#{entry}"
       body = I18n.t(body_key, default: I18n.t(body_key, locale: :en)) unless entry == 'comparison_stats'
-      entry_data = { body: body, body_key: (body_key if entry == 'comparison_stats'), date: I18n.t('newsfeed.date'), links: links }
+      entry_data = { body: body, body_key: (body_key if %w[comparison_stats recent_for_you].include?(entry)), date: I18n.t('newsfeed.date'), links: links }
       if entry == 'comparison_stats'
         entry_data[:images] = %w(procedure-comparison-demo surgeon-comparison-demo).map { |image| "newsfeed/#{image}.png" }
       elsif entry == 'complication_cleanup'
         entry_data[:images] = ['newsfeed/complication-tags-demo.jpg']
         entry_data[:image_alt] = I18n.t('newsfeed.complication_image_alt', default: 'Complication tag editor using short tags and suggestions')
+      elsif entry == 'recent_for_you'
+        entry_data[:images] = ['newsfeed/recent-for-you-demo.jpg']
+        entry_data[:image_alt] = I18n.t('newsfeed.recent_for_you_image_alt', default: 'Recent and For You submission feeds using fictional demo data')
       end
       entry_data
     end
@@ -58,6 +61,9 @@ class PagesController < ApplicationController
     when 'comparison_stats'
       [[t('newsfeed.links.compare_procedures', default: 'Compare procedures'), compare_procedures_path(locale: I18n.locale)],
        [t('newsfeed.links.compare_surgeons', default: 'compare surgeons'), compare_surgeons_path(locale: I18n.locale)]]
+    when 'recent_for_you'
+      [[t('newsfeed.links.recent_submissions', default: 'Recent submissions'), pins_path(feed: 'recent', locale: I18n.locale)],
+       [t('newsfeed.links.for_you', default: 'For You'), pins_path(feed: 'for_you', locale: I18n.locale)]]
     when 'directory_improvements'
       [[t('newsfeed.links.browse_procedures', default: 'Browse procedures'), procedures_path(locale: I18n.locale)],
        [t('newsfeed.links.browse_surgeons', default: 'browse surgeons'), surgeons_path(locale: I18n.locale)]]

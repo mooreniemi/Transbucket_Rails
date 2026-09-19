@@ -9,6 +9,8 @@
       <p class="newsfeed-body">
         <% if entry[:body_key] == 'newsfeed.entries.comparison_stats' %>
           <%= t(entry[:body_key], compare_procedures: link_to(entry[:links][0][0], entry[:links][0][1]), compare_surgeons: link_to(entry[:links][1][0], entry[:links][1][1]), default: t(entry[:body_key], locale: :en, compare_procedures: link_to(entry[:links][0][0], entry[:links][0][1]), compare_surgeons: link_to(entry[:links][1][0], entry[:links][1][1]))).html_safe %>
+        <% elsif entry[:body_key] == 'newsfeed.entries.recent_for_you' %>
+          <%= t(entry[:body_key], recent_submissions: link_to(entry[:links][0][0], entry[:links][0][1]), for_you: link_to(entry[:links][1][0], entry[:links][1][1]), default: t(entry[:body_key], locale: :en, recent_submissions: link_to(entry[:links][0][0], entry[:links][0][1]), for_you: link_to(entry[:links][1][0], entry[:links][1][1]))).html_safe %>
         <% else %>
           <%= entry[:body] %>
         <% end %>

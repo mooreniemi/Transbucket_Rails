@@ -6,6 +6,10 @@
 <li>
   <%= link_to I18n.t(".header.submissions"), pins_path %>
 </li>
+<% comparison_type = controller_name == 'surgeons' || params[:type] == 'surgeons' ? 'surgeons' : 'procedures' %>
+<li>
+  <%= link_to t('comparison.title', default: 'Compare'), compare_path(type: comparison_type) %>
+</li>
 <% unless current_user.gender.cis? %>
   <li>
     <%= link_to "#{I18n.t(".header.add")} #{fa_icon('plus-circle yellow')}".html_safe, new_pin_path %>

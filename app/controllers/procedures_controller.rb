@@ -44,6 +44,7 @@ class ProceduresController < ApplicationController
     @comparison_scope_options = common_surgeons_for(procedures)
     @comparison_surgeon = find_common_surgeon(params[:surgeon_id], procedures)
     @comparison_data = procedure_comparison_data(procedures, @comparison_surgeon, @deduplicate)
+    @comparison_cache_version = comparison_cache_version(procedures, @comparison_surgeon)
     @comparison_evidence = ComparisonStatistics.for(
       @comparison_data[@first_procedure] || { distributions: { sensation: {}, satisfaction: {} } },
       @comparison_data[@second_procedure] || { distributions: { sensation: {}, satisfaction: {} } }
@@ -170,6 +171,12 @@ class ProceduresController < ApplicationController
       }
     end
     data
+  end
+
+  def comparison_cache_version(procedures, surgeon = nil)
+    pins = Pin.where(procedure_id: procedures.map(&:id))
+    pins = pins.where(surgeon_id: surgeon.id) if surgeon
+    [pins.count, pins.maximum(:updated_at)]
   end
 
   def deduplicated_pins(pins, scope_column)

@@ -1,7 +1,40 @@
 require 'rails_helper'
 
 RSpec.describe 'comparison scope selectors', js: true, fake_images: true do
+  before { page.current_window.resize_to(1280, 900) }
+
   after { Warden.test_reset! }
+
+  it 'uses the shared comparison form from the header and directory pages' do
+    user = create(:user, :with_confirmation)
+    first = create(:procedure, name: 'First procedure')
+    second = create(:procedure, name: 'Second procedure')
+    surgeon = create(:surgeon, first_name: 'First', last_name: 'Surgeon')
+
+    login_as(user, scope: :user)
+    visit '/procedures'
+    within('.navbar') { click_link 'Compare' }
+
+    expect(page).to have_current_path('/en/compare?type=procedures')
+    expect(page).to have_checked_field('deduplicate_comparison')
+    expect(page).to have_css('.comparison-mode-tabs li.active', text: 'Procedures')
+    expect(page).to have_css('.comparison-selector-row--two-controls')
+
+    within('.comparison-mode-tabs') { click_link 'Surgeons' }
+    expect(page).to have_current_path('/en/compare?type=surgeons')
+    expect(page).to have_css('.comparison-mode-tabs li.active', text: 'Surgeons')
+
+    visit "/procedures/#{first.to_param}"
+    within('.stats-heading') { click_link 'Compare' }
+    expect(page).to have_current_path("/en/compare?first_id=#{first.to_param}&type=procedures")
+    expect(page).to have_checked_field('deduplicate_comparison')
+    expect(page).to have_select('first_id', selected: first.localized_name)
+
+    find("#second_id option[value='#{second.to_param}']").select_option
+    click_button 'Compare'
+    expect(page).to have_current_path('/en/procedures/compare', ignore_query: true)
+    expect(page).to have_content("Compare #{first.localized_name} and #{second.localized_name}")
+  end
 
   it 'filters shared surgeons immediately as procedures change' do
     user = create(:user, :with_confirmation)

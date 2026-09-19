@@ -157,6 +157,23 @@ RSpec.describe SurgeonsController, :type => :controller do
       expect(stats[:complications].first[:rate]).to eq(50.0)
     end
 
+    it 'changes the comparison cache version when a submission changes' do
+      user = create(:user)
+      first = create(:surgeon)
+      second = create(:surgeon)
+      procedure = create(:procedure)
+      create(:pin, surgeon: first, procedure: procedure)
+
+      sign_in user
+      get :compare, first_id: first.to_param, second_id: second.to_param
+      original_version = assigns(:comparison_cache_version)
+
+      create(:pin, surgeon: second, procedure: procedure)
+      get :compare, first_id: first.to_param, second_id: second.to_param
+
+      expect(assigns(:comparison_cache_version)).not_to eq(original_version)
+    end
+
     it 'applies an optional shared procedure scope to all compared surgeon stats' do
       user = create(:user)
       first = create(:surgeon)

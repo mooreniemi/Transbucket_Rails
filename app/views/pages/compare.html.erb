@@ -1,0 +1,20 @@
+<% is_procedure_comparison = @comparison_type == 'procedures' %>
+<% action = is_procedure_comparison ? compare_procedures_path : compare_surgeons_path %>
+<% label_method = is_procedure_comparison ? :localized_name : :to_s %>
+<% first = @comparison_options.detect { |option| option.to_param == params[:first_id] } %>
+<% second = @comparison_options.detect { |option| option.to_param == params[:second_id] } %>
+<% seo_meta title: t('comparison.title', default: 'Compare'), description: t('comparison.choose_description', default: 'Compare procedure or surgeon rating distributions on Transbucket.'), noindex: true %>
+
+<section class="comparison-chooser" aria-labelledby="comparison-chooser-heading">
+  <h1 id="comparison-chooser-heading"><%= t('comparison.title', default: 'Compare') %></h1>
+  <ul class="nav nav-tabs comparison-mode-tabs" role="tablist">
+    <li class="<%= 'active' if is_procedure_comparison %>" role="presentation">
+      <%= link_to t('header.procedures'), compare_path(type: 'procedures', first_id: (params[:first_id] if is_procedure_comparison)) %>
+    </li>
+    <li class="<%= 'active' unless is_procedure_comparison %>" role="presentation">
+      <%= link_to t('header.surgeons'), compare_path(type: 'surgeons', first_id: (params[:first_id] unless is_procedure_comparison)) %>
+    </li>
+  </ul>
+
+  <%= render partial: 'shared/comparison_form', locals: { resource_type: "chooser-#{@comparison_type}", comparison_heading: is_procedure_comparison ? t('comparison.procedures_title', default: 'Compare procedures') : t('comparison.surgeons_title', default: 'Compare surgeons'), options: @comparison_options, first: first, second: second, label_method: label_method, action: action, scope_options: [], scope_first: nil, scope_param: nil, scope_label: nil, scope_memberships: {}, deduplicate: params[:deduplicate] != '0' } %>
+</section>

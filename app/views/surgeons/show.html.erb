@@ -71,7 +71,7 @@
       <section class="surgeon-stats surgeon-rating-distributions" aria-labelledby="surgeon-stats-heading">
         <div class="stats-heading">
           <h2 id="surgeon-stats-heading"><%= t('directory.stats', default: 'Stats') %></h2>
-          <%= link_to t('comparison.title', default: 'Compare'), compare_surgeons_path(first_id: @surgeon.to_param), class: 'btn btn-default' %>
+          <%= link_to t('comparison.title', default: 'Compare'), compare_path(type: 'surgeons', first_id: @surgeon.to_param), class: 'btn btn-default' %>
         </div>
         <h3><%= t('public.rating.overall_distribution') %></h3>
         <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, average: @overall_sensation, rating: :sensation, title: t('public.rating.sensation.distribution'), scope_params: { surgeon: @surgeon.id }, heading_id: 'surgeon-sensation-distribution-heading' } %>

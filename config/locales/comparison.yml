@@ -29,6 +29,7 @@ en:
     procedures_description: Compare procedure rating distributions on Transbucket.
     surgeons_title: Compare surgeons
     surgeons_description: Compare surgeon rating distributions on Transbucket.
+    choose_description: Compare procedure or surgeon rating distributions on Transbucket.
 
 de:
   comparison:

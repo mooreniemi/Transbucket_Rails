@@ -90,7 +90,7 @@
     <section class="procedure-stats" aria-labelledby="procedure-stats-heading">
       <div class="stats-heading">
         <h2 id="procedure-stats-heading"><%= t('directory.stats', default: 'Stats') %></h2>
-        <%= link_to t('comparison.title', default: 'Compare'), compare_procedures_path(first_id: @procedure.to_param), class: 'btn btn-default' %>
+        <%= link_to t('comparison.title', default: 'Compare'), compare_path(type: 'procedures', first_id: @procedure.to_param), class: 'btn btn-default' %>
       </div>
       <div class="procedure-rating-distributions">
       <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, average: @rating_averages[:sensation], rating: :sensation, title: t('public.rating.sensation.distribution'), scope_params: { procedure: @procedure.id }, heading_id: 'procedure-sensation-distribution-heading' } %>

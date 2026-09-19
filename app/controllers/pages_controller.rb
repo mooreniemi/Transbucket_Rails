@@ -2,6 +2,7 @@ class PagesController < ApplicationController
   # Page-cache keys use the full request path, so each locale gets its own cached document.
   caches_page :home, :about, :terms, :privacy
   before_filter :force_request_format_to_html
+  before_filter :authenticate_user!, only: :compare
 
   def home
   end
@@ -13,6 +14,15 @@ class PagesController < ApplicationController
   end
 
   def privacy
+  end
+
+  def compare
+    @comparison_type = %w(procedures surgeons).include?(params[:type]) ? params[:type] : 'procedures'
+    @comparison_options = if @comparison_type == 'surgeons'
+      Surgeon.order(:last_name, :first_name)
+    else
+      Procedure.order(:name)
+    end
   end
 
   def newsfeed

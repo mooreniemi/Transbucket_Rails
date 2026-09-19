@@ -105,6 +105,19 @@
   display: block;
 }
 
+.comparison-chooser {
+  max-width: 900px;
+}
+
+.comparison-mode-tabs {
+  margin-bottom: 1.5rem;
+}
+
+.comparison-mode-tabs > li > a {
+  font-size: 18px;
+}
+
+
 .comparison-normalization {
   margin-bottom: 1.25rem;
 }
@@ -151,14 +164,24 @@
   grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
 }
 
+.comparison-selector-row--two-controls {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) auto;
+}
+
 .rating-comparison-form .form-group {
   margin-bottom: 0;
 }
 
 .comparison-actions {
-  align-items: center;
+  align-self: end;
   display: flex;
-  gap: .75rem;
+}
+
+.comparison-actions .btn {
+  height: 34px;
+  line-height: 20px;
+  margin: 0;
+  padding: 6px 12px;
 }
 
 .rating-comparison-row {

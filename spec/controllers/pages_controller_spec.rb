@@ -53,6 +53,27 @@ describe PagesController, :type => :controller do
     end
   end
 
+  describe 'GET compare' do
+    it 'requires authentication' do
+      get 'compare', locale: 'en'
+
+      expect(response).to redirect_to(new_user_session_path(locale: 'en'))
+    end
+
+    it 'renders the selected comparison type and preselects the first record' do
+      user = create(:user)
+      surgeon = create(:surgeon, first_name: 'First', last_name: 'Surgeon')
+      sign_in user
+
+      get 'compare', locale: 'en', type: 'surgeons', first_id: surgeon.to_param
+
+      expect(response).to be_success
+      expect(assigns(:comparison_type)).to eq('surgeons')
+      expect(response.body).to include('<option selected="selected" value="' + surgeon.to_param + '">')
+      expect(response.body).to include('action="/en/surgeons/compare"')
+    end
+  end
+
   describe 'GET about' do
     it 'does not label the informational page as legal content' do
       get 'about', locale: 'de'

@@ -124,6 +124,22 @@ describe ProceduresController, :type => :controller do
       expect(complications.map { |complication| complication[:rate] }).to all(eq(50))
     end
 
+    it 'changes the comparison cache version when a submission changes' do
+      user = create(:user)
+      first = create(:procedure)
+      second = create(:procedure)
+      create(:pin, procedure: first)
+
+      sign_in user
+      get :compare, first_id: first.to_param, second_id: second.to_param
+      original_version = assigns(:comparison_cache_version)
+
+      create(:pin, procedure: second)
+      get :compare, first_id: first.to_param, second_id: second.to_param
+
+      expect(assigns(:comparison_cache_version)).not_to eq(original_version)
+    end
+
     it 'applies an optional shared surgeon scope to all compared procedure stats' do
       user = create(:user)
       first = create(:procedure)

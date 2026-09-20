@@ -60,6 +60,11 @@ Rails.application.routes.draw do
     get 'search_terms' => 'search#search_terms'
     get 'surgeons_only' => 'search#surgeons_only'
 
+    # Identity check for the React app's top-level layout (Header, etc.) --
+    # works signed in or out, returns { user: null } rather than a 401 when
+    # signed out, since "show a sign-in link" is a valid response too.
+    get 'me' => 'current_user#show'
+
     # reroute for old bookmarks
     get '/members' => 'pages#home'
     get '/therapies' => 'pages#home'

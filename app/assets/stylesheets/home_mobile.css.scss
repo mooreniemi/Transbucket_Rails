@@ -1,0 +1,35 @@
+// Logged-out home page on phones.
+//
+// The page is a heading, a blurb and three call-to-action blocks, and stacked
+// on a phone the first image was far below the fold. On phones we keep only
+// the middle block (the keys logo, linking to register); the other two are
+// desktop-only (hidden-xs in pages/_welcome.html.erb). This just tightens the
+// heading so that block is on screen without scrolling.
+@media (max-width: 767px) {
+  // Long translated words ("geschlechtsangleichende") must wrap, not push the
+  // page wider than the screen.
+  .welcome-title,
+  .homepage-cta h3,
+  .homepage-cta-row + p,
+  .lead {
+    hyphens: auto;
+    overflow-wrap: break-word;
+  }
+
+  .welcome-title {
+    font-size: 26px;
+    line-height: 1.2;
+    margin: 12px 0 8px;
+  }
+
+  // Bootstrap's .row/.center leave a lot of air around the one block left.
+  .homepage-cta-row .homepage-cta {
+    margin-bottom: 12px;
+  }
+
+  .homepage-cta h3 {
+    font-size: 20px;
+    line-height: 1.3;
+    margin: 8px 0 12px;
+  }
+}

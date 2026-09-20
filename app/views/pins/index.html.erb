@@ -10,10 +10,11 @@
   <% title @presenter.showing_for_you? ? t('directory.for_you', default: 'For You') : t('directory.recent_submissions') %>
 <% end %>
 <% if params[:query].present? %>
-  <h1><%= t('directory.search_results') %></h1>
+  <h1 class="page-title-compact"><%= t('directory.search_results') %></h1>
 <% else %>
-  <h1><%= @presenter.showing_for_you? ? t('directory.for_you', default: 'For You') : t('directory.recent_submissions') %></h1>
-  <p class="lead"><%= t('directory.submissions_intro') %></p>
+  <%# On phones the heading and blurb are visually hidden (see feed_mobile.css.scss) so the photos lead; they stay for screen readers and SEO. %>
+  <h1 class="feed-title"><%= @presenter.showing_for_you? ? t('directory.for_you', default: 'For You') : t('directory.recent_submissions') %></h1>
+  <p class="lead feed-intro"><%= t('directory.submissions_intro') %></p>
   <% if @presenter.show_feed_navigation? %>
     <ul class="nav nav-tabs submission-feed-tabs" role="tablist">
       <li role="presentation" class="<%= 'active' unless @presenter.showing_for_you? %>">

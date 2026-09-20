@@ -266,7 +266,12 @@ p {
   font-size: 16px;
 }
 
-.actions a:link, a:visited, a:hover {
+// Every selector needs the .actions prefix: with only the first one scoped, the
+// bare a:visited and a:hover turned every visited or hovered link on the site
+// black.
+.actions a:link,
+.actions a:visited,
+.actions a:hover {
   color: black;
 }
 

@@ -85,10 +85,8 @@ $footer-focus: #337ab7;
   }
 }
 
-// The :visited / :hover colours are stated on purpose: styles.css.scss has
-// ".actions a:link, a:visited, a:hover { color: black }", and the missing
-// ".actions" on the last two makes every visited or hovered link on the site
-// black, which left one footer link black and the rest blue.
+// Colours are stated for :visited and :hover too, so these links can never be
+// recoloured by a broader link rule elsewhere in the stylesheets.
 .footer-legal {
   a {
     align-items: center;

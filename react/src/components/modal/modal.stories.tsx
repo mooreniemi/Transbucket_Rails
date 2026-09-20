@@ -24,7 +24,7 @@ export const Default: Story = {
           </p>
           <div className="flex justify-end gap-2">
             <Button slot="close" variant="outline">Cancel</Button>
-            <Button slot="close" variant="destructive">Delete</Button>
+            <Button slot="close" theme="destructive">Delete</Button>
           </div>
         </Dialog>
       </Modal>

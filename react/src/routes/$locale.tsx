@@ -16,6 +16,7 @@ const TanstackMenuLink = createLink(HeaderLink);
 function FacebookIcon() {
   return (
     <svg
+      aria-hidden="true"
       role="img"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
@@ -30,6 +31,7 @@ function FacebookIcon() {
 function DiscordIcon() {
   return (
     <svg
+      aria-hidden="true"
       role="img"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
@@ -44,6 +46,7 @@ function DiscordIcon() {
 function TwitterIcon() {
   return (
     <svg
+      aria-hidden="true"
       role="img"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +63,7 @@ function RouteComponent() {
   const currLocale = locale || 'en';
 
   return (
-    <div className="grid grid-rows-[auto_1fr_auto] h-svh">
+    <div className="grid grid-cols-1 grid-rows-[auto_1fr_auto] h-svh">
         <Header
             sectionRight={
               <>
@@ -99,9 +102,9 @@ function RouteComponent() {
         <main className="overflow-auto bg-slate-50">
             <Outlet />
         </main>
-        <footer className="px-10 py-5 border-t border-black-200 shadow-[0_-8px_10px_-13px_var(--color-black-300)]">
-          <div className="text-sm align-middle grid auto-cols-auto grid-flow-col justify-start gap-4">
-            <a href="https://www.facebook.com/transbucket" className="block" target="_blank" rel="noreferrer noopener"><FacebookIcon/><span className="align-middle ml-1">Transbucket</span></a>
+        <footer className="px-5 py-5 sm:px-10 border-t border-black-200 shadow-[0_-8px_10px_-13px_var(--color-black-300)]">
+          <div className="text-sm align-middle flex flex-wrap justify-start gap-4">
+            <a href="https://www.facebook.com/transbucket" className="block" target="_blank" rel="noreferrer noopener"><FacebookIcon/><span className="align-middle ml-1">Facebook</span></a>
             <a href="https://twitter.com/TransBucket" className="block" target="_blank" rel="noreferrer noopener"><TwitterIcon/><span className="align-middle ml-1">@Transbucket</span></a>
             <a href="https://discord.gg/fRW4RnPqgv" className="block" target="_blank" rel="noreferrer noopener"><DiscordIcon/><span className="align-middle ml-1">Join us on Discord</span></a>
           </div>

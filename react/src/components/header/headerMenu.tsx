@@ -42,7 +42,7 @@ function HeaderMenu({ label, children, className }: HeaderMenuProps) {
             {label}
             <ChevronDown
               aria-hidden
-              className="size-4 transition-transform group-data-[expanded]:rotate-180"
+              className="size-4 transition-transform group-data-expanded:rotate-180"
             />
           </ButtonPrimitive>
         </Heading>

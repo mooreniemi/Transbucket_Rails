@@ -22,3 +22,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
 };
+
+export const MultipleCards: Story = {
+  decorators: [(Story) => (<><Card>Another card</Card><Story /></>)]
+}

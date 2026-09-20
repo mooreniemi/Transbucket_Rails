@@ -6,5 +6,6 @@ interface CardProps {
 }
 
 export function Card({ children, className }: CardProps) {
-    return <div className={`${className} bg-white rounded-sm border border-black-300 p-4`}>{children}</div>
+    const tailwindClasses = 'bg-white md:rounded-sm [&_+_&]:border-t md:border border-black-300 p-4 md:[&_+_&]:mt-2';
+    return <div className={className ? `${className} ${tailwindClasses}` : tailwindClasses}>{children}</div>
 }

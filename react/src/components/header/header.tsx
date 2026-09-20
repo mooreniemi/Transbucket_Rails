@@ -48,34 +48,36 @@ function Header({
       <header
         {...props}
         className={cn(
-          "relative flex items-center justify-between gap-4 border-b border-black-200 bg-white px-4 py-3 shadow-[0_8px_10px_-13px_var(--color-black-300)]",
+          "relative border-b border-black-200 bg-white px-4 py-3 shadow-[0_8px_10px_-13px_var(--color-black-300)]",
           className,
         )}
       >
         {skipNavHref && <SkipNav href={skipNavHref} />}
-        <div className="flex items-center gap-4">
-          <h1>
-            <a href="/" className="inline-block hover:no-underline focus-visible:no-underline">
-              <img src={logo} alt="" className="h-8 w-auto inline"/>
-              <span className="font-bold align-middle ml-2 text-black-900">Transbucket</span>
-            </a>
-          </h1>
-          <NavVariantContext.Provider value="desktop">
-            {/* max-md:hidden + md:flex (not the bare "hidden" utility) so
-                both sides of the toggle are variant-scoped and mutually
-                exclusive by media query -- pairing a bare display utility
-                with a responsive one on the same element has unreliable
-                cascade order in this project's build. */}
-            <nav aria-label="Primary" className="max-md:hidden md:flex items-center gap-1">
-              {children}
-            </nav>
-          </NavVariantContext.Provider>
-        </div>
-        <div className="flex items-center gap-4">
-          <NavVariantContext.Provider value="desktop">
-            <div className="max-md:hidden md:flex items-center gap-4">{sectionRight}</div>
-          </NavVariantContext.Provider>
-          <HeaderMobileTrigger />
+        <div className="flex w-full items-center justify-between">
+          <div className="flex items-center gap-4">
+            <h1>
+              <a href="/" className="inline-block hover:no-underline focus-visible:no-underline">
+                <img src={logo} alt="" className="h-8 w-auto inline"/>
+                <span className="font-bold align-middle ml-2 text-black-900">Transbucket</span>
+              </a>
+            </h1>
+            <NavVariantContext.Provider value="desktop">
+              {/* max-md:hidden + md:flex (not the bare "hidden" utility) so
+                  both sides of the toggle are variant-scoped and mutually
+                  exclusive by media query -- pairing a bare display utility
+                  with a responsive one on the same element has unreliable
+                  cascade order in this project's build. */}
+              <nav aria-label="Primary" className="max-md:hidden md:flex items-center gap-1">
+                {children}
+              </nav>
+            </NavVariantContext.Provider>
+          </div>
+          <div className="flex items-center gap-4">
+            <NavVariantContext.Provider value="desktop">
+              <div className="max-md:hidden md:flex items-center gap-4">{sectionRight}</div>
+            </NavVariantContext.Provider>
+            <HeaderMobileTrigger />
+          </div>
         </div>
         <div
           inert={!isMobileNavOpen}

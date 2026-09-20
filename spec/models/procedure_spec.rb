@@ -35,6 +35,58 @@ describe Procedure do
       expect(procedure.reload.avg_sensation).to eq(4)
     end
   end
+  describe "#search_aliases" do
+    it 'includes aliases from supported locales without changing the canonical name' do
+      procedure = build(:procedure, name: 'phalloplasty')
+
+      expect(procedure.search_aliases).to include('phallo', 'faloplastia', 'phalloplastie')
+      expect(procedure.name).to eq('phalloplasty')
+    end
+
+    it 'includes database translations without changing the canonical name' do
+      procedure = create(:procedure, name: 'phalloplasty')
+      procedure.translations.create!(locale: 'es', name: 'faloplastia')
+
+      expect(procedure.reload.search_aliases).to include('faloplastia')
+      expect(procedure.name).to eq('phalloplasty')
+    end
+  end
+
+  describe '#localized_name' do
+    it 'uses a translation for the requested locale and falls back to canonical name' do
+      procedure = create(:procedure, name: 'double incision')
+      procedure.translations.create!(locale: 'es', name: 'doble incisión')
+
+      expect(procedure.localized_name(:es)).to eq('doble incisión')
+      expect(procedure.localized_name(:de)).to eq('double incision')
+    end
+  end
+
+  describe '#editorial_guide' do
+    it 'returns only configured source-backed guidance' do
+      procedure = build(:procedure, name: 'phalloplasty')
+
+      expect(procedure.editorial_guide['summary']).to include('Phalloplasty')
+      expect(procedure.editorial_guide['sources']).to all(satisfy { |source| source['url'].start_with?('https://') })
+      expect(procedure.editorial_guide['community_links']).to all(satisfy { |link| link['url'].start_with?('https://www.reddit.com/r/') })
+    end
+
+    it 'does not invent guidance for an unreviewed procedure' do
+      procedure = build(:procedure, name: 'an unreviewed procedure')
+
+      expect(procedure.editorial_guide).to be_nil
+    end
+  end
+  describe '#related_procedures' do
+    it 'matches meaningful shared terms without matching generic words' do
+      procedure = create(:procedure, name: 'laparoscopic hysterectomy')
+      matching = create(:procedure, name: 'hysterectomy and oophorectomy')
+      unrelated = create(:procedure, name: 'facial feminization surgery')
+
+      expect(procedure.related_procedures).to include(matching)
+      expect(procedure.related_procedures).not_to include(unrelated)
+    end
+  end
   it 'has #names' do
     create_list(:procedure, 3)
     names = Procedure.pluck(:name).sort

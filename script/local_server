@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Keep host Rails aligned with docker-compose.override.yml.
+docker compose up -d db elasticsearch
+
+export POSTGRES_HOST="${POSTGRES_HOST:-127.0.0.1}"
+export POSTGRES_PORT="${POSTGRES_PORT:-5433}"
+export POSTGRES_USER="${POSTGRES_USER:-postgres}"
+export POSTGRES_PASSWORD="${POSTGRES_PASSWORD:-password}"
+export RAILS_ENV="${RAILS_ENV:-development}"
+export DISABLE_SPRING=1
+
+exec rbenv exec bundle exec rails server webrick \
+  -b "${BIND:-127.0.0.1}" \
+  -p "${PORT:-3003}" \
+  -P "${PIDFILE:-/tmp/transbucket-rails-local.pid}"

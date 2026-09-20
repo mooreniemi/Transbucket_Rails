@@ -4,32 +4,69 @@
     <li class="active">
     </li>
   </ul>
-  <h3 class="text-muted">Your experience at a glance:</h3>
+  <h3 class="text-muted"><%= t('public.form.experience_glance') %></h3>
 </div>
 <div class="submission_well">
-  <div class="input-group padded_nicely">
-    <span class="input-group-addon"><%= fa_icon "money" %></span>
-    <%= f.text_field :cost, placeholder: "Cost", class: "form-control" %>
+  <fieldset class="binary-question cost-field padded_nicely">
+    <legend><%= t('public.form.cost_question') %></legend>
+    <div class="input-group">
+      <span class="input-group-addon"><%= fa_icon "money" %></span>
+      <%= f.number_field :cost, class: "form-control", min: 0, step: 1, inputmode: 'numeric' %>
+    </div>
+  </fieldset>
+  <fieldset class="binary-question padded_nicely">
+    <legend><%= t('public.form.insurance_question') %></legend>
+    <label class="radio-inline">
+      <%= f.radio_button :covered_by_insurance, '1' %>
+      <%= t('public.form.insurance_yes') %>
+    </label>
+    <label class="radio-inline">
+      <%= f.radio_button :covered_by_insurance, '0' %>
+      <%= t('public.form.insurance_no') %>
+    </label>
+  </fieldset>
+  <fieldset class="binary-question padded_nicely">
+    <legend><%= t('public.form.revision_question') %></legend>
+    <label class="radio-inline">
+      <%= f.radio_button :revision, '1', checked: !!f.object.revision %>
+      <%= t('public.form.complications_yes') %>
+    </label>
+    <label class="radio-inline">
+      <%= f.radio_button :revision, '0', checked: !f.object.revision %>
+      <%= t('public.form.complications_no') %>
+    </label>
+  </fieldset>
+  <% complication_value = f.object.complication_list.to_s %>
+  <% complications_present = complication_value.present? && complication_value !~ /\A\s*(none|n\/?a|no|0|nothing|no complications|none so far)[\s!.]*\z/i %>
+  <fieldset class="complication-toggle padded_nicely">
+    <legend><%= t('public.form.complications_question') %></legend>
+    <label class="radio-inline">
+      <%= f.radio_button :complications_present, '1', checked: complications_present, data: { complications_toggle: true } %>
+      <%= t('public.form.complications_yes') %>
+    </label>
+    <label class="radio-inline">
+      <%= f.radio_button :complications_present, '0', checked: !complications_present, data: { complications_toggle: true } %>
+      <%= t('public.form.complications_no') %>
+    </label>
+  </fieldset>
+  <div id="pin-complication-tags" class="complication-tags <%= 'hide' unless complications_present %>">
+    <div class="complication-tag-editor padded_nicely">
+      <div id="pin-complication-chips" class="complication-chips" aria-live="polite"></div>
+      <%= f.hidden_field :complication_list, id: 'pin_complication_list', disabled: !complications_present, data: { complication_original: f.object.complication_list.to_s, complication_validation: t('public.form.complications_validation') } %>
+      <%= text_field_tag 'pin_complication_input', '', id: 'pin_complication_input', class: "form-control complication-tag-input", required: false, disabled: !complications_present, autocomplete: 'off', placeholder: t('public.form.complications_placeholder'), data: { complication_suggestions_url: complication_suggestions_path } %>
+    </div>
+    <small class="field-hint"><%= t('public.form.complications_help') %></small>
   </div>
-  <div class="input-group padded_nicely">
-    <span class="input-group-addon">
-    <%= f.check_box :revision %>
-    </span> <span class="form-control">Seeking a revision?</span>
-  </div>
-  <br>
-  <div class="input-group padded_nicely">
-    <span class="input-group-addon">Sensation</span>
+  <div class="rating-field padded_nicely">
+    <%= f.label :sensation, t('public.form.sensation_question'), class: 'rating-field-label' %>
     <!-- note: needs to be text field for chrome focus to work with form validation -->
     <!-- see comments here: http://plugins.krajee.com/star-rating#options -->
-    <%= f.text_field :sensation, class: "form-control", required: false %>
+    <%= f.text_field :sensation, class: "form-control rating-input", required: false, autocomplete: 'off', data: { rating_captions: t('public.rating.sensation.labels').to_json, rating_help: t('public.rating.sensation.help') } %>
+    <small class="rating-hint"><%= t('public.rating.sensation.help') %></small>
   </div>
-  <br>
-  <div class="input-group padded_nicely">
-    <span class="input-group-addon">Satisfaction</span>
-    <%= f.text_field :satisfaction, class: "form-control", required: false %>
-  </div>
-  <div class="input-group padded_nicely">
-    <span class="input-group-addon">Complications</span>
-    <%= f.text_field :complication_list, class: "form-control", required: false, placeholder: "hematoma, fistula" %>
+  <div class="rating-field padded_nicely">
+    <%= f.label :satisfaction, t('public.form.satisfaction_question'), class: 'rating-field-label' %>
+    <%= f.text_field :satisfaction, class: "form-control rating-input", required: false, autocomplete: 'off', data: { rating_captions: t('public.rating.satisfaction.labels').to_json, rating_help: t('public.rating.satisfaction.help') } %>
+    <small class="rating-hint"><%= t('public.rating.satisfaction.help') %></small>
   </div>
 </div>

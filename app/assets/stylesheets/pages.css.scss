@@ -28,8 +28,19 @@ div.rss_item {
 
 .newsfeed-date {
   margin: 6px 0 0;
-  font-size: 12px;
+  font-size: 1rem;
   color: #666;
+}
+
+.newsfeed-screenshot {
+  display: block;
+  height: auto;
+  margin: 12px 0 0;
+  max-width: 100%;
+}
+
+.newsfeed-screenshot + .newsfeed-screenshot {
+  margin-top: 18px;
 }
 
 div.faq_item {

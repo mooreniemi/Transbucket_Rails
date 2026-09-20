@@ -1,3 +1,5 @@
+require 'uri'
+
 class Surgeon < ActiveRecord::Base
   include SanitizeNames
   extend FriendlyId
@@ -34,7 +36,20 @@ class Surgeon < ActiveRecord::Base
   end
 
   def to_s
-    first_name.nil? ? last_name : last_name.capitalize + ', ' + first_name.capitalize
+    first_name.nil? ? last_name : pretty_name
+  end
+
+  def website_url
+    return if url.blank?
+
+    value = url.strip
+    value = "https://#{value}" unless value.match?(/\Ahttps?:\/\//i)
+    uri = URI.parse(value)
+    return unless %w[http https].include?(uri.scheme) && uri.host.present?
+
+    value
+  rescue URI::InvalidURIError
+    nil
   end
 
   def self.names

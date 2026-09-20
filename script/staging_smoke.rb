@@ -10,25 +10,100 @@ require "uri"
 # `db/seeds/test_users.rb`, Elasticsearch must be reachable, and a
 # delayed_job worker must be running so pin indexing jobs get processed.
 STAGING_URL = ENV.fetch("STAGING_URL", "https://transbucket-staging.herokuapp.com")
+STAGING_LOCALES = ENV.fetch("STAGING_LOCALES", ENV.fetch("STAGING_LOCALE", "en")).split(",").map(&:strip).reject(&:empty?)
 USERNAME = ENV.fetch("STAGING_USER", "zoon")
 PASSWORD = ENV.fetch("STAGING_PASSWORD")
 IMAGE_PATH = File.expand_path("../spec/fixtures/cat.jpg", __dir__)
+NEWSFEED_TITLES = {
+  "en" => "Newsfeed",
+  "de" => "Neuigkeiten",
+  "es" => "Novedades",
+  "fr" => "Actualités",
+  "it" => "Novità",
+  "ja" => "ニュース",
+  "zh-CN" => "新闻",
+  "zh-TW" => "最新消息",
+  "pt-BR" => "Novidades",
+  "nl" => "Nieuws",
+  "pl" => "Aktualności",
+  "ru" => "Новости",
+  "tr" => "Haberler",
+  "vi" => "Tin tức",
+  "ar" => "الأخبار",
+  "sv" => "Nyheter"
+}.freeze
+REGISTRATION_MARKERS = {
+  "en" => "Username", "de" => "Benutzername", "es" => "Nombre de usuario",
+  "fr" => "Nom d’utilisateur", "it" => "Nome utente", "ja" => "ユーザー名",
+  "zh-CN" => "用户名", "zh-TW" => "使用者名稱", "pt-BR" => "Nome de usuário",
+  "nl" => "Gebruikersnaam", "pl" => "Nazwa użytkownika", "ru" => "Имя пользователя",
+  "tr" => "Kullanıcı adı", "vi" => "Tên người dùng", "ar" => "اسم المستخدم",
+  "sv" => "Användarnamn"
+}.freeze
+ACCOUNT_MARKERS = {
+  "en" => ["Name", "Safe mode"],
+  "de" => ["Name", "Sicherer Modus"],
+  "es" => ["Nombre", "Modo seguro"],
+  "fr" => ["Nom", "Mode sécurisé"],
+  "it" => ["Nome", "Modalità sicura"],
+  "ja" => ["名前", "セーフモード"],
+  "zh-CN" => ["姓名", "安全模式"],
+  "zh-TW" => ["姓名", "安全模式"],
+  "pt-BR" => ["Nome", "Modo seguro"],
+  "nl" => ["Naam", "Veilige modus"],
+  "pl" => ["Imię", "Tryb bezpieczny"],
+  "ru" => ["Имя", "Безопасный режим"],
+  "tr" => ["Ad", "Güvenli mod"],
+  "vi" => ["Tên", "Chế độ an toàn"],
+  "ar" => ["الاسم", "الوضع الآمن"],
+  "sv" => ["Namn", "Säkert läge"]
+}.freeze
 
 class StagingSmoke
-  def initialize
+  def initialize(locale)
+    @locale = locale
     @cookies = {}
   end
 
   def run
+    verify_public_localization
+    verify_registration_localization
     login
+    verify_account_localization
     pin_id, search_term = create_pin
     edit_pin(pin_id)
     verify_search_page
     verify_search_results(search_term, pin_id)
-    puts "staging smoke ok pin=#{pin_id}"
+    puts "staging smoke ok locale=#{@locale} pin=#{pin_id}"
   end
 
   private
+
+  def verify_public_localization
+    legacy = get_legacy("/")
+    unless legacy.code.to_i == 301 && URI.parse(legacy["location"]).path == "/en/"
+      raise "legacy homepage did not redirect to /en/"
+    end
+
+    localized = get("/")
+    expected_title = NEWSFEED_TITLES.fetch(@locale)
+    unless localized.code.to_i == 200 && localized.body.include?(%(<html lang="#{@locale}">)) && localized.body.include?('hreflang="x-default"')
+      raise "localized homepage metadata failed"
+    end
+
+    newsfeed = get("/newsfeed")
+    unless newsfeed.code.to_i == 200 && newsfeed.body.include?(expected_title)
+      raise "localized newsfeed failed"
+    end
+  end
+
+  def verify_registration_localization
+    response = get("/register")
+    marker = REGISTRATION_MARKERS.fetch(@locale)
+    unless response.code.to_i == 200 && response.body.include?(marker)
+      raise "localized registration form failed for #{@locale}"
+    end
+  end
 
   def login
     token = csrf_token("/users/sign_in")
@@ -40,8 +115,18 @@ class StagingSmoke
     params["authenticity_token"] = token if token
     response = post("/users/sign_in", params)
 
-    unless response.code.to_i.between?(200, 399)
-      raise "login failed with #{response.code}"
+    unless response.is_a?(Net::HTTPRedirection)
+      if response.code.to_i == 422
+        raise "login rejected with 422 (CSRF failure; check the GET session cookie and authenticity token pairing)"
+      end
+
+      raise "valid login credentials were rejected with #{response.code} (expected a redirect; check STAGING_USER/STAGING_PASSWORD)"
+    end
+
+    location = response["location"]
+    expected_path = "/#{@locale}/pins"
+    unless location && URI.parse(URI.join(STAGING_URL, location).to_s).path == expected_path
+      raise "login redirected to #{location.inspect}, expected #{expected_path}"
     end
 
     follow_redirect(response) if response.is_a?(Net::HTTPRedirection)
@@ -49,6 +134,14 @@ class StagingSmoke
 
     unless auth_check.code.to_i == 200
       raise "login did not establish an authenticated session"
+    end
+  end
+
+  def verify_account_localization
+    response = get("/users/edit")
+    profile_label, settings_label = ACCOUNT_MARKERS.fetch(@locale)
+    unless response.code.to_i == 200 && response.body.include?(profile_label) && response.body.include?(settings_label)
+      raise "localized account page failed for #{@locale}"
     end
   end
 
@@ -85,11 +178,32 @@ class StagingSmoke
     pin_id = location[%r{/pins/(\d+)}, 1] || raise("could not parse created pin id")
     show = get("/pins/#{pin_id}").body
 
-    unless show.include?(captions[0]) && show.include?(captions[1])
+    unless show.include?(captions[0]) && show.include?(captions[1]) && show.include?(localized_pin_label)
       raise "multi-image upload did not persist both captions"
     end
 
     [pin_id, params["pin[procedure_attributes][name]"]]
+  end
+
+  def localized_pin_label
+    {
+      "en" => "Surgeon",
+      "de" => "Chirurg",
+      "es" => "Cirujano",
+      "fr" => "Chirurgien",
+      "it" => "Chirurgo",
+      "ja" => "外科医",
+      "zh-CN" => "医生",
+      "zh-TW" => "醫師",
+      "pt-BR" => "Cirurgião",
+      "nl" => "Chirurg",
+      "pl" => "Chirurg",
+      "ru" => "Хирург",
+      "tr" => "Cerrah",
+      "vi" => "Bác sĩ phẫu thuật",
+      "ar" => "الجراح",
+      "sv" => "Kirurg"
+    }.fetch(@locale)
   end
 
   def edit_pin(pin_id)
@@ -187,6 +301,11 @@ class StagingSmoke
     request(target, Net::HTTP::Get.new(target))
   end
 
+  def get_legacy(path)
+    target = URI.join(STAGING_URL, path)
+    request(target, Net::HTTP::Get.new(target))
+  end
+
   def post(path, params, method: :post)
     target = uri(path)
     req = case method
@@ -243,12 +362,18 @@ class StagingSmoke
       http.request(req)
     end
 
+    response.body.force_encoding(Encoding::UTF_8)
     store_cookies(response)
     response
   end
 
   def uri(path)
-    URI.join(STAGING_URL, path)
+    target = URI.join(STAGING_URL, path)
+    return target unless target.host == URI.parse(STAGING_URL).host
+    return target if target.path.match?(%r{\A/(en|de|es|fr|it|ja|zh-CN|zh-TW|pt-BR|nl|pl|ru|tr|vi|ar|sv)(/|$)})
+
+    target.path = "/#{@locale}#{target.path}"
+    target
   end
 
   def store_cookies(response)
@@ -263,4 +388,4 @@ class StagingSmoke
   end
 end
 
-StagingSmoke.new.run
+STAGING_LOCALES.each { |locale| StagingSmoke.new(locale).run }

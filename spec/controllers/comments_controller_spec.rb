@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe CommentsController, :type => :controller do
+  render_views
+
   let(:user) { create(:user) }
   let(:pin) { create(:pin, :with_surgeon_and_procedure) }
 
@@ -13,6 +15,13 @@ describe CommentsController, :type => :controller do
       xhr :get, :new, commentable_type: "Pin", commentable_id: pin.id
 
       expect(response).to be_success
+    end
+
+    it "renders the comment form in the selected locale" do
+      xhr :get, :new, commentable_type: "Pin", commentable_id: pin.id, locale: 'es'
+
+      expect(response).to be_success
+      expect(response.body).to include('Los comentarios que infrinjan')
     end
 
     it "rejects a commentable_type outside the allowed list" do

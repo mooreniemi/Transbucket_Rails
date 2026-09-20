@@ -23,12 +23,16 @@ class PinForm < Reform::Form
   validates :procedure, presence: true
 
   property :cost
+  property :covered_by_insurance
   property :sensation
   property :satisfaction
   property :description
   property :revision
   property :complication_list
+  property :complications_present, virtual: true
   property :details
+
+  validate :complication_tags_are_valid
 
   property :state
 
@@ -89,6 +93,19 @@ class PinForm < Reform::Form
 
   def save
     super
+    model.complication_list = nil if complications_present.present? && complications_present.to_s != '1'
     model.save!
+  end
+
+  private
+
+  def complication_tags_are_valid
+    value = complication_list.to_s
+    tags = value.split(',').map { |tag| tag.strip }.reject(&:blank?)
+    return if value.blank?
+
+    if value.match?(/[\r\n]/) || tags.any? { |tag| tag.length > 80 }
+      errors.add(:complication_list, 'must contain comma-separated tags of 80 characters or fewer')
+    end
   end
 end

@@ -24,6 +24,11 @@ gem 'will_paginate-bootstrap'
 # gem 'faraday_middleware-aws-sigv4'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
+# elasticsearch-transport pulls in faraday with no version constraint of its
+# own, so an unpinned `bundle update` would silently jump to faraday 2.x --
+# a breaking major version this old elasticsearch-transport (7.4.0) was never
+# written against. Pin to the 1.x line so patch/security updates land safely.
+gem 'faraday', '~> 1.10'
 
 gem 'active_model_serializers'
 

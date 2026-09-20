@@ -1,12 +1,27 @@
-<% seo_meta description: 'Recent Transbucket release notes and user-facing updates.' %>
+<% page_title = I18n.t('newsfeed.title') %>
+<% seo_meta title: page_title, description: I18n.t('newsfeed.description') %>
 <%= render partial: 'ads/test1' %>
-<% title 'Newsfeed' %>
-<h1>Newsfeed</h1>
+<% title page_title %>
+<h1><%= I18n.t('newsfeed.title') %></h1>
 <div class="center newsfeed">
   <% @newsfeed_entries.each do |entry| %>
     <article class="rss_item newsfeed-entry">
-      <p class="newsfeed-body"><%= entry[:body] %></p>
-      <p class="newsfeed-date"><%= entry[:date] %></p>
+      <p class="newsfeed-body">
+        <% if entry[:body_key] == 'newsfeed.entries.comparison_stats' %>
+          <%= t(entry[:body_key], compare_procedures: link_to(entry[:links][0][0], entry[:links][0][1]), compare_surgeons: link_to(entry[:links][1][0], entry[:links][1][1]), default: t(entry[:body_key], locale: :en, compare_procedures: link_to(entry[:links][0][0], entry[:links][0][1]), compare_surgeons: link_to(entry[:links][1][0], entry[:links][1][1]))).html_safe %>
+        <% elsif entry[:body_key] == 'newsfeed.entries.recent_for_you' %>
+          <%= t(entry[:body_key], recent_submissions: link_to(entry[:links][0][0], entry[:links][0][1]), for_you: link_to(entry[:links][1][0], entry[:links][1][1]), default: t(entry[:body_key], locale: :en, recent_submissions: link_to(entry[:links][0][0], entry[:links][0][1]), for_you: link_to(entry[:links][1][0], entry[:links][1][1]))).html_safe %>
+        <% else %>
+          <%= entry[:body] %>
+        <% end %>
+        <% if entry[:links].present? && !entry[:body_key] %>
+          (<%= entry[:links].map { |link| link_to(link[0], link[1]) }.join(' / ').html_safe %>)
+        <% end %>
+      </p>
+      <% entry[:images].to_a.each do |image| %>
+        <%= image_tag image, class: 'newsfeed-screenshot', alt: entry[:image_alt] || t('newsfeed.comparison_image_alt', default: 'Example comparison page using fictional demo data') %>
+      <% end %>
+      <p class="newsfeed-date"><time datetime="<%= entry[:published_at].iso8601 %>"><%= entry[:date] %></time></p>
     </article>
   <% end %>
 </div>

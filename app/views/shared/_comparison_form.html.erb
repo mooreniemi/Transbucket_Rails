@@ -1,0 +1,43 @@
+<% options ||= [] %>
+<% first ||= nil %>
+<% second ||= nil %>
+<% label_method ||= :to_s %>
+<% action ||= '#' %>
+<% scope_options ||= [] %>
+<% scope_first ||= nil %>
+<% scope_param ||= nil %>
+<% scope_label ||= nil %>
+<% scope_memberships ||= {} %>
+<% deduplicate ||= true %>
+<% comparison_heading ||= t('comparison.title', default: 'Compare') %>
+<section class="rating-comparison-form" aria-labelledby="<%= resource_type %>-comparison-heading">
+  <h2 id="<%= resource_type %>-comparison-heading"><%= comparison_heading %></h2>
+  <%= form_tag action, method: :get, data: { comparison_scope_memberships: scope_memberships.to_json } do %>
+    <div class="comparison-normalization">
+      <%= hidden_field_tag :deduplicate, '0' %>
+      <%= check_box_tag :deduplicate, '1', deduplicate, id: 'deduplicate_comparison', aria: { describedby: 'deduplicate_comparison_help' } %>
+      <%= label_tag :deduplicate_comparison, t('comparison.deduplicate', default: 'Group repeat submissions') %>
+      <span class="comparison-normalization-help" id="deduplicate_comparison_help"><%= t('comparison.deduplicate_help', default: 'On: count at most one latest post per identified submitter, surgeon, and procedure group, so repeat posts do not inflate averages. Off: count every post.') %></span>
+    </div>
+    <p class="comparison-interpretation"><%= t('comparison.interpretation', default: 'This tool summarizes patterns in the available submissions. It cannot predict what any individual person will experience.') %></p>
+    <div class="comparison-selector-row <%= 'comparison-selector-row--two-controls' unless scope_param %>">
+      <div class="form-group">
+        <%= label_tag :first_id, t('comparison.first', default: 'First') %>
+        <%= select_tag :first_id, options_from_collection_for_select(options, :to_param, label_method, first.try(:to_param)), include_blank: true, required: true, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= label_tag :second_id, t('comparison.second', default: 'Second') %>
+        <%= select_tag :second_id, options_from_collection_for_select(options, :to_param, label_method, second.try(:to_param)), include_blank: true, required: true, class: 'form-control' %>
+      </div>
+      <% if scope_param %>
+        <div class="form-group">
+          <%= label_tag scope_param, scope_label %>
+          <%= select_tag scope_param, options_from_collection_for_select(scope_options, :to_param, label_method == :localized_name ? :to_s : :localized_name, scope_first.try(:to_param)), include_blank: true, class: 'form-control', data: { comparison_scope_select: true } %>
+        </div>
+      <% end %>
+      <div class="comparison-actions">
+        <%= submit_tag t('comparison.submit', default: 'Compare'), class: 'btn btn-primary' %>
+      </div>
+    </div>
+  <% end %>
+</section>

@@ -11,6 +11,7 @@ tmp/*
 *.swp
 *.out
 *.sql
+!db/structure.sql
 public/page_cache/*
 public/system/pin_images/photos/*
 public/system/*

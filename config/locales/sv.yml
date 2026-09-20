@@ -1,0 +1,118 @@
+sv:
+  header:
+    news: Nyheter
+    procedures: Ingrepp
+    surgeons: Kirurger
+    submissions: Bidrag
+    account: Konto
+    search: Sök
+  locale:
+    label: Språk
+    names:
+      sv: Svenska
+  homepage:
+    title: Transbucket
+    intro: Verkliga erfarenheter av könsbekräftande ingrepp
+  directory:
+    procedures_title: Ingrepp
+    procedures_intro: Bläddra bland ingrepp för att jämföra verkliga bidrag, kirurgers länkar och diskussioner.
+    surgeons_title: Kirurger
+    surgeons_intro: Bläddra bland kirurgernas sidor för att jämföra bidrag, resultat och diskussioner.
+    submissions: Bidrag
+    name: Namn
+    average_satisfaction: Genomsnittlig tillfredsställelse
+    average_sensation: Genomsnittlig känsel
+    login_or_register_to_see_more: "%{login} eller %{register} för att se mer"
+  newsfeed:
+    title: Nyheter
+    description: Senaste uppdateringarna från Transbucket.
+    date: Datum
+    entries:
+      directory_improvements: Sidorna för ingrepp och kirurger gör det nu enklare att sortera och se betygsfördelningar.
+  public:
+    auth:
+      username: Användarnamn
+      username_or_email: Användarnamn eller e-post
+      password: Lösenord
+      password_confirmation: Bekräfta lösenord
+      your_name: Ditt namn
+      gender: Kön
+    pin:
+      by: av
+      doctor_prefix: Dr. 
+      unknown: okänd kirurg
+      average_satisfaction: Genomsnittlig tillfredsställelse
+    form:
+      surgeon_url: Kirurgens webbplats
+    extra:
+      sign_in: Logga in
+      sign_up: Registrera dig
+      username: Användarnamn
+      password: Lösenord
+      gender: Kön
+      name: Namn
+      email: E-post
+  settings:
+    safe_mode: Säkert läge
+    safe_mode_help: Dölj känsliga bilder
+    notifications: Aviseringar
+    update: Uppdatera
+    cancel_account: Avsluta konto
+  profile:
+    name: Namn
+    email: E-post
+    username: Användarnamn
+    gender: Kön
+  explanations:
+    username: Ditt användarnamn visas för alla användare och används när du loggar in. Det är unikt på webbplatsen.
+    email: Din e-postadress visas för administratörer men inte för andra användare. Din e-postadress kommer att bekräftas.
+    password: Ditt lösenord krypteras när det lagras och kan återställas med hjälp av din e-postadress.
+    name: Ditt namn visas för administratörer och används i kommunikationen med dem.
+    gender: Ditt kön visas för alla när du publicerar resultat och används för vissa standardinställningar.
+    tos: Genom att registrera dig på Transbucket.com godkänner du våra användarvillkor.
+  account_menu:
+    register: Registrera dig
+    login: Logga in
+    my_account: Mitt konto
+    logout: Logga ut
+  activerecord:
+    attributes:
+      user:
+        email: E-post
+  devise:
+    mailer:
+      confirmation_instructions:
+        subject: Bekräftelseinstruktioner
+        greeting: Hej %{recipient}
+        instruction: "Du kan bekräfta din e-postadress genom länken nedan:"
+        action: Bekräfta mitt konto
+        reminder_notice: Detta är en påminnelse. Vi ser att du ännu inte har bekräftat ditt konto.
+        reminder_help: Behöver du hjälp med att bekräfta kontot? Svara på det här e-postmeddelandet.
+      reset_password_instructions:
+        subject: Instruktioner för återställning av lösenord
+        greeting: Hej %{recipient}
+        instruction: "Någon har begärt en länk för att ändra ditt lösenord. Du kan göra det via länken nedan:"
+        action: Ändra mitt lösenord
+        instruction_2: Om du inte begärde detta kan du ignorera meddelandet.
+        instruction_3: Ditt lösenord ändras inte förrän du öppnar länken ovan och skapar ett nytt.
+      unlock_instructions:
+        subject: Instruktioner för upplåsning
+        greeting: Hej %{recipient}
+        message: Ditt konto har låsts efter för många misslyckade inloggningsförsök.
+        instruction: "Klicka på länken nedan för att låsa upp ditt konto:"
+        action: Lås upp mitt konto
+      password_change:
+        subject: Ditt lösenord har ändrats
+        greeting: Hej %{recipient}
+        message: Vi kontaktar dig för att meddela att ditt lösenord har ändrats.
+  comment_mailer:
+    subject: "Transbucket.com: Ny %{comment_type} på %{id}"
+    types:
+      comment: kommentar
+      question: fråga
+    greeting: Hej %{username}!
+    posted: En annan medlem har publicerat en %{comment_type} på ditt bidrag.
+    reply: Klicka på %{link} om du vill svara.
+    this_link: den här länken
+    flag_help: Om du har synpunkter på kommentaren kan du flagga den. Tre flaggor från olika användare skickar den automatiskt till granskning.
+    unsubscribe: Sluta få dessa aviseringar genom att ändra dina aviseringsinställningar på %{link}.

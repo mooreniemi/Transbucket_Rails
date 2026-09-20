@@ -1,0 +1,75 @@
+<% comparison_heading = if @first_surgeon && @second_surgeon && @first_surgeon != @second_surgeon
+  t('comparison.comparing', first: @first_surgeon.to_s, second: @second_surgeon.to_s, default: 'Compare %{first} and %{second}')
+else
+  t('comparison.surgeons_title', default: 'Compare surgeons')
+end %>
+<% page_title = comparison_heading %>
+<% title page_title %>
+<% seo_meta title: page_title, description: t('comparison.surgeons_description', default: 'Compare surgeon rating distributions on Transbucket.'), noindex: true %>
+<%= render partial: 'shared/comparison_form', locals: { resource_type: 'surgeons', comparison_heading: comparison_heading, options: @comparison_options, first: @first_surgeon, second: @second_surgeon, label_method: :to_s, action: compare_surgeons_path, scope_options: @comparison_scope_options, scope_first: @comparison_procedure, scope_param: :procedure_id, scope_label: t('comparison.scope_procedure', default: 'Optional shared procedure'), scope_memberships: @comparison_scope_memberships, deduplicate: @deduplicate } %>
+<% if @first_surgeon && @second_surgeon && @first_surgeon != @second_surgeon %>
+  <% cache([I18n.locale, 'surgeon-rating-comparison', @first_surgeon, @second_surgeon, @comparison_procedure, @deduplicate, @comparison_cache_version]) do %>
+    <div class="rating-comparison-results">
+      <% [[:sensation, @first_surgeon, @second_surgeon], [:satisfaction, @first_surgeon, @second_surgeon]].each do |rating, first, second| %>
+        <section class="rating-comparison-row row" aria-labelledby="surgeon-comparison-<%= rating %>-heading">
+          <h2 class="col-md-2" id="surgeon-comparison-<%= rating %>-heading"><%= t("public.form.#{rating}") %></h2>
+          <% [[first, 'first'], [second, 'second']].each do |surgeon, position| %>
+            <% values = @comparison_data[surgeon] %>
+            <div class="col-md-5" id="surgeon-comparison-<%= position %>-<%= rating %>">
+              <h3 class="rating-comparison-entity-label"><%= t("comparison.#{position}", default: position.capitalize) %>: <%= link_to surgeon.to_s, surgeon_path(surgeon) %></h3>
+              <p class="rating-comparison-average"><%= rating == :sensation ? t('public.pin.average_sensation') : t('public.pin.average_satisfaction') %>: <%= values[:averages][rating].to_f.round(1) %>/5</p>
+              <div class="rating-comparison-chart">
+                <%= render partial: 'shared/rating_distribution', locals: { distribution: values[:distributions], average: nil, rating: rating, title: t('comparison.rating_distribution', default: 'Rating distribution'), scope_params: { surgeon: surgeon.id }, heading_id: "surgeon-comparison-#{position}-#{rating}" } %>
+              </div>
+            </div>
+          <% end %>
+          <% evidence = @comparison_evidence[rating] %>
+          <p class="comparison-evidence col-md-12"><%= t(evidence[:insufficient_data] ? 'comparison.insufficient_data' : (evidence[:significant] ? 'comparison.signal_detected' : 'comparison.no_clear_difference'), first_count: evidence[:first_rated], second_count: evidence[:second_rated], p_value: evidence[:p_value] || 'n/a', default: 'Evidence is limited or uncertain in this sample (rated submissions: %{first_count} and %{second_count}; Fisher exact p=%{p_value}). This is not a prediction of an individual outcome.') %></p>
+        </section>
+      <% end %>
+      <section class="comparison-stats" aria-labelledby="surgeon-comparison-submissions-heading">
+        <h2 id="surgeon-comparison-submissions-heading"><%= t('comparison.submissions', default: 'Submissions') %></h2>
+        <div class="comparison-stats-table-wrap">
+          <table class="comparison-stats-table">
+            <thead>
+              <tr>
+                <th scope="col"><%= t('comparison.metric', default: 'Metric') %></th>
+                <th scope="col"><%= t('comparison.first', default: 'First') %>: <%= link_to @first_surgeon.to_s, surgeon_path(@first_surgeon) %></th>
+                <th scope="col"><%= t('comparison.second', default: 'Second') %>: <%= link_to @second_surgeon.to_s, surgeon_path(@second_surgeon) %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% first_stats = @comparison_data[@first_surgeon][:stats] %>
+              <% second_stats = @comparison_data[@second_surgeon][:stats] %>
+              <tr>
+                <th scope="row"><%= t('comparison.submission_count', default: 'Published submissions') %></th>
+                <td><%= first_stats[:submissions] %></td>
+                <td><%= second_stats[:submissions] %></td>
+              </tr>
+              <tr>
+                <th scope="row"><%= t('comparison.procedures_count', default: 'Procedures represented') %></th>
+                <td><%= first_stats[:procedures] %></td>
+                <td><%= second_stats[:procedures] %></td>
+              </tr>
+              <% [
+                [t('comparison.good_outcomes', default: 'Rated 3/5 or higher'), :good],
+                [t('comparison.challenging_outcomes', default: 'Rated 1/5'), :challenging]
+              ].each do |label, outcome| %>
+                <tr>
+                  <th scope="row"><%= label %></th>
+                  <% [first_stats, second_stats].each do |stats| %>
+                    <td>
+                      <%= t('public.form.sensation') %>: <%= stats[:outcomes][:sensation][outcome] ? "#{stats[:outcomes][:sensation][outcome]}%" : t('comparison.not_enough_data', default: 'Not enough data') %><br>
+                      <%= t('public.form.satisfaction') %>: <%= stats[:outcomes][:satisfaction][outcome] ? "#{stats[:outcomes][:satisfaction][outcome]}%" : t('comparison.not_enough_data', default: 'Not enough data') %>
+                    </td>
+                  <% end %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <%= render partial: 'shared/comparison_complications', locals: { first_stats: first_stats, second_stats: second_stats, first_label: "#{t('comparison.first', default: 'First')}: #{@first_surgeon}", second_label: "#{t('comparison.second', default: 'Second')}: #{@second_surgeon}", first_name: @first_surgeon.to_s, second_name: @second_surgeon.to_s, first_filter: { surgeon: @first_surgeon.id }, second_filter: { surgeon: @second_surgeon.id } } %>
+      </section>
+    </div>
+  <% end %>
+<% end %>

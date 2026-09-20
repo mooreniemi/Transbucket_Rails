@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Host Rails uses the Postgres and Elasticsearch services exposed by the local
+# Docker Compose override. Keep all connection defaults in one place.
+export RAILS_ENV=test
+export DISABLE_SPRING=1
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+export POSTGRES_HOST="${POSTGRES_HOST:-localhost}"
+export POSTGRES_PORT="${POSTGRES_PORT:-5433}"
+export POSTGRES_USER="${POSTGRES_USER:-postgres}"
+export POSTGRES_PASSWORD="${POSTGRES_PASSWORD:-password}"
+export TEST_DB="${TEST_DB:-psql_test}"
+
+if command -v rbenv >/dev/null 2>&1; then
+  exec rbenv exec bundle exec rspec "$@"
+else
+  exec bundle exec rspec "$@"
+fi

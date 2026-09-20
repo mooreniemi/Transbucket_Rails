@@ -48,6 +48,7 @@ class Pin < ActiveRecord::Base
           indexes :keyword, type: 'keyword'
         end
         indexes :description, type: 'text', analyzer: 'english'
+        indexes :search_aliases, type: 'text'
       end
       indexes :pin_images do
         indexes :caption, type: 'text', analyzer: 'english'
@@ -64,7 +65,7 @@ class Pin < ActiveRecord::Base
       ],
       include: {
         surgeon: { methods: [:pretty_name], only: [:pretty_name] },
-        procedure: { only: [:name, :description] },
+        procedure: { only: [:name, :description], methods: [:search_aliases] },
         pin_images: { only: [:caption] },
         complications: { only: [:name] }
       }
@@ -111,7 +112,18 @@ class Pin < ActiveRecord::Base
   end
 
   def self.recent
-    published.order('updated_at desc')
+    published.
+      joins('LEFT OUTER JOIN pin_images ON pin_images.pin_id = pins.id').
+      group('pins.id').
+      order(<<~SQL.squish)
+        GREATEST(
+          pins.created_at,
+          COALESCE(MAX(pin_images.created_at), pins.created_at),
+          COALESCE(MAX(pin_images.updated_at), pins.created_at),
+          COALESCE(MAX(pin_images.photo_updated_at), pins.created_at)
+        ) DESC,
+        pins.id DESC
+      SQL
   end
 
   def self.by_gender(gender_name)

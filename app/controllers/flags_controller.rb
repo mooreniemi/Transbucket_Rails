@@ -4,13 +4,12 @@ class FlagsController < ApplicationController
   respond_to :js
 
   def create
-    type = params.keys.last.split('_').first
-    id = params.values.last
+    type, id = content_reference
     @flag = Flag.new(current_user, find_content(type, id)).flag_on
 
     respond_to do |format|
       if @flag[:status].present?
-        flash[:notice] = "Content flagged."
+        flash[:notice] = t('flash.content_flagged')
         format.json { render json: @flag, status: :created }
       else
         format.json { render json: @flag.errors, status: :unprocessable_entity }
@@ -19,16 +18,16 @@ class FlagsController < ApplicationController
   end
 
   def destroy
-    type = params.keys.last.split('_').first
-    id = params.values.last
+    type, id = content_reference
 
     @content = find_content(type, id)
+    ModerationEventRecorder.record(action: :unflag, user: current_user, content: @content)
     @content.votes.down.destroy_all
     publish_status = @content.publish!
 
     respond_to do |format|
       if publish_status
-        flash[:notice] = "Removed flags."
+        flash[:notice] = t('flash.removed_flags')
         format.json { render json: { status: 'unflagged'}, status: :ok }
       else
         format.json { render json: @content, status: :unprocessable_entity }
@@ -37,6 +36,14 @@ class FlagsController < ApplicationController
   end
 
   private
+
+  def content_reference
+    return ['pin', params[:pin_id]] if params[:pin_id].present?
+    return ['comment', params[:comment_id]] if params[:comment_id].present?
+
+    key = params.keys.last.to_s
+    [key.split('_').first, params[key]]
+  end
 
   def find_content(type, id)
     if type == "pin"

@@ -1,0 +1,288 @@
+en:
+  public:
+    form:
+      cost_question: How much did this cost?
+      insurance_question: Was this covered by insurance?
+      insurance_yes: Yes
+      insurance_no: No
+      revision_question: Is this a revision procedure?
+      sensation_question: How would you rate your sensation after this procedure?
+      satisfaction_question: How satisfied are you with the result?
+      complication_tags: Complication tags
+      similar_existing: 'Possible existing match:'
+      use_existing: Use existing
+      complications_question: Did you have complications?
+      complications_yes: Yes
+      complications_no: No
+      complications_help: Use short tags separated by commas. Add symptoms, timing, and other detail below.
+      complications_validation: Use short comma-separated tags. Each tag must be 80 characters or fewer and cannot contain line breaks.
+de:
+  public:
+    form:
+      cost_question: Wie viel hat das gekostet?
+      insurance_question: Wurde das von der Versicherung übernommen?
+      insurance_yes: Ja
+      insurance_no: Nein
+      revision_question: Handelt es sich um einen Korrektureingriff?
+      sensation_question: Wie würdest du deine Sensibilität nach diesem Eingriff bewerten?
+      satisfaction_question: Wie zufrieden bist du mit dem Ergebnis?
+      complication_tags: Komplikations-Tags
+      similar_existing: 'Möglicherweise vorhandener Eintrag:'
+      use_existing: Vorhandenen verwenden
+      complications_question: Gab es Komplikationen?
+      complications_yes: Ja
+      complications_no: Nein
+      complications_help: Verwende kurze, durch Kommas getrennte Tags. Symptome, Zeitangaben und weitere Details gehören unten in den Text.
+      complications_validation: Verwende kurze, durch Kommas getrennte Tags. Jeder Tag darf höchstens 80 Zeichen lang sein und keine Zeilenumbrüche enthalten.
+es:
+  public:
+    form:
+      cost_question: ¿Cuánto costó?
+      insurance_question: ¿Lo cubrió el seguro?
+      insurance_yes: Sí
+      insurance_no: No
+      revision_question: ¿Es una cirugía de revisión?
+      sensation_question: ¿Cómo valorarías tu sensibilidad después de este procedimiento?
+      satisfaction_question: ¿Qué tan satisfecho/a estás con el resultado?
+      complication_tags: Etiquetas de complicaciones
+      similar_existing: 'Posible coincidencia existente:'
+      use_existing: Usar existente
+      complications_question: ¿Tuviste complicaciones?
+      complications_yes: Sí
+      complications_no: No
+      complications_help: Usa etiquetas breves separadas por comas. Añade los síntomas, el momento y otros detalles abajo.
+      complications_validation: Usa etiquetas breves separadas por comas. Cada etiqueta debe tener 80 caracteres o menos y no puede contener saltos de línea.
+fr:
+  public:
+    form:
+      cost_question: Combien cela a-t-il coûté ?
+      insurance_question: Cette intervention était-elle couverte par une assurance ?
+      insurance_yes: Oui
+      insurance_no: Non
+      revision_question: S’agit-il d’une chirurgie de reprise ?
+      sensation_question: Comment évalueriez-vous votre sensibilité après cette intervention ?
+      satisfaction_question: Êtes-vous satisfait·e du résultat ?
+      complication_tags: Tags de complications
+      similar_existing: 'Correspondance possible :'
+      use_existing: Utiliser l’existant
+      complications_question: Y a-t-il eu des complications ?
+      complications_yes: Oui
+      complications_no: Non
+      complications_help: Utilisez des tags courts séparés par des virgules. Ajoutez les symptômes, la durée et les détails ci-dessous.
+      complications_validation: Utilisez des tags courts séparés par des virgules. Chaque tag doit comporter au plus 80 caractères et ne pas contenir de saut de ligne.
+it:
+  public:
+    form:
+      cost_question: Quanto è costato?
+      insurance_question: È stato coperto dall'assicurazione?
+      insurance_yes: Sì
+      insurance_no: No
+      revision_question: Si tratta di un intervento di revisione?
+      sensation_question: Come valuteresti la tua sensibilità dopo questo intervento?
+      satisfaction_question: Quanto sei soddisfattə del risultato?
+      complication_tags: Tag delle complicazioni
+      similar_existing: 'Possibile voce esistente:'
+      use_existing: Usa esistente
+      complications_question: Hai avuto complicazioni?
+      complications_yes: Sì
+      complications_no: No
+      complications_help: Usa tag brevi separati da virgole. Aggiungi sotto sintomi, tempistiche e altri dettagli.
+      complications_validation: Usa tag brevi separati da virgole. Ogni tag deve avere al massimo 80 caratteri e non contenere interruzioni di riga.
+ja:
+  public:
+    form:
+      cost_question: いくらかかりましたか？
+      insurance_question: 保険で支払われましたか？
+      insurance_yes: はい
+      insurance_no: いいえ
+      revision_question: 修正手術ですか？
+      sensation_question: この手術後の感覚をどのように評価しますか？
+      satisfaction_question: 結果にどの程度満足していますか？
+      complication_tags: 合併症タグ
+      similar_existing: '既存の候補:'
+      use_existing: 既存のものを使う
+      complications_question: 合併症はありましたか？
+      complications_yes: はい
+      complications_no: いいえ
+      complications_help: 短いタグをカンマで区切って入力してください。症状や時期などの詳しい内容は下に入力してください。
+      complications_validation: 短いタグをカンマで区切って入力してください。各タグは80文字以内で、改行を含めないでください。
+zh-CN:
+  public:
+    form:
+      cost_question: 费用是多少？
+      insurance_question: 这项手术由保险支付吗？
+      insurance_yes: 是
+      insurance_no: 否
+      revision_question: 这是修复手术吗？
+      sensation_question: 您如何评价这次手术后的感觉？
+      satisfaction_question: 您对结果满意吗？
+      complication_tags: 并发症标签
+      similar_existing: '可能的现有条目：'
+      use_existing: 使用现有条目
+      complications_question: 有并发症吗？
+      complications_yes: 有
+      complications_no: 没有
+      complications_help: 请使用逗号分隔的简短标签。症状、时间和其他详细信息请填写在下方。
+      complications_validation: 请使用逗号分隔的简短标签。每个标签不得超过80个字符，也不能包含换行。
+zh-TW:
+  public:
+    form:
+      cost_question: 費用是多少？
+      insurance_question: 這項手術由保險支付嗎？
+      insurance_yes: 是
+      insurance_no: 否
+      revision_question: 這是修正手術嗎？
+      sensation_question: 您如何評價這次手術後的感覺？
+      satisfaction_question: 您對結果滿意嗎？
+      complication_tags: 併發症標籤
+      similar_existing: '可能的現有項目：'
+      use_existing: 使用現有項目
+      complications_question: 有併發症嗎？
+      complications_yes: 有
+      complications_no: 沒有
+      complications_help: 請使用逗號分隔的簡短標籤。症狀、時間和其他詳細資訊請填寫在下方。
+      complications_validation: 請使用逗號分隔的簡短標籤。每個標籤不得超過80個字元，也不能包含換行。
+pt-BR:
+  public:
+    form:
+      cost_question: Quanto custou?
+      insurance_question: Foi coberto pelo seguro?
+      insurance_yes: Sim
+      insurance_no: Não
+      revision_question: É uma cirurgia de revisão?
+      sensation_question: Como você avaliaria sua sensibilidade após este procedimento?
+      satisfaction_question: O quanto você está satisfeito/a com o resultado?
+      complication_tags: Tags de complicações
+      similar_existing: 'Possível item existente:'
+      use_existing: Usar existente
+      complications_question: Houve complicações?
+      complications_yes: Sim
+      complications_no: Não
+      complications_help: Use tags curtas separadas por vírgulas. Adicione sintomas, período e outros detalhes abaixo.
+      complications_validation: Use tags curtas separadas por vírgulas. Cada tag deve ter no máximo 80 caracteres e não pode conter quebras de linha.
+nl:
+  public:
+    form:
+      cost_question: Hoeveel kostte dit?
+      insurance_question: Werd dit door de verzekering vergoed?
+      insurance_yes: Ja
+      insurance_no: Nee
+      revision_question: Gaat het om een hersteloperatie?
+      sensation_question: Hoe beoordeel je je gevoel na deze ingreep?
+      satisfaction_question: Hoe tevreden ben je met het resultaat?
+      complication_tags: Complicatietags
+      similar_existing: 'Mogelijke bestaande match:'
+      use_existing: Bestaande gebruiken
+      complications_question: Waren er complicaties?
+      complications_yes: Ja
+      complications_no: Nee
+      complications_help: Gebruik korte tags, gescheiden door komma's. Voeg symptomen, timing en andere details hieronder toe.
+      complications_validation: Gebruik korte tags, gescheiden door komma's. Elke tag mag maximaal 80 tekens bevatten en geen regeleinden.
+pl:
+  public:
+    form:
+      cost_question: Ile to kosztowało?
+      insurance_question: Czy koszty pokryło ubezpieczenie?
+      insurance_yes: Tak
+      insurance_no: Nie
+      revision_question: Czy to operacja rewizyjna?
+      sensation_question: Jak oceniasz czucie po tym zabiegu?
+      satisfaction_question: Jak bardzo zadowala Cię rezultat?
+      complication_tags: Tagi powikłań
+      similar_existing: 'Możliwe istniejące dopasowanie:'
+      use_existing: Użyj istniejącego
+      complications_question: Czy wystąpiły powikłania?
+      complications_yes: Tak
+      complications_no: Nie
+      complications_help: Użyj krótkich tagów oddzielonych przecinkami. Objawy, czas trwania i inne szczegóły dodaj poniżej.
+      complications_validation: Użyj krótkich tagów oddzielonych przecinkami. Każdy tag może mieć najwyżej 80 znaków i nie może zawierać znaków nowej linii.
+ru:
+  public:
+    form:
+      cost_question: Сколько это стоило?
+      insurance_question: Покрывала ли это страховка?
+      insurance_yes: Да
+      insurance_no: Нет
+      revision_question: Это ревизионная операция?
+      sensation_question: Как вы оцениваете чувствительность после этой операции?
+      satisfaction_question: Насколько вы довольны результатом?
+      complication_tags: Теги осложнений
+      similar_existing: 'Возможное совпадение:'
+      use_existing: Использовать существующее
+      complications_question: Были ли осложнения?
+      complications_yes: Да
+      complications_no: Нет
+      complications_help: Используйте короткие теги через запятую. Симптомы, сроки и другие подробности добавьте ниже.
+      complications_validation: Используйте короткие теги через запятую. Каждый тег должен содержать не более 80 символов и не включать переносы строк.
+tr:
+  public:
+    form:
+      cost_question: Ne kadara mal oldu?
+      insurance_question: Sigorta tarafından karşılandı mı?
+      insurance_yes: Evet
+      insurance_no: Hayır
+      revision_question: Bu bir revizyon ameliyatı mı?
+      sensation_question: Bu işlemden sonraki duyunuzu nasıl değerlendirirsiniz?
+      satisfaction_question: Sonuçtan ne kadar memnunsunuz?
+      complication_tags: Komplikasyon etiketleri
+      similar_existing: 'Olası mevcut eşleşme:'
+      use_existing: Mevcut olanı kullan
+      complications_question: Komplikasyon oldu mu?
+      complications_yes: Evet
+      complications_no: Hayır
+      complications_help: Virgülle ayrılmış kısa etiketler kullanın. Belirtileri, zamanlamayı ve diğer ayrıntıları aşağıya ekleyin.
+      complications_validation: Virgülle ayrılmış kısa etiketler kullanın. Her etiket en fazla 80 karakter olmalı ve satır sonu içermemelidir.
+vi:
+  public:
+    form:
+      cost_question: Chi phí là bao nhiêu?
+      insurance_question: Bảo hiểm có chi trả không?
+      insurance_yes: Có
+      insurance_no: Không
+      revision_question: Đây có phải là phẫu thuật chỉnh sửa không?
+      sensation_question: Bạn đánh giá cảm giác sau phẫu thuật này như thế nào?
+      satisfaction_question: Bạn hài lòng với kết quả ở mức nào?
+      complication_tags: Thẻ biến chứng
+      similar_existing: 'Có thể đã tồn tại:'
+      use_existing: Dùng mục hiện có
+      complications_question: Có biến chứng không?
+      complications_yes: Có
+      complications_no: Không
+      complications_help: Dùng các thẻ ngắn, ngăn cách bằng dấu phẩy. Thêm triệu chứng, thời điểm và chi tiết khác ở bên dưới.
+      complications_validation: Dùng các thẻ ngắn, ngăn cách bằng dấu phẩy. Mỗi thẻ không quá 80 ký tự và không được chứa xuống dòng.
+ar:
+  public:
+    form:
+      cost_question: كم بلغت التكلفة؟
+      insurance_question: هل غطى التأمين هذه العملية؟
+      insurance_yes: نعم
+      insurance_no: لا
+      revision_question: هل هذه عملية تصحيحية؟
+      sensation_question: كيف تقيّم الإحساس بعد هذه العملية؟
+      satisfaction_question: ما مدى رضاك عن النتيجة؟
+      complication_tags: وسوم المضاعفات
+      similar_existing: 'تطابق موجود محتمل:'
+      use_existing: استخدام الموجود
+      complications_question: هل حدثت مضاعفات؟
+      complications_yes: نعم
+      complications_no: لا
+      complications_help: استخدم وسومًا قصيرة تفصل بينها فواصل. أضف الأعراض والتوقيت والتفاصيل الأخرى أدناه.
+      complications_validation: استخدم وسومًا قصيرة تفصل بينها فواصل. يجب ألا يتجاوز كل وسم 80 حرفًا وألا يحتوي على أسطر جديدة.
+sv:
+  public:
+    form:
+      cost_question: Hur mycket kostade det?
+      insurance_question: Täcktes detta av försäkringen?
+      insurance_yes: Ja
+      insurance_no: Nej
+      revision_question: Är detta en revisionsoperation?
+      sensation_question: Hur skulle du bedöma känseln efter ingreppet?
+      satisfaction_question: Hur nöjd är du med resultatet?
+      complication_tags: Komplikationstaggar
+      similar_existing: 'Möjlig befintlig matchning:'
+      use_existing: Använd befintlig
+      complications_question: Uppstod komplikationer?
+      complications_yes: Ja
+      complications_no: Nej
+      complications_help: Använd korta taggar separerade med kommatecken. Lägg till symtom, tidsförlopp och andra detaljer nedan.
+      complications_validation: Använd korta taggar separerade med kommatecken. Varje tagg får vara högst 80 tecken och får inte innehålla radbrytningar.

@@ -11,12 +11,12 @@ describe CommentMailer do
       expect(comment_mail.subject).to eq("Transbucket.com: New Comment on #{commentable.id}")
     end
     it "should have the right url" do
-      comment_url = "https://www.transbucket.com/pins/#{commentable.id}" +
+      comment_url = "https://www.transbucket.com/en/pins/#{commentable.id}" +
         "?utm_source=comment_reminder&amp;utm_medium=email&amp;utm_campaign=comment_reminder"
         expect(comment_mail.body.raw_source).to include(comment_url)
     end
     it "should have the unsub url" do
-      comment_url = "https://www.transbucket.com/users/#{user.id}/edit" +
+      comment_url = "https://www.transbucket.com/en/users/#{user.id}/edit" +
         "?utm_source=comment_reminder&amp;utm_medium=email&amp;utm_campaign=comment_reminder"
         expect(comment_mail.body.raw_source).to include(comment_url)
     end
@@ -29,12 +29,12 @@ describe CommentMailer do
       expect(question_mail.subject).to eq("Transbucket.com: New Question on #{commentable.id}")
     end
     it "should have the right url" do
-      comment_url = "https://www.transbucket.com/pins/#{commentable.id}" +
+      comment_url = "https://www.transbucket.com/en/pins/#{commentable.id}" +
         "?utm_source=comment_reminder&amp;utm_medium=email&amp;utm_campaign=question_reminder"
         expect(question_mail.body.raw_source).to include(comment_url)
     end
     it "should have the unsub url" do
-      comment_url = "https://www.transbucket.com/users/#{user.id}/edit" +
+      comment_url = "https://www.transbucket.com/en/users/#{user.id}/edit" +
         "?utm_source=comment_reminder&amp;utm_medium=email&amp;utm_campaign=question_reminder"
         expect(question_mail.body.raw_source).to include(comment_url)
     end

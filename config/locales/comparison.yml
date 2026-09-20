@@ -1,0 +1,107 @@
+en:
+  comparison:
+    title: Compare
+    comparing: Compare %{first} and %{second}
+    metric: Metric
+    rating_distribution: Rating distribution
+    submissions: Submissions
+    submission_count: Published submissions
+    procedures_count: Procedures represented
+    surgeons_count: Surgeons represented
+    good_outcomes: Rated 3/5 or higher (of rated submissions)
+    challenging_outcomes: Rated 1/5 (of rated submissions)
+    not_enough_data: Not enough data
+    common_complications: Common complications
+    none_reported: None reported
+    scope_surgeon: Optional shared surgeon
+    scope_procedure: Optional shared procedure
+    deduplicate: Group repeat submissions
+    deduplicate_help: 'On: count at most one latest post per identified submitter, surgeon, and procedure group, so repeat posts do not inflate averages. Off: count every post.'
+    interpretation: This tool summarizes patterns in the available submissions. It cannot predict what any individual person will experience.
+    insufficient_data: 'Evidence is limited because the rated sample sizes are %{first_count} and %{second_count}; differences may be unstable. This is not a prediction of an individual outcome.'
+    no_clear_difference: 'This sample does not show a clear difference (rated submissions: %{first_count} and %{second_count}; Fisher exact p=%{p_value}). This is not a prediction of an individual outcome.'
+    signal_detected: 'This sample shows a statistical difference (Fisher exact p=%{p_value}), but this does not establish cause or predict an individual outcome.'
+    complication_rate: '%{rate} of submissions'
+    first: First
+    second: Second
+    submit: Compare
+    procedures_title: Compare procedures
+    procedures_description: Compare procedure rating distributions on Transbucket.
+    surgeons_title: Compare surgeons
+    surgeons_description: Compare surgeon rating distributions on Transbucket.
+    choose_description: Compare procedure or surgeon rating distributions on Transbucket.
+
+de:
+  comparison:
+    deduplicate: Wiederholte Beiträge gruppieren
+    deduplicate_help: 'Ein: höchstens den neuesten Beitrag pro erkannter Kombination aus einreichender Person, Chirurg und Eingriff zählen, damit Wiederholungen die Durchschnittswerte nicht verzerren. Aus: jeden Beitrag zählen.'
+
+es:
+  comparison:
+    deduplicate: Agrupar envíos repetidos
+    deduplicate_help: 'Activado: contar como máximo el envío más reciente de cada combinación identificada de persona, cirujano e intervención para que las repeticiones no inflen los promedios. Desactivado: contar todos los envíos.'
+
+fr:
+  comparison:
+    deduplicate: Regrouper les publications répétées
+    deduplicate_help: 'Activé : compter au plus la publication la plus récente de chaque combinaison identifiée de personne, chirurgien et intervention afin que les répétitions ne faussent pas les moyennes. Désactivé : compter chaque publication.'
+
+it:
+  comparison:
+    deduplicate: Raggruppa gli invii ripetuti
+    deduplicate_help: 'Attivo: conta al massimo l invio più recente per ogni combinazione identificata di persona, chirurgo e procedura, così le ripetizioni non gonfiano le medie. Disattivo: conta ogni invio.'
+
+ja:
+  comparison:
+    deduplicate: 繰り返しの投稿をまとめる
+    deduplicate_help: 'オン: 投稿者・外科医・施術の組み合わせごとに最新の投稿を最大1件だけ数え、繰り返し投稿が平均値を膨らませないようにします。オフ: すべての投稿を数えます。'
+
+zh-CN:
+  comparison:
+    deduplicate: 合并重复提交
+    deduplicate_help: '开启：每个已识别的提交者、外科医生和手术组合最多计入最新的一条提交，避免重复提交影响平均值。关闭：每条提交都计入。'
+
+zh-TW:
+  comparison:
+    deduplicate: 分組重複提交
+    deduplicate_help: '開啟：每個已識別的提交者、外科醫師和手術組合最多計入最新的一筆提交，避免重複提交影響平均值。關閉：每筆提交都計入。'
+
+pt-BR:
+  comparison:
+    deduplicate: Agrupar envios repetidos
+    deduplicate_help: 'Ativado: contar no máximo o envio mais recente de cada combinação identificada de pessoa, cirurgião e procedimento, para que repetições não aumentem as médias. Desativado: contar todos os envios.'
+
+nl:
+  comparison:
+    deduplicate: Herhaalde inzendingen groeperen
+    deduplicate_help: 'Aan: tel per geïdentificeerde combinatie van inzender, chirurg en ingreep maximaal het nieuwste bericht mee, zodat herhalingen de gemiddelden niet verhogen. Uit: tel elk bericht mee.'
+
+pl:
+  comparison:
+    deduplicate: Grupuj powtórne zgłoszenia
+    deduplicate_help: 'Włączone: uwzględniaj najwyżej najnowsze zgłoszenie dla każdej rozpoznanej kombinacji osoby zgłaszającej, chirurga i zabiegu, aby powtórzenia nie zawyżały średnich. Wyłączone: uwzględniaj każde zgłoszenie.'
+
+ru:
+  comparison:
+    deduplicate: Группировать повторные публикации
+    deduplicate_help: 'Включено: учитывать не более одной, самой новой публикации для каждой распознанной комбинации автора, хирурга и процедуры, чтобы повторы не завышали средние значения. Выключено: учитывать каждую публикацию.'
+
+tr:
+  comparison:
+    deduplicate: Tekrarlanan gönderileri grupla
+    deduplicate_help: 'Açık: tekrar gönderilerin ortalamaları artırmaması için tanımlanabilen kullanıcı, cerrah ve işlem kombinasyonu başına en fazla en yeni gönderiyi say. Kapalı: her gönderiyi say.'
+
+vi:
+  comparison:
+    deduplicate: Nhóm bài đăng lặp lại
+    deduplicate_help: 'Bật: chỉ tính tối đa bài đăng mới nhất cho mỗi tổ hợp người gửi, bác sĩ phẫu thuật và thủ thuật đã xác định, để bài đăng lặp lại không làm tăng trung bình. Tắt: tính mọi bài đăng.'
+
+ar:
+  comparison:
+    deduplicate: تجميع المشاركات المتكررة
+    deduplicate_help: 'مفعّل: احتسب أحدث مشاركة واحدة كحد أقصى لكل مجموعة محددة من مقدم المشاركة والجراح والإجراء، حتى لا ترفع المشاركات المتكررة المتوسطات. معطّل: احتسب كل مشاركة.'
+
+sv:
+  comparison:
+    deduplicate: Gruppera upprepade bidrag
+    deduplicate_help: 'På: räkna högst det senaste bidraget för varje identifierad kombination av inskickare, kirurg och ingrepp, så att upprepningar inte höjer genomsnitten. Av: räkna varje bidrag.'

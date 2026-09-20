@@ -40,7 +40,7 @@ module CapybaraHelpers
   end
 
   def enter_details(pin_data, js: false)
-    fill_in "Cost", :with => pin_data[:cost]
+    fill_in "pin_cost", :with => pin_data[:cost]
 
     if js
       page.execute_script("tinyMCE.activeEditor.setContent('#{pin_data[:experience]}')")
@@ -113,4 +113,3 @@ module CapybaraHelpers
     end
   end
 end
-

@@ -1,0 +1,240 @@
+en:
+  about:
+    title: About Transbucket
+    meta_description: A community resource for procedure research and real-world outcomes.
+    origin: was created in 2009 after Transster.com closed. The original founders later passed responsibility to Alex.
+    welcome_heading: Who is welcome here?
+    welcome: We welcome everyone who may benefit from real-life surgical experiences, including FTM, MTF, genderqueer, agender, detrans, desisted, post-trans, and cis people.
+    community_note: Every photo and comment represents a real person. Be thoughtful and respect others.
+    funding_heading: Why are there ads?
+    funding: Ads help cover hosting costs so Transbucket can remain available.
+    help_heading: How can I help?
+    help: Volunteers can help with development, moderation, or sustainable funding. Please
+    github_link: open an issue on GitHub
+    contact: Contact Alex through the %{contact_link} or %{email_link}. You can also find us on %{facebook_link} and %{twitter_link}.
+    contact_form: contact form
+de:
+  about:
+    title: Über Transbucket
+    meta_description: Eine Community-Ressource für Eingriffsrecherche und echte Ergebnisse.
+    origin: wurde 2009 nach der Schließung von Transster.com gegründet. Die Gründer übergaben die Verantwortung später an Alex.
+    welcome_heading: Wer ist hier willkommen?
+    welcome: Wir heißen alle willkommen, die von echten Erfahrungen mit Eingriffen profitieren können, darunter FTM-, MTF-, genderqueere, agender, detrans-, desisted-, post-trans- und cis-Personen.
+    community_note: Jedes Foto und jeder Kommentar stellt eine echte Person dar. Seien Sie aufmerksam und respektvoll.
+    funding_heading: Warum gibt es Werbung?
+    funding: Werbung hilft, die Hostingkosten zu decken, damit Transbucket verfügbar bleibt.
+    help_heading: Wie kann ich helfen?
+    help: Freiwillige können bei Entwicklung, Moderation oder nachhaltiger Finanzierung helfen. Bitte
+    github_link: eröffnen Sie ein Issue auf GitHub
+    contact: Kontaktieren Sie Alex über das %{contact_link} oder per %{email_link}. Sie finden uns auch auf %{facebook_link} und %{twitter_link}.
+    contact_form: Kontaktformular
+es:
+  about:
+    title: Sobre Transbucket
+    meta_description: Un recurso comunitario para investigar procedimientos y resultados reales.
+    origin: nació en 2009 tras el cierre de Transster.com. Sus fundadores cedieron después la responsabilidad a Alex.
+    welcome_heading: ¿Quién es bienvenido aquí?
+    welcome: Damos la bienvenida a todas las personas que puedan beneficiarse de experiencias quirúrgicas reales, incluidas personas FTM, MTF, género queer, agénero, detrans, desisted, post-trans y cis.
+    community_note: Cada foto y comentario representa a una persona real. Sé considerado y respeta a los demás.
+    funding_heading: ¿Por qué hay anuncios?
+    funding: Los anuncios ayudan a cubrir el alojamiento para que Transbucket siga disponible.
+    help_heading: ¿Cómo puedo ayudar?
+    help: Puedes ayudar con desarrollo, moderación o financiación sostenible. Por favor
+    github_link: abre un issue en GitHub
+    contact: Contacta con Alex mediante el %{contact_link} o por %{email_link}. También estamos en %{facebook_link} y %{twitter_link}.
+    contact_form: formulario de contacto
+fr:
+  about:
+    title: À propos de Transbucket
+    meta_description: Une ressource communautaire pour rechercher des interventions et des résultats réels.
+    origin: a été créé en 2009 après la fermeture de Transster.com. Les fondateurs ont ensuite confié la responsabilité à Alex.
+    welcome_heading: Qui est bienvenu ici ?
+    welcome: Nous accueillons toute personne pouvant bénéficier d'expériences chirurgicales réelles, notamment les personnes FTM, MTF, genderqueer, agenres, detrans, desisted, post-trans et cis.
+    community_note: Chaque photo et commentaire représente une personne réelle. Soyez attentif et respectueux.
+    funding_heading: Pourquoi y a-t-il des publicités ?
+    funding: Les publicités contribuent aux frais d'hébergement afin que Transbucket reste disponible.
+    help_heading: Comment aider ?
+    help: Vous pouvez aider au développement, à la modération ou au financement durable. Vous pouvez
+    github_link: ouvrir une issue sur GitHub
+    contact: Contactez Alex via le %{contact_link} ou par %{email_link}. Nous sommes aussi sur %{facebook_link} et %{twitter_link}.
+    contact_form: formulaire de contact
+it:
+  about:
+    title: Informazioni su Transbucket
+    meta_description: Una risorsa comunitaria per ricercare interventi e risultati reali.
+    origin: è nato nel 2009 dopo la chiusura di Transster.com. I fondatori hanno poi affidato la responsabilità ad Alex.
+    welcome_heading: Chi è il benvenuto qui?
+    welcome: Accogliamo chiunque possa trarre beneficio da esperienze chirurgiche reali, comprese persone FTM, MTF, genderqueer, agender, detrans, desisted, post-trans e cis.
+    community_note: Ogni foto e commento rappresenta una persona reale. Sii rispettoso.
+    funding_heading: Perché ci sono annunci?
+    funding: Gli annunci aiutano a coprire i costi di hosting e a mantenere Transbucket disponibile.
+    help_heading: Come posso aiutare?
+    help: Puoi aiutare con sviluppo, moderazione o finanziamenti sostenibili. Puoi
+    github_link: aprire una issue su GitHub
+    contact: Contatta Alex tramite il %{contact_link} o %{email_link}. Ci trovi anche su %{facebook_link} e %{twitter_link}.
+    contact_form: modulo di contatto
+ja:
+  about:
+    title: Transbucketについて
+    meta_description: 手術の調査と実際の結果のためのコミュニティリソースです。
+    origin: は2009年、Transster.comの終了後に設立されました。創設者は後にAlexへ運営を引き継ぎました。
+    welcome_heading: どなたでも参加できます
+    welcome: FTM、MTF、ジェンダークィア、アジェンダー、デトランス、デシステッド、ポストトランス、シスの方など、実際の手術経験から学びたいすべての方を歓迎します。
+    community_note: 写真やコメントの一つひとつには実在する人がいます。思いやりを持ち、他の人を尊重してください。
+    funding_heading: なぜ広告があるのですか？
+    funding: 広告収入はホスティング費用を支え、Transbucketの継続に役立ちます。
+    help_heading: どうすれば協力できますか？
+    help: 開発、モデレーション、持続可能な資金調達に協力できます。ぜひ
+    github_link: GitHubでIssueを作成してください
+    contact: "%{contact_link} または %{email_link} からAlexに連絡できます。%{facebook_link}と%{twitter_link}でも見つけられます。"
+    contact_form: お問い合わせフォーム
+zh-CN:
+  about:
+    title: 关于 Transbucket
+    meta_description: 用于了解手术项目和真实结果的社区资源。
+    origin: 于2009年在Transster.com关闭后成立。创始人后来将网站交给Alex负责。
+    welcome_heading: 谁都可以参加
+    welcome: 我们欢迎所有希望了解真实手术经历的人，包括FTM、MTF、性别酷儿、无性别、去跨性别、停止跨性别、后跨性别和顺性别人士。
+    community_note: 每张照片和每条评论都代表一个真实的人。请体贴并尊重他人。
+    funding_heading: 为什么有广告？
+    funding: 广告帮助支付托管费用，让Transbucket得以继续提供服务。
+    help_heading: 如何提供帮助？
+    help: 你可以帮助开发、审核内容或支持可持续运营。请
+    github_link: 在GitHub提交Issue
+    contact: 你可以通过%{contact_link}或%{email_link}联系Alex，也可以在%{facebook_link}和%{twitter_link}找到我们。
+    contact_form: 联系表单
+zh-TW:
+  about:
+    title: 關於 Transbucket
+    meta_description: 用於了解手術項目與真實成果的社群資源。
+    origin: 於2009年在Transster.com關閉後成立。創辦人後來將網站交由Alex負責。
+    welcome_heading: 歡迎所有人
+    welcome: 我們歡迎所有想了解真實手術經驗的人，包括FTM、MTF、性別酷兒、無性別、去跨性別、停止跨性別、後跨性別與順性別人士。
+    community_note: 每張照片和每則留言都代表一位真實的人。請體貼並尊重他人。
+    funding_heading: 為什麼有廣告？
+    funding: 廣告有助於支付主機費用，讓Transbucket持續提供服務。
+    help_heading: 如何提供協助？
+    help: 你可以協助開發、內容審核或永續營運。請
+    github_link: 在GitHub提交Issue
+    contact: 你可以透過%{contact_link}或%{email_link}聯絡Alex，也可以在%{facebook_link}和%{twitter_link}找到我們。
+    contact_form: 聯絡表單
+pt-BR:
+  about:
+    title: Sobre o Transbucket
+    meta_description: Um recurso comunitário para pesquisar procedimentos e resultados reais.
+    origin: foi criado em 2009 após o encerramento do Transster.com. Os fundadores depois passaram a responsabilidade para Alex.
+    welcome_heading: Quem é bem-vindo aqui?
+    welcome: Recebemos todas as pessoas que possam se beneficiar de experiências cirúrgicas reais, incluindo pessoas FTM, MTF, gênero queer, agênero, detrans, desisted, pós-trans e cis.
+    community_note: Cada foto e comentário representa uma pessoa real. Tenha consideração e respeite os outros.
+    funding_heading: Por que há anúncios?
+    funding: Os anúncios ajudam a cobrir a hospedagem para que o Transbucket continue disponível.
+    help_heading: Como posso ajudar?
+    help: Você pode ajudar no desenvolvimento, na moderação ou no financiamento sustentável. Por favor
+    github_link: abra uma issue no GitHub
+    contact: Entre em contato com Alex pelo %{contact_link} ou %{email_link}. Também estamos no %{facebook_link} e no %{twitter_link}.
+    contact_form: formulário de contato
+nl:
+  about:
+    title: Over Transbucket
+    meta_description: Een gemeenschapsbron voor onderzoek naar ingrepen en echte resultaten.
+    origin: werd in 2009 opgericht nadat Transster.com stopte. De oprichters droegen de verantwoordelijkheid later over aan Alex.
+    welcome_heading: Wie is hier welkom?
+    welcome: Iedereen die baat kan hebben bij echte chirurgische ervaringen is welkom, waaronder FTM-, MTF-, genderqueer-, agender-, detrans-, desisted-, post-trans- en cis-personen.
+    community_note: Elke foto en reactie vertegenwoordigt een echt persoon. Wees attent en respecteer anderen.
+    funding_heading: Waarom zijn er advertenties?
+    funding: Advertenties helpen de hostingkosten te betalen zodat Transbucket beschikbaar blijft.
+    help_heading: Hoe kan ik helpen?
+    help: Je kunt helpen met ontwikkeling, moderatie of duurzame financiering. Je kunt
+    github_link: een issue op GitHub openen
+    contact: Neem contact op met Alex via het %{contact_link} of %{email_link}. Vind ons ook op %{facebook_link} en %{twitter_link}.
+    contact_form: contactformulier
+pl:
+  about:
+    title: O Transbucket
+    meta_description: Społecznościowe źródło informacji o zabiegach i rzeczywistych rezultatach.
+    origin: powstał w 2009 roku po zamknięciu Transster.com. Założyciele przekazali później odpowiedzialność Alexowi.
+    welcome_heading: Kto jest tu mile widziany?
+    welcome: Zapraszamy wszystkie osoby, które mogą skorzystać z prawdziwych doświadczeń chirurgicznych, w tym osoby FTM, MTF, genderqueer, agender, detrans, desisted, post-trans i cis.
+    community_note: Każde zdjęcie i każdy komentarz przedstawia prawdziwą osobę. Bądź uważny i szanuj innych.
+    funding_heading: Dlaczego są tu reklamy?
+    funding: Reklamy pomagają pokryć koszty hostingu i utrzymać Transbucket.
+    help_heading: Jak mogę pomóc?
+    help: Możesz pomóc w rozwoju, moderacji lub finansowaniu. Możesz
+    github_link: otworzyć zgłoszenie na GitHubie
+    contact: Skontaktuj się z Alexem przez %{contact_link} lub %{email_link}. Znajdziesz nas także na %{facebook_link} i %{twitter_link}.
+    contact_form: formularz kontaktowy
+ru:
+  about:
+    title: О Transbucket
+    meta_description: Сообщественный ресурс для изучения процедур и реальных результатов.
+    origin: создан в 2009 году после закрытия Transster.com. Позже основатели передали ответственность Алексу.
+    welcome_heading: Кто здесь может участвовать?
+    welcome: Мы приветствуем всех, кому могут помочь реальные хирургические истории, включая трансмаскулинных, трансфемининных, гендерквир-, агендерных, detrans, desisted, post-trans и цис-людей.
+    community_note: За каждой фотографией и комментарием стоит реальный человек. Будьте внимательны и уважайте других.
+    funding_heading: Почему здесь есть реклама?
+    funding: Реклама помогает оплачивать хостинг и поддерживать Transbucket.
+    help_heading: Как я могу помочь?
+    help: Вы можете помочь с разработкой, модерацией или финансированием. Вы можете
+    github_link: открыть issue на GitHub
+    contact: Свяжитесь с Алексом через %{contact_link} или %{email_link}. Мы также есть в %{facebook_link} и %{twitter_link}.
+    contact_form: контактную форму
+tr:
+  about:
+    title: Transbucket Hakkında
+    meta_description: İşlemleri ve gerçek sonuçları araştırmak için topluluk kaynağı.
+    origin: Transster.com kapandıktan sonra 2009 yılında kuruldu. Kurucular daha sonra sorumluluğu Alex'e devretti.
+    welcome_heading: Burada kimler hoş karşılanır?
+    welcome: FTM, MTF, genderqueer, agender, detrans, desisted, post-trans ve cis kişiler dahil olmak üzere gerçek cerrahi deneyimlerden yararlanabilecek herkesi bekliyoruz.
+    community_note: Her fotoğraf ve yorum gerçek bir kişiyi temsil eder. Düşünceli olun ve başkalarına saygı gösterin.
+    funding_heading: Neden reklam var?
+    funding: Reklamlar barındırma masraflarını karşılamaya ve Transbucket'i erişilebilir tutmaya yardımcı olur.
+    help_heading: Nasıl yardımcı olabilirim?
+    help: Geliştirme, moderasyon veya sürdürülebilir finansmana yardımcı olabilirsiniz. Lütfen
+    github_link: GitHub'da bir issue açın
+    contact: Alex'e %{contact_link} veya %{email_link} üzerinden ulaşabilirsiniz. Bizi %{facebook_link} ve %{twitter_link} üzerinde de bulabilirsiniz.
+    contact_form: iletişim formu
+vi:
+  about:
+    title: Giới thiệu Transbucket
+    meta_description: Tài nguyên cộng đồng để tìm hiểu về các thủ thuật và kết quả thực tế.
+    origin: được thành lập vào năm 2009 sau khi Transster.com đóng cửa. Những người sáng lập sau đó chuyển trách nhiệm cho Alex.
+    welcome_heading: Ai được chào đón ở đây?
+    welcome: Chúng tôi chào đón tất cả những người có thể hưởng lợi từ trải nghiệm phẫu thuật thực tế, bao gồm người FTM, MTF, genderqueer, agender, detrans, desisted, post-trans và cis.
+    community_note: Mỗi ảnh và bình luận đều đại diện cho một người thật. Hãy chu đáo và tôn trọng người khác.
+    funding_heading: Vì sao có quảng cáo?
+    funding: Quảng cáo giúp chi trả chi phí lưu trữ để Transbucket tiếp tục hoạt động.
+    help_heading: Tôi có thể giúp gì?
+    help: Bạn có thể hỗ trợ phát triển, kiểm duyệt hoặc tài trợ bền vững. Vui lòng
+    github_link: mở issue trên GitHub
+    contact: Bạn có thể liên hệ Alex qua %{contact_link} hoặc %{email_link}. Bạn cũng có thể tìm chúng tôi trên %{facebook_link} và %{twitter_link}.
+    contact_form: biểu mẫu liên hệ
+ar:
+  about:
+    title: حول Transbucket
+    meta_description: مورد مجتمعي للبحث في الإجراءات والنتائج الواقعية.
+    origin: أُنشئ عام 2009 بعد إغلاق Transster.com. نقل المؤسسون المسؤولية لاحقاً إلى Alex.
+    welcome_heading: من المرحب به هنا؟
+    welcome: نرحب بكل من قد يستفيد من تجارب الجراحة الحقيقية، بمن فيهم الأشخاص FTM وMTF والكوير جندرياً وغير المحددي الجندر وdetrans وdesisted وpost-trans وcis.
+    community_note: كل صورة وتعليق يمثلان شخصاً حقيقياً. تحلَّ بالاحترام وراعِ الآخرين.
+    funding_heading: لماذا توجد إعلانات؟
+    funding: تساعد الإعلانات في تغطية تكاليف الاستضافة كي يبقى Transbucket متاحاً.
+    help_heading: كيف يمكنني المساعدة؟
+    help: يمكنك المساعدة في التطوير أو الإشراف أو التمويل المستدام. يرجى
+    github_link: فتح issue على GitHub
+    contact: يمكنك التواصل مع Alex عبر %{contact_link} أو %{email_link}. يمكنك أيضاً العثور علينا عبر %{facebook_link} و%{twitter_link}.
+    contact_form: نموذج التواصل
+sv:
+  about:
+    title: Om Transbucket
+    meta_description: En gemenskapsresurs för att undersöka ingrepp och verkliga resultat.
+    origin: grundades 2009 efter att Transster.com stängde. Grundarna överlämnade senare ansvaret till Alex.
+    welcome_heading: Vem är välkommen här?
+    welcome: Vi välkomnar alla som kan ha nytta av verkliga erfarenheter av kirurgi, inklusive FTM-, MTF-, genderqueer-, agender-, detrans-, desisted-, post-trans- och cispersoner.
+    community_note: Varje foto och kommentar föreställer en verklig person. Visa omtanke och respektera andra.
+    funding_heading: Varför finns det annonser?
+    funding: Annonser hjälper till att täcka kostnaderna för webbhotellet så att Transbucket kan fortsätta vara tillgängligt.
+    help_heading: Hur kan jag hjälpa till?
+    help: Du kan hjälpa till med utveckling, moderering eller hållbar finansiering. Du kan
+    github_link: öppna ett ärende på GitHub
+    contact: Kontakta Alex via %{contact_link} eller %{email_link}. Du hittar oss också på %{facebook_link} och %{twitter_link}.
+    contact_form: kontaktformuläret

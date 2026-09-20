@@ -1,11 +1,11 @@
-<%= render partial: 'ads/test1' %>
-<% seo_meta description: 'Browse surgeons on Transbucket to compare linked submissions, outcomes, and discussion activity.' %>
-<% title "Surgeons" %>
+<% page_title = t('directory.surgeons_title') %>
+<% seo_meta title: page_title, description: t('directory.surgeons_intro') %>
+<% title page_title %>
 <% json_ld_tag(
   {
     '@context' => 'https://schema.org',
     '@type' => 'ItemList',
-    'name' => 'Surgeons on Transbucket',
+    'name' => t('directory.surgeons_title'),
     'itemListElement' => @surgeons.each_with_index.map do |surgeon, index|
       {
         '@type' => 'ListItem',
@@ -18,22 +18,34 @@
 ) %>
 <div class="row">
   <div class="col-md-12 center">
-    <h1>Surgeons</h1>
-    <p class="lead">Browse surgeon pages to compare linked submissions, outcomes, and discussion activity.</p>
+    <h1><%= t('directory.surgeons_title') %></h1>
+    <p class="lead"><%= t('directory.surgeons_intro') %></p>
   </div>
 </div>
-<div id="surgeons" style="background-color:#ffffff">
-  <table class="table table-hover table-bordered sticky-header-table" bgcolor="#ffffcc">
+<div id="surgeons" class="directory-table-wrap">
+  <table class="table table-hover table-bordered sticky-header-table sortable-directory-table" data-sortable-directory="surgeons">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Submissions</th>
+        <th><button type="button" class="directory-sort-button" data-sort-key="name" aria-sort="none"><%= t('directory.name') %> <%= fa_icon('sort', aria: { hidden: true }) %></button></th>
+        <th><button type="button" class="directory-sort-button" data-sort-key="submissions" aria-sort="none"><%= t('directory.submissions') %> <%= fa_icon('sort', aria: { hidden: true }) %></button></th>
+        <% if user_signed_in? %>
+          <th><button type="button" class="directory-sort-button" data-sort-key="satisfaction" aria-sort="none"><%= t('directory.average_satisfaction') %> <%= fa_icon('sort', aria: { hidden: true }) %></button></th>
+          <th><button type="button" class="directory-sort-button" data-sort-key="sensation" aria-sort="none"><%= t('directory.average_sensation') %> <%= fa_icon('sort', aria: { hidden: true }) %></button></th>
+        <% end %>
       </tr>
     </thead>
     <tbody>
       <% @surgeons.each do |surgeon| %>
-      <%= render partial: 'surgeons/surgeon_row', locals: { surgeon: surgeon, pin_count: @pins_per_surgeon[surgeon.id] } %>
+      <%= render partial: 'surgeons/surgeon_row', locals: {
+        surgeon: surgeon,
+        pin_count: @pins_per_surgeon[surgeon.id],
+        avg_satisfaction: @avg_satisfaction_by_surgeon[surgeon.id],
+        avg_sensation: @avg_sensation_by_surgeon[surgeon.id]
+      } %>
       <% end %>
     </tbody>
   </table>
+</div>
+<div class="directory-after-content-ad">
+  <%= render partial: 'ads/test1' %>
 </div>

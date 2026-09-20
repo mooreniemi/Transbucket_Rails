@@ -1,6 +1,6 @@
-<% if Rails.env.production? && rand(1..15) == 7 %>
+<% if Rails.env.production? && ads_allowed? && rand(1..15) == 7 %>
   <% Rails.logger.debug "Serving ad with #{pin.id}" %>
-  <div class="item" class="ad">
+  <div class="item ad pin-ad-slot" aria-hidden="true">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- test1 -->
     <ins class="adsbygoogle"
@@ -14,18 +14,31 @@
     </script>
   </div>
 <% end %>
-<!-- end ad snippet  -->
+<!-- end ad snippet -->
 <% if pin.published? %>
 <div class="item" data-pin-id="<%= pin.id %>" itemscope>
+  <% event_context ||= {} %>
+  <%= content_tag :div, '', hidden: true, 'data-content-event' => true,
+    'data-content-event-url' => content_events_path,
+    'data-content-event-batch-url' => batch_content_events_path,
+    'data-content-type' => 'Pin',
+    'data-content-id' => pin.id,
+    'data-event-type' => 'impression',
+    'data-event-context' => event_context.to_json %>
   <div class="panel panel-default">
     <div class="panel-body">
     <%= render partial: "latest_comment_snippet", locals: { pin: pin } if @comments.map(&:commentable_id).include?(pin.id) %>
-    <% cache([pin, @safe_mode]) do %>
-      <div class="image" itemprop="image">
-        <%= link_to (image_tag pin.cover_image(@safe_mode).url(:medium)), pin %>
+    <% cache([I18n.locale, pin, @safe_mode]) do %>
+      <div class="image pin-card-image" itemprop="image">
+        <%= link_to (image_tag pin.cover_image(@safe_mode).url(:medium), alt: pin.procedure.try(:localized_name)), pin,
+          'data-content-event-open' => true,
+          'data-content-event-url' => content_events_path,
+          'data-content-type' => 'Pin',
+          'data-content-id' => pin.id,
+          'data-event-context' => event_context.to_json %>
       </div>
       <p class="description" itemprop="description">
-        <%= pin.try(:procedure).try(:name) %> by <strong><%= pin.unknown_surgeon? ? 'unknown' : 'Dr. ' + pin.surgeon.to_s %></strong>
+        <%= pin.try(:procedure).try(:localized_name) %> <%= t('public.pin.by') %> <strong><%= pin.unknown_surgeon? ? t('public.pin.unknown') : "#{t('public.pin.doctor_prefix')}#{link_to pin.surgeon.to_s, surgeon_path(id: pin.surgeon.id)}".html_safe %></strong>
       </p>
     <% end %>
     <!-- end cache fragment  -->
@@ -38,14 +51,14 @@
         </label>
       <% if current_user == pin.user || current_user.admin? %>
         <%= link_to fa_icon("pencil-square-o"), edit_pin_path(pin) %>
-        | <%= link_to fa_icon("trash-o"), pin, method: :delete, data: { confirm: 'Are you sure?' } %>
+        | <%= link_to fa_icon("trash-o"), pin, method: :delete, data: { confirm: t('public.confirmations.are_you_sure') } %>
       <% if pin.pending? %>
         | <%= link_to 'Remove Flag', remove_pin_flag_path(pin), remote: true %>
       <% end %>
       <!-- end if pin pending -->
       <% end %>
       <!-- end if user can edit -->
-        updated <%= distance_of_time_in_words(Time.now, pin.updated_at) %> ago
+        <%= t('public.pin.updated', time: distance_of_time_in_words(Time.now, pin.updated_at)) %>
       </div>
       <!-- end footer actions -->
     </div>

@@ -7,10 +7,33 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col-sm-6">
+    <h4>Top flaggers (lifetime)</h4>
+    <ol>
+      <% @moderation_stats[:top_flaggers].each do |entry| %>
+        <% flagger = User.find_by_id(entry.user_id) %>
+        <li><%= flagger.try(:username) || 'deleted user' %> (<%= entry.flag_count %>)</li>
+      <% end %>
+    </ol>
+  </div>
+  <div class="col-sm-6">
+    <h4>Most flagged (lifetime)</h4>
+    <ol>
+      <% @moderation_stats[:top_flagged].each do |entry| %>
+        <li><%= entry.content_type %> #<%= entry.content_id %> (<%= entry.flag_count %>)</li>
+      <% end %>
+    </ol>
+  </div>
+</div>
+
 <h4>Pins Queue</h4>
 <table class="table" style="background-color: #fff;">
   <th>pin id link</th>
   <th>pin user email</th>
+  <th>flags</th>
+  <th>lifetime flags</th>
+  <th>flagged by</th>
   <th>unflag</th>
   <th>delete</th>
   <% @queue[:pins].each do |e| %>
@@ -18,6 +41,9 @@
     <tr class="review-pin-row" data-pin-id=<%= e.id %>>
       <td><%= link_to e.id, pin_path(e) %></td>
       <td><%= mail_to user.email, user.username %></td>
+      <td><%= @moderation_stats[:current_flags][['Pin', e.id]] || 0 %></td>
+      <td><%= @moderation_stats[:lifetime_flags][['Pin', e.id]] || 0 %></td>
+      <td><%= @moderation_stats[:current_flaggers][['Pin', e.id]].to_a.map { |vote| vote.voter.try(:username) || 'deleted user' }.to_sentence %></td>
       <td><%= link_to fa_icon("flag"), remove_pin_flag_path(e), :method => :delete, :remote => true, "data-pin-id" => e.id, class: "unflag-pin" %></td>
       <td><%= link_to fa_icon("times"), pin_path(e), :method => :delete, :remote => true, :data => { confirm: "Are you sure you want to remove this pin?" }, "data-pin-id" => e.id, class: "delete-pin" %></td></tr>
   <% end %>
@@ -28,6 +54,9 @@
   <th>parent pin link</th>
   <th>comment user email</th>
   <th>comment body</th>
+  <th>flags</th>
+  <th>lifetime flags</th>
+  <th>flagged by</th>
   <th>unflag</th>
   <th>delete</th>
 
@@ -38,9 +67,11 @@
       <td><%= link_to e.id, pin_path(e.commentable_id) %></td>
       <td><%= mail_to user.email, user.username %></td>
       <td><%= e.body %></td>
+      <td><%= @moderation_stats[:current_flags][['Comment', e.id]] || 0 %></td>
+      <td><%= @moderation_stats[:lifetime_flags][['Comment', e.id]] || 0 %></td>
+      <td><%= @moderation_stats[:current_flaggers][['Comment', e.id]].to_a.map { |vote| vote.voter.try(:username) || 'deleted user' }.to_sentence %></td>
       <td><%= link_to fa_icon("flag"), remove_comment_flag_path(e), :method => :delete, :remote => true, "data-comment-id" => e.id, :class => "unflag-comment" %></td>
       <td><%= link_to fa_icon("times"), comment_path(e), :method => :delete, :remote => true, "data-comment-id" => e.id, :class => "delete-comment", :data => { confirm: "Are you sure you want to remove this comment?" } %></td>
     </tr>
   <% end %>
 </table>
-

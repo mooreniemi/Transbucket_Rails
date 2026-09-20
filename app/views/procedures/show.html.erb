@@ -1,12 +1,21 @@
-<% seo_meta description: "View #{@procedure.name} submissions, average ratings, and discussion on Transbucket.", canonical: procedure_url(@procedure) %>
-<% title @procedure.to_s  %>
+<% procedure_name = @procedure.localized_name %>
+<% guide = @procedure.editorial_guide %>
+<% seo_description = guide ? guide['summary'] : "View #{procedure_name} submissions and discussion on Transbucket." %>
+<% page_title = "#{procedure_name} #{t('procedure_guide.title_suffix', default: 'results and experiences')} | Transbucket" %>
+<% seo_meta title: page_title, description: seo_description, canonical: procedure_url(id: @procedure.to_param), type: 'article' %>
+<% title page_title %>
+<%= content_tag :div, '', hidden: true, 'data-content-event' => true,
+  'data-content-event-url' => content_events_path,
+  'data-content-type' => 'Procedure',
+  'data-content-id' => @procedure.id,
+  'data-event-type' => 'view' %>
 <% json_ld_tag(
   {
     '@context' => 'https://schema.org',
     '@type' => 'MedicalProcedure',
-    'name' => @procedure.name,
-    'description' => @procedure.description,
-    'url' => procedure_url(@procedure)
+    'name' => procedure_name,
+    'description' => guide ? guide['summary'] : @procedure.description,
+    'url' => procedure_url(id: @procedure.to_param)
   }.compact
 ) %>
 <% json_ld_tag(
@@ -14,45 +23,90 @@
     '@context' => 'https://schema.org',
     '@type' => 'BreadcrumbList',
     'itemListElement' => [
-      { '@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => root_url },
-      { '@type' => 'ListItem', 'position' => 2, 'name' => 'Procedures', 'item' => procedures_url },
-      { '@type' => 'ListItem', 'position' => 3, 'name' => @procedure.name, 'item' => procedure_url(@procedure) }
+      { '@type' => 'ListItem', 'position' => 1, 'name' => t('header.home'), 'item' => root_url },
+      { '@type' => 'ListItem', 'position' => 2, 'name' => t('header.procedures'), 'item' => procedures_url },
+      { '@type' => 'ListItem', 'position' => 3, 'name' => procedure_name, 'item' => procedure_url(id: @procedure.to_param) }
     ]
   }
 ) %>
-<% cache(@procedure) do %>
+<% cache([I18n.locale, @procedure]) do %>
   <div class="panel panel-default" itemscope itemtype="https://schema.org/MedicalProcedure">
     <div class="panel-heading">
-      <h1><%= @procedure.name %></h1>
-      <%= link_to "See all submissions", pins_path(procedure: @procedure.id) %>
+      <h1><%= procedure_name %></h1>
+      <% if guide %>
+        <p class="procedure-summary"><%= guide['summary'] %></p>
+      <% end %>
+      <%= link_to t('public.pin.see_all_submissions'), pins_path(procedure: @procedure.id) %>
     </div>
     <% if @procedure.body_type %>
       <div class="panel-body" itemprop="bodyLocation">
-        <i>This procedure is classified as a "<%= @procedure.body_type %>" procedure.</i>
+        <i><%= t('public.pin.classified_as', body_type: @procedure.body_type) %></i>
       </div>
     <% end %>
-    <% if @procedure.description %>
+    <% if @procedure.description && !guide %>
       <div class="panel-body" itemprop="description" itemprop="howPerformed">
         <%= @procedure.description %>
       </div>
     <% end %>
+    <% if guide %>
+      <div class="panel-body procedure-guide" itemprop="description">
+        <h2><%= t('procedure_guide.sources_title', default: 'Reviewed sources') %></h2>
+        <ul>
+          <% guide['sources'].each do |source| %>
+            <li><%= link_to source['name'], source['url'], rel: 'noopener noreferrer' %></li>
+          <% end %>
+        </ul>
+        <% if guide['community_links'].present? %>
+          <h2><%= t('procedure_guide.community_title') %></h2>
+          <p><%= t('procedure_guide.community_note') %></p>
+          <ul>
+            <% guide['community_links'].each do |community| %>
+              <li><%= link_to community['name'], community['url'], rel: 'ugc nofollow noopener noreferrer' %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    <% end %>
+    <% if @related_procedures.present? %>
+      <div class="panel-body procedure-related-links">
+        <h2><%= t('procedure_guide.related_title', default: 'Related procedures') %></h2>
+        <ul>
+          <% @related_procedures.each do |related| %>
+            <li><%= link_to related.localized_name, procedure_path(related) %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
     <!-- List group -->
-    <ul class="list-group">
-      <li class="list-group-item">
-        Average sensation: <%= @procedure.avg_sensation %>
-      </li>
-      <li class="list-group-item">
-        Average satisfaction: <%= @procedure.avg_satisfaction %>
-      </li>
-    </ul>
   </div>
 <% end %>
 
+<% if current_user && @latest_pins.present? %>
+  <section class="procedure-recent-submissions" aria-labelledby="procedure-recent-submissions-heading">
+    <h2 id="procedure-recent-submissions-heading"><%= t('directory.recent_submissions') %></h2>
+    <div class="procedure-recent-pin-list">
+      <%= render partial: 'procedures/recent_pin', collection: @latest_pins, as: :pin %>
+    </div>
+  </section>
+<% end %>
+
 <% if current_user %>
-  <h4><%= fa_icon("comments-o") %> discussion</h4>
+  <% if @rating_distributions.present? %>
+    <section class="procedure-stats" aria-labelledby="procedure-stats-heading">
+      <div class="stats-heading">
+        <h2 id="procedure-stats-heading"><%= t('directory.stats', default: 'Stats') %></h2>
+        <%= link_to t('comparison.title', default: 'Compare'), compare_path(type: 'procedures', first_id: @procedure.to_param), class: 'btn btn-default' %>
+      </div>
+      <div class="procedure-rating-distributions">
+      <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, average: @rating_averages[:sensation], rating: :sensation, title: t('public.rating.sensation.distribution'), scope_params: { procedure: @procedure.id }, heading_id: 'procedure-sensation-distribution-heading' } %>
+      <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, average: @rating_averages[:satisfaction], rating: :satisfaction, title: t('public.rating.satisfaction.distribution'), scope_params: { procedure: @procedure.id }, heading_id: 'procedure-satisfaction-distribution-heading' } %>
+      </div>
+    </section>
+  <% end %>
+  <h4><%= fa_icon("comments-o") %> <%= t('public.pin.discussion') %></h4>
   <div id="comments-container">
     <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>
-    <%= link_to "<h5>#{fa_icon("comment-o")} add thread</h5>".html_safe, new_comment_path(commentable_id: @procedure.id, commentable_type: "Procedure"), remote: true %>
+    <%= link_to "<h5>#{fa_icon("comment-o")} #{t('public.pin.add_thread')}</h5>".html_safe, new_comment_path(commentable_id: @procedure.id, commentable_type: "Procedure"), remote: true %>
     <div id="commentable" class="reply-target">
     </div>
   </div>

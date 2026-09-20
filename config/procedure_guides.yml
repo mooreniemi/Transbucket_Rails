@@ -1,0 +1,260 @@
+# Human-reviewed, source-backed procedure guidance.
+# Keep this concise and factual. Do not add generated or unsourced copy here.
+phalloplasty:
+  summary: Phalloplasty creates a penis using tissue from another part of the body. Techniques, stages, recovery, and risks vary.
+  sources:
+    - name: "UCSF: Phalloplasty and metoidioplasty overview"
+      url: https://transcare.ucsf.edu/guidelines/phalloplasty
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/phallo on Reddit
+      url: https://www.reddit.com/r/phallo/
+  related_procedures:
+    - rff phalloplasty
+    - alt phalloplasty
+    - metoidioplasty ('meta')
+    - scrotoplasty
+metoidioplasty ('meta'):
+  summary: Metoidioplasty uses existing genital tissue, which may have grown with hormone therapy, to create a penis. Urethral lengthening or scrotoplasty may be done as part of the procedure or separately.
+  sources:
+    - name: "UCSF: Phalloplasty and metoidioplasty overview"
+      url: https://transcare.ucsf.edu/guidelines/phalloplasty
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/metoidioplasty on Reddit
+      url: https://www.reddit.com/r/metoidioplasty/
+  related_procedures:
+    - phalloplasty
+    - scrotoplasty
+    - urethral lengthening
+vaginoplasty:
+  summary: Vaginoplasty creates external genital anatomy and, depending on the technique, a vaginal canal. Each technique has different aftercare and considerations.
+  sources:
+    - name: "UCSF: Vaginoplasty procedures, complications, and aftercare"
+      url: https://transcare.ucsf.edu/guidelines/vaginoplasty
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/Transgender_Surgeries on Reddit
+      url: https://www.reddit.com/r/Transgender_Surgeries/
+  related_procedures:
+    - minimal depth vaginoplasty
+    - orchiectomy
+bilateral mastectomy:
+  summary: Masculinizing chest surgery removes breast tissue and reshapes the chest. The approach depends on chest size, skin quality, and anatomy.
+  sources:
+    - name: "UCSF: Masculinizing chest surgery and postoperative care"
+      url: https://transcare.ucsf.edu/guidelines/chest-surgery-masculinizing
+    - name: "NHS: Gender dysphoria and incongruence surgery overview"
+      url: https://www.nhs.uk/conditions/gender-dysphoria-and-incongruence/
+  community_links:
+    - name: r/TopSurgery on Reddit
+      url: https://www.reddit.com/r/TopSurgery/
+  related_procedures:
+    - double incision with grafts
+    - periareolar mastectomy (keyhole)
+    - nipple grafts
+double incision with grafts:
+  summary: A double-incision chest surgery approach removes excess chest skin and tissue. Nipple grafting may be part of reconstruction.
+  sources:
+    - name: "UCSF: Masculinizing chest surgery and postoperative care"
+      url: https://transcare.ucsf.edu/guidelines/chest-surgery-masculinizing
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/TopSurgery on Reddit
+      url: https://www.reddit.com/r/TopSurgery/
+  related_procedures:
+    - bilateral mastectomy
+    - periareolar mastectomy (keyhole)
+    - double incision without grafts
+periareolar mastectomy (keyhole):
+  summary: Periareolar or keyhole chest surgery uses an incision around the areola to remove tissue and reshape the chest. It is not suitable for every anatomy.
+  sources:
+    - name: "UCSF: Masculinizing chest surgery and postoperative care"
+      url: https://transcare.ucsf.edu/guidelines/chest-surgery-masculinizing
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/TopSurgery on Reddit
+      url: https://www.reddit.com/r/TopSurgery/
+  related_procedures:
+    - bilateral mastectomy
+    - double incision with grafts
+hysterectomy:
+  summary: Hysterectomy removes the uterus and may also remove the ovaries and fallopian tubes. It can affect fertility and hormone management.
+  sources:
+    - name: "NHS: Gender dysphoria and incongruence surgery overview"
+      url: https://www.nhs.uk/conditions/gender-dysphoria-and-incongruence/
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/Transgender_Surgeries on Reddit
+      url: https://www.reddit.com/r/Transgender_Surgeries/
+  related_procedures:
+    - laparoscopic hysterectomy
+    - oophorectomy
+laparoscopic hysterectomy:
+  summary: A laparoscopic hysterectomy removes the uterus through small abdominal incisions using a camera and specialized instruments. The operation and recovery depend on the anatomy treated and whether other organs are removed.
+  sources:
+    - name: "NHS: Hysterectomy procedures and recovery"
+      url: https://www.nhs.uk/tests-and-treatments/hysterectomy/
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/Transgender_Surgeries on Reddit
+      url: https://www.reddit.com/r/Transgender_Surgeries/
+  related_procedures:
+    - hysterectomy
+    - oophorectomy
+orchiectomy:
+  summary: Orchiectomy is surgery to remove the testicles. It may be done on its own or with other gender-affirming procedures and can affect hormone management.
+  sources:
+    - name: "UCSF: Genital procedures, including orchiectomy and scrotoplasty"
+      url: https://transcare.ucsf.edu/genital-surgical-procedures-vaginoplasty-orchietcomy-and-phalloplasty
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/Transgender_Surgeries on Reddit
+      url: https://www.reddit.com/r/Transgender_Surgeries/
+  related_procedures:
+    - vaginoplasty
+    - hysterectomy
+scrotoplasty:
+  summary: Scrotoplasty creates a scrotum as part of masculinizing genital surgery, often using implants. It may be done with other procedures or as a separate stage, depending on a person's goals and surgical plan.
+  sources:
+    - name: UCSF Gender Affirming Health Program
+      url: https://transcare.ucsf.edu/genital-surgical-procedures-vaginoplasty-orchietcomy-and-phalloplasty
+    - name: WPATH Standards of Care, Version 8
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/phallo on Reddit
+      url: https://www.reddit.com/r/phallo/
+  related_procedures:
+    - phalloplasty
+    - metoidioplasty ('meta')
+    - testicular implants
+vaginectomy:
+  summary: Vaginectomy removes or closes vaginal tissue. It can be part of a broader masculinizing genital surgery plan.
+  sources:
+    - name: "UCSF: Phalloplasty and related genital procedures"
+      url: https://transcare.ucsf.edu/guidelines/phalloplasty
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/phallo on Reddit
+      url: https://www.reddit.com/r/phallo/
+  related_procedures:
+    - phalloplasty
+    - metoidioplasty ('meta')
+rff phalloplasty:
+  summary: Radial forearm free-flap, or RFF, phalloplasty uses tissue from the forearm to create a penis. It is often staged, and the surgical team can explain recovery and effects at the donor site.
+  sources:
+    - name: "UCSF: Phalloplasty and related genital procedures"
+      url: https://transcare.ucsf.edu/guidelines/phalloplasty
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/phallo on Reddit
+      url: https://www.reddit.com/r/phallo/
+  related_procedures:
+    - phalloplasty
+    - alt phalloplasty
+alt phalloplasty:
+  summary: Anterolateral thigh, or ALT, phalloplasty uses tissue from the thigh to create a penis. Technique, staging, recovery, and effects at the donor site vary by anatomy and surgical plan.
+  sources:
+    - name: "UCSF: Phalloplasty and related genital procedures"
+      url: https://transcare.ucsf.edu/guidelines/phalloplasty
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/phallo on Reddit
+      url: https://www.reddit.com/r/phallo/
+  related_procedures:
+    - phalloplasty
+    - rff phalloplasty
+
+abdominal flap phalloplasty:
+  summary: Abdominal flap phalloplasty uses tissue from the lower abdomen to create a penis. It is one of several phalloplasty approaches documented in the community.
+  sources:
+    - name: "UCSF: Phalloplasty and metoidioplasty overview"
+      url: https://transcare.ucsf.edu/guidelines/phalloplasty
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/phallo on Reddit
+      url: https://www.reddit.com/r/phallo/
+  related_procedures:
+    - phalloplasty
+    - rff phalloplasty
+    - alt phalloplasty
+
+scrotectomy:
+  summary: Scrotectomy removes scrotal tissue. It may be performed as an individual procedure or as part of a broader gender-affirming surgical plan.
+  sources:
+    - name: "UCSF: Genital surgical procedures"
+      url: https://transcare.ucsf.edu/genital-surgical-procedures-vaginoplasty-orchietcomy-and-phalloplasty
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/Transgender_Surgeries on Reddit
+      url: https://www.reddit.com/r/Transgender_Surgeries/
+  related_procedures:
+    - scrotoplasty
+    - phalloplasty
+    - metoidioplasty ('meta')
+
+glansplasty:
+  summary: Glansplasty shapes the tip of a reconstructed penis to create a defined glans. It may be performed as part of a staged phalloplasty plan.
+  sources:
+    - name: "UCSF: Phalloplasty and metoidioplasty overview"
+      url: https://transcare.ucsf.edu/guidelines/phalloplasty
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/phallo on Reddit
+      url: https://www.reddit.com/r/phallo/
+  related_procedures:
+    - phalloplasty
+    - rff phalloplasty
+    - alt phalloplasty
+
+monsplasty:
+  summary: Monsplasty reshapes or reduces tissue at the pubic mound. It may be performed on its own or as part of a broader gender-affirming surgical plan.
+  sources:
+    - name: "UCSF: Overview of gender-affirming care"
+      url: https://transcare.ucsf.edu/guidelines/overview
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/Transgender_Surgeries on Reddit
+      url: https://www.reddit.com/r/Transgender_Surgeries/
+  related_procedures:
+    - metoidioplasty ('meta')
+    - phalloplasty
+
+tracheal shave:
+  summary: A tracheal shave, also called chondrolaryngoplasty, reduces the prominence of the thyroid cartilage at the front of the neck.
+  sources:
+    - name: "Johns Hopkins: Facial feminization surgery and tracheal shave"
+      url: https://www.hopkinsmedicine.org/health/wellness-and-prevention/facial-feminization-surgery
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/Transgender_Surgeries on Reddit
+      url: https://www.reddit.com/r/Transgender_Surgeries/
+  related_procedures:
+    - facial feminization surgery
+
+facial feminization surgery:
+  summary: Facial feminization surgery is a group of procedures that can reshape facial features as part of gender-affirming care. The procedures chosen depend on a person's goals, anatomy, and consultation with a qualified surgeon.
+  sources:
+    - name: "Johns Hopkins: Facial feminization surgery overview"
+      url: https://www.hopkinsmedicine.org/health/wellness-and-prevention/facial-feminization-surgery
+    - name: "WPATH: Standards of Care, Version 8"
+      url: https://www.wpath.org/publications/soc8/
+  community_links:
+    - name: r/Transgender_Surgeries on Reddit
+      url: https://www.reddit.com/r/Transgender_Surgeries/

@@ -1,24 +1,27 @@
 $(document).ready(function() {
-    $("#pin_sensation").rating({
+    function setupRating(selector) {
+        var field = $(selector),
+            captions = field.data('rating-captions'),
+            hint = field.siblings('.rating-hint'),
+            help = field.data('rating-help');
+
+        if (typeof captions === 'string') captions = JSON.parse(captions);
+
+        field.rating({
         size: 'xs',
         step: 1,
-        starCaptions: {
-            1: "Very Poor",
-            2: "Poor",
-            3: "Ok",
-            4: "Good",
-            5: "Very Good"
-        }
-    });
-    $("#pin_satisfaction").rating({
-        size: 'xs',
-        step: 1,
-        starCaptions: {
-            1: "Very Unsatisfied",
-            2: "Unsatisfied",
-            3: "Currently unsure",
-            4: "Satisfied",
-            5: "Very Satisfied"
-        }
-    });
+        showCaption: false,
+        showClear: false,
+        starCaptions: captions
+        });
+
+        field.on('rating.hover', function(event, value, caption) {
+            hint.text(captions[value] || $('<div>').html(caption).text());
+        }).on('rating.hoverleave rating.change', function() {
+            hint.text(help);
+        });
+    }
+
+    setupRating("#pin_sensation");
+    setupRating("#pin_satisfaction");
 });

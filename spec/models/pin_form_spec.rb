@@ -52,6 +52,64 @@ describe PinForm do
     end
   end
 
+  context "complication toggle" do
+    it "clears complication tags when no complications is submitted" do
+      pin.complication_list = "None"
+      pin.save!
+      form.validate(pin.attributes.merge(
+        "complications_present" => "0",
+        "surgeon" => pin.surgeon.attributes,
+        "procedure" => pin.procedure.attributes,
+        "pin_images" => pin.pin_images.map { |image| { "photo" => image.photo, "caption" => image.caption } }
+      ))
+
+      form.save
+
+      expect(form.model.reload.complications).to be_empty
+    end
+  end
+
+  context "complication tag validation" do
+    it "rejects tags longer than 80 characters" do
+      form.validate(pin.attributes.merge(
+        "complication_list" => ('a' * 81),
+        "surgeon" => pin.surgeon.attributes,
+        "procedure" => pin.procedure.attributes,
+        "pin_images" => pin.pin_images.map { |image| { "photo" => image.photo, "caption" => image.caption } }
+      ))
+
+      expect(form.errors[:complication_list]).not_to be_empty
+    end
+
+    it "rejects line breaks in complication tags" do
+      form.validate(pin.attributes.merge(
+        "complication_list" => "hematoma\ninfection",
+        "surgeon" => pin.surgeon.attributes,
+        "procedure" => pin.procedure.attributes,
+        "pin_images" => pin.pin_images.map { |image| { "photo" => image.photo, "caption" => image.caption } }
+      ))
+
+      expect(form.errors[:complication_list]).not_to be_empty
+    end
+  end
+
+  context "submission metadata" do
+    it "stores the reported cost and insurance coverage" do
+      form.validate(pin.attributes.merge(
+        "cost" => "1200",
+        "covered_by_insurance" => "1",
+        "surgeon" => pin.surgeon.attributes,
+        "procedure" => pin.procedure.attributes,
+        "pin_images" => pin.pin_images.map { |image| { "photo" => image.photo, "caption" => image.caption } }
+      ))
+
+      form.save
+
+      expect(form.model.reload.cost).to eq(1200)
+      expect(form.model.covered_by_insurance).to be true
+    end
+  end
+
   context "with pin_images" do
     it "should have all the attributes on its pin_images" do
       confirm_attributes(form.pin_images.first, pin.pin_images.first)

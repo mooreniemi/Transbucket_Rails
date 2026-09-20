@@ -1,7 +1,9 @@
-<% seo_meta description: 'Transbucket is a community photo-sharing archive for transition procedure results, surgeon profiles, and real-world submissions.' %>
+<% page_title = I18n.t('site.name', default: 'Transbucket') %>
+<% seo_meta title: page_title, description: I18n.t('site.description') %>
+<% title page_title %>
 <% if user_signed_in? %>
   <script type="text/javascript">
-    window.location.href="/pins"  // hacky but works
+    window.location.href="<%= pins_path %>"  // hacky but works
   </script>
 <% else %>
   <%= render 'pages/welcome' %>

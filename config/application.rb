@@ -45,15 +45,25 @@ module Transbucket
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :en
+    config.i18n.fallbacks = true
     config.active_record.whitelist_attributes = false
 
     config.active_record.raise_in_transactional_callbacks = true
+
+    # Rails' ruby schema dumper can't represent expression indexes (the
+    # lower(username)/lower(email) functional indexes the login-lookup fix
+    # depends on), so a plain `rake db:migrate` silently drops them from
+    # schema.rb -- bit us twice in one night. structure.sql is generated via
+    # pg_dump instead, which captures the database at the SQL level and
+    # doesn't have this gap.
+    config.active_record.schema_format = :sql
 
     # necessary for using bower-rails!
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'jquery-ui', 'themes', 'smoothness', 'images')
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'tinymce', 'skins', 'lightgray', 'img')
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'tinymce', 'skins', 'lightgray', 'fonts')
+    config.assets.precompile << 'tinymce/langs/*.js'
 
     config.generators do |g|
       g.test_framework :rspec,

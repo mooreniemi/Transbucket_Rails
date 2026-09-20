@@ -4,9 +4,11 @@
     <div class="input-group">
       <%= text_field_tag 'query', value = nil, :class => 'span2 search-query form-control', :placeholder => I18n.t(".header.search") %>
       <%#= autocomplete_field_tag 'pin', '', autocomplete_procedure_pin_index_path, :size => 75 %>
-      <div class="input-group-btn">
-        <%= button_tag '', :class => 'btn btn-default glyphicon glyphicon-search yellow' %>
-      </div>
+      <span class="input-group-btn">
+        <%= button_tag :type => 'submit', :class => 'btn btn-default search-submit', aria: { label: I18n.t('.header.search') }, title: I18n.t('.header.search') do %>
+          <%= content_tag :span, '', class: 'glyphicon glyphicon-search yellow', aria: { hidden: true } %>
+        <% end %>
+      </span>
     </div>
   <% end %>
 <% end %>

@@ -1,0 +1,218 @@
+en:
+  public:
+    rating:
+      sensation:
+        help: Rate how much sensation you experience after this procedure, from none (1) to excellent (5).
+        labels:
+          1: None
+          2: Very limited
+          3: Some
+          4: Good
+          5: Excellent
+        distribution: Sensation ratings
+      satisfaction:
+        help: Rate how satisfied you are with your outcome, from very dissatisfied (1) to very satisfied (5).
+        labels:
+          1: Very dissatisfied
+          2: Dissatisfied
+          3: Neither satisfied nor dissatisfied
+          4: Satisfied
+          5: Very satisfied
+        distribution: Satisfaction ratings
+      view_submissions: View %{count} submissions rated %{score} out of 5
+      overall_distribution: Overall rating distributions
+de:
+  public:
+    rating:
+      sensation:
+        help: Bewerte, wie viel Empfindung du nach diesem Eingriff hast, von keiner (1) bis ausgezeichnet (5).
+        labels: { 1: Keine, 2: Sehr eingeschränkt, 3: Etwas, 4: Gut, 5: Ausgezeichnet }
+        distribution: Bewertungen der Empfindung
+      satisfaction:
+        help: Bewerte, wie zufrieden du mit deinem Ergebnis bist, von sehr unzufrieden (1) bis sehr zufrieden (5).
+        labels: { 1: Sehr unzufrieden, 2: Unzufrieden, 3: Weder zufrieden noch unzufrieden, 4: Zufrieden, 5: Sehr zufrieden }
+        distribution: Bewertungen der Zufriedenheit
+      view_submissions: "%{count} Beiträge mit %{score} von 5 anzeigen"
+      overall_distribution: Gesamtverteilung der Bewertungen
+es:
+  public:
+    rating:
+      sensation:
+        help: Indica cuánta sensibilidad tienes después de este procedimiento, desde ninguna (1) hasta excelente (5).
+        labels: { 1: Ninguna, 2: Muy limitada, 3: Algo, 4: Buena, 5: Excelente }
+        distribution: Valoraciones de sensibilidad
+      satisfaction:
+        help: Indica tu satisfacción con el resultado, desde muy insatisfecho (1) hasta muy satisfecho (5).
+        labels: { 1: Muy insatisfecho, 2: Insatisfecho, 3: Ni satisfecho ni insatisfecho, 4: Satisfecho, 5: Muy satisfecho }
+        distribution: Valoraciones de satisfacción
+      view_submissions: Ver %{count} publicaciones con una valoración de %{score} sobre 5
+      overall_distribution: Distribución general de valoraciones
+fr:
+  public:
+    rating:
+      sensation:
+        help: Évaluez la sensibilité ressentie après cette intervention, de aucune (1) à excellente (5).
+        labels: { 1: Aucune, 2: Très limitée, 3: Moyenne, 4: Bonne, 5: Excellente }
+        distribution: Évaluations de la sensibilité
+      satisfaction:
+        help: Évaluez votre satisfaction quant au résultat, de très insatisfait·e (1) à très satisfait·e (5).
+        labels: { 1: Très insatisfait·e, 2: Insatisfait·e, 3: Ni satisfait·e ni insatisfait·e, 4: Satisfait·e, 5: Très satisfait·e }
+        distribution: Évaluations de la satisfaction
+      view_submissions: Voir %{count} contributions notées %{score} sur 5
+      overall_distribution: Répartition générale des évaluations
+it:
+  public:
+    rating:
+      sensation:
+        help: Valuta quanta sensibilità provi dopo questa procedura, da nessuna (1) a eccellente (5).
+        labels: { 1: Nessuna, 2: Molto limitata, 3: Parziale, 4: Buona, 5: Eccellente }
+        distribution: Valutazioni della sensibilità
+      satisfaction:
+        help: Valuta quanto sei soddisfattə del risultato, da per niente (1) a completamente (5).
+        labels: { 1: Per niente, 2: Poco, 3: Né soddisfattə né insoddisfattə, 4: Soddisfattə, 5: Molto soddisfattə }
+        distribution: Valutazioni della soddisfazione
+      view_submissions: Vedi %{count} contributi con valutazione %{score} su 5
+      overall_distribution: Distribuzione generale delle valutazioni
+ja:
+  public:
+    rating:
+      sensation:
+        help: この手術後の感覚を、ない（1）から非常に良い（5）まで評価してください。
+        labels: { 1: なし, 2: とても弱い, 3: 少しある, 4: 良い, 5: 非常に良い }
+        distribution: 感覚の評価
+      satisfaction:
+        help: 結果への満足度を、とても不満（1）からとても満足（5）まで評価してください。
+        labels: { 1: とても不満, 2: 不満, 3: どちらでもない, 4: 満足, 5: とても満足 }
+        distribution: 満足度の評価
+      view_submissions: 5点満点で%{score}の投稿%{count}件を見る
+      overall_distribution: 評価の全体分布
+zh-CN:
+  public:
+    rating:
+      sensation:
+        help: 请评价术后的感觉，从没有感觉（1）到极佳（5）。
+        labels: { 1: 没有感觉, 2: 非常有限, 3: 一般, 4: 良好, 5: 极佳 }
+        distribution: 感觉评分
+      satisfaction:
+        help: 请评价您对结果的满意度，从非常不满意（1）到非常满意（5）。
+        labels: { 1: 非常不满意, 2: 不满意, 3: 一般, 4: 满意, 5: 非常满意 }
+        distribution: 满意度评分
+      view_submissions: 查看 %{count} 个 %{score}/5 评分的投稿
+      overall_distribution: 总体评分分布
+zh-TW:
+  public:
+    rating:
+      sensation:
+        help: 請評估手術後的感覺，從沒有感覺（1）到極佳（5）。
+        labels: { 1: 沒有感覺, 2: 非常有限, 3: 一般, 4: 良好, 5: 極佳 }
+        distribution: 感覺評分
+      satisfaction:
+        help: 請評估您對結果的滿意度，從非常不滿意（1）到非常滿意（5）。
+        labels: { 1: 非常不滿意, 2: 不滿意, 3: 一般, 4: 滿意, 5: 非常滿意 }
+        distribution: 滿意度評分
+      view_submissions: 查看 %{count} 個 %{score}/5 評分的投稿
+      overall_distribution: 總體評分分布
+pt-BR:
+  public:
+    rating:
+      sensation:
+        help: Avalie quanta sensação você sente após este procedimento, de nenhuma (1) a excelente (5).
+        labels: { 1: Nenhuma, 2: Muito limitada, 3: Alguma, 4: Boa, 5: Excelente }
+        distribution: Avaliações de sensação
+      satisfaction:
+        help: Avalie sua satisfação com o resultado, de muito insatisfeito (1) a muito satisfeito (5).
+        labels: { 1: Muito insatisfeito, 2: Insatisfeito, 3: Nem satisfeito nem insatisfeito, 4: Satisfeito, 5: Muito satisfeito }
+        distribution: Avaliações de satisfação
+      view_submissions: Ver %{count} publicações com avaliação %{score} de 5
+      overall_distribution: Distribuição geral das avaliações
+nl:
+  public:
+    rating:
+      sensation:
+        help: Beoordeel hoeveel gevoel je na deze ingreep ervaart, van geen (1) tot uitstekend (5).
+        labels: { 1: Geen, 2: Zeer beperkt, 3: Enigszins, 4: Goed, 5: Uitstekend }
+        distribution: Gevoelsbeoordelingen
+      satisfaction:
+        help: Beoordeel hoe tevreden je bent met het resultaat, van zeer ontevreden (1) tot zeer tevreden (5).
+        labels: { 1: Zeer ontevreden, 2: Ontevreden, 3: Noch tevreden noch ontevreden, 4: Tevreden, 5: Zeer tevreden }
+        distribution: Tevredenheidsbeoordelingen
+      view_submissions: Bekijk %{count} bijdragen met een score van %{score} op 5
+      overall_distribution: Algemene verdeling van beoordelingen
+pl:
+  public:
+    rating:
+      sensation:
+        help: Oceń odczuwanie po tym zabiegu, od braku czucia (1) do doskonałego czucia (5).
+        labels: { 1: Brak, 2: Bardzo ograniczone, 3: Pewne, 4: Dobre, 5: Doskonałe }
+        distribution: Oceny odczuwania
+      satisfaction:
+        help: Oceń zadowolenie z efektu, od bardzo niezadowolonej osoby (1) do bardzo zadowolonej (5).
+        labels: { 1: Bardzo niezadowolona osoba, 2: Niezadowolona, 3: Ani zadowolona, ani niezadowolona, 4: Zadowolona, 5: Bardzo zadowolona }
+        distribution: Oceny zadowolenia
+      view_submissions: Zobacz %{count} wpisów z oceną %{score} na 5
+      overall_distribution: Ogólny rozkład ocen
+ru:
+  public:
+    rating:
+      sensation:
+        help: "Оцените чувствительность после этой процедуры: от отсутствия (1) до отличной (5)."
+        labels: { 1: Отсутствует, 2: Очень слабая, 3: Некоторая, 4: Хорошая, 5: Отличная }
+        distribution: Оценки чувствительности
+      satisfaction:
+        help: "Оцените удовлетворённость результатом: от очень низкой (1) до очень высокой (5)."
+        labels: { 1: Очень низкая, 2: Низкая, 3: Средняя, 4: Высокая, 5: Очень высокая }
+        distribution: Оценки удовлетворённости
+      view_submissions: Показать публикации (%{count}) с оценкой %{score} из 5
+      overall_distribution: Общее распределение оценок
+tr:
+  public:
+    rating:
+      sensation:
+        help: Bu işlemden sonra hissettiğiniz duyumu yoktan (1) mükemmele (5) kadar değerlendirin.
+        labels: { 1: Yok, 2: Çok sınırlı, 3: Biraz, 4: İyi, 5: Mükemmel }
+        distribution: Duyum değerlendirmeleri
+      satisfaction:
+        help: Sonuçtan memnuniyetinizi hiç memnun değilimden (1) çok memnuna (5) kadar değerlendirin.
+        labels: { 1: Hiç memnun değilim, 2: Memnun değilim, 3: Ne memnunum ne değilim, 4: Memnunum, 5: Çok memnunum }
+        distribution: Memnuniyet değerlendirmeleri
+      view_submissions: "%{score}/5 puan alan %{count} gönderiyi görüntüle"
+      overall_distribution: Genel puan dağılımı
+vi:
+  public:
+    rating:
+      sensation:
+        help: Đánh giá cảm giác sau thủ thuật này, từ không có (1) đến tuyệt vời (5).
+        labels: { 1: Không có, 2: Rất hạn chế, 3: Có một phần, 4: Tốt, 5: Tuyệt vời }
+        distribution: Đánh giá cảm giác
+      satisfaction:
+        help: Đánh giá mức độ hài lòng với kết quả, từ rất không hài lòng (1) đến rất hài lòng (5).
+        labels: { 1: Rất không hài lòng, 2: Không hài lòng, 3: Bình thường, 4: Hài lòng, 5: Rất hài lòng }
+        distribution: Đánh giá mức độ hài lòng
+      view_submissions: Xem %{count} bài đăng được đánh giá %{score}/5
+      overall_distribution: Phân bố đánh giá tổng thể
+ar:
+  public:
+    rating:
+      sensation:
+        help: قيّم مقدار الإحساس بعد هذا الإجراء، من دون إحساس (1) إلى ممتاز (5).
+        labels: { 1: لا يوجد, 2: محدود جداً, 3: بعض الإحساس, 4: جيد, 5: ممتاز }
+        distribution: تقييمات الإحساس
+      satisfaction:
+        help: قيّم مدى رضاك عن النتيجة، من غير راضٍ جداً (1) إلى راضٍ جداً (5).
+        labels: { 1: غير راضٍ جداً, 2: غير راضٍ, 3: لا راضٍ ولا غير راضٍ, 4: راضٍ, 5: راضٍ جداً }
+        distribution: تقييمات الرضا
+      view_submissions: عرض %{count} من المشاركات بتقييم %{score} من 5
+      overall_distribution: التوزيع العام للتقييمات
+sv:
+  public:
+    rating:
+      sensation:
+        help: Betygsätt hur mycket känsel du har efter ingreppet, från ingen (1) till utmärkt (5).
+        labels: { 1: Ingen, 2: Mycket begränsad, 3: Viss, 4: God, 5: Utmärkt }
+        distribution: Känselbetyg
+      satisfaction:
+        help: Betygsätt hur nöjd du är med resultatet, från mycket missnöjd (1) till mycket nöjd (5).
+        labels: { 1: Mycket missnöjd, 2: Missnöjd, 3: Varken nöjd eller missnöjd, 4: Nöjd, 5: Mycket nöjd }
+        distribution: Nöjdhetsbetyg
+      view_submissions: Visa %{count} bidrag med betyget %{score} av 5
+      overall_distribution: Övergripande betygsfördelning

@@ -3,7 +3,7 @@ $(document).ready(function() {
     $("#filter_dropdown select").val([]);
     $("#filter_dropdown select").trigger('chosen:updated');
     // FIXME: hard coding the pins path here
-    window.history.pushState("cleared filter", "Submissions", "/pins");
+    window.history.pushState("cleared filter", "Submissions", "/" + document.documentElement.lang + "/pins");
   });
 
   $("#scope").chosen({
@@ -30,10 +30,11 @@ $(document).ready(function() {
 
   // TODO hack
   if (container) {
-    // initialize Masonry after all images have loaded
+    // Card boxes have stable dimensions, so position them immediately and
+    // only refresh after image loading in case intrinsic content changes.
+    msnry = new Masonry(container, {});
     imagesLoaded(container, function() {
-      // https://masonry.desandro.com/options.html
-      msnry = new Masonry(container, {});
+      msnry.layout();
     });
   }
 });

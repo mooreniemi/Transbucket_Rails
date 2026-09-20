@@ -76,6 +76,24 @@ docker-compose exec web \
     bundle exec rake environment elasticsearch:import:model CLASS=Pin INDEX=development_pins FORCE=y
 ```
 
+When running the services directly on the host with
+`docker-compose.override.yml`, Docker exposes Postgres on host port `5433`
+(the container still listens on `5432`). Use `POSTGRES_PORT=5433` for local
+Rails commands and tests, together with the `postgres` / `password` connection
+settings shown in the smoke commands below.
+
+For the supported host-Rails workflow, start only the backing services and use
+the wrapper for tests:
+
+```sh
+docker-compose up -d db elasticsearch
+script/local_rspec spec/controllers/procedures_controller_spec.rb
+```
+
+This uses the local `psql_test` database. Full Compose mode remains available
+when Rails itself needs to run in the `web` container; do not combine its
+internal `db:5432` settings with a host Rails process.
+
 To stop the environment, run:
 ```sh
 docker-compose down
@@ -128,31 +146,114 @@ Staging and production both deploy and depend on [Heroku](https://heroku.com/). 
 
 Environment variables are kept in an untracked file (`config/application.yml`) managed by [Figaro](https://github.com/laserlemon/figaro#heroku). Running `heroku config --app transbucket` will give you the production env, and `heroku config --app transbucket-staging` staging's env. When you want to push local changes to Heroku (be VERY careful with this), you use `figaro heroku:set -e production`.
 
-## [development (local)](http://localhost:3000)
+## [development (local)](http://127.0.0.1:3003)
 
-To run locally, I use `rails s -p 3003` (because I am often running servers on other ports). Then navigate to [localhost:3003](http://localhost:3000/) to browse. You can also just run it without specifiying the port.
+Use the Docker-backed host-Rails workflow:
+
+```
+script/local_setup
+script/local_server
+```
+
+`local_setup` starts only Docker Postgres and Elasticsearch, runs the local
+development database setup, and resets the confirmed `meowmeow` account.
+`local_server` runs Rails on `http://127.0.0.1:3003` with Postgres on host
+port `5433`. Do not use the default `rails server` command for this workflow:
+it falls back to Postgres port `5432` and the local `Alex` role.
+
+Use `meowmeow` / `local-login` in the browser. `local_reset_user` can be run
+again at any time and changes only the local Docker development database.
 
 If you need to test against an actual S3 instance, you can uncomment the config block in `config/environments/development.rb` and set the required environment varialbles. (You can grab those with `heroku config --app transbucket-staging`. Otherwise you'll just store on your local file system.
 
 ## [ci](https://circleci.com/dashboard)
 
-Currently using [CircleCI](https://circleci.com/), which runs the app on [Ubuntu 12](https://circleci.com/docs/build-image-precise/). If you need to change a setting, try changing it via the UI first, then edit the `circle.yml` file.
+Currently using [CircleCI](https://circleci.com/) (config version 2.1, `.circleci/config.yml`), running `cimg/ruby:3.1.6` images with the `browser-tools` orb for the Selenium/Capybara feature specs. It runs `build` then `test` on a push to any branch -- there's no branch filter restricting it to PRs specifically, and no deploy job of any kind. CI is test-only; it has no effect on staging or production.
 
 For master branch: [![CircleCI](https://circleci.com/gh/mooreniemi/Transbucket_Rails/tree/master.svg?style=svg&circle-token=22981fbc246ebdb12d14ef593592e163d093caf7)](https://circleci.com/gh/mooreniemi/Transbucket_Rails/tree/master)
 
 ## [staging](https://dashboard-preview.heroku.com/apps/transbucket-staging)
 
-Staging is meant to run in the production environment, as close to actual production as possible. Every successful build on CI (based on every `git push` you do) will trigger a deployment on staging automatically.
+### Product release notes
 
-If you need to deploying a branch to [staging](https://transbucket-staging.herokuapp.com/) manually:
+Every user-facing feature must include a corresponding entry in the in-app
+newsfeed (`PagesController::NEWSFEED_ENTRY_TIMESTAMPS` and the `newsfeed`
+translations). This makes shipped improvements discoverable after release.
+Do not create newsfeed entries for admin-only tools, authorization/security
+repairs, maintenance, or other internal changes.
+
+Staging is meant to run in the production environment, as close to actual production as possible. Deploys to staging are always manual -- nothing in CI deploys it automatically.
+
+To deploy a branch to [staging](https://transbucket-staging.herokuapp.com/):
 
 `git push staging your_branch:master`
+
+The locale-aware staging smoke test exercises legacy redirects, localized
+metadata and newsfeed output, then logs in and verifies multi-image pin
+creation, editing, and search indexing. Supply credentials through the shell;
+never commit or paste them into the repository or chat:
+
+```
+STAGING_USER=meowmeow STAGING_PASSWORD='...' \
+  bundle exec ruby script/staging_smoke.rb
+```
+
+Use `STAGING_LOCALES=en,de` (or another comma-separated set of supported
+locales) to run the authenticated submission flow through each locale. The
+script writes one test pin per locale to staging and
+requires a worker dyno for the search-indexing assertion; scale that worker
+back to zero afterward if it is not otherwise needed.
 
 Connecting to staging to debug or run tasks:
 
 `heroku run rails console --app transbucket-staging`
 
 ## [production](transbucket.com)
+
+Production deploy is manual, and separate from CI/CD -- passing CircleCI tests does not deploy anything. The Heroku production deploy target is `main`; deploy master with:
+
+`git push production master:main`
+
+(The `production` remote points at Heroku's `transbucket` app git URL.) There is currently no automated or gated path from a green CircleCI build to a production deploy.
+
+Before deploying, confirm the exact commit and Heroku ref:
+
+```
+git fetch production main
+git rev-parse master origin/master production/main
+```
+
+`master` and `origin/master` should be the tested commit. A normal deploy is a
+fast-forward push. If Heroku rejects the push because `production/main` is
+stale or divergent, stop and inspect the two histories before changing the
+remote ref; do not use an unconditional force push. The one-time
+`--force-with-lease` reconciliation used in September 2026 is not part of the
+normal deploy path.
+
+### Pre-production release gate
+
+Before every production deploy, run the relevant local suite and deploy the exact tested commit to staging. After the staging release completes, run the authenticated smoke with credentials supplied only in the local shell:
+
+```
+STAGING_USER=meowmeow STAGING_PASSWORD='(local secret)' \
+  STAGING_URL=https://transbucket-staging.herokuapp.com \
+  bundle exec ruby script/staging_smoke.rb
+```
+
+The smoke must report `staging smoke ok`; it verifies a real GET-to-POST login with CSRF protection, pin creation with two images, editing, and search. If search indexing is enabled asynchronously on staging, temporarily scale the staging worker for the smoke and scale it back to zero afterward. Never put staging credentials in CI, the repository, or logged deploy commands.
+
+Only after that gate passes may the production cookie-domain configuration be set and the tested commit be pushed to the production `main` ref:
+
+```
+heroku config:set SESSION_COOKIE_DOMAIN=.transbucket.com --app transbucket
+git push production master:main
+```
+
+After deployment, verify fresh GET-to-POST login flows on both `https://transbucket.com` and `https://www.transbucket.com`. The latter should redirect GET/HEAD requests to the apex host. If verification fails, deploy the previous known-good production commit and restore the prior production configuration.
+
+### Authentication monitoring follow-up
+
+This repository does not contain New Relic alert definitions. An alert for `ActionController::InvalidAuthenticityToken` and elevated `422` responses on `POST /users/sign_in` is an optional external follow-up only if it is already included at no additional cost in the current plan. Do not add paid monitoring; the required safeguards are the repository tests and authenticated staging smoke gate.
 
 For staging and production, assets need to be recompiled. It's wise to clean them first:
 
@@ -267,6 +368,15 @@ For staging validation we intentionally reuse the production Bonsai cluster
 and isolate by index prefix. That lets us recreate `staging_pins` freely
 without putting the database at risk. We do not share the database itself.
 
+After changing the indexed Pin representation, rebuild only staging with:
+
+```
+heroku run rake environment elasticsearch:import:model CLASS='Pin' INCLUDE='PinImage,Surgeon,Procedure' FORCE=true -a transbucket-staging
+```
+
+This uses staging's `INDEX_PREFIX=staging` and recreates only `staging_pins`.
+Never run this command against the production app as part of staging testing.
+
 For a fast local smoke loop, reseed the test DB and run the same script
 against localhost:
 
@@ -280,7 +390,7 @@ POSTGRES_HOST=localhost POSTGRES_PORT=5433 POSTGRES_USER=postgres \
 POSTGRES_PASSWORD=password RAILS_ENV=test bundle exec rake jobs:work
 
 STAGING_URL=http://127.0.0.1:3003 \
-STAGING_USER=zoon STAGING_PASSWORD='set your smoke password here' \
+STAGING_USER=meowmeow STAGING_PASSWORD='local-login' \
 bundle exec ruby script/staging_smoke.rb
 ```
 

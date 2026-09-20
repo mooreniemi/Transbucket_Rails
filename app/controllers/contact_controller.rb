@@ -9,9 +9,9 @@ class ContactController < ApplicationController
 
     if @message.valid?
       ContactMailer.new_message(@message).deliver
-      redirect_to(root_path, :notice => "Message was successfully sent.")
+      redirect_to(root_path, :notice => t('flash.contact_sent'))
     else
-      flash.now.alert = "Please fill all fields."
+      flash.now.alert = t('flash.contact_invalid')
       render :new
     end
   end

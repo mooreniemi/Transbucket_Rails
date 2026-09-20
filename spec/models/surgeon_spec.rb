@@ -28,10 +28,34 @@ describe Surgeon do
     end
   end
 
-  describe "#to_s" do
+  describe '#to_s' do
     it 'displays the surgeon name like Last, First' do
-      surgeon = build(:surgeon, first_name: "larry", last_name: "schmoe")
+      surgeon = build(:surgeon, first_name: "Larry", last_name: "Schmoe")
       expect(surgeon.to_s).to eq("Schmoe, Larry")
+    end
+
+    it 'preserves the curated casing of both names' do
+      surgeon = Surgeon.new(first_name: 'Brian', last_name: 'McEvenue')
+
+      expect(surgeon.to_s).to eq('McEvenue, Brian')
+    end
+
+    it 'preserves punctuation and spaces within names' do
+      surgeon = Surgeon.new(first_name: 'J. Brian', last_name: 'Boyd')
+
+      expect(surgeon.to_s).to eq('Boyd, J. Brian')
+    end
+  end
+
+  describe "#website_url" do
+    it "normalizes a host-only URL" do
+      surgeon = build(:surgeon, url: " www.example.org/path ")
+      expect(surgeon.website_url).to eq("https://www.example.org/path")
+    end
+
+    it "rejects non-web URLs" do
+      surgeon = build(:surgeon, url: "javascript:alert(1)")
+      expect(surgeon.website_url).to be_nil
     end
   end
 

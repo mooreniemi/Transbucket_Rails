@@ -1,4 +1,4 @@
-<% if Rails.env.production? %>
+<% if Rails.env.production? && ads_allowed? %>
   <div class="row padded_nicely">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- test1 -->
@@ -11,11 +11,5 @@
     <script>
       (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-  </div>
-<% else %>
-  <div class="row padded_nicely mockad">
-    <center>
-      <h1>on production ad unit "test1"</h1>
-    </center>
   </div>
 <% end %>

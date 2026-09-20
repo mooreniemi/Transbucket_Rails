@@ -8,18 +8,18 @@
         <% else %>
         <div class="input-group padded_nicely">
           <span class="input-group-addon">@</span>
-          <%= form.email_field :email, placeholder: "Your Return Email", class: "form-control", autofocus: true %>
+          <%= form.email_field :email, placeholder: t('public.extra.return_email'), class: "form-control", autofocus: true %>
         </div>
         <% end %>
       </div>
       <div class="input-group padded_nicely">
-        <%= form.text_field :subject, placeholder: "Subject", class: "form-control" %>
+        <%= form.text_field :subject, placeholder: t('public.extra.subject'), class: "form-control" %>
         <span class="input-group-addon"><%= fa_icon 'bullhorn' %></span>
       </div>
-      <%= form.text_area :body, class: "form-control", rows:"4", placeholder: "Howdy Transbucket admins!" %>
+      <%= form.text_area :body, class: "form-control", rows:"4", placeholder: t('public.extra.contact_message') %>
     </fieldset>
   </div>
 
-  <%= form.submit "Send", class: "btn btn-primary" %>
+  <%= form.submit t('public.extra.send'), class: "btn btn-primary" %>
   <% end %>
 </div>

@@ -20,6 +20,13 @@ ActiveRecord::Migration.maintain_test_schema!
 require 'support/monkey_patch_rails_four'
 
 RSpec.configure do |config|
+  config.around do |example|
+    I18n.locale = I18n.default_locale
+    example.run
+  ensure
+    I18n.locale = I18n.default_locale
+  end
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 

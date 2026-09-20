@@ -1,5 +1,7 @@
 class PinPresenter
-  attr_accessor :query, :page, :filter, :pins
+  PERSONALIZED_FEED_GENDERS = %w[MTF FTM].freeze
+
+  attr_accessor :query, :page, :filter, :pins, :feed
   attr_accessor :user, :procedures, :surgeons, :general
 
   def initialize(opts = {})
@@ -7,6 +9,7 @@ class PinPresenter
     @query = opts.delete(:query)
     @user = opts.delete(:user)
     @current_user = opts.delete(:current_user)
+    @feed = opts.delete(:feed)
     @filter = opts
 
     @pins = if @query.present?
@@ -31,13 +34,66 @@ class PinPresenter
               # includes are handled inside Query object
               PinFilterQuery.new(filter).filtered.paginate(:page => @page)
             else
-              # NOTE: if we want to do by_user_gender, we'd do it here
-              # but there's not an easy way to let people change this on the fly
-              Pin.includes(:user).recent.paginate(:page => @page)
+              feed_scope.includes(:user).recent.paginate(:page => @page)
             end
   end
 
+  def personalized_feed_available?
+    PERSONALIZED_FEED_GENDERS.include?(@current_user.try(:gender).try(:name))
+  end
+
+  def showing_for_you?
+    browsing_feed? && @feed == 'for_you' && personalized_feed_available?
+  end
+
+  def show_feed_navigation?
+    browsing_feed? && personalized_feed_available?
+  end
+
+  def list_event_context
+    {
+      surface: 'pins_index',
+      list_mode: list_mode,
+      filter_signature: active_filter_names.join(','),
+      ranking_version: ranking_version
+    }
+  end
+
   private
+
+  def feed_scope
+    showing_for_you? ? Pin.by_user_gender(@current_user) : Pin
+  end
+
+  def browsing_feed?
+    @query.blank? && @user.blank? && !has_keywords?
+  end
+
+  def list_mode
+    return 'search' if @query.present?
+    return 'user' if @user.present?
+    return 'filtered' if has_keywords?
+    return 'for_you' if showing_for_you?
+
+    'recent'
+  end
+
+  def active_filter_names
+    @filter.each_with_object([]) do |(name, value), active|
+      active << name.to_s if value.present?
+    end.sort
+  end
+
+  def ranking_version
+    {
+      'recent' => 'recent_submission_activity_v1',
+      'for_you' => 'for_you_gender_v1',
+      'search' => 'search_v1',
+      'filtered' => 'filtered_recent_activity_v1',
+      'user' => 'user_submissions_v1'
+    }.fetch(list_mode)
+  end
+
   def has_keywords?
     filter.values.reject(&:nil?).count > 0
   end

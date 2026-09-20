@@ -1,11 +1,13 @@
 require 'rails_helper'
 
 describe PinsController, :type => :controller do
+  render_views
+
   describe 'GET #index' do
     it "blocks unauthenticated access" do
-      get :index
+      get :index, locale: 'en'
 
-      expect(response).to redirect_to(new_user_session_path)
+      expect(response).to redirect_to(new_user_session_path(locale: 'en'))
     end
   end
 
@@ -22,6 +24,84 @@ describe PinsController, :type => :controller do
 
         expect(response).to be_success
       end
+
+      it "renders the authenticated index with a locale and user filter" do
+        get :index, locale: 'ja', user: user.id
+
+        expect(response).to be_success
+        expect(response.body).to include('最近の投稿')
+      end
+
+      it 'shows a For You tab for MTF and FTM users' do
+        user.update_attributes!(gender: create(:gender, name: 'MTF'))
+
+        get :index
+
+        expect(response.body).to include('Recent')
+        expect(response.body).to include('For You')
+        expect(response.body).to include('feed=for_you')
+      end
+
+      it 'does not show a For You tab when the profile cannot define one' do
+        user.update_attributes!(gender: create(:gender, name: 'GenderQueer'))
+
+        get :index
+
+        expect(response.body).not_to include('For You')
+      end
+
+      it 'keeps the moderator navigation compact while preserving its accessible label' do
+        user.update_attributes!(admin: true)
+
+        get :index
+
+        expect(response.body).to include('>MQ</a>')
+        expect(response.body).to include('title="Moderation queue"')
+        expect(response.body).not_to include('>ModQueue</a>')
+      end
+
+      it 'labels the personalized feed For You' do
+        user.update_attributes!(gender: create(:gender, name: 'MTF'))
+
+        get :index, feed: 'for_you'
+
+        expect(response.body).to include('<h1>For You</h1>')
+        expect(response.body).not_to include('<h1>Recent Submissions</h1>')
+      end
+
+      it 'renders each published Pin card with its own impression and open telemetry target' do
+        first_pin = create(:pin, user: user)
+        second_pin = create(:pin, user: user)
+
+        get :index
+
+        [first_pin, second_pin].each do |pin|
+          card = response.body[/<div class="item" data-pin-id="#{pin.id}".*?<\/div>\s*<\/div>/m]
+          expect(card).to include('data-event-type="impression"')
+          expect(card).to include("data-content-id=\"#{pin.id}\"")
+          expect(card).to include('data-content-event-open="true"')
+          expect(card).to include("href=\"#{pin_path(pin)}\"")
+        end
+      end
+    end
+
+    describe 'GET #admin' do
+      it 'renders current flaggers and lifetime moderation counts' do
+        admin = create(:user, admin: true)
+        pin = create(:pin)
+        flaggers = create_list(:user, 3)
+        flaggers.each { |flagger| Flag.new(flagger, pin).flag_on }
+        sign_in(admin)
+
+        get :admin
+
+        expect(response).to be_success
+        expect(response.body).to include('Top flaggers (lifetime)')
+        expect(response.body).to include('Most flagged (lifetime)')
+        expect(response.body).to include('<td>2</td>')
+        expect(response.body).to include('<td>3</td>')
+        expect(response.body).to include(flaggers.first.username)
+      end
     end
 
     describe 'GET #show' do
@@ -31,6 +111,32 @@ describe PinsController, :type => :controller do
         get :show, id: pin.id
 
         expect(response).to be_success
+      end
+
+      it "renders localized labels on a pin page" do
+        pin = create(:pin, user: user)
+        get :show, id: pin.id, locale: 'ja'
+
+        expect(response).to be_success
+        expect(response.body).to include('外科医')
+        expect(response.body).to include('手術')
+      end
+
+      it 'preserves line breaks in the in-depth experience' do
+        pin = create(:pin, user: user, details: "First paragraph\nSecond paragraph")
+
+        get :show, id: pin.id
+
+        expect(response.body).to match(/First paragraph\s*<br/)
+        expect(response.body).to include('Second paragraph')
+      end
+
+      it 'links the procedure label to the procedure page' do
+        pin = create(:pin, user: user)
+        get :show, id: pin.id
+
+        expect(response.body).to include("href=\"#{procedure_path(pin.procedure)}\"")
+        expect(response.body).not_to include("procedure=#{pin.procedure.id}")
       end
     end
 
@@ -43,6 +149,64 @@ describe PinsController, :type => :controller do
 
         expect(response).to be_success
       end
+
+      it 'allows an admin to edit another user\'s pin' do
+        admin = create(:user, admin: true)
+        pin = create(:pin, user: create(:user))
+
+        sign_in(admin)
+        get :edit, id: pin.id, locale: 'en'
+
+        expect(response).to be_success
+      end
+    end
+
+    describe 'cached pin actions' do
+      around do |example|
+        previous_setting = ActionController::Base.perform_caching
+        ActionController::Base.perform_caching = true
+        Rails.cache.clear
+        example.run
+      ensure
+        Rails.cache.clear
+        ActionController::Base.perform_caching = previous_setting
+      end
+
+      it 'does not show an edit link cached for the owner to another user' do
+        owner = create(:user)
+        viewer = create(:user)
+        pin = create(:pin, user: owner)
+
+        sign_in(owner)
+        get :show, id: pin.id, locale: 'en'
+        expect(response.body).to include(edit_pin_path(pin))
+
+        sign_in(viewer)
+        get :show, id: pin.id, locale: 'en'
+        expect(response.body).not_to include(edit_pin_path(pin))
+      end
+    end
+
+    describe 'GET #new' do
+      it 'renders the locale-specific TinyMCE language asset' do
+        get :new, locale: 'es'
+
+        expect(response).to be_success
+        expect(response.body).to include('language: "es"')
+      end
+    end
+
+    describe 'GET #complication_suggestions' do
+      it 'returns existing Pin complication tags matching the term' do
+        pin = create(:pin, user: user)
+        pin.complication_list = 'hematoma, infection'
+        pin.save!
+
+        get :complication_suggestions, term: 'hema', format: :json
+
+        expect(response).to be_success
+        expect(JSON.parse(response.body)).to eq(['hematoma'])
+      end
     end
 
     describe 'POST #create' do
@@ -54,6 +218,17 @@ describe PinsController, :type => :controller do
 
         post(:create, {pin: attrs, pin_images: {"0" => image_attrs}})
         expect(response).to redirect_to(pin_url(assigns(:pin)))
+      end
+
+      it 'keeps the selected locale after creating a pin' do
+        surgeon = attributes_for(:surgeon)
+        procedure = attributes_for(:procedure)
+        attrs = attributes_for(:pin).merge("surgeon_attributes" => surgeon, "procedure_attributes" => procedure)
+        image_attrs = attributes_for(:pin_image)
+
+        post :create, pin: attrs, pin_images: { "0" => image_attrs }, locale: 'es'
+
+        expect(response).to redirect_to(pin_url(assigns(:pin), locale: 'es'))
       end
 
       it "refuses to create an invalid pin" do
@@ -98,6 +273,21 @@ describe PinsController, :type => :controller do
         expect(pin.procedure.id).to_not eq(old_procedure_id)
         expect(pin.surgeon.url).to eq(surgeon[:url])
         expect(pin.procedure.name).to eq(procedure[:name])
+      end
+
+      it 'allows an admin to update another user\'s pin' do
+        admin = create(:user, admin: true)
+        pin = create(:pin, :with_surgeon_and_procedure, :real_pin_images, user: create(:user))
+
+        sign_in(admin)
+        put :update, id: pin.id, pin: {
+          cost: 123,
+          surgeon_attributes: { id: pin.surgeon.id },
+          procedure_attributes: { id: pin.procedure.id }
+        }
+
+        expect(response).to redirect_to(pin_url(pin))
+        expect(pin.reload.cost).to eq(123)
       end
     end
 

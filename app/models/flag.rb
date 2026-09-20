@@ -8,6 +8,8 @@ class Flag
   end
 
   def flag_on
+    ModerationEventRecorder.record(action: :flag, user: user, content: content)
+
     if flagger_is_pin_author?
       content.review!
       return { status: :removed }

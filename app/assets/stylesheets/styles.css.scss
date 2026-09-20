@@ -6,22 +6,74 @@ $btnPrimaryBackground: purple;
 
 @import 'bootstrap-responsive';*/
 
-body{
-  padding-top: 60px;
-  padding-bottom: 70px;
-  background-color:#ccc;
+// Sticky footer: body is a flex column at least viewport-tall, .container
+// (the main content wrapper in layouts/application.html.erb) grows to fill
+// whatever space the page content doesn't use, so .footer always lands at
+// the bottom of the viewport on short pages instead of floating mid-page.
+html {
+  height: 100%;
 }
 
-// Keeps the procedures/surgeons index table headers visible while scrolling.
-// top offset matches body's padding-top above, which is sized for the
-// .navbar-fixed-top -- without it the sticky header would tuck in behind
-// the fixed nav instead of sitting just below it.
+body{
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding-top: 60px;
+  background-color:#ccc;
+  color: #222;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+// Bootstrap 3 defaults to 14px for controls and navigation. Keep interactive
+// text at the same readable size as the document body.
+.form-control,
+.btn,
+.navbar-nav > li > a {
+  font-size: 1rem;
+}
+
+select.form-control {
+  font-size: 17px;
+}
+
+// Bootstrap's default fixed-navigation text is 14px. Keep it compact without
+// making the primary navigation smaller than ordinary readable interface text.
+body .navbar .nav > li > a,
+body .navbar .navbar-brand {
+  font-size: 17px;
+}
+
+small {
+  font-size: .875rem;
+}
+
+.container {
+  flex: 1 0 auto;
+}
+
+// Keep directory headers visible below the fixed navigation while scrolling.
 .sticky-header-table thead th {
   position: -webkit-sticky;
   position: sticky;
   top: 60px;
-  background-color: #ffffcc;
+  background-color: #006d82;
+  color: #fff;
   z-index: 2;
+}
+
+.directory-sort-button {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+  text-align: left;
+}
+
+.directory-sort-button:focus {
+  outline: 2px solid #337ab7;
+  outline-offset: 2px;
 }
 
 .ms-container {
@@ -39,6 +91,50 @@ hr.style-two {
 
 .yellow {
   color: #FCC000;
+}
+
+// Bootstrap's .navbar-nav > li > a has higher specificity than .btn, so a
+// plain .btn placed in a <li> here ends up with .navbar-nav's own
+// (much larger) padding *plus* .navbar-btn's centering margin stacked on
+// top of that -- a visibly bloated, oversized box. Matching (and beating)
+// that selector's specificity directly avoids fighting the cascade.
+.navbar-nav > li > a.nav-auth-link {
+  margin: 8px 4px;
+  padding: 6px 14px;
+  line-height: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.navbar-nav > li > a.nav-auth-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-nav > li > a.nav-auth-link-register {
+  border: 2px solid #FCC000;
+}
+
+// Keeps the three homepage CTA circles aligned on the same line regardless
+// of how many lines each column's heading wraps to at a given viewport
+// width, by pushing each image to the bottom of its (equal-height) column.
+// The auto-margin has to go on the <a> itself (the actual flex item and
+// direct child of .homepage-cta) -- setting it on the nested <img> instead
+// does nothing, since only a flex item's own margin gets the "consume the
+// leftover space" treatment.
+.homepage-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.homepage-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.homepage-cta > a {
+  margin-top: auto;
 }
 
 .hide {
@@ -66,6 +162,33 @@ $medium: 900px;
   width: 100%;
 }
 
+// Reserve the space used by asynchronously loaded pin media so captions and
+// neighboring cards do not move when an image finishes loading.
+.pin-card-image {
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #f7f7f7;
+}
+
+.pin-card-image img {
+  height: 100%;
+  object-fit: contain;
+}
+
+.pin-gallery-image {
+  display: block;
+  width: 100%;
+  max-height: 480px;
+  object-fit: contain;
+}
+
+.pin-ad-slot {
+  min-height: 120px;
+}
+
 .mockad {
   outline: 5px dotted green;
 }
@@ -88,6 +211,35 @@ p {
   padding: 0px;
 }
 
+.navbar-form .input-group {
+  display: inline-table;
+  vertical-align: middle;
+}
+
+.navbar-form .input-group-btn {
+  vertical-align: top;
+  width: 1%;
+}
+
+.navbar-form .search-query {
+  border-radius: 4px 0 0 4px;
+  border-right: 0;
+  height: 34px;
+}
+
+.navbar-form .search-submit {
+  align-items: center;
+  border: 1px solid #ccc;
+  border-left: 0;
+  border-radius: 0 4px 4px 0;
+  display: inline-flex;
+  height: 34px;
+  justify-content: center;
+  margin: 0;
+  min-width: 34px;
+  padding: 6px 10px;
+}
+
 .comment_box {
   position:absolute;
   top:5px;
@@ -98,7 +250,7 @@ p {
 }
 
 .comment_box p {
-  font-size: 14px;
+  font-size: 1rem;
   color: #000000;
 }
 
@@ -111,7 +263,7 @@ p {
 }
 
 .actions {
-  font-size: 14px;
+  font-size: 1rem;
 }
 
 .actions a:link, a:visited, a:hover {
@@ -142,6 +294,15 @@ p {
   padding: 15px;
 }
 
+.footer {
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+.footer-links {
+  display: block;
+}
+
 .padded_nicely {
   padding: 10px;
   margin: auto;
@@ -153,7 +314,7 @@ p {
 }
 #details p {
   display: inline;
-  font-size: 14px;
+  font-size: 1rem;
 }
 
 .center {

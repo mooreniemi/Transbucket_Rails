@@ -12,12 +12,21 @@ module Searchable
       ].join('_')
     }
 
-    after_commit :index_document_async, on: [:create, :update]
+    after_commit :enqueue_index_document, on: [:create, :update]
     after_commit :enqueue_delete_document, on: :destroy
-    handle_asynchronously :index_document_async
   end
 
   class_methods do
+    # Delayed Job serializes its receiver and arguments. Keep queued search
+    # work portable across Rails/Ruby upgrades by storing only primitives.
+    def index_document_async(index_name, document_id)
+      document = find_by(id: document_id)
+      return unless document
+
+      document.__elasticsearch__.index_document
+    end
+    handle_asynchronously :index_document_async
+
     # A destroyed Active Record object cannot be serialized by delayed_job.
     # Pass the stable index name and document ID instead.
     def delete_document_async(index_name, document_id)
@@ -26,8 +35,8 @@ module Searchable
     handle_asynchronously :delete_document_async
   end
 
-  def index_document_async
-    __elasticsearch__.index_document
+  def enqueue_index_document
+    self.class.index_document_async(self.class.index_name, id)
   end
 
   def enqueue_delete_document

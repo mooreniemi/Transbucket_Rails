@@ -1,31 +1,37 @@
-// The submissions feed on phones.
+// The submissions feed.
 //
 // The photos are the point, so the top of the page should cost as little as
-// possible: no big heading or blurb (the Recent / For You toggle already says
-// where you are, and search lives in the header), and the toggle itself is a
-// compact full-width segmented control.
-//
-// Desktop is untouched: everything here is inside the phone media query.
+// possible: no big heading or blurb at any width (the Recent / For You toggle
+// already says where you are, and search lives in the header). On phones the
+// toggle also becomes a compact full-width segmented control and the cards get
+// more width; those parts are inside the phone media query.
 
 $feed-toggle-height: 40px;
 $feed-accent: #FCC000;          // brand yellow (see .top-block)
 $feed-accent-border: #c99700;
 
-@media (max-width: 767px) {
-  // Visually hidden, still in the page for screen readers and SEO.
-  .feed-title,
-  .feed-intro {
-    border: 0;
-    clip: rect(0, 0, 0, 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
-  }
+// Visually hidden at every width, still in the page for screen readers.
+.feed-title,
+.feed-intro {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
 
+// With the heading gone the toggle is the first thing under the navbar.
+@media (min-width: 768px) {
+  .submission-feed-tabs {
+    margin-top: 16px;
+  }
+}
+
+@media (max-width: 767px) {
   // Search results keep a heading (it confirms what you searched for), just a
   // sane size for a phone.
   .page-title-compact {

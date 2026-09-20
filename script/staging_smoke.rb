@@ -11,7 +11,9 @@ require "uri"
 # delayed_job worker must be running so pin indexing jobs get processed.
 STAGING_URL = ENV.fetch("STAGING_URL", "https://transbucket-staging.herokuapp.com")
 STAGING_LOCALES = ENV.fetch("STAGING_LOCALES", ENV.fetch("STAGING_LOCALE", "en")).split(",").map(&:strip).reject(&:empty?)
-USERNAME = ENV.fetch("STAGING_USER", "zoon")
+# `meowmeow` is the maintained staging account. `zoon` is only a local test
+# seed/admin account and has no shared staging password.
+USERNAME = ENV.fetch("STAGING_USER", "meowmeow")
 PASSWORD = ENV.fetch("STAGING_PASSWORD")
 IMAGE_PATH = File.expand_path("../spec/fixtures/cat.jpg", __dir__)
 NEWSFEED_TITLES = {

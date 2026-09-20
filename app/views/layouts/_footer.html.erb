@@ -1,7 +1,9 @@
 <%# Site footer. Phones: stacked, with 48px touch targets (Discord button, social
     buttons, then legal links as full-width rows). Tablet and up: one tidy row,
     community links left and legal links right. See footer.css.scss. %>
-<footer class="footer submission_well site-footer">
+<%# footer-compact is applied outside the cache block below, so signed-in and
+    signed-out visitors can share the cached links but get different sizing. %>
+<footer class="footer submission_well site-footer<%= ' footer-compact' if user_signed_in? %>">
   <% cache(["footer", I18n.locale, request.fullpath, Date.today.year]) do %>
     <nav class="footer-nav">
       <div class="footer-community">

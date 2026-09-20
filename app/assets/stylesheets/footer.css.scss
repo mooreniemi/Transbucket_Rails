@@ -159,3 +159,126 @@ $footer-focus: #337ab7;
     }
   }
 }
+
+// Signed-in visitors are here for the content, not to be invited in, so the
+// footer steps back (.footer-compact, set in layouts/_footer.html.erb).
+// Phones: icon-only 44px buttons for the community links, legal links in one
+// wrapping row (about 110px instead of about 290px). Tablet and up: a slim row
+// of plain text links with no yellow button. The link text stays in the page
+// for screen readers.
+@mixin footer-visually-hidden {
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.footer-compact {
+  border-top: 1px solid #e5e5e5;
+  padding: 8px 16px calc(8px + env(safe-area-inset-bottom, 0px));
+
+  .footer-nav {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: none;
+  }
+
+  .footer-community {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .footer-cta,
+  .footer-social a {
+    background: #f2f2f2;
+    border: 0;
+    border-radius: 50%;
+    color: #222;
+    font-size: 18px;
+    font-weight: 400;
+    height: 44px;
+    margin: 0;
+    min-height: 44px;
+    padding: 0;
+    width: 44px;
+
+    &:hover,
+    &:focus {
+      background: #e4e4e4;
+      color: #222;
+    }
+
+    span {
+      @include footer-visually-hidden;
+    }
+  }
+
+  .footer-social {
+    gap: 8px;
+    margin: 0;
+
+    li {
+      flex: 0 0 auto;
+    }
+  }
+
+  .footer-legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    a {
+      border-top: 0;
+      font-size: 15px;
+      min-height: 44px;
+      padding: 0 12px;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .footer-compact {
+    padding: 6px 24px;
+
+    .footer-nav {
+      flex-direction: row;
+      justify-content: space-between;
+      max-width: 1170px;
+    }
+
+    .footer-cta,
+    .footer-social a {
+      background: transparent;
+      border-radius: 6px;
+      font-size: 15px;
+      gap: 8px;
+      height: auto;
+      min-height: 40px;
+      padding: 0 12px;
+      width: auto;
+
+      &:hover,
+      &:focus {
+        background: #f2f2f2;
+      }
+
+      span {
+        clip: auto;
+        height: auto;
+        overflow: visible;
+        position: static;
+        white-space: normal;
+        width: auto;
+      }
+    }
+
+    .footer-legal a {
+      min-height: 40px;
+    }
+  }
+}

@@ -42,6 +42,7 @@
     "@storybook/tanstack-react": "^10.6.0",
     "@tanstack/devtools-vite": "latest",
     "@tanstack/react-query": "latest",
+    "@tanstack/react-query-devtools": "^5.103.1",
     "@tanstack/router-cli": "^1.132.0",
     "@tanstack/router-plugin": "latest",
     "@terrazzo/cli": "^2.7.1",

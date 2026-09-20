@@ -16,13 +16,13 @@ import {
   Link,
   type LinkProps,
 } from "react-aria-components"
-import { NavVariantContext, useHeaderContext } from "./headerContext"
+import { NavVariantContext, useHeaderContext } from "./headerContext";
 
 const triggerStyles =
   "rounded-md px-3 py-2 text-sm font-medium text-black-900 outline-none transition-colors hover:bg-black-100 focus-visible:ring-3 focus-visible:ring-blue-500/50 aria-expanded:bg-black-100"
 
 export interface HeaderMenuProps {
-  label: string
+  label: ReactNode;
   children?: ReactNode
   className?: string
 }

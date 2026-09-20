@@ -1,9 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Input } from '#/components/input/input'
-import { Checkbox } from '#/components/checkbox/checkbox'
-import { Button } from '#/components/button/button'
+import { Input } from '#/components/input'
+import { Checkbox } from '#/components/checkbox'
+import { Button } from '#/components/button'
+import { Card } from '#/components/card';
 
-export const Route = createFileRoute('/$locale/login')({ component: LoginPage })
+export const Route = createFileRoute('/$locale/_public/login')({ component: LoginPage })
 
 // A plain HTML form post, not a fetch -- the browser handles the
 // navigation/redirect and Devise sets the session cookie exactly as it
@@ -17,8 +18,8 @@ function LoginPage() {
   const { locale } = Route.useParams()
 
   return (
-    <div className="mx-auto flex w-full max-w-sm flex-col gap-6 px-4 py-16">
-      <h1 className="text-xl font-semibold text-black-900">Log in</h1>
+    <Card className="mx-auto flex w-full max-w-sm flex-col gap-6 px-4 py-10 mt-20">
+      <h2 className="text-xl font-semibold">Log in</h2>
       <form action={`/${locale}/users/sign_in`} method="post" className="flex flex-col gap-4">
         <input type="hidden" name="authenticity_token" value={getCsrfToken()} />
         <Input name="user[login]" label="Username or email" autoFocus isRequired />
@@ -33,6 +34,6 @@ function LoginPage() {
         </div>
         <Button type="submit">Log in</Button>
       </form>
-    </div>
+    </Card>
   )
 }

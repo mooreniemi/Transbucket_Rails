@@ -48,16 +48,18 @@ function Header({
       <header
         {...props}
         className={cn(
-          "relative flex items-center justify-between gap-4 border-b border-black-300 bg-white px-4 py-3",
+          "relative flex items-center justify-between gap-4 border-b border-black-200 bg-white px-4 py-3 shadow-[0_8px_10px_-13px_var(--color-black-300)]",
           className,
         )}
       >
         {skipNavHref && <SkipNav href={skipNavHref} />}
         <div className="flex items-center gap-4">
-          <a href="/">
-            <img src={logo} alt="" className="h-8 w-auto inline"/>
-            <span className="font-bold align-middle ml-2">Transbucket</span>
-          </a>
+          <h1>
+            <a href="/" className="inline-block hover:no-underline focus-visible:no-underline">
+              <img src={logo} alt="" className="h-8 w-auto inline"/>
+              <span className="font-bold align-middle ml-2 text-black-900">Transbucket</span>
+            </a>
+          </h1>
           <NavVariantContext.Provider value="desktop">
             {/* max-md:hidden + md:flex (not the bare "hidden" utility) so
                 both sides of the toggle are variant-scoped and mutually

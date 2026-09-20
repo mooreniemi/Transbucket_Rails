@@ -10,43 +10,52 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as LocaleLoginRouteImport } from './routes/$locale/login'
+import { Route as LocaleRouteImport } from './routes/$locale'
+import { Route as LocalePublicLoginRouteImport } from './routes/$locale/_public/login'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LocaleLoginRoute = LocaleLoginRouteImport.update({
-  id: '/$locale/login',
-  path: '/$locale/login',
+const LocaleRoute = LocaleRouteImport.update({
+  id: '/$locale',
+  path: '/$locale',
   getParentRoute: () => rootRouteImport,
+} as any)
+const LocalePublicLoginRoute = LocalePublicLoginRouteImport.update({
+  id: '/_public/login',
+  path: '/login',
+  getParentRoute: () => LocaleRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/$locale/login': typeof LocaleLoginRoute
+  '/$locale': typeof LocaleRouteWithChildren
+  '/$locale/login': typeof LocalePublicLoginRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/$locale/login': typeof LocaleLoginRoute
+  '/$locale': typeof LocaleRouteWithChildren
+  '/$locale/login': typeof LocalePublicLoginRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/$locale/login': typeof LocaleLoginRoute
+  '/$locale': typeof LocaleRouteWithChildren
+  '/$locale/_public/login': typeof LocalePublicLoginRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$locale/login'
+  fullPaths: '/' | '/$locale' | '/$locale/login'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$locale/login'
-  id: '__root__' | '/' | '/$locale/login'
+  to: '/' | '/$locale' | '/$locale/login'
+  id: '__root__' | '/' | '/$locale' | '/$locale/_public/login'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  LocaleLoginRoute: typeof LocaleLoginRoute
+  LocaleRoute: typeof LocaleRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -58,19 +67,37 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/$locale/login': {
-      id: '/$locale/login'
-      path: '/$locale/login'
-      fullPath: '/$locale/login'
-      preLoaderRoute: typeof LocaleLoginRouteImport
+    '/$locale': {
+      id: '/$locale'
+      path: '/$locale'
+      fullPath: '/$locale'
+      preLoaderRoute: typeof LocaleRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/$locale/_public/login': {
+      id: '/$locale/_public/login'
+      path: '/login'
+      fullPath: '/$locale/login'
+      preLoaderRoute: typeof LocalePublicLoginRouteImport
+      parentRoute: typeof LocaleRoute
     }
   }
 }
 
+interface LocaleRouteChildren {
+  LocalePublicLoginRoute: typeof LocalePublicLoginRoute
+}
+
+const LocaleRouteChildren: LocaleRouteChildren = {
+  LocalePublicLoginRoute: LocalePublicLoginRoute,
+}
+
+const LocaleRouteWithChildren =
+  LocaleRoute._addFileChildren(LocaleRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  LocaleLoginRoute: LocaleLoginRoute,
+  LocaleRoute: LocaleRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

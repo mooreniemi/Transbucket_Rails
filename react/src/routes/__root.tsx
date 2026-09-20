@@ -2,6 +2,7 @@ import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
 import type { QueryClient } from '@tanstack/react-query'
 
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
+import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools';
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import { currentUserQueryOptions } from '#/lib/currentUser'
 
@@ -19,7 +20,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
   // the cache is missing/stale, so this isn't a refetch-on-every-navigation
   // like a plain beforeLoad fetch would be.
   loader: ({ context: { queryClient } }) =>
-    queryClient.ensureQueryData(currentUserQueryOptions()),
+    queryClient.query(currentUserQueryOptions()),
   component: RootComponent,
 })
 
@@ -36,6 +37,10 @@ function RootComponent() {
             name: 'TanStack Router',
             render: <TanStackRouterDevtoolsPanel />,
           },
+          {
+            name: 'Tanstack Query',
+            render: <ReactQueryDevtoolsPanel />
+          }
         ]}
       />
     </>

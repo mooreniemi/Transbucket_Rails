@@ -2,17 +2,16 @@ Rails.application.routes.draw do
   scope '(:locale)', locale: /en|de|es|fr|it|ja|zh-CN|zh-TW|pt-BR|nl|pl|ru|tr|vi|ar|sv/ do
     root :to => 'pages#home'
 
-    devise_for :users, controllers: { registrations: "registrations", confirmations: "confirmations" }
+    devise_for :users, controllers: { registrations: "registrations", confirmations: "confirmations", sessions: "sessions" }
     # don't want 404 on requesting users index, it breaks google crawlers
     # if user is signed in, login will actually redirect to pins
     get "/users", to: redirect("/login")
 
     devise_scope :user do
       get "/register" => "devise/registrations#new"
-      # React-rendered now -- the form still posts to Devise's own
-      # user_session path (POST /users/sign_in), so sign-in itself is
-      # untouched; this only replaces the page that's shown at GET /login.
-      get "/login" => "react_app#show"
+      # Named so SessionsController#new can redirect_to login_path --
+      # sign-in itself (POST /users/sign_in) is untouched.
+      get "/login" => "react_app#show", as: "login"
     end
 
     resources :users do

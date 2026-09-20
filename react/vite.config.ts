@@ -20,7 +20,7 @@ const config = defineConfig({
       // can enable this if ruby is updated and we can migrate to vite_rails gem instead of custom setup
       consolePiping: {
         enabled: false
-      }
+      },
     }),
     tailwindcss(),
     tanstackRouter({
@@ -44,6 +44,13 @@ const config = defineConfig({
     cors: {
       origin: 'http://localhost:3000'
     },
+    // Without this, Vite resolves asset imports (e.g. the header logo) to
+    // root-relative dev URLs like /src/assets/foo.png -- fine when Vite
+    // serves the page itself, but wrong when Rails does: the browser
+    // resolves that path against Rails' origin (:3000), not Vite's
+    // (:5173), and 404s. origin makes Vite emit the absolute dev-server
+    // URL instead.
+    origin: 'http://localhost:5173',
   },
   test: {
     projects: [{

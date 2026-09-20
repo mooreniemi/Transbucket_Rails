@@ -15,6 +15,32 @@ body {
   margin: 0;
 }
 
+/* @layer base, not a bare rule -- Tailwind's own utilities (hover:,
+   focus-visible:, etc.) live in @layer utilities, and an unlayered rule
+   always wins over ANY layered rule regardless of specificity (see the
+   .sbdocs-content note below, which relies on this same mechanic on
+   purpose). Left bare, this default a style would beat every per-link
+   Tailwind override in the app, not just lose to specificity ties. Base
+   is Tailwind's own layer for exactly this kind of overridable default. */
+@layer base {
+  a {
+    color: var(--color-blue-500);
+
+    &:hover, &:focus-visible {
+      color: var(--color-blue-700);
+      text-decoration-line: underline;
+    }
+
+    &:active {
+      color: var(--color-blue-950);
+    }
+
+    &:visited {
+      color: var(--color-blue-900);
+    }
+  }
+}
+
 /* Storybook's own docs typography (@storybook/addon-docs) restores
    list-style for <ul> inside doc pages (.sbdocs-content) but has no
    equivalent rule for <ol>, so Tailwind's preflight reset (ol, ul, menu {

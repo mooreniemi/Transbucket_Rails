@@ -48,6 +48,7 @@ describe "the flagging process" do
         # Reporting a pin asks first (a single stray tap used to report it).
         expect(flag_link['data-confirm']).to eq(I18n.t('public.pin.report_confirm'))
         accept_confirm { flag_link.click }
+        expect(page).to have_no_selector("a.flag-pin[data-pin-id='" + pin.id.to_s + "']")
       end
 
       visit '/pins'

@@ -392,22 +392,35 @@ heroku run rake environment elasticsearch:import:model CLASS='Pin' INCLUDE='PinI
 This uses staging's `INDEX_PREFIX=staging` and recreates only `staging_pins`.
 Never run this command against the production app as part of staging testing.
 
-For a fast local smoke loop, reseed the test DB and run the same script
-against localhost:
+For a fast local smoke loop, use the same development database and server
+workflow as the local browser app. Run the setup once, then keep the server
+and delayed-job worker in separate terminals:
 
 ```
-DISABLE_SPRING=1 OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES \
-POSTGRES_HOST=localhost POSTGRES_PORT=5433 POSTGRES_USER=postgres \
-POSTGRES_PASSWORD=password RAILS_ENV=test bundle exec rake db:seed
+script/local_setup
+PORT=3004 script/local_server
+RAILS_ENV=development bundle exec rake jobs:work
+```
 
-DISABLE_SPRING=1 OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES \
-POSTGRES_HOST=localhost POSTGRES_PORT=5433 POSTGRES_USER=postgres \
-POSTGRES_PASSWORD=password RAILS_ENV=test bundle exec rake jobs:work
+Then run the smoke against that local server from a third terminal:
 
-STAGING_URL=http://127.0.0.1:3003 \
+```
+STAGING_URL=http://127.0.0.1:3004 \
 STAGING_USER=meowmeow STAGING_PASSWORD='local-login' \
 bundle exec ruby script/staging_smoke.rb
 ```
+
+Use `STAGING_LOCALES=en,de,sv` to run the same authenticated flow for several
+locales in one invocation. The smoke covers public localization, registration
+and login/CSRF, authenticated navigation, multi-image submission, comments,
+editing, safe mode, linked surgeon/procedure pages, and eventual search
+indexing. It does not replace admin/moderation, email-delivery, or external
+S3 checks; those need separate targeted tests.
+
+The smoke creates test data, including a pin with two images and a comment;
+use the local workflow for that data-changing run. For staging, supply only
+the local shell credentials, temporarily run the worker needed for indexing,
+and scale it back to zero immediately afterward.
 
 ```
 rake environment elasticsearch:import:model CLASS='Pin' INCLUDE='PinImage,Surgeon,Procedure' FORCE=true

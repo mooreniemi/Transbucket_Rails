@@ -76,7 +76,7 @@ describe PagesController, :type => :controller do
 
   describe 'GET compare' do
     it 'requires authentication' do
-      get 'compare', locale: 'en'
+      get 'compare', params: { locale: 'en' }
 
       expect(response).to redirect_to(new_user_session_path(locale: 'en'))
     end
@@ -86,7 +86,7 @@ describe PagesController, :type => :controller do
       surgeon = create(:surgeon, first_name: 'First', last_name: 'Surgeon')
       sign_in user
 
-      get 'compare', locale: 'en', type: 'surgeons', first_id: surgeon.to_param
+      get 'compare', params: { locale: 'en', type: 'surgeons', first_id: surgeon.to_param }
 
       expect(response).to be_success
       expect(assigns(:comparison_type)).to eq('surgeons')

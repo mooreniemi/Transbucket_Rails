@@ -5,7 +5,7 @@ describe PreferencesController, type: :controller do
     it 'requires sign-in' do
       user = create(:user)
 
-      put :update, user_id: user.id, preference: { safe_mode: '1' }
+      put :update, params: { user_id: user.id, preference: { safe_mode: '1' } }
 
       expect(response).to redirect_to(new_user_session_path(locale: nil))
       expect(Preference.find_by!(user_id: user.id).safe_mode).to eq(false)
@@ -15,7 +15,7 @@ describe PreferencesController, type: :controller do
       user = create(:user)
       sign_in(user)
 
-      put :update, user_id: user.id, preference: { safe_mode: '1', notification: '0' }
+      put :update, params: { user_id: user.id, preference: { safe_mode: '1', notification: '0' } }
 
       expect(response).to redirect_to(edit_user_registration_path)
       preference = Preference.find_by!(user_id: user.id)
@@ -28,7 +28,7 @@ describe PreferencesController, type: :controller do
       other_user = create(:user)
       sign_in(user)
 
-      put :update, user_id: other_user.id, preference: { safe_mode: '1' }
+      put :update, params: { user_id: other_user.id, preference: { safe_mode: '1' } }
 
       expect(Preference.find_by!(user_id: user.id).safe_mode).to eq(true)
       expect(Preference.find_by!(user_id: other_user.id).safe_mode).to eq(false)

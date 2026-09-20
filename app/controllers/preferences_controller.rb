@@ -1,5 +1,5 @@
 class PreferencesController < ApplicationController
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
 
   def update
     # The nested user id is only part of the route. Preferences always belong

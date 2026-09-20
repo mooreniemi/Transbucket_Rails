@@ -1,5 +1,5 @@
 class ContentEvent < ActiveRecord::Base
-  CONTENT_TYPES = %w[Pin Procedure Surgeon].freeze
+  CONTENT_TYPES = %w[Pin Procedure Surgeon Page].freeze
   EVENT_TYPES = %w[impression open view submission_created submission_updated].freeze
   SOURCES = %w[server client].freeze
 
@@ -34,7 +34,7 @@ class ContentEvent < ActiveRecord::Base
     return if event_context.blank?
     return unless event_context.is_a?(Hash)
 
-    allowed_keys = %w[surface list_mode filter_signature rank ranking_version page]
+    allowed_keys = %w[surface list_mode filter_signature rank ranking_version page target]
     errors.add(:event_context, 'contains unsupported values') unless event_context.keys.all? { |key| allowed_keys.include?(key.to_s) }
   end
 end

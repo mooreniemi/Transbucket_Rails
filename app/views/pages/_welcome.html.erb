@@ -10,14 +10,14 @@
 <div class="row homepage-cta-row text-center">
   <div class="col-md-4 homepage-cta hidden-xs">
     <h3><%= I18n.t('.homepage.considering') %></h3>
-    <%= link_to (image_tag("dysphoria2.png", :size => "200x200", :alt => "dysphoria", :padding => "10")), register_path %>
+    <%= link_to (image_tag("dysphoria2.png", :size => "200x200", :alt => "dysphoria", :padding => "10")), register_path, track_click_attributes(:home_cta, :home) %>
   </div>
   <div class="col-md-4 homepage-cta">
     <h3><%= I18n.t('.homepage.join') %></h3>
-    <%= link_to (image_tag("dysphoria3.png", :size => "200x200", :alt => "key", :padding => "10")), register_path %>
+    <%= link_to (image_tag("dysphoria3.png", :size => "200x200", :alt => "key", :padding => "10")), register_path, track_click_attributes(:home_cta, :home) %>
   </div>
   <div class="col-md-4 homepage-cta hidden-xs">
     <h3><%= I18n.t('.homepage.register') %></h3>
-    <%= link_to (image_tag("register.png", :size => "200x200", :alt => "key", :padding => "10")), register_path %>
+    <%= link_to (image_tag("register.png", :size => "200x200", :alt => "key", :padding => "10")), register_path, track_click_attributes(:home_cta, :home) %>
   </div>
 </div>

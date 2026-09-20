@@ -7,7 +7,7 @@
           phones they are shown inline (see logged_out_header.css.scss) and
           there is no menu to hide them in. %>
       <% unless logged_out %>
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" <%= track_click_attribute_string(:menu, :header) %>>
           <span class="sr-only"><%= t('public.extra.navigation_toggle') %></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -32,13 +32,13 @@
           <%= render partial: 'layouts/logged_in' %>
         <% else %>
           <li>
-            <%= link_to I18n.t('.header.news'),  newsfeed_path %>
+            <%= link_to I18n.t('.header.news'),  newsfeed_path, track_click_attributes(:news, :header) %>
           </li>
           <li>
-            <%= link_to I18n.t('.header.procedures'),  procedures_path %>
+            <%= link_to I18n.t('.header.procedures'),  procedures_path, track_click_attributes(:procedures, :header) %>
           </li>
           <li>
-            <%= link_to I18n.t('.header.surgeons'),  surgeons_path %>
+            <%= link_to I18n.t('.header.surgeons'),  surgeons_path, track_click_attributes(:surgeons, :header) %>
           </li>
         <% end %>
       </ul>

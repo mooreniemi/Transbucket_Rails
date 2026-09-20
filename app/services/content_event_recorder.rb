@@ -3,7 +3,7 @@ require 'openssl'
 class ContentEventRecorder
   DEDUPLICATION_WINDOW = 30.minutes
   STATEMENT_TIMEOUT = '100ms'.freeze
-  TRACKED_CONTENT_TYPES = %w[Pin Procedure Surgeon].freeze
+  TRACKED_CONTENT_TYPES = %w[Pin Procedure Surgeon Page].freeze
   TRACKED_EVENT_TYPES = %w[impression open view].freeze
 
   def self.record(attributes)
@@ -42,7 +42,16 @@ class ContentEventRecorder
       TRACKED_EVENT_TYPES.include?(@event_type) &&
       @content_id.to_s.match?(/\A[1-9]\d*\z/) &&
       (@current_user.present? || @visitor_id.present?) &&
-      content_class.exists?(@content_id)
+      target_exists?
+  end
+
+  # 'Page' events are clicks on allowlisted navigation targets (see
+  # TrackedTarget): open only, and only for a known target id. Everything else
+  # must point at a real record.
+  def target_exists?
+    return @event_type == 'open' && TrackedTarget.valid_id?(@content_id) if @content_type == 'Page'
+
+    content_class.exists?(@content_id)
   end
 
   def content_class

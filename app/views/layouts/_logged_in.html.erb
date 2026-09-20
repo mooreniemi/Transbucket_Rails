@@ -1,25 +1,25 @@
 <%# Signed-in navigation, in the order people reach for it. This is also the top
     of the phone menu, so the most-used destinations come first. %>
 <li>
-  <%= link_to I18n.t(".header.submissions"), pins_path %>
+  <%= link_to I18n.t(".header.submissions"), pins_path, track_click_attributes(:submissions, :header) %>
 </li>
 <li>
-  <%= link_to I18n.t('.header.procedures'), procedures_path %>
+  <%= link_to I18n.t('.header.procedures'), procedures_path, track_click_attributes(:procedures, :header) %>
 </li>
 <li>
-  <%= link_to I18n.t('.header.surgeons'), surgeons_path %>
+  <%= link_to I18n.t('.header.surgeons'), surgeons_path, track_click_attributes(:surgeons, :header) %>
 </li>
 <% comparison_type = controller_name == 'surgeons' || params[:type] == 'surgeons' ? 'surgeons' : 'procedures' %>
 <li>
-  <%= link_to t('comparison.title', default: 'Compare'), compare_path(type: comparison_type) %>
+  <%= link_to t('comparison.title', default: 'Compare'), compare_path(type: comparison_type), track_click_attributes(:compare, :header) %>
 </li>
 <% unless current_user.gender.cis? %>
   <li>
-    <%= link_to "#{I18n.t(".header.add")} #{fa_icon('plus-circle', class: 'yellow')}".html_safe, new_pin_path %>
+    <%= link_to "#{I18n.t(".header.add")} #{fa_icon('plus-circle', class: 'yellow')}".html_safe, new_pin_path, track_click_attributes(:add, :header) %>
   </li>
 <% end %>
 <li>
-  <%= link_to I18n.t('.header.news'), newsfeed_path %>
+  <%= link_to I18n.t('.header.news'), newsfeed_path, track_click_attributes(:news, :header) %>
 </li>
 <% if current_user.admin? %>
   <li class="bg-danger">

@@ -7,19 +7,19 @@
   <% cache(["footer", I18n.locale, request.fullpath, Date.today.year]) do %>
     <nav class="footer-nav">
       <div class="footer-community">
-        <a class="footer-cta" href="https://discord.gg/fRW4RnPqgv" rel="noopener">
+        <a class="footer-cta" href="https://discord.gg/fRW4RnPqgv" rel="noopener" <%= track_click_attribute_string(:discord, :footer) %>>
           <%= fa_icon 'comments' %>
           <span><%= I18n.t('.footer.discord_prefix') %> Transbucket.com Discord</span>
         </a>
         <ul class="footer-social">
-          <li><a href="https://www.facebook.com/transbucket" rel="noopener"><%= fa_icon 'facebook' %> <span>Facebook</span></a></li>
-          <li><a href="https://twitter.com/TransBucket" rel="noopener"><%= fa_icon 'twitter' %> <span>Twitter</span></a></li>
+          <li><a href="https://www.facebook.com/transbucket" rel="noopener" <%= track_click_attribute_string(:facebook, :footer) %>><%= fa_icon 'facebook' %> <span>Facebook</span></a></li>
+          <li><a href="https://twitter.com/TransBucket" rel="noopener" <%= track_click_attribute_string(:twitter, :footer) %>><%= fa_icon 'twitter' %> <span>Twitter</span></a></li>
         </ul>
       </div>
       <ul class="footer-legal">
-        <li><%= link_to I18n.t('.footer.about'), about_path %></li>
-        <li><%= link_to I18n.t('.footer.tos'), terms_path %></li>
-        <li><%= link_to I18n.t('.footer.pp'), privacy_path %></li>
+        <li><%= link_to I18n.t('.footer.about'), about_path, track_click_attributes(:about, :footer) %></li>
+        <li><%= link_to I18n.t('.footer.tos'), terms_path, track_click_attributes(:terms, :footer) %></li>
+        <li><%= link_to I18n.t('.footer.pp'), privacy_path, track_click_attributes(:privacy, :footer) %></li>
       </ul>
     </nav>
   <% end %>

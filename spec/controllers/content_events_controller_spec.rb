@@ -38,6 +38,26 @@ describe ContentEventsController, type: :controller do
       expect(ContentEvent.last.event_context).to eq('surface' => 'compare', 'list_mode' => 'procedures', 'filter_signature' => 'scope', 'rank' => '2')
     end
 
+    it 'records a click on an allowlisted navigation target with its surface' do
+      post :create, locale: :en, content_type: 'Page', content_id: TrackedTarget.id_for(:about), event_type: 'open',
+        event_context: { surface: 'footer', target: 'about', ignored: 'nope' }
+
+      expect(response).to have_http_status(:no_content)
+      event = ContentEvent.last
+      expect(event).to have_attributes(content_type: 'Page', content_id: TrackedTarget.id_for(:about), event_type: 'open')
+      expect(event.event_context).to eq('surface' => 'footer', 'target' => 'about')
+    end
+
+    it 'ignores a Page click for an unknown target or a non-open event' do
+      expect {
+        post :create, locale: :en, content_type: 'Page', content_id: 9_999, event_type: 'open', event_context: { surface: 'footer', target: 'nope' }
+        post :create, locale: :en, content_type: 'Page', content_id: TrackedTarget.id_for(:news), event_type: 'view'
+        post :create, locale: :en, content_type: 'Page', content_id: TrackedTarget.id_for(:news), event_type: 'impression'
+      }.not_to change(ContentEvent, :count)
+
+      expect(response).to have_http_status(:no_content)
+    end
+
     it 'associates a signed-in visitor without setting anonymous identifiers' do
       procedure = create(:procedure)
       user = create(:user)

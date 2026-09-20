@@ -24,6 +24,25 @@ describe ContentEventRecorder do
     expect(event.network_hash).not_to include('203.0.113.8')
   end
 
+  it 'records a click on a navigation target without needing a record to exist' do
+    expect(described_class.record(
+      request: request, current_user: nil, locale: :en,
+      content_type: 'Page', content_id: TrackedTarget.id_for(:news), event_type: 'open',
+      visitor_id: 'browser-only-id', event_context: { surface: 'header', target: 'news' }
+    )).to be(true)
+
+    expect(ContentEvent.last).to have_attributes(content_type: 'Page', content_id: TrackedTarget.id_for(:news), event_type: 'open')
+    expect(ContentEvent.last.event_context).to eq('surface' => 'header', 'target' => 'news')
+  end
+
+  it 'rejects an unknown navigation target and any Page event that is not an open' do
+    base = { request: request, current_user: nil, locale: :en, content_type: 'Page', visitor_id: 'browser-only-id' }
+
+    expect(described_class.record(base.merge(content_id: 9_999, event_type: 'open'))).to be(false)
+    expect(described_class.record(base.merge(content_id: TrackedTarget.id_for(:news), event_type: 'view'))).to be(false)
+    expect(ContentEvent.count).to eq(0)
+  end
+
   it 'records a signed-in surgeon view without anonymous identifiers' do
     surgeon = create(:surgeon)
     user = create(:user)

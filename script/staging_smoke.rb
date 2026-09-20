@@ -188,15 +188,25 @@ class StagingSmoke
     [pin_id, params["pin[procedure_attributes][name]"]]
   end
 
+  # Safe mode blurs the real image until it is tapped (it no longer swaps in a
+  # placeholder), on the feed cards and on the pin page.
   def verify_safe_mode(pin_id)
     update_safe_mode('0')
-    unless pin_card_image_url(pin_id) != safe_mode_placeholder_url
-      raise "safe mode off did not show the uploaded image for pin #{pin_id}"
+    plain_card = pin_card(pin_id)
+    if pin_card_image_url(pin_id) == safe_mode_placeholder_url || plain_card.at_css('.safe-blur, [data-safe-reveal]')
+      raise "safe mode off did not show the plain uploaded image for pin #{pin_id}"
     end
 
     update_safe_mode('1')
-    unless pin_card_image_url(pin_id) == safe_mode_placeholder_url
-      raise "safe mode on did not replace the image for pin #{pin_id}"
+    card = pin_card(pin_id)
+    unless card.at_css('.pin-card-image.safe-blur') && card.at_css('button[data-safe-reveal]') && card.at_css('button[data-safe-hide]')
+      raise "safe mode on did not blur the image for pin #{pin_id}"
+    end
+    if pin_card_image_url(pin_id) == safe_mode_placeholder_url
+      raise "safe mode on swapped in the placeholder instead of blurring pin #{pin_id}"
+    end
+    unless html_document(get("/pins/#{pin_id}").body).at_css('.pin-gallery-photo.safe-blur button[data-safe-reveal]')
+      raise "safe mode on did not blur the photos on the page for pin #{pin_id}"
     end
   ensure
     # The smoke account is shared. Leave it in its normal, image-visible state
@@ -221,12 +231,15 @@ class StagingSmoke
     end
   end
 
-  def pin_card_image_url(pin_id)
+  def pin_card(pin_id)
     response = get('/pins')
     raise "pin index failed with #{response.code}" unless response.code.to_i == 200
 
-    card = html_document(response.body).at_css(%(.item[data-pin-id="#{pin_id}"]))
-    image = card && card.at_css('img')
+    html_document(response.body).at_css(%(.item[data-pin-id="#{pin_id}"])) || raise("pin #{pin_id} missing from index")
+  end
+
+  def pin_card_image_url(pin_id)
+    image = pin_card(pin_id).at_css('img')
     image && image['src'] || raise("pin #{pin_id} card image missing from index")
   end
 

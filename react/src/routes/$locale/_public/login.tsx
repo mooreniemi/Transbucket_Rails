@@ -35,8 +35,8 @@ function LoginPage() {
         <Button type="submit">Log in</Button>
         <hr className="border-black-400" />
         <p className="text-center">New to Transbucket?</p>
-        <Button variant="outline" href="/en/register">Register</Button>
-        <Button variant="ghost" href="/en/users/confirmation/new">Didn't receive confirmation instructions?</Button>
+        <Button variant="outline" href={`/${locale}/register`}>Register</Button>
+        <Button variant="ghost" href={`/${locale}/users/confirmation/new`}>Didn't receive confirmation instructions?</Button>
       </form>
     </Card>
   )

@@ -1,8 +1,15 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
-import { Header, HeaderLink, HeaderMenu, HeaderMenuItem } from '#/components/header';
+import {
+  Header,
+  HeaderLink,
+  HeaderMenu,
+  HeaderMenuItem,
+  NavVariantContext,
+} from '#/components/header';
 import { Earth } from 'lucide-react';
 import { createLink } from '@tanstack/react-router';
 import { Button } from '#/components/button';
+import { useContext } from 'react';
 
 export const Route = createFileRoute('/$locale')({
   component: RouteComponent,
@@ -12,6 +19,65 @@ const iconClasses = "w-4 h-4 fill-yellow-500 inline align-middle";
 
 const TanstackMenuItem = createLink(HeaderMenuItem);
 const TanstackMenuLink = createLink(HeaderLink);
+
+interface LocaleSwitcher {
+  currentLocale: string;
+}
+
+function LocaleSwitcher({ currentLocale }: LocaleSwitcher) {
+  return (
+    <HeaderMenu label={
+        <>
+          <Earth className="inline mr-1 align-middle" size="14" />
+          <span className="align-middle">{currentLocale}</span>
+        </>
+      }>
+        <TanstackMenuItem to="." params={(prev) => ({ ...prev, locale: 'en' })}>English</TanstackMenuItem>
+        <TanstackMenuItem to="." params={(prev) => ({ ...prev, locale: 'de' })}>Deutsch</TanstackMenuItem>
+        <TanstackMenuItem to="." params={(prev) => ({ ...prev, locale: 'es' })}>Español</TanstackMenuItem>
+        <TanstackMenuItem to="." params={(prev) => ({ ...prev, locale: 'fr' })}>Français</TanstackMenuItem>
+        <TanstackMenuItem to="." params={(prev) => ({ ...prev, locale: 'it' })}>Italiano</TanstackMenuItem>
+        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'ja'})}>日本語</TanstackMenuItem>
+        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'zh-CN'})}>简体中文</TanstackMenuItem>
+        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'zh-TW'})}>繁體中文</TanstackMenuItem>
+        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'pt-BR'})}>Português (Brasil)</TanstackMenuItem>
+        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'nl'})}>Nederlands</TanstackMenuItem>
+        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'pl'})}>Polski</TanstackMenuItem>
+        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'ru'})}>Русский</TanstackMenuItem>
+        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'tr'})}>Türkçe</TanstackMenuItem>
+        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'vi'})}>Tiếng Việt</TanstackMenuItem>
+        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'ar'})}>العربية</TanstackMenuItem>
+        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'sv'})}>Svenska</TanstackMenuItem>
+    </HeaderMenu>
+  )
+}
+
+interface HeaderSectionRight {
+  locale: string;
+}
+
+function HeaderSectionRight({ locale }: HeaderSectionRight) {
+  const variant = useContext(NavVariantContext);
+  const currentLocale = locale.toUpperCase();
+
+  if (variant === "mobile") {
+    return (
+      <>
+        <TanstackMenuLink to="/$locale/login" params={{ locale }}>Login</TanstackMenuLink>
+        <HeaderMenuItem href={`/${locale}/register`}>Register</HeaderMenuItem>
+        <LocaleSwitcher currentLocale={currentLocale} />
+      </>
+    );
+  }
+
+  return (
+    <>
+      <LocaleSwitcher currentLocale={currentLocale} />
+      <TanstackMenuLink to="/$locale/login" params={{ locale }}>Login</TanstackMenuLink>
+      <Button variant="outline" href="/register">Register</Button>
+    </>
+  );
+}
 
 function FacebookIcon() {
   return (
@@ -65,39 +131,11 @@ function RouteComponent() {
   return (
     <div className="grid grid-cols-1 grid-rows-[auto_1fr_auto] h-svh">
         <Header
-            sectionRight={
-              <>
-                <HeaderMenu label={
-                  <>
-                    <Earth className="inline mr-1 align-middle" size="14" />
-                    <span className="align-middle">{currLocale.toUpperCase()}</span>
-                  </>
-                }>
-                  <TanstackMenuItem to="." params={(prev) => ({ ...prev, locale: 'en' })}>English</TanstackMenuItem>
-                  <TanstackMenuItem to="." params={(prev) => ({ ...prev, locale: 'de' })}>Deutsch</TanstackMenuItem>
-                  <TanstackMenuItem to="." params={(prev) => ({ ...prev, locale: 'es' })}>Español</TanstackMenuItem>
-                  <TanstackMenuItem to="." params={(prev) => ({ ...prev, locale: 'fr' })}>Français</TanstackMenuItem>
-                  <TanstackMenuItem to="." params={(prev) => ({ ...prev, locale: 'it' })}>Italiano</TanstackMenuItem>
-                  <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'ja'})}>日本語</TanstackMenuItem>
-                  <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'zh-CN'})}>简体中文</TanstackMenuItem>
-                  <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'zh-TW'})}>繁體中文</TanstackMenuItem>
-                  <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'pt-BR'})}>Português (Brasil)</TanstackMenuItem>
-                  <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'nl'})}>Nederlands</TanstackMenuItem>
-                  <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'pl'})}>Polski</TanstackMenuItem>
-                  <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'ru'})}>Русский</TanstackMenuItem>
-                  <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'tr'})}>Türkçe</TanstackMenuItem>
-                  <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'vi'})}>Tiếng Việt</TanstackMenuItem>
-                  <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'ar'})}>العربية</TanstackMenuItem>
-                  <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'sv'})}>Svenska</TanstackMenuItem>
-                </HeaderMenu>
-                <TanstackMenuLink to="/$locale/login" params={{locale: currLocale}}>Login</TanstackMenuLink>
-                <Button variant="outline" href="/register">Register</Button>
-              </>
-            }
+            sectionRight={<HeaderSectionRight locale={currLocale} />}
         >
-            <HeaderLink href="/newsfeed">News</HeaderLink>
-            <HeaderLink href="/procedures">Procedures</HeaderLink>
-            <HeaderLink href="/surgeons">Surgeons</HeaderLink>
+            <HeaderLink href={`/${locale}/newsfeed`}>News</HeaderLink>
+            <HeaderLink href={`/${locale}/procedures`}>Procedures</HeaderLink>
+            <HeaderLink href={`/${locale}/surgeons`}>Surgeons</HeaderLink>
         </Header>
         <main className="overflow-auto bg-slate-50">
             <Outlet />
@@ -109,9 +147,9 @@ function RouteComponent() {
             <a href="https://discord.gg/fRW4RnPqgv" className="block" target="_blank" rel="noreferrer noopener"><DiscordIcon/><span className="align-middle ml-1">Join us on Discord</span></a>
           </div>
           <div className="grid auto-cols-auto grid-flow-col justify-start gap-2 text-xs mt-2" style={{columnRule: "1px solid var(--color-black-200)"}}>
-            <a href="/about">About</a>
-            <a href="/terms">Terms of service</a>
-            <a href="/privacy">Privacy policy</a>
+            <a href={`/${locale}/about`}>About</a>
+            <a href={`/${locale}/terms`}>Terms of service</a>
+            <a href={`/${locale}/privacy`}>Privacy policy</a>
           </div>
         </footer>
     </div>

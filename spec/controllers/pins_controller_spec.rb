@@ -25,6 +25,26 @@ describe PinsController, :type => :controller do
         expect(response).to be_success
       end
 
+      it 'passes the signed-in user safe-mode preference to pin cards' do
+        user.preference.update_attributes!(safe_mode: true)
+        create(:pin, user: user)
+
+        get :index
+
+        expect(assigns(:safe_mode)).to eq(true)
+        expect(response.body).to include('http://placekitten.com/200/300')
+      end
+
+      it 'shows pin images when the signed-in user has not enabled safe mode' do
+        user.preference.update_attributes!(safe_mode: false)
+        create(:pin, user: user)
+
+        get :index
+
+        expect(assigns(:safe_mode)).to eq(false)
+        expect(response.body).not_to include('http://placekitten.com/200/300')
+      end
+
       it "renders the authenticated index with a locale and user filter" do
         get :index, locale: 'ja', user: user.id
 
@@ -65,7 +85,7 @@ describe PinsController, :type => :controller do
 
         get :index, feed: 'for_you'
 
-        expect(response.body).to include('<h1>For You</h1>')
+        expect(response.body).to include('<h1 class="feed-title">For You</h1>')
         expect(response.body).not_to include('<h1>Recent Submissions</h1>')
       end
 

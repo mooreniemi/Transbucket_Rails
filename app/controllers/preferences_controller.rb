@@ -1,16 +1,18 @@
 class PreferencesController < ApplicationController
+  before_filter :authenticate_user!
+
   def update
-    user = User.find(params[:user_id])
-    preference = Preference.find_by_user_id(user.id)
-
-    preference.safe_mode = true if params[:preference]["safe_mode"] == "1"
-    preference.notification = true if params[:preference]["notification"] == "1"
-
-    preference.safe_mode = false if params[:preference]["safe_mode"] == "0"
-    preference.notification = false if params[:preference]["notification"] == "0"
-
-    preference.save!
+    # The nested user id is only part of the route. Preferences always belong
+    # to the signed-in user, never to an id supplied by the browser.
+    preference = current_user.preference || current_user.build_preference
+    preference.update_attributes!(preference_params)
 
     redirect_to edit_user_registration_path
+  end
+
+  private
+
+  def preference_params
+    params.require(:preference).permit(:safe_mode, :notification)
   end
 end

@@ -74,6 +74,9 @@ class User < ActiveRecord::Base
   private
 
   def set_preference
-    Preference.new(user_id: self.id).save if self.preference.nil?
+    # Build through the association so a just-created user can use its
+    # preference immediately (rather than having an existing row but a stale
+    # cached `user.preference == nil` until the next request).
+    build_preference.save! if preference.nil?
   end
 end

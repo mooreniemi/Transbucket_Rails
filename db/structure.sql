@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict hKohc6fgTwCjE07FKdk1Hl5hWSNwcEbHZBpP3kMOtVaWBidASVg0adB9BncP0pH
+\restrict t7fhqQvZ3cttV6viQgblNxzWx9ddyX4aYxBJ4qlwjT1kcZue6isG69YpipMn20F
 
 -- Dumped from database version 16.15 (Debian 16.15-1.pgdg13+2)
 -- Dumped by pg_dump version 16.15 (Homebrew)
@@ -693,6 +693,44 @@ ALTER SEQUENCE public.tags_id_seq OWNED BY public.tags.id;
 
 
 --
+-- Name: user_trust_grants; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_trust_grants (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    granted_by_user_id integer,
+    kind character varying NOT NULL,
+    source character varying DEFAULT 'automatic'::character varying NOT NULL,
+    internal_note text,
+    granted_at timestamp without time zone NOT NULL,
+    revoked_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: user_trust_grants_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.user_trust_grants_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_trust_grants_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.user_trust_grants_id_seq OWNED BY public.user_trust_grants.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -910,6 +948,13 @@ ALTER TABLE ONLY public.tags ALTER COLUMN id SET DEFAULT nextval('public.tags_id
 
 
 --
+-- Name: user_trust_grants id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_trust_grants ALTER COLUMN id SET DEFAULT nextval('public.user_trust_grants_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1065,6 +1110,14 @@ ALTER TABLE ONLY public.taggings
 
 ALTER TABLE ONLY public.tags
     ADD CONSTRAINT tags_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_trust_grants user_trust_grants_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_trust_grants
+    ADD CONSTRAINT user_trust_grants_pkey PRIMARY KEY (id);
 
 
 --
@@ -1273,6 +1326,20 @@ CREATE UNIQUE INDEX index_tags_on_name ON public.tags USING btree (name);
 
 
 --
+-- Name: index_user_trust_grants_on_granted_by_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_trust_grants_on_granted_by_user_id ON public.user_trust_grants USING btree (granted_by_user_id);
+
+
+--
+-- Name: index_user_trust_grants_on_user_id_and_kind; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_user_trust_grants_on_user_id_and_kind ON public.user_trust_grants USING btree (user_id, kind);
+
+
+--
 -- Name: index_users_on_confirmation_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1347,7 +1414,7 @@ ALTER TABLE ONLY public.procedure_translations
 -- PostgreSQL database dump complete
 --
 
-\unrestrict hKohc6fgTwCjE07FKdk1Hl5hWSNwcEbHZBpP3kMOtVaWBidASVg0adB9BncP0pH
+\unrestrict t7fhqQvZ3cttV6viQgblNxzWx9ddyX4aYxBJ4qlwjT1kcZue6isG69YpipMn20F
 
 SET search_path TO "$user", public;
 
@@ -1500,4 +1567,8 @@ INSERT INTO schema_migrations (version) VALUES ('20260919132000');
 INSERT INTO schema_migrations (version) VALUES ('20260919133000');
 
 INSERT INTO schema_migrations (version) VALUES ('20260919134000');
+
+INSERT INTO schema_migrations (version) VALUES ('20260920060000');
+
+INSERT INTO schema_migrations (version) VALUES ('20260920061000');
 

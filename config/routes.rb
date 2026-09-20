@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :users do
       resource :preferences
     end
+    resources :trust_grants, path: 'trust', only: [:index, :create, :destroy]
 
     resources :comments, :only => [:new, :create, :destroy] do
       resources :flags, :only => [:create]

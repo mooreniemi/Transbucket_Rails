@@ -1,0 +1,11 @@
+<%# Records one "view" per compared entity (rank 1 = first, 2 = second) so we can
+    count comparisons that were actually run, and which kind. It sits outside the
+    fragment cache on purpose, so it fires on every render. %>
+<% [[first, 1], [second, 2]].each do |entity, position| %>
+  <%= content_tag :div, '', hidden: true, 'data-content-event' => true,
+    'data-content-event-url' => content_events_path,
+    'data-content-type' => content_type,
+    'data-content-id' => entity.id,
+    'data-event-type' => 'view',
+    'data-event-context' => { surface: 'compare', list_mode: kind, filter_signature: (scoped ? 'scope' : ''), rank: position.to_s }.to_json %>
+<% end %>

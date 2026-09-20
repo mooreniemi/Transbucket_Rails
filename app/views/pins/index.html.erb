@@ -28,7 +28,7 @@
 <% end %>
 <div id="pins">
   <% @presenter.pins.each_with_index do |pin, index| %>
-    <%= render partial: 'pin', locals: { pin: pin, event_context: @presenter.list_event_context.merge(rank: index + 1) } %>
+    <%= render partial: 'pin', locals: { pin: pin, event_context: @presenter.list_event_context.merge(rank: @presenter.rank_offset + index + 1) } %>
   <% end %>
 </div>
 <div id="paginator">

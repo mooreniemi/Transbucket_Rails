@@ -6,7 +6,7 @@
     var contentType = element.getAttribute('data-content-type');
     var contentId = element.getAttribute('data-content-id');
     var eventType = eventTypeOverride || element.getAttribute('data-event-type');
-    var eventContext = parseEventContext(element.getAttribute('data-event-context'));
+    var eventContext = mergeContext(parseEventContext(element.getAttribute('data-event-context')), dynamicContext(element));
 
     if (!url || !contentType || !contentId || !eventType) { return; }
 
@@ -26,6 +26,33 @@
     } catch (error) {
       // Analytics is optional; do not surface or rethrow telemetry failures.
     }
+  }
+
+  // Directory rows are re-sorted in the browser, so a row's position and the
+  // sort mode are read at click time; server-rendered values would be stale.
+  function dynamicContext(element) {
+    var context = {};
+    if (!element.getAttribute('data-event-rank-from-row')) { return context; }
+
+    var row = element;
+    while (row && row.nodeName !== 'TR') { row = row.parentNode; }
+    if (!row || !row.parentNode) { return context; }
+
+    var siblings = row.parentNode.children, position = 0;
+    for (var index = 0; index < siblings.length; index += 1) {
+      if (siblings[index] === row) { position = index + 1; break; }
+    }
+    var table = row.parentNode;
+    while (table && table.nodeName !== 'TABLE') { table = table.parentNode; }
+
+    context.rank = String(position);
+    context.list_mode = (table && table.getAttribute('data-sort-state')) || 'default';
+    return context;
+  }
+
+  function mergeContext(base, extra) {
+    Object.keys(extra).forEach(function(key) { base[key] = extra[key]; });
+    return base;
   }
 
   function parseEventContext(value) {

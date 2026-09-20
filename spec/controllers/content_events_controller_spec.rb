@@ -7,15 +7,35 @@ describe ContentEventsController, type: :controller do
 
       post :create, locale: :en, content_type: 'Procedure', content_id: procedure.id, event_type: 'view',
         client_context: { device_class: 'mobile', browser_family: 'Firefox', browser_major: '130', os_family: 'Android', viewport_bucket: 'small', beacon: 'yes', fetch: 'yes', save_data: 'no', connection_type: '4g' },
-        event_context: { surface: 'pins_index', list_mode: 'recent', filter_signature: '', rank: '1', ranking_version: 'recent_submission_activity_v1', ignored: 'nope' }
+        event_context: { surface: 'pins_index', list_mode: 'recent', filter_signature: '', rank: '1', ranking_version: 'recent_submission_activity_v1', page: '2', ignored: 'nope' }
 
       expect(response).to have_http_status(:no_content)
       event = ContentEvent.last
       expect(event).to have_attributes(content_type: 'Procedure', content_id: procedure.id, event_type: 'view')
       expect(event.client_context).to include('device_class' => 'mobile', 'browser_family' => 'Firefox', 'os_family' => 'Android')
-      expect(event.event_context).to eq('surface' => 'pins_index', 'list_mode' => 'recent', 'filter_signature' => '', 'rank' => '1', 'ranking_version' => 'recent_submission_activity_v1')
+      expect(event.event_context).to eq('surface' => 'pins_index', 'list_mode' => 'recent', 'filter_signature' => '', 'rank' => '1', 'ranking_version' => 'recent_submission_activity_v1', 'page' => '2')
       expect(event.user).to be_nil
       expect(cookies.signed[:content_event_visitor_id]).to be_present
+    end
+
+    it 'records a directory row open with its position and sort mode' do
+      surgeon = create(:surgeon)
+
+      post :create, locale: :en, content_type: 'Surgeon', content_id: surgeon.id, event_type: 'open',
+        event_context: { surface: 'surgeons_index', list_mode: 'submissions-desc', rank: '4' }
+
+      expect(response).to have_http_status(:no_content)
+      expect(ContentEvent.last).to have_attributes(content_type: 'Surgeon', content_id: surgeon.id, event_type: 'open')
+      expect(ContentEvent.last.event_context).to eq('surface' => 'surgeons_index', 'list_mode' => 'submissions-desc', 'rank' => '4')
+    end
+
+    it 'records a compared entity as a view on the compare surface' do
+      procedure = create(:procedure)
+
+      post :create, locale: :en, content_type: 'Procedure', content_id: procedure.id, event_type: 'view',
+        event_context: { surface: 'compare', list_mode: 'procedures', filter_signature: 'scope', rank: '2' }
+
+      expect(ContentEvent.last.event_context).to eq('surface' => 'compare', 'list_mode' => 'procedures', 'filter_signature' => 'scope', 'rank' => '2')
     end
 
     it 'associates a signed-in visitor without setting anonymous identifiers' do

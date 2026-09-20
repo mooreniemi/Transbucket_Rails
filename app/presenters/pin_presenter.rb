@@ -55,8 +55,20 @@ class PinPresenter
       surface: 'pins_index',
       list_mode: list_mode,
       filter_signature: active_filter_names.join(','),
-      ranking_version: ranking_version
+      ranking_version: ranking_version,
+      page: current_page
     }
+  end
+
+  # 1-based page being shown (a missing or invalid page param means page 1).
+  def current_page
+    [@page.to_i, 1].max
+  end
+
+  # Number of pins on earlier pages, so ranks keep counting up across pages
+  # (page 2 starts at 31, not back at 1) and opens can be compared by depth.
+  def rank_offset
+    (current_page - 1) * Pin.per_page
   end
 
   private

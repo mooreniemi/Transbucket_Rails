@@ -44,7 +44,7 @@ class ContentEventBatchRecorder
       next unless existing_ids.include?(id) && !seen_ids[id]
 
       context = event[:event_context].respond_to?(:to_h) ? event[:event_context].to_h.stringify_keys : {}
-      candidates << { content_id: id, event_context: context.slice(*%w[surface list_mode filter_signature rank ranking_version]) }
+      candidates << { content_id: id, event_context: context.slice(*%w[surface list_mode filter_signature rank ranking_version page]) }
       seen_ids[id] = true
     end
   end

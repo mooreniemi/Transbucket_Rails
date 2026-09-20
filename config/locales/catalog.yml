@@ -188,6 +188,8 @@ en:
     submissions_intro: Browse recent submissions or use the search box to find a procedure,
       surgeon, or complication.
     recent_submissions: Recent Submissions
+    recent: Recent
+    for_you: For You
     search_results: Search Results
     search_description: Search Transbucket submissions by procedure, surgeon, complication,
       or user.
@@ -532,6 +534,11 @@ en:
     auth:
       username: Username
       username_or_email: Username or email
+      show_password: Show password
+      hide_password: Hide password
+      have_account: Already have an account?
+      new_here: New to Transbucket?
+      password_hint: At least %{count} characters.
       password: Password
       password_confirmation: Password confirmation
       your_name: Your name
@@ -923,6 +930,8 @@ de:
     submissions_intro: Durchsuche aktuelle Beiträge oder suche nach einem Eingriff,
       Chirurgen oder einer Komplikation.
     recent_submissions: Aktuelle Beiträge
+    recent: Neueste
+    for_you: Für dich
     search_results: Suchergebnisse
     search_description: Suche Transbucket-Beiträge nach Eingriff, Chirurg, Komplikation
       oder Benutzer.
@@ -1062,6 +1071,11 @@ de:
     auth:
       username: Benutzername
       username_or_email: Benutzername oder E-Mail
+      show_password: Passwort anzeigen
+      hide_password: Passwort verbergen
+      have_account: Du hast bereits ein Konto?
+      new_here: Neu bei Transbucket?
+      password_hint: Mindestens %{count} Zeichen.
       password: Passwort
       password_confirmation: Passwort bestätigen
       your_name: Dein Name
@@ -1473,6 +1487,8 @@ es:
     submissions_intro: Consulta publicaciones recientes o busca un procedimiento,
       cirujano o complicación.
     recent_submissions: Publicaciones recientes
+    recent: Recientes
+    for_you: Para ti
     search_results: Resultados de búsqueda
     search_description: Busca publicaciones de Transbucket por procedimiento, cirujano,
       complicación o usuario.
@@ -1607,6 +1623,11 @@ es:
     auth:
       username: Nombre de usuario
       username_or_email: Nombre de usuario o correo electrónico
+      show_password: Mostrar contraseña
+      hide_password: Ocultar contraseña
+      have_account: "¿Ya tienes una cuenta?"
+      new_here: "¿Es tu primera vez en Transbucket?"
+      password_hint: Al menos %{count} caracteres.
       password: Contraseña
       password_confirmation: Confirmación de contraseña
       your_name: Tu nombre
@@ -2009,6 +2030,8 @@ fr:
     submissions_intro: Consultez les contributions récentes ou recherchez une intervention,
       un chirurgien ou une complication.
     recent_submissions: Contributions récentes
+    recent: Récentes
+    for_you: Pour vous
     search_results: Résultats de recherche
     search_description: Recherchez des contributions Transbucket par intervention,
       chirurgien, complication ou utilisateur.
@@ -2149,6 +2172,11 @@ fr:
     auth:
       username: Nom d’utilisateur
       username_or_email: Nom d’utilisateur ou e-mail
+      show_password: Afficher le mot de passe
+      hide_password: Masquer le mot de passe
+      have_account: Vous avez déjà un compte ?
+      new_here: Première visite sur Transbucket ?
+      password_hint: Au moins %{count} caractères.
       password: Mot de passe
       password_confirmation: Confirmation du mot de passe
       your_name: Votre nom
@@ -2541,6 +2569,8 @@ it:
     submissions_intro: Esplora i contributi recenti o cerca una procedura, un chirurgo
       o una complicanza.
     recent_submissions: Contributi recenti
+    recent: Recenti
+    for_you: Per te
     search_results: Risultati della ricerca
     search_description: Cerca i contributi Transbucket per procedura, chirurgo, complicanza
       o utente.
@@ -2673,6 +2703,11 @@ it:
     auth:
       username: Nome utente
       username_or_email: Nome utente o email
+      show_password: Mostra password
+      hide_password: Nascondi password
+      have_account: Hai già un account?
+      new_here: Prima volta su Transbucket?
+      password_hint: Almeno %{count} caratteri.
       password: Password
       password_confirmation: Conferma password
       your_name: Il tuo nome
@@ -3036,6 +3071,8 @@ ja:
     submissions: 投稿
     submissions_intro: 最近の投稿を見たり、手術、外科医、合併症を検索したりできます。
     recent_submissions: 最近の投稿
+    recent: 最近
+    for_you: おすすめ
     search_results: 検索結果
     search_description: 手術、外科医、合併症、ユーザーでTransbucketの投稿を検索します。
     name: 名前
@@ -3160,6 +3197,11 @@ ja:
     auth:
       username: ユーザー名
       username_or_email: ユーザー名またはメールアドレス
+      show_password: パスワードを表示
+      hide_password: パスワードを非表示
+      have_account: すでにアカウントをお持ちですか？
+      new_here: Transbucketは初めてですか？
+      password_hint: "%{count}文字以上で入力してください。"
       password: パスワード
       password_confirmation: パスワード確認
       your_name: 氏名
@@ -3506,6 +3548,8 @@ zh-CN:
     submissions: 投稿
     submissions_intro: 浏览最新投稿，或搜索手术项目、医生或并发症。
     recent_submissions: 最新投稿
+    recent: 最新
+    for_you: 为你推荐
     search_results: 搜索结果
     search_description: 按手术项目、医生、并发症或用户搜索 Transbucket 投稿。
     name: 名称
@@ -3630,6 +3674,11 @@ zh-CN:
     auth:
       username: 用户名
       username_or_email: 用户名或邮箱
+      show_password: 显示密码
+      hide_password: 隐藏密码
+      have_account: 已有账号？
+      new_here: 初次使用 Transbucket？
+      password_hint: 至少 %{count} 个字符。
       password: 密码
       password_confirmation: 确认密码
       your_name: 姓名
@@ -4001,6 +4050,8 @@ zh-TW:
     submissions: 投稿
     submissions_intro: 瀏覽最新投稿，或搜尋手術項目、醫師或併發症。
     recent_submissions: 最新投稿
+    recent: 最新
+    for_you: 為你推薦
     search_results: 搜尋結果
     search_description: 依手術項目、醫師、併發症或使用者搜尋 Transbucket 投稿。
     name: 名稱
@@ -4125,6 +4176,11 @@ zh-TW:
     auth:
       username: 使用者名稱
       username_or_email: 使用者名稱或電子郵件
+      show_password: 顯示密碼
+      hide_password: 隱藏密碼
+      have_account: 已有帳號？
+      new_here: 第一次使用 Transbucket？
+      password_hint: 至少 %{count} 個字元。
       password: 密碼
       password_confirmation: 確認密碼
       your_name: 姓名
@@ -4298,6 +4354,8 @@ pt-BR:
     submissions_intro: Veja publicações recentes ou pesquise um procedimento, cirurgião
       ou complicação.
     recent_submissions: Publicações recentes
+    recent: Recentes
+    for_you: Para você
     search_results: Resultados da pesquisa
     search_description: Pesquise publicações do Transbucket por procedimento, cirurgião,
       complicação ou usuário.
@@ -4432,6 +4490,11 @@ pt-BR:
     auth:
       username: Nome de usuário
       username_or_email: Nome de usuário ou e-mail
+      show_password: Mostrar senha
+      hide_password: Ocultar senha
+      have_account: Já tem uma conta?
+      new_here: É a sua primeira vez no Transbucket?
+      password_hint: Pelo menos %{count} caracteres.
       password: Senha
       password_confirmation: Confirmação da senha
       your_name: Seu nome
@@ -4610,6 +4673,8 @@ nl:
     submissions_intro: Bekijk recente bijdragen of zoek naar een procedure, chirurg
       of complicatie.
     recent_submissions: Recente bijdragen
+    recent: Recent
+    for_you: Voor jou
     search_results: Zoekresultaten
     search_description: Zoek Transbucket-bijdragen op procedure, chirurg, complicatie
       of gebruiker.
@@ -4742,6 +4807,11 @@ nl:
     auth:
       username: Gebruikersnaam
       username_or_email: Gebruikersnaam of e-mail
+      show_password: Wachtwoord tonen
+      hide_password: Wachtwoord verbergen
+      have_account: Heb je al een account?
+      new_here: Nieuw bij Transbucket?
+      password_hint: Minimaal %{count} tekens.
       password: Wachtwoord
       password_confirmation: Wachtwoord bevestigen
       your_name: Je naam
@@ -4922,6 +4992,8 @@ pl:
     submissions_intro: Przeglądaj najnowsze wpisy lub wyszukaj zabieg, chirurga albo
       powikłanie.
     recent_submissions: Najnowsze wpisy
+    recent: Najnowsze
+    for_you: Dla ciebie
     search_results: Wyniki wyszukiwania
     search_description: Szukaj wpisów Transbucket według zabiegu, chirurga, powikłania
       lub użytkownika.
@@ -5052,6 +5124,11 @@ pl:
     auth:
       username: Nazwa użytkownika
       username_or_email: Nazwa użytkownika lub e-mail
+      show_password: Pokaż hasło
+      hide_password: Ukryj hasło
+      have_account: Masz już konto?
+      new_here: Pierwszy raz w Transbucket?
+      password_hint: Co najmniej %{count} znaków.
       password: Hasło
       password_confirmation: Potwierdzenie hasła
       your_name: Twoje imię
@@ -5232,6 +5309,8 @@ ru:
     submissions_intro: Просматривайте последние публикации или ищите операцию, хирурга
       или осложнение.
     recent_submissions: Последние публикации
+    recent: Недавние
+    for_you: Для вас
     search_results: Результаты поиска
     search_description: Ищите публикации Transbucket по операции, хирургу, осложнению
       или пользователю.
@@ -5363,6 +5442,11 @@ ru:
     auth:
       username: Имя пользователя
       username_or_email: Имя пользователя или email
+      show_password: Показать пароль
+      hide_password: Скрыть пароль
+      have_account: Уже есть аккаунт?
+      new_here: Впервые на Transbucket?
+      password_hint: Не менее %{count} символов.
       password: Пароль
       password_confirmation: Подтверждение пароля
       your_name: Ваше имя
@@ -5538,6 +5622,8 @@ tr:
     submissions_intro: Son gönderilere göz atın veya bir prosedür, cerrah ya da komplikasyon
       arayın.
     recent_submissions: Son gönderiler
+    recent: Son gönderiler
+    for_you: Sana özel
     search_results: Arama sonuçları
     search_description: Transbucket gönderilerini prosedür, cerrah, komplikasyon veya
       kullanıcıya göre arayın.
@@ -5668,6 +5754,11 @@ tr:
     auth:
       username: Kullanıcı adı
       username_or_email: Kullanıcı adı veya e-posta
+      show_password: Parolayı göster
+      hide_password: Parolayı gizle
+      have_account: Zaten hesabınız var mı?
+      new_here: Transbucket’a ilk kez mi geliyorsunuz?
+      password_hint: En az %{count} karakter.
       password: Şifre
       password_confirmation: Şifre onayı
       your_name: Adınız
@@ -5845,6 +5936,8 @@ vi:
     submissions_intro: Xem bài đăng gần đây hoặc tìm thủ thuật, bác sĩ phẫu thuật
       hay biến chứng.
     recent_submissions: Bài đăng gần đây
+    recent: Gần đây
+    for_you: Dành cho bạn
     search_results: Kết quả tìm kiếm
     search_description: Tìm bài đăng Transbucket theo thủ thuật, bác sĩ, biến chứng
       hoặc người dùng.
@@ -5974,6 +6067,11 @@ vi:
     auth:
       username: Tên người dùng
       username_or_email: Tên người dùng hoặc email
+      show_password: Hiện mật khẩu
+      hide_password: Ẩn mật khẩu
+      have_account: Bạn đã có tài khoản?
+      new_here: Lần đầu đến với Transbucket?
+      password_hint: Tối thiểu %{count} ký tự.
       password: Mật khẩu
       password_confirmation: Xác nhận mật khẩu
       your_name: Tên của bạn
@@ -6143,6 +6241,8 @@ ar:
     submissions: المنشورات
     submissions_intro: تصفح المنشورات الحديثة أو ابحث عن إجراء أو جراح أو مضاعفة.
     recent_submissions: المنشورات الحديثة
+    recent: الأحدث
+    for_you: مخصّص لك
     search_results: نتائج البحث
     search_description: ابحث في منشورات Transbucket حسب الإجراء أو الجراح أو المضاعفة
       أو المستخدم.
@@ -6272,6 +6372,11 @@ ar:
     auth:
       username: اسم المستخدم
       username_or_email: اسم المستخدم أو البريد الإلكتروني
+      show_password: إظهار كلمة المرور
+      hide_password: إخفاء كلمة المرور
+      have_account: لديك حساب بالفعل؟
+      new_here: هل هذه أول مرة لك على Transbucket؟
+      password_hint: "%{count} أحرف على الأقل."
       password: كلمة المرور
       password_confirmation: تأكيد كلمة المرور
       your_name: اسمك

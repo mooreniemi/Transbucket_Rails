@@ -6,6 +6,9 @@ sv:
     submissions: Bidrag
     account: Konto
     search: Sök
+    filter: Filter
+    add: Lägg till
+    home: Hem
   locale:
     label: Språk
     names:
@@ -13,6 +16,9 @@ sv:
   homepage:
     title: Transbucket
     intro: Verkliga erfarenheter av könsbekräftande ingrepp
+    considering: Funderar du på könsbekräftande vård eller ett ingrepp kopplat till transition?
+    join: Du borde bli en del av vår gemenskap.
+    register: Registrera dig för att dela eller se verkliga resultat.
   directory:
     procedures_title: Ingrepp
     procedures_intro: Bläddra bland ingrepp för att jämföra verkliga bidrag, kirurgers länkar och diskussioner.
@@ -23,6 +29,14 @@ sv:
     average_satisfaction: Genomsnittlig tillfredsställelse
     average_sensation: Genomsnittlig känsel
     login_or_register_to_see_more: "%{login} eller %{register} för att se mer"
+    submissions_intro: Bläddra bland de senaste bidragen eller använd sökrutan för att hitta ett ingrepp, en kirurg eller en komplikation.
+    recent_submissions: Senaste bidrag
+    search_results: Sökresultat
+    search_description: Sök bland bidrag på Transbucket efter ingrepp, kirurg, komplikation eller användare.
+    discussion_threads: Diskussionstrådar
+    register_to_see_more: Registrera dig för att se mer
+    recent: Senaste
+    for_you: För dig
   newsfeed:
     title: Nyheter
     description: Senaste uppdateringarna från Transbucket.
@@ -37,13 +51,57 @@ sv:
       password_confirmation: Bekräfta lösenord
       your_name: Ditt namn
       gender: Kön
+      comments_placeholder: Kommentarer som bryter mot våra användarvillkor kan leda till omedelbar och permanent avstängning av kontot.
+      submit: Skicka
+      submitting: Skickar...
+      show_password: Visa lösenord
+      hide_password: Dölj lösenord
+      have_account: Har du redan ett konto?
+      new_here: Ny på Transbucket?
+      password_hint: Minst %{count} tecken.
     pin:
       by: av
-      doctor_prefix: Dr. 
+      doctor_prefix: 'Dr. '
       unknown: okänd kirurg
       average_satisfaction: Genomsnittlig tillfredsställelse
+      unknown_surgeon: okänd kirurg
+      surgeon: Kirurg
+      procedure: Ingrepp
+      cost: Kostnad
+      complications: Komplikationer
+      wants_revision: Önskar revision
+      post_op_sensation: Känsel efter operation
+      post_op_satisfaction: Tillfredsställelse efter operation
+      submitter: Inskickare
+      discussion: Diskussion
+      respect_pronouns: 'Respektera pronomen när du skriver till bidragets författare. Författarens föredragna pronomen är:'
+      add_thread: lägg till tråd
+      see_all_submissions: Visa alla bidrag
+      classified_as: Det här ingreppet klassas som ett ”%{body_type}”-ingrepp.
+      average_sensation: Genomsnittlig känsel
+      reply: svara
+      remove: Ta bort
+      remove_confirm: Vill du verkligen ta bort den här kommentaren?
+      updated: Uppdaterad för %{time} sedan
     form:
       surgeon_url: Kirurgens webbplats
+      photos: Foton
+      details: Detaljer
+      submit_now: Skicka in nu
+      experience_glance: 'Din upplevelse i korthet:'
+      cost: Kostnad
+      seeking_revision: Söker du en revision?
+      sensation: Känsel
+      satisfaction: Tillfredsställelse
+      complications: Komplikationer
+      complications_placeholder: hematom, fistel
+      experience_depth: 'Din upplevelse på djupet:'
+      drop_files: Släpp filer här för att ladda upp
+      caption: Bildtext
+      remove: Ta bort
+      add_surgeon: Lägg till en ny kirurg
+      surgeon_last_name: Kirurgens efternamn
+      surgeon_first_name: Kirurgens förnamn
     extra:
       sign_in: Logga in
       sign_up: Registrera dig
@@ -52,17 +110,67 @@ sv:
       gender: Kön
       name: Namn
       email: E-post
+      add_procedure: Lägg till ett nytt ingrepp
+      procedure_name: Ingreppets namn
+      describe_procedure: Beskriv ingreppet
+      contact_us: Kontakta oss
+      return_email: Din e-postadress för svar
+      subject: Ämne
+      contact_message: Hej Transbucket-administratörer!
+      send: Skicka
+      edit_profile: Redigera profil för %{resource}
+      new_password: Nytt lösenord
+      password_confirmation: Bekräfta nytt lösenord
+      current_password: Nuvarande lösenord
+      update: Uppdatera
+      profile_help: På Transbucket styr kön vilka pronomen du omtalas med. För närvarande motsvarar könen MTF och FTM binära pronomen. För könsneutrala pronomen, välj Ingen eller Genderqueer som kön. Framtida uppdateringar gör det möjligt att välja pronomen oberoende av könsidentitet.
+      new_submission: Nytt bidrag
+      editing_submission: Redigerar bidrag
+      submissions_by_user: 'Resultat: bidrag från användare'
+      post_op_sensation: Känsel efter operation
+      post_op_satisfaction: Tillfredsställelse efter operation
+      image_caption: Bildtext
+      caption: Bildtext
+      browse_for_image: Välj bild
+      browse: Bläddra
+      navigation_toggle: Visa/dölj navigering
+      logo_alt: Startsida
+      top: Överkropp
+      bottom: Underliv
+      face: Ansikte
+      other: Annat
+      ftm: FTM
+      mtf: MTF
+      error_count: "%{count} fel i det här formuläret:"
+    confirmations:
+      are_you_sure: Är du säker?
+    actions:
+      deleting: tar bort...
+      updating: uppdaterar...
+      update_caption: uppdatera bildtext
   settings:
     safe_mode: Säkert läge
     safe_mode_help: Dölj känsliga bilder
     notifications: Aviseringar
     update: Uppdatera
     cancel_account: Avsluta konto
+    title: Kontoinställningar
+    notifications_help: Aviseringsläget skickar e-post om nya kommentarer på dina bidrag.
+    cancel_confirm: Är du säker?
   profile:
     name: Namn
     email: E-post
     username: Användarnamn
     gender: Kön
+    edit_title: Redigera profil för %{resource}
+    profile_help: Kön styr vilka pronomen som används om dig på Transbucket. Välj Ingen eller Genderqueer för könsneutrala pronomen.
+    new_password: Nytt lösenord
+    current_password: Nuvarande lösenord
+    update: Uppdatera
+    submissions: Dina bidrag
+    submit_now: Skicka in nu
+    delete_confirm: Är du säker?
+    submission: bidrag
   explanations:
     username: Ditt användarnamn visas för alla användare och används när du loggar in. Det är unikt på webbplatsen.
     email: Din e-postadress visas för administratörer men inte för andra användare. Din e-postadress kommer att bekräftas.
@@ -84,14 +192,14 @@ sv:
       confirmation_instructions:
         subject: Bekräftelseinstruktioner
         greeting: Hej %{recipient}
-        instruction: "Du kan bekräfta din e-postadress genom länken nedan:"
+        instruction: 'Du kan bekräfta din e-postadress genom länken nedan:'
         action: Bekräfta mitt konto
         reminder_notice: Detta är en påminnelse. Vi ser att du ännu inte har bekräftat ditt konto.
         reminder_help: Behöver du hjälp med att bekräfta kontot? Svara på det här e-postmeddelandet.
       reset_password_instructions:
         subject: Instruktioner för återställning av lösenord
         greeting: Hej %{recipient}
-        instruction: "Någon har begärt en länk för att ändra ditt lösenord. Du kan göra det via länken nedan:"
+        instruction: 'Någon har begärt en länk för att ändra ditt lösenord. Du kan göra det via länken nedan:'
         action: Ändra mitt lösenord
         instruction_2: Om du inte begärde detta kan du ignorera meddelandet.
         instruction_3: Ditt lösenord ändras inte förrän du öppnar länken ovan och skapar ett nytt.
@@ -99,14 +207,14 @@ sv:
         subject: Instruktioner för upplåsning
         greeting: Hej %{recipient}
         message: Ditt konto har låsts efter för många misslyckade inloggningsförsök.
-        instruction: "Klicka på länken nedan för att låsa upp ditt konto:"
+        instruction: 'Klicka på länken nedan för att låsa upp ditt konto:'
         action: Lås upp mitt konto
       password_change:
         subject: Ditt lösenord har ändrats
         greeting: Hej %{recipient}
         message: Vi kontaktar dig för att meddela att ditt lösenord har ändrats.
   comment_mailer:
-    subject: "Transbucket.com: Ny %{comment_type} på %{id}"
+    subject: 'Transbucket.com: Ny %{comment_type} på %{id}'
     types:
       comment: kommentar
       question: fråga
@@ -116,3 +224,54 @@ sv:
     this_link: den här länken
     flag_help: Om du har synpunkter på kommentaren kan du flagga den. Tre flaggor från olika användare skickar den automatiskt till granskning.
     unsubscribe: Sluta få dessa aviseringar genom att ändra dina aviseringsinställningar på %{link}.
+  footer:
+    about: Om
+    tos: Användarvillkor
+    pp: Integritetspolicy
+    discord_prefix: Gå med i
+  site:
+    description: Gemenskap för att dela foton av transitions- och könsbekräftande ingrepp, kirurgprofiler och verkliga bidrag.
+  filter_menu:
+    apply: Filtrera
+    clear: Rensa
+    scope: Kön / område
+    procedure: Ingrepp
+    surgeon: Kirurg
+  filter_scopes:
+    ftm: FTM
+    mtf: MTF
+    bottom: Underlivskirurgi
+    top: Överkroppskirurgi
+    need_category: Behöver kategori
+  flash:
+    content_flagged: Innehållet har flaggats.
+    removed_flags: Flaggorna har tagits bort.
+    destroy_failed: Kunde inte ta bort %{id}!
+    destroyed: "%{id} har tagits bort"
+    contact_sent: Meddelandet skickades.
+    contact_invalid: Fyll i alla fält.
+    pin_created: Bidraget skapades.
+    pin_updated: Bidraget uppdaterades.
+  gender_labels:
+    FTM: FTM
+    MTF: MTF
+    GenderQueer: Genderqueer
+    None: Ingen
+    Cisgender: Cisgender
+  legal:
+    translation_notice: 'Viktigt: Den här juridiska sidan finns för närvarande bara på engelska. Vi tillhandahåller inte maskinöversatt juridisk text eftersom automatiska översättningar kan innehålla fel. Den engelska versionen är den gällande versionen.'
+  views:
+    pagination:
+      first: Första
+      last: Sista
+      previous: Föregående
+      next: Nästa
+      truncate: "…"
+  simple_form:
+    'yes': Ja
+    'no': Nej
+    required:
+      text: obligatoriskt
+      mark: "*"
+    error_notification:
+      default_message: 'Granska problemen nedan:'

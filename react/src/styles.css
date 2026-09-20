@@ -15,3 +15,16 @@ body {
   margin: 0;
 }
 
+/* Storybook's own docs typography (@storybook/addon-docs) restores
+   list-style for <ul> inside doc pages (.sbdocs-content) but has no
+   equivalent rule for <ol>, so Tailwind's preflight reset (ol, ul, menu {
+   list-style: none }) is left standing for ordered lists only. This rule
+   is unlayered, so it wins over that @layer base reset without needing
+   !important. Scoped to .sbdocs-content, so it only affects MDX/docs
+   pages, not the app or component library, where list styling is opted
+   into per-element via Tailwind's list-decimal/list-disc utilities. */
+.sbdocs-content ol:not(.sb-unstyled, .sb-unstyled ol) {
+  list-style: decimal;
+  padding-left: 30px;
+}
+

@@ -35,29 +35,31 @@ export function Comment({ children, comment, locale, onReply, onReport, isPendin
 
     return (
         <li className="mb-4 last:mb-0">
-            <div>{comment.text}</div>
-            <div className="text-xs text-black-700 font-medium grid auto-cols-auto grid-flow-col justify-start items-center mt-1 mb-2" style={{columnRule: "1px solid var(--ds-color-black-200)"}}>
-                <Button href={`/?user=${comment.user.id}`} variant="link" className="pl-0 text-xs h-auto">{comment.user.name}</Button>
-                <span className="px-2.5">{formattedDate}</span>
-                <Button variant="link" onClick={openReplyBox} className="text-xs h-auto">reply<MessageSquare size={16}/></Button>
-                <Button variant="link" onClick={handleReportComment} className="text-xs h-auto"><Flag size={16} />Report</Button>
+            <div className="border-t border-black-300">
+                <div className="text-right pt-1"><Button variant="link" theme="destructive" onClick={handleReportComment} className="text-xs h-auto"><Flag size={16} />Report</Button></div>
+                <div className="text-sm">{comment.text}</div>
+                <div className="text-xs text-black-700 font-medium grid auto-cols-auto grid-flow-col justify-start items-center mt-1 mb-2" style={{columnRule: "1px solid var(--ds-color-black-200)"}}>
+                    <Button href={`/?user=${comment.user.id}`} variant="link" className="pl-0 text-xs h-auto">{comment.user.name}</Button>
+                    <span className="px-2.5">{formattedDate}</span>
+                    <Button variant="link" onClick={openReplyBox} className="text-xs h-auto">reply<MessageSquare size={16}/></Button>
+                </div>
+                { editMode && (
+                    <form onSubmit={handleReply}>
+                        <Textarea name="reply" />
+                        <div className="mt-2 text-right">
+                            <Button
+                                type="button"
+                                variant="outline"
+                                className="mr-2"
+                                onClick={closeReplyBox}
+                            >
+                                Cancel
+                            </Button>
+                            <Button type="submit" isPending={isPending}>Save</Button>
+                        </div>
+                    </form>
+                )}
             </div>
-            { editMode && (
-                <form onSubmit={handleReply}>
-                    <Textarea name="reply" />
-                    <div className="mt-2 text-right">
-                        <Button
-                            type="button"
-                            variant="outline"
-                            className="mr-2"
-                            onClick={closeReplyBox}
-                        >
-                            Cancel
-                        </Button>
-                        <Button type="submit" isPending={isPending}>Save</Button>
-                    </div>
-                </form>
-            )}
             { children && (
                 <Disclosure defaultExpanded>
                     {({ isExpanded }) => (

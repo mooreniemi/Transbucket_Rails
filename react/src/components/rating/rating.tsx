@@ -83,7 +83,8 @@ export function Rating({ scale, ...props }: RatingProps) {
                     {ratingProps.label}
                     <Button
                         size="icon-xs"
-                        variant="destructive"
+                        variant="secondary"
+                        theme="destructive"
                         onClick={clearValue}
                         className="ml-2"
                     >

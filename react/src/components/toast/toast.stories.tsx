@@ -28,7 +28,7 @@ const meta = {
         Show toast
       </Button>
       <Button
-        variant="destructive"
+        theme="destructive"
         onPress={() =>
           queue.add({
             title: 'Upload failed',

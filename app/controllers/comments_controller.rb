@@ -79,4 +79,9 @@ class CommentsController < ApplicationController
   def render_invalid_commentable_type
     render json: { error: "invalid commentable_type" }, status: :bad_request
   end
+
+  def authorize_destroy
+    comment = Comment.find(params[:id])
+    head :forbidden unless comment.user_id == current_user.id || current_user.moderator?
+  end
 end

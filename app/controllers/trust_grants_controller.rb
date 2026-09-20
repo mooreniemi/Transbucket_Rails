@@ -1,6 +1,6 @@
 class TrustGrantsController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :require_admin!
+  before_action :authenticate_user!
+  before_action :require_admin!
 
   def index
     @query = params[:query].to_s.strip[0, 80]

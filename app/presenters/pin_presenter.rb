@@ -5,7 +5,7 @@ class PinPresenter
   attr_accessor :user, :procedures, :surgeons, :general
 
   def initialize(opts = {})
-    @page = opts.delete(:page)
+    @page = Integer(opts.delete(:page), exception: false) || 1
     @query = opts.delete(:query)
     @user = opts.delete(:user)
     @current_user = opts.delete(:current_user)
@@ -62,7 +62,7 @@ class PinPresenter
 
   # 1-based page being shown (a missing or invalid page param means page 1).
   def current_page
-    [@page.to_i, 1].max
+    [@page, 1].max
   end
 
   # Number of pins on earlier pages, so ranks keep counting up across pages

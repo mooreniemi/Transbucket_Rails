@@ -5,7 +5,7 @@ describe Flag do
   # reindex job (see Searchable#index_document_async), so counting all of
   # Delayed::Job is fragile. Scope to the job this spec actually cares about.
   def admin_review_job_count
-    Delayed::Job.all.count { |job| job.payload_object.method_name == :admin_review_without_delay }
+    Delayed::Job.all.count { |job| job.payload_object.method_name == :admin_review_async_without_delay }
   end
 
   it '3 flags should make a pin pending' do

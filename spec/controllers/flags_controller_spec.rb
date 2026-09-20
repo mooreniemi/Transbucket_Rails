@@ -24,7 +24,7 @@ describe FlagsController, type: :controller do
     pin = create(:pin)
     sign_in(member)
 
-    xhr :delete, :destroy, pin_id: pin.id
+    delete :destroy, params: { pin_id: pin.id }, xhr: true
 
     expect(response).to have_http_status(:forbidden)
   end

@@ -29,7 +29,7 @@ describe PinsController, :type => :controller do
         user.preference.update_attributes!(safe_mode: true)
         create(:pin, user: user)
 
-        get :index
+        get :index, params: { locale: 'en' }
 
         expect(assigns(:safe_mode)).to eq(true)
         expect(response.body).to include('safe-blur')
@@ -50,7 +50,7 @@ describe PinsController, :type => :controller do
         user.preference.update_attributes!(safe_mode: false)
         create(:pin, user: user)
 
-        get :index
+        get :index, params: { locale: 'en' }
 
         expect(assigns(:safe_mode)).to eq(false)
         expect(response.body).not_to include('safe-blur')
@@ -205,7 +205,7 @@ describe PinsController, :type => :controller do
         pin = create(:pin, user: create(:user))
 
         sign_in(admin)
-        get :edit, id: pin.id, locale: 'en'
+        get :edit, params: { id: pin.id, locale: 'en' }
 
         expect(response).to be_success
       end
@@ -228,11 +228,11 @@ describe PinsController, :type => :controller do
         pin = create(:pin, user: owner)
 
         sign_in(owner)
-        get :show, id: pin.id, locale: 'en'
+        get :show, params: { id: pin.id, locale: 'en' }
         expect(response.body).to include(edit_pin_path(pin))
 
         sign_in(viewer)
-        get :show, id: pin.id, locale: 'en'
+        get :show, params: { id: pin.id, locale: 'en' }
         expect(response.body).not_to include(edit_pin_path(pin))
       end
     end
@@ -333,11 +333,11 @@ describe PinsController, :type => :controller do
         pin = create(:pin, :with_surgeon_and_procedure, :real_pin_images, user: create(:user))
 
         sign_in(admin)
-        put :update, id: pin.id, pin: {
+        put :update, params: { id: pin.id, pin: {
           cost: 123,
           surgeon_attributes: { id: pin.surgeon.id },
           procedure_attributes: { id: pin.procedure.id }
-        }
+        } }
 
         expect(response).to redirect_to(pin_url(pin))
         expect(pin.reload.cost).to eq(123)

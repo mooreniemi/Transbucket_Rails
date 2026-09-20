@@ -6,9 +6,9 @@ require "securerandom"
 require "uri"
 
 # This smoke works against either staging or localhost.
-# For localhost, the test DB needs the seeded `zoon` admin from
-# `db/seeds/test_users.rb`, Elasticsearch must be reachable, and a
-# delayed_job worker must be running so pin indexing jobs get processed.
+# For localhost, the test DB needs the seeded smoke account from
+# `db/seeds/test_users.rb`, Elasticsearch must be reachable, and a delayed_job
+# worker must be running so pin indexing jobs get processed.
 STAGING_URL = ENV.fetch("STAGING_URL", "https://transbucket-staging.herokuapp.com")
 STAGING_LOCALES = ENV.fetch("STAGING_LOCALES", ENV.fetch("STAGING_LOCALE", "en")).split(",").map(&:strip).reject(&:empty?)
 # `meowmeow` is the maintained staging account. `zoon` is only a local test
@@ -72,7 +72,9 @@ class StagingSmoke
     verify_registration_localization
     login
     verify_account_localization
+    verify_authenticated_pages
     pin_id, search_term = create_pin
+    create_comment(pin_id)
     verify_safe_mode(pin_id)
     edit_pin(pin_id)
     verify_search_page
@@ -97,6 +99,13 @@ class StagingSmoke
     newsfeed = get("/newsfeed")
     unless newsfeed.code.to_i == 200 && newsfeed.body.include?(expected_title)
       raise "localized newsfeed failed"
+    end
+
+    %w[/about /terms /privacy /procedures /surgeons].each do |path|
+      response = get(path)
+      unless response.code.to_i == 200 && response.body.include?(%(<html lang="#{@locale}">))
+        raise "public page failed for #{@locale}: #{path} returned #{response.code}"
+      end
     end
   end
 
@@ -153,6 +162,15 @@ class StagingSmoke
     end
   end
 
+  def verify_authenticated_pages
+    %w[/pins /pins/new /procedures /surgeons /users/edit].each do |path|
+      response = get(path)
+      unless response.code.to_i == 200 && response.body.include?(%(<html lang="#{@locale}">))
+        raise "authenticated page failed for #{@locale}: #{path} returned #{response.code}"
+      end
+    end
+  end
+
   def create_pin
     token = csrf_token("/pins/new")
     suffix = Time.now.to_i
@@ -184,13 +202,47 @@ class StagingSmoke
     end
 
     pin_id = location[%r{/pins/(\d+)}, 1] || raise("could not parse created pin id")
-    show = get("/pins/#{pin_id}").body
+    show_response = get("/pins/#{pin_id}")
+    raise "created pin page failed with #{show_response.code}" unless show_response.code.to_i == 200
+
+    show = show_response.body
 
     unless show.include?(captions[0]) && show.include?(captions[1]) && show.include?(localized_pin_label)
       raise "multi-image upload did not persist both captions"
     end
 
+    pin_doc = html_document(show)
+    %w[procedures surgeons].each do |resource|
+      resource_name = resource == 'procedures' ? 'procedure' : 'surgeon'
+      link = pin_doc.at_css(%(a[href*="/#{resource}/"]))
+      raise "created pin did not link to its #{resource_name} page" unless link
+
+      linked_page = get(URI.parse(link['href']).path)
+      unless linked_page.code.to_i == 200
+        raise "linked #{resource_name} page failed with #{linked_page.code}"
+      end
+    end
+
     [pin_id, params["pin[procedure_attributes][name]"]]
+  end
+
+  def create_comment(pin_id)
+    pin_path = "/pins/#{pin_id}"
+    doc = html_document(get(pin_path).body)
+    token = csrf_token(pin_path, doc)
+    body = "Smoke test comment #{Time.now.to_i}"
+    response = post(
+      "/comments",
+      {
+        "comment[body]" => body,
+        "comment[commentable_id]" => pin_id,
+        "comment[commentable_type]" => "Pin"
+      }.tap { |params| params["authenticity_token"] = token if token }
+    )
+
+    unless response.code.to_i == 201 && response.body.include?(body)
+      raise "comment create failed with #{response.code}"
+    end
   end
 
   # Safe mode blurs the real image until it is tapped (it no longer swaps in a

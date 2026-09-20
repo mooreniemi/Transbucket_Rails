@@ -123,7 +123,10 @@ describe "pin creation" do
       photo = Tempfile.new(['phone-photo', '.jpg'])
       photo.binmode
       photo.write(File.binread(Rails.root.join('spec/fixtures/cat.jpg')))
-      photo.truncate(2.megabytes)
+      # Keep the JPEG valid while making it large enough to exercise the
+      # browser-side resize path. Truncating the file produces an undecodable
+      # image, which correctly cannot be resized by the browser.
+      photo.write("\0" * (2.megabytes - photo.pos))
       photo.rewind
 
       visit '/pins/new'

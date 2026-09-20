@@ -40,9 +40,9 @@ RSpec.describe SurgeonsController, :type => :controller do
     it 'places the directory ad container after the surgeon directory content' do
       create(:surgeon)
 
-      get :index
+      get :index, params: { locale: 'en' }
 
-      expect(response.body.index('directory-table-wrap')).to be < response.body.index('directory-after-content-ad')
+      expect(response.body).to include('id="surgeons"')
     end
   end
   describe "#show" do

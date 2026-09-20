@@ -48,6 +48,7 @@ describe "the flagging process" do
         visit '/pins'
         flag_link = find('a[href="/en/pins/' + pin.id.to_s + '/flags"]')
         flag_link.click
+        expect(page).to have_no_selector("a.flag-pin[data-pin-id='" + pin.id.to_s + "']")
       end
 
       visit '/pins'

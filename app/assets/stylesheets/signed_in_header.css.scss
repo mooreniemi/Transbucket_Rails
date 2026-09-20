@@ -3,7 +3,7 @@
 // Search is the main way to find things, so below 768px it stays in the top
 // bar and only the secondary links live behind the hamburger:
 //
-//   [logo] [ Search…                     🔍 ] [☰]
+//   [logo] [ Search…                 🔍 ] [👁] [☰]
 //
 // Scoped to .navbar-signed-in (see layouts/_header.html.erb). The search form
 // sits outside the collapsible menu in the markup so it can stay visible.
@@ -93,8 +93,8 @@ $signed-in-field-height: 40px;   // fields are wide targets and the bar is 50px
       float: none;
       height: $signed-in-touch-height;
       justify-content: center;
-      margin: 0 0 0 8px;
-      order: 3;
+      margin: 0 0 0 4px;
+      order: 4;
       padding: 0;
       width: $signed-in-touch-height;
     }
@@ -106,7 +106,7 @@ $signed-in-field-height: 40px;   // fields are wide targets and the bar is 50px
       flex: 1 1 100%;
       margin-left: -8px;
       margin-right: -8px;
-      order: 4;
+      order: 5;
     }
   }
 }

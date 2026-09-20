@@ -1,0 +1,17 @@
+<%# Header switch for safe mode (blur images until tapped). Rendered twice by
+    _header: in the phone top bar (variant "bar") and in the desktop right-hand
+    nav (variant "nav"); safe_mode_toggle.css.scss shows the right one. Posts the
+    opposite value to preferences#update, which sends people back to this page. %>
+<% safe_on = current_user.preference.present? && UserPolicy.new(current_user).safe_mode? %>
+<% label = t(safe_on ? 'header.safe_mode_on' : 'header.safe_mode_off') %>
+<%= button_to user_preferences_path(current_user),
+      method: :patch,
+      params: { 'preference[safe_mode]' => (safe_on ? '0' : '1'), 'return_to' => request.fullpath },
+      form_class: "safe-mode-form safe-mode-form-#{variant}",
+      class: "safe-mode-toggle#{' is-on' if safe_on}",
+      title: label,
+      'aria-label' => label,
+      'aria-pressed' => safe_on.to_s,
+      **track_click_attributes(:safe_mode, :header) do %>
+  <%= fa_icon(safe_on ? 'eye-slash' : 'eye') %>
+<% end %>

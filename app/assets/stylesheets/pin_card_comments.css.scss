@@ -1,0 +1,44 @@
+// Feed card footer:  [flag edit trash]                    [3h ago  💬 2]
+// Icons on the left, freshness and comment count on the right. The icons get a
+// wider tap area than they look (padding balanced by negative margin) because
+// they are 16px glyphs and phones have no hover to disambiguate them.
+.pin-actions {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.pin-actions-icons {
+  white-space: nowrap;
+
+  a {
+    display: inline-block;
+    margin: -8px -2px;
+    padding: 8px 10px;
+  }
+
+  label {
+    font-weight: normal;
+    margin: 0;
+  }
+}
+
+.pin-actions-meta {
+  align-items: center;
+  color: #777;
+  display: inline-flex;
+  font-size: 15px;
+  gap: 12px;
+  white-space: nowrap;
+}
+
+// Comment count: quiet like the age until there is discussion to look at.
+.pin-comment-count {
+  font-weight: 600;
+  text-decoration: none;
+
+  .fa {
+    margin-right: 2px;
+  }
+}

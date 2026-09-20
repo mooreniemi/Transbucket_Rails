@@ -37,4 +37,43 @@ describe PinsHelper do
 			expect(uses_pronouns(gender)).to eq("they/them/theirs")
 		end
 	end
+
+	describe '#author_pronouns' do
+		it 'uses the pronouns the author chose' do
+			user = double(pronouns: 'she/they', gender: double(name: 'FTM'))
+			expect(author_pronouns(user)).to eq('she/they')
+		end
+
+		it 'falls back to the pronouns implied by gender when none were chosen' do
+			user = double(pronouns: nil, gender: double(name: 'FTM'))
+			expect(author_pronouns(user)).to eq('he/him/his')
+		end
+
+		it 'falls back to they/them/theirs for a missing author' do
+			expect(author_pronouns(nil)).to eq('they/them/theirs')
+		end
+	end
+
+	describe '#pronouns_label' do
+		it 'shows standard pronouns in the viewer\'s language' do
+			I18n.with_locale(:de) do
+				expect(pronouns_label('she/her')).to eq('sie/ihr')
+				expect(pronouns_label('she/they')).to eq('sie/they')
+			end
+		end
+
+		it 'keeps the stored value where there is no established equivalent' do
+			I18n.with_locale(:de) { expect(pronouns_label('they/them')).to eq('they/them') }
+			I18n.with_locale(:tr) { expect(pronouns_label('she/her')).to eq('she/her') }
+		end
+
+		it 'never translates what someone typed themselves' do
+			I18n.with_locale(:de) { expect(pronouns_label('xe/xem')).to eq('xe/xem') }
+			I18n.with_locale(:de) { expect(pronouns_label('er/ihm')).to eq('er/ihm') }
+		end
+
+		it 'passes through the gender-derived fallback unchanged' do
+			I18n.with_locale(:fr) { expect(pronouns_label('he/him/his')).to eq('he/him/his') }
+		end
+	end
 end

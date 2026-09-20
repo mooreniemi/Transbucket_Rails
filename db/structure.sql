@@ -759,7 +759,8 @@ CREATE TABLE public.users (
     unconfirmed_email character varying,
     confirmation_reminder_sent_at timestamp without time zone,
     never_signed_in_outreach_sent_at timestamp without time zone,
-    locale character varying
+    locale character varying,
+    pronouns character varying
 );
 
 
@@ -1571,4 +1572,7 @@ INSERT INTO schema_migrations (version) VALUES ('20260919134000');
 INSERT INTO schema_migrations (version) VALUES ('20260920060000');
 
 INSERT INTO schema_migrations (version) VALUES ('20260920061000');
+
+
+INSERT INTO schema_migrations (version) VALUES ('20260920190000');
 

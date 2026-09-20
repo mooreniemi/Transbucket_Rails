@@ -1,5 +1,7 @@
 sv:
   header:
+    safe_mode_on: 'Säkert läge är på: bilder är suddiga. Tryck för att stänga av.'
+    safe_mode_off: 'Säkert läge är av. Tryck för att sudda bilder tills du trycker på dem.'
     news: Nyheter
     procedures: Ingrepp
     surgeons: Kirurger
@@ -58,8 +60,28 @@ sv:
       hide_password: Dölj lösenord
       have_account: Har du redan ett konto?
       new_here: Ny på Transbucket?
+      pronouns: 'Pronomen'
+      pronouns_default: 'Standard (utifrån ditt kön)'
+      pronouns_other: 'Annat…'
+      pronouns_placeholder: 't.ex. xe/xem'
+      pronouns_invalid: 'Pronomen ska se ut som they/them eller she/her/hers: ord åtskilda av snedstreck.'
+      pronoun_labels:
+        she_her: 'hon/henne'
+        he_him: 'han/honom'
+        they_them: 'hen'
+        it_its: 'den/det'
+        she_they: 'hon/hen'
+        he_they: 'han/hen'
+        they_she: 'hen/hon'
+        they_he: 'hen/han'
+        any_all: 'alla pronomen'
       password_hint: Minst %{count} tecken.
     pin:
+      comments_label: 'Kommentarer: %{count}'
+      report: 'Rapportera'
+      edit_post: 'Redigera'
+      delete_post: 'Ta bort'
+      report_confirm: 'Rapportera det här bidraget till moderatorerna?'
       by: av
       doctor_prefix: 'Dr. '
       unknown: okänd kirurg
@@ -182,6 +204,7 @@ sv:
     email: Din e-postadress visas för administratörer men inte för andra användare. Din e-postadress kommer att bekräftas.
     password: Ditt lösenord krypteras när det lagras och kan återställas med hjälp av din e-postadress.
     name: Ditt namn visas för administratörer och används i kommunikationen med dem.
+    pronouns: 'Visas på dina bidrag. Valfritt: med standardvalet används de pronomen som hör till ditt kön.'
     gender: Ditt kön visas för alla när du publicerar resultat och används för vissa standardinställningar.
     tos: Genom att registrera dig på Transbucket.com godkänner du våra användarvillkor.
   account_menu:

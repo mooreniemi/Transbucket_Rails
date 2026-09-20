@@ -22,6 +22,21 @@ class User < ActiveRecord::Base
   # from the original confirmation email.
   attr_accessor :confirmation_reminder
 
+  # Pronouns are picked from PRONOUN_PRESETS or typed in the same "they/them"
+  # shape. The form's select posts CUSTOM_PRONOUNS when "Other" is chosen and
+  # the typed text arrives in pronouns_custom. NULL means "not chosen": pins then
+  # fall back to the pronouns implied by the user's gender (see PinsHelper).
+  PRONOUN_PRESETS = %w[
+    she/her he/him they/them it/its she/they he/they they/she they/he
+    any/all xe/xem ze/hir ze/zir fae/faer ey/em
+  ].freeze
+  CUSTOM_PRONOUNS = 'custom'.freeze
+  PRONOUNS_FORMAT = %r{\A[[:alpha:]'-]{1,15}(?:/[[:alpha:]'-]{1,15}){1,3}\z}
+  PRONOUNS_MAX_LENGTH = 40
+  attr_accessor :pronouns_custom
+  before_validation :normalize_pronouns
+  validate :pronouns_shape
+
   validates :username,
     :uniqueness => {
       :case_sensitive => false
@@ -47,6 +62,20 @@ class User < ActiveRecord::Base
     else
       where(conditions).first
     end
+  end
+
+  def normalize_pronouns
+    raw = pronouns == CUSTOM_PRONOUNS ? pronouns_custom : pronouns
+    self.pronouns = raw.to_s.strip.downcase.gsub(%r{\s*[/／⁄∕]\s*}, '/').presence
+  end
+
+  # :base so the message reads as a whole sentence in any language, instead of
+  # being prefixed with the (English) attribute name.
+  def pronouns_shape
+    return if pronouns.blank?
+    return if pronouns.length <= PRONOUNS_MAX_LENGTH && pronouns.match?(PRONOUNS_FORMAT)
+
+    errors.add(:base, I18n.t('public.auth.pronouns_invalid'))
   end
 
   def legacy_password_hash=(password)

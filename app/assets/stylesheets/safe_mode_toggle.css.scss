@@ -1,0 +1,72 @@
+// Safe mode switch in the signed-in header (layouts/_safe_mode_toggle).
+//
+// Two copies exist in the markup so it can live in different places:
+//   phones:   in the top bar, between search and the hamburger  [logo][search][eye][☰]
+//   desktop:  in the right-hand nav, just before the language switcher
+// It is a quiet icon until safe mode is on, then it gets a soft yellow chip and
+// the crossed-out eye, so the state reads at a glance without any label.
+
+$safe-mode-size: 44px;   // minimum comfortable touch target
+$safe-mode-off-ink: #666;
+$safe-mode-on-ink: #7a5a00;
+$safe-mode-on-bg: #fff3c4;
+
+.safe-mode-form {
+  margin: 0;
+}
+
+.safe-mode-toggle {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: $safe-mode-off-ink;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 18px;
+  height: $safe-mode-size;
+  justify-content: center;
+  padding: 0;
+  width: $safe-mode-size;
+
+  &:hover,
+  &:focus {
+    background: rgba(0, 0, 0, .06);
+    color: #222;
+    outline: 0;
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 3px rgba(11, 83, 148, .35);
+  }
+
+  &.is-on {
+    background: $safe-mode-on-bg;
+    color: $safe-mode-on-ink;
+  }
+}
+
+@media (max-width: 767px) {
+  // The desktop copy sits inside the collapsed menu, where it would be hidden
+  // and pointless; the top-bar copy is the one phones use.
+  .safe-mode-nav {
+    display: none;
+  }
+
+  .navbar-signed-in .safe-mode-form-bar {
+    display: flex;
+    flex: 0 0 auto;
+    margin-left: 4px;
+    order: 3;
+  }
+}
+
+@media (min-width: 768px) {
+  .safe-mode-form-bar {
+    display: none;
+  }
+
+  .navbar-nav > li.safe-mode-nav {
+    padding: 3px 2px;   // centres the 44px button in the 50px bar
+  }
+}

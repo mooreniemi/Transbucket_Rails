@@ -27,4 +27,29 @@ describe Comment do
 			expect(bad_comment.snippet.size).to be <= 50
 		end
 	end
+
+	describe '.published_counts_for' do
+		it 'counts published comments and replies per pin, ignoring pending ones' do
+			pin = comment.commentable
+			create(:comment, commentable: pin)
+			create(:comment, commentable: pin, state: 'pending')
+			other_pin_comment = create(:comment)
+
+			counts = Comment.published_counts_for('Pin', [pin.id, other_pin_comment.commentable_id])
+
+			expect(counts[pin.id]).to eq(2)
+			expect(counts[other_pin_comment.commentable_id]).to eq(1)
+		end
+
+		it 'counts rows with a blank state, which the thread also shows as published' do
+			pin = comment.commentable
+			Comment.where(id: comment.id).update_all(state: nil)
+
+			expect(Comment.published_counts_for('Pin', [pin.id])[pin.id]).to eq(1)
+		end
+
+		it 'returns an empty hash without querying when there are no ids' do
+			expect(Comment.published_counts_for('Pin', [])).to eq({})
+		end
+	end
 end

@@ -11,6 +11,7 @@ class PinsController < ApplicationController
   def index
     @presenter = PinPresenter.new(pin_index_params)
     @comments = Comment.new_as_of(user_last_sign_in)
+    @comment_counts = Comment.published_counts_for('Pin', @presenter.pins.map(&:id))
     # Pin cards are fragment-cached by this value, so set it before rendering
     # rather than relying on an unset instance variable in the partial.
     @safe_mode = safe_mode

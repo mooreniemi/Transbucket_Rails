@@ -1,5 +1,9 @@
 class PagesController < ApplicationController
   NEWSFEED_ENTRY_TIMESTAMPS = {
+    'pronouns' => Time.utc(2026, 9, 20, 22, 30),
+    'comment_counts' => Time.utc(2026, 9, 20, 22, 20),
+    'safe_mode_blur' => Time.utc(2026, 9, 20, 22, 10),
+    'mobile_refresh' => Time.utc(2026, 9, 20, 22, 0),
     'contributor_badges' => Time.utc(2026, 9, 20, 21, 15),
     'readable_pin_details' => Time.utc(2026, 9, 20, 3, 45),
     'mobile_directory_layout' => Time.utc(2026, 9, 19, 22, 40),
@@ -87,6 +91,8 @@ class PagesController < ApplicationController
        [t('newsfeed.links.for_you', default: 'For You'), pins_path(feed: 'for_you', locale: I18n.locale)]]
     when 'automatic_photo_resizing'
       [[t('newsfeed.links.submit_photo', default: 'Submit a photo'), new_pin_path(locale: I18n.locale)]]
+    when 'mobile_refresh', 'comment_counts'
+      [[t('newsfeed.links.browse_submissions', default: 'Browse submissions'), pins_path(locale: I18n.locale)]]
     when 'contributor_badges'
       [[t('newsfeed.links.browse_submissions', default: 'Browse submissions'), pins_path(locale: I18n.locale)]]
     when 'directory_improvements'

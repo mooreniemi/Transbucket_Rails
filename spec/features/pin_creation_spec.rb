@@ -36,12 +36,23 @@ describe "pin creation" do
     end
 
     context "with no surgeons or procedures" do
-      it "shows the complication tag editor without a redundant side label" do
+      it "keeps the complication tag editor hidden until the author says they had complications" do
         visit '/pins/new'
 
-        expect(page).to have_field('pin_complication_input', disabled: true)
-        expect(page).to have_no_selector('.complication-tag-editor .input-group-addon')
-        expect(page).to have_text(I18n.t('public.form.complications_help'))
+        if js
+          expect(page).to have_no_field('pin_complication_input')
+          expect(page).to have_no_text(I18n.t('public.form.complications_help'))
+
+          within('.complication-toggle') { choose I18n.t('public.form.complications_yes') }
+
+          expect(page).to have_field('pin_complication_input', disabled: false)
+          expect(page).to have_no_selector('.complication-tag-editor .input-group-addon')
+          expect(page).to have_text(I18n.t('public.form.complications_help'))
+        else
+          # Without JS/CSS the editor is in the page, but disabled until "Yes" is chosen.
+          expect(page).to have_field('pin_complication_input', disabled: true)
+          expect(page).to have_no_selector('.complication-tag-editor .input-group-addon')
+        end
       end
 
       it "returns errors upon submission" do

@@ -34,4 +34,25 @@ describe PreferencesController, type: :controller do
       expect(Preference.find_by!(user_id: other_user.id).safe_mode).to eq(false)
     end
   end
+
+  describe 'PATCH #update from the header safe mode switch' do
+    let(:user) { create(:user) }
+
+    before { sign_in(user) }
+
+    it 'sends people back to the page they were on' do
+      patch :update, user_id: user.id, preference: { safe_mode: '1' }, return_to: '/en/pins?page=2'
+
+      expect(response).to redirect_to('/en/pins?page=2')
+      expect(Preference.find_by!(user_id: user.id).safe_mode).to eq(true)
+    end
+
+    it 'ignores return_to values that would leave the site' do
+      ['http://evil.example/', '//evil.example/', '/\\evil.example', 'javascript:alert(1)', '/ok path'].each do |bad|
+        patch :update, user_id: user.id, preference: { safe_mode: '0' }, return_to: bad
+
+        expect(response).to redirect_to(edit_user_registration_path)
+      end
+    end
+  end
 end

@@ -1,0 +1,9 @@
+// Bootstrap's .form-control sets display:block, which beats the [hidden] default.
+.pronouns-custom[hidden] {
+  display: none !important;
+}
+
+// Below the select on the sign-up form, beside it inside the profile input group.
+.auth-field .pronouns-custom {
+  margin-top: 8px;
+}

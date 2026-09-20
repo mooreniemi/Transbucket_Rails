@@ -30,7 +30,7 @@
   }
 ) %>
 <h1 class="pin-page-title"><%= pin_title %></h1>
-<% cache([I18n.locale, "pin_show", @safe_mode, @pin, @pin.pin_images.map(&:id), @pin.pin_images.maximum(:updated_at), @pin.user.try(:trust_tier), can_edit_pin]) do %>
+<% cache([I18n.locale, "pin_show", @safe_mode, @pin, @pin.pin_images.map(&:id), @pin.pin_images.maximum(:updated_at), @pin.user.try(:trust_tier), @pin.user.try(:pronouns), @pin.user.try(:gender_id), can_edit_pin]) do %>
   <div class="row pin-show-grid">
     <div class="col-md-7">
       <div class="pin-gallery-panel">
@@ -121,7 +121,7 @@
 <div id="comments-container">
   <h4><%= fa_icon("comments-o") %> <%= t('public.pin.discussion') %></h4>
   <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>
-    <h5><%= t('public.pin.respect_pronouns') %> <%= uses_pronouns(@pin.user.try(:gender)) %>.</h5>
+    <h5><%= t('public.pin.respect_pronouns') %> <%= pronouns_label(author_pronouns(@pin.user)) %>.</h5>
   <%= link_to "<h5>#{fa_icon("comments-o")} #{t('public.pin.add_thread')}</h5>".html_safe, new_comment_path(commentable_id: @pin.id, commentable_type: "Pin"), remote: true %>
   <div id="commentable" class="reply-target">
   </div>

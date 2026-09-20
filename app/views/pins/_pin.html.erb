@@ -46,20 +46,47 @@
     </div>
     <!-- panel body end -->
     <div class="panel-footer">
-      <div class="actions">
-        <label class="label-with-popover" data-placement="right" data-content="Flags from 3 different users will remove content pending review by a moderator." data-title="Flag this content." data-trigger="hover">
-          <%= link_to(fa_icon("flag"), pin_flags_path(pin), method: :post, remote: true, "data-pin-id" => pin.id, class: "flag-pin") + " | " unless current_user == pin.user %>
-        </label>
-      <% if current_user == pin.user || current_user.admin? %>
-        <%= link_to fa_icon("pencil-square-o"), edit_pin_path(pin) %>
-        | <%= link_to fa_icon("trash-o"), pin, method: :delete, data: { confirm: t('public.confirmations.are_you_sure') } %>
-      <% if pin.pending? %>
-        | <%= link_to 'Remove Flag', remove_pin_flag_path(pin), remote: true %>
-      <% end %>
-      <!-- end if pin pending -->
-      <% end %>
-      <!-- end if user can edit -->
-        <%= t('public.pin.updated', time: distance_of_time_in_words(Time.now, pin.updated_at)) %>
+      <div class="actions pin-actions">
+        <%# Left: what you can do. Right: how fresh it is and how much discussion it has.
+            Every icon has a text label (for screen readers and long-press) since phones
+            have no hover, and reporting asks first: it used to fire on a single tap. %>
+        <span class="pin-actions-icons">
+          <% unless current_user == pin.user %>
+            <label class="label-with-popover" data-placement="right" data-content="Flags from 3 different users will remove content pending review by a moderator." data-title="Flag this content." data-trigger="hover">
+              <%= link_to fa_icon("flag"), pin_flags_path(pin), method: :post, remote: true, "data-pin-id" => pin.id, class: "flag-pin",
+                title: t('public.pin.report'), 'aria-label' => t('public.pin.report'), data: { confirm: t('public.pin.report_confirm') } %>
+            </label>
+          <% end %>
+          <% if current_user == pin.user || current_user.admin? %>
+            <%= link_to fa_icon("pencil-square-o"), edit_pin_path(pin), title: t('public.pin.edit_post'), 'aria-label' => t('public.pin.edit_post') %>
+            <%= link_to fa_icon("trash-o"), pin, method: :delete, data: { confirm: t('public.confirmations.are_you_sure') },
+              title: t('public.pin.delete_post'), 'aria-label' => t('public.pin.delete_post') %>
+            <% if pin.pending? %>
+              <%= link_to 'Remove Flag', remove_pin_flag_path(pin), remote: true %>
+            <% end %>
+            <!-- end if pin pending -->
+          <% end %>
+          <!-- end if user can edit -->
+        </span>
+        <span class="pin-actions-meta">
+          <%# Full sentence server-side; pin_age.js swaps in a short localized "3h ago". %>
+          <% updated_text = t('public.pin.updated', time: distance_of_time_in_words(Time.now, pin.updated_at)) %>
+          <%= content_tag :time, updated_text, class: 'pin-age', datetime: pin.updated_at.utc.iso8601, title: updated_text %>
+          <% comment_count = (@comment_counts || {})[pin.id].to_i %>
+          <%# Outside the fragment cache above, so a new comment shows up straight away. %>
+          <% if comment_count > 0 %>
+            <%= link_to pin_path(pin, anchor: 'comments-container'), class: 'pin-comment-count',
+              title: t('public.pin.comments_label', count: comment_count),
+              'aria-label' => t('public.pin.comments_label', count: comment_count),
+              'data-content-event-open' => true,
+              'data-content-event-url' => content_events_path,
+              'data-content-type' => 'Pin',
+              'data-content-id' => pin.id,
+              'data-event-context' => event_context.to_json do %>
+              <%= fa_icon('comment-o') %> <span><%= comment_count %></span>
+            <% end %>
+          <% end %>
+        </span>
       </div>
       <!-- end footer actions -->
     </div>

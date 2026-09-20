@@ -24,7 +24,8 @@ module TrackedTarget
     'menu' => 15,      # the phone hamburger button
     'language' => 16,  # the language switcher
     'home_cta' => 17,  # the three call-to-action images on the logged-out home page
-    'account' => 18    # the signed-in Account menu
+    'account' => 18,   # the signed-in Account menu
+    'safe_mode' => 19  # the safe mode switch in the signed-in header
   }.freeze
 
   def self.id_for(name)

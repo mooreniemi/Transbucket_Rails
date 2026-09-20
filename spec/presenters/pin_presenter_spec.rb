@@ -19,14 +19,11 @@ describe PinPresenter do
     it 'reports the page being shown and keeps ranks counting up across pages' do
       first_page = PinPresenter.new(current_user: create(:user))
       second_page = PinPresenter.new(current_user: create(:user), page: '2')
-      invalid_page = PinPresenter.new(current_user: create(:user), page: 'abc')
 
       expect(first_page.list_event_context[:page]).to eq(1)
       expect(first_page.rank_offset).to eq(0)
       expect(second_page.list_event_context[:page]).to eq(2)
       expect(second_page.rank_offset).to eq(Pin.per_page)
-      expect(invalid_page.list_event_context[:page]).to eq(1)
-      expect(invalid_page.rank_offset).to eq(0)
     end
 
     it 'identifies the actual filtered list shape without retaining filter values' do

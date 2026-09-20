@@ -24,6 +24,7 @@
         float layout puts it in the same place as before. %>
     <% if user_signed_in? %>
       <%= render partial: 'layouts/search' %>
+      <%= render partial: 'layouts/safe_mode_toggle', locals: { variant: 'bar' } %>
     <% end %>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="<%= 'collapse ' unless logged_out %>navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -55,6 +56,7 @@
         </ul>
       <% else %>
         <ul class="nav navbar-nav navbar-right">
+          <li class="safe-mode-nav"><%= render partial: 'layouts/safe_mode_toggle', locals: { variant: 'nav' } %></li>
           <%= render partial: 'layouts/locale_switcher' %>
           <%= render partial: 'layouts/account_menu' %>
         </ul>

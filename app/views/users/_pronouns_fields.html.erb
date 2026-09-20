@@ -1,0 +1,14 @@
+<%# Pronoun picker for the sign-up and profile forms: a list of common pronouns,
+    plus "Other" which reveals a text box (pronouns_field.js). `f` is the User form
+    builder. The model normalises and validates the shape (see User). %>
+<% current = f.object.pronouns.to_s %>
+<% listed = current.blank? || User::PRONOUN_PRESETS.include?(current) %>
+<% options = [[t('public.auth.pronouns_default'), '']] +
+             User::PRONOUN_PRESETS.map { |pronouns| [pronouns_label(pronouns), pronouns] } +
+             [[t('public.auth.pronouns_other'), User::CUSTOM_PRONOUNS]] %>
+<%= f.select :pronouns, options_for_select(options, listed ? current : User::CUSTOM_PRONOUNS), {},
+  class: 'form-control pronouns-select', 'aria-describedby' => 'pronouns-hint' %>
+<%= f.text_field :pronouns_custom, value: (listed ? nil : current), hidden: listed,
+  class: 'form-control pronouns-custom', maxlength: User::PRONOUNS_MAX_LENGTH,
+  placeholder: t('public.auth.pronouns_placeholder'), autocomplete: 'off', autocapitalize: 'none',
+  'aria-label' => t('public.auth.pronouns') %>

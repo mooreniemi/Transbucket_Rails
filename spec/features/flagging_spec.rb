@@ -47,7 +47,9 @@ describe "the flagging process" do
 
         visit '/pins'
         flag_link = find('a[href="/en/pins/' + pin.id.to_s + '/flags"]')
-        flag_link.click
+        # Reporting a pin asks first (a single stray tap used to report it).
+        expect(flag_link['data-confirm']).to eq(I18n.t('public.pin.report_confirm'))
+        accept_confirm { flag_link.click }
       end
 
       visit '/pins'

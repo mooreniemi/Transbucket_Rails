@@ -29,6 +29,17 @@ class Comment < ActiveRecord::Base
     end
   end
 
+  # {commentable_id => number of visible comments and replies}, for showing counts
+  # on a page of cards in one query. Matches what the thread shows: AASM treats a
+  # blank state as the initial (published) one, so those rows count too.
+  def self.published_counts_for(commentable_type, commentable_ids)
+    return {} if commentable_ids.blank?
+
+    where(commentable_type: commentable_type, commentable_id: commentable_ids)
+      .where("comments.state IS NULL OR comments.state IN ('', 'published')")
+      .group(:commentable_id).count
+  end
+
   def self.new_as_of(last_login_time)
     where("created_at > ? and state = 'published'", last_login_time)
   end

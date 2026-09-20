@@ -100,6 +100,7 @@ class PagesController < ApplicationController
     when 'discord_invite' then [[t('newsfeed.links.join_discord', default: 'Join Discord'), 'https://discord.gg/fRW4RnPqgv']]
     when 'prefix_search' then [[t('newsfeed.links.search_pins', default: 'Search pins'), pins_path(locale: I18n.locale)]]
     when 'procedure_cleanup' then [[t('newsfeed.links.browse_procedures', default: 'Browse procedures'), procedures_path(locale: I18n.locale)]]
+    when 'complication_cleanup' then [[t('newsfeed.links.browse_procedures', default: 'Browse procedures'), procedures_path(locale: I18n.locale)]]
     else []
     end
   end

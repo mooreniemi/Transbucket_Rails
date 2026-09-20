@@ -1,5 +1,5 @@
 class SurgeonsController < ApplicationController
-  before_filter :authenticate_user!, only: :compare
+  before_action :authenticate_user!, only: :compare
 
   def index
     @surgeons = Surgeon.all.order(:last_name, :first_name)

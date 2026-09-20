@@ -17,8 +17,10 @@ end
 
 # remove _headless_docker to actually see it manipulate chrome (outside Docker)
 Capybara.javascript_driver = :selenium_chrome_headless_docker
-Capybara.server_port = 9887 + ENV['TEST_ENV_NUMBER'].to_i
-ActionMailer::Base.default_url_options[:host] = "localhost:#{Capybara.server_port}"
+# Let Capybara choose an available port for each server. In Capybara 3.35, a
+# literal zero is passed through to WEBrick instead of being resolved first.
+Capybara.server_port = nil
+ActionMailer::Base.default_url_options[:host] = 'localhost'
 
 RSpec.configure do |config|
   config.before(:each, js: true) do

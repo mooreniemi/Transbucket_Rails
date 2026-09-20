@@ -3,6 +3,17 @@ require File.expand_path('../boot', __FILE__)
 require 'rails/all'
 
 if RUBY_VERSION >= '3.0'
+  # Rails 5.2's signed cookie jar passes expiry options positionally to
+  # MessageVerifier#generate, whose Ruby 3 signature accepts keywords only.
+  # Preserve the old call shape while forwarding the options correctly.
+  module Rails52MessageVerifierRuby3Compatibility
+    def generate(value, options = nil, **keywords)
+      super(value, **(options || {}).merge(keywords))
+    end
+  end
+
+  ActiveSupport::MessageVerifier.prepend(Rails52MessageVerifierRuby3Compatibility)
+
   # Rails 4.2's Fanout#subscribe relies on `Proc.new` implicitly capturing
   # the caller's block, which Ruby 3 no longer supports. Railties (e.g.
   # rack-mini-profiler) call ActiveSupport::Notifications.subscribe during

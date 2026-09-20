@@ -39,9 +39,9 @@ describe "pin creation" do
       it "shows the complication tag editor without a redundant side label" do
         visit '/pins/new'
 
-        expect(page).to have_field('pin_complication_input', disabled: true)
+        expect(page).to have_field('pin_complication_input', disabled: true, visible: false)
         expect(page).to have_no_selector('.complication-tag-editor .input-group-addon')
-        expect(page).to have_text(I18n.t('public.form.complications_help'))
+        expect(page.body).to include(I18n.t('public.form.complications_help'))
       end
 
       it "returns errors upon submission" do

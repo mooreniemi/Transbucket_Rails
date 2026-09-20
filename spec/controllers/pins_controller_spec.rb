@@ -67,7 +67,7 @@ describe PinsController, :type => :controller do
       it 'shows a For You tab for MTF and FTM users' do
         user.update_attributes!(gender: create(:gender, name: 'MTF'))
 
-        get :index
+        get :index, params: { locale: 'en' }
 
         expect(response.body).to include('Recent')
         expect(response.body).to include('For You')
@@ -77,7 +77,7 @@ describe PinsController, :type => :controller do
       it 'does not show a For You tab when the profile cannot define one' do
         user.update_attributes!(gender: create(:gender, name: 'GenderQueer'))
 
-        get :index
+        get :index, params: { locale: 'en' }
 
         expect(response.body).not_to include('For You')
       end
@@ -85,7 +85,7 @@ describe PinsController, :type => :controller do
       it 'groups moderator tools under an accessible moderator menu' do
         user.update_attributes!(admin: true)
 
-        get :index
+        get :index, params: { locale: 'en' }
 
         expect(response.body).to include('title="Moderation tools"')
         expect(response.body).to include('Moderation queue')
@@ -96,7 +96,7 @@ describe PinsController, :type => :controller do
       it 'labels the personalized feed For You' do
         user.update_attributes!(gender: create(:gender, name: 'MTF'))
 
-        get :index, feed: 'for_you'
+        get :index, params: { feed: 'for_you', locale: 'en' }
 
         expect(response.body).to include('<h1 class="feed-title">For You</h1>')
         expect(response.body).not_to include('<h1>Recent Submissions</h1>')
@@ -106,7 +106,7 @@ describe PinsController, :type => :controller do
         first_pin = create(:pin, user: user)
         second_pin = create(:pin, user: user)
 
-        get :index
+        get :index, params: { locale: 'en' }
 
         [first_pin, second_pin].each do |pin|
           card = response.body[/<div class="item" data-pin-id="#{pin.id}".*?<\/div>\s*<\/div>/m]
@@ -143,7 +143,7 @@ describe PinsController, :type => :controller do
         flaggers.each { |flagger| Flag.new(flagger, pin).flag_on }
         sign_in(admin)
 
-        get :admin
+      get :admin, params: { locale: 'en' }
 
         expect(response).to be_success
         expect(response.body).to include('Top flaggers (lifetime)')
@@ -175,7 +175,7 @@ describe PinsController, :type => :controller do
       it 'preserves line breaks in the in-depth experience' do
         pin = create(:pin, user: user, details: "First paragraph\nSecond paragraph")
 
-        get :show, id: pin.id
+      get :show, params: { id: pin.id, locale: 'en' }
 
         expect(response.body).to match(/First paragraph\s*<br/)
         expect(response.body).to include('Second paragraph')
@@ -183,7 +183,7 @@ describe PinsController, :type => :controller do
 
       it 'links the procedure label to the procedure page' do
         pin = create(:pin, user: user)
-        get :show, id: pin.id
+      get :show, params: { id: pin.id, locale: 'en' }
 
         expect(response.body).to include("href=\"#{procedure_path(pin.procedure)}\"")
         expect(response.body).not_to include("procedure=#{pin.procedure.id}")
@@ -252,7 +252,7 @@ describe PinsController, :type => :controller do
         pin.complication_list = 'hematoma, infection'
         pin.save!
 
-        get :complication_suggestions, term: 'hema', format: :json
+      get :complication_suggestions, params: { term: 'hema', format: :json, locale: 'en' }
 
         expect(response).to be_success
         expect(JSON.parse(response.body)).to eq(['hematoma'])

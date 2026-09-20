@@ -1,5 +1,5 @@
 class ProceduresController < ApplicationController
-  before_filter :authenticate_user!, only: :compare
+  before_action :authenticate_user!, only: :compare
 
   def index
     @procedures = Procedure.all.order(:name)

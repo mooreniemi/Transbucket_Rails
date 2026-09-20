@@ -2,7 +2,7 @@ class ContentEventsController < ApplicationController
   # The beacon API cannot attach Rails' CSRF header. This endpoint accepts a
   # tiny allowlisted payload and has no user-visible effect, so it always
   # responds with 204 whether recording succeeds or is intentionally skipped.
-  skip_before_filter :verify_authenticity_token, only: [:create, :batch]
+  skip_before_action :verify_authenticity_token, only: [:create, :batch]
 
   def create
     ContentEventRecorder.record(
@@ -17,7 +17,7 @@ class ContentEventsController < ApplicationController
       event_context: event_context
     )
   rescue StandardError => error
-    Rails.logger.warn("content event request failed: #{error.class}")
+    Rails.logger.warn("content event request failed: #{error.class}: #{error.message}")
   ensure
     head :no_content unless performed?
   end
@@ -32,7 +32,7 @@ class ContentEventsController < ApplicationController
       events: batch_events
     )
   rescue StandardError => error
-    Rails.logger.warn("content event batch request failed: #{error.class}")
+    Rails.logger.warn("content event batch request failed: #{error.class}: #{error.message}")
   ensure
     head :no_content unless performed?
   end

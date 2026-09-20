@@ -1,0 +1,223 @@
+// Login and sign-up pages (devise/sessions/new, devise/registrations/new).
+//
+// Mobile-first: one calm column, a visible label above every field, quiet hint
+// text below, big touch targets, and a single full-width button. Fonts are set
+// in px on purpose: the site's "1rem" rules resolve to 10px (Bootstrap 3 sets
+// html { font-size: 10px }), and iOS zooms the page when an input is under 16px.
+
+$auth-accent: #FCC000;          // brand yellow
+$auth-field-height: 48px;
+$auth-touch-height: 44px;
+$auth-muted: #555;
+$auth-border: #767676;          // 4.5:1 on white, so field edges are visible
+$auth-focus: #337ab7;
+
+.auth-page {
+  padding: 8px 0 24px;
+}
+
+.auth-card {
+  background: #fff;
+  border-radius: 8px;
+  border-top: 4px solid $auth-accent;
+  margin: 0 auto;
+  max-width: 440px;
+  padding: 20px 16px 16px;
+
+  @media (min-width: 768px) {
+    margin-top: 24px;
+    padding: 28px 32px 24px;
+  }
+}
+
+.auth-title {
+  font-size: 24px;
+  line-height: 1.25;
+  margin: 0 0 20px;
+}
+
+.auth-field {
+  margin-bottom: 20px;
+
+  label {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+}
+
+.auth-form {
+  .form-control {
+    border: 1px solid $auth-border;
+    border-radius: 8px;
+    box-shadow: none;
+    font-size: 16px;
+    height: $auth-field-height;
+    padding: 10px 12px;
+
+    &:focus {
+      border-color: $auth-focus;
+      box-shadow: 0 0 0 3px rgba($auth-focus, .25);
+    }
+  }
+}
+
+// Hints and legal text sit under the field in quiet type. (The global
+// "p { padding: 5px }" rule would otherwise indent them.)
+.auth-page p {
+  padding: 0;
+}
+
+.auth-hint {
+  color: $auth-muted;
+  font-size: 14px;
+  line-height: 1.45;
+  margin: 6px 0 0;
+}
+
+.auth-terms {
+  color: $auth-muted;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 4px 0 16px;
+}
+
+// Password field with an inline show/hide button.
+.auth-password {
+  position: relative;
+
+  .form-control {
+    padding-right: $auth-field-height + 4px;
+  }
+}
+
+.auth-password-toggle {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: $auth-muted;
+  display: flex;
+  font-size: 18px;
+  height: $auth-field-height;
+  justify-content: center;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: $auth-field-height;
+
+  &[hidden] {
+    display: none;
+  }
+
+  &:focus {
+    outline: 2px solid $auth-focus;
+    outline-offset: -2px;
+  }
+}
+
+.auth-forgot {
+  margin: 4px 0 0;
+  text-align: right;
+
+  a {
+    display: inline-block;
+    font-size: 15px;
+    padding: 12px 0;
+  }
+}
+
+.auth-remember {
+  align-items: center;
+  display: flex;
+  margin: 0 0 12px;
+  min-height: $auth-touch-height;
+
+  input[type="checkbox"] {
+    flex: 0 0 auto;
+    height: 22px;
+    margin: 0 12px 0 0;
+    width: 22px;
+  }
+
+  label {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0;
+  }
+}
+
+// .auth-form prefix: outranks the global ".btn { font-size: 1rem }" (= 10px).
+.auth-form .auth-submit {
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  min-height: 52px;
+  margin-top: 4px;
+}
+
+.auth-switch {
+  font-size: 16px;
+  margin: 20px 0 0;
+  text-align: center;
+}
+
+.auth-switch-link {
+  display: inline-block;
+  font-weight: 600;
+  padding: 10px 4px;
+}
+
+// Login page: a clear route to sign up, as a real button.
+.auth-switch-cta {
+  border-top: 1px solid #e5e5e5;
+  padding-top: 20px;
+
+  p {
+    margin: 0 0 10px;
+  }
+
+  .btn {
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: 600;
+    min-height: 52px;
+  }
+}
+
+.auth-help {
+  font-size: 14px;
+  margin: 8px 0 0;
+  text-align: center;
+
+  a {
+    display: inline-block;
+    padding: 12px 4px;
+  }
+}
+
+// Server-side errors and flash messages.
+.auth-page {
+  #error_explanation {
+    margin-bottom: 20px;
+
+    h2 {
+      font-size: 16px;
+      margin: 0 0 8px;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+  }
+
+  .alert {
+    margin-bottom: 20px;
+  }
+
+  #flash-message:empty {
+    display: none;
+  }
+}

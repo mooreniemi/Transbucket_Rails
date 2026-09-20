@@ -1,56 +1,60 @@
 <% title t('account_menu.register') %>
-<div class="col-md-6 center">
-  <div class="top-block"><center><h1><%= fa_icon "lock" %></h1></center></div>
-  <div class="login_well">
-    <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), html: { class: 'form-horizontal'}) do |f| %>
+<%# Mobile-first sign-up: one column, a visible label above every field, hints
+    below in quiet text, a show/hide password toggle instead of a confirmation
+    field, and one full-width button. Field ids/names are unchanged. %>
+<div class="auth-page">
+  <div class="auth-card">
+    <h1 class="auth-title"><%= t('homepage.register') %></h1>
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'auth-form' }) do |f| %>
       <%= render 'shared/errors', object: resource %>
-      <div id="username">
-        <span class="explanation"><%= I18n.t(".explanations.username") %></span>
-        <div class="input-group padded_nicely">
-          <span class="input-group-addon"><%= fa_icon "users" %></span>
-          <%= f.text_field :username, placeholder: t('public.auth.username'), class: "form-control" %>
-        </div>
+
+      <div id="username" class="auth-field">
+        <%= label_tag :user_username, t('public.auth.username') %>
+        <%= f.text_field :username, class: 'form-control', autocomplete: 'username', autocapitalize: 'none', autocorrect: 'off', spellcheck: 'false', enterkeyhint: 'next', 'aria-describedby' => 'username-hint' %>
+        <p class="auth-hint" id="username-hint"><%= I18n.t(".explanations.username") %></p>
       </div>
-      <div id="email">
-        <span class="explanation"><%= I18n.t(".explanations.email") %></span>
-        <div class="input-group padded_nicely">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-          <%= f.email_field :email, placeholder: t("activerecord.attributes.user.email"), class: "form-control" %>
-        </div>
+
+      <div id="email" class="auth-field">
+        <%= label_tag :user_email, t('activerecord.attributes.user.email') %>
+        <%= f.email_field :email, class: 'form-control', autocomplete: 'email', autocapitalize: 'none', autocorrect: 'off', spellcheck: 'false', inputmode: 'email', enterkeyhint: 'next', 'aria-describedby' => 'email-hint' %>
+        <p class="auth-hint" id="email-hint"><%= I18n.t(".explanations.email") %></p>
       </div>
-      <div id="password">
-        <span class="explanation"><%= I18n.t(".explanations.password") %></span>
-        <div class="input-group padded_nicely">
-          <span class="input-group-addon"><%= fa_icon "lock" %></span>
-          <%= f.password_field :password, placeholder: t('public.auth.password'), class: "form-control" %>
+
+      <div id="password" class="auth-field">
+        <%= label_tag :user_password, t('public.auth.password') %>
+        <div class="auth-password">
+          <%= f.password_field :password, class: 'form-control', autocomplete: 'new-password', autocapitalize: 'none', autocorrect: 'off', spellcheck: 'false', enterkeyhint: 'next', 'aria-describedby' => 'password-hint' %>
+          <%= render 'devise/shared/password_toggle', input_id: 'user_password' %>
         </div>
-        <div class="input-group padded_nicely">
-          <span class="input-group-addon"><%= fa_icon "lock" %><%= fa_icon "check" %></span>
-          <%= f.password_field :password_confirmation, placeholder: t('public.auth.password_confirmation'), class: "form-control" %>
-        </div>
+        <p class="auth-hint" id="password-hint"><strong><%= t('public.auth.password_hint', count: Devise.password_length.min) %></strong> <%= I18n.t(".explanations.password") %></p>
       </div>
-      <div id="name">
-        <span class="explanation"><%= I18n.t(".explanations.name") %></span>
-        <div class="input-group padded_nicely">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-          <%= f.text_field :name, placeholder: t('public.auth.your_name'), class: "form-control" %>
-        </div>
+
+      <div id="name" class="auth-field">
+        <%= label_tag :user_name, t('public.auth.your_name') %>
+        <%= f.text_field :name, class: 'form-control', autocomplete: 'name', enterkeyhint: 'next', 'aria-describedby' => 'name-hint' %>
+        <p class="auth-hint" id="name-hint"><%= I18n.t(".explanations.name") %></p>
       </div>
-      <div id="gender">
-        <span class="explanation"><%= I18n.t(".explanations.gender") %></span>
-        <div class="input-group padded_nicely">
-          <span class="input-group-addon"><%= fa_icon "key" %> <%= t('public.auth.gender') %>: </span>
-          <%= f.select :gender_id, localized_gender_options, {}, { class: "form-control"} %>
-        </div>
+
+      <div id="gender" class="auth-field">
+        <%= label_tag :user_gender_id, t('public.auth.gender') %>
+        <%= f.select :gender_id, localized_gender_options, {}, { class: 'form-control', 'aria-describedby' => 'gender-hint' } %>
+        <p class="auth-hint" id="gender-hint"><%= I18n.t(".explanations.gender") %></p>
       </div>
-      <p><%= I18n.t(".explanations.tos") %></p>
-      <center>
-        <%= f.submit t('account_menu.register'), class: "btn btn-primary btn-large" %>
-      </center>
+
+      <p class="auth-terms">
+        <%= I18n.t(".explanations.tos") %>
+        <%= link_to I18n.t('.footer.tos'), terms_path %> &middot; <%= link_to I18n.t('.footer.pp'), privacy_path %>
+      </p>
+
+      <%= f.submit t('account_menu.register'), class: 'btn btn-primary btn-lg btn-block auth-submit', data: { disable_with: t('public.auth.submitting') } %>
     <% end %>
-    <br clear="both">
-  </div>
-  <div class="well">
-    <%= render "devise/shared/links" %>
+
+    <p class="auth-switch">
+      <%= t('public.auth.have_account') %>
+      <%= link_to t('account_menu.login'), new_session_path(resource_name), class: 'auth-switch-link' %>
+    </p>
+    <p class="auth-help">
+      <%= link_to t('devise.shared.links.didn_t_receive_confirmation_instructions'), new_confirmation_path(resource_name) %>
+    </p>
   </div>
 </div>

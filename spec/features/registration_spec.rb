@@ -10,8 +10,8 @@ RSpec.describe "registration" do
     fill_in "Your name", :with => user.name
     fill_in "Username", :with => user.username
     fill_in "Email", :with => user.email unless invalid
+    # No confirmation field: the page has a show/hide toggle instead.
     fill_in "Password", :with => user.password
-    fill_in "Password confirmation", :with => user.password
     select user.gender.name, :from => "user_gender_id"
   end
 

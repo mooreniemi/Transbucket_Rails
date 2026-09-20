@@ -21,7 +21,7 @@
     <% end %>
     <meta name="viewport" content="width=device-width,initial-scale=1">
   </head>
-  <body>
+  <body<%= raw ' class="logged-out"' unless user_signed_in? %>>
     <%= render 'layouts/header' %>
     <div class="container">
       <% if user_signed_in? %>

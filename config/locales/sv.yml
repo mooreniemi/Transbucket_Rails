@@ -83,6 +83,8 @@ sv:
       remove: Ta bort
       remove_confirm: Vill du verkligen ta bort den här kommentaren?
       updated: Uppdaterad för %{time} sedan
+      tap_to_reveal: Tryck för att visa
+      hide_image: Dölj bild
     form:
       surgeon_url: Kirurgens webbplats
       photos: Foton
@@ -154,7 +156,7 @@ sv:
       no_matches: Inga träffar
   settings:
     safe_mode: Säkert läge
-    safe_mode_help: Dölj känsliga bilder
+    safe_mode_help: Säkert läge gör bidragens bilder suddiga tills du trycker på dem.
     notifications: Aviseringar
     update: Uppdatera
     cancel_account: Avsluta konto

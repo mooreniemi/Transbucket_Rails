@@ -507,6 +507,8 @@ en:
       average_sensation: Average sensation
       average_satisfaction: Average satisfaction
       by: by
+      tap_to_reveal: Tap to reveal
+      hide_image: Hide image
       reply: reply
       remove: Remove
       remove_confirm: Are you sure you want to remove this comment?
@@ -603,8 +605,7 @@ en:
   settings:
     title: Account Settings
     safe_mode: Safe mode
-    safe_mode_help: Safe mode replaces submission images on the index page with safe-for-work
-      images.
+    safe_mode_help: Safe mode blurs submission images until you tap them.
     notifications: Notifications
     notifications_help: Notification mode sends emails about new comments on your
       submissions.
@@ -1048,6 +1049,8 @@ de:
       average_sensation: Durchschnittliche Empfindung
       average_satisfaction: Durchschnittliche Zufriedenheit
       by: von
+      tap_to_reveal: Zum Anzeigen tippen
+      hide_image: Bild ausblenden
       reply: antworten
       remove: Entfernen
       remove_confirm: Diesen Kommentar wirklich entfernen?
@@ -1141,8 +1144,7 @@ de:
   settings:
     title: Kontoeinstellungen
     safe_mode: Sicherer Modus
-    safe_mode_help: Der sichere Modus ersetzt Beitragsbilder auf der Übersichtsseite
-      durch unbedenkliche Bilder.
+    safe_mode_help: Der sichere Modus verwischt Bilder von Beiträgen, bis du sie antippst.
     notifications: Benachrichtigungen
     notifications_help: Der Benachrichtigungsmodus sendet E-Mails über neue Kommentare
       zu deinen Beiträgen.
@@ -1604,6 +1606,8 @@ es:
       average_sensation: Sensación media
       average_satisfaction: Satisfacción media
       by: por
+      tap_to_reveal: Toca para ver
+      hide_image: Ocultar imagen
       reply: responder
       remove: Eliminar
       remove_confirm: "¿Seguro que quieres eliminar este comentario?"
@@ -1697,8 +1701,7 @@ es:
   settings:
     title: Configuración de la cuenta
     safe_mode: Modo seguro
-    safe_mode_help: El modo seguro sustituye las imágenes de publicaciones por imágenes
-      aptas para el trabajo.
+    safe_mode_help: El modo seguro difumina las imágenes de las publicaciones hasta que las toques.
     notifications: Notificaciones
     notifications_help: El modo de notificaciones envía correos sobre nuevos comentarios
       en tus publicaciones.
@@ -2157,6 +2160,8 @@ fr:
       average_sensation: Sensation moyenne
       average_satisfaction: Satisfaction moyenne
       by: par
+      tap_to_reveal: Touchez pour afficher
+      hide_image: Masquer l’image
       reply: répondre
       remove: Supprimer
       remove_confirm: Supprimer ce commentaire ?
@@ -2250,8 +2255,7 @@ fr:
   settings:
     title: Paramètres du compte
     safe_mode: Mode sécurisé
-    safe_mode_help: Le mode sécurisé remplace les images des contributions par des
-      images tout public.
+    safe_mode_help: Le mode sécurisé floute les images des contributions jusqu’à ce que vous les touchiez.
     notifications: Notifications
     notifications_help: Le mode de notification envoie des e-mails au sujet des nouveaux
       commentaires sur vos contributions.
@@ -2692,6 +2696,8 @@ it:
       average_sensation: Sensibilità media
       average_satisfaction: Soddisfazione media
       by: di
+      tap_to_reveal: Tocca per mostrare
+      hide_image: Nascondi immagine
       reply: rispondi
       remove: Rimuovi
       remove_confirm: Vuoi davvero rimuovere questo commento?
@@ -2785,8 +2791,7 @@ it:
   settings:
     title: Impostazioni account
     safe_mode: Modalità sicura
-    safe_mode_help: La modalità sicura sostituisce le immagini dei contributi con
-      immagini adatte a tutti.
+    safe_mode_help: La modalità sicura sfoca le immagini dei contributi finché non le tocchi.
     notifications: Notifiche
     notifications_help: La modalità notifiche invia e-mail sui nuovi commenti ai tuoi
       contributi.
@@ -3190,6 +3195,8 @@ ja:
       average_sensation: 平均感覚
       average_satisfaction: 平均満足度
       by: '投稿者:'
+      tap_to_reveal: タップして表示
+      hide_image: 画像を隠す
       reply: 返信
       remove: 削除
       remove_confirm: このコメントを削除してもよろしいですか？
@@ -3282,7 +3289,7 @@ ja:
   settings:
     title: アカウント設定
     safe_mode: セーフモード
-    safe_mode_help: セーフモードでは投稿画像を安全な画像に置き換えます。
+    safe_mode_help: セーフモードでは、タップするまで投稿の画像にぼかしがかかります。
     notifications: 通知
     notifications_help: 通知モードでは投稿への新しいコメントをメールで知らせます。
     update: 更新
@@ -3671,6 +3678,8 @@ zh-CN:
       average_sensation: 平均感觉
       average_satisfaction: 平均满意度
       by: 作者：
+      tap_to_reveal: 点按显示
+      hide_image: 隐藏图片
       reply: 回复
       remove: 删除
       remove_confirm: 确定要删除此评论吗？
@@ -3763,7 +3772,7 @@ zh-CN:
   settings:
     title: 账户设置
     safe_mode: 安全模式
-    safe_mode_help: 安全模式会将投稿图片替换为适合工作场所查看的图片。
+    safe_mode_help: 安全模式会将投稿图片模糊处理，点按后才会显示。
     notifications: 通知
     notifications_help: 通知模式会通过邮件提醒您投稿中的新评论。
     update: 更新
@@ -4177,6 +4186,8 @@ zh-TW:
       average_sensation: 平均感覺
       average_satisfaction: 平均滿意度
       by: 作者：
+      tap_to_reveal: 點一下顯示
+      hide_image: 隱藏圖片
       reply: 回覆
       remove: 刪除
       remove_confirm: 確定要刪除此評論嗎？
@@ -4269,7 +4280,7 @@ zh-TW:
   settings:
     title: 帳戶設定
     safe_mode: 安全模式
-    safe_mode_help: 安全模式會將投稿圖片替換為適合工作場所查看的圖片。
+    safe_mode_help: 安全模式會將投稿圖片模糊處理，點一下才會顯示。
     notifications: 通知
     notifications_help: 通知模式會透過電子郵件提醒您投稿中的新評論。
     update: 更新
@@ -4495,6 +4506,8 @@ pt-BR:
       average_sensation: Sensação média
       average_satisfaction: Satisfação média
       by: por
+      tap_to_reveal: Toque para ver
+      hide_image: Ocultar imagem
       reply: responder
       remove: Remover
       remove_confirm: Tem certeza de que deseja remover este comentário?
@@ -4588,8 +4601,7 @@ pt-BR:
   settings:
     title: Configurações da conta
     safe_mode: Modo seguro
-    safe_mode_help: O modo seguro substitui imagens das publicações por imagens apropriadas
-      para o trabalho.
+    safe_mode_help: O modo seguro desfoca as imagens das publicações até você tocar nelas.
     notifications: Notificações
     notifications_help: O modo de notificações envia e-mails sobre novos comentários
       nas suas publicações.
@@ -4816,6 +4828,8 @@ nl:
       average_sensation: Gemiddelde gevoeligheid
       average_satisfaction: Gemiddelde tevredenheid
       by: door
+      tap_to_reveal: Tik om te tonen
+      hide_image: Afbeelding verbergen
       reply: antwoorden
       remove: Verwijderen
       remove_confirm: Deze reactie verwijderen?
@@ -4910,8 +4924,7 @@ nl:
   settings:
     title: Accountinstellingen
     safe_mode: Veilige modus
-    safe_mode_help: De veilige modus vervangt afbeeldingen door afbeeldingen die geschikt
-      zijn voor op het werk.
+    safe_mode_help: In de veilige modus worden afbeeldingen van bijdragen vervaagd totdat je erop tikt.
     notifications: Meldingen
     notifications_help: De meldingsmodus stuurt e-mails over nieuwe reacties op je
       bijdragen.
@@ -5137,6 +5150,8 @@ pl:
       average_sensation: Średnie odczuwanie
       average_satisfaction: Średnie zadowolenie
       by: 'autor:'
+      tap_to_reveal: Dotknij, aby pokazać
+      hide_image: Ukryj obraz
       reply: odpowiedz
       remove: Usuń
       remove_confirm: Czy na pewno usunąć ten komentarz?
@@ -5230,8 +5245,7 @@ pl:
   settings:
     title: Ustawienia konta
     safe_mode: Tryb bezpieczny
-    safe_mode_help: Tryb bezpieczny zastępuje obrazy wpisów obrazami odpowiednimi
-      do oglądania w pracy.
+    safe_mode_help: Tryb bezpieczny rozmywa obrazy wpisów, dopóki ich nie dotkniesz.
     notifications: Powiadomienia
     notifications_help: Tryb powiadomień wysyła e-maile o nowych komentarzach do Twoich
       wpisów.
@@ -5459,6 +5473,8 @@ ru:
       average_sensation: Средняя чувствительность
       average_satisfaction: Средняя удовлетворённость
       by: 'автор:'
+      tap_to_reveal: Нажмите, чтобы показать
+      hide_image: Скрыть изображение
       reply: ответить
       remove: Удалить
       remove_confirm: Удалить этот комментарий?
@@ -5552,8 +5568,7 @@ ru:
   settings:
     title: Настройки аккаунта
     safe_mode: Безопасный режим
-    safe_mode_help: Безопасный режим заменяет изображения публикаций на безопасные
-      для просмотра на работе.
+    safe_mode_help: В безопасном режиме изображения публикаций размыты, пока вы не нажмёте на них.
     notifications: Уведомления
     notifications_help: Уведомления сообщают по электронной почте о новых комментариях
       к вашим публикациям.
@@ -5775,6 +5790,8 @@ tr:
       average_sensation: Ortalama his
       average_satisfaction: Ortalama memnuniyet
       by: 'gönderen:'
+      tap_to_reveal: Göstermek için dokunun
+      hide_image: Görseli gizle
       reply: yanıtla
       remove: Kaldır
       remove_confirm: Bu yorumu kaldırmak istediğinizden emin misiniz?
@@ -5869,8 +5886,7 @@ tr:
   settings:
     title: Hesap ayarları
     safe_mode: Güvenli mod
-    safe_mode_help: Güvenli mod, gönderi görsellerini iş yerinde görüntülenebilecek
-      görsellerle değiştirir.
+    safe_mode_help: Güvenli mod, dokunana kadar gönderi görsellerini bulanıklaştırır.
     notifications: Bildirimler
     notifications_help: Bildirim modu, gönderilerinizdeki yeni yorumları e-posta ile
       bildirir.
@@ -6092,6 +6108,8 @@ vi:
       average_sensation: Cảm giác trung bình
       average_satisfaction: Mức hài lòng trung bình
       by: bởi
+      tap_to_reveal: Chạm để xem
+      hide_image: Ẩn hình ảnh
       reply: trả lời
       remove: Xóa
       remove_confirm: Bạn có chắc muốn xóa bình luận này không?
@@ -6185,8 +6203,7 @@ vi:
   settings:
     title: Cài đặt tài khoản
     safe_mode: Chế độ an toàn
-    safe_mode_help: Chế độ an toàn thay ảnh bài đăng bằng ảnh phù hợp để xem tại nơi
-      làm việc.
+    safe_mode_help: Chế độ an toàn làm mờ hình ảnh bài đăng cho đến khi bạn chạm vào.
     notifications: Thông báo
     notifications_help: Chế độ thông báo gửi email về bình luận mới trên bài đăng
       của bạn.
@@ -6401,6 +6418,8 @@ ar:
       average_sensation: متوسط الإحساس
       average_satisfaction: متوسط الرضا
       by: بواسطة
+      tap_to_reveal: المس للعرض
+      hide_image: إخفاء الصورة
       reply: رد
       remove: حذف
       remove_confirm: هل تريد حذف هذا التعليق؟
@@ -6495,7 +6514,7 @@ ar:
   settings:
     title: إعدادات الحساب
     safe_mode: الوضع الآمن
-    safe_mode_help: يستبدل الوضع الآمن صور المنشورات بصور مناسبة للعمل.
+    safe_mode_help: يُموِّه الوضع الآمن صور المنشورات حتى تلمسها.
     notifications: الإشعارات
     notifications_help: يرسل وضع الإشعارات رسائل بريدية عن التعليقات الجديدة على منشوراتك.
     update: تحديث

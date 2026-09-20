@@ -32,7 +32,18 @@ describe PinsController, :type => :controller do
         get :index
 
         expect(assigns(:safe_mode)).to eq(true)
-        expect(response.body).to include('http://placekitten.com/200/300')
+        expect(response.body).to include('safe-blur')
+        expect(response.body).to include('data-safe-reveal')
+        expect(response.body).to include('data-safe-hide')
+      end
+
+      it 'passes the safe-mode preference to the pin page too' do
+        user.preference.update_attributes!(safe_mode: true)
+        pin = create(:pin, user: user)
+
+        get :show, id: pin.id
+
+        expect(assigns(:safe_mode)).to eq(true)
       end
 
       it 'shows pin images when the signed-in user has not enabled safe mode' do
@@ -42,7 +53,8 @@ describe PinsController, :type => :controller do
         get :index
 
         expect(assigns(:safe_mode)).to eq(false)
-        expect(response.body).not_to include('http://placekitten.com/200/300')
+        expect(response.body).not_to include('safe-blur')
+        expect(response.body).not_to include('data-safe-reveal')
       end
 
       it "renders the authenticated index with a locale and user filter" do

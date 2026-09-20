@@ -30,11 +30,11 @@ module PinsHelper
   end
 
   # FIXME: this could be a lot more robust, and reflect user preference rather than last
-  def cover_image(safe_mode = false)
-    kitty_url = FakeImage.new
-    cover = images.try(:last) ? images.last : kitty_url
-    image = safe_mode == true ? kitty_url : cover
-    image
+  #
+  # +_safe_mode+ is ignored: safe mode used to swap in a cat picture here, and now
+  # blurs the real image in the view instead (see safe_blur.css.scss).
+  def cover_image(_safe_mode = false)
+    images.try(:last) ? images.last : FakeImage.new
   end
 
   def images

@@ -30,13 +30,16 @@
   }
 ) %>
 <h1 class="pin-page-title"><%= pin_title %></h1>
-<% cache([I18n.locale, "pin_show", @pin, @pin.pin_images.map(&:id), @pin.pin_images.maximum(:updated_at), can_edit_pin]) do %>
+<% cache([I18n.locale, "pin_show", @safe_mode, @pin, @pin.pin_images.map(&:id), @pin.pin_images.maximum(:updated_at), can_edit_pin]) do %>
   <div class="row pin-show-grid">
     <div class="col-md-7">
       <div class="pin-gallery-panel">
         <% for pinimage in @pin.pin_images.reject {|p| p.photo_file_size.nil?} do %>
           <div class="thumbnail pin-gallery-item">
-            <%= image_tag pinimage.photo, class: 'pin-gallery-image', alt: pinimage.caption.presence || pin_title %>
+            <div class="pin-gallery-photo<%= ' safe-blur' if @safe_mode %>">
+              <%= image_tag pinimage.photo, class: 'pin-gallery-image', alt: pinimage.caption.presence || pin_title %>
+              <%= render 'shared/safe_reveal' if @safe_mode %>
+            </div>
             <div class="caption pin-gallery-caption">
               <%= pinimage.caption.to_s %>
             </div>

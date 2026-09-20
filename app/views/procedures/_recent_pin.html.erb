@@ -1,5 +1,8 @@
 <article class="procedure-recent-pin">
-  <%= link_to image_tag(pin.cover_image(@safe_mode).url(:medium), alt: pin.procedure.try(:localized_name)), pin %>
+  <div class="recent-pin-image<%= ' safe-blur' if @safe_mode %>">
+    <%= link_to image_tag(pin.cover_image.url(:medium), alt: pin.procedure.try(:localized_name)), pin %>
+    <%= render 'shared/safe_reveal' if @safe_mode %>
+  </div>
   <div class="procedure-recent-pin-details">
     <h3><%= link_to pin.procedure.try(:localized_name), pin %></h3>
     <p><%= t('public.pin.by') %> <strong><%= pin.unknown_surgeon? ? t('public.pin.unknown') : "#{t('public.pin.doctor_prefix')}#{link_to pin.surgeon.to_s, surgeon_path(id: pin.surgeon.id)}".html_safe %></strong></p>

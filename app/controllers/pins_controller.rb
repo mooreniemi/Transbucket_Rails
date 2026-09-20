@@ -2,6 +2,7 @@ class PinsController < ApplicationController
   include SanitizeNames
   before_filter :authenticate_user!
   before_filter :validate_user, :only => [:edit, :update, :destroy]
+  before_filter :require_moderator!, :only => :admin
   before_filter :get_pin, :except => [:index, :new, :create, :admin, :complication_suggestions]
   respond_to :json
 
@@ -22,8 +23,9 @@ class PinsController < ApplicationController
   # GET /pins/1
   # GET /pins/1.json
   def show
-    @comments = @pin.comments_asc
+    @comments = @pin.comments_asc.includes(user: :trust_grants)
     @new_comment = Comment.build_from(@pin, current_user, "")
+    @safe_mode = safe_mode
 
     respond_to do |format|
       format.html # show.html.erb
@@ -181,7 +183,7 @@ class PinsController < ApplicationController
   end
 
   def get_pin
-    @pin = Pin.includes(comment_threads: [:children]).find(params[:id])
+    @pin = Pin.includes(user: :trust_grants, comment_threads: [:children]).find(params[:id])
   end
 
   def id_or_attributes(attributes)
@@ -250,10 +252,14 @@ class PinsController < ApplicationController
   def validate_user
     pin = Pin.find(params[:id])
 
-    if current_user == pin.user || current_user.admin
+    if current_user == pin.user || current_user.admin? || (action_name == 'destroy' && current_user.moderator?)
       return true
     else
       head :forbidden
     end
+  end
+
+  def require_moderator!
+    head :forbidden unless current_user.moderator?
   end
 end

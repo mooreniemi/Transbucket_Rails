@@ -29,13 +29,14 @@
     <div class="panel-body">
     <%= render partial: "latest_comment_snippet", locals: { pin: pin } if @comments.map(&:commentable_id).include?(pin.id) %>
     <% cache([I18n.locale, pin, @safe_mode]) do %>
-      <div class="image pin-card-image" itemprop="image">
-        <%= link_to (image_tag pin.cover_image(@safe_mode).url(:medium), alt: pin.procedure.try(:localized_name)), pin,
+      <div class="image pin-card-image<%= ' safe-blur' if @safe_mode %>" itemprop="image">
+        <%= link_to (image_tag pin.cover_image.url(:medium), alt: pin.procedure.try(:localized_name)), pin,
           'data-content-event-open' => true,
           'data-content-event-url' => content_events_path,
           'data-content-type' => 'Pin',
           'data-content-id' => pin.id,
           'data-event-context' => event_context.to_json %>
+        <%= render 'shared/safe_reveal' if @safe_mode %>
       </div>
       <p class="description" itemprop="description">
         <%= pin.try(:procedure).try(:localized_name) %> <%= t('public.pin.by') %> <strong><%= pin.unknown_surgeon? ? t('public.pin.unknown') : "#{t('public.pin.doctor_prefix')}#{link_to pin.surgeon.to_s, surgeon_path(id: pin.surgeon.id)}".html_safe %></strong>

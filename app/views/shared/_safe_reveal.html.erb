@@ -1,0 +1,11 @@
+<%# Safe mode: the image next to these buttons is blurred until it is tapped, and
+    the small eye-slash button on a revealed image blurs it again
+    (safe_blur.css.scss / safe_reveal.js). It sits beside any link, never inside
+    one, so it is a valid, keyboard-reachable button. %>
+<button type="button" class="safe-reveal" data-safe-reveal>
+  <%= fa_icon 'eye' %>
+  <span><%= t('public.pin.tap_to_reveal') %></span>
+</button>
+<button type="button" class="safe-hide" data-safe-hide aria-label="<%= t('public.pin.hide_image') %>" title="<%= t('public.pin.hide_image') %>">
+  <%= fa_icon 'eye-slash' %>
+</button>

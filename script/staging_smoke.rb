@@ -71,6 +71,7 @@ class StagingSmoke
     login
     verify_account_localization
     pin_id, search_term = create_pin
+    verify_safe_mode(pin_id)
     edit_pin(pin_id)
     verify_search_page
     verify_search_results(search_term, pin_id)
@@ -183,6 +184,52 @@ class StagingSmoke
     end
 
     [pin_id, params["pin[procedure_attributes][name]"]]
+  end
+
+  def verify_safe_mode(pin_id)
+    update_safe_mode('0')
+    unless pin_card_image_url(pin_id) != safe_mode_placeholder_url
+      raise "safe mode off did not show the uploaded image for pin #{pin_id}"
+    end
+
+    update_safe_mode('1')
+    unless pin_card_image_url(pin_id) == safe_mode_placeholder_url
+      raise "safe mode on did not replace the image for pin #{pin_id}"
+    end
+  ensure
+    # The smoke account is shared. Leave it in its normal, image-visible state
+    # even when a later assertion fails.
+    update_safe_mode('0')
+  end
+
+  def update_safe_mode(value)
+    response = get('/users/edit')
+    doc = html_document(response.body)
+    form = doc.at_css('form[action*="preferences"]') || raise('safe-mode settings form missing')
+    token = csrf_token('/users/edit', doc)
+    params = {
+      '_method' => 'put',
+      'preference[safe_mode]' => value
+    }
+    params['authenticity_token'] = token if token
+    response = post(form['action'], params)
+
+    unless response.is_a?(Net::HTTPRedirection)
+      raise "safe-mode update failed with #{response.code}"
+    end
+  end
+
+  def pin_card_image_url(pin_id)
+    response = get('/pins')
+    raise "pin index failed with #{response.code}" unless response.code.to_i == 200
+
+    card = html_document(response.body).at_css(%(.item[data-pin-id="#{pin_id}"]))
+    image = card && card.at_css('img')
+    image && image['src'] || raise("pin #{pin_id} card image missing from index")
+  end
+
+  def safe_mode_placeholder_url
+    'http://placekitten.com/200/300'
   end
 
   def localized_pin_label

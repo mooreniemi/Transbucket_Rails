@@ -9,7 +9,7 @@
     "tokens:build": "tz build",
     "tokens:watch": "tz build --watch",
     "predev": "npm run tokens:build",
-    "dev": "vite dev --port 3000",
+    "dev": "vite dev --port 5173",
     "generate-routes": "tsr generate",
     "prebuild": "npm run tokens:build",
     "build": "vite build",

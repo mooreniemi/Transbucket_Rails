@@ -15,10 +15,36 @@ const config = defineConfig({
   resolve: {
     tsconfigPaths: true
   },
-  plugins: [devtools(), tailwindcss(), tanstackRouter({
-    target: 'react',
-    autoCodeSplitting: true
-  }), viteReact()],
+  plugins: [
+    devtools({
+      // can enable this if ruby is updated and we can migrate to vite_rails gem instead of custom setup
+      consolePiping: {
+        enabled: false
+      }
+    }),
+    tailwindcss(),
+    tanstackRouter({
+      target: 'react',
+      autoCodeSplitting: true
+    }),
+    viteReact()
+  ],
+  // manifest: true so the Rails catch-all view can look up the current
+  // build's hashed asset filenames instead of hardcoding them.
+  build: {
+    manifest: true,
+  },
+  // strictPort so Rails' dev-mode asset helper can rely on this port
+  // always being the dev server, matching the "dev" npm script's
+  // --port 5173; cors so the Rails-origin page can load module scripts
+  // from here directly in development.
+  server: {
+    port: 5173,
+    strictPort: true,
+    cors: {
+      origin: 'http://localhost:3000'
+    },
+  },
   test: {
     projects: [{
       extends: true,

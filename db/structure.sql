@@ -2,10 +2,10 @@
 -- PostgreSQL database dump
 --
 
-\restrict hKohc6fgTwCjE07FKdk1Hl5hWSNwcEbHZBpP3kMOtVaWBidASVg0adB9BncP0pH
+\restrict 8VqrnWMekZSbpesdWJRlKE5Xe4HAad9GFvXdpKD73wJM14KPmSbdNfUaCaKa1be
 
--- Dumped from database version 16.15 (Debian 16.15-1.pgdg13+2)
--- Dumped by pg_dump version 16.15 (Homebrew)
+-- Dumped from database version 13.14 (Debian 13.14-1.pgdg120+2)
+-- Dumped by pg_dump version 15.19 (Debian 15.19-0+deb12u1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -17,6 +17,13 @@ SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
+
+--
+-- Name: public; Type: SCHEMA; Schema: -; Owner: -
+--
+
+-- *not* creating schema, since initdb creates it
+
 
 SET default_tablespace = '';
 
@@ -1347,7 +1354,7 @@ ALTER TABLE ONLY public.procedure_translations
 -- PostgreSQL database dump complete
 --
 
-\unrestrict hKohc6fgTwCjE07FKdk1Hl5hWSNwcEbHZBpP3kMOtVaWBidASVg0adB9BncP0pH
+\unrestrict 8VqrnWMekZSbpesdWJRlKE5Xe4HAad9GFvXdpKD73wJM14KPmSbdNfUaCaKa1be
 
 SET search_path TO "$user", public;
 

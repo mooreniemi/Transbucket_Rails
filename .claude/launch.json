@@ -4,8 +4,14 @@
     {
       "name": "storybook",
       "runtimeExecutable": "sh",
-      "runtimeArgs": ["-c", "cd react && npm run storybook"],
+      "runtimeArgs": ["-c", "export PATH=\"$HOME/.nvm/versions/node/v24.18.0/bin:$PATH\" && cd react && npm run storybook"],
       "port": 6006
+    },
+    {
+      "name": "react-dev",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "export PATH=\"$HOME/.nvm/versions/node/v24.18.0/bin:$PATH\" && cd react && npm run dev"],
+      "port": 5173
     }
   ]
 }

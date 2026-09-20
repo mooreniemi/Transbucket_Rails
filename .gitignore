@@ -16,6 +16,7 @@ public/page_cache/*
 public/system/pin_images/photos/*
 public/system/*
 /public/assets
+/public/vite
 # Ignore application configuration
 /config/application.yml
 coverage/*

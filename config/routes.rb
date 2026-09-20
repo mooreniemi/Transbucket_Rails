@@ -9,7 +9,10 @@ Rails.application.routes.draw do
 
     devise_scope :user do
       get "/register" => "devise/registrations#new"
-      get "/login" => "devise/sessions#new"
+      # React-rendered now -- the form still posts to Devise's own
+      # user_session path (POST /users/sign_in), so sign-in itself is
+      # untouched; this only replaces the page that's shown at GET /login.
+      get "/login" => "react_app#show"
     end
 
     resources :users do
@@ -69,5 +72,11 @@ Rails.application.routes.draw do
     if Rails.env.development?
       get "/system/:url", to: proc { [410, {}, ['']] }, url: /.+/
     end
+
+    # Catch-all for new React-only pages that don't have a Rails route yet.
+    # Must stay last: every route above still wins first, so nothing already
+    # working here changes. Restricted to HTML so it doesn't swallow
+    # requests for a format (json, etc.) nothing above was meant to answer.
+    get '*path', to: 'react_app#show', constraints: ->(req) { req.format == :html }
   end
 end

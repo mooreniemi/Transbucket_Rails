@@ -82,21 +82,22 @@ function Header({
         <div
           inert={!isMobileNavOpen}
           className={cn(
-            // max-height, not grid-template-rows: 0fr/1fr -- a lone
-            // flexible grid track inside an auto-height (absolutely
-            // positioned) container doesn't reliably resolve to a true
-            // 0px, since fr units need a definite space to divide; it
-            // stayed pinned near the content's min-content height and
-            // leaked a sliver of the active link's background. A
-            // max-height transition doesn't have that failure mode.
-            "absolute inset-x-0 top-full max-md:block md:hidden overflow-hidden border-b border-black-300 bg-white transition-[max-height] duration-200",
-            isMobileNavOpen ? "max-h-96" : "max-h-0",
+            // A full-height sheet: starts under the header and runs to the
+            // bottom of the viewport (100% here is the header's own height,
+            // since the header is the containing block), scrolling
+            // internally when expanded accordions outgrow it. Fades/slides
+            // rather than animating height, and visibility is transitioned
+            // too so the closed sheet is hidden without popping.
+            "absolute inset-x-0 top-full z-40 max-md:block md:hidden h-[calc(100dvh-100%)] overflow-y-auto overscroll-contain bg-white transition-[opacity,translate,visibility] duration-200",
+            isMobileNavOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0",
           )}
         >
           <NavVariantContext.Provider value="mobile">
-            <nav aria-label="Primary" className="flex flex-col gap-1 p-2">
+            <nav aria-label="Primary" className="flex flex-col gap-1 p-4">
               {children}
-              {sectionRight}
+              <div className="mt-2 flex flex-col gap-1 border-t border-black-200 pt-3">
+                {sectionRight}
+              </div>
             </nav>
           </NavVariantContext.Provider>
         </div>

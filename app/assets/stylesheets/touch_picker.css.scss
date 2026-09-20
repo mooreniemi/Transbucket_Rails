@@ -1,0 +1,304 @@
+// Touch pickers (touch_picker.js): the replacement for <select> on phones and
+// tablets. Sizes are in px on purpose (the site's rem rules used to resolve to
+// 10px), inputs are 16px so iOS does not zoom the page, and every tap target is
+// at least 44px.
+
+$picker-field-height: 48px;
+$picker-touch: 44px;
+$picker-border: #767676;          // 4.5:1 on white
+$picker-accent: #FCC000;          // brand yellow
+$picker-accent-border: #c99700;
+$picker-muted: #666;
+$picker-focus: #337ab7;
+
+// The real <select> stays in the form, visually hidden, as the source of truth.
+.picker-native {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.picker {
+  min-width: 0;
+  width: 100%;
+}
+
+// ---- the button that opens a sheet ----------------------------------------
+.picker-trigger {
+  align-items: center;
+  background: #fff;
+  border: 1px solid $picker-border;
+  border-radius: 8px;
+  color: #222;
+  display: flex;
+  font-size: 16px;
+  gap: 8px;
+  min-height: $picker-field-height;
+  padding: 8px 12px;
+  text-align: left;
+  width: 100%;
+
+  &:focus {
+    outline: 2px solid $picker-focus;
+    outline-offset: 2px;
+  }
+
+  .fa {
+    color: #555;
+    flex: 0 0 auto;
+  }
+
+  &.is-placeholder .picker-trigger-text {
+    color: $picker-muted;
+  }
+}
+
+.picker-trigger-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.picker-count {
+  background: $picker-accent;
+  border-radius: 12px;
+  color: #222;
+  flex: 0 0 auto;
+  font-size: 14px;
+  font-weight: 600;
+  min-width: 24px;
+  padding: 1px 8px;
+  text-align: center;
+}
+
+// Chosen values of a multiple sheet picker, each removable.
+.picker-selected {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.picker-selected-remove {
+  align-items: center;
+  background: #fff8e1;
+  border: 1px solid $picker-accent-border;
+  border-radius: 20px;
+  color: #222;
+  display: flex;
+  font-size: 15px;
+  gap: 8px;
+  max-width: 100%;
+  min-height: 40px;
+  padding: 0 12px;
+
+  .picker-selected-label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+// ---- inline toggle chips (short multi-selects) -----------------------------
+.picker-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.picker-chip {
+  background: #fff;
+  border: 1px solid $picker-border;
+  border-radius: 22px;
+  color: #222;
+  font-size: 16px;
+  min-height: $picker-touch;
+  padding: 0 16px;
+
+  &.is-selected {
+    background: $picker-accent;
+    border-color: $picker-accent-border;
+    font-weight: 600;
+  }
+
+  &:focus {
+    outline: 2px solid $picker-focus;
+    outline-offset: 2px;
+  }
+}
+
+// ---- the full-screen sheet --------------------------------------------------
+body.picker-open {
+  overflow: hidden;
+}
+
+.picker-sheet {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 2000;
+}
+
+.picker-backdrop {
+  background: rgba(0, 0, 0, .45);
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.picker-panel {
+  background: #fff;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  outline: none;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  @media (min-width: 768px) {
+    border-radius: 12px;
+    bottom: auto;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, .3);
+    left: 50%;
+    margin-left: -260px;
+    max-height: 80vh;
+    padding-bottom: 0;
+    top: 10vh;
+    width: 520px;
+  }
+}
+
+.picker-header {
+  align-items: center;
+  border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  flex: 0 0 auto;
+  gap: 8px;
+  min-height: 56px;
+  padding: env(safe-area-inset-top, 0px) 8px 0;
+}
+
+.picker-close {
+  background: transparent;
+  border: 0;
+  color: #222;
+  flex: 0 0 auto;
+  font-size: 20px;
+  height: $picker-touch;
+  width: $picker-touch;
+}
+
+.picker-title {
+  flex: 1 1 auto;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.picker-done {
+  background: $picker-accent;
+  border: 0;
+  border-radius: 8px;
+  color: #222;
+  flex: 0 0 auto;
+  font-size: 16px;
+  font-weight: 600;
+  min-height: $picker-touch;
+  padding: 0 16px;
+}
+
+.picker-search {
+  border-bottom: 1px solid #e5e5e5;
+  flex: 0 0 auto;
+  padding: 8px 12px;
+}
+
+.picker-search-input {
+  border: 1px solid $picker-border;
+  border-radius: 8px;
+  font-size: 16px;
+  height: $picker-field-height;
+  padding: 0 12px;
+  width: 100%;
+}
+
+.picker-list {
+  -webkit-overflow-scrolling: touch;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.picker-option {
+  align-items: center;
+  background: #fff;
+  border: 0;
+  border-bottom: 1px solid #eee;
+  color: #222;
+  display: flex;
+  font-size: 17px;
+  gap: 12px;
+  justify-content: space-between;
+  min-height: 52px;
+  padding: 8px 16px;
+  text-align: left;
+  width: 100%;
+
+  .fa {
+    color: #0b5394;
+    visibility: hidden;
+  }
+
+  &.is-selected {
+    background: #fff8e1;
+    font-weight: 600;
+
+    .fa {
+      visibility: visible;
+    }
+  }
+
+  &:focus {
+    outline: 2px solid $picker-focus;
+    outline-offset: -2px;
+  }
+}
+
+.picker-option-label {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.picker-empty {
+  color: #555;
+  margin: 0;
+  padding: 24px 16px;
+  text-align: center;
+}

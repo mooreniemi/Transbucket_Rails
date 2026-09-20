@@ -180,17 +180,20 @@ $(document).ready(function() {
     bindEntitySuggestion('#pin_surgeon_attributes_last_name', '#pin_surgeon_attributes_id', '#surgeon-suggestion', '#surgeon_container');
     bindEntitySuggestion('#pin_procedure_attributes_name', '#pin_procedure_attributes_id', '#procedure-suggestion', '#procedure_container');
 
-    $("#pin_procedure_attributes_id").chosen({
-      width: "80%",
-      placeholder_text_single: "Procedures",
-      max_selected_options: 1
-    });
+    // Desktop uses Chosen; touch devices get touch_picker.js (see there).
+    if (!(window.TouchPicker && window.TouchPicker.shouldUse())) {
+      $("#pin_procedure_attributes_id").chosen({
+        width: "80%",
+        placeholder_text_single: "Procedures",
+        max_selected_options: 1
+      });
 
-    $("#pin_surgeon_attributes_id").chosen({
-      width: "80%",
-      placeholder_text_single: "Surgeons",
-      max_selected_options: 1
-    });
+      $("#pin_surgeon_attributes_id").chosen({
+        width: "80%",
+        placeholder_text_single: "Surgeons",
+        max_selected_options: 1
+      });
+    }
 
     Dropzone.autoDiscover = false;
 

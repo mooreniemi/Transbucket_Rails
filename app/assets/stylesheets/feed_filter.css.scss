@@ -1,0 +1,99 @@
+// The feed toolbar (Recent / For You + Filter) and the filter panel under it.
+// The filter used to be an item in the navbar; it is a page control now.
+
+.feed-toolbar {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  margin: 8px 0 10px;
+
+  @media (min-width: 768px) {
+    margin: 16px 0;
+  }
+
+  // The toolbar owns the spacing now.
+  .nav-tabs.submission-feed-tabs {
+    flex: 1 1 auto;
+    margin: 0;
+    min-width: 0;
+  }
+}
+
+.feed-toolbar .feed-filter-toggle {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #767676;
+  border-radius: 8px;
+  color: #222;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 16px;
+  gap: 8px;
+  margin-left: auto;
+  min-height: 40px;
+  padding: 0 14px;
+
+  .badge {
+    background: #FCC000;
+    color: #222;
+  }
+}
+
+.feed-filter-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  padding: 16px;
+}
+
+.feed-filter-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 20px;
+}
+
+.feed-filter-field {
+  flex: 1 1 240px;
+  min-width: 0;
+
+  label {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+}
+
+.feed-filter-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+
+  .btn {
+    border-radius: 8px;
+    font-weight: 600;
+    min-height: 48px;
+  }
+
+  // The Clear link is an <a>, so centre its text like the submit button's.
+  a.btn {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    flex: 1 1 auto;
+  }
+
+  @media (min-width: 768px) {
+    .btn {
+      min-height: 40px;
+    }
+
+    .btn-primary {
+      flex: 0 0 auto;
+    }
+  }
+}

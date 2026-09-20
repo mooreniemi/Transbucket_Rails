@@ -148,6 +148,10 @@ sv:
       deleting: tar bort...
       updating: uppdaterar...
       update_caption: uppdatera bildtext
+    picker:
+      done: Klart
+      close: Stäng
+      no_matches: Inga träffar
   settings:
     safe_mode: Säkert läge
     safe_mode_help: Dölj känsliga bilder

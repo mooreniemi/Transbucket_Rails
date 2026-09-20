@@ -4,9 +4,9 @@
     <label class="control-label"><%= t('public.pin.surgeon') %></label>
     <div id="surgeon_form" class="controls pin-entity-controls">
       <%= f.fields_for :surgeon do |surgeon_form| %>
-        <%= surgeon_form.select :id, options_from_collection_for_select(Surgeon.order('last_name ASC'), 'id', 'to_s', surgeon_form.object.id) %>
+        <%= surgeon_form.select :id, options_from_collection_for_select(Surgeon.order('last_name ASC'), 'id', 'to_s', surgeon_form.object.id), {}, touch_picker_data(t('public.pin.surgeon')) %>
 
-        <a id="add_new_surgeon" href="#" class="add-button"><%= fa_icon("plus-circle") %></a>
+        <a id="add_new_surgeon" href="#" class="add-button" title="<%= t('public.form.add_surgeon') %>" aria-label="<%= t('public.form.add_surgeon') %>"><%= fa_icon("plus-circle") %><span class="add-button-label"><%= t('public.form.add_surgeon') %></span></a>
         <%= render partial: 'surgeons/surgeon', locals: {surgeon_form: surgeon_form} %>
       <% end %>
     </div>
@@ -15,9 +15,9 @@
     <label class="control-label"><%= t('public.pin.procedure') %></label>
     <div id="procedure_form" class="controls pin-entity-controls">
       <%= f.fields_for :procedure do |procedure_form| %>
-        <%= procedure_form.select :id, options_from_collection_for_select(Procedure.order('name ASC'), 'id', 'localized_name', procedure_form.object.id) %>
+        <%= procedure_form.select :id, options_from_collection_for_select(Procedure.order('name ASC'), 'id', 'localized_name', procedure_form.object.id), {}, touch_picker_data(t('public.pin.procedure')) %>
 
-        <a id="add_new_procedure" href="#" class="add-button"><%= fa_icon("plus-circle") %></a>
+        <a id="add_new_procedure" href="#" class="add-button" title="<%= t('public.extra.add_procedure') %>" aria-label="<%= t('public.extra.add_procedure') %>"><%= fa_icon("plus-circle") %><span class="add-button-label"><%= t('public.extra.add_procedure') %></span></a>
         <%= render partial: 'procedures/new_procedure', locals: {procedure_form: procedure_form} %>
       <% end %>
     </div>

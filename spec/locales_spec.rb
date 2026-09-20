@@ -189,6 +189,15 @@ describe 'application locales' do
     end
   end
 
+  it 'defines the touch picker strings for every supported locale' do
+    SUPPORTED_LOCALES.each do |locale|
+      %w(done close no_matches).each do |key|
+        value = @translations.fetch(locale).fetch('public').fetch('picker').fetch(key)
+        expect(value.to_s).not_to be_empty, "#{locale} is missing public.picker.#{key}"
+      end
+    end
+  end
+
   it 'keeps a trailing space on the doctor prefix so names are not glued to it' do
     SUPPORTED_LOCALES.each do |locale|
       prefix = @translations.fetch(locale).fetch('public').fetch('pin').fetch('doctor_prefix')

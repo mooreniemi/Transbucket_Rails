@@ -531,6 +531,10 @@ en:
       surgeon_last_name: Surgeon's last name
       surgeon_first_name: Surgeon's first name
       surgeon_url: Surgeon's URL
+    picker:
+      done: Done
+      close: Close
+      no_matches: No matches
     auth:
       username: Username
       username_or_email: Username or email
@@ -1068,6 +1072,10 @@ de:
       surgeon_last_name: Nachname des Chirurgen
       surgeon_first_name: Vorname des Chirurgen
       surgeon_url: URL des Chirurgen
+    picker:
+      done: Fertig
+      close: Schließen
+      no_matches: Keine Treffer
     auth:
       username: Benutzername
       username_or_email: Benutzername oder E-Mail
@@ -1620,6 +1628,10 @@ es:
       surgeon_last_name: Apellidos del cirujano
       surgeon_first_name: Nombre del cirujano
       surgeon_url: URL del cirujano
+    picker:
+      done: Listo
+      close: Cerrar
+      no_matches: Sin resultados
     auth:
       username: Nombre de usuario
       username_or_email: Nombre de usuario o correo electrónico
@@ -2169,6 +2181,10 @@ fr:
       surgeon_last_name: Nom du chirurgien
       surgeon_first_name: Prénom du chirurgien
       surgeon_url: URL du chirurgien
+    picker:
+      done: Terminé
+      close: Fermer
+      no_matches: Aucun résultat
     auth:
       username: Nom d’utilisateur
       username_or_email: Nom d’utilisateur ou e-mail
@@ -2700,6 +2716,10 @@ it:
       surgeon_last_name: Cognome del chirurgo
       surgeon_first_name: Nome del chirurgo
       surgeon_url: URL del chirurgo
+    picker:
+      done: Fatto
+      close: Chiudi
+      no_matches: Nessun risultato
     auth:
       username: Nome utente
       username_or_email: Nome utente o email
@@ -3194,6 +3214,10 @@ ja:
       surgeon_last_name: 外科医の姓
       surgeon_first_name: 外科医の名
       surgeon_url: 外科医のURL
+    picker:
+      done: 完了
+      close: 閉じる
+      no_matches: 一致なし
     auth:
       username: ユーザー名
       username_or_email: ユーザー名またはメールアドレス
@@ -3671,6 +3695,10 @@ zh-CN:
       surgeon_last_name: 医生姓氏
       surgeon_first_name: 医生名字
       surgeon_url: 医生网址
+    picker:
+      done: 完成
+      close: 关闭
+      no_matches: 无匹配结果
     auth:
       username: 用户名
       username_or_email: 用户名或邮箱
@@ -4173,6 +4201,10 @@ zh-TW:
       surgeon_last_name: 醫師姓氏
       surgeon_first_name: 醫師名字
       surgeon_url: 醫師網址
+    picker:
+      done: 完成
+      close: 關閉
+      no_matches: 沒有符合的結果
     auth:
       username: 使用者名稱
       username_or_email: 使用者名稱或電子郵件
@@ -4487,6 +4519,10 @@ pt-BR:
       surgeon_last_name: Sobrenome do cirurgião
       surgeon_first_name: Nome do cirurgião
       surgeon_url: URL do cirurgião
+    picker:
+      done: Concluir
+      close: Fechar
+      no_matches: Nenhum resultado
     auth:
       username: Nome de usuário
       username_or_email: Nome de usuário ou e-mail
@@ -4804,6 +4840,10 @@ nl:
       surgeon_last_name: Achternaam van chirurg
       surgeon_first_name: Voornaam van chirurg
       surgeon_url: URL van chirurg
+    picker:
+      done: Klaar
+      close: Sluiten
+      no_matches: Geen resultaten
     auth:
       username: Gebruikersnaam
       username_or_email: Gebruikersnaam of e-mail
@@ -5121,6 +5161,10 @@ pl:
       surgeon_last_name: Nazwisko chirurga
       surgeon_first_name: Imię chirurga
       surgeon_url: URL chirurga
+    picker:
+      done: Gotowe
+      close: Zamknij
+      no_matches: Brak wyników
     auth:
       username: Nazwa użytkownika
       username_or_email: Nazwa użytkownika lub e-mail
@@ -5439,6 +5483,10 @@ ru:
       surgeon_last_name: Фамилия хирурга
       surgeon_first_name: Имя хирурга
       surgeon_url: URL хирурга
+    picker:
+      done: Готово
+      close: Закрыть
+      no_matches: Ничего не найдено
     auth:
       username: Имя пользователя
       username_or_email: Имя пользователя или email
@@ -5751,6 +5799,10 @@ tr:
       surgeon_last_name: Cerrahın soyadı
       surgeon_first_name: Cerrahın adı
       surgeon_url: Cerrahın URL’si
+    picker:
+      done: Bitti
+      close: Kapat
+      no_matches: Eşleşme yok
     auth:
       username: Kullanıcı adı
       username_or_email: Kullanıcı adı veya e-posta
@@ -6064,6 +6116,10 @@ vi:
       surgeon_last_name: Họ bác sĩ phẫu thuật
       surgeon_first_name: Tên bác sĩ phẫu thuật
       surgeon_url: URL bác sĩ phẫu thuật
+    picker:
+      done: Xong
+      close: Đóng
+      no_matches: Không có kết quả
     auth:
       username: Tên người dùng
       username_or_email: Tên người dùng hoặc email
@@ -6369,6 +6425,10 @@ ar:
       surgeon_last_name: اسم عائلة الجراح
       surgeon_first_name: اسم الجراح
       surgeon_url: رابط الجراح
+    picker:
+      done: تم
+      close: إغلاق
+      no_matches: لا توجد نتائج
     auth:
       username: اسم المستخدم
       username_or_email: اسم المستخدم أو البريد الإلكتروني

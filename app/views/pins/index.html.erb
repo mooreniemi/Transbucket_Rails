@@ -15,7 +15,13 @@
   <%# On phones the heading and blurb are visually hidden (see feed_mobile.css.scss) so the photos lead; they stay for screen readers and SEO. %>
   <h1 class="feed-title"><%= @presenter.showing_for_you? ? t('directory.for_you', default: 'For You') : t('directory.recent_submissions') %></h1>
   <p class="lead feed-intro"><%= t('directory.submissions_intro') %></p>
-  <% if @presenter.show_feed_navigation? %>
+<% end %>
+<%# Toolbar: Recent / For You on the left (when available), Filter on the right.
+    The filter used to be an item in the navbar; it is a page control now, which
+    also frees a slot in a navbar that already wraps on smaller screens. %>
+<% filter_count = active_filter_count %>
+<div class="feed-toolbar">
+  <% if params[:query].blank? && @presenter.show_feed_navigation? %>
     <ul class="nav nav-tabs submission-feed-tabs" role="tablist">
       <li role="presentation" class="<%= 'active' unless @presenter.showing_for_you? %>">
         <%= link_to t('directory.recent', default: 'Recent'), pins_path(feed: 'recent') %>
@@ -25,7 +31,15 @@
       </li>
     </ul>
   <% end %>
-<% end %>
+  <button type="button" class="btn btn-default feed-filter-toggle" data-toggle="collapse" data-target="#feed-filter-panel" aria-controls="feed-filter-panel" aria-expanded="<%= filter_count > 0 %>">
+    <%= fa_icon 'filter', class: 'yellow' %>
+    <span><%= t('header.filter') %></span>
+    <% if filter_count > 0 %><span class="badge"><%= filter_count %></span><% end %>
+  </button>
+</div>
+<div id="feed-filter-panel" class="collapse<%= ' in' if filter_count > 0 %>">
+  <%= render partial: 'pins/filter_controls' %>
+</div>
 <div id="pins">
   <% @presenter.pins.each_with_index do |pin, index| %>
     <%= render partial: 'pin', locals: { pin: pin, event_context: @presenter.list_event_context.merge(rank: @presenter.rank_offset + index + 1) } %>

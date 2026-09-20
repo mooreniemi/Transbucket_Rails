@@ -1,4 +1,10 @@
 module PinsHelper
+  # How many filter values are applied to the feed right now (for the badge on
+  # the Filter button).
+  def active_filter_count
+    %i[scope procedure surgeon].sum { |key| Array(params[key]).reject(&:blank?).size }
+  end
+
   # Keyed by Gender#name rather than id -- ids aren't stable across
   # environments (or even within one, if genders are ever reseeded), so an
   # id-keyed hash risks silently misgendering users if a Gender's id ever

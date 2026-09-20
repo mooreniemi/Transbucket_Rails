@@ -12,7 +12,7 @@ describe FlagsController, type: :controller do
     pin.review!
     sign_in(moderator)
 
-    xhr :delete, :destroy, pin_id: pin.id
+    delete :destroy, params: { pin_id: pin.id }, xhr: true
 
     expect(response).to be_success
     expect(ModerationEvent.where(action: 'unflag', content_type: 'Pin', content_id: pin.id).count).to eq(1)

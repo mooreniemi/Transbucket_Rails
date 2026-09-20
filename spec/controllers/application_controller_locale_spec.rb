@@ -12,7 +12,7 @@ describe PagesController, type: :controller do
     allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new('production'))
 
     @request.host = 'www.transbucket.com'
-    get :home
+    get :home, params: { locale: 'en' }
 
     expect(response).to redirect_to('https://transbucket.com/en')
   end
@@ -21,7 +21,7 @@ describe PagesController, type: :controller do
     allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new('production'))
 
     @request.host = 'transbucket-staging.herokuapp.com'
-    get :home
+    get :home, params: { locale: 'en' }
 
     expect(response).to have_http_status(:ok)
   end

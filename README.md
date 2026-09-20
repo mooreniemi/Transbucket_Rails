@@ -94,6 +94,21 @@ This uses the local `psql_test` database. Full Compose mode remains available
 when Rails itself needs to run in the `web` container; do not combine its
 internal `db:5432` settings with a host Rails process.
 
+Before pushing any branch to CircleCI, verify the same change locally first:
+
+```sh
+rbenv exec bundle install
+script/local_setup
+script/local_rspec spec/controllers/procedures_controller_spec.rb spec/controllers/surgeons_controller_spec.rb
+script/local_rspec
+```
+
+Do not use a CircleCI run as the first test of a Rails or dependency change.
+The local database and focused specs must pass before starting the full local
+suite; only then should the branch be pushed to CircleCI for an independent
+environment check. Capybara uses an OS-assigned local test port, so do not
+reintroduce a fixed browser-test port.
+
 To stop the environment, run:
 ```sh
 docker-compose down

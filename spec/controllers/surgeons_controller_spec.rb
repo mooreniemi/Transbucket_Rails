@@ -52,7 +52,7 @@ RSpec.describe SurgeonsController, :type => :controller do
       it 'renders a best-effort view-event marker for public surgeon pages' do
         surgeon = create(:surgeon)
 
-        get :show, id: surgeon.id
+        get :show, params: { id: surgeon.id, locale: 'en' }
 
         expect(response.body).to include('data-content-event="true"')
         expect(response.body).to include('data-content-type="Surgeon"')
@@ -151,7 +151,7 @@ RSpec.describe SurgeonsController, :type => :controller do
       create(:pin, surgeon: second, procedure: procedure, sensation: 2, satisfaction: 1)
 
       sign_in user
-      get :compare, first_id: first.to_param, second_id: second.to_param
+      get :compare, params: { first_id: first.to_param, second_id: second.to_param, locale: 'en' }
 
       expect(response).to be_success
       expect(assigns(:comparison_data)[first][:distributions][:sensation]).to eq(5 => 1)
@@ -169,7 +169,7 @@ RSpec.describe SurgeonsController, :type => :controller do
       create(:pin, surgeon: first, procedure: procedure, sensation: 5, satisfaction: 5)
 
       sign_in user
-      get :compare, first_id: first.to_param, second_id: second.to_param
+      get :compare, params: { first_id: first.to_param, second_id: second.to_param, locale: 'en' }
 
       stats = assigns(:comparison_data)[first][:stats]
       expect(stats[:submissions]).to eq(2)
@@ -187,11 +187,11 @@ RSpec.describe SurgeonsController, :type => :controller do
       create(:pin, surgeon: first, procedure: procedure)
 
       sign_in user
-      get :compare, first_id: first.to_param, second_id: second.to_param
+      get :compare, params: { first_id: first.to_param, second_id: second.to_param, locale: 'en' }
       original_version = assigns(:comparison_cache_version)
 
       create(:pin, surgeon: second, procedure: procedure)
-      get :compare, first_id: first.to_param, second_id: second.to_param
+      get :compare, params: { first_id: first.to_param, second_id: second.to_param, locale: 'en' }
 
       expect(assigns(:comparison_cache_version)).not_to eq(original_version)
     end
@@ -207,7 +207,7 @@ RSpec.describe SurgeonsController, :type => :controller do
       create(:pin, surgeon: second, procedure: shared_procedure, sensation: 4, satisfaction: 4)
 
       sign_in user
-      get :compare, first_id: first.to_param, second_id: second.to_param, procedure_id: shared_procedure.to_param
+      get :compare, params: { first_id: first.to_param, second_id: second.to_param, procedure_id: shared_procedure.to_param, locale: 'en' }
 
       expect(assigns(:comparison_procedure)).to eq(shared_procedure)
       expect(assigns(:comparison_data)[first][:stats][:submissions]).to eq(1)
@@ -228,12 +228,12 @@ RSpec.describe SurgeonsController, :type => :controller do
       create(:pin, user: submitter, surgeon: second, procedure: procedure, sensation: 3)
 
       sign_in viewer
-      get :compare, first_id: first.to_param, second_id: second.to_param
+      get :compare, params: { first_id: first.to_param, second_id: second.to_param, locale: 'en' }
 
       expect(assigns(:comparison_data)[first][:stats][:submissions]).to eq(2)
       expect(assigns(:comparison_data)[first][:distributions][:sensation]).to eq(4 => 1, 5 => 1)
 
-      get :compare, first_id: first.to_param, second_id: second.to_param, deduplicate: '0'
+      get :compare, params: { first_id: first.to_param, second_id: second.to_param, deduplicate: '0', locale: 'en' }
 
       expect(assigns(:comparison_data)[first][:stats][:submissions]).to eq(3)
       expect(assigns(:comparison_data)[first][:distributions][:sensation]).to eq(1 => 1, 4 => 1, 5 => 1)

@@ -1,6 +1,6 @@
 class SurgeonsController < ApplicationController
   # Browsing is public; creating (the pin form's "add a new surgeon") needs an account.
-  before_filter :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show]
 
   def index
     @surgeons = Surgeon.all.order(:last_name, :first_name)

@@ -4,8 +4,21 @@ RSpec.describe "registration" do
   let!(:genders) { create_list(:gender, 5) }
   let(:user) { build(:user, gender: genders.last) }
 
+  around do |example|
+    original_mailer_options = ActionMailer::Base.default_url_options.dup
+    example.run
+  ensure
+    ActionMailer::Base.default_url_options = original_mailer_options
+  end
+
   def fill_out_sign_up(user, invalid: false)
     visit '/register'
+    if Capybara.current_session.server
+      ActionMailer::Base.default_url_options = {
+        host: Capybara.current_session.server.host,
+        port: Capybara.current_session.server.port
+      }
+    end
 
     fill_in "Your name", :with => user.name
     fill_in "Username", :with => user.username

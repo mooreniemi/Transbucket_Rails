@@ -1,16 +1,24 @@
 class ApplicationController < ActionController::Base
   SUPPORTED_LOCALES = %w(en de es fr it ja zh-CN zh-TW pt-BR nl pl ru tr vi ar sv).freeze
 
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
-  protect_from_forgery with: :exception
-  prepend_before_action :redirect_canonical_host
-  prepend_before_action :redirect_legacy_locale
   prepend_before_action :set_locale
+  prepend_before_action :redirect_legacy_locale
+  prepend_before_action :redirect_canonical_host
+
+  # Keep Rails' CSRF verification ahead of locale capture. Devise clears the
+  # session token after a successful login; authenticating from set_locale
+  # first would make a valid login submit an already-invalid token.
+  protect_from_forgery with: :exception, prepend: true
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def after_sign_in_path_for(resource_or_scope)
     pins_path
+  end
+
+  # Rails 5.2 exposes this as a keyword-only method, while ActionView's
+  # form helpers still pass the options hash positionally under Ruby 3.
+  def form_authenticity_token(form_options = {}, **keywords)
+    super(form_options: form_options, **keywords)
   end
 
   def authenticate_user!(*args)

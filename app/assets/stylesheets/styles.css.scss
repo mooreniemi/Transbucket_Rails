@@ -310,11 +310,20 @@ p {
 
 #details {
   background-color: #fff;
-  padding: 10px;
+  padding: 20px;
 }
+
 #details p {
-  display: inline;
-  font-size: 1rem;
+  font-size: 18px;
+  line-height: 1.65;
+  margin: 0 0 1em;
+  max-width: 65ch;
+  overflow-wrap: break-word;
+  padding: 0;
+}
+
+#details p:last-child {
+  margin-bottom: 0;
 }
 
 .center {

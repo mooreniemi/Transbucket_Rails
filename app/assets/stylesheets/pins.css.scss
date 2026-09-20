@@ -573,6 +573,15 @@
 }
 
 @media (max-width: 767px) {
+  #details {
+    padding: 16px;
+  }
+
+  #details p {
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
   .pin-meta {
     margin-top: 20px;
   }

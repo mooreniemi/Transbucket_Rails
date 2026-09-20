@@ -231,6 +231,7 @@ en:
       compare_surgeons: compare surgeons
       browse_procedures: Browse procedures
       browse_surgeons: browse surgeons
+      browse_submissions: Browse submissions
       choose_language: Choose a language
       join_discord: Join Discord
       search_pins: Search pins
@@ -238,6 +239,7 @@ en:
       for_you: For You
       submit_photo: Submit a photo
     entries:
+      readable_pin_details: Pin details are now easier to read, with larger text, comfortable spacing, and separate paragraphs on phones and larger screens.
       mobile_directory_layout: "Surgeon listings are easier to reach and read on phones: directory content now appears before advertising, and each surgeon is shown as a labeled card on narrow screens."
       automatic_photo_resizing: Phone photos are now automatically resized before upload when needed, so they can meet Transbucket's upload limit without requiring separate image-editing software.
       comparison_stats: You can now %{compare_procedures} or %{compare_surgeons} side by side, including rating distributions, averages, outcome percentages, and shared-scope filters. These screenshots use fictional demo data to protect privacy.

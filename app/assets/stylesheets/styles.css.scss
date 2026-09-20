@@ -30,7 +30,7 @@ body{
 .form-control,
 .btn,
 .navbar-nav > li > a {
-  font-size: 1rem;
+  font-size: 16px;
 }
 
 select.form-control {
@@ -45,7 +45,7 @@ body .navbar .navbar-brand {
 }
 
 small {
-  font-size: .875rem;
+  font-size: 14px;
 }
 
 .container {
@@ -250,7 +250,7 @@ p {
 }
 
 .comment_box p {
-  font-size: 1rem;
+  font-size: 16px;
   color: #000000;
 }
 
@@ -263,7 +263,7 @@ p {
 }
 
 .actions {
-  font-size: 1rem;
+  font-size: 16px;
 }
 
 .actions a:link, a:visited, a:hover {
@@ -296,7 +296,7 @@ p {
 
 .footer {
   flex-shrink: 0;
-  font-size: 1rem;
+  font-size: 16px;
 }
 
 .footer-links {

@@ -148,7 +148,7 @@ $auth-focus: #337ab7;
   }
 }
 
-// .auth-form prefix: outranks the global ".btn { font-size: 1rem }" (= 10px).
+// .auth-form prefix: outranks the global ".btn" font-size rule.
 .auth-form .auth-submit {
   border-radius: 8px;
   font-size: 18px;

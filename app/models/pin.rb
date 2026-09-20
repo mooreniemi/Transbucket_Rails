@@ -78,11 +78,13 @@ class Pin < ActiveRecord::Base
   validates :user_id, presence: true
   validates :pin_images, presence: true
 
+  after_create :grant_contributor_trust
+
   aasm column: :state do
     state :pending, value: 'pending'
     state :published, value: 'published', initial: :published
 
-    event :publish do
+    event :publish, after: :grant_contributor_trust do
       transitions from: :pending, to: :published
     end
 
@@ -155,5 +157,11 @@ class Pin < ActiveRecord::Base
     else
       where(surgeon_id: surgeon)
     end
+  end
+
+  private
+
+  def grant_contributor_trust
+    user.grant_trust!('contributor') if published? && user.present?
   end
 end

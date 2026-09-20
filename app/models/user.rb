@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   belongs_to :gender
   has_one :preference
+  has_many :trust_grants, class_name: 'UserTrustGrant', dependent: :destroy
+  has_many :granted_trust_grants, class_name: 'UserTrustGrant', foreign_key: :granted_by_user_id
   after_create :set_preference
 
   # Include default devise modules. Others available are:
@@ -69,6 +71,55 @@ class User < ActiveRecord::Base
   def reset_password!(*args)
     self.legacy_password_hash = nil
     super
+  end
+
+  def trust_tier
+    return @trust_tier if defined?(@trust_tier_loaded) && @trust_tier_loaded
+
+    # Pin and procedure pages preload this association for comment authors.
+    # Fall back to one indexed query rather than one EXISTS query per role.
+    trust_grants_association = association(:trust_grants)
+    grants = if trust_grants_association.loaded?
+      trust_grants_association.target.select(&:active?)
+    else
+      trust_grants.active.to_a
+    end
+    @trust_tier = UserTrustGrant::KINDS.reverse.find do |kind|
+      grants.any? { |grant| grant.kind == kind }
+    end
+    @trust_tier_loaded = true
+    @trust_tier
+  end
+
+  def contributor?
+    trust_tier.present?
+  end
+
+  def moderator?
+    return true if admin?
+
+    trust_tier == 'moderator'
+  end
+
+  def grant_trust!(kind, granted_by: nil, internal_note: nil)
+    raise ArgumentError, "Unknown trust kind: #{kind}" unless UserTrustGrant::KINDS.include?(kind)
+
+    grant = trust_grants.where(kind: kind).first_or_initialize
+    grant.assign_attributes(
+      source: granted_by.present? ? 'moderator' : 'automatic',
+      granted_by: granted_by,
+      internal_note: internal_note,
+      granted_at: Time.current,
+      revoked_at: nil
+    )
+    grant.save!
+    # `where(...).first_or_initialize` can populate an association target
+    # without marking the Rails 4 collection as loaded. Reset unconditionally
+    # so the next role lookup cannot read that stale partial target.
+    association(:trust_grants).reset
+    @trust_tier = nil
+    @trust_tier_loaded = false
+    grant
   end
 
   private

@@ -1,0 +1,56 @@
+<% title 'Community trust' %>
+<h1>Community trust</h1>
+<p class="lead">Contributor is earned from an approved submission. Vetted and Moderator are staff-granted roles. Admin access remains separate.</p>
+
+<%= form_tag trust_grants_path, method: :get, class: 'form-inline trust-search-form' do %>
+  <div class="form-group">
+    <%= label_tag :query, 'Find a member', class: 'sr-only' %>
+    <%= text_field_tag :query, @query, class: 'form-control', placeholder: 'Username, name, or email', autocomplete: 'off' %>
+  </div>
+  <%= submit_tag 'Search', class: 'btn btn-primary' %>
+<% end %>
+
+<% if @query.blank? %>
+  <p class="text-muted trust-search-hint">Enter at least 3 characters to search for a member and manage their roles.</p>
+<% elsif !@search_ready %>
+  <p class="text-muted trust-search-hint">Enter at least 3 characters to search.</p>
+<% elsif @users.empty? %>
+  <p class="text-muted trust-search-hint">No members matched “<%= @query %>”.</p>
+<% else %>
+  <p class="text-muted trust-search-hint"><%= pluralize(@users.length, 'member') %> found (showing at most 25).</p>
+
+<table class="table table-striped trust-grants-table">
+  <thead>
+    <tr>
+      <th>Member</th>
+      <th>Current badge</th>
+      <th>Active grants</th>
+      <th>Moderator action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><strong><%= user.username %></strong></td>
+        <td><%= render 'shared/trust_badge', user: user %></td>
+        <td>
+          <% user.trust_grants.active.each do |grant| %>
+            <span class="label label-default"><%= grant.kind.humanize %></span>
+            <% if grant.source == 'moderator' %>
+              <%= link_to 'revoke', trust_grant_path(grant), method: :delete, data: { confirm: "Revoke #{grant.kind.humanize}?" }, class: 'trust-revoke-link' %>
+            <% end %>
+          <% end %>
+        </td>
+        <td>
+          <%= form_for UserTrustGrant.new, url: trust_grants_path, html: { class: 'form-inline trust-grant-form' } do |f| %>
+            <%= hidden_field_tag :user_id, user.id %>
+            <%= f.select :kind, [['Vetted member', 'vetted'], ['Moderator', 'moderator']], {}, class: 'form-control input-sm' %>
+            <%= f.text_field :internal_note, placeholder: 'Internal note', class: 'form-control input-sm' %>
+            <%= f.submit 'Grant', class: 'btn btn-default btn-sm' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>

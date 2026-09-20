@@ -1,0 +1,12 @@
+<% tier = user.try(:trust_tier) %>
+<% if tier.present? %>
+  <% label = {
+    'contributor' => 'Contributor',
+    'vetted' => 'Vetted member',
+    'moderator' => 'Moderator'
+  }.fetch(tier) %>
+  <span class="trust-badge trust-badge--<%= tier.dasherize %>" title="<%= label %>: recognized through approved contributions or moderator review.">
+    <%= fa_icon(tier == 'moderator' ? 'shield' : 'check-circle') %>
+    <span><%= label %></span>
+  </span>
+<% end %>

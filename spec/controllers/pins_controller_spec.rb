@@ -82,14 +82,15 @@ describe PinsController, :type => :controller do
         expect(response.body).not_to include('For You')
       end
 
-      it 'keeps the moderator navigation compact while preserving its accessible label' do
+      it 'groups moderator tools under an accessible moderator menu' do
         user.update_attributes!(admin: true)
 
         get :index
 
-        expect(response.body).to include('>MQ</a>')
-        expect(response.body).to include('title="Moderation queue"')
-        expect(response.body).not_to include('>ModQueue</a>')
+        expect(response.body).to include('title="Moderation tools"')
+        expect(response.body).to include('Moderation queue')
+        expect(response.body).to include('Community trust')
+        expect(response.body).to include('fa-shield')
       end
 
       it 'labels the personalized feed For You' do
@@ -118,6 +119,23 @@ describe PinsController, :type => :controller do
     end
 
     describe 'GET #admin' do
+      it 'forbids members without a Moderator role' do
+        get :admin
+
+        expect(response).to have_http_status(:forbidden)
+      end
+
+      it 'allows a Moderator to view the queue but not the trust console link' do
+        user.grant_trust!('moderator', granted_by: create(:user, admin: true))
+
+        get :index
+        expect(response.body).to include('Moderation queue')
+        expect(response.body).not_to include('Community trust')
+
+        get :admin
+        expect(response).to be_success
+      end
+
       it 'renders current flaggers and lifetime moderation counts' do
         admin = create(:user, admin: true)
         pin = create(:pin)
@@ -329,6 +347,18 @@ describe PinsController, :type => :controller do
 
         delete :destroy, :id => pin.id
         expect(response).to redirect_to(pins_url)
+      end
+
+      it 'allows a Moderator to remove another member’s queued pin' do
+        moderator = create(:user)
+        moderator.grant_trust!('moderator', granted_by: create(:user, admin: true))
+        pin = create(:pin, user: create(:user))
+        sign_in(moderator)
+
+        xhr :delete, :destroy, id: pin.id
+
+        expect(response).to be_success
+        expect(Pin.find_by(id: pin.id)).to be_nil
       end
     end
   end

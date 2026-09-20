@@ -9,7 +9,7 @@ describe TrustGrantsController, type: :controller do
     it 'allows admins to see the trust console' do
       sign_in(admin)
 
-      get :index
+      get :index, params: { locale: 'en' }
 
       expect(response).to be_success
       expect(response.body).to include('Community trust')
@@ -19,7 +19,7 @@ describe TrustGrantsController, type: :controller do
     it 'forbids non-admin users' do
       sign_in(create(:user))
 
-      get :index
+      get :index, params: { locale: 'en' }
 
       expect(response).to have_http_status(:forbidden)
     end
@@ -29,7 +29,7 @@ describe TrustGrantsController, type: :controller do
       moderator.grant_trust!('moderator', granted_by: admin)
       sign_in(moderator)
 
-      get :index
+      get :index, params: { locale: 'en' }
 
       expect(response).to have_http_status(:forbidden)
     end
@@ -39,7 +39,7 @@ describe TrustGrantsController, type: :controller do
     it 'does not query the member directory for fewer than three characters' do
       sign_in(admin)
 
-      get :index, query: 'zo'
+      get :index, params: { query: 'zo', locale: 'en' }
 
       expect(response.body).to include('Enter at least 3 characters to search.')
     end
@@ -49,7 +49,7 @@ describe TrustGrantsController, type: :controller do
       create(:user, username: 'unrelated_member', name: 'Someone Else')
       sign_in(admin)
 
-      get :index, query: 'helpful'
+      get :index, params: { query: 'helpful', locale: 'en' }
 
       expect(response.body).to include(matching_user.username)
       expect(response.body).not_to include('unrelated_member')
@@ -61,7 +61,7 @@ describe TrustGrantsController, type: :controller do
       member = create(:user)
       sign_in(admin)
 
-      post :create, user_id: member.id, user_trust_grant: { kind: 'moderator', internal_note: 'Prototype grant' }
+      post :create, params: { user_id: member.id, user_trust_grant: { kind: 'moderator', internal_note: 'Prototype grant' }, locale: 'en' }
 
       grant = member.trust_grants.find_by(kind: 'moderator')
       expect(grant).to be_present
@@ -77,7 +77,7 @@ describe TrustGrantsController, type: :controller do
       grant = member.grant_trust!('contributor')
       sign_in(admin)
 
-      delete :destroy, id: grant.id
+      delete :destroy, params: { id: grant.id, locale: 'en' }
 
       expect(response).to have_http_status(:forbidden)
       expect(grant.reload).to be_active

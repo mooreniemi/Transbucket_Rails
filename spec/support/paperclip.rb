@@ -3,6 +3,10 @@ Paperclip::Attachment.default_options[:path] = "#{Rails.root}/public/test_files#
 Paperclip::Attachment.default_options[:url] = "/test_files#{ENV['TEST_ENV_NUMBER']}#{url}"
 
 RSpec.configure do |config|
+  config.before(:each) do
+    FileUtils.mkdir_p("#{Rails.root}/public/test_files#{ENV['TEST_ENV_NUMBER']}")
+  end
+
   config.after(:each) do
     FileUtils.rm_rf(Dir["#{Rails.root}/public/test_files#{ENV['TEST_ENV_NUMBER']}/"])
   end

@@ -88,7 +88,7 @@ describe PinsController, :type => :controller do
         user.preference.update_attributes!(safe_mode: true)
         pin = create(:pin, user: user)
 
-        get :show, id: pin.id
+        get :show, params: { id: pin.id, locale: 'en' }
 
         expect(assigns(:safe_mode)).to eq(true)
       end
@@ -230,7 +230,7 @@ describe PinsController, :type => :controller do
 
     describe 'GET #admin' do
       it 'forbids members without a Moderator role' do
-        get :admin
+        get :admin, params: { locale: 'en' }
 
         expect(response).to have_http_status(:forbidden)
       end
@@ -238,11 +238,11 @@ describe PinsController, :type => :controller do
       it 'allows a Moderator to view the queue but not the trust console link' do
         user.grant_trust!('moderator', granted_by: create(:user, admin: true))
 
-        get :index
+        get :index, params: { locale: 'en' }
         expect(response.body).to include('Moderation queue')
         expect(response.body).not_to include('Community trust')
 
-        get :admin
+        get :admin, params: { locale: 'en' }
         expect(response).to be_success
       end
 
@@ -493,9 +493,9 @@ describe PinsController, :type => :controller do
         pin = create(:pin, user: create(:user))
         sign_in(moderator)
 
-        xhr :delete, :destroy, id: pin.id
+        delete :destroy, params: { id: pin.id, locale: 'en' }
 
-        expect(response).to be_success
+        expect(response).to redirect_to(pins_url)
         expect(Pin.find_by(id: pin.id)).to be_nil
       end
     end

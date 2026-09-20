@@ -32,6 +32,7 @@ class PinsController < ApplicationController
   # GET /pins/1.json
   def show
     @comments = @pin.comments_asc
+    ActiveRecord::Associations::Preloader.new.preload(@comments, user: :trust_grants)
     @new_comment = Comment.build_from(@pin, current_user, "")
     @comment_count = Comment.published_counts_for('Pin', [@pin.id])[@pin.id].to_i
     @safe_mode = safe_mode
@@ -196,7 +197,7 @@ class PinsController < ApplicationController
   end
 
   def get_pin
-    @pin = Pin.includes(comment_threads: [:children]).find(params[:id])
+    @pin = Pin.includes(user: :trust_grants, comment_threads: [:children]).find(params[:id])
   end
 
   def id_or_attributes(attributes)
@@ -265,7 +266,7 @@ class PinsController < ApplicationController
   def validate_user
     pin = Pin.find(params[:id])
 
-    if current_user == pin.user || current_user.admin
+    if current_user == pin.user || current_user.admin? || (action_name == 'destroy' && current_user.moderator?)
       return true
     else
       head :forbidden

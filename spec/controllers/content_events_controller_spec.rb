@@ -22,8 +22,8 @@ describe ContentEventsController, type: :controller do
     it 'records a directory row open with its position and sort mode' do
       surgeon = create(:surgeon)
 
-      post :create, locale: :en, content_type: 'Surgeon', content_id: surgeon.id, event_type: 'open',
-        event_context: { surface: 'surgeons_index', list_mode: 'submissions-desc', rank: '4' }
+      post :create, params: { locale: :en, content_type: 'Surgeon', content_id: surgeon.id, event_type: 'open',
+        event_context: { surface: 'surgeons_index', list_mode: 'submissions-desc', rank: '4' } }
 
       expect(response).to have_http_status(:no_content)
       expect(ContentEvent.last).to have_attributes(content_type: 'Surgeon', content_id: surgeon.id, event_type: 'open')
@@ -33,15 +33,15 @@ describe ContentEventsController, type: :controller do
     it 'records a compared entity as a view on the compare surface' do
       procedure = create(:procedure)
 
-      post :create, locale: :en, content_type: 'Procedure', content_id: procedure.id, event_type: 'view',
-        event_context: { surface: 'compare', list_mode: 'procedures', filter_signature: 'scope', rank: '2' }
+      post :create, params: { locale: :en, content_type: 'Procedure', content_id: procedure.id, event_type: 'view',
+        event_context: { surface: 'compare', list_mode: 'procedures', filter_signature: 'scope', rank: '2' } }
 
       expect(ContentEvent.last.event_context).to eq('surface' => 'compare', 'list_mode' => 'procedures', 'filter_signature' => 'scope', 'rank' => '2')
     end
 
     it 'records a click on an allowlisted navigation target with its surface' do
-      post :create, locale: :en, content_type: 'Page', content_id: TrackedTarget.id_for(:about), event_type: 'open',
-        event_context: { surface: 'footer', target: 'about', ignored: 'nope' }
+      post :create, params: { locale: :en, content_type: 'Page', content_id: TrackedTarget.id_for(:about), event_type: 'open',
+        event_context: { surface: 'footer', target: 'about', ignored: 'nope' } }
 
       expect(response).to have_http_status(:no_content)
       event = ContentEvent.last
@@ -51,9 +51,9 @@ describe ContentEventsController, type: :controller do
 
     it 'ignores a Page click for an unknown target or a non-open event' do
       expect {
-        post :create, locale: :en, content_type: 'Page', content_id: 9_999, event_type: 'open', event_context: { surface: 'footer', target: 'nope' }
-        post :create, locale: :en, content_type: 'Page', content_id: TrackedTarget.id_for(:news), event_type: 'view'
-        post :create, locale: :en, content_type: 'Page', content_id: TrackedTarget.id_for(:news), event_type: 'impression'
+        post :create, params: { locale: :en, content_type: 'Page', content_id: 9_999, event_type: 'open', event_context: { surface: 'footer', target: 'nope' } }
+        post :create, params: { locale: :en, content_type: 'Page', content_id: TrackedTarget.id_for(:news), event_type: 'view' }
+        post :create, params: { locale: :en, content_type: 'Page', content_id: TrackedTarget.id_for(:news), event_type: 'impression' }
       }.not_to change(ContentEvent, :count)
 
       expect(response).to have_http_status(:no_content)

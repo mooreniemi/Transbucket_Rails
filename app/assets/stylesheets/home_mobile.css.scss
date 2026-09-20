@@ -5,6 +5,17 @@
 // the middle block (the keys logo, linking to register); the other two are
 // desktop-only (hidden-xs in pages/_welcome.html.erb). This just tightens the
 // heading so that block is on screen without scrolling.
+// Below the desktop breakpoint Bootstrap's col-md-4 has no width, so inside the
+// flex row it shrinks to its content and hugs the left edge: the logo was
+// centred within a block that itself sat off-centre (about 28px left of the
+// page middle on a phone). Let each block span the row so it centres properly.
+@media (max-width: 991px) {
+  .homepage-cta {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
 @media (max-width: 767px) {
   // Long translated words ("geschlechtsangleichende") must wrap, not push the
   // page wider than the screen.

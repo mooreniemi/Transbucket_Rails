@@ -1,0 +1,161 @@
+// Site footer (layouts/_footer.html.erb).
+//
+// Mobile-first: everything is a real 48px touch target in px (the old footer
+// was 8.75px text with 11px-tall links split by pipes). From tablet width up it
+// becomes one row: community links on the left, legal links on the right.
+
+$footer-touch: 48px;
+$footer-accent: #FCC000;          // brand yellow
+$footer-border: #767676;          // 4.5:1 on white
+$footer-link: #0b5394;
+$footer-focus: #337ab7;
+
+.site-footer {
+  // Room for the iPhone home indicator.
+  padding: 20px 16px calc(20px + env(safe-area-inset-bottom, 0px));
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    font-size: 16px;
+    text-decoration: none;
+
+    &:focus {
+      outline: 2px solid $footer-focus;
+      outline-offset: 2px;
+    }
+  }
+}
+
+.footer-nav {
+  margin: 0 auto;
+  max-width: 440px;
+}
+
+// Discord: the community entry point, so it leads.
+.footer-cta {
+  align-items: center;
+  background: $footer-accent;
+  border-radius: 8px;
+  color: #222;
+  display: flex;
+  font-weight: 600;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 12px;
+  min-height: 52px;
+  padding: 8px 16px;
+  text-align: center;
+
+  &:hover,
+  &:focus {
+    background: darken($footer-accent, 6%);
+    color: #222;
+  }
+}
+
+.footer-social {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 8px;
+
+  li {
+    flex: 1 1 0;
+  }
+
+  a {
+    align-items: center;
+    background: #fff;
+    border: 1px solid $footer-border;
+    border-radius: 8px;
+    color: #222;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    min-height: $footer-touch;
+
+    &:hover {
+      background: #f5f5f5;
+      color: #222;
+    }
+  }
+}
+
+// The :visited / :hover colours are stated on purpose: styles.css.scss has
+// ".actions a:link, a:visited, a:hover { color: black }", and the missing
+// ".actions" on the last two makes every visited or hovered link on the site
+// black, which left one footer link black and the rest blue.
+.footer-legal {
+  a {
+    align-items: center;
+    border-top: 1px solid #e5e5e5;
+    display: flex;
+    min-height: $footer-touch;
+
+    &,
+    &:visited,
+    &:hover {
+      color: $footer-link;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .site-footer {
+    padding: 16px 24px;
+  }
+
+  .footer-nav {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 32px;
+    justify-content: space-between;
+    max-width: 1170px;
+  }
+
+  .footer-community {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+  }
+
+  .footer-cta {
+    margin: 0;
+    min-height: 44px;
+    padding: 0 20px;
+  }
+
+  .footer-social {
+    gap: 8px;
+    margin: 0;
+
+    li {
+      flex: 0 0 auto;
+    }
+
+    a {
+      min-height: 44px;
+      padding: 0 16px;
+    }
+  }
+
+  .footer-legal {
+    display: flex;
+    gap: 4px;
+
+    a {
+      border-top: 0;
+      min-height: 44px;
+      padding: 0 12px;
+    }
+  }
+}

@@ -1,13 +1,24 @@
-<div class="footer submission_well">
+<%# Site footer. Phones: stacked, with 48px touch targets (Discord button, social
+    buttons, then legal links as full-width rows). Tablet and up: one tidy row,
+    community links left and legal links right. See footer.css.scss. %>
+<footer class="footer submission_well site-footer">
   <% cache(["footer", I18n.locale, request.fullpath, Date.today.year]) do %>
-    <small> &nbsp;
-      <span class="footer-links">
-        <%= link_to I18n.t('.footer.about'),  about_path %> |
-        <%= link_to I18n.t('.footer.tos'), terms_path %> |
-        <%= link_to I18n.t('.footer.pp'), privacy_path %> |
-        <%= fa_icon "facebook", class: 'yellow' %> <a href="https://www.facebook.com/transbucket">Transbucket</a> <%= fa_icon "twitter", class: 'yellow' %> <a href="https://twitter.com/TransBucket">@TransBucket</a> |
-        <%= I18n.t('.footer.discord_prefix') %> <a href="https://discord.gg/fRW4RnPqgv">Transbucket.com Discord</a>!
-      </span>
-    </small>
+    <nav class="footer-nav">
+      <div class="footer-community">
+        <a class="footer-cta" href="https://discord.gg/fRW4RnPqgv" rel="noopener">
+          <%= fa_icon 'comments' %>
+          <span><%= I18n.t('.footer.discord_prefix') %> Transbucket.com Discord</span>
+        </a>
+        <ul class="footer-social">
+          <li><a href="https://www.facebook.com/transbucket" rel="noopener"><%= fa_icon 'facebook' %> <span>Facebook</span></a></li>
+          <li><a href="https://twitter.com/TransBucket" rel="noopener"><%= fa_icon 'twitter' %> <span>Twitter</span></a></li>
+        </ul>
+      </div>
+      <ul class="footer-legal">
+        <li><%= link_to I18n.t('.footer.about'), about_path %></li>
+        <li><%= link_to I18n.t('.footer.tos'), terms_path %></li>
+        <li><%= link_to I18n.t('.footer.pp'), privacy_path %></li>
+      </ul>
+    </nav>
   <% end %>
-</div>
+</footer>

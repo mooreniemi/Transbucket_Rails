@@ -1,0 +1,158 @@
+// Chosen (the desktop dropdown widget) restyled to match the touch pickers
+// (touch_picker.css.scss): 44px fields, 16px text, rounded corners, a visible
+// border and focus ring, and brand-yellow highlights instead of Chosen's blue
+// gradients. It is used for the two dropdowns on the new/edit pin form and the
+// three filter boxes on the feed. This file loads after Chosen's own stylesheet,
+// so equal-specificity rules here win.
+
+$chosen-height: 44px;
+$chosen-border: #767676;          // 4.5:1 on white
+$chosen-focus: #337ab7;
+$chosen-soft: #fff3c4;            // highlighted option
+$chosen-chip: #fff8e1;
+$chosen-chip-border: #c99700;
+
+.chosen-container {
+  font-size: 16px;
+}
+
+// ---- single select (surgeon, procedure) -----------------------------------
+.chosen-container-single .chosen-single {
+  background: #fff;
+  border: 1px solid $chosen-border;
+  border-radius: 8px;
+  box-shadow: none;
+  color: #222;
+  height: $chosen-height;
+  line-height: $chosen-height - 2px;
+  padding: 0 0 0 12px;
+
+  span {
+    margin-right: 40px;
+  }
+
+  // A crisp CSS chevron instead of Chosen's sprite image.
+  div {
+    width: 40px;
+
+    b {
+      display: none;
+    }
+
+    &:after {
+      border-bottom: 2px solid #555;
+      border-right: 2px solid #555;
+      content: "";
+      height: 8px;
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-70%) rotate(45deg);
+      width: 8px;
+    }
+  }
+}
+
+.chosen-container-single.chosen-with-drop .chosen-single div:after {
+  transform: translateY(-30%) rotate(-135deg);
+}
+
+// ---- focus -----------------------------------------------------------------
+.chosen-container-active .chosen-single,
+.chosen-container-active.chosen-with-drop .chosen-single,
+.chosen-container-active .chosen-choices {
+  background: #fff;
+  border-color: $chosen-focus;
+  border-radius: 8px;
+  box-shadow: 0 0 0 3px rgba($chosen-focus, .25);
+}
+
+// ---- the dropdown panel ---------------------------------------------------
+.chosen-container .chosen-drop {
+  border: 1px solid $chosen-border;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+  margin-top: 4px;
+  overflow: hidden;
+}
+
+.chosen-container-single .chosen-search {
+  padding: 8px;
+
+  input[type="text"] {
+    // Chosen's retina rule forces its sprite in with !important; the taller
+    // input would show the neighbouring sprite icons, so use one clean magnifier.
+    background: #fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><circle cx='6.5' cy='6.5' r='4.5' fill='none' stroke='%23767676' stroke-width='1.6'/><path d='M10 10l4.5 4.5' stroke='%23767676' stroke-width='1.6' stroke-linecap='round'/></svg>") no-repeat right 12px center !important;
+    background-size: 16px 16px !important;
+    border: 1px solid $chosen-border;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+    height: 40px;
+    margin: 0;
+    padding: 0 36px 0 12px;
+    width: 100% !important;   // Chosen sets an inline pixel width
+  }
+}
+
+.chosen-container .chosen-results {
+  margin: 0;
+  max-height: 300px;
+  padding: 0;
+
+  li {
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 16px;
+    line-height: 1.3;
+    padding: 11px 14px;
+  }
+
+  li.highlighted {
+    background: $chosen-soft;
+    color: #222;
+  }
+
+  li.result-selected {
+    font-weight: 600;
+  }
+
+  li.no-results {
+    background: #fff;
+    color: #555;
+  }
+}
+
+// ---- multiple select (the feed filter) -----------------------------------
+.chosen-container-multi .chosen-choices {
+  background: #fff;
+  border: 1px solid $chosen-border;
+  border-radius: 8px;
+  box-shadow: none;
+  min-height: 58px;         // matches a row holding one chip, so empty and filled boxes align
+  padding: 4px 8px;
+
+  li.search-field input[type="text"] {
+    color: #222;
+    font-size: 16px;
+    height: 34px;
+    margin: 0;
+  }
+
+  li.search-choice {
+    background: $chosen-chip;
+    border: 1px solid $chosen-chip-border;
+    border-radius: 16px;
+    box-shadow: none;
+    color: #222;
+    font-size: 15px;
+    line-height: 1.3;
+    margin: 3px 6px 3px 0;
+    padding: 6px 28px 6px 12px;
+
+    .search-choice-close {
+      margin-top: -6px;
+      right: 8px;
+      top: 50%;
+    }
+  }
+}

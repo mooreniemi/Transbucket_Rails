@@ -1,0 +1,84 @@
+// New / edit pin: the surgeon and procedure fields, at every width.
+//
+// Desktop shows a Chosen dropdown (restyled in chosen_theme.css.scss), touch
+// devices a touch picker (touch_picker.css.scss). Either way the field is full
+// width and "add a new ..." is a labelled link under it (it was a 34px icon), and
+// the add-new form gets real inputs.
+
+$entity-input-height: 44px;
+$entity-touch-height: 48px;
+$entity-border: #767676;
+$entity-link: #0b5394;
+
+.pin-entity-field label.control-label {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.pin-entity-controls.controls {
+  flex-wrap: wrap;
+
+  > .chosen-container,
+  > .picker {
+    flex: 1 1 100%;
+    width: 100% !important;   // Chosen sets an inline 80% width
+  }
+
+  > .add-button {
+    align-items: center;
+    color: $entity-link;
+    display: inline-flex;
+    flex: 1 1 100%;
+    font-size: 15px;
+    font-weight: 600;
+    gap: 8px;
+    height: auto;
+    justify-content: flex-start;
+    min-height: 40px;
+    width: auto;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    .fa {
+      font-size: 18px;
+    }
+  }
+}
+
+.add-button-label {
+  display: inline;
+}
+
+.add-form {
+  .input-group {
+    display: block;
+    width: 100%;
+  }
+
+  input[type="text"],
+  select {
+    border: 1px solid $entity-border;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    height: $entity-input-height;
+    padding: 0 12px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 767px), (pointer: coarse) {
+  .pin-entity-controls.controls > .add-button {
+    min-height: 44px;
+  }
+
+  .add-form {
+    input[type="text"],
+    select {
+      height: $entity-touch-height;
+    }
+  }
+}

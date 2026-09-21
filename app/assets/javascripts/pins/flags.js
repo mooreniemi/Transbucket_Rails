@@ -8,7 +8,9 @@ $(document).ready(function(){
       switch(data["status"]) {
         case "voted_down":
           // doesn't persist, but at least shows tapping it did something
-          $(this).replaceWith('<i class="fa fa-exclamation-circle" aria-hidden="true"></i>');
+          $(this).replaceWith($('<span class="flag-reported"></span>')
+            .attr('title', $(this).data('reported-label') || '')
+            .append('<i class="fa fa-exclamation-circle" aria-hidden="true"></i>'));
           break;
         case "removed":
           // persists, item won't show up from server once in review

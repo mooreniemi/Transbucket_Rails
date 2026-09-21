@@ -485,6 +485,7 @@ en:
     edit_title: Edit %{resource} Profile
     name: Name
     email: Email
+    password_required_hint: 'To save any change on this page, enter your current password.'
     profile_help: Gender helps control the pronouns used for you on Transbucket. Use
       None or Genderqueer for gender-neutral pronouns.
     new_password: New Password
@@ -519,6 +520,8 @@ en:
       edit_post: 'Edit'
       delete_post: 'Delete'
       report_confirm: 'Report this post to the moderators?'
+      report_comment_confirm: 'Report this comment to the moderators?'
+      reported: 'Reported'
       by: by
       tap_to_reveal: Tap to reveal
       hide_image: Hide image
@@ -1036,6 +1039,7 @@ de:
     edit_title: "%{resource}-Profil bearbeiten"
     name: Name
     email: E-Mail
+    password_required_hint: 'Um Änderungen auf dieser Seite zu speichern, gib dein aktuelles Passwort ein.'
     profile_help: Das Geschlecht hilft auf Transbucket bei der Auswahl der verwendeten
       Pronomen. Verwende „Keine Angabe“ oder „Genderqueer“ für geschlechtsneutrale
       Pronomen.
@@ -1071,6 +1075,8 @@ de:
       edit_post: 'Bearbeiten'
       delete_post: 'Löschen'
       report_confirm: 'Diesen Beitrag dem Moderationsteam melden?'
+      report_comment_confirm: 'Diesen Kommentar dem Moderationsteam melden?'
+      reported: 'Gemeldet'
       by: von
       tap_to_reveal: Zum Anzeigen tippen
       hide_image: Bild ausblenden
@@ -1618,6 +1624,7 @@ es:
     edit_title: Editar el perfil de %{resource}
     name: Nombre
     email: Correo electrónico
+    password_required_hint: 'Para guardar cualquier cambio en esta página, introduce tu contraseña actual.'
     profile_help: El género ayuda a elegir los pronombres que se usan contigo en Transbucket.
       Usa Ninguno o Género queer para pronombres neutros.
     new_password: Nueva contraseña
@@ -1651,6 +1658,8 @@ es:
       edit_post: 'Editar'
       delete_post: 'Eliminar'
       report_confirm: '¿Reportar esta publicación a los moderadores?'
+      report_comment_confirm: '¿Reportar este comentario a los moderadores?'
+      reported: 'Reportado'
       by: por
       tap_to_reveal: Toca para ver
       hide_image: Ocultar imagen
@@ -2192,6 +2201,7 @@ fr:
     edit_title: Modifier le profil de %{resource}
     name: Nom
     email: E-mail
+    password_required_hint: 'Pour enregistrer une modification sur cette page, saisissez votre mot de passe actuel.'
     profile_help: Le genre aide à choisir les pronoms utilisés pour vous sur Transbucket.
       Utilisez « Aucun » ou « Genre queer » pour des pronoms neutres.
     new_password: Nouveau mot de passe
@@ -2227,6 +2237,8 @@ fr:
       edit_post: 'Modifier'
       delete_post: 'Supprimer'
       report_confirm: 'Signaler cette publication aux modérateurs ?'
+      report_comment_confirm: 'Signaler ce commentaire aux modérateurs ?'
+      reported: 'Signalé'
       by: par
       tap_to_reveal: Touchez pour afficher
       hide_image: Masquer l’image
@@ -2752,6 +2764,7 @@ it:
     edit_title: Modifica il profilo di %{resource}
     name: Nome
     email: E-mail
+    password_required_hint: 'Per salvare qualsiasi modifica in questa pagina, inserisci la password attuale.'
     profile_help: Il genere aiuta a scegliere i pronomi usati per te su Transbucket.
       Usa Nessuno o Genere queer per pronomi neutri.
     new_password: Nuova password
@@ -2785,6 +2798,8 @@ it:
       edit_post: 'Modifica'
       delete_post: 'Elimina'
       report_confirm: 'Segnalare questo contributo ai moderatori?'
+      report_comment_confirm: 'Segnalare questo commento ai moderatori?'
+      reported: 'Segnalato'
       by: di
       tap_to_reveal: Tocca per mostrare
       hide_image: Nascondi immagine
@@ -3272,6 +3287,7 @@ ja:
     edit_title: "%{resource}プロフィールを編集"
     name: 名前
     email: メールアドレス
+    password_required_hint: 'このページの変更を保存するには、現在のパスワードを入力してください。'
     profile_help: Transbucketでは、性別の設定をもとに使用する代名詞を決めます。中立的な代名詞には「指定なし」または「ジェンダークィア」を使用してください。
     new_password: 新しいパスワード
     current_password: 現在のパスワード
@@ -3304,6 +3320,8 @@ ja:
       edit_post: '編集'
       delete_post: '削除'
       report_confirm: 'この投稿をモデレーターに報告しますか？'
+      report_comment_confirm: 'このコメントをモデレーターに報告しますか？'
+      reported: '報告済み'
       by: '投稿者:'
       tap_to_reveal: タップして表示
       hide_image: 画像を隠す
@@ -3777,6 +3795,7 @@ zh-CN:
     edit_title: 编辑 %{resource} 资料
     name: 姓名
     email: 电子邮箱
+    password_required_hint: '要保存此页面上的任何更改，请输入当前密码。'
     profile_help: 在 Transbucket 上，性别设置用于选择称呼您的代词。中性代词请使用“未指定”或“酷儿性别”。
     new_password: 新密码
     current_password: 当前密码
@@ -3809,6 +3828,8 @@ zh-CN:
       edit_post: '编辑'
       delete_post: '删除'
       report_confirm: '要向管理员举报此投稿吗？'
+      report_comment_confirm: '要向管理员举报此评论吗？'
+      reported: '已举报'
       by: 作者：
       tap_to_reveal: 点按显示
       hide_image: 隐藏图片
@@ -4306,6 +4327,7 @@ zh-TW:
     edit_title: 編輯 %{resource} 資料
     name: 姓名
     email: 電子郵件
+    password_required_hint: '要儲存此頁面上的任何變更，請輸入目前的密碼。'
     profile_help: 在 Transbucket 上，性別設定用於選擇稱呼您的代名詞。中性代名詞請使用「未指定」或「酷兒性別」。
     new_password: 新密碼
     current_password: 目前密碼
@@ -4338,6 +4360,8 @@ zh-TW:
       edit_post: '編輯'
       delete_post: '刪除'
       report_confirm: '要向管理員檢舉此貼文嗎？'
+      report_comment_confirm: '要向管理員檢舉此留言嗎？'
+      reported: '已檢舉'
       by: 作者：
       tap_to_reveal: 點一下顯示
       hide_image: 隱藏圖片
@@ -4646,6 +4670,7 @@ pt-BR:
     edit_title: Editar perfil de %{resource}
     name: Nome
     email: E-mail
+    password_required_hint: 'Para salvar qualquer alteração nesta página, informe sua senha atual.'
     profile_help: No Transbucket, o gênero ajuda a escolher os pronomes usados para
       você. Use Nenhum ou Gênero queer para pronomes neutros.
     new_password: Nova senha
@@ -4679,6 +4704,8 @@ pt-BR:
       edit_post: 'Editar'
       delete_post: 'Excluir'
       report_confirm: 'Denunciar esta publicação aos moderadores?'
+      report_comment_confirm: 'Denunciar este comentário aos moderadores?'
+      reported: 'Denunciado'
       by: por
       tap_to_reveal: Toque para ver
       hide_image: Ocultar imagem
@@ -4988,6 +5015,7 @@ nl:
     edit_title: Profiel van %{resource} bewerken
     name: Naam
     email: E-mail
+    password_required_hint: 'Om wijzigingen op deze pagina op te slaan, voer je je huidige wachtwoord in.'
     profile_help: Op Transbucket helpt gender bij het kiezen van de voornaamwoorden
       die voor jou worden gebruikt. Gebruik Geen of Genderqueer voor genderneutrale
       voornaamwoorden.
@@ -5023,6 +5051,8 @@ nl:
       edit_post: 'Bewerken'
       delete_post: 'Verwijderen'
       report_confirm: 'Deze bijdrage bij de moderatoren melden?'
+      report_comment_confirm: 'Deze reactie bij de moderatoren melden?'
+      reported: 'Gemeld'
       by: door
       tap_to_reveal: Tik om te tonen
       hide_image: Afbeelding verbergen
@@ -5334,6 +5364,7 @@ pl:
     edit_title: Edytuj profil %{resource}
     name: Imię
     email: E-mail
+    password_required_hint: 'Aby zapisać jakiekolwiek zmiany na tej stronie, wpisz swoje obecne hasło.'
     profile_help: Na Transbucket płeć pomaga wybrać używane wobec Ciebie zaimki. Użyj
       Nie podano lub Genderqueer dla zaimków neutralnych.
     new_password: Nowe hasło
@@ -5367,6 +5398,8 @@ pl:
       edit_post: 'Edytuj'
       delete_post: 'Usuń'
       report_confirm: 'Zgłosić ten wpis moderatorom?'
+      report_comment_confirm: 'Zgłosić ten komentarz moderatorom?'
+      reported: 'Zgłoszono'
       by: 'autor:'
       tap_to_reveal: Dotknij, aby pokazać
       hide_image: Ukryj obraz
@@ -5678,6 +5711,7 @@ ru:
     edit_title: Редактировать профиль %{resource}
     name: Имя
     email: Электронная почта
+    password_required_hint: 'Чтобы сохранить любые изменения на этой странице, введите текущий пароль.'
     profile_help: На Transbucket гендер помогает выбрать местоимения для обращения
       к вам. Для нейтральных местоимений используйте «Не указано» или «Гендерквир».
     new_password: Новый пароль
@@ -5711,6 +5745,8 @@ ru:
       edit_post: 'Редактировать'
       delete_post: 'Удалить'
       report_confirm: 'Пожаловаться на эту публикацию модераторам?'
+      report_comment_confirm: 'Пожаловаться на этот комментарий модераторам?'
+      reported: 'Жалоба отправлена'
       by: 'автор:'
       tap_to_reveal: Нажмите, чтобы показать
       hide_image: Скрыть изображение
@@ -6016,6 +6052,7 @@ tr:
     edit_title: "%{resource} profilini düzenle"
     name: Ad
     email: E-posta
+    password_required_hint: 'Bu sayfadaki herhangi bir değişikliği kaydetmek için mevcut şifrenizi girin.'
     profile_help: Transbucket'te cinsiyet, sizin için kullanılan zamirlerin seçilmesine
       yardımcı olur. Tarafsız zamirler için Belirtilmedi veya Genderqueer kullanın.
     new_password: Yeni parola
@@ -6049,6 +6086,8 @@ tr:
       edit_post: 'Düzenle'
       delete_post: 'Sil'
       report_confirm: 'Bu paylaşım moderatörlere bildirilsin mi?'
+      report_comment_confirm: 'Bu yorum moderatörlere bildirilsin mi?'
+      reported: 'Bildirildi'
       by: 'gönderen:'
       tap_to_reveal: Göstermek için dokunun
       hide_image: Görseli gizle
@@ -6349,6 +6388,7 @@ vi:
     edit_title: Chỉnh sửa hồ sơ %{resource}
     name: Tên
     email: Email
+    password_required_hint: 'Để lưu bất kỳ thay đổi nào trên trang này, hãy nhập mật khẩu hiện tại của bạn.'
     profile_help: Trên Transbucket, giới tính giúp chọn đại từ dùng để gọi bạn. Hãy
       chọn Không nêu hoặc Genderqueer để dùng đại từ trung tính.
     new_password: Mật khẩu mới
@@ -6382,6 +6422,8 @@ vi:
       edit_post: 'Chỉnh sửa'
       delete_post: 'Xóa'
       report_confirm: 'Báo cáo bài đăng này cho người kiểm duyệt?'
+      report_comment_confirm: 'Báo cáo bình luận này cho người kiểm duyệt?'
+      reported: 'Đã báo cáo'
       by: bởi
       tap_to_reveal: Chạm để xem
       hide_image: Ẩn hình ảnh
@@ -6680,6 +6722,7 @@ ar:
     edit_title: تعديل ملف %{resource}
     name: الاسم
     email: البريد الإلكتروني
+    password_required_hint: 'لحفظ أي تغيير في هذه الصفحة، أدخل كلمة المرور الحالية.'
     profile_help: يساعد النوع الاجتماعي في اختيار الضمائر المستخدمة لمخاطبتك على Transbucket.
       استخدم غير محدد أو جندر كوير للضمائر المحايدة.
     new_password: كلمة مرور جديدة
@@ -6713,6 +6756,8 @@ ar:
       edit_post: 'تعديل'
       delete_post: 'حذف'
       report_confirm: 'هل تريد الإبلاغ عن هذه المشاركة للمشرفين؟'
+      report_comment_confirm: 'هل تريد الإبلاغ عن هذا التعليق للمشرفين؟'
+      reported: 'تم الإبلاغ'
       by: بواسطة
       tap_to_reveal: المس للعرض
       hide_image: إخفاء الصورة
@@ -6850,3 +6895,312 @@ ar:
     flag_help: إذا كانت لديك مخاوف بشأن التعليق، يمكنك الإبلاغ عنه. تؤدي ثلاثة بلاغات
       من مستخدمين مختلفين إلى مراجعته تلقائياً.
     unsubscribe: لإيقاف هذه الإشعارات، عدّل إعداداتك عبر %{link}.
+sv:
+  header:
+    safe_mode_on: 'Säkert läge är på: bilder är suddiga. Tryck för att stänga av.'
+    safe_mode_off: 'Säkert läge är av. Tryck för att sudda bilder tills du trycker på dem.'
+    news: Nyheter
+    procedures: Ingrepp
+    surgeons: Kirurger
+    submissions: Bidrag
+    account: Konto
+    search: Sök
+    filter: Filter
+    add: Lägg till
+    home: Hem
+  locale:
+    label: Språk
+    names:
+      sv: Svenska
+  homepage:
+    title: Transbucket
+    intro: Verkliga erfarenheter av könsbekräftande ingrepp
+    considering: Funderar du på könsbekräftande vård eller ett ingrepp kopplat till transition?
+    join: Du borde bli en del av vår gemenskap.
+    register: Registrera dig för att dela eller se verkliga resultat.
+  directory:
+    procedures_title: Ingrepp
+    procedures_intro: Bläddra bland ingrepp för att jämföra verkliga bidrag, kirurgers länkar och diskussioner.
+    surgeons_title: Kirurger
+    surgeons_intro: Bläddra bland kirurgernas sidor för att jämföra bidrag, resultat och diskussioner.
+    submissions: Bidrag
+    name: Namn
+    average_satisfaction: Genomsnittlig tillfredsställelse
+    average_sensation: Genomsnittlig känsel
+    login_or_register_to_see_more: "%{login} eller %{register} för att se mer"
+    submissions_intro: Bläddra bland de senaste bidragen eller använd sökrutan för att hitta ett ingrepp, en kirurg eller en komplikation.
+    recent_submissions: Senaste bidrag
+    search_results: Sökresultat
+    search_description: Sök bland bidrag på Transbucket efter ingrepp, kirurg, komplikation eller användare.
+    discussion_threads: Diskussionstrådar
+    register_to_see_more: Registrera dig för att se mer
+    recent: Senaste
+    for_you: För dig
+  newsfeed:
+    title: Nyheter
+    description: Senaste uppdateringarna från Transbucket.
+    date: Datum
+    entries:
+      directory_improvements: Sidorna för ingrepp och kirurger gör det nu enklare att sortera och se betygsfördelningar.
+  public:
+    auth:
+      username: Användarnamn
+      username_or_email: Användarnamn eller e-post
+      password: Lösenord
+      password_confirmation: Bekräfta lösenord
+      your_name: Ditt namn
+      gender: Kön
+      comments_placeholder: Kommentarer som bryter mot våra användarvillkor kan leda till omedelbar och permanent avstängning av kontot.
+      submit: Skicka
+      submitting: Skickar...
+      show_password: Visa lösenord
+      hide_password: Dölj lösenord
+      have_account: Har du redan ett konto?
+      new_here: Ny på Transbucket?
+      pronouns: 'Pronomen'
+      pronouns_default: 'Standard (utifrån ditt kön)'
+      pronouns_other: 'Annat…'
+      pronouns_placeholder: 't.ex. xe/xem'
+      pronouns_invalid: 'Pronomen ska se ut som they/them eller she/her/hers: ord åtskilda av snedstreck.'
+      pronoun_labels:
+        she_her: 'hon/henne'
+        he_him: 'han/honom'
+        they_them: 'hen'
+        it_its: 'den/det'
+        she_they: 'hon/hen'
+        he_they: 'han/hen'
+        they_she: 'hen/hon'
+        they_he: 'hen/han'
+        any_all: 'alla pronomen'
+      password_hint: Minst %{count} tecken.
+    pin:
+      comments_label: 'Kommentarer: %{count}'
+      report: 'Rapportera'
+      edit_post: 'Redigera'
+      delete_post: 'Ta bort'
+      report_confirm: 'Rapportera det här bidraget till moderatorerna?'
+      report_comment_confirm: 'Rapportera den här kommentaren till moderatorerna?'
+      reported: 'Rapporterad'
+      by: av
+      doctor_prefix: 'Dr. '
+      unknown: okänd kirurg
+      average_satisfaction: Genomsnittlig tillfredsställelse
+      unknown_surgeon: okänd kirurg
+      surgeon: Kirurg
+      procedure: Ingrepp
+      cost: Kostnad
+      complications: Komplikationer
+      wants_revision: Önskar revision
+      post_op_sensation: Känsel efter operation
+      post_op_satisfaction: Tillfredsställelse efter operation
+      submitter: Inskickare
+      discussion: Diskussion
+      respect_pronouns: 'Respektera pronomen när du skriver till bidragets författare. Författarens föredragna pronomen är:'
+      add_thread: lägg till tråd
+      see_all_submissions: Visa alla bidrag
+      classified_as: Det här ingreppet klassas som ett ”%{body_type}”-ingrepp.
+      average_sensation: Genomsnittlig känsel
+      reply: svara
+      remove: Ta bort
+      remove_confirm: Vill du verkligen ta bort den här kommentaren?
+      updated: Uppdaterad för %{time} sedan
+      tap_to_reveal: Tryck för att visa
+      hide_image: Dölj bild
+    form:
+      surgeon_url: Kirurgens webbplats
+      photos: Foton
+      details: Detaljer
+      submit_now: Skicka in nu
+      experience_glance: 'Din upplevelse i korthet:'
+      cost: Kostnad
+      seeking_revision: Söker du en revision?
+      sensation: Känsel
+      satisfaction: Tillfredsställelse
+      complications: Komplikationer
+      complications_placeholder: hematom, fistel
+      experience_depth: 'Din upplevelse på djupet:'
+      drop_files: Släpp filer här för att ladda upp
+      caption: Bildtext
+      remove: Ta bort
+      add_surgeon: Lägg till en ny kirurg
+      surgeon_last_name: Kirurgens efternamn
+      surgeon_first_name: Kirurgens förnamn
+    extra:
+      sign_in: Logga in
+      sign_up: Registrera dig
+      username: Användarnamn
+      password: Lösenord
+      gender: Kön
+      name: Namn
+      email: E-post
+      add_procedure: Lägg till ett nytt ingrepp
+      procedure_name: Ingreppets namn
+      describe_procedure: Beskriv ingreppet
+      contact_us: Kontakta oss
+      return_email: Din e-postadress för svar
+      subject: Ämne
+      contact_message: Hej Transbucket-administratörer!
+      send: Skicka
+      edit_profile: Redigera profil för %{resource}
+      new_password: Nytt lösenord
+      password_confirmation: Bekräfta nytt lösenord
+      current_password: Nuvarande lösenord
+      update: Uppdatera
+      profile_help: På Transbucket styr kön vilka pronomen du omtalas med. För närvarande motsvarar könen MTF och FTM binära pronomen. För könsneutrala pronomen, välj Ingen eller Genderqueer som kön. Framtida uppdateringar gör det möjligt att välja pronomen oberoende av könsidentitet.
+      new_submission: Nytt bidrag
+      editing_submission: Redigerar bidrag
+      submissions_by_user: 'Resultat: bidrag från användare'
+      post_op_sensation: Känsel efter operation
+      post_op_satisfaction: Tillfredsställelse efter operation
+      image_caption: Bildtext
+      caption: Bildtext
+      browse_for_image: Välj bild
+      browse: Bläddra
+      navigation_toggle: Visa/dölj navigering
+      logo_alt: Startsida
+      top: Överkropp
+      bottom: Underliv
+      face: Ansikte
+      other: Annat
+      ftm: FTM
+      mtf: MTF
+      error_count: "%{count} fel i det här formuläret:"
+    confirmations:
+      are_you_sure: Är du säker?
+    actions:
+      deleting: tar bort...
+      updating: uppdaterar...
+      update_caption: uppdatera bildtext
+    picker:
+      done: Klart
+      close: Stäng
+      no_matches: Inga träffar
+  settings:
+    safe_mode: Säkert läge
+    safe_mode_help: Säkert läge gör bidragens bilder suddiga tills du trycker på dem.
+    notifications: Aviseringar
+    update: Uppdatera
+    cancel_account: Avsluta konto
+    title: Kontoinställningar
+    notifications_help: Aviseringsläget skickar e-post om nya kommentarer på dina bidrag.
+    cancel_confirm: Är du säker?
+  profile:
+    name: Namn
+    email: E-post
+    username: Användarnamn
+    gender: Kön
+    edit_title: Redigera profil för %{resource}
+    password_required_hint: 'För att spara ändringar på den här sidan, ange ditt nuvarande lösenord.'
+    profile_help: Kön styr vilka pronomen som används om dig på Transbucket. Välj Ingen eller Genderqueer för könsneutrala pronomen.
+    new_password: Nytt lösenord
+    current_password: Nuvarande lösenord
+    update: Uppdatera
+    submissions: Dina bidrag
+    submit_now: Skicka in nu
+    delete_confirm: Är du säker?
+    submission: bidrag
+  explanations:
+    username: Ditt användarnamn visas för alla användare och används när du loggar in. Det är unikt på webbplatsen.
+    email: Din e-postadress visas för administratörer men inte för andra användare. Din e-postadress kommer att bekräftas.
+    password: Ditt lösenord krypteras när det lagras och kan återställas med hjälp av din e-postadress.
+    name: Ditt namn visas för administratörer och används i kommunikationen med dem.
+    pronouns: 'Visas på dina bidrag. Valfritt: med standardvalet används de pronomen som hör till ditt kön.'
+    gender: Ditt kön visas för alla när du publicerar resultat och används för vissa standardinställningar.
+    tos: Genom att registrera dig på Transbucket.com godkänner du våra användarvillkor.
+  account_menu:
+    register: Registrera dig
+    login: Logga in
+    my_account: Mitt konto
+    logout: Logga ut
+  activerecord:
+    attributes:
+      user:
+        email: E-post
+  devise:
+    mailer:
+      confirmation_instructions:
+        subject: Bekräftelseinstruktioner
+        greeting: Hej %{recipient}
+        instruction: 'Du kan bekräfta din e-postadress genom länken nedan:'
+        action: Bekräfta mitt konto
+        reminder_notice: Detta är en påminnelse. Vi ser att du ännu inte har bekräftat ditt konto.
+        reminder_help: Behöver du hjälp med att bekräfta kontot? Svara på det här e-postmeddelandet.
+      reset_password_instructions:
+        subject: Instruktioner för återställning av lösenord
+        greeting: Hej %{recipient}
+        instruction: 'Någon har begärt en länk för att ändra ditt lösenord. Du kan göra det via länken nedan:'
+        action: Ändra mitt lösenord
+        instruction_2: Om du inte begärde detta kan du ignorera meddelandet.
+        instruction_3: Ditt lösenord ändras inte förrän du öppnar länken ovan och skapar ett nytt.
+      unlock_instructions:
+        subject: Instruktioner för upplåsning
+        greeting: Hej %{recipient}
+        message: Ditt konto har låsts efter för många misslyckade inloggningsförsök.
+        instruction: 'Klicka på länken nedan för att låsa upp ditt konto:'
+        action: Lås upp mitt konto
+      password_change:
+        subject: Ditt lösenord har ändrats
+        greeting: Hej %{recipient}
+        message: Vi kontaktar dig för att meddela att ditt lösenord har ändrats.
+  comment_mailer:
+    subject: 'Transbucket.com: Ny %{comment_type} på %{id}'
+    types:
+      comment: kommentar
+      question: fråga
+    greeting: Hej %{username}!
+    posted: En annan medlem har publicerat en %{comment_type} på ditt bidrag.
+    reply: Klicka på %{link} om du vill svara.
+    this_link: den här länken
+    flag_help: Om du har synpunkter på kommentaren kan du flagga den. Tre flaggor från olika användare skickar den automatiskt till granskning.
+    unsubscribe: Sluta få dessa aviseringar genom att ändra dina aviseringsinställningar på %{link}.
+  footer:
+    about: Om
+    tos: Användarvillkor
+    pp: Integritetspolicy
+    discord_prefix: Gå med i
+  site:
+    description: Gemenskap för att dela foton av transitions- och könsbekräftande ingrepp, kirurgprofiler och verkliga bidrag.
+  filter_menu:
+    apply: Filtrera
+    clear: Rensa
+    scope: Kön / område
+    procedure: Ingrepp
+    surgeon: Kirurg
+  filter_scopes:
+    ftm: FTM
+    mtf: MTF
+    bottom: Underlivskirurgi
+    top: Överkroppskirurgi
+    need_category: Behöver kategori
+  flash:
+    content_flagged: Innehållet har flaggats.
+    removed_flags: Flaggorna har tagits bort.
+    destroy_failed: Kunde inte ta bort %{id}!
+    destroyed: "%{id} har tagits bort"
+    contact_sent: Meddelandet skickades.
+    contact_invalid: Fyll i alla fält.
+    pin_created: Bidraget skapades.
+    pin_updated: Bidraget uppdaterades.
+  gender_labels:
+    FTM: FTM
+    MTF: MTF
+    GenderQueer: Genderqueer
+    None: Ingen
+    Cisgender: Cisgender
+  legal:
+    translation_notice: 'Viktigt: Den här juridiska sidan finns för närvarande bara på engelska. Vi tillhandahåller inte maskinöversatt juridisk text eftersom automatiska översättningar kan innehålla fel. Den engelska versionen är den gällande versionen.'
+  views:
+    pagination:
+      first: Första
+      last: Sista
+      previous: Föregående
+      next: Nästa
+      truncate: "…"
+  simple_form:
+    'yes': Ja
+    'no': Nej
+    required:
+      text: obligatoriskt
+      mark: "*"
+    error_notification:
+      default_message: 'Granska problemen nedan:'

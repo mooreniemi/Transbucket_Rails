@@ -27,7 +27,8 @@
     'data-event-context' => event_context.to_json %>
   <div class="panel panel-default">
     <div class="panel-body">
-    <%= render partial: "latest_comment_snippet", locals: { pin: pin } if @comments.map(&:commentable_id).include?(pin.id) %>
+    <% latest_new_comment = (@latest_new_comments || {})[pin.id] %>
+    <%= render partial: "latest_comment_snippet", locals: { pin: pin, comment: latest_new_comment, event_context: event_context } if latest_new_comment %>
     <% cache([I18n.locale, pin, @safe_mode]) do %>
       <div class="image pin-card-image<%= ' safe-blur' if @safe_mode %>" itemprop="image">
         <%= link_to (image_tag pin.cover_image.url(:medium), alt: pin.procedure.try(:localized_name)), pin,
@@ -54,7 +55,7 @@
           <% unless current_user == pin.user %>
             <label class="label-with-popover" data-placement="right" data-content="Flags from 3 different users will remove content pending review by a moderator." data-title="Flag this content." data-trigger="hover">
               <%= link_to fa_icon("flag"), pin_flags_path(pin), method: :post, remote: true, "data-pin-id" => pin.id, class: "flag-pin",
-                title: t('public.pin.report'), 'aria-label' => t('public.pin.report'), data: { confirm: t('public.pin.report_confirm') } %>
+                title: t('public.pin.report'), 'aria-label' => t('public.pin.report'), data: { confirm: t('public.pin.report_confirm'), reported_label: t('public.pin.reported') } %>
             </label>
           <% end %>
           <% if current_user == pin.user || current_user.admin? %>

@@ -1,6 +1,11 @@
 class PinPresenter
   PERSONALIZED_FEED_GENDERS = %w[MTF FTM].freeze
 
+  # What a feed card reads from each pin. Loading these up front keeps the query
+  # count flat as the page fills (it used to add four per card: the images, the
+  # surgeon, the procedure and the procedure's translations).
+  CARD_INCLUDES = [:user, :pin_images, :surgeon, { procedure: :translations }].freeze
+
   attr_accessor :query, :page, :filter, :pins, :feed
   attr_accessor :user, :procedures, :surgeons, :general
 
@@ -29,12 +34,12 @@ class PinPresenter
                 Pin.includes(:user).recent.paginate(page: @page)
               end
             elsif @user.present?
-              Pin.includes(:user, :pin_images, :procedure, :surgeon).by_user(@user).paginate(:page => @page)
+              Pin.includes(*CARD_INCLUDES).by_user(@user).paginate(:page => @page)
             elsif has_keywords?
               # includes are handled inside Query object
               PinFilterQuery.new(filter).filtered.paginate(:page => @page)
             else
-              feed_scope.includes(:user).recent.paginate(:page => @page)
+              feed_scope.includes(*CARD_INCLUDES).recent.paginate(:page => @page)
             end
   end
 

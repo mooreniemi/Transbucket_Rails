@@ -14,7 +14,8 @@
             <% commentable = @pin ? @pin : @procedure %>
             <%= link_to "#{fa_icon("comments")} #{t('public.pin.reply')}".html_safe, new_comment_path(commentable_id: commentable.try(:id), commentable_type: commentable.try(:class), parent_id: comment.id), remote: true %>
             <%= " | " unless current_user == comment.user %>
-            <%= link_to(fa_icon("flag"), comment_flags_path(comment), :method => :post, remote: true, class: "flag-comment", "data-comment-id" => comment.id) unless current_user == comment.user %>
+            <%= link_to(fa_icon("flag", text: t('public.pin.report')), comment_flags_path(comment), :method => :post, remote: true, class: "flag-comment", "data-comment-id" => comment.id,
+              title: t('public.pin.report'), data: { confirm: t('public.pin.report_comment_confirm'), reported_label: t('public.pin.reported') }) unless current_user == comment.user %>
           </small>
           <% if comment.user_id == current_user.id || current_user.admin? %>
             <%= link_to "×", comment_path(comment), :method => :delete, :remote => true, data: {confirm: t('public.pin.remove_confirm')}, :disable_with => "×", :class => 'close' %>

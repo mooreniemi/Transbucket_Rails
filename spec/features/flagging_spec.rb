@@ -64,7 +64,8 @@ describe "the flagging process" do
 
         visit '/pins/' + pin.id.to_s
         flag_link = find("#comment-#{comment_id} .fa-flag").find(:xpath, "..")
-        flag_link.click
+        expect(flag_link['data-confirm']).to eq(I18n.t('public.pin.report_comment_confirm'))
+        accept_confirm { flag_link.click }
       end
 
       visit '/pins/' + pin.id.to_s

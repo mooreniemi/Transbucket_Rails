@@ -12,6 +12,11 @@ class PinsController < ApplicationController
     @presenter = PinPresenter.new(pin_index_params)
     @comments = Comment.new_as_of(user_last_sign_in)
     @comment_counts = Comment.published_counts_for('Pin', @presenter.pins.map(&:id))
+    # The card's "new comment" snippet: the newest published comment on each pin since
+    # the last sign-in, picked from the comments loaded above (no query per card).
+    @latest_new_comments = @comments.select { |comment| comment.commentable_type == 'Pin' }
+                                    .group_by(&:commentable_id)
+                                    .each_with_object({}) { |(pin_id, group), latest| latest[pin_id] = group.max_by(&:created_at) }
     # Pin cards are fragment-cached by this value, so set it before rendering
     # rather than relying on an unset instance variable in the partial.
     @safe_mode = safe_mode

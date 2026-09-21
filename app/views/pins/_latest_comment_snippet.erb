@@ -1,5 +1,15 @@
+<%# The newest comment since your last visit, shown over the top of the card. It links
+    to that comment on the pin's page. %>
 <div class="comment_box">
 	<p>
-		<%= fa_icon("comment", text: "#{pin.latest_comment_snippet}") %>
+		<%= link_to pin_path(pin, anchor: "comment-#{comment.id}"),
+		      class: 'comment-snippet-link',
+		      'data-content-event-open' => true,
+		      'data-content-event-url' => content_events_path,
+		      'data-content-type' => 'Pin',
+		      'data-content-id' => pin.id,
+		      'data-event-context' => event_context.to_json do %>
+			<%= fa_icon("comment", text: comment.snippet) %>
+		<% end %>
 	</p>
 </div>

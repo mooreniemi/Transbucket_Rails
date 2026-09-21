@@ -25,6 +25,53 @@ describe PinsController, :type => :controller do
         expect(response).to be_success
       end
 
+      context 'with comments since the last sign-in' do
+        let!(:pin) { create(:pin, user: create(:user)) }
+
+        before { User.where(id: user.id).update_all(last_sign_in_at: 2.days.ago) }
+
+        it 'links the card snippet to the newest published comment on that pin' do
+          create(:comment, commentable: pin, body: 'older words here')
+          newest = create(:comment, commentable: pin, body: 'newest words here')
+
+          get :index
+
+          expect(response.body).to include(%(href="/en/pins/#{pin.id}#comment-#{newest.id}"))
+          expect(response.body).to include('newest words here')
+          expect(response.body).not_to include('older words here')
+        end
+
+        it 'never shows the text of a comment that is pending review' do
+          create(:comment, commentable: pin, body: 'visible words')
+          pending_comment = create(:comment, commentable: pin, body: 'flagged words', state: 'pending')
+          Comment.where(id: pending_comment.id).update_all(created_at: 1.minute.from_now)
+
+          get :index
+
+          expect(response.body).to include('visible words')
+          expect(response.body).not_to include('flagged words')
+        end
+
+        it 'does not show a comment on a procedure that happens to share the pin id' do
+          procedure_comment = create(:comment, commentable: create(:procedure), body: 'procedure chatter')
+          Comment.where(id: procedure_comment.id).update_all(commentable_id: pin.id)
+
+          get :index
+
+          expect(response.body).not_to include('procedure chatter')
+        end
+
+        it 'reports a comment with a labelled, confirmed action on the pin page' do
+          comment = create(:comment, commentable: pin, body: 'a comment to report')
+
+          get :show, id: pin.id
+
+          expect(response.body).to match(/class="flag-comment"[^>]*data-confirm="#{Regexp.escape(I18n.t('public.pin.report_comment_confirm'))}"/)
+          expect(response.body).to include(">#{I18n.t('public.pin.report')}</a>").or include(I18n.t('public.pin.report'))
+          expect(response.body).to include("data-comment-id=\"#{comment.id}\"")
+        end
+      end
+
       it 'passes the signed-in user safe-mode preference to pin cards' do
         user.preference.update_attributes!(safe_mode: true)
         create(:pin, user: user)

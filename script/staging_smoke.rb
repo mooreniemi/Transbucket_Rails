@@ -151,6 +151,9 @@ class StagingSmoke
     unless response.code.to_i == 200 && response.body.include?(profile_label) && response.body.include?(settings_label)
       raise "localized account page failed for #{@locale}"
     end
+    unless html_document(response.body).at_css('#password-required-hint') && html_document(response.body).at_css('select#user_pronouns')
+      raise "account page is missing the password hint or the pronouns picker for #{@locale}"
+    end
   end
 
   def create_pin

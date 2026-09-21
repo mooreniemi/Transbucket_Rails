@@ -4,7 +4,7 @@ import type { QueryClient } from '@tanstack/react-query'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools';
 import { TanStackDevtools } from '@tanstack/react-devtools'
-import { currentUserQueryOptions } from '#/lib/currentUser'
+import { currentUserQueryOptions } from '#/lib/data/currentUser'
 
 import '../styles.css'
 

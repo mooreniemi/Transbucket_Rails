@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { currentUserQueryOptions } from './currentUser'
+import { currentUserQueryOptions } from '../data/currentUser'
 
 // Reads from the query cache the root route's loader already populated
 // (see routes/__root.tsx) -- resolves instantly post-load, no extra

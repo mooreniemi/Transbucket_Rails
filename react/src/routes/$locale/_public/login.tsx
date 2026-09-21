@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Input } from '#/components/input'
-import { Checkbox } from '#/components/checkbox'
-import { Button } from '#/components/button'
-import { Card } from '#/components/card';
+import { Input } from '#/design-system/input'
+import { Checkbox } from '#/design-system/checkbox'
+import { Button } from '#/design-system/button'
+import { Card } from '#/design-system/card';
 
 export const Route = createFileRoute('/$locale/_public/login')({ component: LoginPage })
 

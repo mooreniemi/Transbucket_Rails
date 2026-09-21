@@ -106,6 +106,11 @@ class StagingSmoke
     unless response.code.to_i == 200 && response.body.include?(marker)
       raise "localized registration form failed for #{@locale}"
     end
+
+    doc = html_document(response.body)
+    unless doc.at_css('select#user_pronouns option[value="she/her"]') && doc.at_css('select#user_pronouns option[value="custom"]') && doc.at_css('input#user_pronouns_custom[hidden]')
+      raise "pronouns picker missing from the sign-up form for #{@locale}"
+    end
   end
 
   def login
@@ -197,7 +202,11 @@ class StagingSmoke
       raise "safe mode off did not show the plain uploaded image for pin #{pin_id}"
     end
 
+    verify_card_footer(plain_card, pin_id)
+    verify_header_switch_state(on: false)
+
     update_safe_mode('1')
+    verify_header_switch_state(on: true)
     card = pin_card(pin_id)
     unless card.at_css('.pin-card-image.safe-blur') && card.at_css('button[data-safe-reveal]') && card.at_css('button[data-safe-hide]')
       raise "safe mode on did not blur the image for pin #{pin_id}"
@@ -212,6 +221,39 @@ class StagingSmoke
     # The smoke account is shared. Leave it in its normal, image-visible state
     # even when a later assertion fails.
     update_safe_mode('0')
+  end
+
+  # The feed card footer: icons on the left with text labels, freshness on the right.
+  def verify_card_footer(card, pin_id)
+    unless card.at_css('.pin-actions .pin-actions-icons a[aria-label]') && card.at_css('.pin-actions-meta time.pin-age[datetime]')
+      raise "card footer for pin #{pin_id} is missing its labelled icons or its age"
+    end
+  end
+
+  # The header's eye switch: shows the current state (two copies, phone bar and
+  # desktop nav) and toggles it from any page, sending us back to where we were.
+  def verify_header_switch_state(on:)
+    feed = html_document(get('/pins').body)
+    buttons = feed.css('.safe-mode-toggle')
+    raise 'header safe mode switch is missing' unless buttons.length == 2
+    on_buttons = buttons.select { |button| button['class'].to_s.split.include?('is-on') && button['aria-pressed'] == 'true' }
+    if on && on_buttons.length != 2
+      raise 'header safe mode switch does not show safe mode as on'
+    elsif !on && on_buttons.any?
+      raise 'header safe mode switch shows safe mode on when it is off'
+    end
+
+    return unless on
+
+    # Turn it off using the switch itself, then confirm the state and the redirect.
+    form = feed.at_css('form.safe-mode-form-nav') || raise('desktop safe mode switch form missing')
+    params = form.css('input[type=hidden]').each_with_object({}) { |input, hash| hash[input['name']] = input['value'] }
+    response = post(form['action'], params)
+    unless response.is_a?(Net::HTTPRedirection) && response['location'].to_s.end_with?('/pins')
+      raise "header safe mode switch did not return to the feed (#{response.code} #{response['location']})"
+    end
+    verify_header_switch_state(on: false)
+    update_safe_mode('1')   # the rest of the check continues with it on
   end
 
   def update_safe_mode(value)

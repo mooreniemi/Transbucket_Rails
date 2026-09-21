@@ -1,0 +1,16 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "global": {
+        "buttons": {
+            "login": "登录",
+            "register": "注册",
+            "confirmation": "没有收到确认邮件？"
+        },
+        "pages": {
+            "news": "新闻",
+            "procedures": "手术项目",
+            "surgeons": "医生",
+            "login": "登录"
+        }
+    }
+}

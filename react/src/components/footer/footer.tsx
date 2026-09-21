@@ -1,4 +1,5 @@
 const iconClasses = "w-4 h-4 fill-yellow-500 inline align-middle";
+import { m } from '#/generated/paraglide/messages';
 
 function FacebookIcon() {
   return (
@@ -53,14 +54,14 @@ export function Footer({ locale }: FooterProps) {
     return (
         <footer className="px-5 py-5 sm:px-10 border-t border-black-200 shadow-[0_-8px_10px_-13px_var(--color-black-300)]">
             <div className="text-sm align-middle flex flex-wrap justify-start gap-4">
-                <a href="https://www.facebook.com/transbucket" className="block" target="_blank" rel="noreferrer noopener"><FacebookIcon/><span className="align-middle ml-1">Facebook</span></a>
-                <a href="https://twitter.com/TransBucket" className="block" target="_blank" rel="noreferrer noopener"><TwitterIcon/><span className="align-middle ml-1">@Transbucket</span></a>
-                <a href="https://discord.gg/fRW4RnPqgv" className="block" target="_blank" rel="noreferrer noopener"><DiscordIcon/><span className="align-middle ml-1">Join us on Discord</span></a>
+                <a href="https://www.facebook.com/transbucket" className="block" target="_blank" rel="noreferrer noopener"><FacebookIcon/><span className="align-middle ms-1">Facebook</span></a>
+                <a href="https://twitter.com/TransBucket" className="block" target="_blank" rel="noreferrer noopener"><TwitterIcon/><span className="align-middle ms-1">@Transbucket</span></a>
+                <a href="https://discord.gg/fRW4RnPqgv" className="block" target="_blank" rel="noreferrer noopener"><DiscordIcon/><span className="align-middle ms-1">{m['footer.socialDiscord']()}</span></a>
             </div>
             <div className="grid auto-cols-auto grid-flow-col justify-start gap-2 text-xs mt-2" style={{columnRule: "1px solid var(--color-black-200)"}}>
-                <a href={`/${locale}/about`}>About</a>
-                <a href={`/${locale}/terms`}>Terms of service</a>
-                <a href={`/${locale}/privacy`}>Privacy policy</a>
+                <a href={`/${locale}/about`}>{m['footer.aboutLink']()}</a>
+                <a href={`/${locale}/terms`}>{m['footer.tocLink']()}</a>
+                <a href={`/${locale}/privacy`}>{m['footer.privacyLink']()}</a>
             </div>
         </footer>
     );

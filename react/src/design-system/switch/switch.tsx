@@ -41,7 +41,7 @@ const handleStyles = tv({
   base: "size-4 rounded-full bg-white shadow transition-transform",
   variants: {
     isSelected: {
-      true: "translate-x-full",
+      true: "translate-x-full rtl:-translate-x-full",
       false: "translate-x-0",
     },
   },

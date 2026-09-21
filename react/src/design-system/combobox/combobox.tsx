@@ -24,7 +24,7 @@ import { Label } from "../label/label"
 // real screen actually needs it.
 
 const groupStyles = tv({
-  base: "flex h-8 w-full min-w-[180px] items-center gap-1 rounded-lg border border-black-300 bg-white pl-3 pr-1 transition [-webkit-tap-highlight-color:transparent] focus-within:border-blue-500 focus-within:ring-3 focus-within:ring-blue-500/50",
+  base: "flex h-8 w-full min-w-[180px] items-center gap-1 rounded-lg border border-black-300 bg-white ps-3 pe-1 transition [-webkit-tap-highlight-color:transparent] focus-within:border-blue-500 focus-within:ring-3 focus-within:ring-blue-500/50",
   variants: {
     isDisabled: {
       true: "cursor-not-allowed border-black-200 bg-black-100 text-black-600",

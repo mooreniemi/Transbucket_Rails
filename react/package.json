@@ -18,7 +18,8 @@
     "storybook": "storybook dev -p 6006",
     "prebuild-storybook": "npm run tokens:build",
     "build-storybook": "storybook build",
-    "chromatic": "npx chromatic --project-token=chpt_63f5a92ed13004a"
+    "chromatic": "npx chromatic --project-token=chpt_63f5a92ed13004a",
+    "machine-translate": "inlang machine translate --project project.inlang"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
@@ -62,7 +63,9 @@
     "storybook": "^10.6.0",
     "typescript": "^6.0.2",
     "vite": "^8.0.0",
-    "vitest": "latest"
+    "vitest": "latest",
+    "@inlang/paraglide-js": "^2.25.4",
+    "@inlang/cli": "^3.0.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

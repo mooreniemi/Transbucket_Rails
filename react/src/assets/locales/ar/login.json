@@ -1,0 +1,9 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "login": {
+        "userInputLabel": "اسم المستخدم أو البريد الإلكتروني",
+        "passwordInputLabel": "كلمة المرور",
+        "rememberInputLabel": "تذكرني",
+        "registrationTitle": "هل هذه أول زيارة لك إلى Transbucket؟"
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "global": {
+        "buttons": {
+            "login": "تسجيل الدخول",
+            "register": "إنشاء حساب",
+            "confirmation": "لم تتلقَّ تعليمات التأكيد؟"
+        },
+        "pages": {
+            "news": "الأخبار",
+            "procedures": "الإجراءات",
+            "surgeons": "الجراحون",
+            "login": "تسجيل الدخول"
+        }
+    }
+}

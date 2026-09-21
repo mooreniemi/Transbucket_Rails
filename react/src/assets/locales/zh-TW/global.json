@@ -1,0 +1,16 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "global": {
+        "buttons": {
+            "login": "登入",
+            "register": "註冊",
+            "confirmation": "沒有收到確認信？"
+        },
+        "pages": {
+            "news": "新聞",
+            "procedures": "手術項目",
+            "surgeons": "醫師",
+            "login": "登入"
+        }
+    }
+}

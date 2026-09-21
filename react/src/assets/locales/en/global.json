@@ -1,13 +1,16 @@
 {
-    "buttons": {
-        "login": "Login",
-        "register": "Register",
-        "confirmation": "Didn't receive confirmation instructions?"
-    },
-    "pages": {
-        "news": "News",
-        "procedures": "Procedures",
-        "surgeons": "Surgeons",
-        "login": "Log in"
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "global": {
+        "buttons": {
+            "login": "Login",
+            "register": "Register",
+            "confirmation": "Didn't receive confirmation instructions?"
+        },
+        "pages": {
+            "news": "News",
+            "procedures": "Procedures",
+            "surgeons": "Surgeons",
+            "login": "Log in"
+        }
     }
 }

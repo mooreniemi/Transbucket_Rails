@@ -65,7 +65,7 @@ function Dialog({ className, title, showCloseButton = true, children, ...props }
   return (
     <DialogPrimitive {...props} className={cn("relative flex flex-col gap-3 p-6 outline-none", className)}>
       {title && (
-        <Heading slot="title" className="pr-6 text-lg font-semibold text-black-900">
+        <Heading slot="title" className="pe-6 text-lg font-semibold text-black-900">
           {title}
         </Heading>
       )}
@@ -74,7 +74,7 @@ function Dialog({ className, title, showCloseButton = true, children, ...props }
           slot="close"
           variant="ghost"
           size="icon-sm"
-          className="absolute top-3 right-3"
+          className="absolute top-3 end-3"
           aria-label="Close"
         >
           <X aria-hidden className="size-4" />

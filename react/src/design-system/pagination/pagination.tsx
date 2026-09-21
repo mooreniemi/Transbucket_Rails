@@ -74,7 +74,7 @@ function Pagination({
             isDisabled={isFirstPage}
             onPress={() => onPageChange?.(page - 1)}
           >
-            <ChevronLeft aria-hidden />
+            <ChevronLeft aria-hidden className="rtl:rotate-180" />
           </Button>
         </li>
         {range.map((item, index) =>
@@ -119,7 +119,7 @@ function Pagination({
             isDisabled={isLastPage}
             onPress={() => onPageChange?.(page + 1)}
           >
-            <ChevronRight aria-hidden />
+            <ChevronRight aria-hidden className="rtl:rotate-180" />
           </Button>
         </li>
       </ul>

@@ -1,0 +1,9 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "footer": {
+        "socialDiscord": "Discordに参加する",
+        "aboutLink": "概要",
+        "tocLink": "利用規約",
+        "privacyLink": "プライバシー"
+    }
+}

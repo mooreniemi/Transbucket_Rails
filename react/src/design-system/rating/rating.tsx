@@ -41,7 +41,7 @@ const starLabelStyles = tv({
 });
 
 const tagStyles = tv({
-  base: "ml-2 p-1 text-xs rounded-md font-semibold bg-black-300",
+  base: "ms-2 p-1 text-xs rounded-md font-semibold bg-black-300",
   variants: {
     value: {
         1: "bg-rose-200",
@@ -86,7 +86,7 @@ export function Rating({ scale, ...props }: RatingProps) {
                         variant="secondary"
                         theme="destructive"
                         onClick={clearValue}
-                        className="ml-2"
+                        className="ms-2"
                     >
                         <Trash /><span className="sr-only">Clear rating</span>
                     </Button>

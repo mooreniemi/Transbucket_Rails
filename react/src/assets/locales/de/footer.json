@@ -1,0 +1,9 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "footer": {
+        "socialDiscord": "Tritt unserem Discord bei",
+        "aboutLink": "Über uns",
+        "tocLink": "Nutzungsbedingungen",
+        "privacyLink": "Datenschutz"
+    }
+}

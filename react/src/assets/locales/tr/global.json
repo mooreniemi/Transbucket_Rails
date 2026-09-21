@@ -1,0 +1,16 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "global": {
+        "buttons": {
+            "login": "Giriş yap",
+            "register": "Kayıt ol",
+            "confirmation": "Onay talimatlarını almadınız mı?"
+        },
+        "pages": {
+            "news": "Haberler",
+            "procedures": "Prosedürler",
+            "surgeons": "Cerrahlar",
+            "login": "Giriş yap"
+        }
+    }
+}

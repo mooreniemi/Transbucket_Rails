@@ -36,21 +36,21 @@ export function Comment({ children, comment, locale, onReply, onReport, isPendin
     return (
         <li className="mb-4 last:mb-0">
             <div className="border-t border-black-300">
-                <div className="text-right pt-1"><Button variant="link" theme="destructive" onClick={handleReportComment} className="text-xs h-auto"><Flag size={16} />Report</Button></div>
+                <div className="text-end pt-1"><Button variant="link" theme="destructive" onClick={handleReportComment} className="text-xs h-auto"><Flag size={16} />Report</Button></div>
                 <div className="text-sm">{comment.text}</div>
                 <div className="text-xs text-black-700 font-medium grid auto-cols-auto grid-flow-col justify-start items-center mt-1 mb-2" style={{columnRule: "1px solid var(--ds-color-black-200)"}}>
-                    <Button href={`/?user=${comment.user.id}`} variant="link" className="pl-0 text-xs h-auto">{comment.user.name}</Button>
+                    <Button href={`/?user=${comment.user.id}`} variant="link" className="ps-0 text-xs h-auto">{comment.user.name}</Button>
                     <span className="px-2.5">{formattedDate}</span>
                     <Button variant="link" onClick={openReplyBox} className="text-xs h-auto">reply<MessageSquare size={16}/></Button>
                 </div>
                 { editMode && (
                     <form onSubmit={handleReply}>
                         <Textarea name="reply" />
-                        <div className="mt-2 text-right">
+                        <div className="mt-2 text-end">
                             <Button
                                 type="button"
                                 variant="outline"
-                                className="mr-2"
+                                className="me-2"
                                 onClick={closeReplyBox}
                             >
                                 Cancel
@@ -67,12 +67,12 @@ export function Comment({ children, comment, locale, onReply, onReport, isPendin
                             <Button slot="trigger" variant='ghost' size="icon-xs" className="mt-2">
                                 { isExpanded
                                     ? (<ChevronDown />)
-                                    : (<ChevronRight />)
+                                    : (<ChevronRight className="rtl:rotate-180" />)
                                 }
                                 <span className="sr-only">Toggle replies</span>
                             </Button>
                             <DisclosurePanel>
-                                <ol className="pl-8 border-l border-black-100">{children}</ol>
+                                <ol className="ps-8 border-s border-black-100">{children}</ol>
                             </DisclosurePanel>
                         </>
                     )}

@@ -1,0 +1,16 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "global": {
+        "buttons": {
+            "login": "ログイン",
+            "register": "登録",
+            "confirmation": "確認手順のメールが届いていませんか？"
+        },
+        "pages": {
+            "news": "ニュース",
+            "procedures": "手術",
+            "surgeons": "外科医",
+            "login": "ログイン"
+        }
+    }
+}

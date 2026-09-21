@@ -1,0 +1,9 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "footer": {
+        "socialDiscord": "Word lid van onze Discord",
+        "aboutLink": "Over ons",
+        "tocLink": "Gebruiksvoorwaarden",
+        "privacyLink": "Privacy"
+    }
+}

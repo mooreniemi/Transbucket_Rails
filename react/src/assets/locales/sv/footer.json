@@ -1,0 +1,9 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "footer": {
+        "socialDiscord": "Häng med oss på Discord",
+        "aboutLink": "Om oss",
+        "tocLink": "Användarvillkor",
+        "privacyLink": "Integritetspolicy"
+    }
+}

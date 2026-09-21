@@ -1,0 +1,9 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "login": {
+        "userInputLabel": "ユーザー名またはメールアドレス",
+        "passwordInputLabel": "パスワード",
+        "rememberInputLabel": "ログイン状態を保持する",
+        "registrationTitle": "Transbucketは初めてですか？"
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "global": {
+        "buttons": {
+            "login": "Entrar",
+            "register": "Cadastrar",
+            "confirmation": "Não recebeu as instruções de confirmação?"
+        },
+        "pages": {
+            "news": "Notícias",
+            "procedures": "Procedimentos",
+            "surgeons": "Cirurgiões",
+            "login": "Entrar"
+        }
+    }
+}

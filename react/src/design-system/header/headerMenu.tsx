@@ -46,7 +46,7 @@ function HeaderMenu({ label, children, className }: HeaderMenuProps) {
             />
           </ButtonPrimitive>
         </Heading>
-        <DisclosurePanel className="flex flex-col gap-0.5 overflow-hidden py-1 pl-3">
+        <DisclosurePanel className="flex flex-col gap-0.5 overflow-hidden py-1 ps-3">
           {children}
         </DisclosurePanel>
       </Disclosure>

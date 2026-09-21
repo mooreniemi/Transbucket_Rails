@@ -47,7 +47,7 @@ export function RatingResults ({ data }: RatingResults) {
                         </linearGradient>
                     </defs>
                 </Star>
-                <span className="font-semibold align-middle ml-2">{avgRating} / 5</span>
+                <span className="font-semibold align-middle ms-2">{avgRating} / 5</span>
             </div>
             <div className="mt-4">
                 {[1, 2, 3, 4, 5].map((value) => {

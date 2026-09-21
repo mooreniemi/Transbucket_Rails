@@ -1,8 +1,9 @@
 {
-    "socialFacebook": "Facebook",
-    "socialTwitter": "@Transbucket",
-    "socialDiscord": "Join us on discord",
-    "aboutLink": "About",
-    "tocLink": "Terms of service",
-    "privacyLink": "Privacy policy"
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "footer": {
+        "socialDiscord": "Join us on Discord",
+        "aboutLink": "About",
+        "tocLink": "Terms of service",
+        "privacyLink": "Privacy policy"
+    }
 }

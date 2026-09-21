@@ -1,3 +1,4 @@
+import { paraglideVitePlugin } from '@inlang/paraglide-js'
 /// <reference types="vitest/config" />
 import { defineConfig } from 'vite';
 import { devtools } from '@tanstack/devtools-vite';
@@ -11,11 +12,23 @@ import { playwright } from '@vitest/browser-playwright';
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
-const config = defineConfig({
+const config = defineConfig(({ command }) => ({
+  // The build is served by Rails out of public/vite (see lib/tasks/vite.rake),
+  // so every URL Vite bakes into the bundle -- imported images, lazy route
+  // chunks, CSS url()s -- has to start with /vite/. With the default "/",
+  // they'd point at /assets/..., which is Sprockets' territory, and 404.
+  // Dev keeps "/" because the dev server itself serves everything.
+  base: command === 'build' ? '/vite/' : '/',
   resolve: {
     tsconfigPaths: true
   },
   plugins: [
+    paraglideVitePlugin({
+      project: './project.inlang',
+      outdir: './src/generated/paraglide',
+      strategy: ['url'],
+      outputStructure: process.env.production ? 'message-modules' : 'locale-modules'
+    }),
     devtools({
       // can enable this if ruby is updated and we can migrate to vite_rails gem instead of custom setup
       consolePiping: {
@@ -74,5 +87,5 @@ const config = defineConfig({
       }
     }]
   }
-});
+}));
 export default config;

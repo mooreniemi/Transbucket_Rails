@@ -9,6 +9,7 @@ import { Earth } from 'lucide-react';
 import { createLink } from '@tanstack/react-router';
 import { Button } from '#/design-system/button';
 import { useContext } from 'react';
+import { m } from '#/generated/paraglide/messages';
 
 const TanstackMenuItem = createLink(HeaderMenuItem);
 const TanstackMenuLink = createLink(HeaderLink);
@@ -21,7 +22,7 @@ function LocaleSwitcher({ currentLocale }: LocaleSwitcher) {
   return (
     <HeaderMenu label={
         <>
-          <Earth className="inline mr-1 align-middle" size="14" />
+          <Earth className="inline me-1 align-middle" size="14" />
           <span className="align-middle">{currentLocale}</span>
         </>
       }>
@@ -56,8 +57,8 @@ function HeaderSectionRight({ locale }: HeaderSectionRight) {
   if (variant === "mobile") {
     return (
       <>
-        <TanstackMenuLink to="/$locale/login" params={{ locale }}>Login</TanstackMenuLink>
-        <HeaderMenuItem href={`/${locale}/register`}>Register</HeaderMenuItem>
+        <TanstackMenuLink to="/$locale/login" params={{ locale }}>{m['global.buttons.login']()}</TanstackMenuLink>
+        <HeaderMenuItem href={`/${locale}/register`}>{m['global.buttons.register']()}</HeaderMenuItem>
         <LocaleSwitcher currentLocale={currentLocale} />
       </>
     );
@@ -66,8 +67,8 @@ function HeaderSectionRight({ locale }: HeaderSectionRight) {
   return (
     <>
       <LocaleSwitcher currentLocale={currentLocale} />
-      <TanstackMenuLink to="/$locale/login" params={{ locale }}>Login</TanstackMenuLink>
-      <Button variant="outline" href="/register">Register</Button>
+      <TanstackMenuLink to="/$locale/login" params={{ locale }}>{m['global.buttons.login']()}</TanstackMenuLink>
+      <Button variant="outline" href="/register">{m['global.buttons.register']()}</Button>
     </>
   );
 }
@@ -81,9 +82,9 @@ export function PublicHeader({ locale }: PublicHeader) {
         <Header
             sectionRight={<HeaderSectionRight locale={locale} />}
         >
-            <HeaderLink href={`/${locale}/newsfeed`}>News</HeaderLink>
-            <HeaderLink href={`/${locale}/procedures`}>Procedures</HeaderLink>
-            <HeaderLink href={`/${locale}/surgeons`}>Surgeons</HeaderLink>
+            <HeaderLink href={`/${locale}/newsfeed`}>{m['global.pages.news']()}</HeaderLink>
+            <HeaderLink href={`/${locale}/procedures`}>{m['global.pages.procedures']()}</HeaderLink>
+            <HeaderLink href={`/${locale}/surgeons`}>{m['global.pages.surgeons']()}</HeaderLink>
         </Header>
     );
 }

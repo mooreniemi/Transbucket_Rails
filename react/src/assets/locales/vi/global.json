@@ -1,0 +1,16 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "global": {
+        "buttons": {
+            "login": "Đăng nhập",
+            "register": "Đăng ký",
+            "confirmation": "Không nhận được hướng dẫn xác nhận?"
+        },
+        "pages": {
+            "news": "Tin tức",
+            "procedures": "Thủ thuật",
+            "surgeons": "Bác sĩ phẫu thuật",
+            "login": "Đăng nhập"
+        }
+    }
+}

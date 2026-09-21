@@ -1,0 +1,9 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "footer": {
+        "socialDiscord": "Tham gia Discord của chúng tôi",
+        "aboutLink": "Giới thiệu",
+        "tocLink": "Điều khoản sử dụng",
+        "privacyLink": "Quyền riêng tư"
+    }
+}

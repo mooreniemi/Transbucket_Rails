@@ -58,7 +58,7 @@ function Header({
             <h1>
               <a href="/" className="inline-block hover:no-underline focus-visible:no-underline">
                 <img src={logo} alt="" className="h-8 w-auto inline"/>
-                <span className="font-bold align-middle ml-2 text-black-900">Transbucket</span>
+                <span className="font-bold align-middle ms-2 text-black-900">Transbucket</span>
               </a>
             </h1>
             <NavVariantContext.Provider value="desktop">
@@ -117,7 +117,7 @@ function SkipNav({ href }: { href: string }) {
       // undoing sr-only, and .focus\:not-sr-only:focus (class+pseudo)
       // outranks a plain .px-6/.py-4 (class only), so padding on this
       // element would always lose to that reset while focused.
-      className="sr-only rounded-md outline-none focus:not-sr-only focus:fixed focus:top-4 focus:right-4 focus:z-50 focus-visible:ring-3 focus-visible:ring-blue-300/50"
+      className="sr-only rounded-md outline-none focus:not-sr-only focus:fixed focus:top-4 focus:end-4 focus:z-50 focus-visible:ring-3 focus-visible:ring-blue-300/50"
     >
       <span className="block rounded-md bg-blue-300 px-3 py-2 text-sm font-medium text-black-900">
         Skip to main content

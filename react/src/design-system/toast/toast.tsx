@@ -101,7 +101,7 @@ function ToastRegion({ queue, className }: ToastRegionProps) {
   return (
     <ToastRegionPrimitive
       queue={queue}
-      className={cn("fixed right-4 bottom-4 z-50 flex flex-col-reverse gap-2 outline-none", className)}
+      className={cn("fixed end-4 bottom-4 z-50 flex flex-col-reverse gap-2 outline-none", className)}
     >
       {({ toast }) => <Toast toast={toast} />}
     </ToastRegionPrimitive>

@@ -1,4 +1,4 @@
-class CreateUserTrustGrants < ActiveRecord::Migration
+class CreateUserTrustGrants < ActiveRecord::Migration[4.2]
   def up
     create_table :user_trust_grants do |t|
       t.integer :user_id, null: false

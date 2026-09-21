@@ -8,7 +8,7 @@
     <%# Delete and Report depend on who is looking, so that is in the key too;
         otherwise the first viewer's version was served to everyone. %>
     <% is_author = comment.user_id == current_user.id %>
-    <% cache([I18n.locale, "comment_v3", comment, comment.user.try(:trust_tier), is_author, current_user.admin?]) do %>
+    <% cache([I18n.locale, "comment_v3", comment, comment.state, comment.user.try(:trust_tier), is_author, current_user.admin?]) do %>
       <div class="comment-meta">
         <strong class="comment-author"><%= link_to comment.user.try(:username) || comment.user.try(:id), pins_path(user: comment.user) %></strong><%= render 'shared/trust_badge', user: comment.user %>
         <span class="comment-meta-separator" aria-hidden="true">·</span>

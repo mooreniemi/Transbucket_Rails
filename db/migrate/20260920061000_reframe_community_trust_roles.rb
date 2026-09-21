@@ -1,4 +1,4 @@
-class ReframeCommunityTrustRoles < ActiveRecord::Migration
+class ReframeCommunityTrustRoles < ActiveRecord::Migration[4.2]
   def up
     UserTrustGrant.where(kind: 'established_contributor').update_all(kind: 'vetted')
     UserTrustGrant.where(kind: 'trusted').update_all(kind: 'moderator')

@@ -70,6 +70,7 @@ class StagingSmoke
   def run
     verify_public_localization
     verify_registration_localization
+    verify_write_endpoints_require_login
     login
     verify_account_localization
     pin_id, search_term = create_pin
@@ -110,6 +111,24 @@ class StagingSmoke
     doc = html_document(response.body)
     unless doc.at_css('select#user_pronouns option[value="she/her"]') && doc.at_css('select#user_pronouns option[value="custom"]') && doc.at_css('input#user_pronouns_custom[hidden]')
       raise "pronouns picker missing from the sign-up form for #{@locale}"
+    end
+  end
+
+  # Nothing that writes may work without an account. Runs before login, so this
+  # client is anonymous. The ids are ones that cannot match real records, so even a
+  # regression could not touch real data.
+  def verify_write_endpoints_require_login
+    token = csrf_token('/register').to_s
+    {
+      'pin image upload' => ['/pin_images', { 'pin_images[0][caption]' => 'smoke' }],
+      'pin image delete' => ['/pins/0/pin_images/0', { '_method' => 'delete' }],
+      'pin image caption' => ['/pin_images/0', { '_method' => 'put', 'caption' => 'smoke' }],
+      'procedure create' => ['/procedures', { 'procedure[name]' => 'smoke anonymous', 'procedure[body_type]' => 'top', 'procedure[gender]' => 'ftm' }],
+      'surgeon create' => ['/surgeons', { 'surgeon[first_name]' => 'Smoke', 'surgeon[last_name]' => 'Anonymous' }]
+    }.each do |label, (path, params)|
+      response = post(path, params.merge('authenticity_token' => token))
+      refused = response.is_a?(Net::HTTPUnauthorized) || (response.is_a?(Net::HTTPRedirection) && response['location'].to_s.include?('sign_in'))
+      raise "anonymous #{label} was not refused (#{response.code})" unless refused
     end
   end
 

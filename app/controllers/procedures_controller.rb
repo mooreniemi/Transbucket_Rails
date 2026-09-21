@@ -1,5 +1,6 @@
 class ProceduresController < ApplicationController
-  before_filter :authenticate_user!, only: :compare
+  # Browsing is public; creating (the pin form's "add a new procedure") needs an account.
+  before_filter :authenticate_user!, except: [:index, :show]
 
   def index
     @procedures = Procedure.all.order(:name)

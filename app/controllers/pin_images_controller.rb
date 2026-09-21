@@ -1,4 +1,10 @@
 class PinImagesController < ApplicationController
+  # Every action changes or reveals photo records, so all of them need an account.
+  # (These endpoints used to be open to anyone: an anonymous request could upload
+  # images and delete any post's photos by id.)
+  before_filter :authenticate_user!
+  before_filter :find_image_and_pin, only: [:update, :destroy]
+  before_filter :authorize_change, only: [:update, :destroy]
   respond_to :json
 
   def index
@@ -7,9 +13,8 @@ class PinImagesController < ApplicationController
   end
 
   def update
-    pin_image = PinImage.where(id: params[:id]).first.
-      update_attributes(caption: params[:caption])
-    respond_with(pin_image)
+    @pin_image.update_attributes(caption: params[:caption])
+    render json: { id: @pin_image.id, caption: @pin_image.caption }
   end
 
   def create
@@ -30,9 +35,6 @@ class PinImagesController < ApplicationController
   end
 
   def destroy
-    @pin = Pin.find(params[:pin_id])
-    @pin_image = @pin.pin_images.find(params[:id])
-
     respond_to do |format|
       if @pin_image.destroy
         format.js
@@ -43,6 +45,30 @@ class PinImagesController < ApplicationController
   end
 
   private
+
+  # A photo belongs to a post through its pin. A photo that has just been uploaded
+  # and not yet attached to a post has no pin, so there is nobody to check against;
+  # it is not shown anywhere until a post claims it.
+  def find_image_and_pin
+    if params[:pin_id]
+      @pin = Pin.find(params[:pin_id])
+      @pin_image = @pin.pin_images.find(params[:id])
+    else
+      @pin_image = PinImage.find(params[:id])
+      @pin = @pin_image.pin
+    end
+  end
+
+  # Owner or admin may change a post's photos; moderators may also remove them,
+  # as they may remove whole posts (see PinsController#validate_user).
+  def authorize_change
+    return if @pin.nil? && action_name == 'update'
+    return head(:forbidden) if @pin.nil?
+
+    allowed = current_user == @pin.user || current_user.admin? || (action_name == 'destroy' && current_user.moderator?)
+    head :forbidden unless allowed
+  end
+
   def upload_params
     pin_image_params.map(&:last)
   end

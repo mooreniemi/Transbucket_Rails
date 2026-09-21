@@ -444,4 +444,19 @@ describe PinsController, :type => :controller do
       end
     end
   end
+
+  describe 'photos of other people\'s posts, referenced by id in a new post' do
+    it 'are left alone, and asking to delete one does not crash or delete it' do
+      victim_pin = create(:pin, user: create(:user), pin_images: build_list(:pin_image, 2))
+      victim_image = victim_pin.pin_images.first
+      sign_in(create(:user))
+      attrs = attributes_for(:pin, :with_surgeon_and_procedure)
+
+      post :create, pin: attrs, pin_images: { '0' => { 'id' => victim_image.id.to_s, '_destroy' => '1' }, '1' => attributes_for(:pin_image) }
+
+      expect(response).not_to have_http_status(:internal_server_error)
+      expect(PinImage.exists?(victim_image.id)).to eq(true)
+      expect(victim_image.reload.pin_id).to eq(victim_pin.id)
+    end
+  end
 end

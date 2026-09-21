@@ -82,6 +82,10 @@ class PinForm < Reform::Form
     item = pin_images.find { |image| image.id == fragment["id"].to_i }
 
     if fragment["_destroy"] == "1"
+      # Only this pin's own images can be removed this way; an id that is not one
+      # of them (someone else's photo) is ignored rather than acted on.
+      return skip! unless item
+
       pin_images.delete(item)
       # sync may ignore this if image is otherwise unchanged, so we delete it early
       PinImage.destroy(item.id)

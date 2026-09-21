@@ -58,6 +58,16 @@ describe PinImagesController, type: :controller do
       expect(response).to have_http_status(:ok)
     end
 
+    it 'stores the caption sent with an uploaded PNG' do
+      png = ActionDispatch::Http::UploadedFile.new(
+        filename: 'cat.png', type: 'image/png', tempfile: File.new("#{Rails.root}/spec/support/cat.png")
+      )
+      caption = attributes_for(:pin_image)[:caption]
+
+      expect { post :create, pin_images: { '0' => { photo: png, caption: caption } }, format: :json }.to change { PinImage.count }.by(1)
+      expect(PinImage.last.caption).to eq(caption)
+    end
+
     it 'can caption a photo they just uploaded and have not attached to a post yet' do
       fresh = PinImage.create!(photo: fixture_file_upload('cat.jpg', 'image/jpeg'), caption: 'before')
 

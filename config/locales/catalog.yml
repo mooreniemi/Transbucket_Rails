@@ -596,10 +596,8 @@ en:
       password_confirmation: New Password Confirmation
       current_password: Current Password
       update: Update
-      profile_help: On Transbucket, gender helps control the pronouns you are referred
-        to with. Currently, MTF and FTM genders correspond to binary pronoun identifications.
-        For gender neutral pronouns, please use None or GenderQueer as your gender.
-        Future updates will allow for pronoun choice independent of your gender identification.
+      profile_help: On Transbucket, gender sets the default pronouns you are referred
+        to with, and you can choose your own pronouns independent of your gender.
       new_submission: New Submission
       editing_submission: Editing Submission
       submissions_by_user: Submissions By User Results

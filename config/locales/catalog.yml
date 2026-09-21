@@ -244,6 +244,7 @@ en:
       for_you: For You
       submit_photo: Submit a photo
     entries:
+      comment_reports: 'The new-comment preview on a submission card now links straight to that comment. Reporting a comment is now labelled and asks you to confirm first, like reporting a post, and the profile page says your current password is needed to save changes. The submissions feed also loads with far fewer database queries, so it should feel snappier.'
       pronouns: 'You can now choose your pronouns when you sign up or in your profile, from a list of common ones or by typing your own (like xe/xem). They appear on your submissions, and standard ones are shown in the reader''s language. If you don''t choose, we use the default that goes with your gender.'
       comment_counts: 'Submission cards now show how many comments a post has and how recently it was updated, so it is easier to find posts with discussion. Reporting a post now asks you to confirm first, so a stray tap can''t send a report.'
       safe_mode_blur: 'Safe mode now blurs images until you tap them, instead of hiding them behind a stand-in picture, and you can tap an image again to hide it. There is also a new eye button in the header to switch safe mode on or off from any page.'

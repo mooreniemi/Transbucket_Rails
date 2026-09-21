@@ -31,8 +31,8 @@ describe PagesController, :type => :controller do
       get 'newsfeed'
 
       expect(response).to be_success
-      expect(assigns(:newsfeed_entries).length).to eq(16)
-      expect(assigns(:newsfeed_entries).first[:body]).to eq(I18n.t('newsfeed.entries.pronouns'))
+      expect(assigns(:newsfeed_entries).length).to eq(17)
+      expect(assigns(:newsfeed_entries).first[:body]).to eq(I18n.t('newsfeed.entries.comment_reports'))
       expect(assigns(:newsfeed_entries).find { |entry| entry[:body_key] == 'newsfeed.entries.comparison_stats' }[:images].length).to eq(2)
       expect(assigns(:newsfeed_entries).find { |entry| entry[:body] == I18n.t('newsfeed.entries.comment_counts') }[:links]).to eq([['Browse submissions', '/en/pins']])
       expect(assigns(:newsfeed_entries).map { |entry| entry[:body] }).to include(I18n.t('newsfeed.entries.directory_improvements'))
@@ -45,6 +45,7 @@ describe PagesController, :type => :controller do
       expect(response.body).to include('Pin details are now easier to read')
       expect(response.body).to include('Contributors now receive a badge')
       expect(response.body).to include('You can now choose your pronouns')
+      expect(response.body).to include('Reporting a comment is now labelled')
       expect(response.body).to include('Safe mode now blurs images until you tap them')
       expect(response.body).to include('href="/en/pins/new"')
       expect(response.body).to include('href="/en/procedures/compare"')

@@ -149,6 +149,46 @@ describe PinsController, :type => :controller do
         expect(response.body).not_to include('<h1>Recent Submissions</h1>')
       end
 
+      it 'answers infinite scroll with just the cards and page links' do
+        allow(Pin).to receive(:per_page).and_return(2)
+        create_list(:pin, 3, user: user)
+
+        get :index, fragment: '1'
+
+        expect(response).to be_success
+        expect(response.body).to include('id="pins"')
+        expect(response.body).to include('id="paginator"')
+        expect(response.body).not_to include('<html')
+        expect(response.body).not_to include('feed-filter-panel')
+        expect(response.body.scan('class="item"').size).to eq(2)
+        # The page links must not carry fragment=1, or following one would
+        # give a bare list of cards.
+        expect(response.body).to match(/href="[^"]*page=2/)
+        expect(response.body).not_to include('fragment=1')
+      end
+
+      it 'keeps infinite scroll on the For You feed' do
+        gender = create(:gender, name: 'MTF')
+        user.update_attributes!(gender: gender)
+        allow(Pin).to receive(:per_page).and_return(1)
+        2.times { create(:pin, user: create(:user, gender: gender)) }
+
+        get :index, feed: 'for_you', fragment: '1'
+
+        next_link = Nokogiri::HTML(response.body).at_css('#paginator a[rel~="next"]')
+        expect(next_link['href']).to include('feed=for_you')
+        expect(next_link['href']).to include('page=2')
+      end
+
+      it 'loads the first two card photos straight away and the rest as you near them' do
+        create_list(:pin, 4, user: user)
+
+        get :index
+
+        images = Nokogiri::HTML(response.body).css('#pins .pin-card-image img')
+        expect(images.map { |image| image['loading'] }).to eq([nil, nil, 'lazy', 'lazy'])
+      end
+
       it 'shows how many photos a pin has when it has more than one' do
         create(:pin, user: user, pin_images: build_list(:pin_image, 3))
         create(:pin, user: user, pin_images: build_list(:pin_image, 1))

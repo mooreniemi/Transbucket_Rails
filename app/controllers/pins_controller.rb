@@ -21,7 +21,9 @@ class PinsController < ApplicationController
     # rather than relying on an unset instance variable in the partial.
     @safe_mode = safe_mode
     respond_to do |format|
-      format.html # index.html.erb
+      # Infinite scroll on phones (feed_scroll.js) asks for just the next
+      # cards and page link, not the whole page around them.
+      format.html { render(partial: 'pins/feed_page') if params[:fragment].present? }
       format.js
     end
   end

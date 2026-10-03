@@ -32,9 +32,12 @@
     <%# pin_images is preloaded with the card, so counting costs no query. In the
         cache key because adding a photo does not touch the pin. %>
     <% photo_count = pin.pin_images.to_a.count { |image| image.photo_file_size.present? } %>
-    <% cache([I18n.locale, pin, @safe_mode, photo_count]) do %>
+    <%# The first cards are on screen straight away; the rest load as you near
+        them (their box has a fixed shape, so nothing moves when they do). %>
+    <% lazy = event_context[:rank].nil? || event_context[:rank].to_i > 2 %>
+    <% cache([I18n.locale, pin, @safe_mode, photo_count, lazy]) do %>
       <div class="image pin-card-image<%= ' safe-blur' if @safe_mode %>" itemprop="image">
-        <%= link_to (image_tag pin.cover_image.url(:medium), alt: pin.procedure.try(:localized_name)), pin,
+        <%= link_to (image_tag pin.cover_image.url(:medium), alt: pin.procedure.try(:localized_name), loading: (lazy ? 'lazy' : nil)), pin,
           'data-content-event-open' => true,
           'data-content-event-url' => content_events_path,
           'data-content-type' => 'Pin',

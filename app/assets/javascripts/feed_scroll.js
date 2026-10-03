@@ -87,7 +87,8 @@
 
       loading = true;
       setStatus('loading');
-      window.fetch(url, { credentials: 'same-origin', headers: { 'Accept': 'text/html' } })
+      // fragment=1: only the cards and the page links, no header or footer.
+      window.fetch(url + (url.indexOf('?') === -1 ? '?' : '&') + 'fragment=1', { credentials: 'same-origin', headers: { 'Accept': 'text/html' } })
         .then(function(response) {
           if (!response.ok) { throw new Error('HTTP ' + response.status); }
           return response.text();

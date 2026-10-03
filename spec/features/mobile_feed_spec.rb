@@ -13,8 +13,32 @@ RSpec.describe 'the submissions feed on a phone', js: true, fake_images: true do
   end
 
   after do
-    page.current_window.resize_to(1400, 1000)
-    Warden.test_reset!
+    begin
+      # The viewer loads full-size photos. Let any still downloading finish, or
+      # they reach the server after the fake_images route is removed and fail
+      # the example with a routing error. Lazy photos far off screen are never
+      # requested, so they are not waited for.
+      Timeout.timeout(Capybara.default_max_wait_time) do
+        loop do
+          settled = page.evaluate_script(<<-JAVASCRIPT)
+            Array.prototype.every.call(document.images, function(img) {
+              if (img.complete) { return true; }
+              var rect = img.getBoundingClientRect();
+              return img.loading === 'lazy' && (rect.top > window.innerHeight + 3000 || rect.bottom < -3000);
+            })
+          JAVASCRIPT
+          break if settled
+          sleep 0.05
+        end
+      end
+    rescue Timeout::Error
+      # Best effort: a slow photo should not fail the example.
+    ensure
+      # Always back to the desktop size the other specs expect: below 768px
+      # the pin form swaps its dropdowns for touch pickers.
+      page.current_window.resize_to(1400, 1000)
+      Warden.test_reset!
+    end
   end
 
   def wait_for_event(attributes)
@@ -44,7 +68,9 @@ RSpec.describe 'the submissions feed on a phone', js: true, fake_images: true do
     it 'loads every page into the feed as you scroll, without repeats, then says you are caught up' do
       visit '/en/pins'
 
-      expect(page).to have_css('#pins .item', count: 2)
+      # Page 1 is two cards; with cards this short the next page may already be
+      # on its way, since loading starts well before the bottom is reached.
+      expect(page).to have_css('#pins .item', minimum: 2)
       expect(page).not_to have_css('#paginator', visible: true)
 
       5.times do
@@ -192,6 +218,77 @@ RSpec.describe 'the submissions feed on a phone', js: true, fake_images: true do
       expect(page).to have_current_path("/en/pins/#{pin.id}")
       expect(page).to have_css('.navbar-fixed-top')
       expect(page).not_to have_css('.pin-viewer', visible: true)
+    end
+  end
+
+  describe 'safe mode' do
+    let!(:pin) { create(:pin, :with_surgeon_and_procedure, user: create(:user)) }
+
+    before { user.preference.update_attributes!(safe_mode: true) }
+
+    it 'keeps photos blurred in the viewer until tapped, and the reveal does not close it' do
+      visit '/en/pins'
+      # The card's reveal button must be tapped first; the blurred photo itself
+      # does not open the pin.
+      find(".item[data-pin-id='#{pin.id}'] [data-safe-reveal]").click
+      card_link(pin).click
+      expect(page).to have_css('.pin-viewer .pin-meta')
+
+      expect(page).to have_css('.pin-viewer .pin-gallery-photo.safe-blur:not(.is-revealed)', minimum: 1)
+      first('.pin-viewer [data-safe-reveal]').click
+
+      expect(page).to have_css('.pin-viewer .pin-gallery-photo.safe-blur.is-revealed', minimum: 1)
+      expect(page).to have_css('.pin-viewer', visible: true)
+      expect(page).to have_current_path("/en/pins/#{pin.id}")
+    end
+  end
+
+  describe 'the new-comment preview on a card' do
+    let!(:pin) { create(:pin, :with_surgeon_and_procedure, user: create(:user)) }
+    let!(:commenter) { create(:user, :with_confirmation, username: 'kindperson') }
+    let!(:comment) { create(:comment, commentable: pin, user: commenter, body: 'fresh words on this pin') }
+
+    before do
+      # Signing in makes the previous sign-in the "last visit", so put both
+      # before the comment.
+      user.update_columns(last_sign_in_at: 2.days.ago, current_sign_in_at: 2.days.ago)
+      comment.update_column(:created_at, 1.day.ago)
+    end
+
+    def preview_below_photo?
+      page.evaluate_script(<<-JAVASCRIPT)
+        (function() {
+          var preview = document.querySelector('.pin-card-latest-comment');
+          var photo = preview.closest('.item').querySelector('.pin-card-image');
+          return preview.getBoundingClientRect().top >= photo.getBoundingClientRect().bottom;
+        }())
+      JAVASCRIPT
+    end
+
+    it 'shows who said what under the caption, clear of the photo' do
+      visit '/en/pins'
+
+      preview = find('.pin-card-latest-comment')
+      expect(preview).to have_css('strong', text: 'kindperson')
+      expect(preview).to have_text('fresh words on this pin')
+      expect(preview_below_photo?).to be(true)
+    end
+
+    it 'opens the pin in the viewer at that comment' do
+      visit '/en/pins'
+
+      find('.pin-card-latest-comment').click
+
+      expect(page).to have_css(".pin-viewer #comment-#{comment.id}")
+      expect(page.current_url).to end_with("/en/pins/#{pin.id}#comment-#{comment.id}")
+    end
+
+    it 'is clear of the photo on a wide screen too' do
+      page.current_window.resize_to(1400, 1000)
+      visit '/en/pins'
+
+      expect(page).to have_css('.pin-card-latest-comment', text: 'fresh words on this pin')
+      expect(preview_below_photo?).to be(true)
     end
   end
 

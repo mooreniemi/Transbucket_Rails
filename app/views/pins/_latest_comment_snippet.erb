@@ -1,15 +1,14 @@
-<%# The newest comment since your last visit, shown over the top of the card. It links
-    to that comment on the pin's page. %>
-<div class="comment_box">
-	<p>
-		<%= link_to pin_path(pin, anchor: "comment-#{comment.id}"),
-		      class: 'comment-snippet-link',
-		      'data-content-event-open' => true,
-		      'data-content-event-url' => content_events_path,
-		      'data-content-type' => 'Pin',
-		      'data-content-id' => pin.id,
-		      'data-event-context' => event_context.to_json do %>
-			<%= fa_icon("comment", text: comment.snippet) %>
-		<% end %>
-	</p>
-</div>
+<%# The newest comment since your last visit, as a short preview under the
+    card's caption ("name: what they said"), linking to that comment. It used
+    to sit over the top of the photo. Two lines at most (pin_card_comments.css.scss). %>
+<%= link_to pin_path(pin, anchor: "comment-#{comment.id}"),
+      class: 'pin-card-latest-comment',
+      'data-content-event-open' => true,
+      'data-content-event-url' => content_events_path,
+      'data-content-type' => 'Pin',
+      'data-content-id' => pin.id,
+      'data-event-context' => event_context.to_json do %>
+  <span class="pin-card-latest-comment-dot" aria-hidden="true"></span>
+  <% if comment.user.try(:username).present? %><strong><%= comment.user.username %></strong><% end %>
+  <span class="pin-card-latest-comment-text"><%= truncate(comment.body.to_s.squish, length: 140) %></span>
+<% end %>

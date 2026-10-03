@@ -104,6 +104,24 @@ RSpec.describe "commenting", :fake_images => true, :js => true do
       expect(page).not_to have_button(I18n.t('public.pin.post_comment'))
     end
 
+    it "lets you reply to a comment you have only just posted" do
+      visit "/pins/#{pin.id}"
+      within("#commentable") do
+        fill_in "comment[body]", :with => "Just posted"
+        click_button "Post"
+      end
+      fresh = find(".comment-list .comment", text: "Just posted")
+
+      fresh.click_link "Reply"
+      within("##{fresh[:id]} .reply-target") do
+        fill_in "comment[body]", :with => "Replying to it"
+        click_button "Post"
+      end
+
+      expect(page).to have_css("##{fresh[:id]} .comment-body", text: "Replying to it")
+      expect(Comment.find_by(body: "Replying to it").parent_id).to eq(fresh[:id].sub("comment-", "").to_i)
+    end
+
     it "opens a reply box with the cursor already in it" do
       create(:comment, commentable: pin, user: user, body: "Reply to me")
       visit "/pins/#{pin.id}"

@@ -10,7 +10,7 @@ class PinsController < ApplicationController
   # GET /pins.json
   def index
     @presenter = PinPresenter.new(pin_index_params)
-    @comments = Comment.new_as_of(user_last_sign_in)
+    @comments = Comment.new_as_of(user_last_sign_in).includes(:user)
     @comment_counts = Comment.published_counts_for('Pin', @presenter.pins.map(&:id))
     # The card's "new comment" snippet: the newest published comment on each pin since
     # the last sign-in, picked from the comments loaded above (no query per card).

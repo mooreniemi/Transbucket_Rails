@@ -240,33 +240,6 @@ p {
   padding: 6px 10px;
 }
 
-.comment_box {
-  position:absolute;
-  top:5px;
-  left:5px;
-  background-color:#999;
-  opacity:0.6;
-  width:95%;
-}
-
-.comment_box p {
-  font-size: 16px;
-  color: #000000;
-}
-
-// The snippet is a link to the comment; keep it looking like the text it was.
-.comment_box a.comment-snippet-link,
-.comment_box a.comment-snippet-link:visited,
-.comment_box a.comment-snippet-link:hover {
-  color: #000000;
-  display: block;
-  text-decoration: none;
-}
-
-.comment_box.fa {
-  color: red;
-}
-
 .icon-flag {
   color: red;
 }

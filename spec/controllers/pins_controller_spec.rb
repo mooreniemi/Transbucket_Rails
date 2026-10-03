@@ -168,16 +168,29 @@ describe PinsController, :type => :controller do
       end
 
       it 'keeps infinite scroll on the For You feed' do
-        gender = create(:gender, name: 'MTF')
-        user.update_attributes!(gender: gender)
+        user.update_attributes!(gender: create(:gender, name: 'MTF'))
         allow(Pin).to receive(:per_page).and_return(1)
-        2.times { create(:pin, user: create(:user, gender: gender)) }
+        # For You matches on the procedure's category, so pin that down.
+        procedure = create(:procedure, gender: 'MTF')
+        2.times { create(:pin, user: create(:user), procedure: procedure) }
 
         get :index, feed: 'for_you', fragment: '1'
 
         next_link = Nokogiri::HTML(response.body).at_css('#paginator a[rel~="next"]')
         expect(next_link['href']).to include('feed=for_you')
         expect(next_link['href']).to include('page=2')
+      end
+
+      it 'keeps active filters on the next page infinite scroll asks for' do
+        procedure = create(:procedure)
+        allow(Pin).to receive(:per_page).and_return(1)
+        2.times { create(:pin, user: user, procedure: procedure) }
+
+        get :index, procedure: [procedure.id.to_s], fragment: '1'
+
+        next_link = Nokogiri::HTML(response.body).at_css('#paginator a[rel~="next"]')
+        expect(CGI.unescape(next_link['href'])).to include("procedure[]=#{procedure.id}")
+        expect(next_link['href']).not_to include('fragment')
       end
 
       it 'loads the first two card photos straight away and the rest as you near them' do

@@ -42,3 +42,43 @@
     margin-right: 2px;
   }
 }
+
+// Newest comment since your last visit, under the caption:
+//   • name  what they said, up to two lines…
+// The yellow dot marks it as new; the whole line opens that comment.
+.pin-card-latest-comment {
+  color: #333;
+  display: -webkit-box;
+  font-size: 14px;
+  line-height: 1.4;
+  // Lined up with the caption above it (10px margin + 5px padding).
+  margin: -2px 10px 4px;
+  overflow: hidden;
+  padding: 0 5px;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+
+  &,
+  &:hover,
+  &:focus,
+  &:visited {
+    color: #333;
+    text-decoration: none;
+  }
+
+  strong {
+    color: #222;
+    margin-right: 4px;
+  }
+}
+
+.pin-card-latest-comment-dot {
+  background-color: #FCC000;   // brand yellow (see .top-block)
+  border-radius: 50%;
+  display: inline-block;
+  height: 8px;
+  margin-right: 6px;
+  vertical-align: middle;
+  width: 8px;
+}

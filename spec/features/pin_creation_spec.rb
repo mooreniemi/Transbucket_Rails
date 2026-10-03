@@ -17,6 +17,18 @@ describe "pin creation" do
     Warden.test_reset!
   end
 
+  it 'renders a localized editor when production has only precompiled assets' do
+    # In production, config.assets.compile is false and Rails does not retain a
+    # Sprockets environment.  The TinyMCE helper still runs while rendering
+    # this form, so make that production constraint explicit here.
+    allow(Rails.application).to receive(:assets).and_return(nil)
+
+    visit '/de/pins/new'
+
+    expect(page).to have_field('pin_details')
+    expect(page.html).to include('language: "de"')
+  end
+
   shared_examples "the pin creation process" do |opts = {}|
     # rspec-core 3.3's include_examples passes options as a positional Hash
     # (module_exec(*args, &shared_block)), which relied on Ruby's pre-3.0

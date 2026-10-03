@@ -8,6 +8,9 @@ gem 'rails', '5.2.8.1'
 gem 'actionpack-page_caching', '~> 1.2.2'
 
 gem 'unicorn'
+# Caches load-path lookups and compiled Ruby/YAML so boots (tests, rails
+# runner, Heroku one-off dynos) are faster. Required from config/boot.rb.
+gem 'bootsnap', require: false
 gem 'turbolinks'
 gem 'bower-rails', '~> 0.7.3'
 

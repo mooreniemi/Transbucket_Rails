@@ -1,12 +1,15 @@
-<div id="create_comment_form">
+<%# A one-line "Add a comment…" box that grows when you tap into it and shows
+    the Post button (comment_composer.js). Return makes a new line, since
+    comments here run to paragraphs; Ctrl/⌘+Return posts. %>
+<div id="create_comment_form" class="comment-form" data-comment-form>
   <%= simple_form_for @new_comment, :remote => true do |f| %>
     <%= f.error_notification %>
-    <%= f.input :body, :input_html => {:style => 'width: 99%', :rows => "4"}, :label => false, :placeholder => t('public.auth.comments_placeholder') %>
+    <%= f.input :body, :input_html => {:class => 'form-control', :rows => "4", 'aria-label' => t('public.pin.comment_placeholder')}, :label => false, :placeholder => t('public.pin.comment_placeholder') %>
     <%= f.hidden_field :parent_id, :value => @parent_id %>
     <%= f.hidden_field :commentable_id, :value => @new_comment.commentable_id %>
     <%= f.hidden_field :commentable_type, :value => @new_comment.commentable_type %>
-    <%= f.submit t('public.auth.submit'), class: "btn btn-primary", :disable_with => t('public.auth.submitting') %>
+    <div class="comment-form-actions">
+      <%= f.submit t('public.pin.post_comment'), class: "btn btn-primary", :disable_with => t('public.auth.submitting') %>
+    </div>
   <% end %>
 </div>
-
-<br clear="both">

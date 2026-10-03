@@ -28,15 +28,13 @@ describe "the flagging process" do
       visit '/pins/' + pin.id.to_s
 
       comment_text = "This is my comment: nonce #{rand(9999)}"
-      click_link "add thread"
-      within("#new_comment") do
+      within("#commentable") do
         fill_in "comment_body", :with => comment_text
+        click_button "Post"
       end
 
-      click_button "Submit"
-
       comment = find('.comment', :text => comment_text)
-      expect(comment).to have_no_selector(".fa-flag")
+      expect(comment).to have_no_selector(".flag-comment")
     end
   end
 
@@ -63,7 +61,7 @@ describe "the flagging process" do
         login_as(user, :scope => :user)
 
         visit '/pins/' + pin.id.to_s
-        flag_link = find("#comment-#{comment_id} .fa-flag").find(:xpath, "..")
+        flag_link = find("#comment-#{comment_id} .flag-comment")
         expect(flag_link['data-confirm']).to eq(I18n.t('public.pin.report_comment_confirm'))
         accept_confirm { flag_link.click }
       end

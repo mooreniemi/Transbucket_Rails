@@ -358,3 +358,50 @@ ul.dropdown-menu {
 .chosen-container{
   margin-top: 10px;
 }
+
+// Fitting the photo to the card's 4:3 box (card_photo_fit.js). Close to the
+// box's shape: fill it. Far from it: show it whole over a blurred copy of itself.
+.pin-card-image {
+  position: relative;
+
+  > a {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    z-index: 1;
+  }
+
+  &.is-filled img {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  &.has-backdrop::before {
+    background: var(--card-backdrop) center / cover no-repeat;
+    bottom: -24px;
+    content: '';
+    filter: blur(18px) brightness(.85);
+    left: -24px;
+    position: absolute;
+    right: -24px;
+    top: -24px;
+  }
+}
+
+// How many photos the pin has, when it has more than one.
+.pin-card-photo-count {
+  background: rgba(0, 0, 0, .6);
+  border-radius: 12px;
+  bottom: 8px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 5px 8px;
+  pointer-events: none;   // taps go through to the photo's link
+  position: absolute;
+  right: 8px;
+  z-index: 3;             // above the safe-mode overlay; a number is safe to show
+}

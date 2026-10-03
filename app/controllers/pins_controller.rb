@@ -32,10 +32,13 @@ class PinsController < ApplicationController
     @comments = @pin.comments_asc
     ActiveRecord::Associations::Preloader.new.preload(@comments, user: :trust_grants)
     @new_comment = Comment.build_from(@pin, current_user, "")
+    @comment_count = Comment.published_counts_for('Pin', [@pin.id])[@pin.id].to_i
     @safe_mode = safe_mode
 
     respond_to do |format|
-      format.html # show.html.erb
+      # The phone feed opens pins in an in-page viewer (pin_viewer.js), which
+      # only wants the page body, not the header, footer and scripts again.
+      format.html { render layout: false if params[:viewer].present? }
       format.json { render json: @pin }
     end
   end

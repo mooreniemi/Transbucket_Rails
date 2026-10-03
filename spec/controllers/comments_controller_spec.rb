@@ -21,7 +21,8 @@ describe CommentsController, :type => :controller do
       xhr :get, :new, commentable_type: "Pin", commentable_id: pin.id, locale: 'es'
 
       expect(response).to be_success
-      expect(response.body).to include('Los comentarios que infrinjan')
+      expect(response.body).to include('Añade un comentario')
+      expect(response.body).to include('Publicar')
     end
 
     it "rejects a commentable_type outside the allowed list" do

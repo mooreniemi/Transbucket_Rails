@@ -29,7 +29,10 @@
     <div class="panel-body">
     <% latest_new_comment = (@latest_new_comments || {})[pin.id] %>
     <%= render partial: "latest_comment_snippet", locals: { pin: pin, comment: latest_new_comment, event_context: event_context } if latest_new_comment %>
-    <% cache([I18n.locale, pin, @safe_mode]) do %>
+    <%# pin_images is preloaded with the card, so counting costs no query. In the
+        cache key because adding a photo does not touch the pin. %>
+    <% photo_count = pin.pin_images.to_a.count { |image| image.photo_file_size.present? } %>
+    <% cache([I18n.locale, pin, @safe_mode, photo_count]) do %>
       <div class="image pin-card-image<%= ' safe-blur' if @safe_mode %>" itemprop="image">
         <%= link_to (image_tag pin.cover_image.url(:medium), alt: pin.procedure.try(:localized_name)), pin,
           'data-content-event-open' => true,
@@ -38,6 +41,12 @@
           'data-content-id' => pin.id,
           'data-event-context' => event_context.to_json %>
         <%= render 'shared/safe_reveal' if @safe_mode %>
+        <% if photo_count > 1 %>
+          <span class="pin-card-photo-count" title="<%= t('public.pin.photo_count', count: photo_count) %>">
+            <span aria-hidden="true"><%= fa_icon 'clone' %> <%= photo_count %></span>
+            <span class="sr-only"><%= t('public.pin.photo_count', count: photo_count) %></span>
+          </span>
+        <% end %>
       </div>
       <p class="description" itemprop="description">
         <%= pin.try(:procedure).try(:localized_name) %> <%= t('public.pin.by') %> <strong><%= pin.unknown_surgeon? ? t('public.pin.unknown') : "#{t('public.pin.doctor_prefix')}#{link_to pin.surgeon.to_s, surgeon_path(id: pin.surgeon.id)}".html_safe %></strong>

@@ -193,6 +193,10 @@ en:
     recent_submissions: Recent Submissions
     recent: Recent
     for_you: For You
+    loading_more: "Loading more…"
+    load_more_failed: "Couldn't load more. Try again"
+    end_of_feed: "You're all caught up"
+    close_pin: "Close"
     search_results: Search Results
     search_description: Search Transbucket submissions by procedure, surgeon, complication,
       or user.
@@ -523,10 +527,13 @@ en:
       report_confirm: 'Report this post to the moderators?'
       report_comment_confirm: 'Report this comment to the moderators?'
       reported: 'Reported'
+      photo_count: "Photos: %{count}"
+      comment_placeholder: "Add a comment…"
+      post_comment: "Post"
       by: by
       tap_to_reveal: Tap to reveal
       hide_image: Hide image
-      reply: reply
+      reply: Reply
       remove: Remove
       remove_confirm: Are you sure you want to remove this comment?
       doctor_prefix: 'Dr. '
@@ -959,6 +966,10 @@ de:
     recent_submissions: Aktuelle Beiträge
     recent: Neueste
     for_you: Für dich
+    loading_more: "Weitere werden geladen…"
+    load_more_failed: "Laden fehlgeschlagen. Erneut versuchen"
+    end_of_feed: "Du hast alles gesehen"
+    close_pin: "Schließen"
     search_results: Suchergebnisse
     search_description: Suche Transbucket-Beiträge nach Eingriff, Chirurg, Komplikation
       oder Benutzer.
@@ -1078,10 +1089,13 @@ de:
       report_confirm: 'Diesen Beitrag dem Moderationsteam melden?'
       report_comment_confirm: 'Diesen Kommentar dem Moderationsteam melden?'
       reported: 'Gemeldet'
+      photo_count: "Fotos: %{count}"
+      comment_placeholder: "Kommentar schreiben…"
+      post_comment: "Posten"
       by: von
       tap_to_reveal: Zum Anzeigen tippen
       hide_image: Bild ausblenden
-      reply: antworten
+      reply: Antworten
       remove: Entfernen
       remove_confirm: Diesen Kommentar wirklich entfernen?
       doctor_prefix: 'Dr. '
@@ -1547,6 +1561,10 @@ es:
     recent_submissions: Publicaciones recientes
     recent: Recientes
     for_you: Para ti
+    loading_more: "Cargando más…"
+    load_more_failed: "No se pudo cargar más. Reintentar"
+    end_of_feed: "Ya lo has visto todo"
+    close_pin: "Cerrar"
     search_results: Resultados de búsqueda
     search_description: Busca publicaciones de Transbucket por procedimiento, cirujano,
       complicación o usuario.
@@ -1661,10 +1679,13 @@ es:
       report_confirm: '¿Reportar esta publicación a los moderadores?'
       report_comment_confirm: '¿Reportar este comentario a los moderadores?'
       reported: 'Reportado'
+      photo_count: "Fotos: %{count}"
+      comment_placeholder: "Añade un comentario…"
+      post_comment: "Publicar"
       by: por
       tap_to_reveal: Toca para ver
       hide_image: Ocultar imagen
-      reply: responder
+      reply: Responder
       remove: Eliminar
       remove_confirm: "¿Seguro que quieres eliminar este comentario?"
       doctor_prefix: 'Dr. '
@@ -2120,6 +2141,10 @@ fr:
     recent_submissions: Contributions récentes
     recent: Récentes
     for_you: Pour vous
+    loading_more: "Chargement…"
+    load_more_failed: "Impossible de charger la suite. Réessayer"
+    end_of_feed: "Vous avez tout vu"
+    close_pin: "Fermer"
     search_results: Résultats de recherche
     search_description: Recherchez des contributions Transbucket par intervention,
       chirurgien, complication ou utilisateur.
@@ -2240,10 +2265,13 @@ fr:
       report_confirm: 'Signaler cette publication aux modérateurs ?'
       report_comment_confirm: 'Signaler ce commentaire aux modérateurs ?'
       reported: 'Signalé'
+      photo_count: "Photos : %{count}"
+      comment_placeholder: "Ajouter un commentaire…"
+      post_comment: "Publier"
       by: par
       tap_to_reveal: Touchez pour afficher
       hide_image: Masquer l’image
-      reply: répondre
+      reply: Répondre
       remove: Supprimer
       remove_confirm: Supprimer ce commentaire ?
       doctor_prefix: 'Dr. '
@@ -2689,6 +2717,10 @@ it:
     recent_submissions: Contributi recenti
     recent: Recenti
     for_you: Per te
+    loading_more: "Caricamento…"
+    load_more_failed: "Impossibile caricare altro. Riprova"
+    end_of_feed: "Hai visto tutto"
+    close_pin: "Chiudi"
     search_results: Risultati della ricerca
     search_description: Cerca i contributi Transbucket per procedura, chirurgo, complicanza
       o utente.
@@ -2801,10 +2833,13 @@ it:
       report_confirm: 'Segnalare questo contributo ai moderatori?'
       report_comment_confirm: 'Segnalare questo commento ai moderatori?'
       reported: 'Segnalato'
+      photo_count: "Foto: %{count}"
+      comment_placeholder: "Aggiungi un commento…"
+      post_comment: "Pubblica"
       by: di
       tap_to_reveal: Tocca per mostrare
       hide_image: Nascondi immagine
-      reply: rispondi
+      reply: Rispondi
       remove: Rimuovi
       remove_confirm: Vuoi davvero rimuovere questo commento?
       doctor_prefix: 'Dott. '
@@ -3219,6 +3254,10 @@ ja:
     recent_submissions: 最近の投稿
     recent: 最近
     for_you: おすすめ
+    loading_more: "読み込み中…"
+    load_more_failed: "読み込めませんでした。再試行"
+    end_of_feed: "すべて表示しました"
+    close_pin: "閉じる"
     search_results: 検索結果
     search_description: 手術、外科医、合併症、ユーザーでTransbucketの投稿を検索します。
     name: 名前
@@ -3323,6 +3362,9 @@ ja:
       report_confirm: 'この投稿をモデレーターに報告しますか？'
       report_comment_confirm: 'このコメントをモデレーターに報告しますか？'
       reported: '報告済み'
+      photo_count: "写真: %{count}枚"
+      comment_placeholder: "コメントを追加…"
+      post_comment: "投稿"
       by: '投稿者:'
       tap_to_reveal: タップして表示
       hide_image: 画像を隠す
@@ -3727,6 +3769,10 @@ zh-CN:
     recent_submissions: 最新投稿
     recent: 最新
     for_you: 为你推荐
+    loading_more: "正在加载更多…"
+    load_more_failed: "加载失败，点击重试"
+    end_of_feed: "已经全部看完了"
+    close_pin: "关闭"
     search_results: 搜索结果
     search_description: 按手术项目、医生、并发症或用户搜索 Transbucket 投稿。
     name: 名称
@@ -3831,6 +3877,9 @@ zh-CN:
       report_confirm: '要向管理员举报此投稿吗？'
       report_comment_confirm: '要向管理员举报此评论吗？'
       reported: '已举报'
+      photo_count: "照片：%{count} 张"
+      comment_placeholder: "添加评论…"
+      post_comment: "发布"
       by: 作者：
       tap_to_reveal: 点按显示
       hide_image: 隐藏图片
@@ -4259,6 +4308,10 @@ zh-TW:
     recent_submissions: 最新投稿
     recent: 最新
     for_you: 為你推薦
+    loading_more: "正在載入更多…"
+    load_more_failed: "載入失敗，點此重試"
+    end_of_feed: "已經全部看完了"
+    close_pin: "關閉"
     search_results: 搜尋結果
     search_description: 依手術項目、醫師、併發症或使用者搜尋 Transbucket 投稿。
     name: 名稱
@@ -4363,6 +4416,9 @@ zh-TW:
       report_confirm: '要向管理員檢舉此貼文嗎？'
       report_comment_confirm: '要向管理員檢舉此留言嗎？'
       reported: '已檢舉'
+      photo_count: "照片：%{count} 張"
+      comment_placeholder: "新增留言…"
+      post_comment: "發佈"
       by: 作者：
       tap_to_reveal: 點一下顯示
       hide_image: 隱藏圖片
@@ -4593,6 +4649,10 @@ pt-BR:
     recent_submissions: Publicações recentes
     recent: Recentes
     for_you: Para você
+    loading_more: "Carregando mais…"
+    load_more_failed: "Não foi possível carregar mais. Tentar de novo"
+    end_of_feed: "Você já viu tudo"
+    close_pin: "Fechar"
     search_results: Resultados da pesquisa
     search_description: Pesquise publicações do Transbucket por procedimento, cirurgião,
       complicação ou usuário.
@@ -4707,10 +4767,13 @@ pt-BR:
       report_confirm: 'Denunciar esta publicação aos moderadores?'
       report_comment_confirm: 'Denunciar este comentário aos moderadores?'
       reported: 'Denunciado'
+      photo_count: "Fotos: %{count}"
+      comment_placeholder: "Adicione um comentário…"
+      post_comment: "Publicar"
       by: por
       tap_to_reveal: Toque para ver
       hide_image: Ocultar imagem
-      reply: responder
+      reply: Responder
       remove: Remover
       remove_confirm: Tem certeza de que deseja remover este comentário?
       doctor_prefix: 'Dr. '
@@ -4942,6 +5005,10 @@ nl:
     recent_submissions: Recente bijdragen
     recent: Recent
     for_you: Voor jou
+    loading_more: "Meer laden…"
+    load_more_failed: "Laden mislukt. Opnieuw proberen"
+    end_of_feed: "Je hebt alles gezien"
+    close_pin: "Sluiten"
     search_results: Zoekresultaten
     search_description: Zoek Transbucket-bijdragen op procedure, chirurg, complicatie
       of gebruiker.
@@ -5054,10 +5121,13 @@ nl:
       report_confirm: 'Deze bijdrage bij de moderatoren melden?'
       report_comment_confirm: 'Deze reactie bij de moderatoren melden?'
       reported: 'Gemeld'
+      photo_count: "Foto's: %{count}"
+      comment_placeholder: "Reactie toevoegen…"
+      post_comment: "Plaatsen"
       by: door
       tap_to_reveal: Tik om te tonen
       hide_image: Afbeelding verbergen
-      reply: antwoorden
+      reply: Antwoorden
       remove: Verwijderen
       remove_confirm: Deze reactie verwijderen?
       doctor_prefix: 'Dr. '
@@ -5291,6 +5361,10 @@ pl:
     recent_submissions: Najnowsze wpisy
     recent: Najnowsze
     for_you: Dla ciebie
+    loading_more: "Ładowanie…"
+    load_more_failed: "Nie udało się wczytać. Spróbuj ponownie"
+    end_of_feed: "To już wszystko"
+    close_pin: "Zamknij"
     search_results: Wyniki wyszukiwania
     search_description: Szukaj wpisów Transbucket według zabiegu, chirurga, powikłania
       lub użytkownika.
@@ -5401,10 +5475,13 @@ pl:
       report_confirm: 'Zgłosić ten wpis moderatorom?'
       report_comment_confirm: 'Zgłosić ten komentarz moderatorom?'
       reported: 'Zgłoszono'
+      photo_count: "Zdjęcia: %{count}"
+      comment_placeholder: "Dodaj komentarz…"
+      post_comment: "Opublikuj"
       by: 'autor:'
       tap_to_reveal: Dotknij, aby pokazać
       hide_image: Ukryj obraz
-      reply: odpowiedz
+      reply: Odpowiedz
       remove: Usuń
       remove_confirm: Czy na pewno usunąć ten komentarz?
       doctor_prefix: 'dr '
@@ -5637,6 +5714,10 @@ ru:
     recent_submissions: Последние публикации
     recent: Недавние
     for_you: Для вас
+    loading_more: "Загрузка…"
+    load_more_failed: "Не удалось загрузить. Повторить"
+    end_of_feed: "Вы всё посмотрели"
+    close_pin: "Закрыть"
     search_results: Результаты поиска
     search_description: Ищите публикации Transbucket по операции, хирургу, осложнению
       или пользователю.
@@ -5748,10 +5829,13 @@ ru:
       report_confirm: 'Пожаловаться на эту публикацию модераторам?'
       report_comment_confirm: 'Пожаловаться на этот комментарий модераторам?'
       reported: 'Жалоба отправлена'
+      photo_count: "Фото: %{count}"
+      comment_placeholder: "Добавьте комментарий…"
+      post_comment: "Отправить"
       by: 'автор:'
       tap_to_reveal: Нажмите, чтобы показать
       hide_image: Скрыть изображение
-      reply: ответить
+      reply: Ответить
       remove: Удалить
       remove_confirm: Удалить этот комментарий?
       doctor_prefix: 'д-р '
@@ -5979,6 +6063,10 @@ tr:
     recent_submissions: Son gönderiler
     recent: Son gönderiler
     for_you: Sana özel
+    loading_more: "Daha fazlası yükleniyor…"
+    load_more_failed: "Yüklenemedi. Tekrar dene"
+    end_of_feed: "Hepsini gördün"
+    close_pin: "Kapat"
     search_results: Arama sonuçları
     search_description: Transbucket gönderilerini prosedür, cerrah, komplikasyon veya
       kullanıcıya göre arayın.
@@ -6089,10 +6177,13 @@ tr:
       report_confirm: 'Bu paylaşım moderatörlere bildirilsin mi?'
       report_comment_confirm: 'Bu yorum moderatörlere bildirilsin mi?'
       reported: 'Bildirildi'
+      photo_count: "Fotoğraf: %{count}"
+      comment_placeholder: "Yorum ekle…"
+      post_comment: "Paylaş"
       by: 'gönderen:'
       tap_to_reveal: Göstermek için dokunun
       hide_image: Görseli gizle
-      reply: yanıtla
+      reply: Yanıtla
       remove: Kaldır
       remove_confirm: Bu yorumu kaldırmak istediğinizden emin misiniz?
       doctor_prefix: 'Dr. '
@@ -6316,6 +6407,10 @@ vi:
     recent_submissions: Bài đăng gần đây
     recent: Gần đây
     for_you: Dành cho bạn
+    loading_more: "Đang tải thêm…"
+    load_more_failed: "Không tải được. Thử lại"
+    end_of_feed: "Bạn đã xem hết"
+    close_pin: "Đóng"
     search_results: Kết quả tìm kiếm
     search_description: Tìm bài đăng Transbucket theo thủ thuật, bác sĩ, biến chứng
       hoặc người dùng.
@@ -6425,10 +6520,13 @@ vi:
       report_confirm: 'Báo cáo bài đăng này cho người kiểm duyệt?'
       report_comment_confirm: 'Báo cáo bình luận này cho người kiểm duyệt?'
       reported: 'Đã báo cáo'
+      photo_count: "Ảnh: %{count}"
+      comment_placeholder: "Thêm bình luận…"
+      post_comment: "Đăng"
       by: bởi
       tap_to_reveal: Chạm để xem
       hide_image: Ẩn hình ảnh
-      reply: trả lời
+      reply: Trả lời
       remove: Xóa
       remove_confirm: Bạn có chắc muốn xóa bình luận này không?
       doctor_prefix: 'BS. '
@@ -6650,6 +6748,10 @@ ar:
     recent_submissions: المنشورات الحديثة
     recent: الأحدث
     for_you: مخصّص لك
+    loading_more: "جارٍ تحميل المزيد…"
+    load_more_failed: "تعذّر التحميل. أعد المحاولة"
+    end_of_feed: "لقد شاهدت كل شيء"
+    close_pin: "إغلاق"
     search_results: نتائج البحث
     search_description: ابحث في منشورات Transbucket حسب الإجراء أو الجراح أو المضاعفة
       أو المستخدم.
@@ -6759,6 +6861,9 @@ ar:
       report_confirm: 'هل تريد الإبلاغ عن هذه المشاركة للمشرفين؟'
       report_comment_confirm: 'هل تريد الإبلاغ عن هذا التعليق للمشرفين؟'
       reported: 'تم الإبلاغ'
+      photo_count: "الصور: %{count}"
+      comment_placeholder: "أضف تعليقًا…"
+      post_comment: "نشر"
       by: بواسطة
       tap_to_reveal: المس للعرض
       hide_image: إخفاء الصورة
@@ -6937,6 +7042,10 @@ sv:
     register_to_see_more: Registrera dig för att se mer
     recent: Senaste
     for_you: För dig
+    loading_more: "Laddar fler…"
+    load_more_failed: "Kunde inte ladda fler. Försök igen"
+    end_of_feed: "Du har sett allt"
+    close_pin: "Stäng"
   newsfeed:
     title: Nyheter
     description: Senaste uppdateringarna från Transbucket.
@@ -6982,6 +7091,9 @@ sv:
       report_confirm: 'Rapportera det här bidraget till moderatorerna?'
       report_comment_confirm: 'Rapportera den här kommentaren till moderatorerna?'
       reported: 'Rapporterad'
+      photo_count: "Foton: %{count}"
+      comment_placeholder: "Skriv en kommentar…"
+      post_comment: "Publicera"
       by: av
       doctor_prefix: 'Dr. '
       unknown: okänd kirurg
@@ -7001,7 +7113,7 @@ sv:
       see_all_submissions: Visa alla bidrag
       classified_as: Det här ingreppet klassas som ett ”%{body_type}”-ingrepp.
       average_sensation: Genomsnittlig känsel
-      reply: svara
+      reply: Svara
       remove: Ta bort
       remove_confirm: Vill du verkligen ta bort den här kommentaren?
       updated: Uppdaterad för %{time} sedan

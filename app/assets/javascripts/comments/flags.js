@@ -1,27 +1,26 @@
 // FIXME: this is the bare minimum to give some feedback to users
 $(document).ready(function(){
-  // on index page
-  $(".flag-comment").each(function(){
-    $(this).unbind().on('ajax:success', function(e, data, status, xhr){
-      var commentId = $(this).data('comment-id');
+  // on pin pages. Delegated, so comments shown in the phone pin viewer
+  // (pin_viewer.js) or added after load are covered too.
+  $(document).off('.flagComment').on('ajax:success.flagComment', '.flag-comment', function(e, data, status, xhr){
+    var commentId = $(this).data('comment-id');
 
-      switch(data["status"]) {
-        case "voted_down":
-          // doesn't persist, but at least shows tapping it did something
-          $(this).replaceWith($('<span class="flag-reported"></span>')
-            .append('<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ')
-            .append(document.createTextNode($(this).data('reported-label') || '')));
-          break;
-        case "removed":
-          // persists, item won't show up from server once in review
-          $('.comment[data-comment-id="' + commentId + '"]').hide();
-          break;
-        default:
-          console.log("unknown status reached while flagging " + commentId);
-      }
-    }).on('ajax:error',function(e, xhr, status, error){
-      console.log("error = " + JSON.stringify(error));
-    });
+    switch(data["status"]) {
+      case "voted_down":
+        // doesn't persist, but at least shows tapping it did something
+        $(this).replaceWith($('<span class="flag-reported"></span>')
+          .append('<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ')
+          .append(document.createTextNode($(this).data('reported-label') || '')));
+        break;
+      case "removed":
+        // persists, item won't show up from server once in review
+        $('.comment[data-comment-id="' + commentId + '"]').hide();
+        break;
+      default:
+        console.log("unknown status reached while flagging " + commentId);
+    }
+  }).on('ajax:error.flagComment', '.flag-comment', function(e, xhr, status, error){
+    console.log("error = " + JSON.stringify(error));
   });
 
   // on admin page

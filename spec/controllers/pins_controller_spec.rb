@@ -149,6 +149,16 @@ describe PinsController, :type => :controller do
         expect(response.body).not_to include('<h1>Recent Submissions</h1>')
       end
 
+      it 'shows how many photos a pin has when it has more than one' do
+        create(:pin, user: user, pin_images: build_list(:pin_image, 3))
+        create(:pin, user: user, pin_images: build_list(:pin_image, 1))
+
+        get :index
+
+        expect(response.body.scan('class="pin-card-photo-count"').size).to eq(1)
+        expect(response.body).to include(I18n.t('public.pin.photo_count', count: 3))
+      end
+
       it 'renders each published Pin card with its own impression and open telemetry target' do
         first_pin = create(:pin, user: user)
         second_pin = create(:pin, user: user)
@@ -226,6 +236,31 @@ describe PinsController, :type => :controller do
 
         expect(response.body).to match(/First paragraph\s*<br/)
         expect(response.body).to include('Second paragraph')
+      end
+
+      it 'heads the discussion with its count and keeps the comment box open under it' do
+        pin = create(:pin, user: user, details: 'How it went')
+        create(:comment, commentable: pin, user: user)
+        create(:comment, commentable: pin, user: user)
+
+        get :show, id: pin.id
+
+        expect(response.body).to match(%r{class="comments-heading">\s*#{I18n.t('public.pin.discussion')} <span class="comments-count">2</span>})
+        expect(response.body).to include('class="comment-composer reply-target"')
+        expect(response.body).to include('id="create_comment_form"')
+        expect(response.body).not_to include(I18n.t('public.pin.add_thread'))
+        expect(response.body).not_to include('fa-quote-left')
+      end
+
+      it 'renders just the pin, without the site layout, for the phone viewer' do
+        pin = create(:pin, user: user)
+        get :show, id: pin.id, viewer: '1'
+
+        expect(response).to be_success
+        expect(response.body).to include('pin-page-title')
+        expect(response.body).to include('comments-container')
+        expect(response.body).not_to include('<html')
+        expect(response.body).not_to include('navbar-fixed-top')
       end
 
       it 'links the procedure label to the procedure page' do

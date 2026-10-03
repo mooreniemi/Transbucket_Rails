@@ -2,7 +2,8 @@
 // "3h ago" (the full sentence stays as the tooltip). Uses the browser's
 // Intl.RelativeTimeFormat so every supported language works without extra
 // translations; without it the full sentence simply stays. Plain ES5 for Uglifier.
-$(document).ready(function () {
+// Exposed so cards added later (feed_scroll.js) get the same treatment.
+window.formatPinAges = function (root) {
   if (typeof Intl === 'undefined' || typeof Intl.RelativeTimeFormat !== 'function') { return; }
 
   var formatter;
@@ -20,7 +21,7 @@ $(document).ready(function () {
     ['minute', 60]
   ];
 
-  $('time.pin-age').each(function () {
+  $(root || document).find('time.pin-age').each(function () {
     var updated = Date.parse(this.getAttribute('datetime'));
     if (isNaN(updated)) { return; }
 
@@ -36,4 +37,6 @@ $(document).ready(function () {
     }
     this.textContent = formatter.format(-amount, unit);
   });
-});
+};
+
+$(document).ready(function () { window.formatPinAges(); });

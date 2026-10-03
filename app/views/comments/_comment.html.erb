@@ -1,35 +1,35 @@
 <% if comment.published? %>
-  <% cache([I18n.locale, comment, comment.user.try(:trust_tier)]) do %>
+  <% cache([I18n.locale, "comment_v2", comment, comment.user.try(:trust_tier)]) do %>
+    <%# Who and when first, then what they said, then what you can do about it.
+        Replies sit indented under their parent with a thread line. %>
     <div class="comment" id="comment-<%=comment.id %>" data-comment-id="<%= comment.id %>">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <%= comment.body %>
-        </div>
-        <div class="panel-footer">
-          <small>
-            <%= t('public.pin.by') %> <strong>
-              <%= link_to comment.user.try(:username) || comment.user.try(:id), pins_path(user: comment.user) %><%= render 'shared/trust_badge', user: comment.user %>
-            </strong> |
-            <%= content_tag(:time, l(comment.updated_at, format: :long), datetime: comment.updated_at.utc.iso8601, class: 'local-time') %> |
-            <% commentable = @pin ? @pin : @procedure %>
-            <%= link_to "#{fa_icon("comments")} #{t('public.pin.reply')}".html_safe, new_comment_path(commentable_id: commentable.try(:id), commentable_type: commentable.try(:class), parent_id: comment.id), remote: true %>
-            <%= " | " unless current_user == comment.user %>
-            <%= link_to(fa_icon("flag", text: t('public.pin.report')), comment_flags_path(comment), :method => :post, remote: true, class: "flag-comment", "data-comment-id" => comment.id,
-              title: t('public.pin.report'), data: { confirm: t('public.pin.report_comment_confirm'), reported_label: t('public.pin.reported') }) unless current_user == comment.user %>
-          </small>
-          <% if comment.user_id == current_user.id || current_user.admin? %>
-            <%= link_to "×", comment_path(comment), :method => :delete, :remote => true, data: {confirm: t('public.pin.remove_confirm')}, :disable_with => "×", :class => 'close' %>
-          <% end %>
-          <% cache([I18n.locale, comment.children]) do %>
-            <% if comment.children.present? %>
-              <hr class="thread">
-              <%= render :partial => 'comments/comment', :collection => comment.children, :as => :comment %>
-            <% end %>
-          <% end %>
-          <div class="reply-target">
-          </div>
-        </div>
+      <div class="comment-meta">
+        <strong class="comment-author"><%= link_to comment.user.try(:username) || comment.user.try(:id), pins_path(user: comment.user) %></strong><%= render 'shared/trust_badge', user: comment.user %>
+        <span class="comment-meta-separator" aria-hidden="true">·</span>
+        <%# Full date server-side and as the tooltip; pin_age.js swaps in a short "3d ago". %>
+        <% posted = l(comment.updated_at, format: :long) %>
+        <%= content_tag(:time, posted, datetime: comment.updated_at.utc.iso8601, title: posted, class: 'pin-age comment-age') %>
+        <% if comment.user_id == current_user.id || current_user.admin? %>
+          <%= link_to "×", comment_path(comment), :method => :delete, :remote => true, data: {confirm: t('public.pin.remove_confirm')}, :disable_with => "×", :class => 'close' %>
+        <% end %>
       </div>
+      <div class="comment-body"><%= comment.body %></div>
+      <div class="comment-actions">
+        <% commentable = @pin ? @pin : @procedure %>
+        <%= link_to t('public.pin.reply'), new_comment_path(commentable_id: commentable.try(:id), commentable_type: commentable.try(:class), parent_id: comment.id), remote: true, class: 'comment-reply' %>
+        <%= link_to(t('public.pin.report'), comment_flags_path(comment), :method => :post, remote: true, class: "flag-comment", "data-comment-id" => comment.id,
+          title: t('public.pin.report'), data: { confirm: t('public.pin.report_comment_confirm'), reported_label: t('public.pin.reported') }) unless current_user == comment.user %>
+      </div>
+      <% cache([I18n.locale, "comment_v2", comment.children]) do %>
+        <% if comment.children.present? %>
+          <div class="comment-replies">
+            <%= render :partial => 'comments/comment', :collection => comment.children, :as => :comment %>
+          </div>
+        <% end %>
+      <% end %>
+      <%# After the replies: comments/new.js.erb puts the reply form in the last
+          .reply-target inside this comment. %>
+      <div class="reply-target"></div>
     </div>
   <% end %>
 <% end %>

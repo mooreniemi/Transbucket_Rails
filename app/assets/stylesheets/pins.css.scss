@@ -609,3 +609,18 @@
 .submission-feed-tabs {
   margin-bottom: 20px;
 }
+
+// On phones the submitter's own words come straight after the photos, before
+// the facts list, the way a caption follows a photo. It is also where the text
+// of a text-only post will lead.
+@media (max-width: 767px) {
+  .pin-show-grid > .col-md-5 {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pin-show-grid .pin-details {
+    margin-top: 12px;
+    order: -1;
+  }
+}

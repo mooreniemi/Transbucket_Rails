@@ -1,0 +1,168 @@
+// Comments under a pin (and a procedure). One white sheet for the whole
+// discussion rather than a grey-footed panel per comment: author and time on
+// one line, the comment, then quiet text actions. Replies are indented under
+// their parent with a thread line.
+
+$comment-muted: #6b6b6b;
+$comment-rule: #e3e3e3;
+
+#comments-container {
+  background-color: #fff;
+  margin-top: 20px;
+  padding: 16px;
+}
+
+.comments-heading {
+  align-items: baseline;
+  display: flex;
+  font-size: 18px;
+  font-weight: 700;
+  gap: 8px;
+  margin: 0 0 4px;
+}
+
+.comments-count {
+  color: $comment-muted;
+  font-weight: 400;
+}
+
+.comment {
+  border-top: 1px solid $comment-rule;
+  padding: 12px 0;
+  position: relative;
+
+  // Nothing to separate the first comment from but the heading.
+  .comment-list > &:first-child {
+    border-top: 0;
+  }
+}
+
+.comment-meta {
+  align-items: center;
+  color: $comment-muted;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 14px;
+  gap: 4px 6px;
+  padding-right: 32px;  // room for the delete ×
+
+  .close {
+    font-size: 24px;
+    line-height: 1;
+    padding: 4px 8px;
+    position: absolute;
+    right: -8px;
+    top: 6px;
+  }
+}
+
+.comment-author a {
+  color: #222;
+}
+
+.comment-body {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 4px 0 6px;
+  overflow-wrap: break-word;
+  white-space: pre-line;
+}
+
+.comment-actions {
+  display: flex;
+  font-size: 14px;
+  gap: 16px;
+
+  // Bigger tap targets than they look, without moving the text.
+  a,
+  .flag-reported {
+    color: $comment-muted;
+    display: inline-block;
+    font-weight: 600;
+    margin: -6px 0;
+    padding: 6px 0;
+  }
+
+  a:hover,
+  a:focus {
+    color: #222;
+  }
+}
+
+.comment-replies {
+  border-left: 2px solid $comment-rule;
+  margin: 8px 0 0 4px;
+  padding-left: 12px;
+
+  .comment:first-child {
+    border-top: 0;
+    padding-top: 4px;
+  }
+}
+
+// The box for a new comment, open under the thread.
+.comment-composer {
+  border-top: 1px solid $comment-rule;
+  padding-top: 12px;
+
+  textarea {
+    border-radius: 6px;
+    font-size: 16px;  // 16px keeps iOS from zooming in on focus
+    resize: vertical;
+  }
+}
+
+.comment-composer-hint {
+  color: $comment-muted;
+  font-size: 14px;
+  margin: 0 0 8px;
+  padding: 0;  // the site-wide p padding would indent it past the box below
+}
+
+// Post sits under the box at its right edge, where the eye finishes the text.
+.comment-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+
+  .btn {
+    flex: 0 0 auto;
+    min-height: 40px;
+    min-width: 88px;
+  }
+}
+
+#create_comment_form .control-group {
+  margin: 0;
+}
+
+// The box under the thread is one line until you tap into it. It only grows
+// downwards, so the spot you tapped stays where it was.
+.comment-composer .comment-form:not(.is-open) {
+  textarea {
+    height: 44px;
+    min-height: 44px;
+    overflow: hidden;
+    resize: none;
+  }
+
+  .comment-form-actions {
+    display: none;
+  }
+}
+
+// A reply form opened inside a thread.
+.comment .reply-target #create_comment_form {
+  margin-top: 8px;
+
+  textarea {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  #comments-container {
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+}

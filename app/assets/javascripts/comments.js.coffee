@@ -8,15 +8,30 @@ $(document)
     $(this).find('textarea')
       .removeClass('uneditable-input')
       .removeAttr('disabled', 'disabled')
-      .val('');
-    $($.parseHTML(xhr.responseText)).hide().insertAfter($(this)).show('slow')
-    $(this).hide()
+      .val('')
+      .trigger('input')
+      .blur();
+    # The box under the thread folds back to one line once it is empty again.
+    $(this).removeClass('is-open') if $(this).closest('.comment-composer').length
+    comment = $($.parseHTML(xhr.responseText)).hide()
+    list = $(this).closest('.comment-composer').siblings('.comment-list')
+    if list.length
+      # The always-open box under a pin's comments: the new comment joins the
+      # end of the list and the box stays, empty, for the next one.
+      list.append(comment)
+      window.formatPinAges?(comment)
+      comment.show('slow')
+    else
+      # A reply form (or a procedure page's "add thread" form): it is done.
+      comment.insertAfter($(this)).show('slow')
+      window.formatPinAges?(comment)
+      $(this).hide()
 
 # Delete a comment
 $(document)
   .on "ajax:beforeSend", ".close", (evt, xhr) ->
-    $(this.parentElement.parentElement).fadeTo('fast', 0.5)
+    $(this).closest('.comment').fadeTo('fast', 0.5)
   .on "ajax:success", ".close", (evt, xhr) ->
-    $(this.parentElement.parentElement).hide('fast')
+    $(this).closest('.comment').hide('fast')
   .on "ajax:error", ".close", ->
-    $(this.parentElement.parentElement).fadeTo('fast', 1)
+    $(this).closest('.comment').fadeTo('fast', 1)

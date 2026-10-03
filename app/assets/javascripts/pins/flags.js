@@ -1,27 +1,25 @@
 // FIXME: this is the bare minimum to give some feedback to users
 $(document).ready(function(){
-  // on index page
-  $(".flag-pin").each(function(){
-    $(this).unbind().on('ajax:success', function(e, data, status, xhr){
-      var pinId = $(this).data('pin-id');
+  // on index page. Delegated, so cards added by infinite scroll are covered too.
+  $(document).off('.flagPin').on('ajax:success.flagPin', '.flag-pin', function(e, data, status, xhr){
+    var pinId = $(this).data('pin-id');
 
-      switch(data["status"]) {
-        case "voted_down":
-          // doesn't persist, but at least shows tapping it did something
-          $(this).replaceWith($('<span class="flag-reported"></span>')
-            .attr('title', $(this).data('reported-label') || '')
-            .append('<i class="fa fa-exclamation-circle" aria-hidden="true"></i>'));
-          break;
-        case "removed":
-          // persists, item won't show up from server once in review
-          $('.item[data-pin-id="' + pinId + '"]').hide();
-          break;
-        default:
-          console.log("unknown status reached while flagging " + pinId);
-      }
-    }).on('ajax:error',function(e, xhr, status, error){
-      console.log("error = " + JSON.stringify(error));
-    });
+    switch(data["status"]) {
+      case "voted_down":
+        // doesn't persist, but at least shows tapping it did something
+        $(this).replaceWith($('<span class="flag-reported"></span>')
+          .attr('title', $(this).data('reported-label') || '')
+          .append('<i class="fa fa-exclamation-circle" aria-hidden="true"></i>'));
+        break;
+      case "removed":
+        // persists, item won't show up from server once in review
+        $('.item[data-pin-id="' + pinId + '"]').hide();
+        break;
+      default:
+        console.log("unknown status reached while flagging " + pinId);
+    }
+  }).on('ajax:error.flagPin', '.flag-pin', function(e, xhr, status, error){
+    console.log("error = " + JSON.stringify(error));
   });
 
   // on admin page

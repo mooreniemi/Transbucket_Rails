@@ -46,9 +46,9 @@
           </div>
         <% end %>
         <div class="pin-page-actions">
-          <%= link_to fa_icon("arrow-left"), pins_path, title: t('header.submissions'), aria: { label: t('header.submissions') } %>
+          <%= link_to fa_icon("arrow-left"), pins_path, data: { pin_viewer_close: true }, title: t('header.submissions'), aria: { label: t('header.submissions') } %>
         <% if can_edit_pin %>
-          | <%= link_to fa_icon("pencil-square-o"), edit_pin_path(id: @pin.id), title: t('public.extra.editing_submission'), aria: { label: t('public.extra.editing_submission') } %>
+          <span class="pin-page-actions-separator">|</span> <%= link_to fa_icon("pencil-square-o"), edit_pin_path(id: @pin.id), title: t('public.extra.editing_submission'), aria: { label: t('public.extra.editing_submission') } %>
       <% end %>
         </div>
     </div>
@@ -110,7 +110,6 @@
     </dl>
     <% if @pin.details.present? %>
       <div id="details" class="pin-details">
-        <%= fa_icon "quote-left" %>
         <%= simple_format(@pin.details) %>
       </div>
     <% end %>
@@ -118,11 +117,18 @@
   <br clear="both" />
   </div>
 <% end %>
+<%# Comments: a heading with the count (it is also the target of the cards'
+    comment links), the thread, then a box to add to it, already open. The
+    pronoun reminder sits with the box, where it is needed. %>
 <div id="comments-container">
-  <h4><%= fa_icon("comments-o") %> <%= t('public.pin.discussion') %></h4>
-  <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>
-    <h5><%= t('public.pin.respect_pronouns') %> <%= pronouns_label(author_pronouns(@pin.user)) %>.</h5>
-  <%= link_to "<h5>#{fa_icon("comments-o")} #{t('public.pin.add_thread')}</h5>".html_safe, new_comment_path(commentable_id: @pin.id, commentable_type: "Pin"), remote: true %>
-  <div id="commentable" class="reply-target">
+  <h2 class="comments-heading">
+    <%= t('public.pin.discussion') %><% if @comment_count > 0 %> <span class="comments-count"><%= @comment_count %></span><% end %>
+  </h2>
+  <div class="comment-list">
+    <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>
+  </div>
+  <div id="commentable" class="comment-composer reply-target">
+    <p class="comment-composer-hint"><%= t('public.pin.respect_pronouns') %> <%= pronouns_label(author_pronouns(@pin.user)) %>.</p>
+    <%= render partial: 'comments/form', locals: { comment: @new_comment } %>
   </div>
 </div>

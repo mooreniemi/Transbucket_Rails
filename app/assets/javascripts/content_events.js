@@ -78,8 +78,10 @@
     };
   }
 
-  function recordPageContentEvents() {
-    var markers = document.querySelectorAll('[data-content-event]');
+  // Also called for content added to the page later: feed cards loaded by
+  // infinite scroll (impressions) and pins opened in the phone viewer (views).
+  function recordPageContentEvents(root) {
+    var markers = (root && root.querySelectorAll ? root : document).querySelectorAll('[data-content-event]');
     var impressions = [];
     for (var index = 0; index < markers.length; index += 1) {
       if (markers[index].getAttribute('data-event-type') === 'impression') {
@@ -138,8 +140,10 @@
     }
   });
 
+  window.recordContentEvents = recordPageContentEvents;
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', recordPageContentEvents);
+    document.addEventListener('DOMContentLoaded', function() { recordPageContentEvents(); });
   } else {
     recordPageContentEvents();
   }

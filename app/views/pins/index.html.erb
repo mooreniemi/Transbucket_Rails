@@ -45,6 +45,12 @@
     <%= render partial: 'pin', locals: { pin: pin, event_context: @presenter.list_event_context.merge(rank: @presenter.rank_offset + index + 1) } %>
   <% end %>
 </div>
-<div id="paginator">
+<%# On phones feed_scroll.js hides the page links and loads the next page as you
+    scroll; these are its status lines. pin_viewer.js reads the close label. %>
+<div id="paginator"
+  data-loading-label="<%= t('directory.loading_more') %>"
+  data-error-label="<%= t('directory.load_more_failed') %>"
+  data-done-label="<%= t('directory.end_of_feed') %>"
+  data-close-label="<%= t('directory.close_pin') %>">
   <%= will_paginate @presenter.pins, renderer: BootstrapPagination::Rails unless @presenter.pins.empty? %>
 </div>

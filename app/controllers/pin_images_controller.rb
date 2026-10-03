@@ -2,9 +2,9 @@ class PinImagesController < ApplicationController
   # Every action changes or reveals photo records, so all of them need an account.
   # (These endpoints used to be open to anyone: an anonymous request could upload
   # images and delete any post's photos by id.)
-  before_filter :authenticate_user!
-  before_filter :find_image_and_pin, only: [:update, :destroy]
-  before_filter :authorize_change, only: [:update, :destroy]
+  before_action :authenticate_user!
+  before_action :find_image_and_pin, only: [:update, :destroy]
+  before_action :authorize_change, only: [:update, :destroy]
   respond_to :json
 
   def index

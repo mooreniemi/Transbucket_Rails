@@ -34,7 +34,7 @@ describe PinsController, :type => :controller do
           create(:comment, commentable: pin, body: 'older words here')
           newest = create(:comment, commentable: pin, body: 'newest words here')
 
-          get :index
+          get :index, params: { locale: 'en' }
 
           expect(response.body).to include(%(href="/en/pins/#{pin.id}#comment-#{newest.id}"))
           expect(response.body).to include('newest words here')
@@ -46,7 +46,7 @@ describe PinsController, :type => :controller do
           pending_comment = create(:comment, commentable: pin, body: 'flagged words', state: 'pending')
           Comment.where(id: pending_comment.id).update_all(created_at: 1.minute.from_now)
 
-          get :index
+          get :index, params: { locale: 'en' }
 
           expect(response.body).to include('visible words')
           expect(response.body).not_to include('flagged words')
@@ -56,7 +56,7 @@ describe PinsController, :type => :controller do
           procedure_comment = create(:comment, commentable: create(:procedure), body: 'procedure chatter')
           Comment.where(id: procedure_comment.id).update_all(commentable_id: pin.id)
 
-          get :index
+          get :index, params: { locale: 'en' }
 
           expect(response.body).not_to include('procedure chatter')
         end
@@ -64,7 +64,7 @@ describe PinsController, :type => :controller do
         it 'reports a comment with a labelled, confirmed action on the pin page' do
           comment = create(:comment, commentable: pin, body: 'a comment to report')
 
-          get :show, id: pin.id
+          get :show, params: { id: pin.id, locale: 'en' }
 
           expect(response.body).to match(/class="flag-comment"[^>]*data-confirm="#{Regexp.escape(I18n.t('public.pin.report_comment_confirm'))}"/)
           expect(response.body).to include(">#{I18n.t('public.pin.report')}</a>").or include(I18n.t('public.pin.report'))
@@ -543,7 +543,7 @@ describe PinsController, :type => :controller do
       sign_in(create(:user))
       attrs = attributes_for(:pin, :with_surgeon_and_procedure)
 
-      post :create, pin: attrs, pin_images: { '0' => { 'id' => victim_image.id.to_s, '_destroy' => '1' }, '1' => attributes_for(:pin_image) }
+      post :create, params: { pin: attrs, pin_images: { '0' => { 'id' => victim_image.id.to_s, '_destroy' => '1' }, '1' => attributes_for(:pin_image) } }
 
       expect(response).not_to have_http_status(:internal_server_error)
       expect(PinImage.exists?(victim_image.id)).to eq(true)

@@ -30,9 +30,11 @@ describe PinImagesController, type: :controller do
     end
 
     it 'refuses to list a post\'s photos' do
-      get :index, params: { pin_id: pin.id }, format: :json
+      get :index, params: { pin_id: pin.id, locale: 'en' }, format: :json
 
-      expect(response).to have_http_status(:unauthorized)
+      # Anonymous GETs with a locale go to the login page (see
+      # ApplicationController#authenticate_user!), never to the photo list.
+      expect(response).to redirect_to(new_user_session_path(locale: 'en'))
     end
   end
 
@@ -99,7 +101,7 @@ describe PinImagesController, type: :controller do
     it 'cannot reach a photo through a different post\'s id' do
       other_pin = create(:pin, user: owner, pin_images: build_list(:pin_image, 1))
 
-      expect { xhr :delete, :destroy, pin_id: other_pin.id, id: image.id, format: :js }.to raise_error(ActiveRecord::RecordNotFound)
+      expect { delete :destroy, params: { pin_id: other_pin.id, id: image.id }, format: :js, xhr: true }.to raise_error(ActiveRecord::RecordNotFound)
       expect(PinImage.exists?(image.id)).to eq(true)
     end
   end

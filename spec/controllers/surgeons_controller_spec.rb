@@ -244,14 +244,14 @@ RSpec.describe SurgeonsController, :type => :controller do
     let(:params) { { surgeon: { first_name: 'Made', last_name: 'Up', url: 'http://example.com' } } }
 
     it 'is refused for anyone who is not signed in' do
-      expect { xhr :post, :create, params.merge(format: :js) }.not_to change { Surgeon.count }
+      expect { post :create, params: params, format: :js, xhr: true }.not_to change { Surgeon.count }
       expect(response).to have_http_status(:unauthorized)
     end
 
     it 'works for a signed-in user (the pin form\'s \"add a new surgeon\")' do
       sign_in(create(:user))
 
-      expect { xhr :post, :create, params.merge(format: :js) }.to change { Surgeon.count }.by(1)
+      expect { post :create, params: params, format: :js, xhr: true }.to change { Surgeon.count }.by(1)
     end
   end
 end

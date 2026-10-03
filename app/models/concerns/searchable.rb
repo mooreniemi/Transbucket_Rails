@@ -35,6 +35,14 @@ module Searchable
     handle_asynchronously :delete_document_async
   end
 
+  # Jobs queued by the Rails 4 release serialized the whole record and call
+  # this instance method. Keep it so any still in the queue at deploy time
+  # index normally instead of failing. Safe to remove once the production
+  # queue has drained after the Rails 5 deploy.
+  def index_document_async_without_delay
+    __elasticsearch__.index_document
+  end
+
   def enqueue_index_document
     self.class.index_document_async(self.class.index_name, id)
   end

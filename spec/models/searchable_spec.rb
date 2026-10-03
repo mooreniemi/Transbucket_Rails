@@ -47,4 +47,28 @@ describe Searchable do
     expect(job).to be_present
     expect(job.payload_object.args).to eq([index_name, pin_id])
   end
+
+  it 'still runs an indexing job queued by the Rails 4 release' do
+    pin = create(:pin)
+    Delayed::Job.delete_all
+    # The handler shape delayed_job wrote on Rails 4: the whole record,
+    # reloaded by ID, with the generated instance method.
+    Delayed::Job.create!(handler: <<~YAML)
+      --- !ruby/object:Delayed::PerformableMethod
+      object: !ruby/ActiveRecord:Pin
+        attributes:
+          id: #{pin.id}
+          description: legacy
+      method_name: :index_document_async_without_delay
+      args: []
+    YAML
+    elasticsearch = double('elasticsearch')
+    allow_any_instance_of(Pin).to receive(:__elasticsearch__).and_return(elasticsearch)
+    expect(elasticsearch).to receive(:index_document)
+
+    successes, failures = Delayed::Worker.new.work_off
+
+    expect([successes, failures]).to eq([1, 0])
+    expect(Delayed::Job.count).to eq(0)
+  end
 end

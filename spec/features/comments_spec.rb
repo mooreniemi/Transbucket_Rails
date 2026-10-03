@@ -104,6 +104,82 @@ RSpec.describe "commenting", :fake_images => true, :js => true do
       expect(page).not_to have_button(I18n.t('public.pin.post_comment'))
     end
 
+    context "with fragment caching on, as on staging and production" do
+      around do |example|
+        caching, store = ActionController::Base.perform_caching, ActionController::Base.cache_store
+        ActionController::Base.perform_caching = true
+        ActionController::Base.cache_store = ActiveSupport::Cache::MemoryStore.new
+        begin
+          example.run
+        ensure
+          ActionController::Base.perform_caching = caching
+          ActionController::Base.cache_store = store
+        end
+      end
+
+      def indent_of(selector)
+        page.evaluate_script("document.querySelector(#{selector.to_json}).getBoundingClientRect().left")
+      end
+
+      it "nests a reply under its parent straight away, and still after a reload" do
+        parent = create(:comment, commentable: pin, user: user, body: "The parent comment")
+        visit "/pins/#{pin.id}"
+        # Render (and cache) the parent before the reply exists.
+        expect(page).to have_css("#comment-#{parent.id} .comment-body", text: "The parent comment")
+
+        find("#comment-#{parent.id}").click_link "Reply"
+        within("#comment-#{parent.id} .reply-target") do
+          fill_in "comment[body]", :with => "A nested reply"
+          click_button "Post"
+        end
+
+        reply_body = "#comment-#{parent.id} .comment-replies .comment-body"
+        expect(page).to have_css(reply_body, text: "A nested reply")
+        expect(page).not_to have_css("#comment-#{parent.id} .reply-target textarea")
+        expect(indent_of(reply_body)).to be > indent_of("#comment-#{parent.id} > .comment-body")
+
+        visit "/pins/#{pin.id}"
+
+        expect(page).to have_css(reply_body, text: "A nested reply")
+        expect(page).to have_css(".comment-list > .comment", count: 1)
+        expect(indent_of(reply_body)).to be > indent_of("#comment-#{parent.id} > .comment-body")
+      end
+    end
+
+    context "with fragment caching on, for different viewers" do
+      around do |example|
+        caching, store = ActionController::Base.perform_caching, ActionController::Base.cache_store
+        ActionController::Base.perform_caching = true
+        ActionController::Base.cache_store = ActiveSupport::Cache::MemoryStore.new
+        begin
+          example.run
+        ensure
+          ActionController::Base.perform_caching = caching
+          ActionController::Base.cache_store = store
+        end
+      end
+
+      it "shows delete only to the author and Report only to everyone else" do
+        mine = create(:comment, commentable: pin, user: user, body: "Written by me")
+
+        visit "/pins/#{pin.id}"
+        within("#comment-#{mine.id}") do
+          expect(page).to have_css("a.close")
+          expect(page).not_to have_css(".flag-comment")
+        end
+
+        other = create(:user, :with_confirmation)
+        Warden.test_reset!
+        login_as(other, :scope => :user)
+        visit "/pins/#{pin.id}"
+
+        within("#comment-#{mine.id}") do
+          expect(page).not_to have_css("a.close")
+          expect(page).to have_css(".flag-comment")
+        end
+      end
+    end
+
     it "lets you reply to a comment you have only just posted" do
       visit "/pins/#{pin.id}"
       within("#commentable") do

@@ -22,10 +22,21 @@ $(document)
       window.formatPinAges?(comment)
       comment.show('slow')
     else
-      # A reply form (or a procedure page's "add thread" form): it is done.
-      comment.insertAfter($(this)).show('slow')
+      parent = $(this).closest('.reply-target').parent('.comment')
+      if parent.length
+        # A reply: it joins the parent's indented replies, where it will also
+        # be after a reload, and the reply form goes away.
+        replies = parent.children('.comment-replies')
+        unless replies.length
+          replies = $('<div class="comment-replies"></div>').insertBefore(parent.children('.reply-target'))
+        replies.append(comment)
+        $(this).remove()
+      else
+        # A procedure page's "add thread" form: the comment takes its place.
+        comment.insertAfter($(this))
+        $(this).hide()
       window.formatPinAges?(comment)
-      $(this).hide()
+      comment.show('slow')
 
 # Delete a comment
 $(document)

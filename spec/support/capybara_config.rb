@@ -23,6 +23,10 @@ Capybara.javascript_driver = :selenium_chrome_headless_docker
 # Let Capybara choose an available port for each server. In Capybara 3.35, a
 # literal zero is passed through to WEBrick instead of being resolved first.
 Capybara.server_port = nil
+# Saving a pin with new photos resizes them server-side before the page
+# moves on, which takes 2-3s locally -- longer than Capybara's 2s default, so
+# the pin creation/update specs failed intermittently on timing alone.
+Capybara.default_max_wait_time = 5
 ActionMailer::Base.default_url_options[:host] = 'localhost'
 
 RSpec.configure do |config|

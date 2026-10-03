@@ -153,7 +153,7 @@ describe PinsController, :type => :controller do
         allow(Pin).to receive(:per_page).and_return(2)
         create_list(:pin, 3, user: user)
 
-        get :index, fragment: '1'
+        get :index, params: { fragment: '1', locale: 'en' }
 
         expect(response).to be_success
         expect(response.body).to include('id="pins"')
@@ -174,7 +174,7 @@ describe PinsController, :type => :controller do
         procedure = create(:procedure, gender: 'MTF')
         2.times { create(:pin, user: create(:user), procedure: procedure) }
 
-        get :index, feed: 'for_you', fragment: '1'
+        get :index, params: { feed: 'for_you', fragment: '1', locale: 'en' }
 
         next_link = Nokogiri::HTML(response.body).at_css('#paginator a[rel~="next"]')
         expect(next_link['href']).to include('feed=for_you')
@@ -186,7 +186,7 @@ describe PinsController, :type => :controller do
         allow(Pin).to receive(:per_page).and_return(1)
         2.times { create(:pin, user: user, procedure: procedure) }
 
-        get :index, procedure: [procedure.id.to_s], fragment: '1'
+        get :index, params: { procedure: [procedure.id.to_s], fragment: '1', locale: 'en' }
 
         next_link = Nokogiri::HTML(response.body).at_css('#paginator a[rel~="next"]')
         expect(CGI.unescape(next_link['href'])).to include("procedure[]=#{procedure.id}")
@@ -196,7 +196,7 @@ describe PinsController, :type => :controller do
       it 'loads the first two card photos straight away and the rest as you near them' do
         create_list(:pin, 4, user: user)
 
-        get :index
+        get :index, params: { locale: 'en' }
 
         images = Nokogiri::HTML(response.body).css('#pins .pin-card-image img')
         expect(images.map { |image| image['loading'] }).to eq([nil, nil, 'lazy', 'lazy'])
@@ -206,7 +206,7 @@ describe PinsController, :type => :controller do
         create(:pin, user: user, pin_images: build_list(:pin_image, 3))
         create(:pin, user: user, pin_images: build_list(:pin_image, 1))
 
-        get :index
+        get :index, params: { locale: 'en' }
 
         expect(response.body.scan('class="pin-card-photo-count"').size).to eq(1)
         expect(response.body).to include(I18n.t('public.pin.photo_count', count: 3))
@@ -296,7 +296,7 @@ describe PinsController, :type => :controller do
         create(:comment, commentable: pin, user: user)
         create(:comment, commentable: pin, user: user)
 
-        get :show, id: pin.id
+        get :show, params: { id: pin.id, locale: 'en' }
 
         expect(response.body).to match(%r{class="comments-heading">\s*#{I18n.t('public.pin.discussion')} <span class="comments-count">2</span>})
         expect(response.body).to include('class="comment-composer reply-target"')
@@ -307,7 +307,7 @@ describe PinsController, :type => :controller do
 
       it 'renders just the pin, without the site layout, for the phone viewer' do
         pin = create(:pin, user: user)
-        get :show, id: pin.id, viewer: '1'
+        get :show, params: { id: pin.id, viewer: '1', locale: 'en' }
 
         expect(response).to be_success
         expect(response.body).to include('pin-page-title')

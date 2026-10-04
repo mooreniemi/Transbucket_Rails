@@ -74,8 +74,9 @@ class StagingSmoke
     login
     verify_account_localization
     verify_authenticated_pages
-    pin_id, search_term = create_pin
+    pin_id, search_term, subject_paths = create_pin
     create_comment(pin_id)
+    subject_paths.each { |type, path| create_subject_comment(type, path) }
     verify_safe_mode(pin_id)
     edit_pin(pin_id)
     verify_search_page
@@ -239,18 +240,21 @@ class StagingSmoke
     end
 
     pin_doc = html_document(show)
+    subject_paths = {}
     %w[procedures surgeons].each do |resource|
       resource_name = resource == 'procedures' ? 'procedure' : 'surgeon'
       link = pin_doc.at_css(%(a[href*="/#{resource}/"]))
       raise "created pin did not link to its #{resource_name} page" unless link
 
-      linked_page = get(URI.parse(link['href']).path)
+      subject_path = URI.parse(link['href']).path
+      subject_paths[resource_name.capitalize] = subject_path
+      linked_page = get(subject_path)
       unless linked_page.code.to_i == 200
         raise "linked #{resource_name} page failed with #{linked_page.code}"
       end
     end
 
-    [pin_id, params["pin[procedure_attributes][name]"]]
+    [pin_id, params["pin[procedure_attributes][name]"], subject_paths]
   end
 
   def create_comment(pin_id)
@@ -269,6 +273,24 @@ class StagingSmoke
 
     unless response.code.to_i == 201 && response.body.include?(body)
       raise "comment create failed with #{response.code}"
+    end
+  end
+
+  def create_subject_comment(commentable_type, path)
+    doc = html_document(get(path).body)
+    link = doc.at_css(%(a[href*="commentable_type=#{commentable_type}"]))
+    raise "#{commentable_type} comment link missing" unless link
+
+    comment_url = URI.parse(URI.join(STAGING_URL, link['href']).to_s)
+    params = URI.decode_www_form(comment_url.query.to_s).to_h
+    body = "Smoke test #{commentable_type.downcase} comment #{Time.now.to_i}"
+    params['comment[body]'] = body
+    token = csrf_token(path, doc)
+    params['authenticity_token'] = token if token
+    response = post('/comments', params)
+
+    unless response.code.to_i == 201 && response.body.include?(body)
+      raise "#{commentable_type} comment create failed with #{response.code}"
     end
   end
 

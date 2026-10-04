@@ -55,9 +55,6 @@ gem 'friendly_id', '~> 5.1.0' # Note: You MUST use 5.0.0 or greater for Rails 4.
 # for managing environment variables
 gem 'figaro', '~> 1.3'
 
-# Rails 6.1's latest Zeitwerk supports Ruby 3.1; newer Zeitwerk releases
-# require the later Ruby upgrade planned after this Rails step.
-gem 'zeitwerk', '2.6.18'
 
 # for i18n, pulls out header
 gem 'http_accept_language'
@@ -82,8 +79,8 @@ gem 'fuzzy_match'
 gem 'rake-progressbar'
 gem 'awesome_print'
 # we use Faker to create junk data sometimes on staging
-	# Faker 1.x passes I18n options positionally and cannot run with Rails 6's
-	# I18n 1.x. 3.5 remains compatible with the current Ruby 3.1 runtime.
+	# Faker 1.x passes I18n options positionally and cannot run with the
+	# I18n 1.x that Rails 6+ uses.
 	gem 'faker', '3.5.2', :require => false
 gem 'zip-codes'
 

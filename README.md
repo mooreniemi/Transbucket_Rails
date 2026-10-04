@@ -183,7 +183,7 @@ If you need to test against an actual S3 instance, you can uncomment the config 
 
 ## [ci](https://circleci.com/dashboard)
 
-Currently using [CircleCI](https://circleci.com/) (config version 2.1, `.circleci/config.yml`), running `cimg/ruby:3.1.6` images with the `browser-tools` orb for the Selenium/Capybara feature specs. It runs `build` then `test` on a push to any branch -- there's no branch filter restricting it to PRs specifically, and no deploy job of any kind. CI is test-only; it has no effect on staging or production.
+Currently using [CircleCI](https://circleci.com/) (config version 2.1, `.circleci/config.yml`), running `cimg/ruby:3.3.12` and `cimg/postgres:16.10` images with the `browser-tools` orb for the Selenium/Capybara feature specs. It runs `build` then `test` on a push to any branch -- there's no branch filter restricting it to PRs specifically, and no deploy job of any kind. CI is test-only; it has no effect on staging or production.
 
 For master branch: [![CircleCI](https://circleci.com/gh/mooreniemi/Transbucket_Rails/tree/master.svg?style=svg&circle-token=22981fbc246ebdb12d14ef593592e163d093caf7)](https://circleci.com/gh/mooreniemi/Transbucket_Rails/tree/master)
 

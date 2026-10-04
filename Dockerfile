@@ -1,8 +1,6 @@
-FROM ruby:3.1.6
-
-# ruby:3.1.6 is based on Debian 12 (bookworm), which is still current, so no
-# archive.debian.org repointing is needed here (unlike the old ruby:2.6.6
-# image, which was based on the now-EOL Debian 10 buster).
+# Keep in step with .ruby-version, the Gemfile's ruby line and the CircleCI
+# image. The bookworm variant is Debian 12, which is still current.
+FROM ruby:3.3.12-bookworm
 RUN apt-get -yqq update \
     && apt-get -yqq install nodejs postgresql-client
 

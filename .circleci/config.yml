@@ -24,7 +24,8 @@ jobs:
           POSTGRES_PASSWORD: password
           RAILS_ENV: test
           TEST_DB: circle_test
-      - image: circleci/postgres:13.1
+      # Match production's major version (Heroku Postgres 16).
+      - image: cimg/postgres:16.10
         environment:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password

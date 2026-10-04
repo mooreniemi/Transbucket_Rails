@@ -314,7 +314,7 @@ spring rake parallel:spec
 
 Best if you run `unicorn` rather than usual development server `thin`:
 
-`unicorn -c config/unicorn.rb` # this will spawn 3 processes
+`unicorn -c config/unicorn.rb` # defaults to one process; set WEB_CONCURRENCY to increase it
 
 Then after installing [apache_bench](http://work.stevegrossi.com/2015/02/07/load-testing-rails-apps-with-apache-bench-siege-and-jmeter/) (you should be able to do `brew install ab`) run:
 

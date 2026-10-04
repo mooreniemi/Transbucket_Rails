@@ -6,7 +6,7 @@ ruby '3.3.12'
 gem 'rails', '8.1.4'
 # Ruby 3.1 activates its bundled cgi default gem before Bundler 1.17; keep
 # the lockfile aligned until the planned Ruby 3.3/3.4 upgrade.
-gem 'cgi', '0.3.6'
+gem 'cgi', '0.3.7'
 # used for public areas of the site, see PagesController
 gem 'actionpack-page_caching', '~> 1.2.2'
 

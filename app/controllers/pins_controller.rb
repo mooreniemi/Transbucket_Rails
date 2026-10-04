@@ -95,6 +95,7 @@ class PinsController < ApplicationController
         @form.save
         @pin = @form.model
         @pin.procedure.recalculate_avgs
+        SubmissionEventRecorder.record(pin: @pin, user: current_user, event_type: 'submission_created', locale: I18n.locale)
 
         format.html { redirect_to @pin, notice: t('flash.pin_created') }
         format.json { render json: @pin, status: :created, location: @pin }
@@ -115,6 +116,7 @@ class PinsController < ApplicationController
         @form.save
         @pin = @form.model
         @pin.procedure.recalculate_avgs
+        SubmissionEventRecorder.record(pin: @pin, user: current_user, event_type: 'submission_updated', locale: I18n.locale)
 
         format.html { redirect_to @pin, notice: t('flash.pin_updated') }
         format.json { head :no_content }

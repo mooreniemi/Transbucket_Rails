@@ -4,9 +4,6 @@ source 'https://rubygems.org'
 ruby '3.3.12'
 
 gem 'rails', '8.1.4'
-# Ruby 3.1 activates its bundled cgi default gem before Bundler 1.17; keep
-# the lockfile aligned until the planned Ruby 3.3/3.4 upgrade.
-gem 'cgi', '0.3.6'
 # used for public areas of the site, see PagesController
 gem 'actionpack-page_caching', '~> 1.2.2'
 
@@ -66,9 +63,9 @@ gem 'zeitwerk', '2.6.18'
 gem 'http_accept_language'
 # Rails-i18n follows Rails' major version: the 5.x line caps Railties below 6.
 gem 'rails-i18n', '~> 8.1'
-# Nokogiri 1.19 requires Ruby 3.2. Keep the current security-patched release
-# until the planned Ruby 3.3 upgrade.
-gem 'nokogiri', '1.18.10'
+# Floor at the release that fixes the CSS-selector ReDoS (CVE-2026-79770) and
+# the use-after-free advisories in 1.19.3 and earlier.
+gem 'nokogiri', '~> 1.19', '>= 1.19.4'
 gem 'i18n_generators'
 
 # for authentication
@@ -163,7 +160,9 @@ group :test do
 	gem 'factory_bot', '6.5.0'
 	gem 'capybara', '3.40.0'
   gem 'capybara-email'
-	gem 'selenium-webdriver', '4.8.1'
+	# 4.8.1 capped rubyzip below 3.0; 3.4.0 fixes a path traversal (CVE-2026-85396).
+	gem 'selenium-webdriver', '~> 4.50'
+	gem 'rubyzip', '>= 3.4.0'
 	gem 'guard-rspec'
 	gem 'launchy'
 	gem 'rspec-console'

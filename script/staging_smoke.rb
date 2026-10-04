@@ -282,7 +282,11 @@ class StagingSmoke
     raise "#{commentable_type} comment link missing" unless link
 
     comment_url = URI.parse(URI.join(STAGING_URL, link['href']).to_s)
-    params = URI.decode_www_form(comment_url.query.to_s).to_h
+    query_params = URI.decode_www_form(comment_url.query.to_s).to_h
+    params = {
+      'comment[commentable_id]' => query_params.fetch('commentable_id'),
+      'comment[commentable_type]' => query_params.fetch('commentable_type')
+    }
     body = "Smoke test #{commentable_type.downcase} comment #{Time.now.to_i}"
     params['comment[body]'] = body
     token = csrf_token(path, doc)

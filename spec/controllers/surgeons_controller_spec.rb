@@ -46,6 +46,22 @@ RSpec.describe SurgeonsController, :type => :controller do
     end
   end
   describe "#show" do
+    context 'when rendering a public profile with procedure activity' do
+      render_views
+
+      it 'renders the localized procedure name' do
+        surgeon = create(:surgeon)
+        procedure = create(:procedure, name: 'double incision')
+        procedure.translations.create!(locale: 'sv', name: 'dubbel incision')
+        create(:pin, surgeon: surgeon, procedure: procedure)
+
+        get :show, params: { id: surgeon.id, locale: 'sv' }
+
+        expect(response).to be_success
+        expect(response.body).to include('dubbel incision')
+      end
+    end
+
     describe 'activity marker' do
       render_views
 

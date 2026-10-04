@@ -1,6 +1,10 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Preserve the production cookie/signing key without falling back to the
+  # deprecated config/secrets.yml lookup on Rails 7.1+.
+  config.secret_key_base = ENV['SECRET_KEY_BASE'] if ENV['SECRET_KEY_BASE'].present?
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 

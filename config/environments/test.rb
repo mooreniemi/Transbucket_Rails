@@ -3,6 +3,10 @@ require 'faker' # gemfile marks faker require: false so production boot skips it
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Keep the existing test cookie/signing key while avoiding the deprecated
+  # Rails.application.secrets fallback used by Rails 7.1.
+  config.secret_key_base = 'f607f528104f0200b0df7d08c353cc4458d1d943b066e25d0c922fbc786f47a8dcb33ccb9ebfaef7454b664bfbe5831e76dc3c8dbb7964b7c68edbff2d5fe813'
+
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
   # your test database is "scratch space" for the test suite and is wiped
@@ -20,14 +24,14 @@ Rails.application.configure do
   # Browser specs must resolve the current source assets, not a stale manifest
   # left by a previous precompile.
   config.assets.resolve_with = [:environment]
-  config.assets.paths << TinyMCE::Rails::Engine.root.join('vendor', 'assets', 'javascripts', 'tinymce', 'skins', 'lightgray')
+  config.assets.paths = config.assets.paths + [TinyMCE::Rails::Engine.root.join('vendor', 'assets', 'javascripts', 'tinymce', 'skins', 'lightgray')]
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
   # Raise exceptions instead of rendering exception templates.
-  config.action_dispatch.show_exceptions = false
+  config.action_dispatch.show_exceptions = :none
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false

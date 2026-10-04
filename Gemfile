@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 # https://devcenter.heroku.com/articles/ruby-versions
 ruby '3.1.6'
 
-gem 'rails', '7.0.10'
+gem 'rails', '7.1.6'
 # used for public areas of the site, see PagesController
 gem 'actionpack-page_caching', '~> 1.2.2'
 
@@ -110,7 +110,7 @@ gem 'acts_as_votable', '~> 0.7.1'
 # Rails 5.2's belongs_to(name, scope=nil, **options) binds that Hash to
 # `scope` instead, raising NoMethodError on Hash#arity. Fixed upstream in
 # 7.0.0 (real `polymorphic:, optional:` keyword syntax).
-gem 'acts-as-taggable-on', '9.0.1'
+gem 'acts-as-taggable-on', '10.0.0'
 gem 'acts_as_commentable_with_threading'
 gem 'letsrate'
 
@@ -142,7 +142,7 @@ group :development, :test do
   gem 'spring-commands-rspec'
   gem 'rspec-benchmark'
   gem 'parallel_tests'
-	gem 'bullet', '~> 7.0.7'
+	gem 'bullet', '~> 7.1.6'
   # NOTE: with spring breaks rails console, so don't use it
 	# gem 'binding_of_caller'
 	gem 'guard'
@@ -157,7 +157,7 @@ group :test do
 	gem 'simplecov', :require => false
 	gem 'database_cleaner', '~> 2.1'
   # 3.9 calls Rails 6's template compiler with its Rails 5 signature.
-  gem 'rspec-rails', '5.1.2'
+  gem 'rspec-rails', '6.1.5'
 	# assigns/assert_template were extracted out of Rails core in 5.0.
 	gem 'rails-controller-testing'
 	gem 'factory_bot', '6.5.0'

@@ -75,6 +75,6 @@ class ContentEventBatchRecorder
   end
 
   def hmac(value)
-    OpenSSL::HMAC.hexdigest('SHA256', Rails.application.secrets.secret_key_base, value)
+    OpenSSL::HMAC.hexdigest('SHA256', Rails.application.secret_key_base, value)
   end
 end

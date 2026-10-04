@@ -12,9 +12,6 @@ Bundler.require(*Rails.groups)
 
 module Transbucket
   class Application < Rails::Application
-    # This app has one database; use Rails 7's current connection handling.
-    config.active_record.legacy_connection_handling = false
-
     # TODO include blocking ips for bad users
     # config.middleware.use Rack::Attack
 
@@ -32,6 +29,11 @@ module Transbucket
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :en
     config.i18n.fallbacks = true
+    config.active_support.cache_format_version = 7.1
+    # Set the signing key before Rails initializes, preserving the existing
+    # production/test values without consulting deprecated secrets.yml.
+    config.secret_key_base = ENV['SECRET_KEY_BASE'] if ENV['SECRET_KEY_BASE'].present?
+    config.secret_key_base = 'f607f528104f0200b0df7d08c353cc4458d1d943b066e25d0c922fbc786f47a8dcb33ccb9ebfaef7454b664bfbe5831e76dc3c8dbb7964b7c68edbff2d5fe813' if ENV['RAILS_ENV'] == 'test'
     # Rails' ruby schema dumper can't represent expression indexes (the
     # lower(username)/lower(email) functional indexes the login-lookup fix
     # depends on), so a plain `rake db:migrate` silently drops them from
@@ -41,10 +43,12 @@ module Transbucket
     config.active_record.schema_format = :sql
 
     # necessary for using bower-rails!
-    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
-    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'jquery-ui', 'themes', 'smoothness', 'images')
-    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'tinymce', 'skins', 'lightgray', 'img')
-    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'tinymce', 'skins', 'lightgray', 'fonts')
+    config.assets.paths = config.assets.paths + [
+      Rails.root.join('vendor', 'assets', 'bower_components'),
+      Rails.root.join('vendor', 'assets', 'bower_components', 'jquery-ui', 'themes', 'smoothness', 'images'),
+      Rails.root.join('vendor', 'assets', 'bower_components', 'tinymce', 'skins', 'lightgray', 'img'),
+      Rails.root.join('vendor', 'assets', 'bower_components', 'tinymce', 'skins', 'lightgray', 'fonts')
+    ]
     config.assets.precompile << 'tinymce/langs/*.js'
 
     config.generators do |g|

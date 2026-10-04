@@ -29,7 +29,7 @@ RSpec.configure do |config|
   end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_paths = ["#{::Rails.root}/spec/fixtures"]
   # Rails 6.1's fixture upload adapter uses file_fixture_path for
   # fixture_file_upload; this project keeps uploads directly under spec/fixtures.
   config.file_fixture_path = "#{::Rails.root}/spec/fixtures"

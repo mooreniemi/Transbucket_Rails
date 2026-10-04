@@ -1,0 +1,23 @@
+<% if item.kind == 'submission' %>
+  <%= render partial: 'pin', locals: { pin: item.record, event_context: event_context } %>
+<% else %>
+  <% comment = item.record %>
+  <% subject = comment.commentable %>
+  <article class="item feed-discussion" data-comment-id="<%= comment.id %>">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="comment-meta">
+          <strong class="comment-author"><%= link_to comment.user.try(:username) || comment.user.try(:id), pins_path(user: comment.user) %></strong>
+          <span class="comment-meta-separator" aria-hidden="true">·</span>
+          <% posted = l(comment.created_at, format: :long) %>
+          <%= content_tag :time, posted, datetime: comment.created_at.utc.iso8601, title: posted, class: 'pin-age comment-age' %>
+        </div>
+        <p class="feed-discussion-subject">
+          <%= t('directory.discussion_about', default: 'Discussion about') %>
+          <%= link_to subject.to_s, polymorphic_path(subject, locale: I18n.locale, anchor: 'comments-container') %>
+        </p>
+        <div class="comment-body"><%= comment.body %></div>
+      </div>
+    </div>
+  </article>
+<% end %>

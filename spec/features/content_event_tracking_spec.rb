@@ -24,7 +24,7 @@ RSpec.describe 'Pin-list activity tracking', js: true, fake_images: true do
     impression_attributes = { user: user, content_type: 'Pin', content_id: pin.id, event_type: 'impression' }
     wait_for_event(impression_attributes)
     expect(ContentEvent.find_by(impression_attributes).event_context).to include(
-      'surface' => 'pins_index', 'list_mode' => 'recent', 'rank' => '1', 'ranking_version' => 'recent_submission_activity_v1'
+        'surface' => 'pins_index', 'list_mode' => 'mixed', 'rank' => '1', 'ranking_version' => 'mixed_recent_activity_v1'
     )
 
     find(".item[data-pin-id='#{pin.id}'] .pin-card-image a").click
@@ -34,7 +34,7 @@ RSpec.describe 'Pin-list activity tracking', js: true, fake_images: true do
     open_attributes = { user: user, content_type: 'Pin', content_id: pin.id, event_type: 'open' }
     wait_for_event(open_attributes)
     expect(ContentEvent.find_by(open_attributes).event_context).to include(
-      'surface' => 'pins_index', 'list_mode' => 'recent', 'rank' => '1', 'ranking_version' => 'recent_submission_activity_v1'
+      'surface' => 'pins_index', 'list_mode' => 'mixed', 'rank' => '1', 'ranking_version' => 'mixed_recent_activity_v1'
     )
     wait_for_event(user: user, content_type: 'Pin', content_id: pin.id, event_type: 'view')
   end

@@ -2,7 +2,8 @@ module PinsHelper
   # How many filter values are applied to the feed right now (for the badge on
   # the Filter button).
   def active_filter_count
-    %i[scope procedure surgeon].sum { |key| Array(params[key]).reject(&:blank?).size }
+    %i[scope procedure surgeon].sum { |key| Array(params[key]).reject(&:blank?).size } +
+      (params[:content].present? && params[:content] != 'all' ? 1 : 0)
   end
 
   # Keyed by Gender#name rather than id -- ids aren't stable across

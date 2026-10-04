@@ -6,7 +6,7 @@ class PinPresenter
   # surgeon, the procedure and the procedure's translations).
   CARD_INCLUDES = [:user, :pin_images, :surgeon, { procedure: :translations }].freeze
 
-  attr_accessor :query, :page, :filter, :pins, :feed
+  attr_accessor :query, :page, :filter, :pins, :feed, :feed_items
   attr_accessor :user, :procedures, :surgeons, :general
 
   def initialize(opts = {})
@@ -15,9 +15,18 @@ class PinPresenter
     @user = opts.delete(:user)
     @current_user = opts.delete(:current_user)
     @feed = opts.delete(:feed)
+    @content = opts.delete(:content)
     @filter = opts
 
-    @pins = if @query.present?
+    if browsing_feed? && @feed != 'for_you' && @content.present?
+      @feed_items_query = HomeFeedQuery.new(content: @content, page: @page)
+      @feed_items = @feed_items_query.call
+      @pins = WillPaginate::Collection.create(@page, @feed_items_query.per_page, @feed_items_query.total_entries) do |pager|
+        pager.replace(@feed_items)
+      end
+    end
+
+    @pins ||= if @query.present?
               begin
                 search_results = Pin.search(PinSearchQuery.all_xfields(@query), PinSearchQuery::DEFAULT_OPTIONS)
                                      .paginate(page: @page)
@@ -45,6 +54,10 @@ class PinPresenter
 
   def personalized_feed_available?
     PERSONALIZED_FEED_GENDERS.include?(@current_user.try(:gender).try(:name))
+  end
+
+  def mixed_feed?
+    browsing_feed? && @feed != 'for_you' && (@feed_items.present? || @content.present?)
   end
 
   def showing_for_you?
@@ -87,6 +100,7 @@ class PinPresenter
   end
 
   def list_mode
+    return 'mixed' if mixed_feed?
     return 'search' if @query.present?
     return 'user' if @user.present?
     return 'filtered' if has_keywords?
@@ -107,7 +121,8 @@ class PinPresenter
       'for_you' => 'for_you_gender_v1',
       'search' => 'search_v1',
       'filtered' => 'filtered_recent_activity_v1',
-      'user' => 'user_submissions_v1'
+      'user' => 'user_submissions_v1',
+      'mixed' => 'mixed_recent_activity_v1'
     }.fetch(list_mode)
   end
 

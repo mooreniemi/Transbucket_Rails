@@ -6,7 +6,16 @@
 <div class="feed-filter-card">
   <%= form_tag pins_path, method: 'get', id: 'filter_dropdown' do %>
     <% scope_options = Pin::SCOPES.map { |scope| [t("filter_scopes.#{scope}"), scope] } %>
+    <% content_options = [
+      [t('filter_menu.all_content', default: 'Submissions and discussions'), 'all'],
+      [t('filter_menu.submissions_only', default: 'Submissions only'), 'submissions'],
+      [t('filter_menu.discussions_only', default: 'Discussions only'), 'discussions']
+    ] %>
     <div class="feed-filter-fields">
+      <div class="feed-filter-field">
+        <%= label_tag :content, t('filter_menu.content', default: 'Content') %>
+        <%= select_tag :content, options_for_select(content_options, params[:content].presence || 'all'), class: 'form-control' %>
+      </div>
       <div class="feed-filter-field">
         <%= label_tag :scope, t('filter_menu.scope') %>
         <%= select_tag :scope, options_for_select(scope_options, params[:scope]), { multiple: true, class: 'chosen-select', 'data-placeholder' => t('filter_menu.scope') }.merge(touch_picker_data(t('filter_menu.scope'))) %>

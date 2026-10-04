@@ -2,8 +2,12 @@
     with ?fragment=1) for feed_scroll.js, which only needs the next cards and
     the next link, not the header, filters and footer around them. %>
 <div id="pins">
-  <% @presenter.pins.each_with_index do |pin, index| %>
-    <%= render partial: 'pin', locals: { pin: pin, event_context: @presenter.list_event_context.merge(rank: @presenter.rank_offset + index + 1) } %>
+  <% @presenter.pins.each_with_index do |item, index| %>
+    <% if @presenter.mixed_feed? %>
+      <%= render partial: 'feed_item', locals: { item: item, event_context: @presenter.list_event_context.merge(rank: @presenter.rank_offset + index + 1) } %>
+    <% else %>
+      <%= render partial: 'pin', locals: { pin: item, event_context: @presenter.list_event_context.merge(rank: @presenter.rank_offset + index + 1) } %>
+    <% end %>
   <% end %>
 </div>
 <%# On phones feed_scroll.js hides the page links and loads the next page as you

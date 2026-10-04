@@ -11,7 +11,9 @@ class PinsController < ApplicationController
   def index
     @presenter = PinPresenter.new(pin_index_params)
     @comments = Comment.new_as_of(user_last_sign_in).includes(:user)
-    @comment_counts = Comment.published_counts_for('Pin', @presenter.pins.map(&:id))
+    feed_records = @presenter.pins.map { |item| item.respond_to?(:record) ? item.record : item }
+    pin_ids = feed_records.select { |record| record.is_a?(Pin) }.map(&:id)
+    @comment_counts = Comment.published_counts_for('Pin', pin_ids)
     # The card's "new comment" snippet: the newest published comment on each pin since
     # the last sign-in, picked from the comments loaded above (no query per card).
     @latest_new_comments = @comments.select { |comment| comment.commentable_type == 'Pin' }
@@ -248,6 +250,7 @@ class PinsController < ApplicationController
       satisfaction: params[:satisfaction],
       sensation: params[:sensation],
       feed: params[:feed],
+      content: params[:content].presence || 'all',
       current_user: current_user,
       page: params[:page]
     }

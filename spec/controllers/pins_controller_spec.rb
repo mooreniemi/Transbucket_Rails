@@ -25,6 +25,22 @@ describe PinsController, :type => :controller do
         expect(response).to have_http_status(:success)
       end
 
+      it 'renders contextual discussions in the mixed feed and supports submissions-only filtering' do
+        procedure = create(:procedure)
+        discussion = create(:comment, commentable: procedure, user: user, body: 'procedure feed discussion')
+
+        get :index, params: { locale: 'en' }
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include('procedure feed discussion')
+        expect(response.body).to include("data-comment-id=\"#{discussion.id}\"")
+
+        get :index, params: { locale: 'en', content: 'submissions' }
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).not_to include('procedure feed discussion')
+      end
+
       context 'with comments since the last sign-in' do
         let!(:pin) { create(:pin, user: create(:user)) }
 
@@ -56,7 +72,7 @@ describe PinsController, :type => :controller do
           procedure_comment = create(:comment, commentable: create(:procedure), body: 'procedure chatter')
           Comment.where(id: procedure_comment.id).update_all(commentable_id: pin.id)
 
-          get :index, params: { locale: 'en' }
+          get :index, params: { locale: 'en', content: 'submissions' }
 
           expect(response.body).not_to include('procedure chatter')
         end

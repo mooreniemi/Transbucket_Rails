@@ -40,6 +40,29 @@ describe PinPresenter do
     expect(PinPresenter.new.pins).to eq(pins.to_a.reverse)
   end
 
+  describe 'mixed contextual feed' do
+    it 'wraps submissions and root contextual comments in a paginated feed' do
+      procedure = create(:procedure)
+      comment = Comment.create!(commentable: procedure, user: create(:user), body: 'A discussion')
+
+      presenter = PinPresenter.new(current_user: create(:user), content: 'all')
+
+      expect(presenter.mixed_feed?).to eq(true)
+      expect(presenter.pins.map(&:record)).to include(comment)
+      expect(presenter.pins).to respond_to(:total_entries)
+    end
+
+    it 'supports submissions-only content filtering' do
+      procedure = create(:procedure)
+      comment = Comment.create!(commentable: procedure, user: create(:user), body: 'A discussion')
+
+      presenter = PinPresenter.new(current_user: create(:user), content: 'submissions')
+
+      expect(presenter.pins.map(&:record)).not_to include(comment)
+      expect(presenter.list_event_context[:list_mode]).to eq('mixed')
+    end
+  end
+
   describe 'personalized feeds' do
     let!(:mtf_gender) { create(:gender, name: 'MTF') }
     let!(:ftm_gender) { create(:gender, name: 'FTM') }

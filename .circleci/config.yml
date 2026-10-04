@@ -54,6 +54,16 @@ jobs:
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
       - ruby/install-deps
+      # The Ruby image ships pg_dump 14, which refuses to dump a Postgres 16
+      # server (db:migrate dumps db/structure.sql afterwards). Install the
+      # client that matches the database image and production.
+      - run:
+          name: Install PostgreSQL 16 client
+          command: |
+            curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo gpg --dearmor -o /usr/share/keyrings/pgdg.gpg
+            echo "deb [signed-by=/usr/share/keyrings/pgdg.gpg] http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+            sudo apt-get update -qq && sudo apt-get install -yqq postgresql-client-16
+            pg_dump --version
       - run:
           name: Wait for db
           command: dockerize -wait tcp://localhost:5432 -timeout 1m

@@ -7,7 +7,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/ruby:3.1.6
+      - image: cimg/ruby:3.3.12
         environment:
           RAILS_ENV: development
     executor: ruby/default
@@ -16,7 +16,7 @@ jobs:
       - ruby/install-deps
   test:
     docker:
-      - image: cimg/ruby:3.1.6
+      - image: cimg/ruby:3.3.12
         environment:
           BUNDLE_JOBS: '3'
           BUNDLE_RETRY: '3'
@@ -41,10 +41,8 @@ jobs:
       - checkout
       # The asset pipeline needs Node at runtime to compile the app's
       # .coffee files via ExecJS. browser-tools installs Chrome plus a
-      # matching chromedriver explicitly -- the old cimg -browsers image
-      # variant bundles a Chrome/chromedriver pairing that selenium-webdriver
-      # 3.142.7 (this app's pinned version) can't locate on PATH, which is
-      # also why CircleCI flags that variant as a deprecated convenience image.
+      # matching chromedriver explicitly rather than relying on the
+      # deprecated cimg -browsers image variant.
       - node/install
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver

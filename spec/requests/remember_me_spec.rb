@@ -100,7 +100,7 @@ describe 'staying signed in', type: :request do
       phone = device
       sign_in_on(phone, remember: true)
 
-      user.reload.update_attributes!(password: 'a different long password', password_confirmation: 'a different long password')
+      user.reload.update!(password: 'a different long password', password_confirmation: 'a different long password')
       phone.cookies.delete('_transbucket_session')
 
       expect(signed_in_on?(phone)).to be(false)

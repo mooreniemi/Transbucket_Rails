@@ -12,33 +12,10 @@ RSpec.describe 'the submissions feed on a phone', js: true, fake_images: true do
     page.current_window.resize_to(390, 800)
   end
 
+  # In-flight photos are waited for in spec/support/settle_images.rb.
   after do
-    begin
-      # The viewer loads full-size photos. Let any still downloading finish, or
-      # they reach the server after the fake_images route is removed and fail
-      # the example with a routing error. Lazy photos far off screen are never
-      # requested, so they are not waited for.
-      Timeout.timeout(Capybara.default_max_wait_time) do
-        loop do
-          settled = page.evaluate_script(<<-JAVASCRIPT)
-            Array.prototype.every.call(document.images, function(img) {
-              if (img.complete) { return true; }
-              var rect = img.getBoundingClientRect();
-              return img.loading === 'lazy' && (rect.top > window.innerHeight + 3000 || rect.bottom < -3000);
-            })
-          JAVASCRIPT
-          break if settled
-          sleep 0.05
-        end
-      end
-    rescue Timeout::Error
-      # Best effort: a slow photo should not fail the example.
-    ensure
-      # Always back to the desktop size the other specs expect: below 768px
-      # the pin form swaps its dropdowns for touch pickers.
-      page.current_window.resize_to(1400, 1000)
-      Warden.test_reset!
-    end
+    page.current_window.resize_to(1400, 1000)
+    Warden.test_reset!
   end
 
   def wait_for_event(attributes)

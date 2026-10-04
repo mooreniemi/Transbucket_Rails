@@ -41,6 +41,14 @@ RSpec.describe 'the surgeon page', js: true, fake_images: true do
       expect(left_of(selector)).to eq(page_content_left), "#{selector} is indented"
     end
 
+    # Paragraphs too: no site-wide padding insetting their text.
+    insets = page.evaluate_script(<<-JAVASCRIPT)
+      Array.prototype.map.call(document.querySelectorAll('.surgeon-profile .media-body > p'), function(p) {
+        return parseFloat(getComputedStyle(p).paddingLeft);
+      })
+    JAVASCRIPT
+    expect(insets).to all(eq(0))
+
     # Each submission's photo box spans its card's content width.
     gaps = page.evaluate_script(<<-JAVASCRIPT)
       Array.prototype.map.call(document.querySelectorAll('.procedure-recent-pin'), function(card) {

@@ -18,6 +18,13 @@
     width: auto;
   }
 
+  // The site-wide paragraph padding would inset these from the name and
+  // address above them.
+  .surgeon-profile .media-body > p {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   .surgeon-profile h1.media-heading {
     font-size: 24px;
     line-height: 1.25;

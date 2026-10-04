@@ -31,3 +31,4 @@ docker-compose.override.yml
 
 # ad-hoc production data exports / audit CSVs (scratch, not for source control)
 /data/
+notes/worklog-2026-09-13.md

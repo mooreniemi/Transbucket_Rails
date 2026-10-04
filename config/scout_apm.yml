@@ -1,0 +1,15 @@
+# Scout APM settings that belong in the repo. SCOUT_KEY, SCOUT_MONITOR and
+# SCOUT_LOG_LEVEL stay in Heroku config vars, and environment variables take
+# precedence over this file.
+#
+# use_prepend: New Relic instruments Elasticsearch and Net::HTTP with
+# Module#prepend. Scout's default alias_method chaining on those same methods
+# recursed forever (SystemStackError on every pin search) once both agents ran
+# together, so Scout prepends too. Staging and production both run with
+# RAILS_ENV=production.
+production:
+  use_prepend: true
+development:
+  use_prepend: true
+test:
+  use_prepend: true

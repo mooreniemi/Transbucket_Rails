@@ -65,6 +65,10 @@ describe "the flagging process" do
         flag_link = find("#comment-#{comment_id} .flag-comment")
         expect(flag_link['data-confirm']).to eq(I18n.t('public.pin.report_comment_confirm'))
         accept_confirm { flag_link.click }
+        # Wait for the report to land (the link turns into "Reported", or the
+        # comment hides on the last one) before the next user's visit, which
+        # could otherwise cancel the request mid-flight.
+        expect(page).to have_no_css("#comment-#{comment_id} .flag-comment")
       end
 
       visit '/pins/' + pin.id.to_s

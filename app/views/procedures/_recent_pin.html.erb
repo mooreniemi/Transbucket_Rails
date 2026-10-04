@@ -1,5 +1,7 @@
 <article class="procedure-recent-pin">
-  <div class="recent-pin-image<%= ' safe-blur' if @safe_mode %>">
+  <%# pin-card-image: the feed cards' 4:3 photo box, filled edge to edge
+      (card_photo_fit.js), so the photo never leaves an empty strip. %>
+  <div class="recent-pin-image pin-card-image<%= ' safe-blur' if @safe_mode %>">
     <%= link_to image_tag(pin.cover_image.url(:medium), alt: pin.procedure.try(:localized_name)), pin %>
     <%= render 'shared/safe_reveal' if @safe_mode %>
   </div>

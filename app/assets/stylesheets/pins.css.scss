@@ -486,6 +486,19 @@
   max-width: 100%;
 }
 
+// The photo box spans the card, like the feed cards: the image fills it when
+// its shape is close to 4:3, otherwise it shows whole over a blurred copy.
+.procedure-recent-pin .pin-card-image img {
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  width: 100%;
+}
+
+.procedure-recent-pin .pin-card-image.is-filled img {
+  object-fit: cover;
+}
+
 .procedure-recent-pin h3 {
   font-size: 17.6px;
   margin: .75rem 0 .35rem;

@@ -1,0 +1,33 @@
+// Surgeon page (surgeons/show.html.erb).
+
+// The small icon before the name only shows on phones; wider screens keep the
+// big icon in its own column.
+.surgeon-heading-icon {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  // Bootstrap's media object keeps the icon column for the full height of the
+  // page, leaving a strip of dead space down the left on a phone.
+  .surgeon-profile .surgeon-profile-icon {
+    display: none;
+  }
+
+  .surgeon-profile .media-body {
+    display: block;
+    width: auto;
+  }
+
+  .surgeon-profile h1.media-heading {
+    font-size: 24px;
+    line-height: 1.25;
+    margin-top: 12px;
+  }
+
+  .surgeon-heading-icon {
+    color: #555;
+    display: inline-block;
+    font-size: 0.85em;
+    margin-right: 8px;
+  }
+}

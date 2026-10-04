@@ -46,6 +46,7 @@ RSpec.describe SurgeonsController, :type => :controller do
     end
   end
   describe "#show" do
+    render_views
     context 'when rendering a public profile with procedure activity' do
       render_views
 
@@ -134,6 +135,20 @@ RSpec.describe SurgeonsController, :type => :controller do
       get :show, params: { id: surgeon.id, locale: 'en' }
 
       expect(assigns(:latest_pins)).to eq([newest_pin, old_pin])
+    end
+
+    it 'loads surgeon comments for signed-in users' do
+      user = create(:user)
+      surgeon = create(:surgeon)
+      comment = Comment.create!(commentable: surgeon, user: user, body: 'great surgeon')
+
+      sign_in user
+      get :show, params: { id: surgeon.id, locale: 'en' }
+
+      expect(assigns(:comments)).to include(comment)
+      expect(assigns(:new_comment).commentable).to eq(surgeon)
+      expect(response.body).to include('comments-container')
+      expect(response.body).to include('great surgeon')
     end
 
     it 'scopes per-procedure pin counts to the surgeon being viewed' do

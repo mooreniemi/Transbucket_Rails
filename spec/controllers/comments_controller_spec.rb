@@ -5,6 +5,7 @@ describe CommentsController, :type => :controller do
 
   let(:user) { create(:user) }
   let(:pin) { create(:pin, :with_surgeon_and_procedure) }
+  let(:surgeon) { create(:surgeon) }
 
   before(:each) do
     sign_in(user)
@@ -38,6 +39,13 @@ describe CommentsController, :type => :controller do
 
       expect(response).to have_http_status(:success)
       expect(Comment.count).to eq(1)
+    end
+
+    it "creates a comment on a surgeon" do
+      post :create, params: { comment: { commentable_type: "Surgeon", commentable_id: surgeon.id, body: "great surgeon" } }, xhr: true
+
+      expect(response).to have_http_status(:success)
+      expect(Comment.last.commentable).to eq(surgeon)
     end
 
     it "rejects a commentable_type outside the allowed list without touching the database" do

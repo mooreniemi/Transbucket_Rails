@@ -32,6 +32,9 @@ class SurgeonsController < ApplicationController
     @rating_distributions = nil
     @rating_distributions_by_procedure = nil
     if user_signed_in?
+      @comments = @surgeon.comments_asc
+      ActiveRecord::Associations::Preloader.new(records: @comments, associations: { user: :trust_grants }).call
+      @new_comment = Comment.build_from(@surgeon, current_user, "")
       @latest_pins = pins.recent.
         includes(:pin_images, :surgeon, :procedure).
         limit(3)

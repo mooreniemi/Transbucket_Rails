@@ -87,6 +87,17 @@
       </section>
     <% end %>
 
+    <% if user_signed_in? %>
+      <section class="surgeon-comments" aria-labelledby="surgeon-comments-heading">
+        <h2 id="surgeon-comments-heading"><%= fa_icon("comments-o") %> <%= t('public.pin.discussion') %></h2>
+        <div id="comments-container">
+          <%= render partial: 'comments/comment', collection: @comments, as: :comment %>
+          <%= link_to "<h5>#{fa_icon("comment-o")} #{t('public.pin.add_thread')}</h5>".html_safe, new_comment_path(commentable_id: @surgeon.id, commentable_type: "Surgeon"), remote: true %>
+          <div id="commentable" class="reply-target"></div>
+        </div>
+      </section>
+    <% end %>
+
     <% if @procedure_count > 0 %>
       <p class="lead"><%= t('directory.procedures_intro') %></p>
     <% end %>

@@ -366,7 +366,7 @@ GEM
     newrelic_rpm (10.7.1)
       logger
     nio4r (2.7.5)
-    nokogiri (1.18.10)
+    nokogiri (1.19.4)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     notiffany (0.1.3)
@@ -662,7 +662,7 @@ DEPENDENCIES
   meta-tags
   nested_form
   newrelic_rpm (= 10.7.1)
-  nokogiri (= 1.18.10)
+  nokogiri (= 1.19.4)
   parallel_tests
   pg (~> 1.5)
   phony_rails (~> 0.15)

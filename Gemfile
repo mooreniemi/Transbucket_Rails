@@ -68,7 +68,7 @@ gem 'http_accept_language'
 gem 'rails-i18n', '~> 8.1'
 # Nokogiri 1.19 requires Ruby 3.2. Keep the current security-patched release
 # until the planned Ruby 3.3 upgrade.
-gem 'nokogiri', '1.18.10'
+gem 'nokogiri', '1.19.4'
 gem 'i18n_generators'
 
 # for authentication

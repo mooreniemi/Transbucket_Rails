@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
 # https://devcenter.heroku.com/articles/ruby-versions
-ruby '3.1.6'
+ruby '3.3.12'
 
-gem 'rails', '7.2.3.2'
+gem 'rails', '8.1.4'
 # Ruby 3.1 activates its bundled cgi default gem before Bundler 1.17; keep
 # the lockfile aligned until the planned Ruby 3.3/3.4 upgrade.
 gem 'cgi', '0.3.6'
@@ -65,7 +65,7 @@ gem 'zeitwerk', '2.6.18'
 # for i18n, pulls out header
 gem 'http_accept_language'
 # Rails-i18n follows Rails' major version: the 5.x line caps Railties below 6.
-gem 'rails-i18n', '~> 7.0'
+gem 'rails-i18n', '~> 8.1'
 # Nokogiri 1.19 requires Ruby 3.2. Keep the current security-patched release
 # until the planned Ruby 3.3 upgrade.
 gem 'nokogiri', '1.18.10'
@@ -73,7 +73,7 @@ gem 'i18n_generators'
 
 # for authentication
 gem 'bcrypt', '~> 3.1.13'
-gem 'devise'
+gem 'devise', '~> 5.0'
 gem 'devise-i18n'
 gem 'devise-encryptable'
 
@@ -113,7 +113,7 @@ gem 'acts_as_votable', '~> 0.7.1'
 # Rails 5.2's belongs_to(name, scope=nil, **options) binds that Hash to
 # `scope` instead, raising NoMethodError on Hash#arity. Fixed upstream in
 # 7.0.0 (real `polymorphic:, optional:` keyword syntax).
-gem 'acts-as-taggable-on', '11.0.0'
+gem 'acts-as-taggable-on', '13.0.0'
 gem 'acts_as_commentable_with_threading'
 gem 'letsrate'
 
@@ -137,7 +137,6 @@ end
 
 group :development, :test do
   gem 'matrix'
-  gem 'stackprof'
   gem 'ruby-prof', '~> 1.4'
 	gem 'rack-mini-profiler', '~> 3.1'
   # gem 'flamegraph' # for rack-mini-profiler
@@ -145,15 +144,13 @@ group :development, :test do
   gem 'spring-commands-rspec'
   gem 'rspec-benchmark'
   gem 'parallel_tests'
-gem 'bullet', '~> 7.2.0'
+gem 'bullet', '~> 8.2.0'
   # NOTE: with spring breaks rails console, so don't use it
 	# gem 'binding_of_caller'
 	gem 'guard'
 	gem 'guard-livereload'
 	gem 'pry-rescue'
-	gem 'pry-nav'
-	gem 'pry-rails'
-	gem 'pry-coolline'
+  gem 'pry', '~> 0.16'
 end
 
 group :test do
@@ -192,5 +189,5 @@ gem 'newrelic_rpm', '10.7.1'
 # 2.1.32 instruments Active Record with Rails 4 method signatures. 4.0.4
 # includes the agent's Rails 5.2 and Ruby 3 compatibility fixes while retaining
 # the production Scout telemetry configured through SCOUT_KEY/SCOUT_MONITOR.
-gem 'scout_apm', '4.0.4'
+gem 'scout_apm', '6.3.1'
 end

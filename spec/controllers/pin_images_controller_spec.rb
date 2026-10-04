@@ -86,7 +86,7 @@ describe PinImagesController, type: :controller do
     it 'can delete their photo' do
       delete :destroy, params: { pin_id: pin.id, id: image.id }, format: :js, xhr: true
 
-      expect(response).to be_success
+      expect(response).to have_http_status(:success)
       expect(PinImage.exists?(image.id)).to eq(false)
     end
 

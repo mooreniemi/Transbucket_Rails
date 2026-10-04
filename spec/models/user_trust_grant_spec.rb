@@ -16,7 +16,7 @@ describe UserTrustGrant do
     user.grant_trust!('contributor')
     moderator = user.grant_trust!('moderator', granted_by: create(:user, admin: true))
 
-    moderator.update_attributes!(revoked_at: Time.current)
+    moderator.update!(revoked_at: Time.current)
 
     expect(user.reload.trust_tier).to eq('contributor')
   end

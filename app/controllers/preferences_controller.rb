@@ -5,7 +5,7 @@ class PreferencesController < ApplicationController
     # The nested user id is only part of the route. Preferences always belong
     # to the signed-in user, never to an id supplied by the browser.
     preference = current_user.preference || current_user.build_preference
-    preference.update_attributes!(preference_params)
+    preference.update!(preference_params)
 
     redirect_to return_path || edit_user_registration_path
   end

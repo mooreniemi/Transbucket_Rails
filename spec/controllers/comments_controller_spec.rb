@@ -14,13 +14,13 @@ describe CommentsController, :type => :controller do
     it "builds a comment for an allowed commentable_type" do
       get :new, params: { commentable_type: "Pin", commentable_id: pin.id, locale: 'en' }, xhr: true
 
-      expect(response).to be_success
+      expect(response).to have_http_status(:success)
     end
 
     it "renders the comment form in the selected locale" do
       get :new, params: { commentable_type: "Pin", commentable_id: pin.id, locale: 'es' }, xhr: true
 
-      expect(response).to be_success
+      expect(response).to have_http_status(:success)
       expect(response.body).to include('Añade un comentario')
       expect(response.body).to include('Publicar')
     end
@@ -36,7 +36,7 @@ describe CommentsController, :type => :controller do
     it "creates a comment for an allowed commentable_type" do
       post :create, params: { comment: { commentable_type: "Pin", commentable_id: pin.id, body: "nice pin" } }, xhr: true
 
-      expect(response).to be_success
+      expect(response).to have_http_status(:success)
       expect(Comment.count).to eq(1)
     end
 

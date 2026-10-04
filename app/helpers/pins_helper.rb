@@ -59,7 +59,7 @@ module PinsHelper
     if surgeon.present?
       surgeon.id == 911
     else
-      update_attributes(surgeon_id: 911)
+      update(surgeon_id: 911)
     end
   end
 

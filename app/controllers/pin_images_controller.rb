@@ -13,7 +13,7 @@ class PinImagesController < ApplicationController
   end
 
   def update
-    @pin_image.update_attributes(caption: params[:caption])
+    @pin_image.update(caption: params[:caption])
     render json: { id: @pin_image.id, caption: @pin_image.caption }
   end
 

@@ -29,7 +29,7 @@ class TrustGrantsController < ApplicationController
     grant = UserTrustGrant.find(params[:id])
     return head(:forbidden) unless grant.source == 'moderator'
 
-    grant.update_attributes!(revoked_at: Time.current)
+    grant.update!(revoked_at: Time.current)
 
     redirect_to trust_grants_path, notice: "#{grant.kind.humanize} revoked."
   end

@@ -1,7 +1,7 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :preference do
     user
-    notification true
-    safe_mode false
+    notification { true }
+    safe_mode { false }
   end
 end

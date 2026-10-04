@@ -1,11 +1,11 @@
 require 'faker'
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :pin do
-    description { Faker::Lorem.sentences(3).join(" ") }
+    description { Faker::Lorem.sentences(number: 3).join(" ") }
     association :surgeon, factory: :surgeon, strategy: :build
     association :procedure, factory: :procedure, strategy: :build
-    user_id  { Faker::Number.number(5) }
+    user_id  { Faker::Number.number(digits: 5) }
     cost { Random.rand(50000) }
     sensation { Random.rand(5) }
     satisfaction { Random.rand(5) }

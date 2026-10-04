@@ -224,7 +224,7 @@ RSpec.describe 'the submissions feed on a phone', js: true, fake_images: true do
   describe 'safe mode' do
     let!(:pin) { create(:pin, :with_surgeon_and_procedure, user: create(:user)) }
 
-    before { user.preference.update_attributes!(safe_mode: true) }
+    before { user.preference.update!(safe_mode: true) }
 
     it 'keeps photos blurred in the viewer until tapped, and the reveal does not close it' do
       visit '/en/pins'

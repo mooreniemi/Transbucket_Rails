@@ -1,4 +1,4 @@
-require 'faker' # gemfile marks faker require: false so production boot skips it; factories need it loaded before FactoryGirl's after-initialize hook runs
+require 'faker' # gemfile marks faker require: false so production boot skips it; factories need it loaded before FactoryBot's after-initialize hook runs
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -17,6 +17,10 @@ Rails.application.configure do
   # Configure static asset server for tests with Cache-Control for performance.
   config.serve_static_files = true
   config.static_cache_control = 'public, max-age=3600'
+  # Browser specs must resolve the current source assets, not a stale manifest
+  # left by a previous precompile.
+  config.assets.resolve_with = [:environment]
+  config.assets.paths << TinyMCE::Rails::Engine.root.join('vendor', 'assets', 'javascripts', 'tinymce', 'skins', 'lightgray')
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true

@@ -29,7 +29,7 @@ describe 'locale-prefixed URLs', type: :request do
   it 'serves a prefixed path without redirecting' do
     get '/de/'
 
-    expect(response).to be_success
+    expect(response).to have_http_status(:success)
     expect(response.body).to include('Gemeinschaftliche Fotosammlung für geschlechtsangleichende Eingriffe')
   end
 
@@ -73,14 +73,14 @@ describe 'locale-prefixed URLs', type: :request do
   it 'uses the request locale for the document language' do
     get '/pt-BR/'
 
-    expect(response).to be_success
+    expect(response).to have_http_status(:success)
     expect(response.body).to include('<html lang="pt-BR">')
   end
 
   it 'serves the Swedish homepage and keeps its locale in links' do
     get '/sv/'
 
-    expect(response).to be_success
+    expect(response).to have_http_status(:success)
     expect(response.body).to include('<html lang="sv">')
     expect(response.body).to include('Verkliga erfarenheter av könsbekräftande ingrepp')
     expect(response.body).to include('href="/sv/procedures"')
@@ -92,11 +92,11 @@ describe 'locale-prefixed URLs', type: :request do
 
     REQUEST_SUPPORTED_LOCALES.each do |locale|
       get "/#{locale}/users/sign_in"
-      expect(response).to be_success, "login form failed for #{locale}"
+      expect(response).to have_http_status(:success), "login form failed for #{locale}"
       expect(response.body).to include('id="new_user"'), "login form missing for #{locale}"
 
       get "/#{locale}/register"
-      expect(response).to be_success, "registration form failed for #{locale}"
+      expect(response).to have_http_status(:success), "registration form failed for #{locale}"
       expect(response.body).to include('id="new_user"'), "registration form missing for #{locale}"
     end
   ensure

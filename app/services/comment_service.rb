@@ -33,7 +33,7 @@ class CommentService
     begin
       send_email_notification
     rescue => e
-      puts "#{e} was raised while attempting to send notification " +
+      puts "#{e.class} was raised while attempting to send notification " +
            "on #{commentable.class} #{commentable.id} to User #{commentable.user.id}"
     end
   end

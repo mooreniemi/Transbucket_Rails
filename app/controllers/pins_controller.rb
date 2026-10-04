@@ -162,8 +162,8 @@ class PinsController < ApplicationController
       current_flags: current_flag_counts(pins, comments),
       lifetime_flags: lifetime_flag_counts(pins, comments),
       current_flaggers: current_flaggers(pins, comments),
-      top_flaggers: ModerationEvent.where(action: 'flag').select('user_id, COUNT(*) AS flag_count').group(:user_id).order('COUNT(*) DESC').limit(10),
-      top_flagged: ModerationEvent.where(action: 'flag').select('content_type, content_id, COUNT(*) AS flag_count').group(:content_type, :content_id).order('COUNT(*) DESC').limit(10)
+      top_flaggers: ModerationEvent.where(action: 'flag').select('user_id, COUNT(*) AS flag_count').group(:user_id).order(Arel.sql('COUNT(*) DESC')).limit(10),
+      top_flagged: ModerationEvent.where(action: 'flag').select('content_type, content_id, COUNT(*) AS flag_count').group(:content_type, :content_id).order(Arel.sql('COUNT(*) DESC')).limit(10)
     }
   end
 

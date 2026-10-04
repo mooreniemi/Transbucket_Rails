@@ -122,13 +122,13 @@ describe PinPresenter do
     let(:user_id) { pins.last.user_id }
 
     it 'returns pins scoped by surgeon' do
-      pins.last.update_attributes!(surgeon_id: surgeon.id)
+      pins.last.update!(surgeon_id: surgeon.id)
       presenter = PinPresenter.new({surgeon: surgeon.id})
       expect(presenter.pins.last).to eq(pins.last)
     end
 
     it 'returns pins scoped by procedure' do
-      pins.last.update_attributes!(procedure_id: procedure.id)
+      pins.last.update!(procedure_id: procedure.id)
       presenter = PinPresenter.new({procedure: procedure.id})
 
       expect(presenter.pins.last).to eq(pins.last)

@@ -57,7 +57,7 @@ RSpec.describe SurgeonsController, :type => :controller do
 
         get :show, params: { id: surgeon.id, locale: 'sv' }
 
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
         expect(response.body).to include('dubbel incision')
       end
     end
@@ -169,7 +169,7 @@ RSpec.describe SurgeonsController, :type => :controller do
       sign_in user
       get :compare, params: { first_id: first.to_param, second_id: second.to_param, locale: 'en' }
 
-      expect(response).to be_success
+      expect(response).to have_http_status(:success)
       expect(assigns(:comparison_data)[first][:distributions][:sensation]).to eq(5 => 1)
       expect(assigns(:comparison_data)[second][:distributions][:satisfaction]).to eq(1 => 1)
     end

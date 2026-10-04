@@ -11,7 +11,7 @@ describe TrustGrantsController, type: :controller do
 
       get :index, params: { locale: 'en' }
 
-      expect(response).to be_success
+      expect(response).to have_http_status(:success)
       expect(response.body).to include('Community trust')
       expect(response.body).to include('Enter at least 3 characters to search for a member and manage their roles.')
     end

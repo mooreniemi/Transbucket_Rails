@@ -22,7 +22,7 @@ describe PinsController, :type => :controller do
       it "allows authenticated access" do
         get :index, params: { locale: 'en' }
 
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
       end
 
       context 'with comments since the last sign-in' do
@@ -73,7 +73,7 @@ describe PinsController, :type => :controller do
       end
 
       it 'passes the signed-in user safe-mode preference to pin cards' do
-        user.preference.update_attributes!(safe_mode: true)
+        user.preference.update!(safe_mode: true)
         create(:pin, user: user)
 
         get :index, params: { locale: 'en' }
@@ -85,7 +85,7 @@ describe PinsController, :type => :controller do
       end
 
       it 'passes the safe-mode preference to the pin page too' do
-        user.preference.update_attributes!(safe_mode: true)
+        user.preference.update!(safe_mode: true)
         pin = create(:pin, user: user)
 
         get :show, params: { id: pin.id, locale: 'en' }
@@ -94,7 +94,7 @@ describe PinsController, :type => :controller do
       end
 
       it 'shows pin images when the signed-in user has not enabled safe mode' do
-        user.preference.update_attributes!(safe_mode: false)
+        user.preference.update!(safe_mode: false)
         create(:pin, user: user)
 
         get :index, params: { locale: 'en' }
@@ -107,12 +107,12 @@ describe PinsController, :type => :controller do
       it "renders the authenticated index with a locale and user filter" do
         get :index, params: { locale: 'ja', user: user.id }
 
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
         expect(response.body).to include('最近の投稿')
       end
 
       it 'shows a For You tab for MTF and FTM users' do
-        user.update_attributes!(gender: create(:gender, name: 'MTF'))
+        user.update!(gender: create(:gender, name: 'MTF'))
 
         get :index, params: { locale: 'en' }
 
@@ -122,7 +122,7 @@ describe PinsController, :type => :controller do
       end
 
       it 'does not show a For You tab when the profile cannot define one' do
-        user.update_attributes!(gender: create(:gender, name: 'GenderQueer'))
+        user.update!(gender: create(:gender, name: 'GenderQueer'))
 
         get :index, params: { locale: 'en' }
 
@@ -130,7 +130,7 @@ describe PinsController, :type => :controller do
       end
 
       it 'groups moderator tools under an accessible moderator menu' do
-        user.update_attributes!(admin: true)
+        user.update!(admin: true)
 
         get :index, params: { locale: 'en' }
 
@@ -141,7 +141,7 @@ describe PinsController, :type => :controller do
       end
 
       it 'labels the personalized feed For You' do
-        user.update_attributes!(gender: create(:gender, name: 'MTF'))
+        user.update!(gender: create(:gender, name: 'MTF'))
 
         get :index, params: { feed: 'for_you', locale: 'en' }
 
@@ -155,7 +155,7 @@ describe PinsController, :type => :controller do
 
         get :index, params: { fragment: '1', locale: 'en' }
 
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
         expect(response.body).to include('id="pins"')
         expect(response.body).to include('id="paginator"')
         expect(response.body).not_to include('<html')
@@ -168,7 +168,7 @@ describe PinsController, :type => :controller do
       end
 
       it 'keeps infinite scroll on the For You feed' do
-        user.update_attributes!(gender: create(:gender, name: 'MTF'))
+        user.update!(gender: create(:gender, name: 'MTF'))
         allow(Pin).to receive(:per_page).and_return(1)
         # For You matches on the procedure's category, so pin that down.
         procedure = create(:procedure, gender: 'MTF')
@@ -243,7 +243,7 @@ describe PinsController, :type => :controller do
         expect(response.body).not_to include('Community trust')
 
         get :admin, params: { locale: 'en' }
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
       end
 
       it 'renders current flaggers and lifetime moderation counts' do
@@ -255,7 +255,7 @@ describe PinsController, :type => :controller do
 
       get :admin, params: { locale: 'en' }
 
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
         expect(response.body).to include('Top flaggers (lifetime)')
         expect(response.body).to include('Most flagged (lifetime)')
         expect(response.body).to include('<td>2</td>')
@@ -270,14 +270,14 @@ describe PinsController, :type => :controller do
         pin = create(:pin, user: user)
         get :show, params: { id: pin.id, locale: 'en' }
 
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
       end
 
       it "renders localized labels on a pin page" do
         pin = create(:pin, user: user)
         get :show, params: { id: pin.id, locale: 'ja' }
 
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
         expect(response.body).to include('外科医')
         expect(response.body).to include('手術')
       end
@@ -309,7 +309,7 @@ describe PinsController, :type => :controller do
         pin = create(:pin, user: user)
         get :show, params: { id: pin.id, viewer: '1', locale: 'en' }
 
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
         expect(response.body).to include('pin-page-title')
         expect(response.body).to include('comments-container')
         expect(response.body).not_to include('<html')
@@ -332,7 +332,7 @@ describe PinsController, :type => :controller do
         pin = create(:pin, user: user)
         get :edit, params: { id: pin.id, locale: 'en' }
 
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
       end
 
       it 'allows an admin to edit another user\'s pin' do
@@ -342,7 +342,7 @@ describe PinsController, :type => :controller do
         sign_in(admin)
         get :edit, params: { id: pin.id, locale: 'en' }
 
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
       end
     end
 
@@ -376,7 +376,7 @@ describe PinsController, :type => :controller do
       it 'renders the locale-specific TinyMCE language asset' do
         get :new, params: { locale: 'es' }
 
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
         expect(response.body).to include('language: "es"')
       end
     end
@@ -389,7 +389,7 @@ describe PinsController, :type => :controller do
 
       get :complication_suggestions, params: { term: 'hema', format: :json, locale: 'en' }
 
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
         expect(JSON.parse(response.body)).to eq(['hematoma'])
       end
     end

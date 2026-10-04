@@ -14,7 +14,7 @@ describe FlagsController, type: :controller do
 
     delete :destroy, params: { pin_id: pin.id }, xhr: true
 
-    expect(response).to be_success
+    expect(response).to have_http_status(:success)
     expect(ModerationEvent.where(action: 'unflag', content_type: 'Pin', content_id: pin.id).count).to eq(1)
     expect(pin.votes.down.count).to eq(0)
   end

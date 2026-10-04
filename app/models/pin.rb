@@ -117,7 +117,7 @@ class Pin < ActiveRecord::Base
     published.
       joins('LEFT OUTER JOIN pin_images ON pin_images.pin_id = pins.id').
       group('pins.id').
-      order(<<~SQL.squish)
+      order(Arel.sql(<<~SQL.squish))
         GREATEST(
           pins.created_at,
           COALESCE(MAX(pin_images.created_at), pins.created_at),

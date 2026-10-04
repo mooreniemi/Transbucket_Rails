@@ -12,7 +12,7 @@ describe PagesController, :type => :controller do
 
     get 'home', params: { locale: 'en' }
 
-    expect(response).to be_success
+    expect(response).to have_http_status(:success)
   ensure
     Rails.cache = original_cache
   end
@@ -21,7 +21,7 @@ describe PagesController, :type => :controller do
     it 'uses an explicitly selected supported locale' do
       get 'home', params: { locale: 'de' }
 
-      expect(response).to be_success
+      expect(response).to have_http_status(:success)
       expect(I18n.locale.to_s).to eq('de')
       expect(response.body).to include('Gemeinschaftliche Fotosammlung für geschlechtsangleichende Eingriffe')
       expect(response.body).to include('hreflang="pt-BR"')
@@ -30,7 +30,7 @@ describe PagesController, :type => :controller do
     it 'falls back to English for unsupported locales' do
       get 'home', params: { locale: 'xx' }
 
-      expect(response).to be_success
+      expect(response).to have_http_status(:success)
       expect(I18n.locale.to_s).to eq('en')
       expect(response.body).to include('Community Photo-Sharing for Transition and Gender-Affirming Procedures')
     end
@@ -42,7 +42,7 @@ describe PagesController, :type => :controller do
 
       get 'newsfeed', params: { locale: 'en' }
 
-      expect(response).to be_success
+      expect(response).to have_http_status(:success)
       expect(assigns(:newsfeed_entries).length).to eq(17)
       expect(assigns(:newsfeed_entries).first[:body]).to eq(I18n.t('newsfeed.entries.comment_reports'))
       expect(assigns(:newsfeed_entries).find { |entry| entry[:body_key] == 'newsfeed.entries.comparison_stats' }[:images].length).to eq(2)
@@ -68,7 +68,7 @@ describe PagesController, :type => :controller do
     it 'localizes the release notes' do
       get 'newsfeed', params: { locale: 'de' }
 
-      expect(response).to be_success
+      expect(response).to have_http_status(:success)
       expect(response.body).to include('Die Verfahrenssuche findet jetzt Präfixe')
       expect(response.body).not_to include('Procedure search now matches prefixes')
     end
@@ -88,7 +88,7 @@ describe PagesController, :type => :controller do
 
       get 'compare', params: { locale: 'en', type: 'surgeons', first_id: surgeon.to_param }
 
-      expect(response).to be_success
+      expect(response).to have_http_status(:success)
       expect(assigns(:comparison_type)).to eq('surgeons')
       expect(response.body).to include('<option selected="selected" value="' + surgeon.to_param + '">')
       expect(response.body).to include('action="/en/surgeons/compare"')
@@ -99,7 +99,7 @@ describe PagesController, :type => :controller do
     it 'does not label the informational page as legal content' do
       get 'about', params: { locale: 'de' }
 
-      expect(response).to be_success
+      expect(response).to have_http_status(:success)
       expect(response.body).not_to include(I18n.t('legal.translation_notice', locale: :de))
     end
   end

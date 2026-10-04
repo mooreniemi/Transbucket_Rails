@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'sprockets/railtie'
 
 # https://github.com/elastic/elasticsearch-rails/tree/master/elasticsearch-rails#activesupport-instrumentation
 require 'elasticsearch/rails/instrumentation'
@@ -11,6 +12,9 @@ Bundler.require(*Rails.groups)
 
 module Transbucket
   class Application < Rails::Application
+    # This app has one database; use Rails 7's current connection handling.
+    config.active_record.legacy_connection_handling = false
+
     # TODO include blocking ips for bad users
     # config.middleware.use Rack::Attack
 

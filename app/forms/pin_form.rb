@@ -45,19 +45,19 @@ class PinForm < Reform::Form
     property :_destroy, virtual: true, writeable: false
   end
 
-  def prepopulate_pin_images!(options)
+  def prepopulate_pin_images!(options = {})
     3.times { self.pin_images << PinImage.new }
   end
 
-  def prepopulate_procedure!(options)
+  def prepopulate_procedure!(options = {})
     self.procedure = (procedure && procedure.id) ? OpenStruct.new(id: procedure.id) : Procedure.new
   end
 
-  def prepopulate_surgeon!(options)
+  def prepopulate_surgeon!(options = {})
     self.surgeon = (surgeon && surgeon.id) ? OpenStruct.new(id: surgeon.id) : Surgeon.new
   end
 
-  def populate_procedure!(options)
+  def populate_procedure!(options = {})
     fragment = options[:fragment]
     id = fragment["id"]
     if id.nil? || id == 0 || id == ""
@@ -67,7 +67,7 @@ class PinForm < Reform::Form
     end
   end
 
-  def populate_surgeon!(options)
+  def populate_surgeon!(options = {})
     fragment = options[:fragment]
     id = fragment["id"]
     if id.nil? || id == 0 || id == ""
@@ -77,7 +77,7 @@ class PinForm < Reform::Form
     end
   end
 
-  def populate_pin_images!(options)
+  def populate_pin_images!(options = {})
     fragment = options[:fragment]
     item = pin_images.find { |image| image.id == fragment["id"].to_i }
 

@@ -32,7 +32,7 @@ class PinsController < ApplicationController
   # GET /pins/1.json
   def show
     @comments = @pin.comments_asc
-    ActiveRecord::Associations::Preloader.new.preload(@comments, user: :trust_grants)
+    ActiveRecord::Associations::Preloader.new(records: @comments, associations: { user: :trust_grants }).call
     @new_comment = Comment.build_from(@pin, current_user, "")
     @comment_count = Comment.published_counts_for('Pin', [@pin.id])[@pin.id].to_i
     @safe_mode = safe_mode

@@ -19,7 +19,7 @@ class ProceduresController < ApplicationController
     # procedure pages are public, but comments should be private
     if current_user
       @comments = @procedure.comments_asc
-      ActiveRecord::Associations::Preloader.new.preload(@comments, user: :trust_grants)
+      ActiveRecord::Associations::Preloader.new(records: @comments, associations: { user: :trust_grants }).call
       @new_comment = Comment.build_from(@procedure, current_user, "")
       @safe_mode = current_user.preference.present? && UserPolicy.new(current_user).safe_mode?
       @latest_pins = @procedure.pins.recent.

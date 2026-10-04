@@ -125,7 +125,7 @@ describe "pin creation" do
 
         click_button "Submit Now"
 
-        expect(find("#error_explanation")).to have_content("Procedure name has already been taken")
+        expect(find("#error_explanation")).to have_content("Name has already been taken")
       end
     end
   end

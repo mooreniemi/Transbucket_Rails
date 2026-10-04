@@ -225,7 +225,8 @@ GEM
       cgi (>= 0.3.3)
     erubi (1.13.1)
     eventmachine (1.2.7)
-    execjs (2.6.0)
+    execjs (2.10.2)
+      json (>= 2)
     factory_bot (6.5.0)
       activesupport (>= 5.0.0)
     faker (3.5.2)
@@ -574,6 +575,8 @@ GEM
     strscan (3.1.8)
     terrapin (1.1.1)
       climate_control
+    terser (1.2.8)
+      execjs (>= 0.3.0, < 3)
     thor (1.5.0)
     tilt (2.9.0)
     timeout (0.6.1)
@@ -587,9 +590,8 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
-    uglifier (2.7.2)
-      execjs (>= 0.3.0)
-      json (>= 1.8.0)
+    uglifier (4.2.1)
+      execjs (>= 0.3.0, < 3)
     unicode_utils (1.4.0)
     unicorn (6.1.0)
       kgio (~> 2.6)
@@ -699,9 +701,10 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   stackprof
+  terser (= 1.2.8)
   tinymce-rails (= 4.2.6)
   turbolinks
-  uglifier (>= 1.0.3)
+  uglifier (~> 4.2)
   unicorn
   webrick
   will_paginate (~> 3.0)

@@ -1,3 +1,5 @@
+require 'terser'
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -27,7 +29,9 @@ Rails.application.configure do
   config.serve_static_files = false
 
   # Compress JavaScripts and CSS.
-  config.assets.js_compressor = :uglifier
+  # Terser handles the ES2015 syntax in current vendor assets while retaining
+  # the existing Sprockets pipeline.
+  config.assets.js_compressor = Terser.new
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.

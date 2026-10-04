@@ -177,7 +177,8 @@ group :assets do
 	# other versions yanked https://rubygems.org/gems/bootstrap-sass/versions
 	gem 'bootstrap-sass', '3.4.1'
 	gem 'autoprefixer-rails'
-	gem 'uglifier', '>= 1.0.3'
+	gem 'uglifier', '~> 4.2'
+	gem 'terser', '1.2.8'
 end
 
 group :production do

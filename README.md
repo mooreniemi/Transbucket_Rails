@@ -247,7 +247,13 @@ normal deploy path.
 
 ### Pre-production release gate
 
-Before every production deploy, run the relevant local suite and deploy the exact tested commit to staging. After the staging release completes, run the authenticated smoke with credentials supplied only in the local shell:
+Before every production deploy:
+
+- CircleCI must be green on the exact commit being deployed. Local runs alone are not enough: CI runs inside Docker images that pin their own Ruby and Postgres versions.
+- A Ruby or database version bump changes `.ruby-version`, the `ruby` line in the `Gemfile`, the `Dockerfile`, and both images in `.circleci/config.yml` together. CI and the Docker setup use Postgres 16 to match production.
+- Prod runs exactly what is on `master`: fast-forward `master` first, then deploy `master`. Only one person or agent deploys at a time.
+
+Run the relevant local suite and deploy the exact tested commit to staging. After the staging release completes, run the authenticated smoke with credentials supplied only in the local shell:
 
 ```
 STAGING_USER=meowmeow STAGING_PASSWORD='(local secret)' \

@@ -8,8 +8,12 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
+  # timeout_in: signed out after a week without visiting. It was 180 minutes,
+  # and each of those timeouts also cancelled "stay logged in" on the user's
+  # other devices (Devise's expire_all_remember_me_on_sign_out), so people
+  # with a phone and a laptop kept getting logged out. spec/requests/remember_me_spec.rb
   devise :database_authenticatable, :registerable, :timeoutable,
-         :recoverable, :rememberable, :trackable, :confirmable, :validatable, :authentication_keys => [:login], :timeout_in => 180.minutes
+         :recoverable, :rememberable, :trackable, :confirmable, :validatable, :authentication_keys => [:login], :timeout_in => 1.week
 
   # Setup accessible (or protected) attributes for your model
   # attr_accessible :email, :password_confirmation, :remember_me, :name, :gender_id, :username, :id, :created_at, :updated_at, :login, :md5, :password, :settings

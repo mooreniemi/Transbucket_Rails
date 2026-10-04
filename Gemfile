@@ -41,8 +41,11 @@ gem 'active_model_serializers'
 gem 'pg', '~> 1.5'
 gem 'delayed_job_active_record'
 
-gem 'paperclip', '~> 5.2.0'
-gem 'aws-sdk', '~> 2.11'
+# Maintained fork of thoughtbot's Paperclip (abandoned in 2018), from Kreeti.
+# It stores files the same way, and uses the current S3 SDK instead of the
+# unmaintained aws-sdk v2.
+gem 'kt-paperclip', '~> 8.0'
+gem 'aws-sdk-s3', '~> 1'
 gem 'json', '2.6.3'
 gem 'webrick'
 

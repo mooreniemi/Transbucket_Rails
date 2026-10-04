@@ -84,7 +84,8 @@
         </span>
         <span class="pin-actions-meta">
           <%# Full sentence server-side; pin_age.js swaps in a short localized "3h ago". %>
-          <% updated_text = t('public.pin.updated', time: distance_of_time_in_words(Time.now, pin.updated_at)) %>
+          <%# Pass timestamps as numbers so Rails does not invoke deprecated to_time conversion. %>
+          <% updated_text = t('public.pin.updated', time: distance_of_time_in_words(Time.current.to_f, pin.updated_at.to_f)) %>
           <%= content_tag :time, updated_text, class: 'pin-age', datetime: pin.updated_at.utc.iso8601, title: updated_text %>
           <% comment_count = (@comment_counts || {})[pin.id].to_i %>
           <%# Outside the fragment cache above, so a new comment shows up straight away. %>

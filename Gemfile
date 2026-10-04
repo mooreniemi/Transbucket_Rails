@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 # https://devcenter.heroku.com/articles/ruby-versions
 ruby '3.1.6'
 
-gem 'rails', '7.1.6'
+gem 'rails', '7.2.3.2'
 # used for public areas of the site, see PagesController
 gem 'actionpack-page_caching', '~> 1.2.2'
 
@@ -110,7 +110,7 @@ gem 'acts_as_votable', '~> 0.7.1'
 # Rails 5.2's belongs_to(name, scope=nil, **options) binds that Hash to
 # `scope` instead, raising NoMethodError on Hash#arity. Fixed upstream in
 # 7.0.0 (real `polymorphic:, optional:` keyword syntax).
-gem 'acts-as-taggable-on', '10.0.0'
+gem 'acts-as-taggable-on', '11.0.0'
 gem 'acts_as_commentable_with_threading'
 gem 'letsrate'
 
@@ -142,7 +142,7 @@ group :development, :test do
   gem 'spring-commands-rspec'
   gem 'rspec-benchmark'
   gem 'parallel_tests'
-	gem 'bullet', '~> 7.1.6'
+gem 'bullet', '~> 7.2.0'
   # NOTE: with spring breaks rails console, so don't use it
 	# gem 'binding_of_caller'
 	gem 'guard'

@@ -174,7 +174,8 @@ group :production do
 	gem 'rails_12factor'
 # The pre-Rails-5 agent crashes while loading the Rails 5 framework adapter.
 gem 'newrelic_rpm', '10.7.1'
-# 2.1.32 instruments Active Record with Rails 4 method signatures. It is not
-# configured for this app, and loading it under Rails 5 makes public reads 500.
-gem 'scout_apm', require: false
+# 2.1.32 instruments Active Record with Rails 4 method signatures. 4.0.4
+# includes the agent's Rails 5.2 and Ruby 3 compatibility fixes while retaining
+# the production Scout telemetry configured through SCOUT_KEY/SCOUT_MONITOR.
+gem 'scout_apm', '4.0.4'
 end

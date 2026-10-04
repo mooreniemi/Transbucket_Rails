@@ -10,6 +10,11 @@ jobs:
       - image: cimg/ruby:3.3.12
         environment:
           RAILS_ENV: development
+          # Native gems (sassc especially) compile with one job per CPU the
+          # container reports, which is the host's count on CircleCI. That
+          # ran the container out of memory and killed bundle install.
+          MAKEFLAGS: '-j2'
+          BUNDLE_JOBS: '2'
     executor: ruby/default
     steps:
       - checkout
@@ -18,8 +23,9 @@ jobs:
     docker:
       - image: cimg/ruby:3.3.12
         environment:
-          BUNDLE_JOBS: '3'
+          BUNDLE_JOBS: '2'
           BUNDLE_RETRY: '3'
+          MAKEFLAGS: '-j2'
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
           RAILS_ENV: test

@@ -137,17 +137,17 @@ describe PinsController, :type => :controller do
         expect(response.body).to include('最近の投稿')
       end
 
-      it 'shows a For You tab for MTF and FTM users' do
+      it 'offers For You in the filter for MTF and FTM users' do
         user.update!(gender: create(:gender, name: 'MTF'))
 
         get :index, params: { locale: 'en' }
 
         expect(response.body).to include('Recent')
         expect(response.body).to include('For You')
-        expect(response.body).to include('feed=for_you')
+        expect(response.body).to include('id="feed_for_you"')
       end
 
-      it 'does not show a For You tab when the profile cannot define one' do
+      it 'does not offer For You when the profile cannot define one' do
         user.update!(gender: create(:gender, name: 'GenderQueer'))
 
         get :index, params: { locale: 'en' }

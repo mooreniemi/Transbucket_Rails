@@ -16,37 +16,22 @@
   <h1 class="feed-title"><%= @presenter.showing_for_you? ? t('directory.for_you', default: 'For You') : t('directory.recent_submissions') %></h1>
   <p class="lead feed-intro"><%= t('directory.submissions_intro') %></p>
 <% end %>
-<%# Toolbar: Recent / For You on the left (when available), Filter on the right.
-    The filter used to be an item in the navbar; it is a page control now, which
-    also frees a slot in a navbar that already wraps on smaller screens. %>
+<%# Toolbar: Filter, + Discussion, + Submission. Filter and + Discussion each
+    open a form above the feed (one at a time, feed_toolbar.js); + Submission
+    is the submission form. Recent / For You is a choice inside Filter. On
+    phones the same three float at the bottom once this row scrolls away. %>
 <% filter_count = active_filter_count %>
-<div class="feed-toolbar">
-  <% if @presenter.show_feed_tabs? %>
-    <% paused = @presenter.feed_tabs_paused? %>
-    <% tabs = [[t('directory.recent', default: 'Recent'), 'recent', !@presenter.showing_for_you?],
-               [t('directory.for_you', default: 'For You'), 'for_you', @presenter.showing_for_you?]] %>
-    <ul class="nav nav-tabs submission-feed-tabs<%= ' is-paused' if paused %>" role="tablist">
-      <% tabs.each do |label, feed, active| %>
-        <% if paused %>
-          <%# Filters take priority: shown greyed out, not tappable. %>
-          <li role="presentation" class="disabled"><span aria-disabled="true"><%= label %></span></li>
-        <% else %>
-          <li role="presentation" class="<%= 'active' if active %>"><%= link_to label, pins_path(feed: feed) %></li>
-        <% end %>
-      <% end %>
-    </ul>
-  <% end %>
-  <button type="button" class="btn btn-default feed-filter-toggle" data-toggle="collapse" data-target="#feed-filter-panel" aria-controls="feed-filter-panel" aria-expanded="<%= filter_count > 0 %>">
-    <%= fa_icon 'filter', class: 'yellow' %>
-    <span><%= t('header.filter') %></span>
-    <% if filter_count > 0 %><span class="badge"><%= filter_count %></span><% end %>
-  </button>
-  <%= link_to t('public.discussion.new_title', default: 'Start a discussion'), new_discussion_path, class: 'btn btn-default start-discussion-feed' %>
-</div>
-<% if @presenter.feed_tabs_paused? %>
-  <p class="feed-tabs-paused"><%= t('directory.feed_tabs_paused', default: 'Filters are on, so Recent / For You is paused.') %> <%= link_to t('directory.clear_filters', default: 'Clear filters'), pins_path %></p>
-<% end %>
-<div id="feed-filter-panel" class="collapse<%= ' in' if filter_count > 0 %>">
+<div class="feed-toolbar" id="feed-toolbar"><%= render 'pins/toolbar_actions', filter_count: filter_count, dock: false %></div>
+<div id="feed-filter-panel" class="feed-toolbar-panel collapse<%= ' in' if filter_count > 0 %>">
   <%= render partial: 'pins/filter_controls' %>
 </div>
+<div id="feed-compose-panel" class="feed-toolbar-panel collapse">
+  <div class="feed-filter-card feed-compose-card">
+    <%= render 'discussions/form', discussion: Discussion.new(category: 'discussion', visibility: 'everyone'), in_feed: true %>
+  </div>
+</div>
+<%# Phones: the toolbar again, at the bottom of the screen, once the one above
+    has scrolled away (feed_toolbar.js shows it). Its buttons scroll back up
+    and open the same forms. %>
+<nav class="feed-dock" aria-label="<%= t('directory.feed_actions', default: 'Feed actions') %>" hidden><%= render 'pins/toolbar_actions', filter_count: filter_count, dock: true %></nav>
 <%= render 'pins/feed_page' %>

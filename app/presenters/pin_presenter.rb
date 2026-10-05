@@ -45,8 +45,12 @@ class PinPresenter
             elsif @user.present?
               Pin.includes(*CARD_INCLUDES).by_user(@user).paginate(:page => @page)
             elsif has_keywords?
-              # includes are handled inside Query object
-              PinFilterQuery.new(filter).filtered.paginate(:page => @page)
+              # includes are handled inside Query object. For You narrows the
+              # filtered list the same way it narrows the feed (feed_scope),
+              # rather than being dropped while filters are on.
+              filtered = PinFilterQuery.new(filter).filtered
+              filtered = filtered.where(procedure_id: Procedure.where(gender: @current_user.gender.name).select(:id)) if for_you_chosen?
+              filtered.paginate(:page => @page)
             else
               feed_scope.includes(*CARD_INCLUDES).recent.paginate(:page => @page)
             end
@@ -68,16 +72,15 @@ class PinPresenter
     browsing_feed? && personalized_feed_available?
   end
 
-  # Recent / For You stay on screen while feed filters are on (greyed out, see
-  # feed_tabs_paused?), so the toolbar doesn't jump. Not on search results or
-  # someone's own submissions, which are separate views.
-  def show_feed_tabs?
+  # Recent / For You is a choice inside Filter (pins/_filter_controls), for
+  # people who get a For You feed. Not on search results or someone's own
+  # submissions, which are separate views.
+  def offer_for_you?
     @query.blank? && @user.blank? && personalized_feed_available?
   end
 
-  # Filters take priority over Recent / For You.
-  def feed_tabs_paused?
-    show_feed_tabs? && has_keywords?
+  def for_you_chosen?
+    offer_for_you? && @feed == 'for_you'
   end
 
   def list_event_context

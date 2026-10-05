@@ -13,6 +13,21 @@
     ] %>
     <% current_content = params[:content].presence_in(content_options.map(&:last)) || 'all' %>
     <div class="feed-filter-fields">
+      <%# Recent / For You, for people who get a For You feed (PinPresenter).
+          For You works together with the filters below. %>
+      <% if @presenter&.offer_for_you? %>
+        <fieldset class="feed-filter-field feed-content-choice feed-show-choice">
+          <legend><%= t('filter_menu.show', default: 'Show') %></legend>
+          <div class="feed-content-pills">
+            <% [[t('directory.recent', default: 'Recent'), 'recent'], [t('directory.for_you', default: 'For You'), 'for_you']].each do |label, value| %>
+              <label class="feed-content-pill">
+                <%= radio_button_tag :feed, value, (value == 'for_you') == @presenter.for_you_chosen? %>
+                <span><%= label %></span>
+              </label>
+            <% end %>
+          </div>
+        </fieldset>
+      <% end %>
       <%# Three choices, so one tap each (radio pills) rather than a dropdown. %>
       <fieldset class="feed-filter-field feed-content-choice">
         <legend><%= t('filter_menu.content', default: 'Content') %></legend>

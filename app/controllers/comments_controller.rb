@@ -41,8 +41,10 @@ class CommentsController < ApplicationController
   end
 
   def create
+    subject = commented_on
+    ensure_can_reply!(subject)
     service = CommentService.new(
-      commented_on,
+      subject,
       current_user,
       comment_params[:body],
       parent_id,
@@ -94,6 +96,15 @@ class CommentsController < ApplicationController
     rescue
       params[:parent_id]
     end
+  end
+
+  # Only people who can read a discussion can reply to it, and only under a
+  # comment in the same place that they can read; otherwise it's not found.
+  def ensure_can_reply!(subject)
+    Discussion.published.visible_to(current_user).find(subject.id) if subject.is_a?(Discussion)
+    return if parent_id.blank?
+
+    Comment.visible_to(current_user).where(commentable: subject).find(parent_id)
   end
 
   def commented_on

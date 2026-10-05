@@ -79,7 +79,8 @@ CREATE TABLE public.comments (
     rgt integer,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    state character varying
+    state character varying,
+    visibility character varying DEFAULT 'everyone'::character varying NOT NULL
 );
 
 
@@ -181,6 +182,43 @@ CREATE SEQUENCE public.delayed_jobs_id_seq
 --
 
 ALTER SEQUENCE public.delayed_jobs_id_seq OWNED BY public.delayed_jobs.id;
+
+
+--
+-- Name: discussions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.discussions (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    title character varying NOT NULL,
+    body text NOT NULL,
+    visibility character varying DEFAULT 'everyone'::character varying NOT NULL,
+    state character varying DEFAULT 'published'::character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    category character varying DEFAULT 'discussion'::character varying NOT NULL
+);
+
+
+--
+-- Name: discussions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.discussions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: discussions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.discussions_id_seq OWNED BY public.discussions.id;
 
 
 --
@@ -851,6 +889,13 @@ ALTER TABLE ONLY public.delayed_jobs ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: discussions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.discussions ALTER COLUMN id SET DEFAULT nextval('public.discussions_id_seq'::regclass);
+
+
+--
 -- Name: friendly_id_slugs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -999,6 +1044,14 @@ ALTER TABLE ONLY public.content_events
 
 ALTER TABLE ONLY public.delayed_jobs
     ADD CONSTRAINT delayed_jobs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: discussions discussions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.discussions
+    ADD CONSTRAINT discussions_pkey PRIMARY KEY (id);
 
 
 --
@@ -1152,6 +1205,13 @@ CREATE INDEX index_comments_on_commentable_id_and_commentable_type ON public.com
 
 
 --
+-- Name: index_comments_on_subject_visibility; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_comments_on_subject_visibility ON public.comments USING btree (commentable_type, commentable_id, parent_id, visibility);
+
+
+--
 -- Name: index_comments_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1198,6 +1258,27 @@ CREATE INDEX index_content_events_on_visitor_deduplication ON public.content_eve
 --
 
 CREATE INDEX index_content_events_on_visitor_hash_and_occurred_at ON public.content_events USING btree (visitor_hash, occurred_at);
+
+
+--
+-- Name: index_discussions_on_category_and_created_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_discussions_on_category_and_created_at ON public.discussions USING btree (category, created_at);
+
+
+--
+-- Name: index_discussions_on_state_and_visibility_and_created_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_discussions_on_state_and_visibility_and_created_at ON public.discussions USING btree (state, visibility, created_at);
+
+
+--
+-- Name: index_discussions_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_discussions_on_user_id ON public.discussions USING btree (user_id);
 
 
 --
@@ -1575,4 +1656,10 @@ INSERT INTO schema_migrations (version) VALUES ('20260920061000');
 
 
 INSERT INTO schema_migrations (version) VALUES ('20260920190000');
+
+INSERT INTO schema_migrations (version) VALUES ('20261004000000');
+
+INSERT INTO schema_migrations (version) VALUES ('20261005000000');
+
+INSERT INTO schema_migrations (version) VALUES ('20261005000100');
 

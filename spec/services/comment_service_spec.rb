@@ -7,7 +7,7 @@ describe CommentService do
 
 	it 'can create a comment and notify appropriately' do
 		expect_any_instance_of(CommentMailer).to receive(:new_comment_email).with(
-			user.id, pin.id, false).and_return(true)
+			user.id, pin.id, false, 'Pin').and_return(true)
 
 		CommentService.new(pin, commenter, "new comment").create
 		expect(Comment.count).to eq(1)

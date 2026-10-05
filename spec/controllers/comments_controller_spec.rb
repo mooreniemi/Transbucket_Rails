@@ -60,6 +60,7 @@ describe CommentsController, :type => :controller do
     it 'inherits the root visibility for replies' do
       procedure = create(:procedure)
       root = create(:comment, commentable: procedure, visibility: 'subject_contributors')
+      create(:pin, user: user, procedure: procedure) # so they can read the thread
 
       post :create, params: { comment: { commentable_type: 'Procedure', commentable_id: procedure.id, parent_id: root.id, body: 'reply', visibility: 'everyone' } }, xhr: true
 

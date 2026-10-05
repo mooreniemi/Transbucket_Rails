@@ -26,7 +26,7 @@ class Discussion < ActiveRecord::Base
 
   def self.visible_to(user)
     return where(visibility: 'everyone') if user.blank?
-    return all if user.respond_to?(:admin?) && user.admin?
+    return all if user.respond_to?(:moderator?) && user.moderator?
 
     contributor = sanitize_sql_array([
       "EXISTS (SELECT 1 FROM user_trust_grants grants WHERE grants.user_id = ? AND grants.revoked_at IS NULL AND grants.kind IN (?, ?, ?))",

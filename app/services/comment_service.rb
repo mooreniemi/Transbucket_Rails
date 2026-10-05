@@ -8,7 +8,7 @@ class CommentService
     @contains_question = body.include?("?")
     @commenter = commenter
     @parent_comment_id = parent_comment_id
-    @visibility = if %w[Procedure Surgeon Discussion].include?(commentable.class.name)
+    @visibility = if %w[Procedure Surgeon].include?(commentable.class.name)
       visibility.to_s.presence_in(Comment::VISIBILITIES) || 'everyone'
     else
       'everyone'
@@ -52,6 +52,6 @@ class CommentService
 
   def send_email_notification
     # NOTE: not exactly bleeding edge nlp here but succeeds most of the time
-    CommentMailer.new_comment_email(commentable.user.id, commentable.id, contains_question).deliver_now
+    CommentMailer.new_comment_email(commentable.user.id, commentable.id, contains_question, commentable.class.name).deliver_now
   end
 end

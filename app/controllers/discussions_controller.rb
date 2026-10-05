@@ -29,6 +29,16 @@ class DiscussionsController < ApplicationController
     @comments = @discussion.comments_asc(viewer: current_user)
     ActiveRecord::Associations::Preloader.new(records: @comments, associations: { user: :trust_grants }).call
     @new_comment = Comment.build_from(@discussion, current_user, '')
+    # The phone feed opens it over the feed (pin_viewer.js) with ?viewer=1.
+    render layout: !params[:viewer].present?
+  end
+
+  # Its author or a moderator, from its feed card (comments.js.coffee hides
+  # the card); anyone else gets not found.
+  def destroy
+    discussions = current_user.moderator? ? Discussion.all : current_user.discussions
+    discussions.find(params[:id]).destroy!
+    render json: { status: 'destroyed' }, status: :ok
   end
 
   private

@@ -306,3 +306,41 @@ $tap-target: 44px;
     outline-offset: 2px;
   }
 }
+
+// A standalone discussion's category, beside its author (pins/_feed_item,
+// discussions/show).
+.discussion-category-chip {
+  background: #eef3f8;
+  border-radius: 12px;
+  color: #234a6b;
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-right: 6px;
+  padding: 2px 10px;
+}
+
+.standalone-discussion-page {
+  // The post itself, as a card like the replies under it.
+  .standalone-discussion-post {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px 0 12px;
+    padding: 12px 14px 2px;
+  }
+
+  #comments-container:empty {
+    display: none;
+  }
+
+  .comment-meta {
+    margin: 4px 0 12px;
+  }
+
+  .standalone-discussion-body {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+}

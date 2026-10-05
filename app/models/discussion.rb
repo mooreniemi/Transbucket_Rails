@@ -4,6 +4,9 @@ class Discussion < ActiveRecord::Base
 
   belongs_to :user
   acts_as_commentable
+  # Its whole thread goes with it (comments nest per commentable, so every
+  # row with this commentable is part of it).
+  has_many :thread_comments, class_name: 'Comment', as: :commentable, dependent: :delete_all
 
   include AASM
   include CommentsHelper
@@ -34,6 +37,13 @@ class Discussion < ActiveRecord::Base
     ])
     where("discussions.visibility = 'everyone' OR discussions.user_id = ? OR (discussions.visibility = 'contributors' AND (#{contributor}))", user.id).
       distinct
+  end
+
+  # Who a members-only discussion is for, in plain words; nil when it's open.
+  def audience_label
+    return unless visibility == 'contributors'
+
+    I18n.t('public.comment.audience_contributors', default: 'People who have posted a submission')
   end
 
   def contextual?

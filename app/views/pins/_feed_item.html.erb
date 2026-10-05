@@ -1,20 +1,51 @@
 <% if item.kind == 'submission' %>
   <%= render partial: 'pin', locals: { pin: item.record, event_context: event_context } %>
 <% elsif item.kind == 'discussion_post' %>
+  <%# A standalone discussion (discussions/show): laid out like the discussion
+      cards below, with its title as the topic and its category beside the
+      author. The title link is stretched over the whole card. %>
   <% discussion = item.record %>
+  <% thread_path = discussion_path(discussion, locale: I18n.locale) %>
+  <% excerpt, cut = discussion_excerpt(discussion.body) %>
+  <% is_author = current_user && discussion.user_id == current_user.id %>
   <article class="item feed-discussion standalone-feed-discussion" data-discussion-id="<%= discussion.id %>" data-feed-key="discussion-<%= discussion.id %>">
     <div class="panel panel-default">
       <div class="panel-body">
-        <p class="discussion-category"><%= discussion_category_label(discussion.category) %></p>
-        <h2 class="feed-discussion-title"><%= link_to discussion.title, discussion_path(discussion, locale: I18n.locale), class: 'feed-discussion-link' %></h2>
-        <div class="comment-body feed-discussion-excerpt"><%= discussion_excerpt(discussion.body).first %></div>
+        <p class="feed-discussion-topic">
+          <%= fa_icon('comments-o') %>
+          <%= link_to discussion.title, thread_path, class: 'feed-discussion-link' %>
+        </p>
+        <% if discussion.audience_label %>
+          <p class="audience-badge"><%= fa_icon('lock') %> <%= discussion.audience_label %></p>
+        <% end %>
         <div class="comment-meta">
-          <strong class="comment-author"><%= link_to discussion.user.try(:username) || discussion.user.try(:id), pins_path(user: discussion.user) %></strong>
+          <span class="discussion-category-chip"><%= discussion_category_label(discussion.category) %></span>
+          <strong class="comment-author"><%= link_to discussion.user.try(:username) || discussion.user.try(:id), pins_path(user: discussion.user) %></strong><%= render 'shared/trust_badge', user: discussion.user %>
           <span class="comment-meta-separator" aria-hidden="true">·</span>
-          <%= content_tag :time, l(discussion.created_at, format: :long), datetime: discussion.created_at.utc.iso8601, class: 'pin-age comment-age' %>
+          <% posted = l(discussion.created_at, format: :long) %>
+          <%= content_tag :time, posted, datetime: discussion.created_at.utc.iso8601, title: posted, class: 'pin-age comment-age' %>
+        </div>
+        <div class="comment-body feed-discussion-excerpt"><%= excerpt %><% if cut %> <%= link_to t('public.feed.read_more', default: 'Read more'), thread_path, class: 'feed-discussion-more' %><% end %></div>
+      </div>
+      <div class="panel-footer">
+        <div class="actions pin-actions feed-discussion-actions">
+          <span class="pin-actions-icons">
+            <% if is_author || current_user.try(:moderator?) %>
+              <%= link_to thread_path, method: :delete, remote: true,
+                    data: { confirm: t('public.pin.remove_confirm') },
+                    class: 'feed-discussion-delete', title: t('public.pin.remove', default: 'Delete'),
+                    'aria-label' => t('public.pin.remove', default: 'Delete') do %>
+                <%= fa_icon('trash-o') %>
+              <% end %>
+            <% end %>
+          </span>
+          <span class="pin-actions-meta">
+            <% replies = item.reply_count.to_i %>
+            <span class="feed-discussion-replies"><%= fa_icon('comment-o') %> <%= t('public.feed.reply_count', count: replies, default: replies == 1 ? '1 reply' : "#{replies} replies") %></span>
+            <%= link_to t('public.pin.reply'), discussion_path(discussion, locale: I18n.locale, anchor: 'commentable'), class: 'feed-discussion-reply' %>
+          </span>
         </div>
       </div>
-      <div class="panel-footer"><%= link_to t('public.pin.reply', default: 'Reply'), discussion_path(discussion, locale: I18n.locale), class: 'feed-discussion-reply' %></div>
     </div>
   </article>
 <% else %>

@@ -74,5 +74,10 @@ class HomeFeedQuery
     discussion_ids = items.select { |item| item.kind == 'discussion' }.map { |item| item.record.id }
     counts = Comment.reply_counts_for(discussion_ids)
     items.each { |item| item.reply_count = counts.fetch(item.record.id, 0) if item.kind == 'discussion' }
+
+    # A standalone discussion's replies are all the comments on it.
+    post_ids = items.select { |item| item.kind == 'discussion_post' }.map { |item| item.record.id }
+    post_counts = Comment.published_counts_for('Discussion', post_ids)
+    items.each { |item| item.reply_count = post_counts.fetch(item.record.id, 0) if item.kind == 'discussion_post' }
   end
 end

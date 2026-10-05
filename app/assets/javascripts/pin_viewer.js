@@ -7,13 +7,16 @@
 // The pin's own URL is pushed onto the history, so the system back button or
 // gesture closes the viewer, sharing or reloading gives the real pin page, and
 // forward reopens it. The content is the normal pin page rendered without the
-// layout (PinsController#show with ?viewer=1), so comments, safe mode and
+// layout (PinsController#show with ?viewer=1; likewise comments/show and
+// discussions/show), so comments, safe mode and
 // analytics behave the same as on the full page.
 // ES5 only: the asset pipeline's minifier cannot parse newer syntax.
 (function() {
   var PHONE = '(max-width: 767px)',
       PIN_PATH = /\/pins\/[^\/]+\/?$/,
-      DISCUSSION_PATH = /\/comments\/\d+\/?$/;
+      // Discussions on a procedure or surgeon (comments/show) and standalone
+      // ones (discussions/show).
+      DISCUSSION_PATH = /\/(comments|discussions)\/\d+\/?$/;
 
   function init() {
     var pins = document.getElementById('pins');
@@ -120,6 +123,7 @@
           if (window.formatPinAges) { window.formatPinAges(body); }
           if (window.syncCommentForms) { window.syncCommentForms(body); }
           openRequestedReply(url);
+          focusComposer(hash);
           var target = hash && document.getElementById(hash);
           if (target && body.contains(target)) {
             // Again once the photos above it have loaded and pushed it down,
@@ -147,6 +151,13 @@
       var actions = comment.querySelector('.comment-actions');
       var reply = actions && actions.querySelector('.comment-reply');
       if (reply) { reply.click(); }
+    }
+
+    // A standalone discussion card's Reply points at its reply box.
+    function focusComposer(hash) {
+      if (hash !== 'commentable') { return; }
+      var box = body.querySelector('#commentable textarea');
+      if (box) { box.focus({ preventScroll: true }); }
     }
 
     function cardLabel(card) {

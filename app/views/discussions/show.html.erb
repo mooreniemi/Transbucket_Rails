@@ -1,16 +1,23 @@
 <% title @discussion.title %>
+<%# A standalone discussion: the post, its replies and a reply box. The phone
+    feed opens it over the feed (pin_viewer.js) with ?viewer=1. %>
 <div class="comment-thread-page standalone-discussion-page">
-  <p class="discussion-category"><%= discussion_category_label(@discussion.category) %></p>
   <h1 class="pin-page-title"><%= @discussion.title %></h1>
-  <div class="standalone-discussion-body"><%= simple_format(@discussion.body) %></div>
-  <p class="comment-thread-context">
-    <%= fa_icon('comments-o') %>
-    <%= t('public.discussion.by', default: 'Posted by') %>
-    <%= link_to @discussion.user.username.presence || @discussion.user.id, pins_path(user: @discussion.user) %>
-  </p>
-  <div id="comments-container" class="comment-list">
-    <%= render partial: 'comments/comment', collection: @comments, as: :comment %>
+  <div class="standalone-discussion-post">
+    <% if @discussion.audience_label %>
+      <p class="audience-badge"><%= fa_icon('lock') %> <%= @discussion.audience_label %></p>
+    <% end %>
+    <div class="comment-meta">
+      <span class="discussion-category-chip"><%= discussion_category_label(@discussion.category) %></span>
+      <strong class="comment-author"><%= link_to @discussion.user.username.presence || @discussion.user.id, pins_path(user: @discussion.user) %></strong><%= render 'shared/trust_badge', user: @discussion.user %>
+      <span class="comment-meta-separator" aria-hidden="true">·</span>
+      <% posted = l(@discussion.created_at, format: :long) %>
+      <%= content_tag :time, posted, datetime: @discussion.created_at.utc.iso8601, title: posted, class: 'pin-age comment-age' %>
+    </div>
+    <div class="comment-body standalone-discussion-body"><%= simple_format(@discussion.body) %></div>
   </div>
+  <%# On one line so it is truly :empty (and hidden) before the first reply. %>
+  <div id="comments-container" class="comment-list"><%= render partial: 'comments/comment', collection: @comments, as: :comment %></div>
   <div id="commentable" class="comment-composer reply-target">
     <%= render partial: 'comments/form', locals: { comment: @new_comment } %>
   </div>

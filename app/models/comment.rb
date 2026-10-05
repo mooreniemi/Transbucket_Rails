@@ -44,25 +44,30 @@ class Comment < ActiveRecord::Base
   end
 
   # Visibility is inherited from the root discussion so a private thread never
-  # leaks through one of its replies. The correlated EXISTS checks keep this a
-  # single SQL query for a page/feed rather than one trust lookup per comment.
+  # leaks through one of its replies. Authors always see their own threads;
+  # admins and moderators see everything. "People who posted about X" covers
+  # X and its related procedures (Procedure.covered_ids_for). The correlated
+  # checks keep this a single SQL query for a page or feed.
   def self.visible_to(user)
     return where(visibility: 'everyone') if user.blank?
-    return all if user.respond_to?(:admin?) && user.admin?
+    return all if user.respond_to?(:moderator?) && user.moderator?
 
+    root_visibility = 'COALESCE(visibility_roots.visibility, comments.visibility)'
     contributor = sanitize_sql_array([
       "EXISTS (SELECT 1 FROM user_trust_grants grants WHERE grants.user_id = ? AND grants.revoked_at IS NULL AND grants.kind IN (?, ?, ?))",
       user.id, 'contributor', 'vetted', 'moderator'
     ])
+    covered_procedures = Procedure.covered_ids_for(user).presence || [0]
     subject_contributor = sanitize_sql_array([
       <<~SQL.squish,
-        EXISTS (SELECT 1 FROM pins subject_pins
+        (visibility_roots.commentable_type = 'Procedure' AND visibility_roots.commentable_id IN (?))
+        OR (visibility_roots.commentable_type = 'Surgeon' AND EXISTS (SELECT 1 FROM pins subject_pins
           WHERE subject_pins.user_id = ? AND subject_pins.state = 'published'
-            AND ((visibility_roots.commentable_type = 'Procedure' AND subject_pins.procedure_id = visibility_roots.commentable_id)
-              OR (visibility_roots.commentable_type = 'Surgeon' AND subject_pins.surgeon_id = visibility_roots.commentable_id)))
+            AND subject_pins.surgeon_id = visibility_roots.commentable_id))
       SQL
-      user.id
+      covered_procedures, user.id
     ])
+    own_thread = sanitize_sql_array(['comments.user_id = ? OR visibility_roots.user_id = ?', user.id, user.id])
 
     joins(<<~SQL.squish).
       LEFT JOIN comments visibility_roots
@@ -72,8 +77,43 @@ class Comment < ActiveRecord::Base
        AND visibility_roots.lft <= comments.lft
        AND visibility_roots.rgt >= comments.rgt
     SQL
-      where("COALESCE(visibility_roots.visibility, comments.visibility) = 'everyone' OR (COALESCE(visibility_roots.visibility, comments.visibility) = 'contributors' AND (#{contributor})) OR (COALESCE(visibility_roots.visibility, comments.visibility) = 'subject_contributors' AND (#{subject_contributor}))").
+      where("#{root_visibility} = 'everyone' OR (#{own_thread}) OR (#{root_visibility} = 'contributors' AND (#{contributor})) OR (#{root_visibility} = 'subject_contributors' AND (#{subject_contributor}))").
       distinct
+  end
+
+  # Published top-level discussions on a subject that this viewer can't read:
+  # shown as locked stubs so people know they exist and how to join.
+  def self.locked_roots_for(commentable, viewer)
+    roots = where(commentable_type: commentable.class.name, commentable_id: commentable.id, parent_id: nil).
+      where("comments.state IS NULL OR comments.state IN ('', 'published')")
+    roots.where.not(id: visible_to(viewer).select(:id)).order(:created_at)
+  end
+
+  # Published replies at any depth under each of these top-level comments, in
+  # one query (comments nest as a nested set per commentable).
+  def self.reply_counts_for(root_ids)
+    return {} if root_ids.blank?
+
+    from('comments parents').
+      joins(<<~SQL.squish).
+        INNER JOIN comments ON comments.commentable_type = parents.commentable_type
+          AND comments.commentable_id = parents.commentable_id
+          AND comments.lft > parents.lft AND comments.rgt < parents.rgt
+      SQL
+      where('parents.id IN (?)', root_ids).
+      where("comments.state IS NULL OR comments.state IN ('', 'published')").
+      group('parents.id').
+      count
+  end
+
+  # Who a restricted discussion is for, in plain words; nil when it's open.
+  def audience_label
+    case visibility
+    when 'contributors'
+      I18n.t('public.comment.audience_contributors', default: 'People who have posted a submission')
+    when 'subject_contributors'
+      I18n.t('public.comment.audience_subject_contributors', subject: commentable.to_s, default: 'People who posted about %{subject}')
+    end
   end
 
   def self.new_as_of(last_login_time)

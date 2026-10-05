@@ -134,7 +134,7 @@
     <% end %>
 
     <% if user_signed_in? %>
-      <%= render 'comments/discussion_section', subject: @surgeon, comments: @comments %>
+      <%= render 'comments/discussion_section', subject: @surgeon, comments: @comments, locked: @locked_discussions, locked_reply_counts: @locked_reply_counts %>
     <% end %>
     </div>
   </div>

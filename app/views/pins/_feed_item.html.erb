@@ -20,6 +20,9 @@
           <span class="sr-only"><%= t('directory.discussion_about', default: 'Discussion about') %></span>
           <%= link_to subject.to_s, thread_path, class: 'feed-discussion-link' %>
         </p>
+        <% if comment.audience_label %>
+          <p class="audience-badge"><%= fa_icon('lock') %> <%= comment.audience_label %></p>
+        <% end %>
         <div class="comment-meta">
           <strong class="comment-author"><%= link_to comment.user.try(:username) || comment.user.try(:id), pins_path(user: comment.user) %></strong><%= render 'shared/trust_badge', user: comment.user %>
           <span class="comment-meta-separator" aria-hidden="true">·</span>

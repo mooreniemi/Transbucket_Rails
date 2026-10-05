@@ -6,10 +6,19 @@
     <%= f.error_notification %>
     <%= f.input :body, :input_html => {:class => 'form-control', :rows => "4", 'aria-label' => t('public.pin.comment_placeholder')}, :label => false, :placeholder => t('public.pin.comment_placeholder') %>
     <% if @parent_id.blank? %>
-      <div class="comment-visibility">
-        <%= label_tag 'comment_visibility', t('public.comment.visibility_label', default: 'Who can see this?') %>
-        <%= select_tag 'comment[visibility]', options_for_select(comment_visibility_options(@new_comment.commentable), @new_comment.visibility || 'everyone'), id: 'comment_visibility', class: 'form-control' %>
-      </div>
+      <% options = comment_visibility_options(@new_comment.commentable) %>
+      <% if options.size > 1 %>
+        <%# Who a new discussion is for: one tap each. Replies follow their thread. %>
+        <fieldset class="comment-audience">
+          <legend><%= t('public.comment.visibility_label', default: 'Who can see this?') %></legend>
+          <% options.each do |label, value| %>
+            <label class="comment-audience-pill">
+              <%= radio_button_tag 'comment[visibility]', value, value == (@new_comment.visibility || 'everyone'), id: "comment_visibility_#{value}" %>
+              <span><%= label %></span>
+            </label>
+          <% end %>
+        </fieldset>
+      <% end %>
     <% end %>
     <%= f.hidden_field :parent_id, :value => @parent_id %>
     <%= f.hidden_field :commentable_id, :value => @new_comment.commentable_id %>

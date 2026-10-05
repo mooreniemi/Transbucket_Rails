@@ -1,10 +1,27 @@
-<%# The discussion at the bottom of procedure and surgeon pages (the jump link
+<%# Locals: subject, comments, locked (optional), locked_reply_counts (optional).
+    The discussion at the bottom of procedure and surgeon pages (the jump link
     near the top, DiscussionsHelper#discussion_jump_link, points here). Kept
     outside fragment caches so new comments show up on the next visit. %>
 <section id="discussion" class="subject-discussion" aria-labelledby="discussion-heading">
   <h2 id="discussion-heading"><%= fa_icon('comments-o') %> <%= t('public.pin.discussion') %></h2>
   <div id="comments-container">
     <%= render partial: 'comments/comment', collection: comments, as: :comment %>
+    <%# Threads this viewer can't read: shown locked, with who they're for and
+        how big they are (never their words or author), and how to join. %>
+    <% (locked || []).each do |thread| %>
+      <div class="locked-discussion" data-comment-id="<%= thread.id %>">
+        <p class="locked-discussion-audience">
+          <%= fa_icon('lock') %>
+          <%= t('public.comment.locked_discussion', default: 'A discussion for') %>
+          <%# Mid-sentence, so lowercase the label's first letter. %>
+          <strong><%= thread.audience_label.sub(/\A\p{Lu}/) { |letter| letter.downcase } %></strong>
+          <span class="comment-meta-separator" aria-hidden="true">·</span>
+          <% replies = (locked_reply_counts || {}).fetch(thread.id, 0) %>
+          <%= t('public.feed.reply_count', count: replies, default: replies == 1 ? '1 reply' : "#{replies} replies") %>
+        </p>
+        <%= link_to t('public.comment.locked_join', default: 'Share your experience to join'), new_pin_path, class: 'locked-discussion-join' %>
+      </div>
+    <% end %>
     <%= link_to new_comment_path(commentable_id: subject.id, commentable_type: subject.class.name), remote: true, class: 'start-discussion' do %><%= fa_icon('comment-o') %> <%= t('public.pin.start_discussion', default: 'Start a discussion') %><% end %>
     <div id="commentable" class="reply-target"></div>
   </div>

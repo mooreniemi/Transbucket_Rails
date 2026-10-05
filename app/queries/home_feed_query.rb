@@ -57,24 +57,9 @@ class HomeFeedQuery
       where(PUBLISHED_COMMENT_SQL)
   end
 
-  # Published replies at any depth for the discussions on this page, in one
-  # query. Comments nest as a nested set per commentable (lft/rgt).
   def add_reply_counts(items)
     discussion_ids = items.select { |item| item.kind == 'discussion' }.map { |item| item.record.id }
-    counts = if discussion_ids.empty?
-               {}
-             else
-               Comment.from('comments parents').
-                 joins(<<~SQL.squish).
-                   INNER JOIN comments ON comments.commentable_type = parents.commentable_type
-                     AND comments.commentable_id = parents.commentable_id
-                     AND comments.lft > parents.lft AND comments.rgt < parents.rgt
-                 SQL
-                 where('parents.id IN (?)', discussion_ids).
-                 where(PUBLISHED_COMMENT_SQL).
-                 group('parents.id').
-                 count
-             end
+    counts = Comment.reply_counts_for(discussion_ids)
     items.each { |item| item.reply_count = counts.fetch(item.record.id, 0) if item.kind == 'discussion' }
   end
 end

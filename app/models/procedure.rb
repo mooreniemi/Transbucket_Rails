@@ -38,6 +38,19 @@ class Procedure < ActiveRecord::Base
 
   # Editorial links come first; token matches fill gaps for variants such as
   # "laparoscopic hysterectomy" and "groin flap phalloplasty".
+  # Procedures a user counts as having posted about, for discussions shown to
+  # "people who posted about X": the ones they published submissions for, plus
+  # those procedures' related ones (so an RFF phalloplasty submission covers
+  # phalloplasty). Memoized on the user for the request.
+  def self.covered_ids_for(user)
+    return [] if user.blank?
+    return user.instance_variable_get(:@covered_procedure_ids) if user.instance_variable_defined?(:@covered_procedure_ids)
+
+    posted = Pin.where(user_id: user.id, state: 'published').where.not(procedure_id: nil).distinct.pluck(:procedure_id)
+    related = where(id: posted).flat_map { |procedure| procedure.related_procedures.map(&:id) }
+    user.instance_variable_set(:@covered_procedure_ids, (posted + related).uniq)
+  end
+
   def related_procedures
     explicit_names = (editorial_guide || {}).fetch('related_procedures', [])
     explicit = self.class.where(name: explicit_names).to_a

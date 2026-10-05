@@ -19,6 +19,9 @@
           <%= link_to "×", comment_path(comment), :method => :delete, :remote => true, data: {confirm: t('public.pin.remove_confirm')}, :disable_with => "×", :class => 'close' %>
         <% end %>
       </div>
+      <% if comment.parent_id.nil? && comment.audience_label %>
+        <p class="audience-badge"><%= fa_icon('lock') %> <%= comment.audience_label %></p>
+      <% end %>
       <div class="comment-body"><%= comment.body %></div>
       <div class="comment-actions">
         <%# The comment's own commentable: right on pin, procedure and surgeon pages alike. %>

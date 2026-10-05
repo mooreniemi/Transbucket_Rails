@@ -104,5 +104,5 @@
       </div>
     </section>
   <% end %>
-  <%= render 'comments/discussion_section', subject: @procedure, comments: @comments %>
+  <%= render 'comments/discussion_section', subject: @procedure, comments: @comments, locked: @locked_discussions, locked_reply_counts: @locked_reply_counts %>
 <% end %>

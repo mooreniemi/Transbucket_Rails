@@ -1,11 +1,13 @@
 module CommentsHelper
+  # Who a new discussion is for, in plain words (comments/_form).
   def comment_visibility_options(commentable)
-    return [[t('public.comment.visibility_everyone', default: 'Everyone'), 'everyone']] unless %w[Procedure Surgeon].include?(commentable.class.name)
+    everyone = [t('public.comment.visibility_everyone', default: 'Everyone'), 'everyone']
+    return [everyone] unless %w[Procedure Surgeon].include?(commentable.class.name)
 
     [
-      [t('public.comment.visibility_everyone', default: 'Everyone'), 'everyone'],
-      [t('public.comment.visibility_contributors', default: 'Contributors'), 'contributors'],
-      [t('public.comment.visibility_subject_contributors', default: 'Subject contributors'), 'subject_contributors']
+      everyone,
+      [t('public.comment.audience_contributors', default: 'People who have posted a submission'), 'contributors'],
+      [t('public.comment.audience_subject_contributors', subject: commentable.to_s, default: 'People who posted about %{subject}'), 'subject_contributors']
     ]
   end
 

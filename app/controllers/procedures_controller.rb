@@ -23,6 +23,8 @@ class ProceduresController < ApplicationController
     # procedure pages are public, but comments should be private
     if current_user
       @comments = @procedure.comments_asc(viewer: current_user)
+      @locked_discussions = Comment.locked_roots_for(@procedure, current_user).to_a
+      @locked_reply_counts = Comment.reply_counts_for(@locked_discussions.map(&:id))
       ActiveRecord::Associations::Preloader.new(records: @comments, associations: { user: :trust_grants }).call
       @new_comment = Comment.build_from(@procedure, current_user, "")
       @safe_mode = current_user.preference.present? && UserPolicy.new(current_user).safe_mode?

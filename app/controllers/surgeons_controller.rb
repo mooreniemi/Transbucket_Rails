@@ -33,6 +33,8 @@ class SurgeonsController < ApplicationController
     @rating_distributions_by_procedure = nil
     if user_signed_in?
       @comments = @surgeon.comments_asc(viewer: current_user)
+      @locked_discussions = Comment.locked_roots_for(@surgeon, current_user).to_a
+      @locked_reply_counts = Comment.reply_counts_for(@locked_discussions.map(&:id))
       ActiveRecord::Associations::Preloader.new(records: @comments, associations: { user: :trust_grants }).call
       @new_comment = Comment.build_from(@surgeon, current_user, "")
       @latest_pins = pins.recent.

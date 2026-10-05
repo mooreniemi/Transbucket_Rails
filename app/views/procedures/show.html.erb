@@ -29,7 +29,8 @@
     ]
   }
 ) %>
-<% cache([I18n.locale, @procedure]) do %>
+<%# The heading is rendered fresh (its Discussion link carries a live count);
+    the reference sections below it are cached. %>
   <div class="panel panel-default" itemscope itemtype="https://schema.org/MedicalProcedure">
     <div class="panel-heading">
       <h1><%= procedure_name %></h1>
@@ -37,7 +38,11 @@
         <p class="procedure-summary"><%= guide['summary'] %></p>
       <% end %>
       <%= link_to t('public.pin.see_all_submissions'), pins_path(procedure: @procedure.id) %>
+      <% if current_user %>
+        <p class="discussion-jump-row"><%= discussion_jump_link(@procedure) %></p>
+      <% end %>
     </div>
+<% cache([I18n.locale, @procedure, 'reference']) do %>
     <% if @procedure.body_type %>
       <div class="panel-body" itemprop="bodyLocation">
         <i><%= t('public.pin.classified_as', body_type: @procedure.body_type) %></i>
@@ -77,9 +82,8 @@
         </ul>
       </div>
     <% end %>
-    <!-- List group -->
-  </div>
 <% end %>
+  </div>
 
 <% if current_user && @latest_pins.present? %>
   <section class="procedure-recent-submissions" aria-labelledby="procedure-recent-submissions-heading">
@@ -103,11 +107,5 @@
       </div>
     </section>
   <% end %>
-  <h4><%= fa_icon("comments-o") %> <%= t('public.pin.discussion') %></h4>
-  <div id="comments-container">
-    <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>
-    <%= link_to "<h5>#{fa_icon("comment-o")} #{t('public.pin.add_thread')}</h5>".html_safe, new_comment_path(commentable_id: @procedure.id, commentable_type: "Procedure"), remote: true %>
-    <div id="commentable" class="reply-target">
-    </div>
-  </div>
+  <%= render 'comments/discussion_section', subject: @procedure, comments: @comments %>
 <% end %>

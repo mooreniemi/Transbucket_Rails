@@ -1,0 +1,11 @@
+<%# The discussion at the bottom of procedure and surgeon pages (the jump link
+    near the top, DiscussionsHelper#discussion_jump_link, points here). Kept
+    outside fragment caches so new comments show up on the next visit. %>
+<section id="discussion" class="subject-discussion" aria-labelledby="discussion-heading">
+  <h2 id="discussion-heading"><%= fa_icon('comments-o') %> <%= t('public.pin.discussion') %></h2>
+  <div id="comments-container">
+    <%= render partial: 'comments/comment', collection: comments, as: :comment %>
+    <%= link_to "<h5>#{fa_icon('comment-o')} #{t('public.pin.add_thread')}</h5>".html_safe, new_comment_path(commentable_id: subject.id, commentable_type: subject.class.name), remote: true %>
+    <div id="commentable" class="reply-target"></div>
+  </div>
+</section>

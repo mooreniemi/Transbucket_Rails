@@ -46,16 +46,22 @@
       }
     }
 
+    // Pins are keyed by id; discussion cards (pins/_feed_item) carry their
+    // own data-feed-key, so the two can't collide.
+    function cardKey(item) {
+      return item.getAttribute('data-feed-key') || ('pin-' + item.getAttribute('data-pin-id'));
+    }
+
     function appendCards(doc) {
       var seen = {}, added = [];
-      Array.prototype.forEach.call(pins.querySelectorAll('.item[data-pin-id]'), function(item) {
-        seen[item.getAttribute('data-pin-id')] = true;
+      Array.prototype.forEach.call(pins.querySelectorAll('.item[data-pin-id], .item[data-feed-key]'), function(item) {
+        seen[cardKey(item)] = true;
       });
-      // A pin posted while you scroll shifts every page down by one, so the
+      // A post added while you scroll shifts every page down by one, so the
       // next page can repeat the last card. Ad slots need their script run,
       // which parsed HTML does not do, so leave them out.
-      Array.prototype.forEach.call(doc.querySelectorAll('#pins > .item[data-pin-id]'), function(item) {
-        var id = item.getAttribute('data-pin-id');
+      Array.prototype.forEach.call(doc.querySelectorAll('#pins > .item[data-pin-id], #pins > .item[data-feed-key]'), function(item) {
+        var id = cardKey(item);
         if (seen[id]) { return; }
         seen[id] = true;
         var card = document.importNode(item, true);

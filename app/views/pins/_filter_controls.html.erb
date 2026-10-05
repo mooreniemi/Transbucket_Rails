@@ -7,15 +7,24 @@
   <%= form_tag pins_path, method: 'get', id: 'filter_dropdown' do %>
     <% scope_options = Pin::SCOPES.map { |scope| [t("filter_scopes.#{scope}"), scope] } %>
     <% content_options = [
-      [t('filter_menu.all_content', default: 'Submissions and discussions'), 'all'],
-      [t('filter_menu.submissions_only', default: 'Submissions only'), 'submissions'],
-      [t('filter_menu.discussions_only', default: 'Discussions only'), 'discussions']
+      [t('filter_menu.all_content_short', default: 'All'), 'all'],
+      [t('filter_menu.submissions_short', default: 'Submissions'), 'submissions'],
+      [t('filter_menu.discussions_short', default: 'Discussions'), 'discussions']
     ] %>
+    <% current_content = params[:content].presence_in(content_options.map(&:last)) || 'all' %>
     <div class="feed-filter-fields">
-      <div class="feed-filter-field">
-        <%= label_tag :content, t('filter_menu.content', default: 'Content') %>
-        <%= select_tag :content, options_for_select(content_options, params[:content].presence || 'all'), class: 'form-control' %>
-      </div>
+      <%# Three choices, so one tap each (radio pills) rather than a dropdown. %>
+      <fieldset class="feed-filter-field feed-content-choice">
+        <legend><%= t('filter_menu.content', default: 'Content') %></legend>
+        <div class="feed-content-pills">
+          <% content_options.each do |label, value| %>
+            <label class="feed-content-pill">
+              <%= radio_button_tag :content, value, current_content == value %>
+              <span><%= label %></span>
+            </label>
+          <% end %>
+        </div>
+      </fieldset>
       <div class="feed-filter-field">
         <%= label_tag :scope, t('filter_menu.scope') %>
         <%= select_tag :scope, options_for_select(scope_options, params[:scope]), { multiple: true, class: 'chosen-select', 'data-placeholder' => t('filter_menu.scope') }.merge(touch_picker_data(t('filter_menu.scope'))) %>

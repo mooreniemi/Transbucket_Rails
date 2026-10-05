@@ -1,22 +1,58 @@
 <% if item.kind == 'submission' %>
   <%= render partial: 'pin', locals: { pin: item.record, event_context: event_context } %>
 <% else %>
+  <%# A discussion card: what it is about first, who said it, the opening of
+      what they said, then the same kind of footer as a photo post.
+      The topic link is stretched over the whole card (feed_discussions.css),
+      so tapping anywhere opens the thread at this comment; the author, Read
+      more and footer actions sit above it and keep working on their own. %>
   <% comment = item.record %>
   <% subject = comment.commentable %>
-  <article class="item feed-discussion" data-comment-id="<%= comment.id %>">
+  <% thread_path = polymorphic_path(subject, locale: I18n.locale, anchor: "comment-#{comment.id}") %>
+  <% excerpt, cut = discussion_excerpt(comment.body) %>
+  <% is_author = current_user && comment.user_id == current_user.id %>
+  <article class="item feed-discussion" data-comment-id="<%= comment.id %>" data-feed-key="comment-<%= comment.id %>">
     <div class="panel panel-default">
       <div class="panel-body">
+        <p class="feed-discussion-topic">
+          <%= fa_icon('comments-o') %>
+          <span class="sr-only"><%= t('directory.discussion_about', default: 'Discussion about') %></span>
+          <%= link_to subject.to_s, thread_path, class: 'feed-discussion-link' %>
+        </p>
         <div class="comment-meta">
-          <strong class="comment-author"><%= link_to comment.user.try(:username) || comment.user.try(:id), pins_path(user: comment.user) %></strong>
+          <strong class="comment-author"><%= link_to comment.user.try(:username) || comment.user.try(:id), pins_path(user: comment.user) %></strong><%= render 'shared/trust_badge', user: comment.user %>
           <span class="comment-meta-separator" aria-hidden="true">·</span>
           <% posted = l(comment.created_at, format: :long) %>
           <%= content_tag :time, posted, datetime: comment.created_at.utc.iso8601, title: posted, class: 'pin-age comment-age' %>
         </div>
-        <p class="feed-discussion-subject">
-          <%= t('directory.discussion_about', default: 'Discussion about') %>
-          <%= link_to subject.to_s, polymorphic_path(subject, locale: I18n.locale, anchor: 'comments-container') %>
-        </p>
-        <div class="comment-body"><%= comment.body %></div>
+        <div class="comment-body feed-discussion-excerpt"><%= excerpt %><% if cut %> <%= link_to t('public.feed.read_more', default: 'Read more'), thread_path, class: 'feed-discussion-more' %><% end %></div>
+      </div>
+      <div class="panel-footer">
+        <div class="actions pin-actions feed-discussion-actions">
+          <span class="pin-actions-icons">
+            <% if is_author || current_user.try(:admin?) %>
+              <%= link_to comment_path(comment), method: :delete, remote: true,
+                    data: { confirm: t('public.pin.remove_confirm') },
+                    class: 'feed-discussion-delete', title: t('public.pin.remove', default: 'Delete'),
+                    'aria-label' => t('public.pin.remove', default: 'Delete') do %>
+                <%= fa_icon('trash-o') %>
+              <% end %>
+            <% end %>
+            <% unless is_author %>
+              <%= link_to comment_flags_path(comment), method: :post, remote: true,
+                    class: 'flag-comment', 'data-comment-id' => comment.id,
+                    title: t('public.pin.report'), 'aria-label' => t('public.pin.report'),
+                    data: { confirm: t('public.pin.report_comment_confirm'), reported_label: t('public.pin.reported') } do %>
+                <%= fa_icon('flag') %>
+              <% end %>
+            <% end %>
+          </span>
+          <span class="pin-actions-meta">
+            <% replies = item.reply_count.to_i %>
+            <span class="feed-discussion-replies"><%= fa_icon('comment-o') %> <%= t('public.feed.reply_count', count: replies, default: replies == 1 ? '1 reply' : "#{replies} replies") %></span>
+            <%= link_to t('public.pin.reply'), polymorphic_path(subject, locale: I18n.locale, reply_to: comment.id, anchor: "comment-#{comment.id}"), class: 'feed-discussion-reply' %>
+          </span>
+        </div>
       </div>
     </div>
   </article>

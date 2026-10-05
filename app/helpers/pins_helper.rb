@@ -6,6 +6,19 @@ module PinsHelper
       (params[:content].present? && params[:content] != 'all' ? 1 : 0)
   end
 
+  DISCUSSION_EXCERPT_WORDS = 40
+
+  # The opening of a discussion for its feed card: the first words, keeping the
+  # author's own line breaks, and whether anything was cut (so the card can
+  # offer "Read more"). The full text is on the thread page.
+  def discussion_excerpt(text, words: DISCUSSION_EXCERPT_WORDS)
+    text = text.to_s.strip
+    opening = text[/\A\s*(?:\S+\s+){#{words - 1}}\S+/m]
+    return [text, false] if opening.nil? || opening.length >= text.length
+
+    ["#{opening.rstrip}…", true]
+  end
+
   # Keyed by Gender#name rather than id -- ids aren't stable across
   # environments (or even within one, if genders are ever reseeded), so an
   # id-keyed hash risks silently misgendering users if a Gender's id ever

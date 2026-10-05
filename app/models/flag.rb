@@ -24,10 +24,13 @@ class Flag
 
   private
 
+  # A pin's author can take a comment on their own pin straight to review.
+  # Comments on procedures and surgeons have no such owner.
   def flagger_is_pin_author?
     return false if content.is_a?(Pin)
     return false if user.nil?
-    pin_author = Pin.find(content.commentable_id).user
+    return false unless content.commentable_type == 'Pin'
+    pin_author = content.commentable&.user
     return false if pin_author.nil?
     user.id == pin_author.id
   end

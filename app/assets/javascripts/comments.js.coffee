@@ -46,3 +46,12 @@ $(document)
     $(this).closest('.comment').hide('fast')
   .on "ajax:error", ".close", ->
     $(this).closest('.comment').fadeTo('fast', 1)
+
+# Delete your own discussion from its home-feed card (pins/_feed_item)
+$(document)
+  .on "ajax:beforeSend", ".feed-discussion-delete", ->
+    $(this).closest('.feed-discussion').fadeTo('fast', 0.5)
+  .on "ajax:success", ".feed-discussion-delete", ->
+    $(this).closest('.feed-discussion').hide('fast')
+  .on "ajax:error", ".feed-discussion-delete", ->
+    $(this).closest('.feed-discussion').fadeTo('fast', 1)

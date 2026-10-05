@@ -113,19 +113,23 @@ class Pin < ActiveRecord::Base
     where(procedure_id: 911)
   end
 
+  # A post's latest activity: when it was created or a photo was last added or
+  # changed. Edits that only touch pins.updated_at (bulk cleanups) don't count.
+  # Shared with HomeFeedQuery, which merges posts with discussions by this time.
+  RECENT_ACTIVITY_SQL = <<~SQL.squish.freeze
+    GREATEST(
+      pins.created_at,
+      COALESCE(MAX(pin_images.created_at), pins.created_at),
+      COALESCE(MAX(pin_images.updated_at), pins.created_at),
+      COALESCE(MAX(pin_images.photo_updated_at), pins.created_at)
+    )
+  SQL
+
   def self.recent
     published.
       joins('LEFT OUTER JOIN pin_images ON pin_images.pin_id = pins.id').
       group('pins.id').
-      order(Arel.sql(<<~SQL.squish))
-        GREATEST(
-          pins.created_at,
-          COALESCE(MAX(pin_images.created_at), pins.created_at),
-          COALESCE(MAX(pin_images.updated_at), pins.created_at),
-          COALESCE(MAX(pin_images.photo_updated_at), pins.created_at)
-        ) DESC,
-        pins.id DESC
-      SQL
+      order(Arel.sql("#{RECENT_ACTIVITY_SQL} DESC, pins.id DESC"))
   end
 
   def self.by_gender(gender_name)

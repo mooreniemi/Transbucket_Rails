@@ -14,7 +14,7 @@ $(document).ready(function(){
         break;
       case "removed":
         // persists, item won't show up from server once in review
-        $('.comment[data-comment-id="' + commentId + '"]').hide();
+        $('.comment[data-comment-id="' + commentId + '"], .feed-discussion[data-comment-id="' + commentId + '"]').hide();
         break;
       default:
         console.log("unknown status reached while flagging " + commentId);

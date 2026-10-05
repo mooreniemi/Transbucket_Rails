@@ -1,0 +1,180 @@
+// Discussion cards in the home feed (pins/_feed_item) and the Content choice
+// in the feed filter (pins/_filter_controls). Phone first: everything you can
+// tap is at least 44px tall, and the whole card opens the thread.
+
+$discussion-ink: #222;
+$discussion-muted: #6b6b6b;
+$discussion-accent: #337ab7;
+$tap-target: 44px;
+
+.feed-discussion {
+  .panel {
+    position: relative; // anchors the stretched topic link below
+  }
+
+  .panel-body {
+    padding-bottom: 10px;
+  }
+}
+
+.feed-discussion-topic {
+  align-items: baseline;
+  display: flex;
+  font-size: 17px;
+  font-weight: 600;
+  gap: 8px;
+  line-height: 1.3;
+  margin: 0 0 6px;
+
+  .fa {
+    color: $discussion-muted;
+    flex: none;
+  }
+}
+
+// The topic link covers the whole card, so a tap anywhere opens the thread.
+.feed-discussion-link {
+  color: $discussion-ink;
+  overflow-wrap: anywhere;
+
+  &::after {
+    content: '';
+    inset: 0;
+    position: absolute;
+    z-index: 1;
+  }
+
+  &:focus-visible::after {
+    border-radius: 4px;
+    outline: 2px solid $discussion-accent;
+    outline-offset: -2px;
+  }
+}
+
+// Things inside the card that do something else sit above that link.
+.feed-discussion .comment-author a,
+.feed-discussion .trust-badge,
+.feed-discussion-more,
+.feed-discussion .panel-footer {
+  position: relative;
+  z-index: 2;
+}
+
+.feed-discussion .comment-meta {
+  padding-right: 0; // no delete × in the meta row here (it's in the footer)
+}
+
+.feed-discussion-excerpt {
+  margin-bottom: 0;
+}
+
+.feed-discussion-more {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.feed-discussion-actions {
+  min-height: $tap-target;
+
+  .pin-actions-icons a {
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    margin: -8px -4px;
+    min-height: $tap-target;
+    min-width: $tap-target;
+    padding: 0 10px;
+  }
+}
+
+.feed-discussion-replies {
+  color: $discussion-muted;
+}
+
+.feed-discussion-reply {
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 22px;
+  color: $discussion-ink;
+  display: inline-flex;
+  font-weight: 600;
+  min-height: $tap-target;
+  padding: 0 16px;
+
+  &:hover,
+  &:focus {
+    border-color: #999;
+    color: $discussion-ink;
+    text-decoration: none;
+  }
+}
+
+// Landing on a comment from the feed (#comment-<id>): keep it clear of the
+// fixed navbar and show briefly which one it is.
+.comment {
+  scroll-margin-top: 72px;
+}
+
+.comment:target > .comment-body {
+  animation: comment-target-flash 2.4s ease-out 1;
+  border-radius: 4px;
+}
+
+@keyframes comment-target-flash {
+  0% { background-color: #fff3c4; }
+  100% { background-color: transparent; }
+}
+
+// Content: three one-tap choices (radio pills) in the feed filter.
+.feed-content-choice {
+  border: 0;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+
+  legend {
+    border: 0;
+    font-size: inherit;
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+}
+
+.feed-content-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.feed-content-pill {
+  cursor: pointer;
+  font-weight: normal;
+  margin: 0;
+  position: relative;
+
+  input {
+    opacity: 0;
+    position: absolute;
+  }
+
+  span {
+    align-items: center;
+    background: #fff;
+    border: 1px solid #888;
+    border-radius: 22px;
+    display: inline-flex;
+    min-height: $tap-target;
+    padding: 0 18px;
+  }
+
+  input:checked + span {
+    background: #fff8e1;
+    border-color: #c99700;
+    font-weight: 600;
+  }
+
+  input:focus-visible + span {
+    outline: 2px solid $discussion-accent;
+    outline-offset: 2px;
+  }
+}

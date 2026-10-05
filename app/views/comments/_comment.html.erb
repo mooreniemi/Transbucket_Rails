@@ -21,7 +21,8 @@
       </div>
       <div class="comment-body"><%= comment.body %></div>
       <div class="comment-actions">
-        <% commentable = @pin ? @pin : @procedure %>
+        <%# The comment's own commentable: right on pin, procedure and surgeon pages alike. %>
+        <% commentable = comment.commentable %>
         <%= link_to t('public.pin.reply'), new_comment_path(commentable_id: commentable.try(:id), commentable_type: commentable.try(:class), parent_id: comment.id), remote: true, class: 'comment-reply' %>
         <%= link_to(t('public.pin.report'), comment_flags_path(comment), :method => :post, remote: true, class: "flag-comment", "data-comment-id" => comment.id,
           title: t('public.pin.report'), data: { confirm: t('public.pin.report_comment_confirm'), reported_label: t('public.pin.reported') }) unless is_author %>

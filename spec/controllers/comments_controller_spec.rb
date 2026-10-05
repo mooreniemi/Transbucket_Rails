@@ -48,6 +48,32 @@ describe CommentsController, :type => :controller do
       expect(Comment.last.commentable).to eq(surgeon)
     end
 
+    it 'stores a selected visibility for a contextual discussion' do
+      procedure = create(:procedure)
+
+      post :create, params: { comment: { commentable_type: 'Procedure', commentable_id: procedure.id, body: 'contributors only', visibility: 'contributors' } }, xhr: true
+
+      expect(response).to have_http_status(:created)
+      expect(Comment.last.visibility).to eq('contributors')
+    end
+
+    it 'inherits the root visibility for replies' do
+      procedure = create(:procedure)
+      root = create(:comment, commentable: procedure, visibility: 'subject_contributors')
+
+      post :create, params: { comment: { commentable_type: 'Procedure', commentable_id: procedure.id, parent_id: root.id, body: 'reply', visibility: 'everyone' } }, xhr: true
+
+      expect(response).to have_http_status(:created)
+      expect(Comment.last.visibility).to eq('subject_contributors')
+    end
+
+    it 'keeps submission comments public even if a forged visibility is submitted' do
+      post :create, params: { comment: { commentable_type: 'Pin', commentable_id: pin.id, body: 'public pin comment', visibility: 'contributors' } }, xhr: true
+
+      expect(response).to have_http_status(:created)
+      expect(Comment.last.visibility).to eq('everyone')
+    end
+
     it "rejects a commentable_type outside the allowed list without touching the database" do
       post :create, params: { comment: { commentable_type: "User", commentable_id: user.id, body: "gotcha" } }, xhr: true
 

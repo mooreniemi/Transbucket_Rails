@@ -19,7 +19,7 @@ class PinPresenter
     @filter = opts
 
     if browsing_feed? && @feed != 'for_you' && @content.present?
-      @feed_items_query = HomeFeedQuery.new(content: @content, page: @page)
+      @feed_items_query = HomeFeedQuery.new(content: @content, page: @page, viewer: @current_user)
       @feed_items = @feed_items_query.call
       @pins = WillPaginate::Collection.create(@page, @feed_items_query.per_page, @feed_items_query.total_entries) do |pager|
         pager.replace(@feed_items)

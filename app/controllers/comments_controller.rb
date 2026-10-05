@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
   # reply; a comment on a submission goes to the submission page.
   def show
     comment = Comment.find(params[:id])
-    raise ActiveRecord::RecordNotFound unless comment.published? || current_user.admin?
+    raise ActiveRecord::RecordNotFound unless comment.published? && Comment.visible_to(current_user).where(id: comment.id).exists? || current_user.admin?
 
     root = comment.root
     anchor = "comment-#{comment.id}"
@@ -43,7 +43,8 @@ class CommentsController < ApplicationController
       commented_on,
       current_user,
       comment_params[:body],
-      parent_id
+      parent_id,
+      comment_params[:visibility]
     )
     service.create
 
@@ -76,7 +77,7 @@ class CommentsController < ApplicationController
 
   private
   def comment_params
-    params.require(:comment).permit(:commentable_id, :commentable_type, :parent_id, :body)
+    params.require(:comment).permit(:commentable_id, :commentable_type, :parent_id, :body, :visibility)
   end
 
   def commentable

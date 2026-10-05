@@ -66,6 +66,12 @@ describe CommentsController, type: :controller do
 
       expect { get :show, params: { id: root.id, locale: 'en' } }.to raise_error(ActiveRecord::RecordNotFound)
     end
+
+    it 'does not show a contributor-only discussion to a regular viewer' do
+      root.update!(visibility: 'contributors')
+
+      expect { get :show, params: { id: root.id, locale: 'en' } }.to raise_error(ActiveRecord::RecordNotFound)
+    end
   end
 
   it 'asks you to sign in first' do

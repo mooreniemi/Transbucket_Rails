@@ -5,7 +5,11 @@ class ProceduresController < ApplicationController
   def index
     @procedures = Procedure.all.order(:name)
     @pins_per_procedure = Procedure.joins(:pins).group("pins.procedure_id").count
-    @comments_per_procedure = Procedure.joins(:comment_threads).group("comments.commentable_id").count
+    # Do not leak the existence of contributor-only discussions on the public
+    # directory; the subject page/feed applies the same visibility policy.
+    @comments_per_procedure = Comment.visible_to(nil).
+      where(commentable_type: 'Procedure').
+      group(:commentable_id).count
     @avg_satisfaction_by_procedure = Pin.where.not(satisfaction: [nil, 0]).group(:procedure_id).average(:satisfaction)
     @avg_sensation_by_procedure = Pin.where.not(sensation: [nil, 0]).group(:procedure_id).average(:sensation)
 
@@ -18,7 +22,7 @@ class ProceduresController < ApplicationController
     @related_procedures = @procedure.related_procedures
     # procedure pages are public, but comments should be private
     if current_user
-      @comments = @procedure.comments_asc
+      @comments = @procedure.comments_asc(viewer: current_user)
       ActiveRecord::Associations::Preloader.new(records: @comments, associations: { user: :trust_grants }).call
       @new_comment = Comment.build_from(@procedure, current_user, "")
       @safe_mode = current_user.preference.present? && UserPolicy.new(current_user).safe_mode?

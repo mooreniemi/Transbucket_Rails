@@ -1,13 +1,18 @@
 class CommentService
-  attr_reader :body, :commentable, :commenter, :parent_comment_id, :contains_question
+  attr_reader :body, :commentable, :commenter, :parent_comment_id, :contains_question, :visibility
   attr_accessor :comment
 
-  def initialize(commentable, commenter, body, parent_comment_id = nil)
+  def initialize(commentable, commenter, body, parent_comment_id = nil, visibility = 'everyone')
     @commentable = commentable
     @body = body
     @contains_question = body.include?("?")
     @commenter = commenter
     @parent_comment_id = parent_comment_id
+    @visibility = if %w[Procedure Surgeon].include?(commentable.class.name)
+      visibility.to_s.presence_in(Comment::VISIBILITIES) || 'everyone'
+    else
+      'everyone'
+    end
   end
 
   def create
@@ -19,6 +24,7 @@ class CommentService
     end
 
     @comment = Comment.build_from(commentable, commenter, body)
+    @comment.visibility = parent_comment_visibility || @visibility
     @comment.save!
 
     notify_author if wants_email
@@ -28,6 +34,12 @@ class CommentService
   end
 
   private
+
+  def parent_comment_visibility
+    return if parent_comment_id.blank?
+
+    Comment.find(parent_comment_id).root.visibility
+  end
 
   def notify_author
     begin

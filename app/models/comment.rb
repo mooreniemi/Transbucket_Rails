@@ -1,9 +1,12 @@
 # https://github.com/elight/acts_as_commentable_with_threading/blob/a579b92b497cbb2b5b5e8be78b760cf1c652dfa3/lib/generators/acts_as_commentable_upgrade_migration/comment.rb
 class Comment < ActiveRecord::Base
+  VISIBILITIES = %w[everyone contributors subject_contributors].freeze
+
   include AASM
   include NotificationsHelper
   validates :body, presence: true
   validates :user, presence: true
+  validates :visibility, inclusion: { in: VISIBILITIES }
 
   # votes on comments are just flags
   # flags determine whether something needs to be reviewed
@@ -38,6 +41,39 @@ class Comment < ActiveRecord::Base
     where(commentable_type: commentable_type, commentable_id: commentable_ids)
       .where("comments.state IS NULL OR comments.state IN ('', 'published')")
       .group(:commentable_id).count
+  end
+
+  # Visibility is inherited from the root discussion so a private thread never
+  # leaks through one of its replies. The correlated EXISTS checks keep this a
+  # single SQL query for a page/feed rather than one trust lookup per comment.
+  def self.visible_to(user)
+    return where(visibility: 'everyone') if user.blank?
+    return all if user.respond_to?(:admin?) && user.admin?
+
+    contributor = sanitize_sql_array([
+      "EXISTS (SELECT 1 FROM user_trust_grants grants WHERE grants.user_id = ? AND grants.revoked_at IS NULL AND grants.kind IN (?, ?, ?))",
+      user.id, 'contributor', 'vetted', 'moderator'
+    ])
+    subject_contributor = sanitize_sql_array([
+      <<~SQL.squish,
+        EXISTS (SELECT 1 FROM pins subject_pins
+          WHERE subject_pins.user_id = ? AND subject_pins.state = 'published'
+            AND ((visibility_roots.commentable_type = 'Procedure' AND subject_pins.procedure_id = visibility_roots.commentable_id)
+              OR (visibility_roots.commentable_type = 'Surgeon' AND subject_pins.surgeon_id = visibility_roots.commentable_id)))
+      SQL
+      user.id
+    ])
+
+    joins(<<~SQL.squish).
+      LEFT JOIN comments visibility_roots
+        ON visibility_roots.commentable_type = comments.commentable_type
+       AND visibility_roots.commentable_id = comments.commentable_id
+       AND visibility_roots.parent_id IS NULL
+       AND visibility_roots.lft <= comments.lft
+       AND visibility_roots.rgt >= comments.rgt
+    SQL
+      where("COALESCE(visibility_roots.visibility, comments.visibility) = 'everyone' OR (COALESCE(visibility_roots.visibility, comments.visibility) = 'contributors' AND (#{contributor})) OR (COALESCE(visibility_roots.visibility, comments.visibility) = 'subject_contributors' AND (#{subject_contributor}))").
+      distinct
   end
 
   def self.new_as_of(last_login_time)

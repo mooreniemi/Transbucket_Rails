@@ -83,4 +83,14 @@ RSpec.describe HomeFeedQuery do
     expect(items[root.reload].reply_count).to eq(2)
     expect(items[quiet].reply_count).to eq(0)
   end
+
+  it 'applies discussion visibility for the feed viewer' do
+    viewer = create(:user)
+    hidden = Comment.create!(commentable: procedure, user: user, body: 'contributors only', visibility: 'contributors')
+    visible = Comment.create!(commentable: procedure, user: user, body: 'public')
+
+    expect(described_class.new(content: 'discussions', viewer: viewer).call.map(&:record)).to eq([visible])
+    viewer.grant_trust!('contributor')
+    expect(described_class.new(content: 'discussions', viewer: viewer).call.map(&:record)).to include(hidden, visible)
+  end
 end

@@ -5,6 +5,12 @@
   <%= simple_form_for @new_comment, :remote => true do |f| %>
     <%= f.error_notification %>
     <%= f.input :body, :input_html => {:class => 'form-control', :rows => "4", 'aria-label' => t('public.pin.comment_placeholder')}, :label => false, :placeholder => t('public.pin.comment_placeholder') %>
+    <% if @parent_id.blank? %>
+      <div class="comment-visibility">
+        <%= label_tag 'comment_visibility', t('public.comment.visibility_label', default: 'Who can see this?') %>
+        <%= select_tag 'comment[visibility]', options_for_select(comment_visibility_options(@new_comment.commentable), @new_comment.visibility || 'everyone'), id: 'comment_visibility', class: 'form-control' %>
+      </div>
+    <% end %>
     <%= f.hidden_field :parent_id, :value => @parent_id %>
     <%= f.hidden_field :commentable_id, :value => @new_comment.commentable_id %>
     <%= f.hidden_field :commentable_type, :value => @new_comment.commentable_type %>

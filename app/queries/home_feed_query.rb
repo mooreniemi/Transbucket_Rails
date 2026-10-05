@@ -5,10 +5,11 @@ class HomeFeedQuery
   PUBLISHED_COMMENT_SQL = "comments.state IS NULL OR comments.state IN ('', 'published')".freeze
   attr_reader :page, :per_page
 
-  def initialize(content: 'all', page: 1, per_page: Pin.per_page)
+  def initialize(content: 'all', page: 1, per_page: Pin.per_page, viewer: nil)
     @content = content.to_s.presence_in(%w[all submissions discussions]) || 'all'
     @page = [page.to_i, 1].max
     @per_page = per_page.to_i.positive? ? per_page.to_i : PER_PAGE
+    @viewer = viewer
   end
 
   # Both lists are fetched newest-first and merged by the same timestamp each
@@ -52,7 +53,7 @@ class HomeFeedQuery
   end
 
   def contextual_comment_scope
-    Comment.where(commentable_type: %w[Procedure Surgeon], parent_id: nil).
+    Comment.visible_to(@viewer).where(commentable_type: %w[Procedure Surgeon], parent_id: nil).
       where(PUBLISHED_COMMENT_SQL)
   end
 

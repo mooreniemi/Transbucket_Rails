@@ -8,7 +8,7 @@ class CommentService
     @contains_question = body.include?("?")
     @commenter = commenter
     @parent_comment_id = parent_comment_id
-    @visibility = if %w[Procedure Surgeon].include?(commentable.class.name)
+    @visibility = if %w[Procedure Surgeon Discussion].include?(commentable.class.name)
       visibility.to_s.presence_in(Comment::VISIBILITIES) || 'everyone'
     else
       'everyone'

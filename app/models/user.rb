@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   belongs_to :gender
   has_one :preference
   has_many :trust_grants, class_name: 'UserTrustGrant', dependent: :destroy
+  has_many :discussions, dependent: :destroy
   has_many :granted_trust_grants, class_name: 'UserTrustGrant', foreign_key: :granted_by_user_id
   after_create :set_preference
 

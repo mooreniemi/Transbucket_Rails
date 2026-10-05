@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
   # app/views/pins/show.html.erb and app/views/procedures/show.html.erb).
   # commentable_type otherwise comes straight from user-controlled params, so
   # constantize-ing it unchecked would let a request target arbitrary AR models.
-  ALLOWED_COMMENTABLE_TYPES = %w[Pin Procedure Surgeon].freeze
+  ALLOWED_COMMENTABLE_TYPES = %w[Pin Procedure Surgeon Discussion].freeze
 
   class InvalidCommentableType < StandardError; end
   rescue_from InvalidCommentableType, with: :render_invalid_commentable_type
@@ -25,6 +25,8 @@ class CommentsController < ApplicationController
       redirect_to pin_path(root.commentable, anchor: anchor)
     elsif root != comment
       redirect_to comment_path(root, **params.permit(:viewer, :reply_to).to_h.symbolize_keys, anchor: anchor)
+    elsif root.commentable_type == 'Discussion'
+      redirect_to discussion_path(root.commentable, anchor: anchor)
     else
       @comment = root
       @subject = root.commentable
@@ -57,6 +59,8 @@ class CommentsController < ApplicationController
       @procedure = @comment.commentable_type.constantize.find(@comment.commentable_id)
     when "Surgeon"
       @surgeon = @comment.commentable_type.constantize.find(@comment.commentable_id)
+    when "Discussion"
+      @discussion = @comment.commentable_type.constantize.find(@comment.commentable_id)
     end
 
     if @comment.errors.present?

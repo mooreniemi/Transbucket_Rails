@@ -1,0 +1,20 @@
+<% title t('public.discussion.new_title', default: 'Start a discussion') %>
+<div class="discussion-compose">
+  <h1><%= t('public.discussion.new_title', default: 'Start a discussion') %></h1>
+  <%= simple_form_for @discussion do |f| %>
+    <%= f.error_notification %>
+    <%= f.input :title, label: t('public.discussion.title', default: 'Title'), input_html: { maxlength: 160, autofocus: true } %>
+    <%= f.input :category, collection: discussion_category_options, label: t('public.discussion.category', default: 'Category') %>
+    <%= f.input :body, label: t('public.discussion.body', default: 'Post'), input_html: { rows: 8 } %>
+    <fieldset class="discussion-visibility">
+      <legend><%= t('public.comment.visibility_label', default: 'Who can see this?') %></legend>
+      <% Discussion::VISIBILITIES.each do |visibility| %>
+        <label class="feed-content-pill">
+          <%= radio_button_tag 'discussion[visibility]', visibility, visibility == (@discussion.visibility || 'everyone') %>
+          <span><%= t("public.comment.visibility_#{visibility}", default: visibility.humanize) %></span>
+        </label>
+      <% end %>
+    </fieldset>
+    <%= f.submit t('public.discussion.post', default: 'Post discussion'), class: 'btn btn-primary' %>
+  <% end %>
+</div>

@@ -41,6 +41,7 @@
     <span><%= t('header.filter') %></span>
     <% if filter_count > 0 %><span class="badge"><%= filter_count %></span><% end %>
   </button>
+  <%= link_to t('public.discussion.new_title', default: 'Start a discussion'), new_discussion_path, class: 'btn btn-default start-discussion-feed' %>
 </div>
 <% if @presenter.feed_tabs_paused? %>
   <p class="feed-tabs-paused"><%= t('directory.feed_tabs_paused', default: 'Filters are on, so Recent / For You is paused.') %> <%= link_to t('directory.clear_filters', default: 'Clear filters'), pins_path %></p>

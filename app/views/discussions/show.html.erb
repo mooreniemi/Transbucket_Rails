@@ -1,0 +1,17 @@
+<% title @discussion.title %>
+<div class="comment-thread-page standalone-discussion-page">
+  <p class="discussion-category"><%= discussion_category_label(@discussion.category) %></p>
+  <h1 class="pin-page-title"><%= @discussion.title %></h1>
+  <div class="standalone-discussion-body"><%= simple_format(@discussion.body) %></div>
+  <p class="comment-thread-context">
+    <%= fa_icon('comments-o') %>
+    <%= t('public.discussion.by', default: 'Posted by') %>
+    <%= link_to @discussion.user.username.presence || @discussion.user.id, pins_path(user: @discussion.user) %>
+  </p>
+  <div id="comments-container" class="comment-list">
+    <%= render partial: 'comments/comment', collection: @comments, as: :comment %>
+  </div>
+  <div id="commentable" class="comment-composer reply-target">
+    <%= render partial: 'comments/form', locals: { comment: @new_comment } %>
+  </div>
+</div>

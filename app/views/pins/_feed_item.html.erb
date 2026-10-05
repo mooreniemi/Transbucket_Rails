@@ -1,5 +1,22 @@
 <% if item.kind == 'submission' %>
   <%= render partial: 'pin', locals: { pin: item.record, event_context: event_context } %>
+<% elsif item.kind == 'discussion_post' %>
+  <% discussion = item.record %>
+  <article class="item feed-discussion standalone-feed-discussion" data-discussion-id="<%= discussion.id %>" data-feed-key="discussion-<%= discussion.id %>">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <p class="discussion-category"><%= discussion_category_label(discussion.category) %></p>
+        <h2 class="feed-discussion-title"><%= link_to discussion.title, discussion_path(discussion, locale: I18n.locale), class: 'feed-discussion-link' %></h2>
+        <div class="comment-body feed-discussion-excerpt"><%= discussion_excerpt(discussion.body).first %></div>
+        <div class="comment-meta">
+          <strong class="comment-author"><%= link_to discussion.user.try(:username) || discussion.user.try(:id), pins_path(user: discussion.user) %></strong>
+          <span class="comment-meta-separator" aria-hidden="true">·</span>
+          <%= content_tag :time, l(discussion.created_at, format: :long), datetime: discussion.created_at.utc.iso8601, class: 'pin-age comment-age' %>
+        </div>
+      </div>
+      <div class="panel-footer"><%= link_to t('public.pin.reply', default: 'Reply'), discussion_path(discussion, locale: I18n.locale), class: 'feed-discussion-reply' %></div>
+    </div>
+  </article>
 <% else %>
   <%# A discussion card: what it is about first, who said it, the opening of
       what they said, then the same kind of footer as a photo post.

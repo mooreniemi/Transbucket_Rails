@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     resources :comments, :only => [:new, :create, :show, :destroy] do
       resources :flags, :only => [:create]
     end
+    resources :discussions, only: [:new, :create, :show]
     resources :content_events, only: [:create] do
       collection { post :batch }
     end

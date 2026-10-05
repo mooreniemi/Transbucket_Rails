@@ -1,4 +1,24 @@
 module DiscussionsHelper
+  DISCUSSION_CATEGORY_LABELS = {
+    'discussion' => 'Discussion',
+    'question' => 'Question',
+    'experience' => 'Experience',
+    'recovery' => 'Recovery',
+    'planning' => 'Planning',
+    'resources' => 'Resources',
+    'community' => 'Community'
+  }.freeze
+
+  def discussion_category_options
+    Discussion::CATEGORIES.map do |category|
+      [t("public.discussion.categories.#{category}", default: DISCUSSION_CATEGORY_LABELS.fetch(category)), category]
+    end
+  end
+
+  def discussion_category_label(category)
+    t("public.discussion.categories.#{category}", default: DISCUSSION_CATEGORY_LABELS.fetch(category, category.humanize))
+  end
+
   # "Discussion (3)" near the top of a procedure or surgeon page, jumping to
   # the discussion at the bottom (these pages get long on a phone). Counts
   # published comments, replies included; no count when there are none yet.

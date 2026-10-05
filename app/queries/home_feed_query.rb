@@ -20,6 +20,7 @@ class HomeFeedQuery
     limit = @page * @per_page
     items.concat(submission_items(limit)) unless @content == 'discussions'
     items.concat(discussion_items(limit)) unless @content == 'submissions'
+    items.concat(standalone_discussion_items(limit)) unless @content == 'submissions'
 
     page_items = items.sort_by { |item| [-item.occurred_at.to_f, -item.record.id] }.
       slice((@page - 1) * @per_page, @per_page) || []
@@ -28,7 +29,7 @@ class HomeFeedQuery
 
   def total_entries
     submissions = @content == 'discussions' ? 0 : Pin.published.count
-    discussions = @content == 'submissions' ? 0 : contextual_comment_scope.count
+    discussions = @content == 'submissions' ? 0 : contextual_comment_scope.count + standalone_discussion_scope.count
     submissions + discussions
   end
 
@@ -52,9 +53,21 @@ class HomeFeedQuery
       map { |comment| Item.new(record: comment, kind: 'discussion', occurred_at: comment.created_at) }
   end
 
+  def standalone_discussion_items(limit)
+    standalone_discussion_scope.
+      includes(:user).
+      order(created_at: :desc, id: :desc).
+      limit(limit).
+      map { |discussion| Item.new(record: discussion, kind: 'discussion_post', occurred_at: discussion.created_at) }
+  end
+
   def contextual_comment_scope
     Comment.visible_to(@viewer).where(commentable_type: %w[Procedure Surgeon], parent_id: nil).
       where(PUBLISHED_COMMENT_SQL)
+  end
+
+  def standalone_discussion_scope
+    Discussion.published.visible_to(@viewer)
   end
 
   def add_reply_counts(items)

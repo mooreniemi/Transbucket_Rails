@@ -41,6 +41,16 @@ describe PinsController, :type => :controller do
         expect(response.body).not_to include('procedure feed discussion')
       end
 
+      it 'renders standalone discussion posts in the discussions feed' do
+        post = create(:discussion, user: user, title: 'General feed topic', body: 'A text-only post')
+
+        get :index, params: { locale: 'en', content: 'discussions' }
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include('General feed topic', 'A text-only post')
+        expect(response.body).to include("data-discussion-id=\"#{post.id}\"")
+      end
+
       context 'with comments since the last sign-in' do
         let!(:pin) { create(:pin, user: create(:user)) }
 

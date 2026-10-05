@@ -93,4 +93,13 @@ RSpec.describe HomeFeedQuery do
     viewer.grant_trust!('contributor')
     expect(described_class.new(content: 'discussions', viewer: viewer).call.map(&:record)).to include(hidden, visible)
   end
+
+  it 'mixes standalone discussion posts into the discussions feed' do
+    post = create(:discussion, title: 'General question', created_at: 1.hour.ago)
+
+    items = described_class.new(content: 'discussions', viewer: user).call
+
+    expect(items.map(&:record)).to include(post)
+    expect(items.find { |item| item.record == post }.kind).to eq('discussion_post')
+  end
 end

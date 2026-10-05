@@ -2,6 +2,12 @@ module CommentsHelper
   # Who a new discussion is for, in plain words (comments/_form).
   def comment_visibility_options(commentable)
     everyone = [t('public.comment.visibility_everyone', default: 'Everyone'), 'everyone']
+    if commentable.class.name == 'Discussion'
+      return [
+        everyone,
+        [t('public.comment.audience_contributors', default: 'People who have posted a submission'), 'contributors']
+      ]
+    end
     return [everyone] unless %w[Procedure Surgeon].include?(commentable.class.name)
 
     [

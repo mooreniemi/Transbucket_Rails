@@ -1,12 +1,14 @@
 // Signed-in header on phones.
 //
-// Search is the main way to find things, so below 768px it stays in the top
-// bar and only the secondary links live behind the hamburger:
+// Below 768px the bar holds four 44px targets, and search is an icon that
+// opens the field over the whole bar (header_search.js):
 //
-//   [logo] [ Search…                 🔍 ] [👁] [☰]
+//   [logo]                    [🔍] [👁] [☰]
+//   [ Search…                  🔍 ] Cancel     <- after tapping 🔍
 //
-// Scoped to .navbar-signed-in (see layouts/_header.html.erb). The search form
-// sits outside the collapsible menu in the markup so it can stay visible.
+// Without the script the field simply stays in the bar. Scoped to
+// .navbar-signed-in (see layouts/_header.html.erb). The search form sits
+// outside the collapsible menu in the markup so it can stay visible.
 
 $signed-in-touch-height: 44px;   // minimum comfortable touch target
 $signed-in-field-height: 40px;   // fields are wide targets and the bar is 50px
@@ -37,14 +39,78 @@ $signed-in-field-height: 40px;   // fields are wide targets and the bar is 50px
       }
     }
 
+    // The whole 44px square goes home, not just the 16px logo.
     .container-fluid .navbar-brand {
       align-items: center;
       display: flex;
       float: none;
       height: 50px;
+      justify-content: center;
       margin: 0;
+      min-width: $signed-in-touch-height;
       order: 1;
-      padding: 0 10px 0 0;
+      padding: 0;
+    }
+
+    .header-search-open {
+      align-items: center;
+      background: transparent;
+      border: 0;
+      border-radius: 8px;
+      color: #666;
+      display: inline-flex;
+      flex: 0 0 auto;
+      font-size: 18px;
+      height: $signed-in-touch-height;
+      justify-content: center;
+      margin-left: auto;
+      order: 2;
+      padding: 0;
+      width: $signed-in-touch-height;
+
+      &:hover,
+      &:focus {
+        background: rgba(0, 0, 0, .06);
+        color: #222;
+        outline: 0;
+      }
+
+      &:focus-visible {
+        box-shadow: 0 0 0 3px rgba(11, 83, 148, .35);
+      }
+    }
+
+    &.search-collapsible:not(.is-searching) .navbar-form {
+      display: none;
+    }
+
+    // Open: the field and Cancel have the bar to themselves.
+    &.is-searching {
+      .navbar-brand,
+      .header-search-open,
+      .safe-mode-form-bar,
+      .navbar-toggle,
+      .navbar-collapse {
+        display: none !important;
+      }
+
+      .navbar-form {
+        align-items: center;
+        display: flex;
+        height: 50px;
+      }
+
+      .header-search-cancel {
+        background: transparent;
+        border: 0;
+        color: #0b5394;
+        display: inline-block;
+        flex: 0 0 auto;
+        font-size: 16px;
+        height: $signed-in-touch-height;
+        margin-left: 4px;
+        padding: 0 8px;
+      }
     }
 
     // Search takes all the room between the logo and the hamburger.
@@ -109,6 +175,12 @@ $signed-in-field-height: 40px;   // fields are wide targets and the bar is 50px
       order: 5;
     }
   }
+}
+
+// Phones only: the icon, and Cancel until search is opened.
+.header-search-open,
+.header-search-cancel {
+  display: none;
 }
 
 @media (min-width: 768px) {

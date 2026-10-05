@@ -102,7 +102,6 @@ describe PinsController, type: :controller do
 
     doc = Nokogiri::HTML(response.body)
     expect(doc.at_css('select#content')).to be_nil
-    # The filter form is rendered twice (navbar menu and page panel); check each.
     forms = doc.css('form#filter_dropdown')
     expect(forms).not_to be_empty
     forms.each do |form|

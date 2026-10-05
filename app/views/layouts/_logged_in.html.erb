@@ -18,18 +18,6 @@
     <%= link_to "#{I18n.t(".header.add")} #{fa_icon('plus-circle', class: 'yellow')}".html_safe, new_pin_path, track_click_attributes(:add, :header) %>
   </li>
 <% end %>
-<% if current_page?(pins_path) %>
-  <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      <%= I18n.t(".header.filter") %> <%= fa_icon "filter", { class: 'yellow' } %>
-    </a>
-    <ul class="dropdown-menu" role="menu">
-      <li>
-        <%= render partial: 'pins/filter_controls' %>
-      </li>
-    </ul>
-  </li>
-<% end %>
 <li>
   <%= link_to I18n.t('.header.news'), newsfeed_path, track_click_attributes(:news, :header) %>
 </li>

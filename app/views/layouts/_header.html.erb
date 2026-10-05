@@ -20,9 +20,13 @@
       <% end %>
     </div>
     <%# Search lives outside the collapsible menu so phones can keep it in the
-        top bar instead of hiding it behind the hamburger. On desktop the
-        float layout puts it in the same place as before. %>
+        top bar instead of hiding it behind the hamburger. On phones it is an
+        icon until tapped (header_search.js); on desktop the float layout puts
+        the open field in the same place as before. %>
     <% if user_signed_in? %>
+      <button type="button" class="header-search-open" aria-controls="header-search" aria-expanded="false" aria-label="<%= t('header.search') %>" title="<%= t('header.search') %>">
+        <%= content_tag :span, '', class: 'glyphicon glyphicon-search', aria: { hidden: true } %>
+      </button>
       <%= render partial: 'layouts/search' %>
       <%= render partial: 'layouts/safe_mode_toggle', locals: { variant: 'bar' } %>
     <% end %>

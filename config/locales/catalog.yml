@@ -9,7 +9,8 @@ en:
         will receive an email with instructions about how to confirm your account
         in a few minutes.
     failure:
-      already_authenticated: You are already signed in.
+      # Blank so Devise sets no flash when a signed-in person opens the login page.
+      already_authenticated: ''
       inactive: Your account is not activated yet.
       invalid: Invalid email or password.
       locked: Your account is locked.

@@ -75,7 +75,7 @@ describe ProceduresController, type: :controller do
 
     get :show, params: { id: procedure.id, locale: 'en' }
 
-    expect(doc.at_css('.panel-heading a.discussion-jump')).to be_present
+    expect(doc.at_css('.subject-header a.discussion-jump')).to be_present
     expect(positions('a.discussion-jump', '.procedure-guide')).to eq(positions('a.discussion-jump', '.procedure-guide').sort)
   end
 

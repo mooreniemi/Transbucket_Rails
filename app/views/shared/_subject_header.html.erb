@@ -1,0 +1,17 @@
+<%# The top of a procedure or surgeon page: title, key facts (the block),
+    then the same three actions on both. Rendered fresh (the Discussion
+    action carries a live count). Locals: title, subject, see_all_path,
+    compare_path, heading_class (optional), heading_icon (optional). %>
+<% heading_class ||= nil %>
+<% heading_icon ||= nil %>
+<header class="subject-header">
+  <h1 class="<%= heading_class %>"><%= heading_icon %><%= title %></h1>
+  <div class="subject-facts"><%= yield %></div>
+  <nav class="subject-actions" aria-label="<%= t('directory.page_actions', default: 'Page actions') %>">
+    <%= link_to t('public.pin.see_all_submissions'), see_all_path, class: 'subject-action' %>
+    <% if user_signed_in? %>
+      <%= link_to t('comparison.title', default: 'Compare'), compare_path, class: 'subject-action' %>
+      <%= discussion_jump_link(subject) %>
+    <% end %>
+  </nav>
+</header>

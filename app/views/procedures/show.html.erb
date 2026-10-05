@@ -29,61 +29,58 @@
     ]
   }
 ) %>
-<%# The heading is rendered fresh (its Discussion link carries a live count);
-    the reference sections below it are cached. %>
-  <div class="panel panel-default" itemscope itemtype="https://schema.org/MedicalProcedure">
-    <div class="panel-heading">
-      <h1><%= procedure_name %></h1>
-      <% if guide %>
-        <p class="procedure-summary"><%= guide['summary'] %></p>
-      <% end %>
-      <%= link_to t('public.pin.see_all_submissions'), pins_path(procedure: @procedure.id) %>
-      <% if current_user %>
-        <p class="discussion-jump-row"><%= discussion_jump_link(@procedure) %></p>
-      <% end %>
-    </div>
-<% cache([I18n.locale, @procedure, 'reference']) do %>
-    <% if @procedure.body_type %>
-      <div class="panel-body" itemprop="bodyLocation">
-        <i><%= t('public.pin.classified_as', body_type: @procedure.body_type) %></i>
-      </div>
-    <% end %>
-    <% if @procedure.description && !guide %>
-      <div class="panel-body" itemprop="description" itemprop="howPerformed">
-        <%= @procedure.description %>
-      </div>
-    <% end %>
+<div class="subject-page" itemscope itemtype="https://schema.org/MedicalProcedure">
+  <%= render layout: 'shared/subject_header', locals: {
+        title: procedure_name, subject: @procedure,
+        see_all_path: pins_path(procedure: @procedure.id),
+        compare_path: compare_path(type: 'procedures', first_id: @procedure.to_param)
+      } do %>
     <% if guide %>
-      <div class="panel-body procedure-guide" itemprop="description">
-        <h2><%= t('procedure_guide.sources_title', default: 'Reviewed sources') %></h2>
+      <p class="procedure-summary" itemprop="description"><%= guide['summary'] %></p>
+    <% elsif @procedure.description %>
+      <p itemprop="description"><%= @procedure.description %></p>
+    <% end %>
+    <% if @procedure.body_type %>
+      <p class="subject-classification" itemprop="bodyLocation"><%= t('public.pin.classified_as', body_type: @procedure.body_type) %></p>
+    <% end %>
+  <% end %>
+
+  <%# Reference sections: tap to open on phones, open on desktop
+      (subject_reference.js). %>
+  <% cache([I18n.locale, @procedure, 'reference-v2']) do %>
+    <% if guide %>
+      <details class="subject-reference procedure-guide" data-open-on-desktop="true">
+        <summary><%= t('procedure_guide.sources_title', default: 'Reviewed sources') %></summary>
         <ul>
           <% guide['sources'].each do |source| %>
             <li><%= link_to source['name'], source['url'], rel: 'noopener noreferrer' %></li>
           <% end %>
         </ul>
-        <% if guide['community_links'].present? %>
-          <h2><%= t('procedure_guide.community_title') %></h2>
+      </details>
+      <% if guide['community_links'].present? %>
+        <details class="subject-reference" data-open-on-desktop="true">
+          <summary><%= t('procedure_guide.community_title') %></summary>
           <p><%= t('procedure_guide.community_note') %></p>
           <ul>
             <% guide['community_links'].each do |community| %>
               <li><%= link_to community['name'], community['url'], rel: 'ugc nofollow noopener noreferrer' %></li>
             <% end %>
           </ul>
-        <% end %>
-      </div>
+        </details>
+      <% end %>
     <% end %>
     <% if @related_procedures.present? %>
-      <div class="panel-body procedure-related-links">
-        <h2><%= t('procedure_guide.related_title', default: 'Related procedures') %></h2>
+      <details class="subject-reference procedure-related-links" data-open-on-desktop="true">
+        <summary><%= t('procedure_guide.related_title', default: 'Related procedures') %></summary>
         <ul>
           <% @related_procedures.each do |related| %>
             <li><%= link_to related.localized_name, procedure_path(related) %></li>
           <% end %>
         </ul>
-      </div>
+      </details>
     <% end %>
-<% end %>
-  </div>
+  <% end %>
+</div>
 
 <% if current_user && @latest_pins.present? %>
   <section class="procedure-recent-submissions" aria-labelledby="procedure-recent-submissions-heading">
@@ -96,12 +93,12 @@
 
 <% if current_user %>
   <% if @rating_distributions.present? %>
-    <section class="procedure-stats" aria-labelledby="procedure-stats-heading">
+    <section class="procedure-stats subject-stats" aria-labelledby="procedure-stats-heading">
       <div class="stats-heading">
         <h2 id="procedure-stats-heading"><%= t('directory.stats', default: 'Stats') %></h2>
         <%= link_to t('comparison.title', default: 'Compare'), compare_path(type: 'procedures', first_id: @procedure.to_param), class: 'btn btn-default' %>
       </div>
-      <div class="procedure-rating-distributions">
+      <div class="subject-stats-card procedure-rating-distributions">
       <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, average: @rating_averages[:sensation], rating: :sensation, title: t('public.rating.sensation.distribution'), scope_params: { procedure: @procedure.id }, heading_id: 'procedure-sensation-distribution-heading' } %>
       <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, average: @rating_averages[:satisfaction], rating: :satisfaction, title: t('public.rating.satisfaction.distribution'), scope_params: { procedure: @procedure.id }, heading_id: 'procedure-satisfaction-distribution-heading' } %>
       </div>

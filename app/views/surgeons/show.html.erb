@@ -36,10 +36,9 @@
     ]
   }
 ) %>
-<%# The page is cached in two parts (the surgeon's details; then submissions and
-    stats), with the jump link's count and the discussion rendered fresh in
-    between and after: new comments show up on the next visit. %>
-<div itemscope itemtype="https://schema.org/Physician" class="surgeon-profile">
+<%# The header is rendered fresh (its Discussion action carries a live count);
+    submissions and stats are cached; the discussion at the bottom is fresh. %>
+<div itemscope itemtype="https://schema.org/Physician" class="surgeon-profile subject-page">
   <div class="media">
     <%# The big icon column is for wider screens; on a phone it ran down the
         whole page as dead space, so there a small icon sits before the name
@@ -48,32 +47,28 @@
       <%= fa_icon "user-md", class: "fa-5x media-object" %>
     </div>
     <div class="media-body">
-    <% cache([I18n.locale, @surgeon, user_signed_in?, 'details']) do %>
-      <h1 class="media-heading"><%= fa_icon "user-md", class: "surgeon-heading-icon" %><%= @surgeon.to_s %></h1>
-      <h4 class="media-heading">
-        <% if @surgeon.website_url %>
-          <%= link_to t('public.form.surgeon_url'), @surgeon.website_url %>
-        <% end %>
-      </h4>
-    <% if @surgeon.address %>
-      <address>
-        <%= @surgeon.address %><br>
-        <%= @surgeon.city %>, <%= @surgeon.state %> <%= @surgeon.zip %><br>
-        <%= @surgeon.country %><br>
-      </address>
-    <% end %>
-    <% if @surgeon.notes %>
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <%= t('public.form.details') %>: <%= @surgeon.notes %></div>
-      </div>
-    <% end %>
-    <% end %>
-    <% if user_signed_in? %>
-      <p class="discussion-jump-row"><%= discussion_jump_link(@surgeon) %></p>
+    <%= render layout: 'shared/subject_header', locals: {
+          title: @surgeon.to_s, subject: @surgeon,
+          heading_class: 'media-heading', heading_icon: fa_icon('user-md', class: 'surgeon-heading-icon'),
+          see_all_path: pins_path(surgeon: @surgeon.id),
+          compare_path: compare_path(type: 'surgeons', first_id: @surgeon.to_param)
+        } do %>
+      <% if @surgeon.website_url %>
+        <p><%= link_to "#{t('public.surgeon.website', default: 'Website')} ↗", @surgeon.website_url, class: 'subject-website', rel: 'noopener noreferrer' %></p>
+      <% end %>
+      <% if @surgeon.address %>
+        <address>
+          <%= @surgeon.address %><br>
+          <%= @surgeon.city %>, <%= @surgeon.state %> <%= @surgeon.zip %><br>
+          <%= @surgeon.country %>
+        </address>
+      <% end %>
+      <% if @surgeon.notes %>
+        <p class="subject-notes"><%= t('public.form.details') %>: <%= @surgeon.notes %></p>
+      <% end %>
     <% end %>
 
-    <% cache([I18n.locale, @surgeon, user_signed_in?, 'submissions-and-stats']) do %>
+    <% cache([I18n.locale, @surgeon, user_signed_in?, 'submissions-and-stats-v2']) do %>
     <% if user_signed_in? && @latest_pins.present? %>
       <section class="procedure-recent-submissions" aria-labelledby="surgeon-recent-submissions-heading">
         <h2 id="surgeon-recent-submissions-heading"><%= t('directory.recent_submissions') %></h2>
@@ -83,62 +78,58 @@
       </section>
     <% end %>
 
-    <% if user_signed_in? && @rating_distributions.present? %>
-      <section class="surgeon-stats surgeon-rating-distributions" aria-labelledby="surgeon-stats-heading">
-        <div class="stats-heading">
-          <h2 id="surgeon-stats-heading"><%= t('directory.stats', default: 'Stats') %></h2>
+    <section class="surgeon-stats surgeon-rating-distributions subject-stats" aria-labelledby="surgeon-stats-heading">
+      <div class="stats-heading">
+        <h2 id="surgeon-stats-heading"><%= t('directory.stats', default: 'Stats') %></h2>
+        <% if user_signed_in? %>
           <%= link_to t('comparison.title', default: 'Compare'), compare_path(type: 'surgeons', first_id: @surgeon.to_param), class: 'btn btn-default' %>
-        </div>
-        <h3><%= t('public.rating.overall_distribution') %></h3>
-        <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, average: @overall_sensation, rating: :sensation, title: t('public.rating.sensation.distribution'), scope_params: { surgeon: @surgeon.id }, heading_id: 'surgeon-sensation-distribution-heading' } %>
-        <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, average: @overall_satisfaction, rating: :satisfaction, title: t('public.rating.satisfaction.distribution'), scope_params: { surgeon: @surgeon.id }, heading_id: 'surgeon-satisfaction-distribution-heading' } %>
-      </section>
-    <% end %>
-
-    <%# The per-procedure breakdown is part of the stats. %>
-    <section class="surgeon-procedure-breakdown">
-    <% if @procedure_count > 0 %>
-      <p class="lead"><%= t('directory.procedures_intro') %></p>
-    <% end %>
-    <% if user_signed_in? %>
-      <p><%= t('directory.submissions') %>: <%= @submission_count %></p>
-    <% end %>
-    <% @pins_by_surgeon_procedure.each do |procedure_id, _count| %>
-      <% procedure = @procedures_by_id[procedure_id] %>
-      <% next unless procedure %>
-      <% satisfaction = @satisfaction_by_procedure[procedure_id] %>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><%= procedure.localized_name %>
-          <% if user_signed_in? %>
-            <%= link_to @pins_by_surgeon_procedure[procedure_id], pins_path(procedure: procedure_id, surgeon: @surgeon.id), { style: 'border-radius: 100%; background: #ffffcc; display:inline-block; padding:5px;' } %>
-          <% end %>
-        </h3>
+        <% end %>
       </div>
-      <div class="panel-body">
-        <% if satisfaction %>
-          <%= t('public.pin.average_satisfaction') %>: <%= satisfaction.to_i.to_s %>
-          <label class="label-with-popover" data-placement="right" data-content="<%= t('public.pin.average_satisfaction') %>: <%= satisfaction %>" data-title="<%= t('public.pin.average_satisfaction') %>" data-trigger="hover" data-original-title="" title="">
-            <%= fa_icon("bar-chart") %>
-          </label>
+      <% if user_signed_in? && @rating_distributions.present? %>
+        <div class="subject-stats-card">
+          <h3><%= t('public.rating.overall_distribution') %></h3>
+          <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, average: @overall_sensation, rating: :sensation, title: t('public.rating.sensation.distribution'), scope_params: { surgeon: @surgeon.id }, heading_id: 'surgeon-sensation-distribution-heading' } %>
+          <%= render partial: 'shared/rating_distribution', locals: { distribution: @rating_distributions, average: @overall_satisfaction, rating: :satisfaction, title: t('public.rating.satisfaction.distribution'), scope_params: { surgeon: @surgeon.id }, heading_id: 'surgeon-satisfaction-distribution-heading' } %>
+        </div>
+      <% end %>
+
+      <%# The per-procedure breakdown is part of the stats: one card each. %>
+      <section class="surgeon-procedure-breakdown" aria-labelledby="surgeon-breakdown-heading">
+        <h3 id="surgeon-breakdown-heading"><%= t('directory.by_procedure', default: 'By procedure') %></h3>
+        <% if user_signed_in? %>
+          <p class="subject-stats-summary"><%= t('directory.submissions') %>: <%= @submission_count %></p>
         <% end %>
-        <% procedure_distribution = (@rating_distributions_by_procedure || {})[procedure_id] %>
-        <% if user_signed_in? && procedure_distribution.present? %>
-          <div class="surgeon-procedure-rating-distributions">
-            <%= render partial: 'shared/rating_distribution', locals: { distribution: procedure_distribution, average: @sensation_by_procedure[procedure_id], rating: :sensation, title: t('public.rating.sensation.distribution'), scope_params: { surgeon: @surgeon.id, procedure: procedure_id }, heading_id: "surgeon-#{procedure_id}-sensation-distribution-heading" } %>
-            <%= render partial: 'shared/rating_distribution', locals: { distribution: procedure_distribution, average: @satisfaction_by_procedure[procedure_id], rating: :satisfaction, title: t('public.rating.satisfaction.distribution'), scope_params: { surgeon: @surgeon.id, procedure: procedure_id }, heading_id: "surgeon-#{procedure_id}-satisfaction-distribution-heading" } %>
-          </div>
+        <% @pins_by_surgeon_procedure.each do |procedure_id, count| %>
+          <% procedure = @procedures_by_id[procedure_id] %>
+          <% next unless procedure %>
+          <% satisfaction = @satisfaction_by_procedure[procedure_id] %>
+          <article class="subject-stats-card subject-procedure-card">
+            <h3>
+              <%= procedure.localized_name %>
+              <% if user_signed_in? %>
+                <%= link_to count, pins_path(procedure: procedure_id, surgeon: @surgeon.id), class: 'subject-count-badge',
+                      'aria-label' => t('public.rating.view_procedure_submissions', count: count, default: "#{count} submissions") %>
+              <% end %>
+            </h3>
+            <% procedure_distribution = (@rating_distributions_by_procedure || {})[procedure_id] %>
+            <% if user_signed_in? && procedure_distribution.present? %>
+              <div class="surgeon-procedure-rating-distributions">
+                <%= render partial: 'shared/rating_distribution', locals: { distribution: procedure_distribution, average: @sensation_by_procedure[procedure_id], rating: :sensation, title: t('public.rating.sensation.distribution'), scope_params: { surgeon: @surgeon.id, procedure: procedure_id }, heading_id: "surgeon-#{procedure_id}-sensation-distribution-heading" } %>
+                <%= render partial: 'shared/rating_distribution', locals: { distribution: procedure_distribution, average: @satisfaction_by_procedure[procedure_id], rating: :satisfaction, title: t('public.rating.satisfaction.distribution'), scope_params: { surgeon: @surgeon.id, procedure: procedure_id }, heading_id: "surgeon-#{procedure_id}-satisfaction-distribution-heading" } %>
+              </div>
+            <% elsif satisfaction %>
+              <p class="subject-stats-average"><%= t('public.pin.average_satisfaction') %>: <%= satisfaction.to_f.round(1) %>/5</p>
+            <% end %>
+            <% unless user_signed_in? %>
+              <p class="directory-login-prompt">
+                <%= t('directory.login_or_register_to_see_more',
+                      login: link_to(t('account_menu.login'), new_user_session_path),
+                      register: link_to(t('account_menu.register'), register_path)).html_safe %>
+              </p>
+            <% end %>
+          </article>
         <% end %>
-        <% unless user_signed_in? %>
-          <p class="directory-login-prompt">
-            <%= t('directory.login_or_register_to_see_more',
-                  login: link_to(t('account_menu.login'), new_user_session_path),
-                  register: link_to(t('account_menu.register'), register_path)).html_safe %>
-          </p>
-        <% end %>
-    </div>
-  </div>
-<% end %>
+      </section>
     </section>
     <% end %>
 

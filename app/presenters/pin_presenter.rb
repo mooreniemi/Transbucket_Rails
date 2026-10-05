@@ -68,6 +68,18 @@ class PinPresenter
     browsing_feed? && personalized_feed_available?
   end
 
+  # Recent / For You stay on screen while feed filters are on (greyed out, see
+  # feed_tabs_paused?), so the toolbar doesn't jump. Not on search results or
+  # someone's own submissions, which are separate views.
+  def show_feed_tabs?
+    @query.blank? && @user.blank? && personalized_feed_available?
+  end
+
+  # Filters take priority over Recent / For You.
+  def feed_tabs_paused?
+    show_feed_tabs? && has_keywords?
+  end
+
   def list_event_context
     {
       surface: 'pins_index',

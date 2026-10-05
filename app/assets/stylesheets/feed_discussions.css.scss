@@ -178,3 +178,34 @@ $tap-target: 44px;
     outline-offset: 2px;
   }
 }
+
+// Recent / For You while filters are on: still there, greyed out, so the
+// toolbar keeps its shape and it's clear the filters take priority.
+// Desktop: the same box as Bootstrap's tab links. Phones get their shape from
+// feed_mobile.css.scss, which styles links and these spans alike.
+.submission-feed-tabs.is-paused > li > span {
+  border: 1px solid transparent;
+  border-radius: 4px 4px 0 0;
+  cursor: not-allowed;
+  display: block;
+  line-height: 1.42857143;
+  margin-right: 2px;
+  padding: 10px 15px;
+}
+
+.nav-tabs.submission-feed-tabs.is-paused > li > span {
+  background-color: #f2f2f2;
+  color: #8a8a8a;
+}
+
+.feed-tabs-paused {
+  color: $discussion-muted;
+  font-size: 14px;
+  margin: 6px 0 10px;
+
+  a {
+    display: inline-block;
+    font-weight: 600;
+    padding: 6px 0; // a bigger tap target without changing the line
+  }
+}

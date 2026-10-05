@@ -59,7 +59,9 @@ $feed-accent-border: #c99700;
       margin: 0;
     }
 
-    > li > a {
+    // The greyed-out tabs (filters on) are spans; same shape as the links.
+    > li > a,
+    > li > span {
       align-items: center;
       background-color: #fff;
       border: 1px solid #bbb;
@@ -73,11 +75,13 @@ $feed-accent-border: #c99700;
       padding: 0 12px;
     }
 
-    > li:first-child > a {
+    > li:first-child > a,
+    > li:first-child > span {
       border-radius: 6px 0 0 6px;
     }
 
-    > li:last-child > a {
+    > li:last-child > a,
+    > li:last-child > span {
       border-radius: 0 6px 6px 0;
       margin-left: -1px;
     }

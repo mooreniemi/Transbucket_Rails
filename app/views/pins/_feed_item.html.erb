@@ -4,11 +4,12 @@
   <%# A discussion card: what it is about first, who said it, the opening of
       what they said, then the same kind of footer as a photo post.
       The topic link is stretched over the whole card (feed_discussions.css),
-      so tapping anywhere opens the thread at this comment; the author, Read
-      more and footer actions sit above it and keep working on their own. %>
+      so tapping anywhere opens the discussion (over the feed on phones); the
+      author, Read more and footer actions sit above it and keep working. %>
   <% comment = item.record %>
   <% subject = comment.commentable %>
-  <% thread_path = polymorphic_path(subject, locale: I18n.locale, anchor: "comment-#{comment.id}") %>
+  <%# The discussion's own page; on phones pin_viewer.js opens it over the feed. %>
+  <% thread_path = comment_path(comment, locale: I18n.locale) %>
   <% excerpt, cut = discussion_excerpt(comment.body) %>
   <% is_author = current_user && comment.user_id == current_user.id %>
   <article class="item feed-discussion" data-comment-id="<%= comment.id %>" data-feed-key="comment-<%= comment.id %>">
@@ -50,7 +51,7 @@
           <span class="pin-actions-meta">
             <% replies = item.reply_count.to_i %>
             <span class="feed-discussion-replies"><%= fa_icon('comment-o') %> <%= t('public.feed.reply_count', count: replies, default: replies == 1 ? '1 reply' : "#{replies} replies") %></span>
-            <%= link_to t('public.pin.reply'), polymorphic_path(subject, locale: I18n.locale, reply_to: comment.id, anchor: "comment-#{comment.id}"), class: 'feed-discussion-reply' %>
+            <%= link_to t('public.pin.reply'), comment_path(comment, locale: I18n.locale, reply_to: comment.id), class: 'feed-discussion-reply' %>
           </span>
         </div>
       </div>

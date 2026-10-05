@@ -11,6 +11,27 @@ class CommentsController < ApplicationController
   class InvalidCommentableType < StandardError; end
   rescue_from InvalidCommentableType, with: :render_invalid_commentable_type
 
+  # One discussion on its own page: the post, its replies and Reply. The phone
+  # feed opens it over the feed (pin_viewer.js) with ?viewer=1, which leaves
+  # the layout out, as pin pages do. A reply goes to its discussion, at the
+  # reply; a comment on a submission goes to the submission page.
+  def show
+    comment = Comment.find(params[:id])
+    raise ActiveRecord::RecordNotFound unless comment.published? || current_user.admin?
+
+    root = comment.root
+    anchor = "comment-#{comment.id}"
+    if root.commentable_type == 'Pin'
+      redirect_to pin_path(root.commentable, anchor: anchor)
+    elsif root != comment
+      redirect_to comment_path(root, **params.permit(:viewer, :reply_to).to_h.symbolize_keys, anchor: anchor)
+    else
+      @comment = root
+      @subject = root.commentable
+      render layout: !params[:viewer].present?
+    end
+  end
+
   def new
     @commentable = commentable
     @parent_id = parent_id # as in, parent comment, may be nil

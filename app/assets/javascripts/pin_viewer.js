@@ -1,6 +1,8 @@
 // Phone pin viewer: tapping a card in the feed opens the pin in a full-screen
 // layer over the feed instead of loading a new page, so closing it drops you
-// back exactly where you were (like Instagram).
+// back exactly where you were (like Instagram). Discussion cards
+// (pins/_feed_item) open their discussion page (comments/show) the same way;
+// ?reply_to=<id> on their Reply link opens that comment's reply box.
 //
 // The pin's own URL is pushed onto the history, so the system back button or
 // gesture closes the viewer, sharing or reloading gives the real pin page, and
@@ -10,7 +12,8 @@
 // ES5 only: the asset pipeline's minifier cannot parse newer syntax.
 (function() {
   var PHONE = '(max-width: 767px)',
-      PIN_PATH = /\/pins\/[^\/]+\/?$/;
+      PIN_PATH = /\/pins\/[^\/]+\/?$/,
+      DISCUSSION_PATH = /\/comments\/\d+\/?$/;
 
   function init() {
     var pins = document.getElementById('pins');
@@ -116,6 +119,7 @@
           if (window.recordContentEvents) { window.recordContentEvents(body); }
           if (window.formatPinAges) { window.formatPinAges(body); }
           if (window.syncCommentForms) { window.syncCommentForms(body); }
+          openRequestedReply(url);
           var target = hash && document.getElementById(hash);
           if (target && body.contains(target)) {
             // Again once the photos above it have loaded and pushed it down,
@@ -132,6 +136,22 @@
           // Fall back to the ordinary page rather than a dead end.
           window.location.href = url;
         });
+    }
+
+    // A discussion card's Reply asks for the reply box: tap that comment's own
+    // Reply (comments/new.js.erb opens the box and focuses it).
+    function openRequestedReply(url) {
+      var match = url.match(/[?&]reply_to=(\d+)/);
+      var comment = match && document.getElementById('comment-' + match[1]);
+      if (!comment || !body.contains(comment)) { return; }
+      var actions = comment.querySelector('.comment-actions');
+      var reply = actions && actions.querySelector('.comment-reply');
+      if (reply) { reply.click(); }
+    }
+
+    function cardLabel(card) {
+      var description = card.querySelector('.description, .feed-discussion-topic');
+      return description ? description.textContent.replace(/\s+/g, ' ').trim() : '';
     }
 
     function hide() {
@@ -164,16 +184,20 @@
       if (!window.matchMedia(PHONE).matches) { return; }
       var link = closest(event.target, function(node) { return node.nodeName === 'A'; });
       if (!link || link.hasAttribute('data-method') || link.hasAttribute('data-remote')) { return; }
-      if (link.host !== window.location.host || !PIN_PATH.test(link.pathname)) { return; }
-      var card = closest(link, function(node) { return node.hasAttribute('data-pin-id'); });
+      if (link.host !== window.location.host) { return; }
+      var isPin = PIN_PATH.test(link.pathname),
+          isDiscussion = DISCUSSION_PATH.test(link.pathname);
+      if (!isPin && !isDiscussion) { return; }
+      var card = closest(link, function(node) {
+        return isPin ? node.hasAttribute('data-pin-id') : node.hasAttribute('data-feed-key');
+      });
       if (!card) { return; }
 
       event.preventDefault();
       // Hand focus back on close only to keyboard users (a click with no
       // pointer detail); after a tap it would just draw a focus ring.
       returnFocus = event.detail === 0 ? link : null;
-      var description = card.querySelector('.description');
-      open(link.href, description ? description.textContent.replace(/\s+/g, ' ').trim() : '');
+      open(link.href, cardLabel(card));
     });
 
     window.addEventListener('popstate', function(event) {

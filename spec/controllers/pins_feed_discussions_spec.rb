@@ -16,8 +16,9 @@ describe PinsController, type: :controller do
     Nokogiri::HTML(response.body).at_css(".feed-discussion[data-comment-id='#{comment.id}']")
   end
 
+  # The discussion's own page; on phones the feed opens it in the viewer.
   def thread_path_for(comment)
-    procedure_path(procedure, locale: 'en', anchor: "comment-#{comment.id}")
+    comment_path(comment, locale: 'en')
   end
 
   it 'leads with the topic, linked straight to that comment in its thread' do
@@ -81,7 +82,7 @@ describe PinsController, type: :controller do
     footer = card_for(comment).at_css('.panel-footer')
     expect(footer.at_css('.feed-discussion-replies').text).to include('2 replies')
     reply = footer.at_css('a.feed-discussion-reply')
-    expect(reply['href']).to eq(procedure_path(procedure, locale: 'en', reply_to: comment.id, anchor: "comment-#{comment.id}"))
+    expect(reply['href']).to eq(comment_path(comment, locale: 'en', reply_to: comment.id))
     expect(footer.at_css("a.flag-comment[data-comment-id='#{comment.id}']")).to be_present
     expect(footer.at_css('a.feed-discussion-delete')).to be_nil
   end

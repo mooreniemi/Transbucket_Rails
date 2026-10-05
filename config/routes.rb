@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     end
     resources :trust_grants, path: 'trust', only: [:index, :create, :destroy]
 
-    resources :comments, :only => [:new, :create, :destroy] do
+    resources :comments, :only => [:new, :create, :show, :destroy] do
       resources :flags, :only => [:create]
     end
     resources :content_events, only: [:create] do

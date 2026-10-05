@@ -1,0 +1,14 @@
+<%# One discussion (CommentsController#show). Also the content of the phone
+    viewer (?viewer=1, no layout), which takes its title from .pin-page-title. %>
+<% title "#{t('public.pin.discussion')}: #{@subject}" %>
+<div class="comment-thread-page">
+  <h1 class="pin-page-title"><%= @subject %></h1>
+  <p class="comment-thread-context">
+    <%= fa_icon('comments-o') %>
+    <%= t('directory.discussion_about', default: 'Discussion about') %>
+    <%= link_to @subject.to_s, polymorphic_path(@subject, anchor: 'comments-container') %>
+  </p>
+  <div id="comments-container" class="comment-list">
+    <%= render partial: 'comments/comment', locals: { comment: @comment } %>
+  </div>
+</div>

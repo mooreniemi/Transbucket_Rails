@@ -209,3 +209,10 @@ $tap-target: 44px;
     padding: 6px 0; // a bigger tap target without changing the line
   }
 }
+
+// One discussion on its own page or in the phone viewer (comments/show).
+.comment-thread-context {
+  color: $discussion-muted;
+  margin: 0;
+  padding: 12px 16px;
+}

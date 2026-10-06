@@ -1,4 +1,18 @@
 module DiscussionsHelper
+  # Languages whose audience labels start with a common word ("People who…",
+  # "Personas que…") that reads lowercase mid-sentence. Not German (nouns are
+  # capitalized), not languages where the label starts with the procedure or
+  # surgeon's name, and not ones whose sentence puts it after a colon.
+  MID_SENTENCE_LOWERCASE_LOCALES = %w[en es fr it pt-BR nl sv vi].freeze
+
+  # An audience label ("People who posted a submission for X") for use inside
+  # a sentence ("A discussion for people who posted...").
+  def audience_mid_sentence(label)
+    return label unless MID_SENTENCE_LOWERCASE_LOCALES.include?(I18n.locale.to_s)
+
+    label.sub(/\A\p{Lu}/) { |letter| letter.downcase }
+  end
+
   DISCUSSION_CATEGORY_LABELS = {
     'discussion' => 'Discussion',
     'question' => 'Question',

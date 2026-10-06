@@ -12,9 +12,7 @@
       <div class="locked-discussion" data-comment-id="<%= thread.id %>">
         <p class="locked-discussion-audience">
           <%= fa_icon('lock') %>
-          <%= t('public.comment.locked_discussion', default: 'A discussion for') %>
-          <%# Mid-sentence, so lowercase the label's first letter. %>
-          <strong><%= thread.audience_label.sub(/\A\p{Lu}/) { |letter| letter.downcase } %></strong>
+          <%= t('public.comment.locked_discussion_for_html', audience: content_tag(:strong, audience_mid_sentence(thread.audience_label))) %>
           <span class="comment-meta-separator" aria-hidden="true">·</span>
           <% replies = (locked_reply_counts || {}).fetch(thread.id, 0) %>
           <%= t('public.feed.reply_count', count: replies, default: replies == 1 ? '1 reply' : "#{replies} replies") %>

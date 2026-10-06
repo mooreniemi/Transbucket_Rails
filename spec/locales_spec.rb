@@ -24,7 +24,7 @@ describe 'application locales' do
   before do
     I18n.available_locales = SUPPORTED_LOCALES.map(&:to_sym)
     locale_files = Dir[File.expand_path('../config/locales/*.yml', __dir__)].sort
-    expect(locale_files.map { |file| File.basename(file) }).to eq(['about.yml', 'catalog.yml', 'comparison.yml', 'form_guidance.yml', 'procedure_guide.yml', 'rating.yml', 'zz_procedure_names.yml'])
+    expect(locale_files.map { |file| File.basename(file) }).to eq(['about.yml', 'catalog.yml', 'comparison.yml', 'discussions.yml', 'form_guidance.yml', 'procedure_guide.yml', 'rating.yml', 'zz_procedure_names.yml'])
     @translations = YAML.load_file(locale_files.find { |file| file.end_with?('catalog.yml') })
     # Swedish is a partial block in the catalog; whatever it lacks falls back to English at runtime.
     @translations['sv'] = deep_merge(@translations.fetch('en'), @translations.fetch('sv'))

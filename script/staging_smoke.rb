@@ -77,6 +77,7 @@ class StagingSmoke
     pin_id, search_term, subject_paths = create_pin
     create_comment(pin_id)
     subject_paths.each { |type, path| create_subject_comment(type, path) }
+    verify_discussions
     verify_safe_mode(pin_id)
     edit_pin(pin_id)
     verify_search_page
@@ -298,6 +299,71 @@ class StagingSmoke
     end
   end
 
+  # Discussions from the feed: the toolbar and its forms are on the page (and
+  # translated), posting works the way feed_toolbar.js does it (an in-page
+  # request answered with the new card), the discussion takes a reply, has its
+  # own page, and shows up under the Discussions filter. Also: opening the
+  # login page while signed in says nothing.
+  def verify_discussions
+    revisit = get("/users/sign_in")
+    revisit = follow_redirect(revisit) if revisit.is_a?(Net::HTTPRedirection)
+    raise "signed-in login page still says 'already signed in'" if revisit.body.to_s.include?("already signed in")
+
+    feed_path = "/pins"
+    feed = html_document(get(feed_path).body)
+    actions = feed.css(".feed-toolbar .feed-toolbar-action")
+    raise "feed toolbar missing (found #{actions.size} actions)" if actions.size < 2
+    raise "feed bottom bar missing" unless feed.at_css(".feed-dock")
+    form = feed.at_css("#feed-compose-panel form.discussion-form")
+    raise "discussion form missing from the feed" unless form
+    submit = form.at_css("[type=submit]")&.[]("value").to_s
+    if @locale != "en" && submit == "Post discussion"
+      raise "discussion form is not translated for #{@locale}"
+    end
+
+    title = "Smoke test discussion #{Time.now.to_i}"
+    params = {
+      "discussion[title]" => title,
+      "discussion[body]" => "Posted by the staging smoke.",
+      "discussion[category]" => "question",
+      "discussion[visibility]" => "everyone"
+    }
+    token = csrf_token(feed_path, feed)
+    params["authenticity_token"] = token if token
+    created = post("/discussions", params, headers: { "X-Requested-With" => "XMLHttpRequest" })
+    card = html_document(created.body).at_css(".feed-discussion[data-discussion-id]")
+    unless created.code.to_i == 201 && card && created.body.include?(title)
+      raise "posting a discussion from the feed failed with #{created.code}"
+    end
+    discussion_id = card["data-discussion-id"]
+
+    reply = "Smoke test discussion reply #{Time.now.to_i}"
+    page_path = "/discussions/#{discussion_id}"
+    page = html_document(get(page_path).body)
+    reply_params = {
+      "comment[body]" => reply,
+      "comment[commentable_id]" => discussion_id,
+      "comment[commentable_type]" => "Discussion"
+    }
+    reply_token = csrf_token(page_path, page)
+    reply_params["authenticity_token"] = reply_token if reply_token
+    replied = post("/comments", reply_params)
+    raise "replying to a discussion failed with #{replied.code}" unless replied.code.to_i == 201 && replied.body.include?(reply)
+
+    shown = get(page_path)
+    unless shown.code.to_i == 200 && shown.body.include?(title) && shown.body.include?(reply)
+      raise "discussion page is missing the post or its reply"
+    end
+
+    listed = html_document(get("/pins?content=discussions").body)
+    unless listed.at_css(%(.feed-discussion[data-discussion-id="#{discussion_id}"]))
+      raise "new discussion missing from the Discussions filter"
+    end
+
+    composing = html_document(get("/pins?compose=1").body).at_css("#feed-compose-panel")
+    raise "?compose=1 did not open the discussion form" unless composing && composing["class"].to_s.split.include?("in")
+  end
+
   # Safe mode blurs the real image until it is tapped (it no longer swaps in a
   # placeholder), on the feed cards and on the pin page.
   def verify_safe_mode(pin_id)
@@ -515,7 +581,7 @@ class StagingSmoke
     request(target, Net::HTTP::Get.new(target))
   end
 
-  def post(path, params, method: :post)
+  def post(path, params, method: :post, headers: {})
     target = uri(path)
     req = case method
     when :post
@@ -527,6 +593,7 @@ class StagingSmoke
     end
 
     req.set_form_data(params)
+    headers.each { |name, value| req[name] = value }
     request(target, req)
   end
 

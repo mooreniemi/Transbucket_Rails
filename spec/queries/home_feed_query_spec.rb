@@ -94,6 +94,34 @@ RSpec.describe HomeFeedQuery do
     expect(described_class.new(content: 'discussions', viewer: viewer).call.map(&:record)).to include(hidden, visible)
   end
 
+  it 'shows every item exactly once when paging through all three kinds, ties included' do
+    pins = pins_with_an_edited_old_one(3)
+    comments = [2, 7].map { |days| Comment.create!(commentable: procedure, user: user, body: "discussion #{days}", created_at: days.days.ago) }
+    posts = [1, 4].map { |days| create(:discussion, created_at: days.days.ago) }
+    # A standalone discussion and a procedure thread at the same moment with the same id.
+    tie_time = 3.days.ago.change(usec: 0)
+    tied_comment = Comment.create!(commentable: procedure, user: user, body: 'tied', created_at: tie_time)
+    tied_post = create(:discussion, created_at: tie_time)
+    tied_post.update_columns(id: tied_comment.id) unless Discussion.exists?(tied_comment.id)
+
+    all = pins + comments + posts + [tied_comment, tied_post.reload]
+    3.times do
+      shown = (1..6).flat_map { |page| described_class.new(content: 'all', page: page, per_page: 2, viewer: user).call.map(&:record) }
+      expect(shown).to match_array(all)
+    end
+  end
+
+  it 'keeps members-only standalone discussions out of the feed of people who have not posted' do
+    members_only = create(:discussion, visibility: 'contributors')
+    open = create(:discussion)
+    outsider = create(:user)
+
+    expect(described_class.new(content: 'discussions', viewer: outsider).call.map(&:record)).to eq([open])
+    expect(described_class.new(content: 'discussions', viewer: outsider).total_entries).to eq(1)
+    outsider.grant_trust!('contributor')
+    expect(described_class.new(content: 'discussions', viewer: outsider).call.map(&:record)).to include(members_only, open)
+  end
+
   it 'mixes standalone discussion posts into the discussions feed' do
     post = create(:discussion, title: 'General question', created_at: 1.hour.ago)
 

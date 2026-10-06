@@ -22,7 +22,9 @@ class HomeFeedQuery
     items.concat(discussion_items(limit)) unless @content == 'submissions'
     items.concat(standalone_discussion_items(limit)) unless @content == 'submissions'
 
-    page_items = items.sort_by { |item| [-item.occurred_at.to_f, -item.record.id] }.
+    # Kind breaks the last tie (a discussion and a comment can share an id and
+    # a moment), so every page sorts the same way.
+    page_items = items.sort_by { |item| [-item.occurred_at.to_f, -item.record.id, item.kind] }.
       slice((@page - 1) * @per_page, @per_page) || []
     add_reply_counts(page_items)
   end

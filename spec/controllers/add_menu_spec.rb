@@ -73,3 +73,17 @@ describe TrackedTarget do
     expect(TrackedTarget.id_for(:add_discussion)).to eq(27)
   end
 end
+
+describe ProceduresController, type: :controller do
+  render_views
+
+  it 'gives Compare a little flair: yellow scales, like the yellow plus on Add' do
+    sign_in(create(:user))
+
+    get :index, params: { locale: 'en' }
+
+    compare = Nokogiri::HTML(response.body).css('.navbar-collapse a').find { |a| a.text.squish == 'Compare' }
+    expect(compare.at_css('.fa-balance-scale.yellow')).to be_present
+    expect(compare['data-content-id'].to_i).to eq(TrackedTarget.id_for(:compare))
+  end
+end

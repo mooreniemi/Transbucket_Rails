@@ -11,7 +11,10 @@
 </li>
 <% comparison_type = controller_name == 'surgeons' || params[:type] == 'surgeons' ? 'surgeons' : 'procedures' %>
 <li>
-  <%= link_to t('comparison.title', default: 'Compare'), compare_path(type: comparison_type), track_click_attributes(:compare, :header) %>
+  <%# A little flair to draw people to it: yellow scales, like Add's yellow plus. %>
+  <%= link_to compare_path(type: comparison_type), track_click_attributes(:compare, :header) do %>
+    <%= t('comparison.title', default: 'Compare') %> <%= fa_icon('balance-scale', class: 'yellow') %>
+  <% end %>
 </li>
 <%# Creating, from any page. Phones: two rows in the menu. Desktop: one Add
     dropdown, so the navbar doesn't wrap. Start a discussion opens the feed

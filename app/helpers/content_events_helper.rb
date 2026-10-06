@@ -11,6 +11,19 @@ module ContentEventsHelper
     }
   end
 
+  # The hidden marker that records a feed card's impression when the page (or
+  # the next page of the feed) shows it; see content_events.js. Submission
+  # cards (pins/_pin) write theirs out by hand.
+  def content_event_impression_marker(content_type, content_id, context = {})
+    content_tag :div, '', hidden: true, 'data-content-event' => true,
+      'data-content-event-url' => content_events_path,
+      'data-content-event-batch-url' => batch_content_events_path,
+      'data-content-type' => content_type,
+      'data-content-id' => content_id,
+      'data-event-type' => 'impression',
+      'data-event-context' => context.to_json
+  end
+
   # Attributes that record a click on an allowlisted navigation target (see
   # TrackedTarget), e.g. link_to 'News', newsfeed_path, track_click_attributes(:news, :header)
   def track_click_attributes(target, surface)

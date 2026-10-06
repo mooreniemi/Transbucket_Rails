@@ -1,6 +1,8 @@
 class ContentEvent < ActiveRecord::Base
-  CONTENT_TYPES = %w[Pin Procedure Surgeon Page].freeze
-  EVENT_TYPES = %w[impression open view submission_created submission_updated].freeze
+  # Discussion: a standalone discussion. Comment: a procedure or surgeon
+  # discussion's opening comment, as shown on its feed card.
+  CONTENT_TYPES = %w[Pin Procedure Surgeon Page Discussion Comment].freeze
+  EVENT_TYPES = %w[impression open view submission_created submission_updated discussion_created].freeze
   SOURCES = %w[server client].freeze
 
   belongs_to :user

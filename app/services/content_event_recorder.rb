@@ -3,7 +3,7 @@ require 'openssl'
 class ContentEventRecorder
   DEDUPLICATION_WINDOW = 30.minutes
   STATEMENT_TIMEOUT = '100ms'.freeze
-  TRACKED_CONTENT_TYPES = %w[Pin Procedure Surgeon Page].freeze
+  TRACKED_CONTENT_TYPES = %w[Pin Procedure Surgeon Page Discussion Comment].freeze
   TRACKED_EVENT_TYPES = %w[impression open view].freeze
 
   def self.record(attributes)

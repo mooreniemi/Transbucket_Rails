@@ -118,6 +118,7 @@ class PinPresenter
     return 'mixed' if mixed_feed?
     return 'search' if @query.present?
     return 'user' if @user.present?
+    return 'filtered_for_you' if has_keywords? && for_you_chosen?
     return 'filtered' if has_keywords?
     return 'for_you' if showing_for_you?
 
@@ -136,6 +137,7 @@ class PinPresenter
       'for_you' => 'for_you_gender_v1',
       'search' => 'search_v1',
       'filtered' => 'filtered_recent_activity_v1',
+      'filtered_for_you' => 'filtered_for_you_v1',
       'user' => 'user_submissions_v1',
       'mixed' => 'mixed_recent_activity_v1'
     }.fetch(list_mode)

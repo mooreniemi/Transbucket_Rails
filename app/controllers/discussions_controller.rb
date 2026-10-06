@@ -8,17 +8,19 @@ class DiscussionsController < ApplicationController
 
   def create
     @discussion = current_user.discussions.new(discussion_params)
+    saved = @discussion.save
+    SubmissionEventRecorder.record(content: @discussion, user: current_user, event_type: 'discussion_created', locale: I18n.locale) if saved
 
     # From the feed's form (feed_toolbar.js): the new card to put at the top
     # of the feed, or the form again with what to fix.
     if request.xhr?
-      if @discussion.save
+      if saved
         item = HomeFeedQuery::Item.new(record: @discussion, kind: 'discussion_post', occurred_at: @discussion.created_at, reply_count: 0)
         render partial: 'pins/feed_item', locals: { item: item, event_context: {} }, status: :created
       else
         render partial: 'discussions/form', locals: { discussion: @discussion, in_feed: true }, status: :unprocessable_entity
       end
-    elsif @discussion.save
+    elsif saved
       redirect_to discussion_path(@discussion, locale: I18n.locale), notice: t('public.discussion.created', default: 'Discussion posted')
     else
       render :new, status: :unprocessable_entity

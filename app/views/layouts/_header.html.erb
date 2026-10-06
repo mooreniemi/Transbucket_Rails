@@ -24,7 +24,7 @@
         icon until tapped (header_search.js); on desktop the float layout puts
         the open field in the same place as before. %>
     <% if user_signed_in? %>
-      <button type="button" class="header-search-open" aria-controls="header-search" aria-expanded="false" aria-label="<%= t('header.search') %>" title="<%= t('header.search') %>">
+      <button type="button" class="header-search-open" aria-controls="header-search" aria-expanded="false" aria-label="<%= t('header.search') %>" title="<%= t('header.search') %>" <%= track_click_attribute_string(:search, :header) %>>
         <%= content_tag :span, '', class: 'glyphicon glyphicon-search', aria: { hidden: true } %>
       </button>
       <%= render partial: 'layouts/search' %>

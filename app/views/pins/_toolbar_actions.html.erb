@@ -2,20 +2,22 @@
     toolbar above the feed, and (dock: true) in the phone bar at the bottom of
     the screen, whose Filter and Discussion scroll back up to the toolbar and
     open the form there (feed_toolbar.js) rather than toggling it directly. %>
+<% surface = dock ? :feed_dock : :feed_toolbar %>
+<% track = ->(name) { track_click_attributes("#{dock ? 'dock' : 'feed'}_#{name}", surface) } %>
 <% toggle = ->(panel) { dock ? { 'data-feed-dock-open' => panel } : { 'data-toggle' => 'collapse', 'data-target' => "##{panel}", 'aria-controls' => panel } } %>
 <%= content_tag :button, type: 'button', class: 'feed-toolbar-action feed-filter-toggle',
-      **toggle.call('feed-filter-panel'), **(dock ? {} : { 'aria-expanded' => (filter_count > 0).to_s }) do %>
+      **toggle.call('feed-filter-panel'), **track.call(:filter), **(dock ? {} : { 'aria-expanded' => (filter_count > 0).to_s }) do %>
   <%= fa_icon 'filter', class: 'yellow' %>
   <span><%= t('header.filter') %><% if @presenter.for_you_chosen? %> · <%= t('directory.for_you', default: 'For You') %><% end %></span>
   <% if filter_count > 0 %><span class="badge"><%= filter_count %></span><% end %>
 <% end %>
 <%= content_tag :button, type: 'button', class: 'feed-toolbar-action feed-compose-toggle',
-      **toggle.call('feed-compose-panel'), **(dock ? {} : { 'aria-expanded' => 'false' }) do %>
+      **toggle.call('feed-compose-panel'), **track.call(:discussion), **(dock ? {} : { 'aria-expanded' => 'false' }) do %>
   <%= fa_icon 'comments-o' %>
   <span><%= t('public.discussion.toolbar_label', default: 'Discussion') %></span>
 <% end %>
 <% unless current_user.gender&.cis? %>
-  <%= link_to new_pin_path, class: 'feed-toolbar-action feed-add-submission' do %>
+  <%= link_to new_pin_path, class: 'feed-toolbar-action feed-add-submission', **track.call(:submission) do %>
     <%= fa_icon 'plus-circle', class: 'yellow' %>
     <span><%= t('public.pin.toolbar_label', default: 'Submission') %></span>
   <% end %>

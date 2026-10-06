@@ -8,12 +8,14 @@
   <% thread_path = discussion_path(discussion, locale: I18n.locale) %>
   <% excerpt, cut = discussion_excerpt(discussion.body) %>
   <% is_author = current_user && discussion.user_id == current_user.id %>
+  <% opens = content_event_open_attributes('Discussion', discussion.id, event_context) %>
   <article class="item feed-discussion standalone-feed-discussion" data-discussion-id="<%= discussion.id %>" data-feed-key="discussion-<%= discussion.id %>">
+    <%= content_event_impression_marker('Discussion', discussion.id, event_context) %>
     <div class="panel panel-default">
       <div class="panel-body">
         <p class="feed-discussion-topic">
           <%= fa_icon('comments-o') %>
-          <%= link_to discussion.title, thread_path, class: 'feed-discussion-link' %>
+          <%= link_to discussion.title, thread_path, class: 'feed-discussion-link', **opens %>
         </p>
         <% if discussion.audience_label %>
           <p class="audience-badge"><%= fa_icon('lock') %> <%= discussion.audience_label %></p>
@@ -25,7 +27,7 @@
           <% posted = l(discussion.created_at, format: :long) %>
           <%= content_tag :time, posted, datetime: discussion.created_at.utc.iso8601, title: posted, class: 'pin-age comment-age' %>
         </div>
-        <div class="comment-body feed-discussion-excerpt"><%= excerpt %><% if cut %> <%= link_to t('public.feed.read_more', default: 'Read more'), thread_path, class: 'feed-discussion-more' %><% end %></div>
+        <div class="comment-body feed-discussion-excerpt"><%= excerpt %><% if cut %> <%= link_to t('public.feed.read_more', default: 'Read more'), thread_path, class: 'feed-discussion-more', **opens %><% end %></div>
       </div>
       <div class="panel-footer">
         <div class="actions pin-actions feed-discussion-actions">
@@ -60,13 +62,15 @@
   <% thread_path = comment_path(comment, locale: I18n.locale) %>
   <% excerpt, cut = discussion_excerpt(comment.body) %>
   <% is_author = current_user && comment.user_id == current_user.id %>
+  <% opens = content_event_open_attributes('Comment', comment.id, event_context) %>
   <article class="item feed-discussion" data-comment-id="<%= comment.id %>" data-feed-key="comment-<%= comment.id %>">
+    <%= content_event_impression_marker('Comment', comment.id, event_context) %>
     <div class="panel panel-default">
       <div class="panel-body">
         <p class="feed-discussion-topic">
           <%= fa_icon('comments-o') %>
           <span class="sr-only"><%= t('directory.discussion_about', default: 'Discussion about') %></span>
-          <%= link_to subject.to_s, thread_path, class: 'feed-discussion-link' %>
+          <%= link_to subject.to_s, thread_path, class: 'feed-discussion-link', **opens %>
         </p>
         <% if comment.audience_label %>
           <p class="audience-badge"><%= fa_icon('lock') %> <%= comment.audience_label %></p>
@@ -77,7 +81,7 @@
           <% posted = l(comment.created_at, format: :long) %>
           <%= content_tag :time, posted, datetime: comment.created_at.utc.iso8601, title: posted, class: 'pin-age comment-age' %>
         </div>
-        <div class="comment-body feed-discussion-excerpt"><%= excerpt %><% if cut %> <%= link_to t('public.feed.read_more', default: 'Read more'), thread_path, class: 'feed-discussion-more' %><% end %></div>
+        <div class="comment-body feed-discussion-excerpt"><%= excerpt %><% if cut %> <%= link_to t('public.feed.read_more', default: 'Read more'), thread_path, class: 'feed-discussion-more', **opens %><% end %></div>
       </div>
       <div class="panel-footer">
         <div class="actions pin-actions feed-discussion-actions">

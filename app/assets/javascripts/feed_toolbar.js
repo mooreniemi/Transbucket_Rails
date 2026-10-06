@@ -91,6 +91,7 @@
       var masonry = window.Masonry && window.Masonry.data && window.Masonry.data(pins);
       if (masonry) { masonry.prepended([card]); }
       if (window.formatPinAges) { window.formatPinAges(card); }
+      if (window.recordContentEvents) { window.recordContentEvents(card); }
       card.classList.add('is-new');
       card.scrollIntoView({ block: 'center' });
     }

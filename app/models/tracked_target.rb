@@ -25,7 +25,17 @@ module TrackedTarget
     'language' => 16,  # the language switcher
     'home_cta' => 17,  # the three call-to-action images on the logged-out home page
     'account' => 18,   # the signed-in Account menu
-    'safe_mode' => 19  # the safe mode switch in the signed-in header
+    'safe_mode' => 19, # the safe mode switch in the signed-in header
+    'search' => 20,    # the phone header's search icon (opens the field)
+    # The feed toolbar (pins/_toolbar_actions): above the feed, and again in
+    # the phone bar at the bottom of the screen. Separate ids so a click on one
+    # isn't deduplicated away by a click on the other.
+    'feed_filter' => 21,
+    'feed_discussion' => 22,
+    'feed_submission' => 23,
+    'dock_filter' => 24,
+    'dock_discussion' => 25,
+    'dock_submission' => 26
   }.freeze
 
   def self.id_for(name)

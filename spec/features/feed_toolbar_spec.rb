@@ -14,6 +14,16 @@ RSpec.describe 'feed toolbar on a phone', js: true do
 
   after { Warden.test_reset! }
 
+  def wait_for_event(attributes)
+    Timeout.timeout(Capybara.default_max_wait_time) do
+      loop do
+        return if ContentEvent.where(attributes).exists?
+
+        sleep 0.05
+      end
+    end
+  end
+
   def boxes(selector)
     page.evaluate_script(<<~JS)
       Array.prototype.map.call(document.querySelectorAll(#{selector.to_json}), function(el) {
@@ -30,6 +40,19 @@ RSpec.describe 'feed toolbar on a phone', js: true do
     expect(buttons.map { |b| b['top'] }.uniq.size).to eq(1)
     expect(buttons.map { |b| b['h'] }).to all(be >= 44)
     expect(page.evaluate_script('document.documentElement.scrollWidth')).to be <= page.evaluate_script('window.innerWidth')
+  end
+
+  it 'records taps on the toolbar and the bottom bar as separate targets' do
+    create_list(:discussion, 8)
+    visit '/en/pins'
+
+    find('.feed-toolbar .feed-filter-toggle').click
+    page.execute_script('window.scrollTo(0, 1200)')
+    find('.feed-dock .feed-compose-toggle').click
+
+    wait_for_event(content_type: 'Page', event_type: 'open', content_id: TrackedTarget.id_for(:feed_filter))
+    wait_for_event(content_type: 'Page', event_type: 'open', content_id: TrackedTarget.id_for(:dock_discussion))
+    expect(ContentEvent.find_by(content_id: TrackedTarget.id_for(:dock_discussion)).event_context).to include('surface' => 'feed_dock')
   end
 
   it 'opens the discussion form in place, with the cursor in the title, one panel at a time' do

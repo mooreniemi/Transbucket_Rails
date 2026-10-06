@@ -78,6 +78,17 @@ $toolbar-ink: #222;
     }
   }
 
+  // The same white strip as the dock, edge to edge under the navbar, so the
+  // row looks the same at the top as it does at the bottom. -15px undoes
+  // Bootstrap's .container padding; -10px the gap between the 50px navbar
+  // and the body's 60px top padding (styles.css.scss).
+  .feed-toolbar {
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    margin: -10px -15px 12px;
+    padding: 8px 16px;
+  }
+
   // Room for the dock, so it never covers the last card.
   #pins {
     padding-bottom: 72px;

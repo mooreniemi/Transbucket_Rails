@@ -15,12 +15,22 @@ module ContentEventsHelper
   # the next page of the feed) shows it; see content_events.js. Submission
   # cards (pins/_pin) write theirs out by hand.
   def content_event_impression_marker(content_type, content_id, context = {})
+    content_event_marker(content_type, content_id, 'impression', context)
+  end
+
+  # The same for a page that is one piece of content (a discussion's page,
+  # also when the phone viewer opens it), recorded as a view.
+  def content_event_view_marker(content_type, content_id)
+    content_event_marker(content_type, content_id, 'view')
+  end
+
+  def content_event_marker(content_type, content_id, event_type, context = {})
     content_tag :div, '', hidden: true, 'data-content-event' => true,
       'data-content-event-url' => content_events_path,
       'data-content-event-batch-url' => batch_content_events_path,
       'data-content-type' => content_type,
       'data-content-id' => content_id,
-      'data-event-type' => 'impression',
+      'data-event-type' => event_type,
       'data-event-context' => context.to_json
   end
 

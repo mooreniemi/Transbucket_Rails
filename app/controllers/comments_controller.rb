@@ -53,6 +53,7 @@ class CommentsController < ApplicationController
     service.create
 
     @comment = service.comment
+    SubmissionEventRecorder.record(content: @comment, user: current_user, event_type: 'comment_created', locale: I18n.locale) if @comment.persisted? && @comment.errors.empty?
     #TODO clean this up
     case @comment.commentable_type
     when "Pin"

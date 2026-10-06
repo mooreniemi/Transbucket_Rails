@@ -2,6 +2,7 @@
     viewer (?viewer=1, no layout), which takes its title from .pin-page-title. %>
 <% title "#{t('public.pin.discussion')}: #{@subject}" %>
 <div class="comment-thread-page">
+  <%= content_event_view_marker('Comment', @comment.id) %>
   <h1 class="pin-page-title"><%= @subject %></h1>
   <p class="comment-thread-context">
     <%= fa_icon('comments-o') %>

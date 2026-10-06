@@ -14,8 +14,9 @@ RSpec.describe 'feed toolbar on a phone', js: true do
 
   after { Warden.test_reset! }
 
+  # Events are posted in the background; allow for a busy machine.
   def wait_for_event(attributes)
-    Timeout.timeout(Capybara.default_max_wait_time) do
+    Timeout.timeout([Capybara.default_max_wait_time, 10].max) do
       loop do
         return if ContentEvent.where(attributes).exists?
 

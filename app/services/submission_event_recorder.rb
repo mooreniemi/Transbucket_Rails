@@ -1,5 +1,5 @@
-# Records a server-side content event when someone submits or edits a pin, or
-# posts a standalone discussion, so that step sits in content_events next to
+# Records a server-side content event when someone submits or edits a pin,
+# posts a standalone discussion or comments (a discussion reply included), so that step sits in content_events next to
 # the browser's impression/open/view events. Called only after it has saved.
 #
 # Tracking must never get in the way of a submission: the insert runs in its
@@ -10,7 +10,8 @@ class SubmissionEventRecorder
   EVENT_TYPES = {
     'submission_created' => 'Pin',
     'submission_updated' => 'Pin',
-    'discussion_created' => 'Discussion'
+    'discussion_created' => 'Discussion',
+    'comment_created' => 'Comment'
   }.freeze
 
   def self.record(user:, event_type:, locale:, pin: nil, content: pin)

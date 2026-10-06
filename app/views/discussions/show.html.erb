@@ -2,6 +2,7 @@
 <%# A standalone discussion: the post, its replies and a reply box. The phone
     feed opens it over the feed (pin_viewer.js) with ?viewer=1. %>
 <div class="comment-thread-page standalone-discussion-page">
+  <%= content_event_view_marker('Discussion', @discussion.id) %>
   <h1 class="pin-page-title"><%= @discussion.title %></h1>
   <div class="standalone-discussion-post">
     <% if @discussion.audience_label %>

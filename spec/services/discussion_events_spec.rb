@@ -177,3 +177,82 @@ describe TrackedTarget do
     expect(TrackedTarget::TARGETS.values_at('search', 'feed_filter', 'feed_discussion', 'feed_submission', 'dock_filter', 'dock_discussion', 'dock_submission')).to eq((20..26).to_a)
   end
 end
+
+# The remaining gaps: replies, a discussion's own page, and applying a filter.
+describe CommentsController, type: :controller do
+  let(:user) { create(:user) }
+
+  before { sign_in(user) }
+
+  it 'records comment_created for a reply, from the server' do
+    discussion = create(:discussion)
+
+    post :create, params: { locale: 'en', comment: { commentable_type: 'Discussion', commentable_id: discussion.id, body: 'Me too' } }, xhr: true
+
+    comment = Comment.last
+    expect(ContentEvent.where(content_type: 'Comment', content_id: comment.id, event_type: 'comment_created', source: 'server', user_id: user.id).count).to eq(1)
+  end
+
+  it "records nothing when a reply isn't allowed" do
+    members_only = create(:discussion, visibility: 'contributors')
+
+    expect { post :create, params: { locale: 'en', comment: { commentable_type: 'Discussion', commentable_id: members_only.id, body: 'Me too' } }, xhr: true }.
+      to raise_error(ActiveRecord::RecordNotFound)
+    expect(ContentEvent.count).to eq(0)
+  end
+end
+
+describe 'discussion page views', type: :controller do
+  render_views
+
+  def view_marker
+    Nokogiri::HTML(response.body).at_css('[data-content-event][data-event-type=view]')
+  end
+
+  describe DiscussionsController do
+    it "marks a standalone discussion's page as a view" do
+      sign_in(create(:user))
+      discussion = create(:discussion)
+
+      get :show, params: { id: discussion.id, locale: 'en', viewer: '1' }
+
+      expect([view_marker['data-content-type'], view_marker['data-content-id']]).to eq(['Discussion', discussion.id.to_s])
+    end
+  end
+
+  describe CommentsController do
+    it "marks a procedure discussion's page as a view of its opening comment" do
+      sign_in(create(:user))
+      thread = CommentService.new(create(:procedure), create(:user), 'How was recovery?').tap(&:create).comment
+
+      get :show, params: { id: thread.id, locale: 'en' }
+
+      expect([view_marker['data-content-type'], view_marker['data-content-id']]).to eq(['Comment', thread.id.to_s])
+    end
+  end
+end
+
+describe PinsController, type: :controller do
+  render_views
+
+  it "tracks the filter's Apply button" do
+    sign_in(create(:user))
+
+    get :index, params: { locale: 'en' }
+
+    apply = Nokogiri::HTML(response.body).at_css('#feed-filter-panel #submit-filter')
+    expect(apply['data-content-id'].to_i).to eq(TrackedTarget.id_for(:filter_apply))
+    expect(JSON.parse(apply['data-event-context'])).to include('surface' => 'feed_filter')
+  end
+end
+
+describe ContentEventRecorder do
+  it 'records a view of a discussion page' do
+    discussion = create(:discussion)
+
+    expect(described_class.record(
+      request: double(remote_ip: '203.0.113.8'), current_user: nil, locale: :en,
+      content_type: 'Discussion', content_id: discussion.id, event_type: 'view', visitor_id: 'browser'
+    )).to be(true)
+  end
+end

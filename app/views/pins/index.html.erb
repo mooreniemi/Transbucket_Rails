@@ -21,11 +21,13 @@
     is the submission form. Recent / For You is a choice inside Filter. On
     phones the same three float at the bottom once this row scrolls away. %>
 <% filter_count = active_filter_count %>
-<div class="feed-toolbar" id="feed-toolbar"><%= render 'pins/toolbar_actions', filter_count: filter_count, dock: false %></div>
-<div id="feed-filter-panel" class="feed-toolbar-panel collapse<%= ' in' if filter_count > 0 %>">
+<%# ?compose=1 (Start a discussion in the menu) opens the discussion form instead. %>
+<% composing = params[:compose].present? %>
+<div class="feed-toolbar" id="feed-toolbar"><%= render 'pins/toolbar_actions', filter_count: filter_count, composing: composing, dock: false %></div>
+<div id="feed-filter-panel" class="feed-toolbar-panel collapse<%= ' in' if filter_count > 0 && !composing %>">
   <%= render partial: 'pins/filter_controls' %>
 </div>
-<div id="feed-compose-panel" class="feed-toolbar-panel collapse">
+<div id="feed-compose-panel" class="feed-toolbar-panel collapse<%= ' in' if composing %>">
   <div class="feed-filter-card feed-compose-card">
     <%= render 'discussions/form', discussion: Discussion.new(category: 'discussion', visibility: 'everyone'), in_feed: true %>
   </div>
@@ -33,5 +35,5 @@
 <%# Phones: the toolbar again, at the bottom of the screen, once the one above
     has scrolled away (feed_toolbar.js shows it). Its buttons scroll back up
     and open the same forms. %>
-<nav class="feed-dock" aria-label="<%= t('directory.feed_actions', default: 'Feed actions') %>" hidden><%= render 'pins/toolbar_actions', filter_count: filter_count, dock: true %></nav>
+<nav class="feed-dock" aria-label="<%= t('directory.feed_actions', default: 'Feed actions') %>" hidden><%= render 'pins/toolbar_actions', filter_count: filter_count, composing: composing, dock: true %></nav>
 <%= render 'pins/feed_page' %>

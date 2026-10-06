@@ -13,11 +13,34 @@
 <li>
   <%= link_to t('comparison.title', default: 'Compare'), compare_path(type: comparison_type), track_click_attributes(:compare, :header) %>
 </li>
-<% unless current_user.gender&.cis? %>
-  <li>
-    <%= link_to "#{I18n.t(".header.add")} #{fa_icon('plus-circle', class: 'yellow')}".html_safe, new_pin_path, track_click_attributes(:add, :header) %>
+<%# Creating, from any page. Phones: two rows in the menu. Desktop: one Add
+    dropdown, so the navbar doesn't wrap. Start a discussion opens the feed
+    with its discussion form already open (pins/index, feed_toolbar.js). %>
+<% can_add_submission = !current_user.gender&.cis? %>
+<% start_discussion_path = pins_path(compose: 1) %>
+<% if can_add_submission %>
+  <li class="visible-xs">
+    <%= link_to new_pin_path, track_click_attributes(:add, :header) do %>
+      <%= t('header.add_submission', default: 'Add submission') %> <%= fa_icon('plus-circle', class: 'yellow') %>
+    <% end %>
   </li>
 <% end %>
+<li class="visible-xs">
+  <%= link_to start_discussion_path, track_click_attributes(:add_discussion, :header).merge('data-open-compose' => true) do %>
+    <%= t('header.start_discussion', default: 'Start a discussion') %> <%= fa_icon('comments-o') %>
+  <% end %>
+</li>
+<li class="dropdown add-menu hidden-xs">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+    <%= t('header.add') %> <%= fa_icon('plus-circle', class: 'yellow') %> <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <% if can_add_submission %>
+      <li><%= link_to t('public.pin.toolbar_label', default: 'Submission'), new_pin_path, track_click_attributes(:add, :header) %></li>
+    <% end %>
+    <li><%= link_to t('public.discussion.toolbar_label', default: 'Discussion'), start_discussion_path, track_click_attributes(:add_discussion, :header).merge('data-open-compose' => true) %></li>
+  </ul>
+</li>
 <li>
   <%= link_to I18n.t('.header.news'), newsfeed_path, track_click_attributes(:news, :header) %>
 </li>

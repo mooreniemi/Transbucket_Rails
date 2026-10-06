@@ -26,10 +26,21 @@
     });
 
     if (compose) {
-      $(compose).on('shown.bs.collapse', function() {
-        var title = compose.querySelector('.discussion-title-input');
-        // Without scrolling: the dock may be scrolling the page back up.
-        if (title) { title.focus({ preventScroll: true }); }
+      $(compose).on('shown.bs.collapse', focusTitle);
+
+      // Arrived from Start a discussion in the menu (?compose=1): the form is
+      // already open, so put the cursor in it.
+      if ($(compose).hasClass('in')) { focusTitle(); }
+
+      // Start a discussion in the menu while already on the feed: open the
+      // form here instead of reloading the page.
+      document.addEventListener('click', function(event) {
+        var link = event.target.closest && event.target.closest('[data-open-compose]');
+        if (!link) { return; }
+        event.preventDefault();
+        hideWhenOpen($('.navbar-collapse.in, .navbar-collapse.collapsing'));
+        toolbar.scrollIntoView({ block: 'start' });
+        if ($(compose).hasClass('in')) { focusTitle(); } else { $(compose).collapse('show'); }
       });
       compose.addEventListener('submit', function(event) {
         var form = event.target;
@@ -39,14 +50,24 @@
       });
     }
 
-    // Bootstrap ignores hide while the panel is still opening.
-    function closeCompose() {
-      var $compose = $(compose), collapse = $compose.data('bs.collapse');
+    // Without scrolling: the dock or the menu may be scrolling the page up.
+    function focusTitle() {
+      var title = compose && compose.querySelector('.discussion-title-input');
+      if (title) { title.focus({ preventScroll: true }); }
+    }
+
+    // Bootstrap ignores hide while a panel (or the menu) is still opening.
+    function hideWhenOpen($panel) {
+      var collapse = $panel.data('bs.collapse');
       if (collapse && collapse.transitioning) {
-        $compose.one('shown.bs.collapse', function() { $compose.collapse('hide'); });
+        $panel.one('shown.bs.collapse', function() { $panel.collapse('hide'); });
       } else {
-        $compose.collapse('hide');
+        $panel.collapse('hide');
       }
+    }
+
+    function closeCompose() {
+      hideWhenOpen($(compose));
     }
 
     function post(form) {

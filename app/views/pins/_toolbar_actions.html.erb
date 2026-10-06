@@ -6,13 +6,13 @@
 <% track = ->(name) { track_click_attributes("#{dock ? 'dock' : 'feed'}_#{name}", surface) } %>
 <% toggle = ->(panel) { dock ? { 'data-feed-dock-open' => panel } : { 'data-toggle' => 'collapse', 'data-target' => "##{panel}", 'aria-controls' => panel } } %>
 <%= content_tag :button, type: 'button', class: 'feed-toolbar-action feed-filter-toggle',
-      **toggle.call('feed-filter-panel'), **track.call(:filter), **(dock ? {} : { 'aria-expanded' => (filter_count > 0).to_s }) do %>
+      **toggle.call('feed-filter-panel'), **track.call(:filter), **(dock ? {} : { 'aria-expanded' => (filter_count > 0 && !composing).to_s }) do %>
   <%= fa_icon 'filter', class: 'yellow' %>
   <span><%= t('header.filter') %><% if @presenter.for_you_chosen? %> · <%= t('directory.for_you', default: 'For You') %><% end %></span>
   <% if filter_count > 0 %><span class="badge"><%= filter_count %></span><% end %>
 <% end %>
 <%= content_tag :button, type: 'button', class: 'feed-toolbar-action feed-compose-toggle',
-      **toggle.call('feed-compose-panel'), **track.call(:discussion), **(dock ? {} : { 'aria-expanded' => 'false' }) do %>
+      **toggle.call('feed-compose-panel'), **track.call(:discussion), **(dock ? {} : { 'aria-expanded' => composing.to_s }) do %>
   <%= fa_icon 'comments-o' %>
   <span><%= t('public.discussion.toolbar_label', default: 'Discussion') %></span>
 <% end %>

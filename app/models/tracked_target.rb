@@ -35,7 +35,8 @@ module TrackedTarget
     'feed_submission' => 23,
     'dock_filter' => 24,
     'dock_discussion' => 25,
-    'dock_submission' => 26
+    'dock_submission' => 26,
+    'add_discussion' => 27   # Start a discussion, in the menu (opens the feed's form)
   }.freeze
 
   def self.id_for(name)

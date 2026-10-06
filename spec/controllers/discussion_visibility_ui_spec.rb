@@ -33,7 +33,7 @@ describe ProceduresController, type: :controller do
     get :show, params: { id: phalloplasty.id, locale: 'en' }
 
     stub = doc.at_css('section#discussion .locked-discussion')
-    expect(stub.text.squish).to include('A discussion for people who posted about phalloplasty')
+    expect(stub.text.squish).to include('A discussion for people who posted a submission for phalloplasty')
     expect(stub.text.squish).to include('2 replies')
     expect(stub.text).not_to include('Secret recovery notes')
     expect(stub.text).not_to include('thread_author')
@@ -66,7 +66,7 @@ describe ProceduresController, type: :controller do
     get :show, params: { id: phalloplasty.id, locale: 'en' }
 
     badge = doc.at_css("#comment-#{root.id} .audience-badge")
-    expect(badge.text.squish).to eq('People who posted about phalloplasty')
+    expect(badge.text.squish).to eq('People who posted a submission for phalloplasty')
     expect(doc.at_css('.locked-discussion')).to be_nil
   end
 end
@@ -85,7 +85,7 @@ describe PinsController, type: :controller do
     get :index, params: { locale: 'en' }
 
     badge = doc.at_css(".feed-discussion[data-comment-id='#{root.id}'] .audience-badge")
-    expect(badge.text.squish).to eq('People who posted about phalloplasty')
+    expect(badge.text.squish).to eq('People who posted a submission for phalloplasty')
   end
 end
 
@@ -110,7 +110,7 @@ describe CommentsController, type: :controller do
     expect(choices.map { |input| input['value'] }).to eq(%w[everyone contributors subject_contributors])
     expect(choices.find { |input| input['checked'] }['value']).to eq('everyone')
     labels = form_html.css('.comment-audience label').map { |label| label.text.squish }
-    expect(labels).to eq(['Everyone', 'People who have posted a submission', 'People who posted about phalloplasty'])
+    expect(labels).to eq(['Everyone', 'People who have posted a submission', 'People who posted a submission for phalloplasty'])
     expect(form_html.at_css('select#comment_visibility')).to be_nil
   end
 
@@ -120,6 +120,6 @@ describe CommentsController, type: :controller do
 
     get :show, params: { id: root.id, locale: 'en' }
 
-    expect(doc.at_css("#comment-#{root.id} .audience-badge").text.squish).to eq('People who posted about phalloplasty')
+    expect(doc.at_css("#comment-#{root.id} .audience-badge").text.squish).to eq('People who posted a submission for phalloplasty')
   end
 end

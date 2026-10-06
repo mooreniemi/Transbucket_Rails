@@ -2,7 +2,7 @@ require 'rails_helper'
 
 # Who can read a restricted discussion, beyond the rules in
 # comment_visibility_spec.rb: its author, moderators, and for "people who
-# posted about X", anyone who posted about X or a related procedure.
+# posted a submission for X", anyone who posted one for X or a related procedure.
 RSpec.describe Comment do
   let(:phalloplasty) { create(:procedure, name: 'phalloplasty') }
   let(:rff) { create(:procedure, name: 'rff phalloplasty') }
@@ -50,6 +50,12 @@ RSpec.describe Comment do
   it "describes its audience in plain words, naming the subject" do
     expect(discussion('everyone').audience_label).to be_nil
     expect(discussion('contributors').audience_label).to eq('People who have posted a submission')
-    expect(discussion('subject_contributors').audience_label).to eq('People who posted about phalloplasty')
+    expect(discussion('subject_contributors').audience_label).to eq('People who posted a submission for phalloplasty')
+  end
+
+  it 'names a surgeon the same way: a submission with them, not a post about them' do
+    surgeon = create(:surgeon)
+
+    expect(discussion('subject_contributors', on: surgeon).audience_label).to eq("People who posted a submission with #{surgeon}")
   end
 end

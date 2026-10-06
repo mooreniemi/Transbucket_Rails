@@ -45,8 +45,9 @@ class Comment < ActiveRecord::Base
 
   # Visibility is inherited from the root discussion so a private thread never
   # leaks through one of its replies. Authors always see their own threads;
-  # admins and moderators see everything. "People who posted about X" covers
-  # X and its related procedures (Procedure.covered_ids_for). The correlated
+  # admins and moderators see everything. "People who posted a submission for
+  # X" covers X and its related procedures (Procedure.covered_ids_for); for a
+  # surgeon, a submission with them. The correlated
   # checks keep this a single SQL query for a page or feed.
   def self.visible_to(user)
     return where(visibility: 'everyone') if user.blank?
@@ -112,7 +113,17 @@ class Comment < ActiveRecord::Base
     when 'contributors'
       I18n.t('public.comment.audience_contributors', default: 'People who have posted a submission')
     when 'subject_contributors'
-      I18n.t('public.comment.audience_subject_contributors', subject: commentable.to_s, default: 'People who posted about %{subject}')
+      self.class.subject_audience_label(commentable)
+    end
+  end
+
+  # "People who posted a submission for <procedure>" / "...with <surgeon>":
+  # a submission, not a discussion or comment, is what lets someone in.
+  def self.subject_audience_label(subject)
+    if subject.is_a?(Surgeon)
+      I18n.t('public.comment.audience_surgeon_contributors', subject: subject.to_s, default: 'People who posted a submission with %{subject}')
+    else
+      I18n.t('public.comment.audience_procedure_contributors', subject: subject.to_s, default: 'People who posted a submission for %{subject}')
     end
   end
 

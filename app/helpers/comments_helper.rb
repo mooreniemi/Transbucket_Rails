@@ -8,7 +8,7 @@ module CommentsHelper
     [
       everyone,
       [t('public.comment.audience_contributors', default: 'People who have posted a submission'), 'contributors'],
-      [t('public.comment.audience_subject_contributors', subject: commentable.to_s, default: 'People who posted about %{subject}'), 'subject_contributors']
+      [Comment.subject_audience_label(commentable), 'subject_contributors']
     ]
   end
 

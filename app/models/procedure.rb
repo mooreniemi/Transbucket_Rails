@@ -38,8 +38,8 @@ class Procedure < ActiveRecord::Base
 
   # Editorial links come first; token matches fill gaps for variants such as
   # "laparoscopic hysterectomy" and "groin flap phalloplasty".
-  # Procedures a user counts as having posted about, for discussions shown to
-  # "people who posted about X": the ones they published submissions for, plus
+  # Procedures a user counts as having posted a submission for, for discussions shown to
+  # "people who posted a submission for X": the ones they published submissions for, plus
   # those procedures' related ones (so an RFF phalloplasty submission covers
   # phalloplasty). Memoized on the user for the request.
   def self.covered_ids_for(user)

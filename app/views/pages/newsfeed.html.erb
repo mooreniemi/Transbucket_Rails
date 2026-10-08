@@ -1,6 +1,6 @@
 <% page_title = I18n.t('newsfeed.title') %>
 <% seo_meta title: page_title, description: I18n.t('newsfeed.description') %>
-<%= render partial: 'ads/test1' %>
+<%= render partial: 'ads/test1', locals: { surface: 'news' } %>
 <% title page_title %>
 <h1><%= I18n.t('newsfeed.title') %></h1>
 <div class="center newsfeed">

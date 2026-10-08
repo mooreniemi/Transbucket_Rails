@@ -56,7 +56,7 @@ class ContentEventsController < ApplicationController
   end
 
   def event_context
-    allowlisted_context(:event_context, %w[surface list_mode filter_signature rank ranking_version page target])
+    allowlisted_context(:event_context, %w[surface list_mode filter_signature rank ranking_version page target status])
   end
 
   def batch_events

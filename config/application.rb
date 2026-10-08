@@ -12,6 +12,9 @@ Bundler.require(*Rails.groups)
 
 module Transbucket
   class Application < Rails::Application
+    # AdSense ads render only in production (see ApplicationHelper#ads_enabled?).
+    config.x.show_ads = Rails.env.production?
+
     # TODO include blocking ips for bad users
     # config.middleware.use Rack::Attack
 

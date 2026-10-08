@@ -37,7 +37,11 @@ module TrackedTarget
     'dock_discussion' => 25,
     'dock_submission' => 26,
     'add_discussion' => 27,  # Start a discussion, in the menu (opens the feed's form)
-    'filter_apply' => 28     # Apply, in the feed's filter
+    'filter_apply' => 28,    # Apply, in the feed's filter
+    # An ad slot on a page (ads/_slot). Unlike the targets above this is not a
+    # click: ad_tracking.js records an 'impression' when the slot resolves (with
+    # its status) and a 'view' once a filled ad has been on screen for a second.
+    'ad_slot' => 29
   }.freeze
 
   def self.id_for(name)

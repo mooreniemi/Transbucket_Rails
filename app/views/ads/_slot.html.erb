@@ -1,0 +1,19 @@
+<%# One AdSense slot, wrapped with what ad_tracking.js needs to record how it
+    fared: the page it is on, where to send the event, and the ad-slot target id.
+    surface: which page ('pins_index', 'procedures_index', 'surgeons_index', 'news'). %>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- test1 -->
+<div class="ad-slot" data-ad-slot-tracking
+     data-ad-surface="<%= surface %>"
+     data-content-event-url="<%= content_events_path %>"
+     data-content-id="<%= TrackedTarget.id_for('ad_slot') %>">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-3154444439610781"
+       data-ad-slot="3311943876"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+</div>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+</script>

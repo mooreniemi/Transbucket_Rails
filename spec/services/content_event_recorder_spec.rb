@@ -72,6 +72,47 @@ describe ContentEventRecorder do
     expect(ContentEvent.count).to eq(1)
   end
 
+  describe 'ad slots' do
+    let(:base) do
+      { request: request, current_user: nil, locale: :en, content_type: 'Page',
+        content_id: TrackedTarget.id_for('ad_slot'), visitor_id: 'browser-only-id' }
+    end
+
+    it 'records an impression with its page and status' do
+      expect(described_class.record(base.merge(event_type: 'impression', event_context: { 'surface' => 'procedures_index', 'status' => 'unfilled' }))).to be(true)
+
+      expect(ContentEvent.last).to have_attributes(content_type: 'Page', content_id: TrackedTarget.id_for('ad_slot'), event_type: 'impression', source: 'client')
+      expect(ContentEvent.last.event_context).to eq('surface' => 'procedures_index', 'status' => 'unfilled')
+    end
+
+    it 'counts every render, not one per visitor per half hour' do
+      attributes = base.merge(event_type: 'impression', event_context: { 'surface' => 'news', 'status' => 'filled' })
+
+      3.times { expect(described_class.record(attributes)).to be(true) }
+
+      expect(ContentEvent.where(content_id: TrackedTarget.id_for('ad_slot')).count).to eq(3)
+    end
+
+    it 'records a view for a filled ad' do
+      expect(described_class.record(base.merge(event_type: 'view', event_context: { 'surface' => 'pins_index', 'status' => 'filled' }))).to be(true)
+      expect(ContentEvent.last.event_type).to eq('view')
+    end
+
+    it 'stores only a known status, and only the page and status, whatever the client sends' do
+      described_class.record(base.merge(event_type: 'impression', event_context: { 'surface' => 'news', 'status' => '<script>', 'rank' => '1', 'target' => 'x' }))
+
+      expect(ContentEvent.last.event_context).to eq('surface' => 'news', 'status' => 'unknown')
+    end
+
+    it 'never records a click on an ad slot, and still dedupes ordinary navigation targets' do
+      expect(described_class.record(base.merge(event_type: 'open'))).to be(false)
+
+      news = base.merge(content_id: TrackedTarget.id_for('news'), event_type: 'open')
+      expect(described_class.record(news)).to be(true)
+      expect(described_class.record(news)).to be(false)
+    end
+  end
+
   it 'records a Pin-card impression and open only for a real Pin' do
     pin = create(:pin)
     attributes = {

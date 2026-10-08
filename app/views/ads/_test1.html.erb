@@ -1,15 +1,6 @@
-<% if Rails.env.production? && ads_allowed? %>
+<%# The ad on the News, Procedures and Surgeons pages. surface: see ads/_slot. %>
+<% if ads_enabled? %>
   <div class="row padded_nicely">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <!-- test1 -->
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-3154444439610781"
-         data-ad-slot="3311943876"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
+    <%= render 'ads/slot', surface: local_assigns.fetch(:surface, '') %>
   </div>
 <% end %>

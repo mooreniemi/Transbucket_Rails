@@ -141,6 +141,8 @@
   });
 
   window.recordContentEvents = recordPageContentEvents;
+  // One event from a marker element, now: used by ad_tracking.js.
+  window.recordContentEvent = recordContentEvent;
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() { recordPageContentEvents(); });

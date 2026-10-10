@@ -1,4 +1,4 @@
-<% if ads_enabled? && rand(1..15) == 7 %>
+<% if feed_ad_slot? %>
   <% Rails.logger.debug "Serving ad with #{pin.id}" %>
   <div class="item ad pin-ad-slot" aria-hidden="true">
     <%= render 'ads/slot', surface: 'pins_index' %>

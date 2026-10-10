@@ -6,6 +6,13 @@
 // is fetched as ordinary HTML and its cards are appended to #pins. Together
 // with pin_viewer.js you can scroll, open a pin, close it and carry on without
 // ever losing your place.
+//
+// Ad slots (ads/_slot) come in with each page like any other card. HTML added
+// this way does not run its scripts, so each new slot is started here: Google's
+// ad script is loaded if no page has needed it yet, and each slot is started
+// exactly once. Slots change size as ads arrive, so the feed lays itself out
+// again when one does (Masonry positions the cards, and would let a growing ad
+// cover the next card).
 // ES5 only: the asset pipeline's minifier cannot parse newer syntax.
 (function() {
   var PHONE = '(max-width: 767px)';
@@ -58,17 +65,79 @@
         seen[cardKey(item)] = true;
       });
       // A post added while you scroll shifts every page down by one, so the
-      // next page can repeat the last card. Ad slots need their script run,
-      // which parsed HTML does not do, so leave them out.
-      Array.prototype.forEach.call(doc.querySelectorAll('#pins > .item[data-pin-id], #pins > .item[data-feed-key]'), function(item) {
-        var id = cardKey(item);
-        if (seen[id]) { return; }
-        seen[id] = true;
+      // next page can repeat the last card. Ad slots have no key and are never
+      // repeats; they stay in place before the card they were rendered with.
+      Array.prototype.forEach.call(doc.querySelectorAll('#pins > .item[data-pin-id], #pins > .item[data-feed-key], #pins > .item.ad'), function(item) {
+        var isAd = /(^|\s)ad(\s|$)/.test(item.className);
+        if (!isAd) {
+          var id = cardKey(item);
+          if (seen[id]) { return; }
+          seen[id] = true;
+        }
         var card = document.importNode(item, true);
+        if (isAd) { loadAdScript(card); }
         pins.appendChild(card);
         added.push(card);
       });
       return added;
+    }
+
+    // Pasted-in scripts do not run, so take them out of an ad slot, and load
+    // Google's ad script once if the page does not have it yet (the first page
+    // may have had no ad).
+    function loadAdScript(card) {
+      Array.prototype.forEach.call(card.querySelectorAll('script'), function(script) {
+        var src = script.getAttribute('src');
+        script.parentNode.removeChild(script);
+        if (!src) { return; }
+        var present = Array.prototype.some.call(document.getElementsByTagName('script'), function(existing) {
+          return existing.getAttribute('src') === src;
+        });
+        if (present) { return; }
+        var loader = document.createElement('script');
+        loader.async = true;
+        loader.src = src;
+        document.head.appendChild(loader);
+      });
+    }
+
+    // Start each new slot once (Google fills the next slot that has not been
+    // started, so this runs after the slot is in the page), and report on it.
+    function startAds(cards) {
+      cards.forEach(function(card) {
+        var slot = card.querySelector('ins.adsbygoogle');
+        if (!slot || slot.getAttribute('data-ad-started')) { return; }
+        slot.setAttribute('data-ad-started', '1');
+        try {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (error) {
+          // The slot stays empty; ad_tracking.js records that.
+        }
+        if (window.trackAdSlots) { window.trackAdSlots(card); }
+      });
+    }
+
+    var layoutQueued = false, resizeObserver = null;
+
+    function masonryOf() {
+      return window.Masonry && window.Masonry.data && window.Masonry.data(pins);
+    }
+
+    function relayout() {
+      if (layoutQueued) { return; }
+      layoutQueued = true;
+      window.requestAnimationFrame(function() {
+        layoutQueued = false;
+        var masonry = masonryOf();
+        if (masonry) { masonry.layout(); }
+      });
+    }
+
+    // Lay the feed out again whenever an ad slot changes size.
+    function watchAd(item) {
+      if (!window.ResizeObserver) { return; }
+      if (!resizeObserver) { resizeObserver = new window.ResizeObserver(relayout); }
+      resizeObserver.observe(item);
     }
 
     function afterAppend(cards) {
@@ -79,11 +148,15 @@
       cards.forEach(function(card) {
         if (window.recordContentEvents) { window.recordContentEvents(card); }
       });
-      var masonry = window.Masonry && window.Masonry.data && window.Masonry.data(pins);
+      var masonry = masonryOf();
       if (masonry) {
         masonry.appended(cards);
         imagesLoaded(pins, function() { masonry.layout(); });
       }
+      startAds(cards);
+      cards.forEach(function(card) {
+        if (/(^|\s)ad(\s|$)/.test(card.className)) { watchAd(card); }
+      });
     }
 
     function loadMore() {
@@ -125,6 +198,7 @@
     document.documentElement.className += ' feed-infinite';
     setStatus(nextUrl(paginator) ? 'idle' : 'done');
     observer.observe(status);
+    Array.prototype.forEach.call(pins.querySelectorAll('.item.ad'), watchAd);
   }
 
   if (document.readyState === 'loading') {

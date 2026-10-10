@@ -14,6 +14,11 @@ module Transbucket
   class Application < Rails::Application
     # AdSense ads render only in production (see ApplicationHelper#ads_enabled?).
     config.x.show_ads = Rails.env.production?
+    # One ad slot goes before roughly 1 in this many feed cards. Specs set it to
+    # 1 so every card has one.
+    config.x.feed_ad_odds = 15
+    # Google's ad script. Specs point this at a stand-in so they never call Google.
+    config.x.ad_script_src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
 
     # TODO include blocking ips for bad users
     # config.middleware.use Rack::Attack

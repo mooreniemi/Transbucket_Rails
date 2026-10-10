@@ -9,6 +9,11 @@ module ApplicationHelper
     Rails.configuration.x.show_ads && ads_allowed?
   end
 
+  # Whether an ad slot goes before this feed card: about 1 card in feed_ad_odds.
+  def feed_ad_slot?
+    ads_enabled? && rand(Rails.configuration.x.feed_ad_odds).zero?
+  end
+
   def ads_allowed?
     !(controller_path == 'pins' && %w[new edit create update].include?(action_name))
   end

@@ -1,7 +1,7 @@
 <%# One AdSense slot, wrapped with what ad_tracking.js needs to record how it
     fared: the page it is on, where to send the event, and the ad-slot target id.
     surface: which page ('pins_index', 'procedures_index', 'surgeons_index', 'news'). %>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="<%= Rails.configuration.x.ad_script_src %>"></script>
 <!-- test1 -->
 <div class="ad-slot" data-ad-slot-tracking
      data-ad-surface="<%= surface %>"

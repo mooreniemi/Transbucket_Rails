@@ -31,6 +31,23 @@
     return ins.getAttribute('data-ad-status') || null;
   }
 
+  // Statuses that mean no ad will appear in the slot.
+  var EMPTY = ['unfilled', 'unfill-optimized', 'hidden', 'script_blocked'];
+
+  // A feed slot (.pin-ad-slot) that will stay empty gives back its space, so
+  // there is no blank gap between cards.
+  function collapseIfEmpty(wrapper, status) {
+    if (EMPTY.indexOf(status) === -1) { return; }
+    var node = wrapper.parentNode;
+    while (node && node !== document) {
+      if (node.className && /(^|\s)pin-ad-slot(\s|$)/.test(node.className)) {
+        node.className += ' ad-collapsed';
+        return;
+      }
+      node = node.parentNode;
+    }
+  }
+
   function send(wrapper, eventType, status) {
     if (!window.recordContentEvent) { return; }
     try {
@@ -76,6 +93,7 @@
     function finish(status) {
       if (done) { return; }
       done = true;
+      collapseIfEmpty(wrapper, status);
       send(wrapper, 'impression', status);
       if (status === 'filled') { watchViewable(ins, wrapper, config); }
     }

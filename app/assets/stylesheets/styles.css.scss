@@ -189,6 +189,13 @@ $medium: 900px;
   min-height: 120px;
 }
 
+// A feed slot that will stay empty (unfilled, or hidden by an ad blocker) gives
+// its space back instead of leaving a blank gap between cards (ad_tracking.js).
+.pin-ad-slot.ad-collapsed {
+  display: none;
+  min-height: 0;
+}
+
 .mockad {
   outline: 5px dotted green;
 }

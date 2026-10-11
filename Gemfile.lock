@@ -203,6 +203,7 @@ GEM
       representable (>= 3.1.1, < 4)
     docile (1.4.1)
     drb (2.2.3)
+    dry-cli (1.4.1)
     elasticsearch (7.4.0)
       elasticsearch-api (= 7.4.0)
       elasticsearch-transport (= 7.4.0)
@@ -351,6 +352,7 @@ GEM
     msgpack (1.8.5)
     multi_json (1.19.1)
     multipart-post (2.4.1)
+    mutex_m (0.3.0)
     nenv (0.3.0)
     nested_form (0.3.2)
     net-imap (0.6.7)
@@ -399,6 +401,8 @@ GEM
     rack (2.2.24)
     rack-mini-profiler (3.3.1)
       rack (>= 1.2.0)
+    rack-proxy (2.0.1)
+      rack (>= 2.0, < 4)
     rack-session (1.0.2)
       rack (< 3)
     rack-test (2.2.0)
@@ -590,6 +594,15 @@ GEM
     uniform_notifier (1.18.0)
     uri (1.1.1)
     useragent (0.16.11)
+    vite_rails (3.11.1)
+      railties (>= 5.1, < 9)
+      vite_ruby (~> 3.0, >= 3.2.2)
+    vite_ruby (3.11.1)
+      dry-cli (>= 0.7, < 2)
+      logger (~> 1.6)
+      mutex_m
+      rack-proxy (>= 0.6.1)
+      zeitwerk (~> 2.2)
     warden (1.2.9)
       rack (>= 2.0.9)
     webrick (1.9.2)
@@ -696,6 +709,7 @@ DEPENDENCIES
   turbolinks
   uglifier (~> 4.2)
   unicorn
+  vite_rails (~> 3.11)
   webrick
   will_paginate (~> 3.0)
   will_paginate-bootstrap

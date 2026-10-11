@@ -5,66 +5,62 @@ import { devtools } from '@tanstack/devtools-vite';
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import viteReact from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
+import RubyPlugin from 'vite-plugin-ruby';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
+// Storybook and Vitest load this file too, but they don't run behind Rails --
+// the Ruby plugin would remap their root, base, and build inputs.
+const runsBehindRails = !process.env.STORYBOOK && !process.env.VITEST;
+
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
-const config = defineConfig(({ command }) => ({
-  // The build is served by Rails out of public/vite (see lib/tasks/vite.rake),
-  // so every URL Vite bakes into the bundle -- imported images, lazy route
-  // chunks, CSS url()s -- has to start with /vite/. With the default "/",
-  // they'd point at /assets/..., which is Sprockets' territory, and 404.
-  // Dev keeps "/" because the dev server itself serves everything.
-  base: command === 'build' ? '/vite/' : '/',
+const config = defineConfig({
+  // Copied as-is into the build output (e.g. the og:image). Absolute because
+  // the Ruby plugin's root is src/, where Vite would otherwise look.
+  publicDir: path.resolve(dirname, 'public'),
   resolve: {
     tsconfigPaths: true
   },
+  // Only when served through Rails (see runsBehindRails above).
+  server: runsBehindRails ? {
+    // Rails' dev proxy (inside Docker) forwards requests with this Host
+    // header; Vite rejects unknown hosts by default.
+    allowedHosts: ['host.docker.internal'],
+    // The proxy only relays HTTP, not WebSockets, so HMR connects straight
+    // to the dev server instead of going through the page's origin (:3000).
+    hmr: { host: 'localhost', clientPort: 5173 },
+  } : undefined,
   plugins: [
     paraglideVitePlugin({
-      project: './project.inlang',
-      outdir: './src/generated/paraglide',
+      // Absolute: the Ruby plugin sets Vite's root to src/, so relative
+      // paths in plugin options would resolve against that instead.
+      project: path.resolve(dirname, 'project.inlang'),
+      outdir: path.resolve(dirname, 'src/generated/paraglide'),
       strategy: ['url'],
       outputStructure: process.env.production ? 'message-modules' : 'locale-modules'
     }),
+    // base, manifest, output dir, port, and the entrypoint list all come
+    // from config/vite.json (shared with the vite_rails gem).
+    ...(runsBehindRails ? [RubyPlugin()] : []),
     devtools({
-      // can enable this if ruby is updated and we can migrate to vite_rails gem instead of custom setup
+      // Console piping calls /__tsd/... at the page's origin, which the
+      // Rails dev proxy doesn't forward (it only forwards /vite-dev/*).
       consolePiping: {
         enabled: false
       },
     }),
     tailwindcss(),
     tanstackRouter({
+      routesDirectory: path.resolve(dirname, 'src/routes'),
+      generatedRouteTree: path.resolve(dirname, 'src/routeTree.gen.ts'),
       target: 'react',
       autoCodeSplitting: true
     }),
     viteReact()
   ],
-  // manifest: true so the Rails catch-all view can look up the current
-  // build's hashed asset filenames instead of hardcoding them.
-  build: {
-    manifest: true,
-  },
-  // strictPort so Rails' dev-mode asset helper can rely on this port
-  // always being the dev server, matching the "dev" npm script's
-  // --port 5173; cors so the Rails-origin page can load module scripts
-  // from here directly in development.
-  server: {
-    port: 5173,
-    strictPort: true,
-    cors: {
-      origin: 'http://localhost:3000'
-    },
-    // Without this, Vite resolves asset imports (e.g. the header logo) to
-    // root-relative dev URLs like /src/assets/foo.png -- fine when Vite
-    // serves the page itself, but wrong when Rails does: the browser
-    // resolves that path against Rails' origin (:3000), not Vite's
-    // (:5173), and 404s. origin makes Vite emit the absolute dev-server
-    // URL instead.
-    origin: 'http://localhost:5173',
-  },
   test: {
     projects: [{
       extends: true,
@@ -87,5 +83,5 @@ const config = defineConfig(({ command }) => ({
       }
     }]
   }
-}));
+});
 export default config;

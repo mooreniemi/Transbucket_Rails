@@ -16,7 +16,7 @@ public/page_cache/*
 public/system/pin_images/photos/*
 public/system/*
 /public/assets
-/public/vite
+/public/vite*
 # Ignore application configuration
 /config/application.yml
 coverage/*
@@ -38,3 +38,6 @@ react/.agents/skills
 react/skills-lock.json
 react/chromatic.log
 react/chromatic-diagnostics.json
+
+# vite-plugin-ruby dev-server metadata
+/react/tmp

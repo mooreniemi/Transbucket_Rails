@@ -6,6 +6,10 @@ require 'sprockets/railtie'
 # https://github.com/elastic/elasticsearch-rails/tree/master/elasticsearch-rails#activesupport-instrumentation
 require 'elasticsearch/rails/instrumentation'
 
+# The Vite project lives in react/, not the Rails root. Must be absolute (the
+# gem computes paths relative to Rails.root) and set before vite_rails loads.
+ENV['VITE_RUBY_ROOT'] ||= File.expand_path('../react', __dir__)
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)

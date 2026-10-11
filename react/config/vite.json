@@ -1,0 +1,15 @@
+{
+  "all": {
+    "sourceCodeDir": "src",
+    "entrypointsDir": "entrypoints",
+    "publicDir": "../public",
+    "publicOutputDir": "vite",
+    "additionalEntrypoints": []
+  },
+  "development": {
+    "autoBuild": false,
+    "publicOutputDir": "vite-dev",
+    "port": 5173,
+    "host": "0.0.0.0"
+  }
+}

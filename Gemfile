@@ -13,6 +13,8 @@ gem 'unicorn'
 gem 'bootsnap', require: false
 gem 'turbolinks'
 gem 'bower-rails', '~> 0.7.3'
+# Bridges the react/ Vite app into Rails views (tag helpers, dev proxy, manifest)
+gem 'vite_rails', '~> 3.11'
 
 # for ci
 gem 'rspec_junit_formatter', '0.2.2'

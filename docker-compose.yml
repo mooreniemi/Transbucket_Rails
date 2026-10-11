@@ -39,6 +39,8 @@ services:
       POSTGRES_HOST: db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
+      # Vite runs on the host machine, outside this container.
+      VITE_RUBY_HOST: host.docker.internal
     networks:
       - db
       - elastic

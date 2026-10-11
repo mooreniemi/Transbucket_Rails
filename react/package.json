@@ -37,6 +37,8 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "latest",
+    "@inlang/cli": "^3.0.0",
+    "@inlang/paraglide-js": "^2.25.4",
     "@storybook/addon-a11y": "^10.6.0",
     "@storybook/addon-docs": "^10.6.0",
     "@storybook/addon-mcp": "^10.6.0",
@@ -63,9 +65,8 @@
     "storybook": "^10.6.0",
     "typescript": "^6.0.2",
     "vite": "^8.0.0",
-    "vitest": "latest",
-    "@inlang/paraglide-js": "^2.25.4",
-    "@inlang/cli": "^3.0.0"
+    "vite-plugin-ruby": "^5.2.5",
+    "vitest": "latest"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

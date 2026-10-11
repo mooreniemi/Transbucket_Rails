@@ -4,7 +4,9 @@ require "rails_helper"
 RSpec.describe "user profile", truncation: true do
   let!(:genders) { create_list(:gender, 5) }
   let(:user) { create(:user, :with_confirmation, :wants_notifications, gender: genders.last) }
-  let!(:updated) { build(:user) }
+  # FactoryBot 6 follows the parent build strategy for associations; persist
+  # this gender because the edit form only offers stored gender records.
+  let!(:updated) { build(:user, gender: create(:gender)) }
 
   before(:each) do
     login_as(user, :scope => :user)

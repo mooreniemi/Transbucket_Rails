@@ -5,7 +5,7 @@ describe PinsController, :type => :controller do
 
   describe 'GET #index' do
     it "blocks unauthenticated access" do
-      get :index, locale: 'en'
+      get :index, params: { locale: 'en' }
 
       expect(response).to redirect_to(new_user_session_path(locale: 'en'))
     end
@@ -20,60 +20,229 @@ describe PinsController, :type => :controller do
 
     describe "GET #index" do
       it "allows authenticated access" do
-        get :index
+        get :index, params: { locale: 'en' }
 
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'renders contextual discussions in the mixed feed and supports submissions-only filtering' do
+        procedure = create(:procedure)
+        discussion = create(:comment, commentable: procedure, user: user, body: 'procedure feed discussion')
+
+        get :index, params: { locale: 'en' }
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include('procedure feed discussion')
+        expect(response.body).to include("data-comment-id=\"#{discussion.id}\"")
+
+        get :index, params: { locale: 'en', content: 'submissions' }
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).not_to include('procedure feed discussion')
+      end
+
+      it 'renders standalone discussion posts in the discussions feed' do
+        post = create(:discussion, user: user, title: 'General feed topic', body: 'A text-only post')
+
+        get :index, params: { locale: 'en', content: 'discussions' }
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include('General feed topic', 'A text-only post')
+        expect(response.body).to include("data-discussion-id=\"#{post.id}\"")
+      end
+
+      context 'with comments since the last sign-in' do
+        let!(:pin) { create(:pin, user: create(:user)) }
+
+        before { User.where(id: user.id).update_all(last_sign_in_at: 2.days.ago) }
+
+        it 'links the card snippet to the newest published comment on that pin' do
+          create(:comment, commentable: pin, body: 'older words here')
+          newest = create(:comment, commentable: pin, body: 'newest words here')
+
+          get :index, params: { locale: 'en' }
+
+          expect(response.body).to include(%(href="/en/pins/#{pin.id}#comment-#{newest.id}"))
+          expect(response.body).to include('newest words here')
+          expect(response.body).not_to include('older words here')
+        end
+
+        it 'never shows the text of a comment that is pending review' do
+          create(:comment, commentable: pin, body: 'visible words')
+          pending_comment = create(:comment, commentable: pin, body: 'flagged words', state: 'pending')
+          Comment.where(id: pending_comment.id).update_all(created_at: 1.minute.from_now)
+
+          get :index, params: { locale: 'en' }
+
+          expect(response.body).to include('visible words')
+          expect(response.body).not_to include('flagged words')
+        end
+
+        it 'does not show a comment on a procedure that happens to share the pin id' do
+          procedure_comment = create(:comment, commentable: create(:procedure), body: 'procedure chatter')
+          Comment.where(id: procedure_comment.id).update_all(commentable_id: pin.id)
+
+          get :index, params: { locale: 'en', content: 'submissions' }
+
+          expect(response.body).not_to include('procedure chatter')
+        end
+
+        it 'reports a comment with a labelled, confirmed action on the pin page' do
+          comment = create(:comment, commentable: pin, body: 'a comment to report')
+
+          get :show, params: { id: pin.id, locale: 'en' }
+
+          expect(response.body).to match(/class="flag-comment"[^>]*data-confirm="#{Regexp.escape(I18n.t('public.pin.report_comment_confirm'))}"/)
+          expect(response.body).to include(">#{I18n.t('public.pin.report')}</a>").or include(I18n.t('public.pin.report'))
+          expect(response.body).to include("data-comment-id=\"#{comment.id}\"")
+        end
+      end
+
+      it 'passes the signed-in user safe-mode preference to pin cards' do
+        user.preference.update!(safe_mode: true)
+        create(:pin, user: user)
+
+        get :index, params: { locale: 'en' }
+
+        expect(assigns(:safe_mode)).to eq(true)
+        expect(response.body).to include('safe-blur')
+        expect(response.body).to include('data-safe-reveal')
+        expect(response.body).to include('data-safe-hide')
+      end
+
+      it 'passes the safe-mode preference to the pin page too' do
+        user.preference.update!(safe_mode: true)
+        pin = create(:pin, user: user)
+
+        get :show, params: { id: pin.id, locale: 'en' }
+
+        expect(assigns(:safe_mode)).to eq(true)
+      end
+
+      it 'shows pin images when the signed-in user has not enabled safe mode' do
+        user.preference.update!(safe_mode: false)
+        create(:pin, user: user)
+
+        get :index, params: { locale: 'en' }
+
+        expect(assigns(:safe_mode)).to eq(false)
+        expect(response.body).not_to include('safe-blur')
+        expect(response.body).not_to include('data-safe-reveal')
       end
 
       it "renders the authenticated index with a locale and user filter" do
-        get :index, locale: 'ja', user: user.id
+        get :index, params: { locale: 'ja', user: user.id }
 
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
         expect(response.body).to include('最近の投稿')
       end
 
-      it 'shows a For You tab for MTF and FTM users' do
-        user.update_attributes!(gender: create(:gender, name: 'MTF'))
+      it 'offers For You in the filter for MTF and FTM users' do
+        user.update!(gender: create(:gender, name: 'MTF'))
 
-        get :index
+        get :index, params: { locale: 'en' }
 
         expect(response.body).to include('Recent')
         expect(response.body).to include('For You')
-        expect(response.body).to include('feed=for_you')
+        expect(response.body).to include('id="feed_for_you"')
       end
 
-      it 'does not show a For You tab when the profile cannot define one' do
-        user.update_attributes!(gender: create(:gender, name: 'GenderQueer'))
+      it 'does not offer For You when the profile cannot define one' do
+        user.update!(gender: create(:gender, name: 'GenderQueer'))
 
-        get :index
+        get :index, params: { locale: 'en' }
 
         expect(response.body).not_to include('For You')
       end
 
-      it 'keeps the moderator navigation compact while preserving its accessible label' do
-        user.update_attributes!(admin: true)
+      it 'groups moderator tools under an accessible moderator menu' do
+        user.update!(admin: true)
 
-        get :index
+        get :index, params: { locale: 'en' }
 
-        expect(response.body).to include('>MQ</a>')
-        expect(response.body).to include('title="Moderation queue"')
-        expect(response.body).not_to include('>ModQueue</a>')
+        expect(response.body).to include('title="Moderation tools"')
+        expect(response.body).to include('Moderation queue')
+        expect(response.body).to include('Community trust')
+        expect(response.body).to include('fa-shield')
       end
 
       it 'labels the personalized feed For You' do
-        user.update_attributes!(gender: create(:gender, name: 'MTF'))
+        user.update!(gender: create(:gender, name: 'MTF'))
 
-        get :index, feed: 'for_you'
+        get :index, params: { feed: 'for_you', locale: 'en' }
 
-        expect(response.body).to include('<h1>For You</h1>')
+        expect(response.body).to include('<h1 class="feed-title">For You</h1>')
         expect(response.body).not_to include('<h1>Recent Submissions</h1>')
+      end
+
+      it 'answers infinite scroll with just the cards and page links' do
+        allow(Pin).to receive(:per_page).and_return(2)
+        create_list(:pin, 3, user: user)
+
+        get :index, params: { fragment: '1', locale: 'en' }
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include('id="pins"')
+        expect(response.body).to include('id="paginator"')
+        expect(response.body).not_to include('<html')
+        expect(response.body).not_to include('feed-filter-panel')
+        expect(response.body.scan('class="item"').size).to eq(2)
+        # The page links must not carry fragment=1, or following one would
+        # give a bare list of cards.
+        expect(response.body).to match(/href="[^"]*page=2/)
+        expect(response.body).not_to include('fragment=1')
+      end
+
+      it 'keeps infinite scroll on the For You feed' do
+        user.update!(gender: create(:gender, name: 'MTF'))
+        allow(Pin).to receive(:per_page).and_return(1)
+        # For You matches on the procedure's category, so pin that down.
+        procedure = create(:procedure, gender: 'MTF')
+        2.times { create(:pin, user: create(:user), procedure: procedure) }
+
+        get :index, params: { feed: 'for_you', fragment: '1', locale: 'en' }
+
+        next_link = Nokogiri::HTML(response.body).at_css('#paginator a[rel~="next"]')
+        expect(next_link['href']).to include('feed=for_you')
+        expect(next_link['href']).to include('page=2')
+      end
+
+      it 'keeps active filters on the next page infinite scroll asks for' do
+        procedure = create(:procedure)
+        allow(Pin).to receive(:per_page).and_return(1)
+        2.times { create(:pin, user: user, procedure: procedure) }
+
+        get :index, params: { procedure: [procedure.id.to_s], fragment: '1', locale: 'en' }
+
+        next_link = Nokogiri::HTML(response.body).at_css('#paginator a[rel~="next"]')
+        expect(CGI.unescape(next_link['href'])).to include("procedure[]=#{procedure.id}")
+        expect(next_link['href']).not_to include('fragment')
+      end
+
+      it 'loads the first two card photos straight away and the rest as you near them' do
+        create_list(:pin, 4, user: user)
+
+        get :index, params: { locale: 'en' }
+
+        images = Nokogiri::HTML(response.body).css('#pins .pin-card-image img')
+        expect(images.map { |image| image['loading'] }).to eq([nil, nil, 'lazy', 'lazy'])
+      end
+
+      it 'shows how many photos a pin has when it has more than one' do
+        create(:pin, user: user, pin_images: build_list(:pin_image, 3))
+        create(:pin, user: user, pin_images: build_list(:pin_image, 1))
+
+        get :index, params: { locale: 'en' }
+
+        expect(response.body.scan('class="pin-card-photo-count"').size).to eq(1)
+        expect(response.body).to include(I18n.t('public.pin.photo_count', count: 3))
       end
 
       it 'renders each published Pin card with its own impression and open telemetry target' do
         first_pin = create(:pin, user: user)
         second_pin = create(:pin, user: user)
 
-        get :index
+        get :index, params: { locale: 'en' }
 
         [first_pin, second_pin].each do |pin|
           card = response.body[/<div class="item" data-pin-id="#{pin.id}".*?<\/div>\s*<\/div>/m]
@@ -86,6 +255,23 @@ describe PinsController, :type => :controller do
     end
 
     describe 'GET #admin' do
+      it 'forbids members without a Moderator role' do
+        get :admin, params: { locale: 'en' }
+
+        expect(response).to have_http_status(:forbidden)
+      end
+
+      it 'allows a Moderator to view the queue but not the trust console link' do
+        user.grant_trust!('moderator', granted_by: create(:user, admin: true))
+
+        get :index, params: { locale: 'en' }
+        expect(response.body).to include('Moderation queue')
+        expect(response.body).not_to include('Community trust')
+
+        get :admin, params: { locale: 'en' }
+        expect(response).to have_http_status(:success)
+      end
+
       it 'renders current flaggers and lifetime moderation counts' do
         admin = create(:user, admin: true)
         pin = create(:pin)
@@ -93,9 +279,9 @@ describe PinsController, :type => :controller do
         flaggers.each { |flagger| Flag.new(flagger, pin).flag_on }
         sign_in(admin)
 
-        get :admin
+      get :admin, params: { locale: 'en' }
 
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
         expect(response.body).to include('Top flaggers (lifetime)')
         expect(response.body).to include('Most flagged (lifetime)')
         expect(response.body).to include('<td>2</td>')
@@ -108,16 +294,16 @@ describe PinsController, :type => :controller do
       it "retrieves pin for view" do
 
         pin = create(:pin, user: user)
-        get :show, id: pin.id
+        get :show, params: { id: pin.id, locale: 'en' }
 
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
       end
 
       it "renders localized labels on a pin page" do
         pin = create(:pin, user: user)
-        get :show, id: pin.id, locale: 'ja'
+        get :show, params: { id: pin.id, locale: 'ja' }
 
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
         expect(response.body).to include('外科医')
         expect(response.body).to include('手術')
       end
@@ -125,15 +311,40 @@ describe PinsController, :type => :controller do
       it 'preserves line breaks in the in-depth experience' do
         pin = create(:pin, user: user, details: "First paragraph\nSecond paragraph")
 
-        get :show, id: pin.id
+      get :show, params: { id: pin.id, locale: 'en' }
 
         expect(response.body).to match(/First paragraph\s*<br/)
         expect(response.body).to include('Second paragraph')
       end
 
+      it 'heads the discussion with its count and keeps the comment box open under it' do
+        pin = create(:pin, user: user, details: 'How it went')
+        create(:comment, commentable: pin, user: user)
+        create(:comment, commentable: pin, user: user)
+
+        get :show, params: { id: pin.id, locale: 'en' }
+
+        expect(response.body).to match(%r{class="comments-heading">\s*#{I18n.t('public.pin.discussion')} <span class="comments-count">2</span>})
+        expect(response.body).to include('class="comment-composer reply-target"')
+        expect(response.body).to include('id="create_comment_form"')
+        expect(response.body).not_to include(I18n.t('public.pin.add_thread'))
+        expect(response.body).not_to include('fa-quote-left')
+      end
+
+      it 'renders just the pin, without the site layout, for the phone viewer' do
+        pin = create(:pin, user: user)
+        get :show, params: { id: pin.id, viewer: '1', locale: 'en' }
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include('pin-page-title')
+        expect(response.body).to include('comments-container')
+        expect(response.body).not_to include('<html')
+        expect(response.body).not_to include('navbar-fixed-top')
+      end
+
       it 'links the procedure label to the procedure page' do
         pin = create(:pin, user: user)
-        get :show, id: pin.id
+      get :show, params: { id: pin.id, locale: 'en' }
 
         expect(response.body).to include("href=\"#{procedure_path(pin.procedure)}\"")
         expect(response.body).not_to include("procedure=#{pin.procedure.id}")
@@ -145,9 +356,9 @@ describe PinsController, :type => :controller do
         create(:surgeon, id: 911)
 
         pin = create(:pin, user: user)
-        get :edit, id: pin.id
+        get :edit, params: { id: pin.id, locale: 'en' }
 
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
       end
 
       it 'allows an admin to edit another user\'s pin' do
@@ -155,9 +366,9 @@ describe PinsController, :type => :controller do
         pin = create(:pin, user: create(:user))
 
         sign_in(admin)
-        get :edit, id: pin.id, locale: 'en'
+        get :edit, params: { id: pin.id, locale: 'en' }
 
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
       end
     end
 
@@ -178,20 +389,20 @@ describe PinsController, :type => :controller do
         pin = create(:pin, user: owner)
 
         sign_in(owner)
-        get :show, id: pin.id, locale: 'en'
+        get :show, params: { id: pin.id, locale: 'en' }
         expect(response.body).to include(edit_pin_path(pin))
 
         sign_in(viewer)
-        get :show, id: pin.id, locale: 'en'
+        get :show, params: { id: pin.id, locale: 'en' }
         expect(response.body).not_to include(edit_pin_path(pin))
       end
     end
 
     describe 'GET #new' do
       it 'renders the locale-specific TinyMCE language asset' do
-        get :new, locale: 'es'
+        get :new, params: { locale: 'es' }
 
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
         expect(response.body).to include('language: "es"')
       end
     end
@@ -202,9 +413,9 @@ describe PinsController, :type => :controller do
         pin.complication_list = 'hematoma, infection'
         pin.save!
 
-        get :complication_suggestions, term: 'hema', format: :json
+      get :complication_suggestions, params: { term: 'hema', format: :json, locale: 'en' }
 
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
         expect(JSON.parse(response.body)).to eq(['hematoma'])
       end
     end
@@ -216,7 +427,7 @@ describe PinsController, :type => :controller do
         attrs = attributes_for(:pin).merge({"surgeon_attributes" => surgeon, "procedure_attributes" => procedure})
         image_attrs = attributes_for(:pin_image)
 
-        post(:create, {pin: attrs, pin_images: {"0" => image_attrs}})
+        post :create, params: { pin: attrs, pin_images: {"0" => image_attrs} }
         expect(response).to redirect_to(pin_url(assigns(:pin)))
       end
 
@@ -226,7 +437,7 @@ describe PinsController, :type => :controller do
         attrs = attributes_for(:pin).merge("surgeon_attributes" => surgeon, "procedure_attributes" => procedure)
         image_attrs = attributes_for(:pin_image)
 
-        post :create, pin: attrs, pin_images: { "0" => image_attrs }, locale: 'es'
+        post :create, params: { pin: attrs, pin_images: { "0" => image_attrs }, locale: 'es' }
 
         expect(response).to redirect_to(pin_url(assigns(:pin), locale: 'es'))
       end
@@ -235,7 +446,7 @@ describe PinsController, :type => :controller do
         attrs = attributes_for(:pin, :invalid)
         image_attrs = attributes_for(:pin_image)
 
-        post(:create, {pin: attrs, pin_images: {"0" => image_attrs}})
+        post :create, params: { pin: attrs, pin_images: {"0" => image_attrs} }
         expect(assigns(:form).errors).not_to be_empty
       end
     end
@@ -259,8 +470,11 @@ describe PinsController, :type => :controller do
         surgeon = attributes_for(:surgeon)
         procedure = attributes_for(:procedure)
         updated_attrs = build(:pin, user: user).attributes.merge({"surgeon_attributes" => surgeon, "procedure_attributes" => procedure})
+        # Rails 5 preserves an empty rich-text form field as an empty string;
+        # Rails 4's parameter handling represented the same value as nil.
+        updated_attrs["details"] = ""
 
-        put :update, :id => pin.id, :pin => updated_attrs
+        put :update, params: { :id => pin.id, :pin => updated_attrs }
 
         pin.reload
         expect(response).to redirect_to(pin_url(assigns(:pin)))
@@ -280,11 +494,11 @@ describe PinsController, :type => :controller do
         pin = create(:pin, :with_surgeon_and_procedure, :real_pin_images, user: create(:user))
 
         sign_in(admin)
-        put :update, id: pin.id, pin: {
+        put :update, params: { id: pin.id, pin: {
           cost: 123,
           surgeon_attributes: { id: pin.surgeon.id },
           procedure_attributes: { id: pin.procedure.id }
-        }
+        } }
 
         expect(response).to redirect_to(pin_url(pin))
         expect(pin.reload.cost).to eq(123)
@@ -292,11 +506,23 @@ describe PinsController, :type => :controller do
     end
 
     describe "DELETE #destroy" do
-      xit "deletes a pin and redirects to pins index" do
+      it "deletes a pin and redirects to pins index" do
         pin = create(:pin, user: user)
 
-        delete :destroy, :id => pin.id
+        delete :destroy, params: { :id => pin.id }
         expect(response).to redirect_to(pins_url)
+      end
+
+      it 'allows a Moderator to remove another member’s queued pin' do
+        moderator = create(:user)
+        moderator.grant_trust!('moderator', granted_by: create(:user, admin: true))
+        pin = create(:pin, user: create(:user))
+        sign_in(moderator)
+
+        delete :destroy, params: { id: pin.id, locale: 'en' }
+
+        expect(response).to redirect_to(pins_url)
+        expect(Pin.find_by(id: pin.id)).to be_nil
       end
     end
   end
@@ -311,7 +537,7 @@ describe PinsController, :type => :controller do
 
     describe "GET #edit" do
       it "is forbidden to edit" do
-        get :edit, id: pin.id
+        get :edit, params: { id: pin.id, locale: 'en' }
 
         expect(response).to be_forbidden
       end
@@ -321,7 +547,7 @@ describe PinsController, :type => :controller do
       it "is forbidden to update" do
         updated_attrs = build(:pin).attributes
 
-        put :update, :id => pin.id, :pin => updated_attrs
+        put :update, params: { :id => pin.id, :pin => updated_attrs }
 
         expect(response).to be_forbidden
       end
@@ -329,10 +555,25 @@ describe PinsController, :type => :controller do
 
     describe "DELETE #destroy" do
       it "is forbidden to destroy" do
-        delete :destroy, :id => pin.id
+        delete :destroy, params: { :id => pin.id }
 
         expect(response).to be_forbidden
       end
+    end
+  end
+
+  describe 'photos of other people\'s posts, referenced by id in a new post' do
+    it 'are left alone, and asking to delete one does not crash or delete it' do
+      victim_pin = create(:pin, user: create(:user), pin_images: build_list(:pin_image, 2))
+      victim_image = victim_pin.pin_images.first
+      sign_in(create(:user))
+      attrs = attributes_for(:pin, :with_surgeon_and_procedure)
+
+      post :create, params: { pin: attrs, pin_images: { '0' => { 'id' => victim_image.id.to_s, '_destroy' => '1' }, '1' => attributes_for(:pin_image) } }
+
+      expect(response).not_to have_http_status(:internal_server_error)
+      expect(PinImage.exists?(victim_image.id)).to eq(true)
+      expect(victim_image.reload.pin_id).to eq(victim_pin.id)
     end
   end
 end

@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 describe Surgeon do
+  it 'is commentable' do
+    surgeon = create(:surgeon)
+
+    expect(surgeon).to respond_to(:comment_threads, :root_comments)
+  end
+
   it 'requires a last_name' do
     expect{ Surgeon.create!(first_name: "Larry") }.
       to raise_error("Validation failed: Last name can't be blank")

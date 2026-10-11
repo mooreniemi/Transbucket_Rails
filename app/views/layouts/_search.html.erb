@@ -1,6 +1,6 @@
 <% cache(I18n.locale) do %>
   <%= javascript_include_tag 'search' %>
-  <%= form_tag pins_path, :class => 'navbar-form navbar-right', :method => :get do %>
+  <%= form_tag pins_path, :class => 'navbar-form navbar-right', :id => 'header-search', :method => :get do %>
     <div class="input-group">
       <%= text_field_tag 'query', value = nil, :class => 'span2 search-query form-control', :placeholder => I18n.t(".header.search") %>
       <%#= autocomplete_field_tag 'pin', '', autocomplete_procedure_pin_index_path, :size => 75 %>
@@ -10,5 +10,7 @@
         <% end %>
       </span>
     </div>
+    <%# Phones only, once search has been opened from its icon. %>
+    <button type="button" class="header-search-cancel"><%= t('header.cancel_search', default: 'Cancel') %></button>
   <% end %>
 <% end %>

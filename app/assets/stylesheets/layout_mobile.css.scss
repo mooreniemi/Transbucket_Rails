@@ -1,0 +1,15 @@
+// Page-width fix for phones.
+//
+// <body> is a flex column (sticky footer, see styles.css.scss) and Bootstrap's
+// .container has auto side margins. In a column flexbox, auto cross-axis
+// margins mean "size to your content, then centre", so any page whose content
+// was narrower than the screen (e.g. the For You feed) rendered as a narrow,
+// centred column instead of using the full width. Fill the width instead.
+//
+// At 768px and up Bootstrap gives .container explicit widths, so this only
+// matters below that.
+@media (max-width: 767px) {
+  body > .container {
+    width: 100%;
+  }
+}

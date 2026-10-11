@@ -2,7 +2,7 @@ require File.expand_path('../../config/boot', __FILE__)
 
 require 'support/controller_helpers'
 require 'rspec-benchmark'
-require 'factory_girl_rails'
+require 'factory_bot'
 
 require 'simplecov'
 # save to CircleCI's artifacts directory if we're on CircleCI
@@ -55,6 +55,6 @@ RSpec.configure do |config|
   config.example_status_persistence_file_path = File.expand_path("../../spec/examples.txt", __FILE__)
 
   # from previous rails build
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.include RSpec::Benchmark::Matchers
 end

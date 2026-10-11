@@ -6,12 +6,14 @@ require "securerandom"
 require "uri"
 
 # This smoke works against either staging or localhost.
-# For localhost, the test DB needs the seeded `zoon` admin from
-# `db/seeds/test_users.rb`, Elasticsearch must be reachable, and a
-# delayed_job worker must be running so pin indexing jobs get processed.
+# For localhost, the test DB needs the seeded smoke account from
+# `db/seeds/test_users.rb`, Elasticsearch must be reachable, and a delayed_job
+# worker must be running so pin indexing jobs get processed.
 STAGING_URL = ENV.fetch("STAGING_URL", "https://transbucket-staging.herokuapp.com")
 STAGING_LOCALES = ENV.fetch("STAGING_LOCALES", ENV.fetch("STAGING_LOCALE", "en")).split(",").map(&:strip).reject(&:empty?)
-USERNAME = ENV.fetch("STAGING_USER", "zoon")
+# `meowmeow` is the maintained staging account. `zoon` is only a local test
+# seed/admin account and has no shared staging password.
+USERNAME = ENV.fetch("STAGING_USER", "meowmeow")
 PASSWORD = ENV.fetch("STAGING_PASSWORD")
 IMAGE_PATH = File.expand_path("../spec/fixtures/cat.jpg", __dir__)
 NEWSFEED_TITLES = {
@@ -68,9 +70,15 @@ class StagingSmoke
   def run
     verify_public_localization
     verify_registration_localization
+    verify_write_endpoints_require_login
     login
     verify_account_localization
-    pin_id, search_term = create_pin
+    verify_authenticated_pages
+    pin_id, search_term, subject_paths = create_pin
+    create_comment(pin_id)
+    subject_paths.each { |type, path| create_subject_comment(type, path) }
+    verify_discussions
+    verify_safe_mode(pin_id)
     edit_pin(pin_id)
     verify_search_page
     verify_search_results(search_term, pin_id)
@@ -95,6 +103,13 @@ class StagingSmoke
     unless newsfeed.code.to_i == 200 && newsfeed.body.include?(expected_title)
       raise "localized newsfeed failed"
     end
+
+    %w[/about /terms /privacy /procedures /surgeons].each do |path|
+      response = get(path)
+      unless response.code.to_i == 200 && response.body.include?(%(<html lang="#{@locale}">))
+        raise "public page failed for #{@locale}: #{path} returned #{response.code}"
+      end
+    end
   end
 
   def verify_registration_localization
@@ -103,9 +118,37 @@ class StagingSmoke
     unless response.code.to_i == 200 && response.body.include?(marker)
       raise "localized registration form failed for #{@locale}"
     end
+
+    doc = html_document(response.body)
+    unless doc.at_css('select#user_pronouns option[value="she/her"]') && doc.at_css('select#user_pronouns option[value="custom"]') && doc.at_css('input#user_pronouns_custom[hidden]')
+      raise "pronouns picker missing from the sign-up form for #{@locale}"
+    end
+  end
+
+  # Nothing that writes may work without an account. Runs before login, so this
+  # client is anonymous. The ids are ones that cannot match real records, so even a
+  # regression could not touch real data.
+  def verify_write_endpoints_require_login
+    token = csrf_token('/register').to_s
+    {
+      'pin image upload' => ['/pin_images', { 'pin_images[0][caption]' => 'smoke' }],
+      'pin image delete' => ['/pins/0/pin_images/0', { '_method' => 'delete' }],
+      'pin image caption' => ['/pin_images/0', { '_method' => 'put', 'caption' => 'smoke' }],
+      'procedure create' => ['/procedures', { 'procedure[name]' => 'smoke anonymous', 'procedure[body_type]' => 'top', 'procedure[gender]' => 'ftm' }],
+      'surgeon create' => ['/surgeons', { 'surgeon[first_name]' => 'Smoke', 'surgeon[last_name]' => 'Anonymous' }]
+    }.each do |label, (path, params)|
+      response = post(path, params.merge('authenticity_token' => token))
+      refused = response.is_a?(Net::HTTPUnauthorized) || (response.is_a?(Net::HTTPRedirection) && response['location'].to_s.include?('sign_in'))
+      raise "anonymous #{label} was not refused (#{response.code})" unless refused
+    end
   end
 
   def login
+    login_page = get("/users/sign_in")
+    unless login_page.code.to_i == 200 && login_page.body.include?('id="new_user"')
+      raise "localized login form failed for #{@locale}"
+    end
+
     token = csrf_token("/users/sign_in")
     params = {
       "user[login]" => USERNAME,
@@ -143,6 +186,18 @@ class StagingSmoke
     unless response.code.to_i == 200 && response.body.include?(profile_label) && response.body.include?(settings_label)
       raise "localized account page failed for #{@locale}"
     end
+    unless html_document(response.body).at_css('#password-required-hint') && html_document(response.body).at_css('select#user_pronouns')
+      raise "account page is missing the password hint or the pronouns picker for #{@locale}"
+    end
+  end
+
+  def verify_authenticated_pages
+    %w[/pins /pins/new /procedures /surgeons /users/edit].each do |path|
+      response = get(path)
+      unless response.code.to_i == 200 && response.body.include?(%(<html lang="#{@locale}">))
+        raise "authenticated page failed for #{@locale}: #{path} returned #{response.code}"
+      end
+    end
   end
 
   def create_pin
@@ -176,13 +231,233 @@ class StagingSmoke
     end
 
     pin_id = location[%r{/pins/(\d+)}, 1] || raise("could not parse created pin id")
-    show = get("/pins/#{pin_id}").body
+    show_response = get("/pins/#{pin_id}")
+    raise "created pin page failed with #{show_response.code}" unless show_response.code.to_i == 200
+
+    show = show_response.body
 
     unless show.include?(captions[0]) && show.include?(captions[1]) && show.include?(localized_pin_label)
       raise "multi-image upload did not persist both captions"
     end
 
-    [pin_id, params["pin[procedure_attributes][name]"]]
+    pin_doc = html_document(show)
+    subject_paths = {}
+    %w[procedures surgeons].each do |resource|
+      resource_name = resource == 'procedures' ? 'procedure' : 'surgeon'
+      link = pin_doc.at_css(%(a[href*="/#{resource}/"]))
+      raise "created pin did not link to its #{resource_name} page" unless link
+
+      subject_path = URI.parse(link['href']).path
+      subject_paths[resource_name.capitalize] = subject_path
+      linked_page = get(subject_path)
+      unless linked_page.code.to_i == 200
+        raise "linked #{resource_name} page failed with #{linked_page.code}"
+      end
+    end
+
+    [pin_id, params["pin[procedure_attributes][name]"], subject_paths]
+  end
+
+  def create_comment(pin_id)
+    pin_path = "/pins/#{pin_id}"
+    doc = html_document(get(pin_path).body)
+    token = csrf_token(pin_path, doc)
+    body = "Smoke test comment #{Time.now.to_i}"
+    response = post(
+      "/comments",
+      {
+        "comment[body]" => body,
+        "comment[commentable_id]" => pin_id,
+        "comment[commentable_type]" => "Pin"
+      }.tap { |params| params["authenticity_token"] = token if token }
+    )
+
+    unless response.code.to_i == 201 && response.body.include?(body)
+      raise "comment create failed with #{response.code}"
+    end
+  end
+
+  def create_subject_comment(commentable_type, path)
+    doc = html_document(get(path).body)
+    link = doc.at_css(%(a[href*="commentable_type=#{commentable_type}"]))
+    raise "#{commentable_type} comment link missing" unless link
+
+    comment_url = URI.parse(URI.join(STAGING_URL, link['href']).to_s)
+    query_params = URI.decode_www_form(comment_url.query.to_s).to_h
+    params = {
+      'comment[commentable_id]' => query_params.fetch('commentable_id'),
+      'comment[commentable_type]' => query_params.fetch('commentable_type')
+    }
+    body = "Smoke test #{commentable_type.downcase} comment #{Time.now.to_i}"
+    params['comment[body]'] = body
+    token = csrf_token(path, doc)
+    params['authenticity_token'] = token if token
+    response = post('/comments', params)
+
+    unless response.code.to_i == 201 && response.body.include?(body)
+      raise "#{commentable_type} comment create failed with #{response.code}"
+    end
+  end
+
+  # Discussions from the feed: the toolbar and its forms are on the page (and
+  # translated), posting works the way feed_toolbar.js does it (an in-page
+  # request answered with the new card), the discussion takes a reply, has its
+  # own page, and shows up under the Discussions filter. Also: opening the
+  # login page while signed in says nothing.
+  def verify_discussions
+    revisit = get("/users/sign_in")
+    revisit = follow_redirect(revisit) if revisit.is_a?(Net::HTTPRedirection)
+    raise "signed-in login page still says 'already signed in'" if revisit.body.to_s.include?("already signed in")
+
+    feed_path = "/pins"
+    feed = html_document(get(feed_path).body)
+    actions = feed.css(".feed-toolbar .feed-toolbar-action")
+    raise "feed toolbar missing (found #{actions.size} actions)" if actions.size < 2
+    raise "feed bottom bar missing" unless feed.at_css(".feed-dock")
+    form = feed.at_css("#feed-compose-panel form.discussion-form")
+    raise "discussion form missing from the feed" unless form
+    submit = form.at_css("[type=submit]")&.[]("value").to_s
+    if @locale != "en" && submit == "Post discussion"
+      raise "discussion form is not translated for #{@locale}"
+    end
+
+    title = "Smoke test discussion #{Time.now.to_i}"
+    params = {
+      "discussion[title]" => title,
+      "discussion[body]" => "Posted by the staging smoke.",
+      "discussion[category]" => "question",
+      "discussion[visibility]" => "everyone"
+    }
+    token = csrf_token(feed_path, feed)
+    params["authenticity_token"] = token if token
+    created = post("/discussions", params, headers: { "X-Requested-With" => "XMLHttpRequest" })
+    card = html_document(created.body).at_css(".feed-discussion[data-discussion-id]")
+    unless created.code.to_i == 201 && card && created.body.include?(title)
+      raise "posting a discussion from the feed failed with #{created.code}"
+    end
+    discussion_id = card["data-discussion-id"]
+
+    reply = "Smoke test discussion reply #{Time.now.to_i}"
+    page_path = "/discussions/#{discussion_id}"
+    page = html_document(get(page_path).body)
+    reply_params = {
+      "comment[body]" => reply,
+      "comment[commentable_id]" => discussion_id,
+      "comment[commentable_type]" => "Discussion"
+    }
+    reply_token = csrf_token(page_path, page)
+    reply_params["authenticity_token"] = reply_token if reply_token
+    replied = post("/comments", reply_params)
+    raise "replying to a discussion failed with #{replied.code}" unless replied.code.to_i == 201 && replied.body.include?(reply)
+
+    shown = get(page_path)
+    unless shown.code.to_i == 200 && shown.body.include?(title) && shown.body.include?(reply)
+      raise "discussion page is missing the post or its reply"
+    end
+
+    listed = html_document(get("/pins?content=discussions").body)
+    unless listed.at_css(%(.feed-discussion[data-discussion-id="#{discussion_id}"]))
+      raise "new discussion missing from the Discussions filter"
+    end
+
+    composing = html_document(get("/pins?compose=1").body).at_css("#feed-compose-panel")
+    raise "?compose=1 did not open the discussion form" unless composing && composing["class"].to_s.split.include?("in")
+  end
+
+  # Safe mode blurs the real image until it is tapped (it no longer swaps in a
+  # placeholder), on the feed cards and on the pin page.
+  def verify_safe_mode(pin_id)
+    update_safe_mode('0')
+    plain_card = pin_card(pin_id)
+    if pin_card_image_url(pin_id) == safe_mode_placeholder_url || plain_card.at_css('.safe-blur, [data-safe-reveal]')
+      raise "safe mode off did not show the plain uploaded image for pin #{pin_id}"
+    end
+
+    verify_card_footer(plain_card, pin_id)
+    verify_header_switch_state(on: false)
+
+    update_safe_mode('1')
+    verify_header_switch_state(on: true)
+    card = pin_card(pin_id)
+    unless card.at_css('.pin-card-image.safe-blur') && card.at_css('button[data-safe-reveal]') && card.at_css('button[data-safe-hide]')
+      raise "safe mode on did not blur the image for pin #{pin_id}"
+    end
+    if pin_card_image_url(pin_id) == safe_mode_placeholder_url
+      raise "safe mode on swapped in the placeholder instead of blurring pin #{pin_id}"
+    end
+    unless html_document(get("/pins/#{pin_id}").body).at_css('.pin-gallery-photo.safe-blur button[data-safe-reveal]')
+      raise "safe mode on did not blur the photos on the page for pin #{pin_id}"
+    end
+  ensure
+    # The smoke account is shared. Leave it in its normal, image-visible state
+    # even when a later assertion fails.
+    update_safe_mode('0')
+  end
+
+  # The feed card footer: icons on the left with text labels, freshness on the right.
+  def verify_card_footer(card, pin_id)
+    unless card.at_css('.pin-actions .pin-actions-icons a[aria-label]') && card.at_css('.pin-actions-meta time.pin-age[datetime]')
+      raise "card footer for pin #{pin_id} is missing its labelled icons or its age"
+    end
+  end
+
+  # The header's eye switch: shows the current state (two copies, phone bar and
+  # desktop nav) and toggles it from any page, sending us back to where we were.
+  def verify_header_switch_state(on:)
+    feed = html_document(get('/pins').body)
+    buttons = feed.css('.safe-mode-toggle')
+    raise 'header safe mode switch is missing' unless buttons.length == 2
+    on_buttons = buttons.select { |button| button['class'].to_s.split.include?('is-on') && button['aria-pressed'] == 'true' }
+    if on && on_buttons.length != 2
+      raise 'header safe mode switch does not show safe mode as on'
+    elsif !on && on_buttons.any?
+      raise 'header safe mode switch shows safe mode on when it is off'
+    end
+
+    return unless on
+
+    # Turn it off using the switch itself, then confirm the state and the redirect.
+    form = feed.at_css('form.safe-mode-form-nav') || raise('desktop safe mode switch form missing')
+    params = form.css('input[type=hidden]').each_with_object({}) { |input, hash| hash[input['name']] = input['value'] }
+    response = post(form['action'], params)
+    unless response.is_a?(Net::HTTPRedirection) && response['location'].to_s.end_with?('/pins')
+      raise "header safe mode switch did not return to the feed (#{response.code} #{response['location']})"
+    end
+    verify_header_switch_state(on: false)
+    update_safe_mode('1')   # the rest of the check continues with it on
+  end
+
+  def update_safe_mode(value)
+    response = get('/users/edit')
+    doc = html_document(response.body)
+    form = doc.at_css('form[action*="preferences"]') || raise('safe-mode settings form missing')
+    token = csrf_token('/users/edit', doc)
+    params = {
+      '_method' => 'put',
+      'preference[safe_mode]' => value
+    }
+    params['authenticity_token'] = token if token
+    response = post(form['action'], params)
+
+    unless response.is_a?(Net::HTTPRedirection)
+      raise "safe-mode update failed with #{response.code}"
+    end
+  end
+
+  def pin_card(pin_id)
+    response = get('/pins')
+    raise "pin index failed with #{response.code}" unless response.code.to_i == 200
+
+    html_document(response.body).at_css(%(.item[data-pin-id="#{pin_id}"])) || raise("pin #{pin_id} missing from index")
+  end
+
+  def pin_card_image_url(pin_id)
+    image = pin_card(pin_id).at_css('img')
+    image && image['src'] || raise("pin #{pin_id} card image missing from index")
+  end
+
+  def safe_mode_placeholder_url
+    'http://placekitten.com/200/300'
   end
 
   def localized_pin_label
@@ -306,7 +581,7 @@ class StagingSmoke
     request(target, Net::HTTP::Get.new(target))
   end
 
-  def post(path, params, method: :post)
+  def post(path, params, method: :post, headers: {})
     target = uri(path)
     req = case method
     when :post
@@ -318,6 +593,7 @@ class StagingSmoke
     end
 
     req.set_form_data(params)
+    headers.each { |name, value| req[name] = value }
     request(target, req)
   end
 

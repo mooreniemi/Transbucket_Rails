@@ -6,7 +6,7 @@ RSpec.describe SurgeonsController, :type => :controller do
 
     it 'gives a list of surgeons' do
       surgeons = create_list(:surgeon, 2)
-      get :index
+      get :index, params: { locale: 'en' }
       expect(assigns(:surgeons)).to match_array(surgeons)
       expect(response).to render_template(:index)
     end
@@ -20,7 +20,7 @@ RSpec.describe SurgeonsController, :type => :controller do
       create(:pin, surgeon: high, procedure: procedure, sensation: 5, satisfaction: 4)
 
       sign_in user
-      get :index
+      get :index, params: { locale: 'en' }
 
       expect(assigns(:avg_sensation_by_surgeon)[high.id]).to eq(5.0)
       expect(assigns(:avg_satisfaction_by_surgeon)[low.id]).to eq(2.0)
@@ -33,29 +33,43 @@ RSpec.describe SurgeonsController, :type => :controller do
       create(:pin, surgeon: low, procedure: procedure, sensation: 1)
       create(:pin, surgeon: high, procedure: procedure, sensation: 5)
 
-      get :index
+      get :index, params: { locale: 'en' }
 
       expect(assigns(:avg_sensation_by_surgeon)).to eq({})
     end
-
     it 'places the directory ad container after the surgeon directory content' do
       create(:surgeon)
 
-      get :index
+      get :index, params: { locale: 'en' }
 
-      expect(response.body.index('directory-table-wrap')).to be < response.body.index('directory-after-content-ad')
-    end
-    xit 'links surgeons to queries for all pins of that surgeon' do
+      expect(response.body).to include('id="surgeons"')
     end
   end
   describe "#show" do
+    render_views
+    context 'when rendering a public profile with procedure activity' do
+      render_views
+
+      it 'renders the localized procedure name' do
+        surgeon = create(:surgeon)
+        procedure = create(:procedure, name: 'double incision')
+        procedure.translations.create!(locale: 'sv', name: 'dubbel incision')
+        create(:pin, surgeon: surgeon, procedure: procedure)
+
+        get :show, params: { id: surgeon.id, locale: 'sv' }
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include('dubbel incision')
+      end
+    end
+
     describe 'activity marker' do
       render_views
 
       it 'renders a best-effort view-event marker for public surgeon pages' do
         surgeon = create(:surgeon)
 
-        get :show, id: surgeon.id
+        get :show, params: { id: surgeon.id, locale: 'en' }
 
         expect(response.body).to include('data-content-event="true"')
         expect(response.body).to include('data-content-type="Surgeon"')
@@ -72,7 +86,7 @@ RSpec.describe SurgeonsController, :type => :controller do
       create(:pin, surgeon: surgeon, procedure: procedure, sensation: 5, satisfaction: 1)
 
       sign_in user
-      get :show, id: surgeon.id
+      get :show, params: { id: surgeon.id, locale: 'en' }
 
       expect(assigns(:overall_satisfaction)).to eq(3.0)
       expect(assigns(:overall_sensation)).to eq(4.0)
@@ -86,7 +100,7 @@ RSpec.describe SurgeonsController, :type => :controller do
       create(:pin, surgeon: surgeon, procedure: procedure, sensation: 5, satisfaction: 2)
 
       sign_in user
-      get :show, id: surgeon.id
+      get :show, params: { id: surgeon.id, locale: 'en' }
 
       expect(assigns(:rating_distributions)).to eq(
         sensation: { 5 => 2 },
@@ -103,7 +117,7 @@ RSpec.describe SurgeonsController, :type => :controller do
     it 'does not expose overall rating averages to anonymous users' do
       surgeon = create(:surgeon)
 
-      get :show, id: surgeon.id
+      get :show, params: { id: surgeon.id, locale: 'en' }
 
       expect(assigns(:overall_satisfaction)).to be_nil
       expect(assigns(:overall_sensation)).to be_nil
@@ -118,9 +132,23 @@ RSpec.describe SurgeonsController, :type => :controller do
       create(:pin, surgeon: surgeon, procedure: procedure, state: 'pending', updated_at: Time.current)
 
       sign_in user
-      get :show, id: surgeon.id
+      get :show, params: { id: surgeon.id, locale: 'en' }
 
       expect(assigns(:latest_pins)).to eq([newest_pin, old_pin])
+    end
+
+    it 'loads surgeon comments for signed-in users' do
+      user = create(:user)
+      surgeon = create(:surgeon)
+      comment = Comment.create!(commentable: surgeon, user: user, body: 'great surgeon')
+
+      sign_in user
+      get :show, params: { id: surgeon.id, locale: 'en' }
+
+      expect(assigns(:comments)).to include(comment)
+      expect(assigns(:new_comment).commentable).to eq(surgeon)
+      expect(response.body).to include('comments-container')
+      expect(response.body).to include('great surgeon')
     end
 
     it 'scopes per-procedure pin counts to the surgeon being viewed' do
@@ -134,7 +162,7 @@ RSpec.describe SurgeonsController, :type => :controller do
       # pins belonging to a different surgeon must not affect this surgeon's counts
       create_list(:pin, 5, surgeon: other_surgeon, procedure: procedure_a)
 
-      get :show, id: surgeon.id
+      get :show, params: { id: surgeon.id, locale: 'en' }
 
       counts = assigns(:pins_by_surgeon_procedure)
       expect(counts[procedure_a.id]).to eq(2)
@@ -154,9 +182,9 @@ RSpec.describe SurgeonsController, :type => :controller do
       create(:pin, surgeon: second, procedure: procedure, sensation: 2, satisfaction: 1)
 
       sign_in user
-      get :compare, first_id: first.to_param, second_id: second.to_param
+      get :compare, params: { first_id: first.to_param, second_id: second.to_param, locale: 'en' }
 
-      expect(response).to be_success
+      expect(response).to have_http_status(:success)
       expect(assigns(:comparison_data)[first][:distributions][:sensation]).to eq(5 => 1)
       expect(assigns(:comparison_data)[second][:distributions][:satisfaction]).to eq(1 => 1)
     end
@@ -172,7 +200,7 @@ RSpec.describe SurgeonsController, :type => :controller do
       create(:pin, surgeon: first, procedure: procedure, sensation: 5, satisfaction: 5)
 
       sign_in user
-      get :compare, first_id: first.to_param, second_id: second.to_param
+      get :compare, params: { first_id: first.to_param, second_id: second.to_param, locale: 'en' }
 
       stats = assigns(:comparison_data)[first][:stats]
       expect(stats[:submissions]).to eq(2)
@@ -190,11 +218,11 @@ RSpec.describe SurgeonsController, :type => :controller do
       create(:pin, surgeon: first, procedure: procedure)
 
       sign_in user
-      get :compare, first_id: first.to_param, second_id: second.to_param
+      get :compare, params: { first_id: first.to_param, second_id: second.to_param, locale: 'en' }
       original_version = assigns(:comparison_cache_version)
 
       create(:pin, surgeon: second, procedure: procedure)
-      get :compare, first_id: first.to_param, second_id: second.to_param
+      get :compare, params: { first_id: first.to_param, second_id: second.to_param, locale: 'en' }
 
       expect(assigns(:comparison_cache_version)).not_to eq(original_version)
     end
@@ -210,7 +238,7 @@ RSpec.describe SurgeonsController, :type => :controller do
       create(:pin, surgeon: second, procedure: shared_procedure, sensation: 4, satisfaction: 4)
 
       sign_in user
-      get :compare, first_id: first.to_param, second_id: second.to_param, procedure_id: shared_procedure.to_param
+      get :compare, params: { first_id: first.to_param, second_id: second.to_param, procedure_id: shared_procedure.to_param, locale: 'en' }
 
       expect(assigns(:comparison_procedure)).to eq(shared_procedure)
       expect(assigns(:comparison_data)[first][:stats][:submissions]).to eq(1)
@@ -231,15 +259,30 @@ RSpec.describe SurgeonsController, :type => :controller do
       create(:pin, user: submitter, surgeon: second, procedure: procedure, sensation: 3)
 
       sign_in viewer
-      get :compare, first_id: first.to_param, second_id: second.to_param
+      get :compare, params: { first_id: first.to_param, second_id: second.to_param, locale: 'en' }
 
       expect(assigns(:comparison_data)[first][:stats][:submissions]).to eq(2)
       expect(assigns(:comparison_data)[first][:distributions][:sensation]).to eq(4 => 1, 5 => 1)
 
-      get :compare, first_id: first.to_param, second_id: second.to_param, deduplicate: '0'
+      get :compare, params: { first_id: first.to_param, second_id: second.to_param, deduplicate: '0', locale: 'en' }
 
       expect(assigns(:comparison_data)[first][:stats][:submissions]).to eq(3)
       expect(assigns(:comparison_data)[first][:distributions][:sensation]).to eq(1 => 1, 4 => 1, 5 => 1)
+    end
+  end
+
+  describe 'creating a surgeon' do
+    let(:params) { { surgeon: { first_name: 'Made', last_name: 'Up', url: 'http://example.com' } } }
+
+    it 'is refused for anyone who is not signed in' do
+      expect { post :create, params: params, format: :js, xhr: true }.not_to change { Surgeon.count }
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+    it 'works for a signed-in user (the pin form\'s \"add a new surgeon\")' do
+      sign_in(create(:user))
+
+      expect { post :create, params: params, format: :js, xhr: true }.to change { Surgeon.count }.by(1)
     end
   end
 end

@@ -14,11 +14,17 @@
     <span class="input-group-addon"><%= fa_icon "key" %> <%= t('public.auth.gender') %>: </span>
     <%= f.select :gender_id, localized_gender_options(resource.gender.id), {}, { class: "form-control"} %>
   </div>
+  <div class="input-group">
+    <span class="input-group-addon"><%= fa_icon "comment-o" %> <%= t('public.auth.pronouns') %>: </span>
+    <%= render 'users/pronouns_fields', f: f %>
+  </div>
+  <small id="pronouns-hint"><%= t('explanations.pronouns') %></small>
   <small><%= t('profile.profile_help') %></small>
   <div class="input-group">
     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i> <%= t('profile.email') %>: </span>
     <%= f.email_field :email, class: "form-control" %>
   </div>
+  <p class="help-block" id="password-required-hint"><%= t('profile.password_required_hint') %></p>
   <div class="input-group">
     <span class="input-group-addon"><%= fa_icon "lock" %> <%= t('public.auth.password') %>: </span>
     <%= f.password_field :password, placeholder: t('profile.new_password'), autocomplete: "off", class: "form-control" %>

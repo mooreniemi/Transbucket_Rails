@@ -1,0 +1,7 @@
+<% title t('public.discussion.new_title', default: 'Start a discussion') %>
+<div class="discussion-compose">
+  <h1 class="page-title-compact"><%= t('public.discussion.new_title', default: 'Start a discussion') %></h1>
+  <div class="feed-filter-card feed-compose-card">
+    <%= render 'discussions/form', discussion: @discussion %>
+  </div>
+</div>

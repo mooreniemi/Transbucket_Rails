@@ -9,7 +9,8 @@ en:
         will receive an email with instructions about how to confirm your account
         in a few minutes.
     failure:
-      already_authenticated: You are already signed in.
+      # Blank so Devise sets no flash when a signed-in person opens the login page.
+      already_authenticated: ''
       inactive: Your account is not activated yet.
       invalid: Invalid email or password.
       locked: Your account is locked.
@@ -116,6 +117,8 @@ en:
     intro: Browse real results from gender-affirming and transition-related procedures,
       surgeon pages, and community submissions.
   header:
+    safe_mode_on: 'Safe mode is on: images are blurred. Tap to turn it off.'
+    safe_mode_off: 'Safe mode is off. Tap to blur images until you tap them.'
     news: News
     procedures: Procedures
     surgeons: Surgeons
@@ -145,6 +148,7 @@ en:
     name: Your name will be visible to admins and used in communications with them.
       If you are a care provider and do not use your real name, you will be blocked
       from the site.
+    pronouns: 'Shown on your submissions. Optional: if you leave the default, we use the pronouns your gender implies.'
     gender: Your gender will be visible to everyone when you post results. It is also
       used to set some defaults for what content you see and your pronouns. It can
       be updated after registration.
@@ -188,6 +192,12 @@ en:
     submissions_intro: Browse recent submissions or use the search box to find a procedure,
       surgeon, or complication.
     recent_submissions: Recent Submissions
+    recent: Recent
+    for_you: For You
+    loading_more: "Loading more…"
+    load_more_failed: "Couldn't load more. Try again"
+    end_of_feed: "You're all caught up"
+    close_pin: "Close"
     search_results: Search Results
     search_description: Search Transbucket submissions by procedure, surgeon, complication,
       or user.
@@ -231,6 +241,7 @@ en:
       compare_surgeons: compare surgeons
       browse_procedures: Browse procedures
       browse_surgeons: browse surgeons
+      browse_submissions: Browse submissions
       choose_language: Choose a language
       join_discord: Join Discord
       search_pins: Search pins
@@ -238,6 +249,13 @@ en:
       for_you: For You
       submit_photo: Submit a photo
     entries:
+      comment_reports: 'The new-comment preview on a submission card now links straight to that comment. Reporting a comment is now labelled and asks you to confirm first, like reporting a post, and the profile page says your current password is needed to save changes. The submissions feed also loads with far fewer database queries, so it should feel snappier.'
+      pronouns: 'You can now choose your pronouns when you sign up or in your profile, from a list of common ones or by typing your own (like xe/xem). They appear on your submissions, and standard ones are shown in the reader''s language. If you don''t choose, we use the default that goes with your gender.'
+      comment_counts: 'Submission cards now show how many comments a post has and how recently it was updated, so it is easier to find posts with discussion. Reporting a post now asks you to confirm first, so a stray tap can''t send a report.'
+      safe_mode_blur: 'Safe mode now blurs images until you tap them, instead of hiding them behind a stand-in picture, and you can tap an image again to hide it. There is also a new eye button in the header to switch safe mode on or off from any page.'
+      mobile_refresh: 'Transbucket is easier to use on phones: search stays at the top, the home page and footer are simpler, the submissions feed is more compact with Recent and For You tabs, and the filter and the surgeon and procedure pickers are built for touch. Sign-up and login were redesigned too.'
+      contributor_badges: Contributors now receive a badge after sharing a published result, recognizing the work that helps others make informed decisions.
+      readable_pin_details: Pin details are now easier to read, with larger text, comfortable spacing, and separate paragraphs on phones and larger screens.
       mobile_directory_layout: "Surgeon listings are easier to reach and read on phones: directory content now appears before advertising, and each surgeon is shown as a labeled card on narrow screens."
       automatic_photo_resizing: Phone photos are now automatically resized before upload when needed, so they can meet Transbucket's upload limit without requiring separate image-editing software.
       comparison_stats: You can now %{compare_procedures} or %{compare_surgeons} side by side, including rating distributions, averages, outcome percentages, and shared-scope filters. These screenshots use fictional demo data to protect privacy.
@@ -473,6 +491,7 @@ en:
     edit_title: Edit %{resource} Profile
     name: Name
     email: Email
+    password_required_hint: 'To save any change on this page, enter your current password.'
     profile_help: Gender helps control the pronouns used for you on Transbucket. Use
       None or Genderqueer for gender-neutral pronouns.
     new_password: New Password
@@ -502,8 +521,20 @@ en:
       classified_as: This procedure is classified as a "%{body_type}" procedure.
       average_sensation: Average sensation
       average_satisfaction: Average satisfaction
+      comments_label: 'Comments: %{count}'
+      report: 'Report'
+      edit_post: 'Edit'
+      delete_post: 'Delete'
+      report_confirm: 'Report this post to the moderators?'
+      report_comment_confirm: 'Report this comment to the moderators?'
+      reported: 'Reported'
+      photo_count: "Photos: %{count}"
+      comment_placeholder: "Add a comment…"
+      post_comment: "Post"
       by: by
-      reply: reply
+      tap_to_reveal: Tap to reveal
+      hide_image: Hide image
+      reply: Reply
       remove: Remove
       remove_confirm: Are you sure you want to remove this comment?
       doctor_prefix: 'Dr. '
@@ -527,9 +558,23 @@ en:
       surgeon_last_name: Surgeon's last name
       surgeon_first_name: Surgeon's first name
       surgeon_url: Surgeon's URL
+    picker:
+      done: Done
+      close: Close
+      no_matches: No matches
     auth:
       username: Username
       username_or_email: Username or email
+      show_password: Show password
+      hide_password: Hide password
+      have_account: Already have an account?
+      new_here: New to Transbucket?
+      pronouns: 'Pronouns'
+      pronouns_default: 'Default (from your gender)'
+      pronouns_other: 'Other…'
+      pronouns_placeholder: 'e.g. xe/xem'
+      pronouns_invalid: 'Pronouns should look like they/them or she/her/hers: words separated by slashes.'
+      password_hint: At least %{count} characters.
       password: Password
       password_confirmation: Password confirmation
       your_name: Your name
@@ -563,10 +608,8 @@ en:
       password_confirmation: New Password Confirmation
       current_password: Current Password
       update: Update
-      profile_help: On Transbucket, gender helps control the pronouns you are referred
-        to with. Currently, MTF and FTM genders correspond to binary pronoun identifications.
-        For gender neutral pronouns, please use None or GenderQueer as your gender.
-        Future updates will allow for pronoun choice independent of your gender identification.
+      profile_help: On Transbucket, gender sets the default pronouns you are referred
+        to with, and you can choose your own pronouns independent of your gender.
       new_submission: New Submission
       editing_submission: Editing Submission
       submissions_by_user: Submissions By User Results
@@ -590,8 +633,7 @@ en:
   settings:
     title: Account Settings
     safe_mode: Safe mode
-    safe_mode_help: Safe mode replaces submission images on the index page with safe-for-work
-      images.
+    safe_mode_help: Safe mode blurs submission images until you tap them.
     notifications: Notifications
     notifications_help: Notification mode sends emails about new comments on your
       submissions.
@@ -851,6 +893,8 @@ de:
     intro: Durchsuche echte Ergebnisse, Chirurgenprofile und Beiträge von Menschen,
       die ihre Erfahrungen mit Transition teilen.
   header:
+    safe_mode_on: 'Sicherer Modus ist an: Bilder sind unscharf. Zum Ausschalten tippen.'
+    safe_mode_off: 'Sicherer Modus ist aus. Zum Einschalten tippen: Bilder bleiben unscharf, bis man sie antippt.'
     news: Neuigkeiten
     procedures: Eingriffe
     surgeons: Chirurgen
@@ -921,6 +965,12 @@ de:
     submissions_intro: Durchsuche aktuelle Beiträge oder suche nach einem Eingriff,
       Chirurgen oder einer Komplikation.
     recent_submissions: Aktuelle Beiträge
+    recent: Neueste
+    for_you: Für dich
+    loading_more: "Weitere werden geladen…"
+    load_more_failed: "Laden fehlgeschlagen. Erneut versuchen"
+    end_of_feed: "Du hast alles gesehen"
+    close_pin: "Schließen"
     search_results: Suchergebnisse
     search_description: Suche Transbucket-Beiträge nach Eingriff, Chirurg, Komplikation
       oder Benutzer.
@@ -1002,6 +1052,7 @@ de:
     edit_title: "%{resource}-Profil bearbeiten"
     name: Name
     email: E-Mail
+    password_required_hint: 'Um Änderungen auf dieser Seite zu speichern, gib dein aktuelles Passwort ein.'
     profile_help: Das Geschlecht hilft auf Transbucket bei der Auswahl der verwendeten
       Pronomen. Verwende „Keine Angabe“ oder „Genderqueer“ für geschlechtsneutrale
       Pronomen.
@@ -1032,8 +1083,20 @@ de:
       classified_as: Dieser Eingriff ist als "%{body_type}" eingestuft.
       average_sensation: Durchschnittliche Empfindung
       average_satisfaction: Durchschnittliche Zufriedenheit
+      comments_label: 'Kommentare: %{count}'
+      report: 'Melden'
+      edit_post: 'Bearbeiten'
+      delete_post: 'Löschen'
+      report_confirm: 'Diesen Beitrag dem Moderationsteam melden?'
+      report_comment_confirm: 'Diesen Kommentar dem Moderationsteam melden?'
+      reported: 'Gemeldet'
+      photo_count: "Fotos: %{count}"
+      comment_placeholder: "Kommentar schreiben…"
+      post_comment: "Posten"
       by: von
-      reply: antworten
+      tap_to_reveal: Zum Anzeigen tippen
+      hide_image: Bild ausblenden
+      reply: Antworten
       remove: Entfernen
       remove_confirm: Diesen Kommentar wirklich entfernen?
       doctor_prefix: 'Dr. '
@@ -1057,9 +1120,32 @@ de:
       surgeon_last_name: Nachname des Chirurgen
       surgeon_first_name: Vorname des Chirurgen
       surgeon_url: URL des Chirurgen
+    picker:
+      done: Fertig
+      close: Schließen
+      no_matches: Keine Treffer
     auth:
       username: Benutzername
       username_or_email: Benutzername oder E-Mail
+      show_password: Passwort anzeigen
+      hide_password: Passwort verbergen
+      have_account: Du hast bereits ein Konto?
+      new_here: Neu bei Transbucket?
+      pronouns: 'Pronomen'
+      pronouns_default: 'Standard (aus deinem Geschlecht)'
+      pronouns_other: 'Andere …'
+      pronouns_placeholder: 'z. B. xe/xem'
+      pronouns_invalid: 'Die Pronomen müssen so aussehen wie they/them oder she/her/hers (Wörter, durch Schrägstriche getrennt).'
+      pronoun_labels:
+        she_her: 'sie/ihr'
+        he_him: 'er/ihm'
+        it_its: 'es/sein'
+        she_they: 'sie/they'
+        he_they: 'er/they'
+        they_she: 'they/sie'
+        they_he: 'they/er'
+        any_all: 'alle Pronomen'
+      password_hint: Mindestens %{count} Zeichen.
       password: Passwort
       password_confirmation: Passwort bestätigen
       your_name: Dein Name
@@ -1117,8 +1203,7 @@ de:
   settings:
     title: Kontoeinstellungen
     safe_mode: Sicherer Modus
-    safe_mode_help: Der sichere Modus ersetzt Beitragsbilder auf der Übersichtsseite
-      durch unbedenkliche Bilder.
+    safe_mode_help: Der sichere Modus verwischt Bilder von Beiträgen, bis du sie antippst.
     notifications: Benachrichtigungen
     notifications_help: Der Benachrichtigungsmodus sendet E-Mails über neue Kommentare
       zu deinen Beiträgen.
@@ -1155,6 +1240,7 @@ de:
     password: Dein Passwort wird verschlüsselt gespeichert und kann mit deiner E-Mail-Adresse
       wiederhergestellt werden.
     name: Dein Name ist für Admins sichtbar und wird zur Kommunikation mit ihnen verwendet.
+    pronouns: 'Wird bei deinen Beiträgen angezeigt. Optional: Beim Standard werden die Pronomen verwendet, die zum angegebenen Geschlecht passen.'
     gender: Dein Geschlecht ist sichtbar, wenn du Ergebnisse veröffentlichst, und
       hilft bei der Auswahl der Pronomen.
     tos: Mit der Registrierung bei Transbucket.com stimmst du unseren Nutzungsbedingungen
@@ -1386,6 +1472,8 @@ es:
     intro: Consulta resultados reales, perfiles de cirujanos y publicaciones de personas
       que comparten sus experiencias de transición.
   header:
+    safe_mode_on: 'El modo seguro está activado: las imágenes aparecen borrosas. Toca para desactivarlo.'
+    safe_mode_off: 'El modo seguro está desactivado. Toca para difuminar las imágenes hasta que las toques.'
     news: Noticias
     procedures: Procedimientos
     surgeons: Cirujanos
@@ -1415,6 +1503,7 @@ es:
     name: Su nombre será visible para los administradores y se utilizará en las comunicaciones
       con ellos. Si usted es un proveedor de atención médica y no usa su nombre real,
       será bloqueado del sitio.
+    pronouns: 'Se muestran en tus publicaciones. Opcional: con la opción predeterminada usamos los pronombres que corresponden a tu género.'
     gender: Su género será visible para todos cuando publique resultados. También
       se utiliza para establecer algunos valores predeterminados para el contenido
       que ve y sus pronombres. Puede actualizarse después del registro.
@@ -1471,6 +1560,12 @@ es:
     submissions_intro: Consulta publicaciones recientes o busca un procedimiento,
       cirujano o complicación.
     recent_submissions: Publicaciones recientes
+    recent: Recientes
+    for_you: Para ti
+    loading_more: "Cargando más…"
+    load_more_failed: "No se pudo cargar más. Reintentar"
+    end_of_feed: "Ya lo has visto todo"
+    close_pin: "Cerrar"
     search_results: Resultados de búsqueda
     search_description: Busca publicaciones de Transbucket por procedimiento, cirujano,
       complicación o usuario.
@@ -1549,6 +1644,7 @@ es:
     edit_title: Editar el perfil de %{resource}
     name: Nombre
     email: Correo electrónico
+    password_required_hint: 'Para guardar cualquier cambio en esta página, introduce tu contraseña actual.'
     profile_help: El género ayuda a elegir los pronombres que se usan contigo en Transbucket.
       Usa Ninguno o Género queer para pronombres neutros.
     new_password: Nueva contraseña
@@ -1577,8 +1673,20 @@ es:
       classified_as: Este procedimiento está clasificado como "%{body_type}".
       average_sensation: Sensación media
       average_satisfaction: Satisfacción media
+      comments_label: 'Comentarios: %{count}'
+      report: 'Reportar'
+      edit_post: 'Editar'
+      delete_post: 'Eliminar'
+      report_confirm: '¿Reportar esta publicación a los moderadores?'
+      report_comment_confirm: '¿Reportar este comentario a los moderadores?'
+      reported: 'Reportado'
+      photo_count: "Fotos: %{count}"
+      comment_placeholder: "Añade un comentario…"
+      post_comment: "Publicar"
       by: por
-      reply: responder
+      tap_to_reveal: Toca para ver
+      hide_image: Ocultar imagen
+      reply: Responder
       remove: Eliminar
       remove_confirm: "¿Seguro que quieres eliminar este comentario?"
       doctor_prefix: 'Dr. '
@@ -1602,9 +1710,32 @@ es:
       surgeon_last_name: Apellidos del cirujano
       surgeon_first_name: Nombre del cirujano
       surgeon_url: URL del cirujano
+    picker:
+      done: Listo
+      close: Cerrar
+      no_matches: Sin resultados
     auth:
       username: Nombre de usuario
       username_or_email: Nombre de usuario o correo electrónico
+      show_password: Mostrar contraseña
+      hide_password: Ocultar contraseña
+      have_account: "¿Ya tienes una cuenta?"
+      new_here: "¿Es tu primera vez en Transbucket?"
+      pronouns: 'Pronombres'
+      pronouns_default: 'Predeterminado (según tu género)'
+      pronouns_other: 'Otros…'
+      pronouns_placeholder: 'p. ej., xe/xem'
+      pronouns_invalid: 'Los pronombres deben tener un formato como they/them o she/her/hers: palabras separadas por barras.'
+      pronoun_labels:
+        she_her: 'ella'
+        he_him: 'él'
+        they_them: 'elle'
+        she_they: 'ella/elle'
+        he_they: 'él/elle'
+        they_she: 'elle/ella'
+        they_he: 'elle/él'
+        any_all: 'cualquier pronombre'
+      password_hint: Al menos %{count} caracteres.
       password: Contraseña
       password_confirmation: Confirmación de contraseña
       your_name: Tu nombre
@@ -1662,8 +1793,7 @@ es:
   settings:
     title: Configuración de la cuenta
     safe_mode: Modo seguro
-    safe_mode_help: El modo seguro sustituye las imágenes de publicaciones por imágenes
-      aptas para el trabajo.
+    safe_mode_help: El modo seguro difumina las imágenes de las publicaciones hasta que las toques.
     notifications: Notificaciones
     notifications_help: El modo de notificaciones envía correos sobre nuevos comentarios
       en tus publicaciones.
@@ -1919,6 +2049,8 @@ fr:
     intro: Consultez des résultats réels, des profils de chirurgiens et des témoignages
       de personnes partageant leur expérience de transition.
   header:
+    safe_mode_on: 'Le mode sécurisé est activé : les images sont floutées. Touchez pour le désactiver.'
+    safe_mode_off: 'Le mode sécurisé est désactivé. Touchez pour flouter les images jusqu''à ce que vous les touchiez.'
     news: Actualités
     procedures: Procédures
     surgeons: Chirurgiens
@@ -1948,6 +2080,7 @@ fr:
     name: Votre nom sera visible par les administrateurs et utilisé dans les communications
       avec eux. Si vous êtes un prestataire de soins et que vous n'utilisez pas votre
       vrai nom, vous serez bloqué sur le site.
+    pronouns: 'Affichés sur vos publications. Facultatif : par défaut, nous utilisons les pronoms associés à votre genre.'
     gender: Votre sexe sera visible par tous lorsque vous publierez des résultats.
       Il est également utilisé pour définir des valeurs par défaut pour le contenu
       que vous voyez et vos pronoms. Il peut être mis à jour après l'enregistrement.
@@ -2007,6 +2140,12 @@ fr:
     submissions_intro: Consultez les contributions récentes ou recherchez une intervention,
       un chirurgien ou une complication.
     recent_submissions: Contributions récentes
+    recent: Récentes
+    for_you: Pour vous
+    loading_more: "Chargement…"
+    load_more_failed: "Impossible de charger la suite. Réessayer"
+    end_of_feed: "Vous avez tout vu"
+    close_pin: "Fermer"
     search_results: Résultats de recherche
     search_description: Recherchez des contributions Transbucket par intervention,
       chirurgien, complication ou utilisateur.
@@ -2089,6 +2228,7 @@ fr:
     edit_title: Modifier le profil de %{resource}
     name: Nom
     email: E-mail
+    password_required_hint: 'Pour enregistrer une modification sur cette page, saisissez votre mot de passe actuel.'
     profile_help: Le genre aide à choisir les pronoms utilisés pour vous sur Transbucket.
       Utilisez « Aucun » ou « Genre queer » pour des pronoms neutres.
     new_password: Nouveau mot de passe
@@ -2119,8 +2259,20 @@ fr:
         ».
       average_sensation: Sensation moyenne
       average_satisfaction: Satisfaction moyenne
+      comments_label: 'Commentaires : %{count}'
+      report: 'Signaler'
+      edit_post: 'Modifier'
+      delete_post: 'Supprimer'
+      report_confirm: 'Signaler cette publication aux modérateurs ?'
+      report_comment_confirm: 'Signaler ce commentaire aux modérateurs ?'
+      reported: 'Signalé'
+      photo_count: "Photos : %{count}"
+      comment_placeholder: "Ajouter un commentaire…"
+      post_comment: "Publier"
       by: par
-      reply: répondre
+      tap_to_reveal: Touchez pour afficher
+      hide_image: Masquer l’image
+      reply: Répondre
       remove: Supprimer
       remove_confirm: Supprimer ce commentaire ?
       doctor_prefix: 'Dr. '
@@ -2144,9 +2296,32 @@ fr:
       surgeon_last_name: Nom du chirurgien
       surgeon_first_name: Prénom du chirurgien
       surgeon_url: URL du chirurgien
+    picker:
+      done: Terminé
+      close: Fermer
+      no_matches: Aucun résultat
     auth:
       username: Nom d’utilisateur
       username_or_email: Nom d’utilisateur ou e-mail
+      show_password: Afficher le mot de passe
+      hide_password: Masquer le mot de passe
+      have_account: Vous avez déjà un compte ?
+      new_here: Première visite sur Transbucket ?
+      pronouns: 'Pronoms'
+      pronouns_default: 'Par défaut (selon votre genre)'
+      pronouns_other: 'Autre…'
+      pronouns_placeholder: 'p. ex. xe/xem'
+      pronouns_invalid: 'Les pronoms doivent ressembler à they/them ou she/her/hers : des mots séparés par des barres obliques.'
+      pronoun_labels:
+        she_her: 'elle'
+        he_him: 'il'
+        they_them: 'iel'
+        she_they: 'elle/iel'
+        he_they: 'il/iel'
+        they_she: 'iel/elle'
+        they_he: 'iel/il'
+        any_all: 'tous les pronoms'
+      password_hint: Au moins %{count} caractères.
       password: Mot de passe
       password_confirmation: Confirmation du mot de passe
       your_name: Votre nom
@@ -2204,8 +2379,7 @@ fr:
   settings:
     title: Paramètres du compte
     safe_mode: Mode sécurisé
-    safe_mode_help: Le mode sécurisé remplace les images des contributions par des
-      images tout public.
+    safe_mode_help: Le mode sécurisé floute les images des contributions jusqu’à ce que vous les touchiez.
     notifications: Notifications
     notifications_help: Le mode de notification envoie des e-mails au sujet des nouveaux
       commentaires sur vos contributions.
@@ -2455,6 +2629,8 @@ it:
     intro: Esplora risultati reali, profili dei chirurghi e contributi di persone
       che condividono la propria esperienza di transizione.
   header:
+    safe_mode_on: 'La modalità sicura è attiva: le immagini sono sfocate. Tocca per disattivarla.'
+    safe_mode_off: 'La modalità sicura è disattivata. Tocca per sfocare le immagini finché non le tocchi.'
     news: Novità
     procedures: Procedure
     surgeons: Chirurghi
@@ -2484,6 +2660,7 @@ it:
     name: Il tuo nome sarà visibile agli amministratori e utilizzato nelle comunicazioni
       con loro. Se sei un fornitore di cure e non usi il tuo vero nome, sarai bloccato
       dal sito.
+    pronouns: 'Mostrati nei tuoi contributi. Facoltativo: con l''opzione predefinita usiamo i pronomi associati al tuo genere.'
     gender: Il tuo sesso sarà visibile a tutti quando pubblichi i risultati. Viene
       anche utilizzato per impostare alcuni valori predefiniti per il contenuto che
       vedi e per i tuoi pronomi. Può essere aggiornato dopo la registrazione.
@@ -2539,6 +2716,12 @@ it:
     submissions_intro: Esplora i contributi recenti o cerca una procedura, un chirurgo
       o una complicanza.
     recent_submissions: Contributi recenti
+    recent: Recenti
+    for_you: Per te
+    loading_more: "Caricamento…"
+    load_more_failed: "Impossibile caricare altro. Riprova"
+    end_of_feed: "Hai visto tutto"
+    close_pin: "Chiudi"
     search_results: Risultati della ricerca
     search_description: Cerca i contributi Transbucket per procedura, chirurgo, complicanza
       o utente.
@@ -2615,6 +2798,7 @@ it:
     edit_title: Modifica il profilo di %{resource}
     name: Nome
     email: E-mail
+    password_required_hint: 'Per salvare qualsiasi modifica in questa pagina, inserisci la password attuale.'
     profile_help: Il genere aiuta a scegliere i pronomi usati per te su Transbucket.
       Usa Nessuno o Genere queer per pronomi neutri.
     new_password: Nuova password
@@ -2643,8 +2827,20 @@ it:
       classified_as: Questa procedura è classificata come procedura "%{body_type}".
       average_sensation: Sensibilità media
       average_satisfaction: Soddisfazione media
+      comments_label: 'Commenti: %{count}'
+      report: 'Segnala'
+      edit_post: 'Modifica'
+      delete_post: 'Elimina'
+      report_confirm: 'Segnalare questo contributo ai moderatori?'
+      report_comment_confirm: 'Segnalare questo commento ai moderatori?'
+      reported: 'Segnalato'
+      photo_count: "Foto: %{count}"
+      comment_placeholder: "Aggiungi un commento…"
+      post_comment: "Pubblica"
       by: di
-      reply: rispondi
+      tap_to_reveal: Tocca per mostrare
+      hide_image: Nascondi immagine
+      reply: Rispondi
       remove: Rimuovi
       remove_confirm: Vuoi davvero rimuovere questo commento?
       doctor_prefix: 'Dott. '
@@ -2668,9 +2864,31 @@ it:
       surgeon_last_name: Cognome del chirurgo
       surgeon_first_name: Nome del chirurgo
       surgeon_url: URL del chirurgo
+    picker:
+      done: Fatto
+      close: Chiudi
+      no_matches: Nessun risultato
     auth:
       username: Nome utente
       username_or_email: Nome utente o email
+      show_password: Mostra password
+      hide_password: Nascondi password
+      have_account: Hai già un account?
+      new_here: Prima volta su Transbucket?
+      pronouns: 'Pronomi'
+      pronouns_default: 'Predefinito (in base al tuo genere)'
+      pronouns_other: 'Altro…'
+      pronouns_placeholder: 'es. xe/xem'
+      pronouns_invalid: 'I pronomi devono avere un formato come they/them o she/her/hers: parole separate da barre.'
+      pronoun_labels:
+        she_her: 'lei'
+        he_him: 'lui'
+        she_they: 'lei/they'
+        he_they: 'lui/they'
+        they_she: 'they/lei'
+        they_he: 'they/lui'
+        any_all: 'qualsiasi pronome'
+      password_hint: Almeno %{count} caratteri.
       password: Password
       password_confirmation: Conferma password
       your_name: Il tuo nome
@@ -2728,8 +2946,7 @@ it:
   settings:
     title: Impostazioni account
     safe_mode: Modalità sicura
-    safe_mode_help: La modalità sicura sostituisce le immagini dei contributi con
-      immagini adatte a tutti.
+    safe_mode_help: La modalità sicura sfoca le immagini dei contributi finché non le tocchi.
     notifications: Notifiche
     notifications_help: La modalità notifiche invia e-mail sui nuovi commenti ai tuoi
       contributi.
@@ -2971,6 +3188,8 @@ ja:
     register: 登録して実際の結果を共有・閲覧しましょう。
     intro: 実際の手術結果、外科医のプロフィール、トランジションの体験を共有する投稿をご覧ください。
   header:
+    safe_mode_on: 'セーフモードはオンです。画像はぼかされています。タップでオフにします。'
+    safe_mode_off: 'セーフモードはオフです。タップすると、画像をタップするまでぼかします。'
     news: ニュース
     procedures: 手術
     surgeons: 外科医
@@ -3034,6 +3253,12 @@ ja:
     submissions: 投稿
     submissions_intro: 最近の投稿を見たり、手術、外科医、合併症を検索したりできます。
     recent_submissions: 最近の投稿
+    recent: 最近
+    for_you: おすすめ
+    loading_more: "読み込み中…"
+    load_more_failed: "読み込めませんでした。再試行"
+    end_of_feed: "すべて表示しました"
+    close_pin: "閉じる"
     search_results: 検索結果
     search_description: 手術、外科医、合併症、ユーザーでTransbucketの投稿を検索します。
     name: 名前
@@ -3103,6 +3328,7 @@ ja:
     edit_title: "%{resource}プロフィールを編集"
     name: 名前
     email: メールアドレス
+    password_required_hint: 'このページの変更を保存するには、現在のパスワードを入力してください。'
     profile_help: Transbucketでは、性別の設定をもとに使用する代名詞を決めます。中立的な代名詞には「指定なし」または「ジェンダークィア」を使用してください。
     new_password: 新しいパスワード
     current_password: 現在のパスワード
@@ -3130,7 +3356,19 @@ ja:
       classified_as: この手術は「%{body_type}」に分類されています。
       average_sensation: 平均感覚
       average_satisfaction: 平均満足度
+      comments_label: 'コメント：%{count}'
+      report: '報告'
+      edit_post: '編集'
+      delete_post: '削除'
+      report_confirm: 'この投稿をモデレーターに報告しますか？'
+      report_comment_confirm: 'このコメントをモデレーターに報告しますか？'
+      reported: '報告済み'
+      photo_count: "写真: %{count}枚"
+      comment_placeholder: "コメントを追加…"
+      post_comment: "投稿"
       by: '投稿者:'
+      tap_to_reveal: タップして表示
+      hide_image: 画像を隠す
       reply: 返信
       remove: 削除
       remove_confirm: このコメントを削除してもよろしいですか？
@@ -3155,9 +3393,31 @@ ja:
       surgeon_last_name: 外科医の姓
       surgeon_first_name: 外科医の名
       surgeon_url: 外科医のURL
+    picker:
+      done: 完了
+      close: 閉じる
+      no_matches: 一致なし
     auth:
       username: ユーザー名
       username_or_email: ユーザー名またはメールアドレス
+      show_password: パスワードを表示
+      hide_password: パスワードを非表示
+      have_account: すでにアカウントをお持ちですか？
+      new_here: Transbucketは初めてですか？
+      pronouns: '代名詞'
+      pronouns_default: 'デフォルト（性別に基づく）'
+      pronouns_other: 'その他…'
+      pronouns_placeholder: '例：xe/xem'
+      pronouns_invalid: '代名詞は they/them や she/her/hers のように、単語をスラッシュで区切った形式で入力してください。'
+      pronoun_labels:
+        she_her: '彼女'
+        he_him: '彼'
+        she_they: '彼女/they'
+        he_they: '彼/they'
+        they_she: 'they/彼女'
+        they_he: 'they/彼'
+        any_all: 'どれでも'
+      password_hint: "%{count}文字以上で入力してください。"
       password: パスワード
       password_confirmation: パスワード確認
       your_name: 氏名
@@ -3214,7 +3474,7 @@ ja:
   settings:
     title: アカウント設定
     safe_mode: セーフモード
-    safe_mode_help: セーフモードでは投稿画像を安全な画像に置き換えます。
+    safe_mode_help: セーフモードでは、タップするまで投稿の画像にぼかしがかかります。
     notifications: 通知
     notifications_help: 通知モードでは投稿への新しいコメントをメールで知らせます。
     update: 更新
@@ -3245,6 +3505,7 @@ ja:
     email: メールアドレスは管理者に表示されますが、他のユーザーには表示されません。確認メールが送信されます。
     password: パスワードは暗号化して保存され、メールアドレスを使って復元できます。
     name: 名前は管理者に表示され、管理者との連絡に使用されます。
+    pronouns: '投稿に表示されます。任意：デフォルトのままにすると、選択した性別に合った代名詞が使われます。'
     gender: 性別は結果を投稿したときに表示され、代名詞の選択に使用されます。
     tos: Transbucket.comに登録すると、利用規約に同意したことになります。
 zh-CN:
@@ -3434,6 +3695,8 @@ zh-CN:
     register: 注册后即可分享或查看真实结果。
     intro: 浏览真实的手术结果、医生资料，以及分享变性经历的社区投稿。
   header:
+    safe_mode_on: '安全模式已开启：图片已模糊。点按可关闭。'
+    safe_mode_off: '安全模式已关闭。点按可将图片模糊，点按图片后再显示。'
     news: 新闻
     procedures: 手术项目
     surgeons: 医生
@@ -3458,6 +3721,7 @@ zh-CN:
     email: 您的电子邮件对管理员可见，但对其他用户不可见。您的电子邮件将被确认。
     password: 您的密码在存储时将被加密，并可使用您的电子邮件进行恢复。
     name: 您的姓名将对管理员可见，并用于与他们的通讯中。如果您是护理提供者并且不使用您的真实姓名，那么您将被屏蔽。
+    pronouns: '会显示在你的投稿上。可选：保持默认时，将使用与你的性别对应的代词。'
     gender: 发布结果后，所有人都可以看到您的性别。它还用于为您看到的内容和代词设置一些默认值。注册后可以更新。
     tos: 通过在Transbucket.com上注册，您同意遵守我们的服务条款。
   site:
@@ -3504,6 +3768,12 @@ zh-CN:
     submissions: 投稿
     submissions_intro: 浏览最新投稿，或搜索手术项目、医生或并发症。
     recent_submissions: 最新投稿
+    recent: 最新
+    for_you: 为你推荐
+    loading_more: "正在加载更多…"
+    load_more_failed: "加载失败，点击重试"
+    end_of_feed: "已经全部看完了"
+    close_pin: "关闭"
     search_results: 搜索结果
     search_description: 按手术项目、医生、并发症或用户搜索 Transbucket 投稿。
     name: 名称
@@ -3573,6 +3843,7 @@ zh-CN:
     edit_title: 编辑 %{resource} 资料
     name: 姓名
     email: 电子邮箱
+    password_required_hint: '要保存此页面上的任何更改，请输入当前密码。'
     profile_help: 在 Transbucket 上，性别设置用于选择称呼您的代词。中性代词请使用“未指定”或“酷儿性别”。
     new_password: 新密码
     current_password: 当前密码
@@ -3600,7 +3871,19 @@ zh-CN:
       classified_as: 此手术项目归类为“%{body_type}”。
       average_sensation: 平均感觉
       average_satisfaction: 平均满意度
+      comments_label: '评论：%{count}'
+      report: '举报'
+      edit_post: '编辑'
+      delete_post: '删除'
+      report_confirm: '要向管理员举报此投稿吗？'
+      report_comment_confirm: '要向管理员举报此评论吗？'
+      reported: '已举报'
+      photo_count: "照片：%{count} 张"
+      comment_placeholder: "添加评论…"
+      post_comment: "发布"
       by: 作者：
+      tap_to_reveal: 点按显示
+      hide_image: 隐藏图片
       reply: 回复
       remove: 删除
       remove_confirm: 确定要删除此评论吗？
@@ -3625,9 +3908,31 @@ zh-CN:
       surgeon_last_name: 医生姓氏
       surgeon_first_name: 医生名字
       surgeon_url: 医生网址
+    picker:
+      done: 完成
+      close: 关闭
+      no_matches: 无匹配结果
     auth:
       username: 用户名
       username_or_email: 用户名或邮箱
+      show_password: 显示密码
+      hide_password: 隐藏密码
+      have_account: 已有账号？
+      new_here: 初次使用 Transbucket？
+      pronouns: '代词'
+      pronouns_default: '默认（根据你的性别）'
+      pronouns_other: '其他…'
+      pronouns_placeholder: '例如 xe/xem'
+      pronouns_invalid: '代词的格式应类似 they/them 或 she/her/hers：用斜杠分隔的单词。'
+      pronoun_labels:
+        she_her: '她'
+        he_him: '他'
+        she_they: '她/they'
+        he_they: '他/they'
+        they_she: 'they/她'
+        they_he: 'they/他'
+        any_all: '任意代词'
+      password_hint: 至少 %{count} 个字符。
       password: 密码
       password_confirmation: 确认密码
       your_name: 姓名
@@ -3684,7 +3989,7 @@ zh-CN:
   settings:
     title: 账户设置
     safe_mode: 安全模式
-    safe_mode_help: 安全模式会将投稿图片替换为适合工作场所查看的图片。
+    safe_mode_help: 安全模式会将投稿图片模糊处理，点按后才会显示。
     notifications: 通知
     notifications_help: 通知模式会通过邮件提醒您投稿中的新评论。
     update: 更新
@@ -3929,6 +4234,8 @@ zh-TW:
     register: 註冊即可分享或查看真實成果。
     intro: 瀏覽真實手術成果、醫師資料，以及分享跨性別經驗的社群投稿。
   header:
+    safe_mode_on: '安全模式已開啟：圖片已模糊。點一下即可關閉。'
+    safe_mode_off: '安全模式已關閉。點一下即可模糊圖片，點圖片後才會顯示。'
     news: 新聞
     procedures: 手術項目
     surgeons: 醫師
@@ -3953,6 +4260,7 @@ zh-TW:
     email: 您的電子郵件對管理員可見，但對其他用戶不可見。您的電子郵件將被確認。
     password: 您的密碼在存儲時將被加密，並可使用您的電子郵件進行恢復。
     name: 您的姓名將對管理員可見，並用於與他們的通訊中。如果您是護理提供者並且不使用您的真實姓名，那麼您將被屏蔽。
+    pronouns: '會顯示在你的貼文上。選填：維持預設時，會使用與你的性別對應的代名詞。'
     gender: 發布結果後，所有人都可以看到您的性別。它還用於為您看到的內容和代詞設置一些默認值。註冊後可以更新。
     tos: 通過在Transbucket.com上註冊，您同意遵守我們的服務條款。
   site:
@@ -3999,6 +4307,12 @@ zh-TW:
     submissions: 投稿
     submissions_intro: 瀏覽最新投稿，或搜尋手術項目、醫師或併發症。
     recent_submissions: 最新投稿
+    recent: 最新
+    for_you: 為你推薦
+    loading_more: "正在載入更多…"
+    load_more_failed: "載入失敗，點此重試"
+    end_of_feed: "已經全部看完了"
+    close_pin: "關閉"
     search_results: 搜尋結果
     search_description: 依手術項目、醫師、併發症或使用者搜尋 Transbucket 投稿。
     name: 名稱
@@ -4068,6 +4382,7 @@ zh-TW:
     edit_title: 編輯 %{resource} 資料
     name: 姓名
     email: 電子郵件
+    password_required_hint: '要儲存此頁面上的任何變更，請輸入目前的密碼。'
     profile_help: 在 Transbucket 上，性別設定用於選擇稱呼您的代名詞。中性代名詞請使用「未指定」或「酷兒性別」。
     new_password: 新密碼
     current_password: 目前密碼
@@ -4095,7 +4410,19 @@ zh-TW:
       classified_as: 此手術項目分類為「%{body_type}」。
       average_sensation: 平均感覺
       average_satisfaction: 平均滿意度
+      comments_label: '留言：%{count}'
+      report: '檢舉'
+      edit_post: '編輯'
+      delete_post: '刪除'
+      report_confirm: '要向管理員檢舉此貼文嗎？'
+      report_comment_confirm: '要向管理員檢舉此留言嗎？'
+      reported: '已檢舉'
+      photo_count: "照片：%{count} 張"
+      comment_placeholder: "新增留言…"
+      post_comment: "發佈"
       by: 作者：
+      tap_to_reveal: 點一下顯示
+      hide_image: 隱藏圖片
       reply: 回覆
       remove: 刪除
       remove_confirm: 確定要刪除此評論嗎？
@@ -4120,9 +4447,31 @@ zh-TW:
       surgeon_last_name: 醫師姓氏
       surgeon_first_name: 醫師名字
       surgeon_url: 醫師網址
+    picker:
+      done: 完成
+      close: 關閉
+      no_matches: 沒有符合的結果
     auth:
       username: 使用者名稱
       username_or_email: 使用者名稱或電子郵件
+      show_password: 顯示密碼
+      hide_password: 隱藏密碼
+      have_account: 已有帳號？
+      new_here: 第一次使用 Transbucket？
+      pronouns: '代名詞'
+      pronouns_default: '預設（依你的性別）'
+      pronouns_other: '其他…'
+      pronouns_placeholder: '例如 xe/xem'
+      pronouns_invalid: '代名詞的格式應類似 they/them 或 she/her/hers：以斜線分隔的單字。'
+      pronoun_labels:
+        she_her: '她'
+        he_him: '他'
+        she_they: '她/they'
+        he_they: '他/they'
+        they_she: 'they/她'
+        they_he: 'they/他'
+        any_all: '任何代名詞'
+      password_hint: 至少 %{count} 個字元。
       password: 密碼
       password_confirmation: 確認密碼
       your_name: 姓名
@@ -4179,7 +4528,7 @@ zh-TW:
   settings:
     title: 帳戶設定
     safe_mode: 安全模式
-    safe_mode_help: 安全模式會將投稿圖片替換為適合工作場所查看的圖片。
+    safe_mode_help: 安全模式會將投稿圖片模糊處理，點一下才會顯示。
     notifications: 通知
     notifications_help: 通知模式會透過電子郵件提醒您投稿中的新評論。
     update: 更新
@@ -4219,6 +4568,8 @@ pt-BR:
     register: Cadastre-se para compartilhar ou ver resultados reais.
   header:
     home: Início
+    safe_mode_on: 'O modo seguro está ativado: as imagens estão desfocadas. Toque para desativar.'
+    safe_mode_off: 'O modo seguro está desativado. Toque para desfocar as imagens até você tocar nelas.'
     news: Notícias
     procedures: Procedimentos
     surgeons: Cirurgiões
@@ -4242,6 +4593,7 @@ pt-BR:
     password: Sua senha será criptografada quando armazenada e poderá ser recuperada
       usando seu e-mail.
     name: Seu nome ficará visível para administradores e será usado nas comunicações.
+    pronouns: 'Exibidos nas suas publicações. Opcional: com o padrão, usamos os pronomes associados ao seu gênero.'
     gender: Seu gênero ficará visível quando você publicar resultados e ajuda a definir
       pronomes.
     tos: Ao se cadastrar no Transbucket.com, você concorda em seguir nossos Termos
@@ -4296,6 +4648,12 @@ pt-BR:
     submissions_intro: Veja publicações recentes ou pesquise um procedimento, cirurgião
       ou complicação.
     recent_submissions: Publicações recentes
+    recent: Recentes
+    for_you: Para você
+    loading_more: "Carregando mais…"
+    load_more_failed: "Não foi possível carregar mais. Tentar de novo"
+    end_of_feed: "Você já viu tudo"
+    close_pin: "Fechar"
     search_results: Resultados da pesquisa
     search_description: Pesquise publicações do Transbucket por procedimento, cirurgião,
       complicação ou usuário.
@@ -4374,6 +4732,7 @@ pt-BR:
     edit_title: Editar perfil de %{resource}
     name: Nome
     email: E-mail
+    password_required_hint: 'Para salvar qualquer alteração nesta página, informe sua senha atual.'
     profile_help: No Transbucket, o gênero ajuda a escolher os pronomes usados para
       você. Use Nenhum ou Gênero queer para pronomes neutros.
     new_password: Nova senha
@@ -4402,8 +4761,20 @@ pt-BR:
       classified_as: Este procedimento é classificado como "%{body_type}".
       average_sensation: Sensação média
       average_satisfaction: Satisfação média
+      comments_label: 'Comentários: %{count}'
+      report: 'Denunciar'
+      edit_post: 'Editar'
+      delete_post: 'Excluir'
+      report_confirm: 'Denunciar esta publicação aos moderadores?'
+      report_comment_confirm: 'Denunciar este comentário aos moderadores?'
+      reported: 'Denunciado'
+      photo_count: "Fotos: %{count}"
+      comment_placeholder: "Adicione um comentário…"
+      post_comment: "Publicar"
       by: por
-      reply: responder
+      tap_to_reveal: Toque para ver
+      hide_image: Ocultar imagem
+      reply: Responder
       remove: Remover
       remove_confirm: Tem certeza de que deseja remover este comentário?
       doctor_prefix: 'Dr. '
@@ -4427,9 +4798,32 @@ pt-BR:
       surgeon_last_name: Sobrenome do cirurgião
       surgeon_first_name: Nome do cirurgião
       surgeon_url: URL do cirurgião
+    picker:
+      done: Concluir
+      close: Fechar
+      no_matches: Nenhum resultado
     auth:
       username: Nome de usuário
       username_or_email: Nome de usuário ou e-mail
+      show_password: Mostrar senha
+      hide_password: Ocultar senha
+      have_account: Já tem uma conta?
+      new_here: É a sua primeira vez no Transbucket?
+      pronouns: 'Pronomes'
+      pronouns_default: 'Padrão (de acordo com seu gênero)'
+      pronouns_other: 'Outros…'
+      pronouns_placeholder: 'ex.: xe/xem'
+      pronouns_invalid: 'Os pronomes devem ter um formato como they/them ou she/her/hers: palavras separadas por barras.'
+      pronoun_labels:
+        she_her: 'ela/dela'
+        he_him: 'ele/dele'
+        they_them: 'elu/delu'
+        she_they: 'ela/elu'
+        he_they: 'ele/elu'
+        they_she: 'elu/ela'
+        they_he: 'elu/ele'
+        any_all: 'qualquer pronome'
+      password_hint: Pelo menos %{count} caracteres.
       password: Senha
       password_confirmation: Confirmação da senha
       your_name: Seu nome
@@ -4487,8 +4881,7 @@ pt-BR:
   settings:
     title: Configurações da conta
     safe_mode: Modo seguro
-    safe_mode_help: O modo seguro substitui imagens das publicações por imagens apropriadas
-      para o trabalho.
+    safe_mode_help: O modo seguro desfoca as imagens das publicações até você tocar nelas.
     notifications: Notificações
     notifications_help: O modo de notificações envia e-mails sobre novos comentários
       nas suas publicações.
@@ -4530,6 +4923,8 @@ nl:
     register: Registreer je om resultaten te delen of te bekijken.
   header:
     home: Home
+    safe_mode_on: 'Veilige modus staat aan: afbeeldingen zijn onscherp. Tik om uit te zetten.'
+    safe_mode_off: 'Veilige modus staat uit. Tik om afbeeldingen onscherp te maken tot je erop tikt.'
     news: Nieuws
     procedures: Procedures
     surgeons: Chirurgen
@@ -4554,6 +4949,7 @@ nl:
       hersteld.
     name: Je naam is zichtbaar voor beheerders en wordt gebruikt voor communicatie
       met hen.
+    pronouns: 'Wordt bij je bijdragen getoond. Optioneel: bij de standaardkeuze gebruiken we de voornaamwoorden die bij je geslacht horen.'
     gender: Je gender is zichtbaar wanneer je resultaten plaatst en wordt gebruikt
       voor voornaamwoorden.
     tos: Door je te registreren op Transbucket.com ga je akkoord met onze gebruiksvoorwaarden.
@@ -4608,6 +5004,12 @@ nl:
     submissions_intro: Bekijk recente bijdragen of zoek naar een procedure, chirurg
       of complicatie.
     recent_submissions: Recente bijdragen
+    recent: Recent
+    for_you: Voor jou
+    loading_more: "Meer laden…"
+    load_more_failed: "Laden mislukt. Opnieuw proberen"
+    end_of_feed: "Je hebt alles gezien"
+    close_pin: "Sluiten"
     search_results: Zoekresultaten
     search_description: Zoek Transbucket-bijdragen op procedure, chirurg, complicatie
       of gebruiker.
@@ -4682,6 +5084,7 @@ nl:
     edit_title: Profiel van %{resource} bewerken
     name: Naam
     email: E-mail
+    password_required_hint: 'Om wijzigingen op deze pagina op te slaan, voer je je huidige wachtwoord in.'
     profile_help: Op Transbucket helpt gender bij het kiezen van de voornaamwoorden
       die voor jou worden gebruikt. Gebruik Geen of Genderqueer voor genderneutrale
       voornaamwoorden.
@@ -4712,8 +5115,20 @@ nl:
       classified_as: Deze procedure valt onder "%{body_type}".
       average_sensation: Gemiddelde gevoeligheid
       average_satisfaction: Gemiddelde tevredenheid
+      comments_label: 'Reacties: %{count}'
+      report: 'Melden'
+      edit_post: 'Bewerken'
+      delete_post: 'Verwijderen'
+      report_confirm: 'Deze bijdrage bij de moderatoren melden?'
+      report_comment_confirm: 'Deze reactie bij de moderatoren melden?'
+      reported: 'Gemeld'
+      photo_count: "Foto's: %{count}"
+      comment_placeholder: "Reactie toevoegen…"
+      post_comment: "Plaatsen"
       by: door
-      reply: antwoorden
+      tap_to_reveal: Tik om te tonen
+      hide_image: Afbeelding verbergen
+      reply: Antwoorden
       remove: Verwijderen
       remove_confirm: Deze reactie verwijderen?
       doctor_prefix: 'Dr. '
@@ -4737,9 +5152,32 @@ nl:
       surgeon_last_name: Achternaam van chirurg
       surgeon_first_name: Voornaam van chirurg
       surgeon_url: URL van chirurg
+    picker:
+      done: Klaar
+      close: Sluiten
+      no_matches: Geen resultaten
     auth:
       username: Gebruikersnaam
       username_or_email: Gebruikersnaam of e-mail
+      show_password: Wachtwoord tonen
+      hide_password: Wachtwoord verbergen
+      have_account: Heb je al een account?
+      new_here: Nieuw bij Transbucket?
+      pronouns: 'Voornaamwoorden'
+      pronouns_default: 'Standaard (op basis van je geslacht)'
+      pronouns_other: 'Anders…'
+      pronouns_placeholder: 'bijv. xe/xem'
+      pronouns_invalid: 'Voornaamwoorden moeten eruitzien als they/them of she/her/hers: woorden gescheiden door schuine strepen.'
+      pronoun_labels:
+        she_her: 'zij/haar'
+        he_him: 'hij/hem'
+        it_its: 'het/zijn'
+        she_they: 'zij/they'
+        he_they: 'hij/they'
+        they_she: 'they/zij'
+        they_he: 'they/hij'
+        any_all: 'alle voornaamwoorden'
+      password_hint: Minimaal %{count} tekens.
       password: Wachtwoord
       password_confirmation: Wachtwoord bevestigen
       your_name: Je naam
@@ -4798,8 +5236,7 @@ nl:
   settings:
     title: Accountinstellingen
     safe_mode: Veilige modus
-    safe_mode_help: De veilige modus vervangt afbeeldingen door afbeeldingen die geschikt
-      zijn voor op het werk.
+    safe_mode_help: In de veilige modus worden afbeeldingen van bijdragen vervaagd totdat je erop tikt.
     notifications: Meldingen
     notifications_help: De meldingsmodus stuurt e-mails over nieuwe reacties op je
       bijdragen.
@@ -4841,6 +5278,8 @@ pl:
     register: Zarejestruj się, aby dzielić się rezultatami lub je oglądać.
   header:
     home: Strona główna
+    safe_mode_on: 'Tryb bezpieczny jest włączony: obrazy są rozmyte. Dotknij, aby wyłączyć.'
+    safe_mode_off: 'Tryb bezpieczny jest wyłączony. Dotknij, aby rozmywać obrazy, dopóki ich nie dotkniesz.'
     news: Aktualności
     procedures: Zabiegi
     surgeons: Chirurdzy
@@ -4865,6 +5304,7 @@ pl:
       e-maila.
     name: Twoje imię będzie widoczne dla administratorów i będzie używane w kontaktach
       z nimi.
+    pronouns: 'Wyświetlane przy Twoich wpisach. Opcjonalne: przy ustawieniu domyślnym używamy zaimków przypisanych do Twojej płci.'
     gender: Twoja płeć będzie widoczna przy publikowaniu rezultatów i służy do ustawiania
       zaimków.
     tos: Rejestrując się na Transbucket.com, zgadzasz się przestrzegać naszych warunków
@@ -4920,6 +5360,12 @@ pl:
     submissions_intro: Przeglądaj najnowsze wpisy lub wyszukaj zabieg, chirurga albo
       powikłanie.
     recent_submissions: Najnowsze wpisy
+    recent: Najnowsze
+    for_you: Dla ciebie
+    loading_more: "Ładowanie…"
+    load_more_failed: "Nie udało się wczytać. Spróbuj ponownie"
+    end_of_feed: "To już wszystko"
+    close_pin: "Zamknij"
     search_results: Wyniki wyszukiwania
     search_description: Szukaj wpisów Transbucket według zabiegu, chirurga, powikłania
       lub użytkownika.
@@ -4994,6 +5440,7 @@ pl:
     edit_title: Edytuj profil %{resource}
     name: Imię
     email: E-mail
+    password_required_hint: 'Aby zapisać jakiekolwiek zmiany na tej stronie, wpisz swoje obecne hasło.'
     profile_help: Na Transbucket płeć pomaga wybrać używane wobec Ciebie zaimki. Użyj
       Nie podano lub Genderqueer dla zaimków neutralnych.
     new_password: Nowe hasło
@@ -5022,8 +5469,20 @@ pl:
       classified_as: Ten zabieg jest sklasyfikowany jako „%{body_type}”.
       average_sensation: Średnie odczuwanie
       average_satisfaction: Średnie zadowolenie
+      comments_label: 'Komentarze: %{count}'
+      report: 'Zgłoś'
+      edit_post: 'Edytuj'
+      delete_post: 'Usuń'
+      report_confirm: 'Zgłosić ten wpis moderatorom?'
+      report_comment_confirm: 'Zgłosić ten komentarz moderatorom?'
+      reported: 'Zgłoszono'
+      photo_count: "Zdjęcia: %{count}"
+      comment_placeholder: "Dodaj komentarz…"
+      post_comment: "Opublikuj"
       by: 'autor:'
-      reply: odpowiedz
+      tap_to_reveal: Dotknij, aby pokazać
+      hide_image: Ukryj obraz
+      reply: Odpowiedz
       remove: Usuń
       remove_confirm: Czy na pewno usunąć ten komentarz?
       doctor_prefix: 'dr '
@@ -5047,9 +5506,31 @@ pl:
       surgeon_last_name: Nazwisko chirurga
       surgeon_first_name: Imię chirurga
       surgeon_url: URL chirurga
+    picker:
+      done: Gotowe
+      close: Zamknij
+      no_matches: Brak wyników
     auth:
       username: Nazwa użytkownika
       username_or_email: Nazwa użytkownika lub e-mail
+      show_password: Pokaż hasło
+      hide_password: Ukryj hasło
+      have_account: Masz już konto?
+      new_here: Pierwszy raz w Transbucket?
+      pronouns: 'Zaimki'
+      pronouns_default: 'Domyślne (według Twojej płci)'
+      pronouns_other: 'Inne…'
+      pronouns_placeholder: 'np. xe/xem'
+      pronouns_invalid: 'Zaimki powinny wyglądać jak they/them lub she/her/hers: słowa oddzielone ukośnikami.'
+      pronoun_labels:
+        she_her: 'ona/jej'
+        he_him: 'on/jego'
+        she_they: 'ona/they'
+        he_they: 'on/they'
+        they_she: 'they/ona'
+        they_he: 'they/on'
+        any_all: 'dowolne zaimki'
+      password_hint: Co najmniej %{count} znaków.
       password: Hasło
       password_confirmation: Potwierdzenie hasła
       your_name: Twoje imię
@@ -5107,8 +5588,7 @@ pl:
   settings:
     title: Ustawienia konta
     safe_mode: Tryb bezpieczny
-    safe_mode_help: Tryb bezpieczny zastępuje obrazy wpisów obrazami odpowiednimi
-      do oglądania w pracy.
+    safe_mode_help: Tryb bezpieczny rozmywa obrazy wpisów, dopóki ich nie dotkniesz.
     notifications: Powiadomienia
     notifications_help: Tryb powiadomień wysyła e-maile o nowych komentarzach do Twoich
       wpisów.
@@ -5151,6 +5631,8 @@ ru:
     register: Зарегистрируйтесь, чтобы делиться результатами или смотреть их.
   header:
     home: Главная
+    safe_mode_on: 'Безопасный режим включён: изображения размыты. Нажмите, чтобы выключить.'
+    safe_mode_off: 'Безопасный режим выключен. Нажмите, чтобы размывать изображения, пока вы их не коснётесь.'
     news: Новости
     procedures: Операции
     surgeons: Хирурги
@@ -5175,6 +5657,7 @@ ru:
       электронной почты.
     name: Ваше имя будет видно администраторам и будет использоваться для связи с
       ними.
+    pronouns: 'Показываются в ваших публикациях. Необязательно: по умолчанию используются местоимения, соответствующие вашему полу.'
     gender: Ваш гендер будет виден при публикации результатов и используется для выбора
       местоимений.
     tos: Регистрируясь на Transbucket.com, вы соглашаетесь соблюдать наши условия
@@ -5230,6 +5713,12 @@ ru:
     submissions_intro: Просматривайте последние публикации или ищите операцию, хирурга
       или осложнение.
     recent_submissions: Последние публикации
+    recent: Недавние
+    for_you: Для вас
+    loading_more: "Загрузка…"
+    load_more_failed: "Не удалось загрузить. Повторить"
+    end_of_feed: "Вы всё посмотрели"
+    close_pin: "Закрыть"
     search_results: Результаты поиска
     search_description: Ищите публикации Transbucket по операции, хирургу, осложнению
       или пользователю.
@@ -5305,6 +5794,7 @@ ru:
     edit_title: Редактировать профиль %{resource}
     name: Имя
     email: Электронная почта
+    password_required_hint: 'Чтобы сохранить любые изменения на этой странице, введите текущий пароль.'
     profile_help: На Transbucket гендер помогает выбрать местоимения для обращения
       к вам. Для нейтральных местоимений используйте «Не указано» или «Гендерквир».
     new_password: Новый пароль
@@ -5333,8 +5823,20 @@ ru:
       classified_as: Эта операция относится к категории «%{body_type}».
       average_sensation: Средняя чувствительность
       average_satisfaction: Средняя удовлетворённость
+      comments_label: 'Комментарии: %{count}'
+      report: 'Пожаловаться'
+      edit_post: 'Редактировать'
+      delete_post: 'Удалить'
+      report_confirm: 'Пожаловаться на эту публикацию модераторам?'
+      report_comment_confirm: 'Пожаловаться на этот комментарий модераторам?'
+      reported: 'Жалоба отправлена'
+      photo_count: "Фото: %{count}"
+      comment_placeholder: "Добавьте комментарий…"
+      post_comment: "Отправить"
       by: 'автор:'
-      reply: ответить
+      tap_to_reveal: Нажмите, чтобы показать
+      hide_image: Скрыть изображение
+      reply: Ответить
       remove: Удалить
       remove_confirm: Удалить этот комментарий?
       doctor_prefix: 'д-р '
@@ -5358,9 +5860,31 @@ ru:
       surgeon_last_name: Фамилия хирурга
       surgeon_first_name: Имя хирурга
       surgeon_url: URL хирурга
+    picker:
+      done: Готово
+      close: Закрыть
+      no_matches: Ничего не найдено
     auth:
       username: Имя пользователя
       username_or_email: Имя пользователя или email
+      show_password: Показать пароль
+      hide_password: Скрыть пароль
+      have_account: Уже есть аккаунт?
+      new_here: Впервые на Transbucket?
+      pronouns: 'Местоимения'
+      pronouns_default: 'По умолчанию (по вашему полу)'
+      pronouns_other: 'Другие…'
+      pronouns_placeholder: 'например, xe/xem'
+      pronouns_invalid: 'Местоимения должны выглядеть как they/them или she/her/hers: слова, разделённые косой чертой.'
+      pronoun_labels:
+        she_her: 'она/её'
+        he_him: 'он/его'
+        she_they: 'она/they'
+        he_they: 'он/they'
+        they_she: 'they/она'
+        they_he: 'they/он'
+        any_all: 'любые местоимения'
+      password_hint: Не менее %{count} символов.
       password: Пароль
       password_confirmation: Подтверждение пароля
       your_name: Ваше имя
@@ -5418,8 +5942,7 @@ ru:
   settings:
     title: Настройки аккаунта
     safe_mode: Безопасный режим
-    safe_mode_help: Безопасный режим заменяет изображения публикаций на безопасные
-      для просмотра на работе.
+    safe_mode_help: В безопасном режиме изображения публикаций размыты, пока вы не нажмёте на них.
     notifications: Уведомления
     notifications_help: Уведомления сообщают по электронной почте о новых комментариях
       к вашим публикациям.
@@ -5461,6 +5984,8 @@ tr:
     register: Sonuç paylaşmak veya gerçek sonuçları görmek için kaydolun.
   header:
     home: Ana sayfa
+    safe_mode_on: 'Güvenli mod açık: görseller bulanık. Kapatmak için dokunun.'
+    safe_mode_off: 'Güvenli mod kapalı. Görselleri dokunana kadar bulanıklaştırmak için dokunun.'
     news: Haberler
     procedures: Prosedürler
     surgeons: Cerrahlar
@@ -5483,6 +6008,7 @@ tr:
       görülemez. E-postanız doğrulanır.
     password: Parolanız saklanırken şifrelenir ve e-postanız kullanılarak kurtarılabilir.
     name: Adınız yöneticiler tarafından görülebilir ve iletişim için kullanılır.
+    pronouns: 'Paylaşımlarınızda gösterilir. İsteğe bağlı: varsayılan seçildiğinde cinsiyetinize karşılık gelen zamirler kullanılır.'
     gender: Cinsiyetiniz sonuç yayınladığınızda görünür ve zamir tercihlerini belirlemeye
       yardımcı olur.
     tos: Transbucket.com'a kaydolarak Kullanım Şartlarımızı kabul etmiş olursunuz.
@@ -5536,6 +6062,12 @@ tr:
     submissions_intro: Son gönderilere göz atın veya bir prosedür, cerrah ya da komplikasyon
       arayın.
     recent_submissions: Son gönderiler
+    recent: Son gönderiler
+    for_you: Sana özel
+    loading_more: "Daha fazlası yükleniyor…"
+    load_more_failed: "Yüklenemedi. Tekrar dene"
+    end_of_feed: "Hepsini gördün"
+    close_pin: "Kapat"
     search_results: Arama sonuçları
     search_description: Transbucket gönderilerini prosedür, cerrah, komplikasyon veya
       kullanıcıya göre arayın.
@@ -5610,6 +6142,7 @@ tr:
     edit_title: "%{resource} profilini düzenle"
     name: Ad
     email: E-posta
+    password_required_hint: 'Bu sayfadaki herhangi bir değişikliği kaydetmek için mevcut şifrenizi girin.'
     profile_help: Transbucket'te cinsiyet, sizin için kullanılan zamirlerin seçilmesine
       yardımcı olur. Tarafsız zamirler için Belirtilmedi veya Genderqueer kullanın.
     new_password: Yeni parola
@@ -5638,8 +6171,20 @@ tr:
       classified_as: Bu prosedür "%{body_type}" olarak sınıflandırılmıştır.
       average_sensation: Ortalama his
       average_satisfaction: Ortalama memnuniyet
+      comments_label: 'Yorumlar: %{count}'
+      report: 'Bildir'
+      edit_post: 'Düzenle'
+      delete_post: 'Sil'
+      report_confirm: 'Bu paylaşım moderatörlere bildirilsin mi?'
+      report_comment_confirm: 'Bu yorum moderatörlere bildirilsin mi?'
+      reported: 'Bildirildi'
+      photo_count: "Fotoğraf: %{count}"
+      comment_placeholder: "Yorum ekle…"
+      post_comment: "Paylaş"
       by: 'gönderen:'
-      reply: yanıtla
+      tap_to_reveal: Göstermek için dokunun
+      hide_image: Görseli gizle
+      reply: Yanıtla
       remove: Kaldır
       remove_confirm: Bu yorumu kaldırmak istediğinizden emin misiniz?
       doctor_prefix: 'Dr. '
@@ -5663,9 +6208,25 @@ tr:
       surgeon_last_name: Cerrahın soyadı
       surgeon_first_name: Cerrahın adı
       surgeon_url: Cerrahın URL’si
+    picker:
+      done: Bitti
+      close: Kapat
+      no_matches: Eşleşme yok
     auth:
       username: Kullanıcı adı
       username_or_email: Kullanıcı adı veya e-posta
+      show_password: Parolayı göster
+      hide_password: Parolayı gizle
+      have_account: Zaten hesabınız var mı?
+      new_here: Transbucket’a ilk kez mi geliyorsunuz?
+      pronouns: 'Zamirler'
+      pronouns_default: 'Varsayılan (cinsiyetinize göre)'
+      pronouns_other: 'Diğer…'
+      pronouns_placeholder: 'örn. xe/xem'
+      pronouns_invalid: 'Zamirler they/them veya she/her/hers gibi görünmelidir: eğik çizgiyle ayrılmış sözcükler.'
+      pronoun_labels:
+        any_all: 'herhangi bir zamir'
+      password_hint: En az %{count} karakter.
       password: Şifre
       password_confirmation: Şifre onayı
       your_name: Adınız
@@ -5724,8 +6285,7 @@ tr:
   settings:
     title: Hesap ayarları
     safe_mode: Güvenli mod
-    safe_mode_help: Güvenli mod, gönderi görsellerini iş yerinde görüntülenebilecek
-      görsellerle değiştirir.
+    safe_mode_help: Güvenli mod, dokunana kadar gönderi görsellerini bulanıklaştırır.
     notifications: Bildirimler
     notifications_help: Bildirim modu, gönderilerinizdeki yeni yorumları e-posta ile
       bildirir.
@@ -5767,6 +6327,8 @@ vi:
     register: Đăng ký để chia sẻ hoặc xem kết quả thực tế.
   header:
     home: Trang chủ
+    safe_mode_on: 'Chế độ an toàn đang bật: hình ảnh bị làm mờ. Chạm để tắt.'
+    safe_mode_off: 'Chế độ an toàn đang tắt. Chạm để làm mờ hình ảnh cho đến khi bạn chạm vào.'
     news: Tin tức
     procedures: Thủ thuật
     surgeons: Bác sĩ phẫu thuật
@@ -5790,6 +6352,7 @@ vi:
     password: Mật khẩu được mã hóa khi lưu trữ và có thể khôi phục bằng email của
       bạn.
     name: Tên của bạn hiển thị với quản trị viên và được dùng để liên hệ với họ.
+    pronouns: 'Hiển thị trên bài đăng của bạn. Tùy chọn: nếu để mặc định, chúng tôi dùng đại từ tương ứng với giới tính của bạn.'
     gender: Giới tính của bạn hiển thị khi đăng kết quả và được dùng để chọn đại từ.
     tos: Khi đăng ký trên Transbucket.com, bạn đồng ý tuân thủ Điều khoản sử dụng
       của chúng tôi.
@@ -5843,6 +6406,12 @@ vi:
     submissions_intro: Xem bài đăng gần đây hoặc tìm thủ thuật, bác sĩ phẫu thuật
       hay biến chứng.
     recent_submissions: Bài đăng gần đây
+    recent: Gần đây
+    for_you: Dành cho bạn
+    loading_more: "Đang tải thêm…"
+    load_more_failed: "Không tải được. Thử lại"
+    end_of_feed: "Bạn đã xem hết"
+    close_pin: "Đóng"
     search_results: Kết quả tìm kiếm
     search_description: Tìm bài đăng Transbucket theo thủ thuật, bác sĩ, biến chứng
       hoặc người dùng.
@@ -5916,6 +6485,7 @@ vi:
     edit_title: Chỉnh sửa hồ sơ %{resource}
     name: Tên
     email: Email
+    password_required_hint: 'Để lưu bất kỳ thay đổi nào trên trang này, hãy nhập mật khẩu hiện tại của bạn.'
     profile_help: Trên Transbucket, giới tính giúp chọn đại từ dùng để gọi bạn. Hãy
       chọn Không nêu hoặc Genderqueer để dùng đại từ trung tính.
     new_password: Mật khẩu mới
@@ -5944,8 +6514,20 @@ vi:
       classified_as: Thủ thuật này được phân loại là "%{body_type}".
       average_sensation: Cảm giác trung bình
       average_satisfaction: Mức hài lòng trung bình
+      comments_label: 'Bình luận: %{count}'
+      report: 'Báo cáo'
+      edit_post: 'Chỉnh sửa'
+      delete_post: 'Xóa'
+      report_confirm: 'Báo cáo bài đăng này cho người kiểm duyệt?'
+      report_comment_confirm: 'Báo cáo bình luận này cho người kiểm duyệt?'
+      reported: 'Đã báo cáo'
+      photo_count: "Ảnh: %{count}"
+      comment_placeholder: "Thêm bình luận…"
+      post_comment: "Đăng"
       by: bởi
-      reply: trả lời
+      tap_to_reveal: Chạm để xem
+      hide_image: Ẩn hình ảnh
+      reply: Trả lời
       remove: Xóa
       remove_confirm: Bạn có chắc muốn xóa bình luận này không?
       doctor_prefix: 'BS. '
@@ -5969,9 +6551,31 @@ vi:
       surgeon_last_name: Họ bác sĩ phẫu thuật
       surgeon_first_name: Tên bác sĩ phẫu thuật
       surgeon_url: URL bác sĩ phẫu thuật
+    picker:
+      done: Xong
+      close: Đóng
+      no_matches: Không có kết quả
     auth:
       username: Tên người dùng
       username_or_email: Tên người dùng hoặc email
+      show_password: Hiện mật khẩu
+      hide_password: Ẩn mật khẩu
+      have_account: Bạn đã có tài khoản?
+      new_here: Lần đầu đến với Transbucket?
+      pronouns: 'Đại từ nhân xưng'
+      pronouns_default: 'Mặc định (theo giới tính của bạn)'
+      pronouns_other: 'Khác…'
+      pronouns_placeholder: 'vd: xe/xem'
+      pronouns_invalid: 'Đại từ nên có dạng như they/them hoặc she/her/hers: các từ ngăn cách bằng dấu gạch chéo.'
+      pronoun_labels:
+        she_her: 'cô ấy'
+        he_him: 'anh ấy'
+        she_they: 'cô ấy/they'
+        he_they: 'anh ấy/they'
+        they_she: 'they/cô ấy'
+        they_he: 'they/anh ấy'
+        any_all: 'mọi đại từ'
+      password_hint: Tối thiểu %{count} ký tự.
       password: Mật khẩu
       password_confirmation: Xác nhận mật khẩu
       your_name: Tên của bạn
@@ -6029,8 +6633,7 @@ vi:
   settings:
     title: Cài đặt tài khoản
     safe_mode: Chế độ an toàn
-    safe_mode_help: Chế độ an toàn thay ảnh bài đăng bằng ảnh phù hợp để xem tại nơi
-      làm việc.
+    safe_mode_help: Chế độ an toàn làm mờ hình ảnh bài đăng cho đến khi bạn chạm vào.
     notifications: Thông báo
     notifications_help: Chế độ thông báo gửi email về bình luận mới trên bài đăng
       của bạn.
@@ -6071,6 +6674,8 @@ ar:
     register: سجل حساباً لمشاركة النتائج الحقيقية أو مشاهدتها.
   header:
     home: الرئيسية
+    safe_mode_on: 'الوضع الآمن مفعّل: الصور مموّهة. اضغط لإيقافه.'
+    safe_mode_off: 'الوضع الآمن متوقف. اضغط لتمويه الصور حتى تضغط عليها.'
     news: الأخبار
     procedures: الإجراءات
     surgeons: الجراحون
@@ -6092,6 +6697,7 @@ ar:
       بريدك الإلكتروني.
     password: سيتم تشفير كلمة المرور عند تخزينها ويمكن استعادتها باستخدام بريدك الإلكتروني.
     name: سيظهر اسمك للمسؤولين ويُستخدم للتواصل معهم.
+    pronouns: 'تظهر في مشاركاتك. اختياري: عند اختيار الافتراضي نستخدم الضمائر المرتبطة بالنوع الاجتماعي المحدد.'
     gender: سيظهر نوعك الاجتماعي عند نشر النتائج ويُستخدم لتحديد الضمائر.
     tos: بتسجيلك في Transbucket.com، توافق على الالتزام بشروط الاستخدام الخاصة بنا.
   devise:
@@ -6141,6 +6747,12 @@ ar:
     submissions: المنشورات
     submissions_intro: تصفح المنشورات الحديثة أو ابحث عن إجراء أو جراح أو مضاعفة.
     recent_submissions: المنشورات الحديثة
+    recent: الأحدث
+    for_you: مخصّص لك
+    loading_more: "جارٍ تحميل المزيد…"
+    load_more_failed: "تعذّر التحميل. أعد المحاولة"
+    end_of_feed: "لقد شاهدت كل شيء"
+    close_pin: "إغلاق"
     search_results: نتائج البحث
     search_description: ابحث في منشورات Transbucket حسب الإجراء أو الجراح أو المضاعفة
       أو المستخدم.
@@ -6214,6 +6826,7 @@ ar:
     edit_title: تعديل ملف %{resource}
     name: الاسم
     email: البريد الإلكتروني
+    password_required_hint: 'لحفظ أي تغيير في هذه الصفحة، أدخل كلمة المرور الحالية.'
     profile_help: يساعد النوع الاجتماعي في اختيار الضمائر المستخدمة لمخاطبتك على Transbucket.
       استخدم غير محدد أو جندر كوير للضمائر المحايدة.
     new_password: كلمة مرور جديدة
@@ -6242,7 +6855,19 @@ ar:
       classified_as: يُصنّف هذا الإجراء على أنه "%{body_type}".
       average_sensation: متوسط الإحساس
       average_satisfaction: متوسط الرضا
+      comments_label: 'التعليقات: %{count}'
+      report: 'إبلاغ'
+      edit_post: 'تعديل'
+      delete_post: 'حذف'
+      report_confirm: 'هل تريد الإبلاغ عن هذه المشاركة للمشرفين؟'
+      report_comment_confirm: 'هل تريد الإبلاغ عن هذا التعليق للمشرفين؟'
+      reported: 'تم الإبلاغ'
+      photo_count: "الصور: %{count}"
+      comment_placeholder: "أضف تعليقًا…"
+      post_comment: "نشر"
       by: بواسطة
+      tap_to_reveal: المس للعرض
+      hide_image: إخفاء الصورة
       reply: رد
       remove: حذف
       remove_confirm: هل تريد حذف هذا التعليق؟
@@ -6267,9 +6892,31 @@ ar:
       surgeon_last_name: اسم عائلة الجراح
       surgeon_first_name: اسم الجراح
       surgeon_url: رابط الجراح
+    picker:
+      done: تم
+      close: إغلاق
+      no_matches: لا توجد نتائج
     auth:
       username: اسم المستخدم
       username_or_email: اسم المستخدم أو البريد الإلكتروني
+      show_password: إظهار كلمة المرور
+      hide_password: إخفاء كلمة المرور
+      have_account: لديك حساب بالفعل؟
+      new_here: هل هذه أول مرة لك على Transbucket؟
+      pronouns: 'الضمائر'
+      pronouns_default: 'الافتراضي (حسب النوع الاجتماعي)'
+      pronouns_other: 'أخرى…'
+      pronouns_placeholder: 'مثال: xe/xem'
+      pronouns_invalid: 'يجب أن تبدو الضمائر مثل they/them أو she/her/hers: كلمات مفصولة بشرطة مائلة.'
+      pronoun_labels:
+        she_her: 'هي'
+        he_him: 'هو'
+        she_they: 'هي/they'
+        he_they: 'هو/they'
+        they_she: 'they/هي'
+        they_he: 'they/هو'
+        any_all: 'أي ضمائر'
+      password_hint: "%{count} أحرف على الأقل."
       password: كلمة المرور
       password_confirmation: تأكيد كلمة المرور
       your_name: اسمك
@@ -6328,7 +6975,7 @@ ar:
   settings:
     title: إعدادات الحساب
     safe_mode: الوضع الآمن
-    safe_mode_help: يستبدل الوضع الآمن صور المنشورات بصور مناسبة للعمل.
+    safe_mode_help: يُموِّه الوضع الآمن صور المنشورات حتى تلمسها.
     notifications: الإشعارات
     notifications_help: يرسل وضع الإشعارات رسائل بريدية عن التعليقات الجديدة على منشوراتك.
     update: تحديث
@@ -6355,3 +7002,319 @@ ar:
     flag_help: إذا كانت لديك مخاوف بشأن التعليق، يمكنك الإبلاغ عنه. تؤدي ثلاثة بلاغات
       من مستخدمين مختلفين إلى مراجعته تلقائياً.
     unsubscribe: لإيقاف هذه الإشعارات، عدّل إعداداتك عبر %{link}.
+sv:
+  header:
+    safe_mode_on: 'Säkert läge är på: bilder är suddiga. Tryck för att stänga av.'
+    safe_mode_off: 'Säkert läge är av. Tryck för att sudda bilder tills du trycker på dem.'
+    news: Nyheter
+    procedures: Ingrepp
+    surgeons: Kirurger
+    submissions: Bidrag
+    account: Konto
+    search: Sök
+    filter: Filter
+    add: Lägg till
+    home: Hem
+  locale:
+    label: Språk
+    names:
+      sv: Svenska
+  homepage:
+    title: Transbucket
+    intro: Verkliga erfarenheter av könsbekräftande ingrepp
+    considering: Funderar du på könsbekräftande vård eller ett ingrepp kopplat till transition?
+    join: Du borde bli en del av vår gemenskap.
+    register: Registrera dig för att dela eller se verkliga resultat.
+  directory:
+    procedures_title: Ingrepp
+    procedures_intro: Bläddra bland ingrepp för att jämföra verkliga bidrag, kirurgers länkar och diskussioner.
+    surgeons_title: Kirurger
+    surgeons_intro: Bläddra bland kirurgernas sidor för att jämföra bidrag, resultat och diskussioner.
+    submissions: Bidrag
+    name: Namn
+    average_satisfaction: Genomsnittlig tillfredsställelse
+    average_sensation: Genomsnittlig känsel
+    login_or_register_to_see_more: "%{login} eller %{register} för att se mer"
+    submissions_intro: Bläddra bland de senaste bidragen eller använd sökrutan för att hitta ett ingrepp, en kirurg eller en komplikation.
+    recent_submissions: Senaste bidrag
+    search_results: Sökresultat
+    search_description: Sök bland bidrag på Transbucket efter ingrepp, kirurg, komplikation eller användare.
+    discussion_threads: Diskussionstrådar
+    register_to_see_more: Registrera dig för att se mer
+    recent: Senaste
+    for_you: För dig
+    loading_more: "Laddar fler…"
+    load_more_failed: "Kunde inte ladda fler. Försök igen"
+    end_of_feed: "Du har sett allt"
+    close_pin: "Stäng"
+  newsfeed:
+    title: Nyheter
+    description: Senaste uppdateringarna från Transbucket.
+    date: Datum
+    entries:
+      directory_improvements: Sidorna för ingrepp och kirurger gör det nu enklare att sortera och se betygsfördelningar.
+  public:
+    auth:
+      username: Användarnamn
+      username_or_email: Användarnamn eller e-post
+      password: Lösenord
+      password_confirmation: Bekräfta lösenord
+      your_name: Ditt namn
+      gender: Kön
+      comments_placeholder: Kommentarer som bryter mot våra användarvillkor kan leda till omedelbar och permanent avstängning av kontot.
+      submit: Skicka
+      submitting: Skickar...
+      show_password: Visa lösenord
+      hide_password: Dölj lösenord
+      have_account: Har du redan ett konto?
+      new_here: Ny på Transbucket?
+      pronouns: 'Pronomen'
+      pronouns_default: 'Standard (utifrån ditt kön)'
+      pronouns_other: 'Annat…'
+      pronouns_placeholder: 't.ex. xe/xem'
+      pronouns_invalid: 'Pronomen ska se ut som they/them eller she/her/hers: ord åtskilda av snedstreck.'
+      pronoun_labels:
+        she_her: 'hon/henne'
+        he_him: 'han/honom'
+        they_them: 'hen'
+        it_its: 'den/det'
+        she_they: 'hon/hen'
+        he_they: 'han/hen'
+        they_she: 'hen/hon'
+        they_he: 'hen/han'
+        any_all: 'alla pronomen'
+      password_hint: Minst %{count} tecken.
+    pin:
+      comments_label: 'Kommentarer: %{count}'
+      report: 'Rapportera'
+      edit_post: 'Redigera'
+      delete_post: 'Ta bort'
+      report_confirm: 'Rapportera det här bidraget till moderatorerna?'
+      report_comment_confirm: 'Rapportera den här kommentaren till moderatorerna?'
+      reported: 'Rapporterad'
+      photo_count: "Foton: %{count}"
+      comment_placeholder: "Skriv en kommentar…"
+      post_comment: "Publicera"
+      by: av
+      doctor_prefix: 'Dr. '
+      unknown: okänd kirurg
+      average_satisfaction: Genomsnittlig tillfredsställelse
+      unknown_surgeon: okänd kirurg
+      surgeon: Kirurg
+      procedure: Ingrepp
+      cost: Kostnad
+      complications: Komplikationer
+      wants_revision: Önskar revision
+      post_op_sensation: Känsel efter operation
+      post_op_satisfaction: Tillfredsställelse efter operation
+      submitter: Inskickare
+      discussion: Diskussion
+      respect_pronouns: 'Respektera pronomen när du skriver till bidragets författare. Författarens föredragna pronomen är:'
+      add_thread: lägg till tråd
+      see_all_submissions: Visa alla bidrag
+      classified_as: Det här ingreppet klassas som ett ”%{body_type}”-ingrepp.
+      average_sensation: Genomsnittlig känsel
+      reply: Svara
+      remove: Ta bort
+      remove_confirm: Vill du verkligen ta bort den här kommentaren?
+      updated: Uppdaterad för %{time} sedan
+      tap_to_reveal: Tryck för att visa
+      hide_image: Dölj bild
+    form:
+      surgeon_url: Kirurgens webbplats
+      photos: Foton
+      details: Detaljer
+      submit_now: Skicka in nu
+      experience_glance: 'Din upplevelse i korthet:'
+      cost: Kostnad
+      seeking_revision: Söker du en revision?
+      sensation: Känsel
+      satisfaction: Tillfredsställelse
+      complications: Komplikationer
+      complications_placeholder: hematom, fistel
+      experience_depth: 'Din upplevelse på djupet:'
+      drop_files: Släpp filer här för att ladda upp
+      caption: Bildtext
+      remove: Ta bort
+      add_surgeon: Lägg till en ny kirurg
+      surgeon_last_name: Kirurgens efternamn
+      surgeon_first_name: Kirurgens förnamn
+    extra:
+      sign_in: Logga in
+      sign_up: Registrera dig
+      username: Användarnamn
+      password: Lösenord
+      gender: Kön
+      name: Namn
+      email: E-post
+      add_procedure: Lägg till ett nytt ingrepp
+      procedure_name: Ingreppets namn
+      describe_procedure: Beskriv ingreppet
+      contact_us: Kontakta oss
+      return_email: Din e-postadress för svar
+      subject: Ämne
+      contact_message: Hej Transbucket-administratörer!
+      send: Skicka
+      edit_profile: Redigera profil för %{resource}
+      new_password: Nytt lösenord
+      password_confirmation: Bekräfta nytt lösenord
+      current_password: Nuvarande lösenord
+      update: Uppdatera
+      profile_help: På Transbucket styr kön vilka pronomen du omtalas med. För närvarande motsvarar könen MTF och FTM binära pronomen. För könsneutrala pronomen, välj Ingen eller Genderqueer som kön. Framtida uppdateringar gör det möjligt att välja pronomen oberoende av könsidentitet.
+      new_submission: Nytt bidrag
+      editing_submission: Redigerar bidrag
+      submissions_by_user: 'Resultat: bidrag från användare'
+      post_op_sensation: Känsel efter operation
+      post_op_satisfaction: Tillfredsställelse efter operation
+      image_caption: Bildtext
+      caption: Bildtext
+      browse_for_image: Välj bild
+      browse: Bläddra
+      navigation_toggle: Visa/dölj navigering
+      logo_alt: Startsida
+      top: Överkropp
+      bottom: Underliv
+      face: Ansikte
+      other: Annat
+      ftm: FTM
+      mtf: MTF
+      error_count: "%{count} fel i det här formuläret:"
+    confirmations:
+      are_you_sure: Är du säker?
+    actions:
+      deleting: tar bort...
+      updating: uppdaterar...
+      update_caption: uppdatera bildtext
+    picker:
+      done: Klart
+      close: Stäng
+      no_matches: Inga träffar
+  settings:
+    safe_mode: Säkert läge
+    safe_mode_help: Säkert läge gör bidragens bilder suddiga tills du trycker på dem.
+    notifications: Aviseringar
+    update: Uppdatera
+    cancel_account: Avsluta konto
+    title: Kontoinställningar
+    notifications_help: Aviseringsläget skickar e-post om nya kommentarer på dina bidrag.
+    cancel_confirm: Är du säker?
+  profile:
+    name: Namn
+    email: E-post
+    username: Användarnamn
+    gender: Kön
+    edit_title: Redigera profil för %{resource}
+    password_required_hint: 'För att spara ändringar på den här sidan, ange ditt nuvarande lösenord.'
+    profile_help: Kön styr vilka pronomen som används om dig på Transbucket. Välj Ingen eller Genderqueer för könsneutrala pronomen.
+    new_password: Nytt lösenord
+    current_password: Nuvarande lösenord
+    update: Uppdatera
+    submissions: Dina bidrag
+    submit_now: Skicka in nu
+    delete_confirm: Är du säker?
+    submission: bidrag
+  explanations:
+    username: Ditt användarnamn visas för alla användare och används när du loggar in. Det är unikt på webbplatsen.
+    email: Din e-postadress visas för administratörer men inte för andra användare. Din e-postadress kommer att bekräftas.
+    password: Ditt lösenord krypteras när det lagras och kan återställas med hjälp av din e-postadress.
+    name: Ditt namn visas för administratörer och används i kommunikationen med dem.
+    pronouns: 'Visas på dina bidrag. Valfritt: med standardvalet används de pronomen som hör till ditt kön.'
+    gender: Ditt kön visas för alla när du publicerar resultat och används för vissa standardinställningar.
+    tos: Genom att registrera dig på Transbucket.com godkänner du våra användarvillkor.
+  account_menu:
+    register: Registrera dig
+    login: Logga in
+    my_account: Mitt konto
+    logout: Logga ut
+  activerecord:
+    attributes:
+      user:
+        email: E-post
+  devise:
+    mailer:
+      confirmation_instructions:
+        subject: Bekräftelseinstruktioner
+        greeting: Hej %{recipient}
+        instruction: 'Du kan bekräfta din e-postadress genom länken nedan:'
+        action: Bekräfta mitt konto
+        reminder_notice: Detta är en påminnelse. Vi ser att du ännu inte har bekräftat ditt konto.
+        reminder_help: Behöver du hjälp med att bekräfta kontot? Svara på det här e-postmeddelandet.
+      reset_password_instructions:
+        subject: Instruktioner för återställning av lösenord
+        greeting: Hej %{recipient}
+        instruction: 'Någon har begärt en länk för att ändra ditt lösenord. Du kan göra det via länken nedan:'
+        action: Ändra mitt lösenord
+        instruction_2: Om du inte begärde detta kan du ignorera meddelandet.
+        instruction_3: Ditt lösenord ändras inte förrän du öppnar länken ovan och skapar ett nytt.
+      unlock_instructions:
+        subject: Instruktioner för upplåsning
+        greeting: Hej %{recipient}
+        message: Ditt konto har låsts efter för många misslyckade inloggningsförsök.
+        instruction: 'Klicka på länken nedan för att låsa upp ditt konto:'
+        action: Lås upp mitt konto
+      password_change:
+        subject: Ditt lösenord har ändrats
+        greeting: Hej %{recipient}
+        message: Vi kontaktar dig för att meddela att ditt lösenord har ändrats.
+  comment_mailer:
+    subject: 'Transbucket.com: Ny %{comment_type} på %{id}'
+    types:
+      comment: kommentar
+      question: fråga
+    greeting: Hej %{username}!
+    posted: En annan medlem har publicerat en %{comment_type} på ditt bidrag.
+    reply: Klicka på %{link} om du vill svara.
+    this_link: den här länken
+    flag_help: Om du har synpunkter på kommentaren kan du flagga den. Tre flaggor från olika användare skickar den automatiskt till granskning.
+    unsubscribe: Sluta få dessa aviseringar genom att ändra dina aviseringsinställningar på %{link}.
+  footer:
+    about: Om
+    tos: Användarvillkor
+    pp: Integritetspolicy
+    discord_prefix: Gå med i
+  site:
+    description: Gemenskap för att dela foton av transitions- och könsbekräftande ingrepp, kirurgprofiler och verkliga bidrag.
+  filter_menu:
+    apply: Filtrera
+    clear: Rensa
+    scope: Kön / område
+    procedure: Ingrepp
+    surgeon: Kirurg
+  filter_scopes:
+    ftm: FTM
+    mtf: MTF
+    bottom: Underlivskirurgi
+    top: Överkroppskirurgi
+    need_category: Behöver kategori
+  flash:
+    content_flagged: Innehållet har flaggats.
+    removed_flags: Flaggorna har tagits bort.
+    destroy_failed: Kunde inte ta bort %{id}!
+    destroyed: "%{id} har tagits bort"
+    contact_sent: Meddelandet skickades.
+    contact_invalid: Fyll i alla fält.
+    pin_created: Bidraget skapades.
+    pin_updated: Bidraget uppdaterades.
+  gender_labels:
+    FTM: FTM
+    MTF: MTF
+    GenderQueer: Genderqueer
+    None: Ingen
+    Cisgender: Cisgender
+  legal:
+    translation_notice: 'Viktigt: Den här juridiska sidan finns för närvarande bara på engelska. Vi tillhandahåller inte maskinöversatt juridisk text eftersom automatiska översättningar kan innehålla fel. Den engelska versionen är den gällande versionen.'
+  views:
+    pagination:
+      first: Första
+      last: Sista
+      previous: Föregående
+      next: Nästa
+      truncate: "…"
+  simple_form:
+    'yes': Ja
+    'no': Nej
+    required:
+      text: obligatoriskt
+      mark: "*"
+    error_notification:
+      default_message: 'Granska problemen nedan:'

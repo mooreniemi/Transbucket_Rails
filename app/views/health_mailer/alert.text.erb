@@ -1,0 +1,11 @@
+The scheduled production health check found no recent activity for:
+
+<% @failing.each do |name| -%>
+- <%= name %> (none in the last <%= AuthHealthCheck::MAX_AGES.fetch(name).inspect %>)
+<% end -%>
+
+No activity usually means sign-up, login or sessions are broken. Check
+`heroku logs -a transbucket` and try logging in. If this started right after
+a deploy, `heroku rollback -a transbucket` to the previous release.
+
+You will get this email on every scheduled run until the checks recover.

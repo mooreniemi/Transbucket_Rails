@@ -24,6 +24,25 @@ describe ContentEventRecorder do
     expect(event.network_hash).not_to include('203.0.113.8')
   end
 
+  it 'records a click on a navigation target without needing a record to exist' do
+    expect(described_class.record(
+      request: request, current_user: nil, locale: :en,
+      content_type: 'Page', content_id: TrackedTarget.id_for(:news), event_type: 'open',
+      visitor_id: 'browser-only-id', event_context: { surface: 'header', target: 'news' }
+    )).to be(true)
+
+    expect(ContentEvent.last).to have_attributes(content_type: 'Page', content_id: TrackedTarget.id_for(:news), event_type: 'open')
+    expect(ContentEvent.last.event_context).to eq('surface' => 'header', 'target' => 'news')
+  end
+
+  it 'rejects an unknown navigation target and any Page event that is not an open' do
+    base = { request: request, current_user: nil, locale: :en, content_type: 'Page', visitor_id: 'browser-only-id' }
+
+    expect(described_class.record(base.merge(content_id: 9_999, event_type: 'open'))).to be(false)
+    expect(described_class.record(base.merge(content_id: TrackedTarget.id_for(:news), event_type: 'view'))).to be(false)
+    expect(ContentEvent.count).to eq(0)
+  end
+
   it 'records a signed-in surgeon view without anonymous identifiers' do
     surgeon = create(:surgeon)
     user = create(:user)
@@ -51,6 +70,47 @@ describe ContentEventRecorder do
     expect(described_class.record(attributes)).to be(true)
     expect(described_class.record(attributes)).to be(false)
     expect(ContentEvent.count).to eq(1)
+  end
+
+  describe 'ad slots' do
+    let(:base) do
+      { request: request, current_user: nil, locale: :en, content_type: 'Page',
+        content_id: TrackedTarget.id_for('ad_slot'), visitor_id: 'browser-only-id' }
+    end
+
+    it 'records an impression with its page and status' do
+      expect(described_class.record(base.merge(event_type: 'impression', event_context: { 'surface' => 'procedures_index', 'status' => 'unfilled' }))).to be(true)
+
+      expect(ContentEvent.last).to have_attributes(content_type: 'Page', content_id: TrackedTarget.id_for('ad_slot'), event_type: 'impression', source: 'client')
+      expect(ContentEvent.last.event_context).to eq('surface' => 'procedures_index', 'status' => 'unfilled')
+    end
+
+    it 'counts every render, not one per visitor per half hour' do
+      attributes = base.merge(event_type: 'impression', event_context: { 'surface' => 'news', 'status' => 'filled' })
+
+      3.times { expect(described_class.record(attributes)).to be(true) }
+
+      expect(ContentEvent.where(content_id: TrackedTarget.id_for('ad_slot')).count).to eq(3)
+    end
+
+    it 'records a view for a filled ad' do
+      expect(described_class.record(base.merge(event_type: 'view', event_context: { 'surface' => 'pins_index', 'status' => 'filled' }))).to be(true)
+      expect(ContentEvent.last.event_type).to eq('view')
+    end
+
+    it 'stores only a known status, and only the page and status, whatever the client sends' do
+      described_class.record(base.merge(event_type: 'impression', event_context: { 'surface' => 'news', 'status' => '<script>', 'rank' => '1', 'target' => 'x' }))
+
+      expect(ContentEvent.last.event_context).to eq('surface' => 'news', 'status' => 'unknown')
+    end
+
+    it 'never records a click on an ad slot, and still dedupes ordinary navigation targets' do
+      expect(described_class.record(base.merge(event_type: 'open'))).to be(false)
+
+      news = base.merge(content_id: TrackedTarget.id_for('news'), event_type: 'open')
+      expect(described_class.record(news)).to be(true)
+      expect(described_class.record(news)).to be(false)
+    end
   end
 
   it 'records a Pin-card impression and open only for a real Pin' do

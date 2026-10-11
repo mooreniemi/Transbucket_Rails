@@ -1,4 +1,4 @@
-class CreatePinImages < ActiveRecord::Migration
+class CreatePinImages < ActiveRecord::Migration[4.2]
   def change
     create_table :pin_images do |t|
       t.string :caption

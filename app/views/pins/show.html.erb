@@ -30,22 +30,26 @@
   }
 ) %>
 <h1 class="pin-page-title"><%= pin_title %></h1>
-<% cache([I18n.locale, "pin_show", @pin, @pin.pin_images.map(&:id), @pin.pin_images.maximum(:updated_at), can_edit_pin]) do %>
+<% comment_states = @pin.comment_threads.map { |comment| [comment.id, comment.state] } %>
+<% cache([I18n.locale, "pin_show", @safe_mode, @pin, @pin.pin_images.map(&:id), @pin.pin_images.maximum(:updated_at), comment_states, @pin.user.try(:trust_tier), @pin.user.try(:pronouns), @pin.user.try(:gender_id), can_edit_pin]) do %>
   <div class="row pin-show-grid">
     <div class="col-md-7">
       <div class="pin-gallery-panel">
         <% for pinimage in @pin.pin_images.reject {|p| p.photo_file_size.nil?} do %>
           <div class="thumbnail pin-gallery-item">
-            <%= image_tag pinimage.photo, class: 'pin-gallery-image', alt: pinimage.caption.presence || pin_title %>
+            <div class="pin-gallery-photo<%= ' safe-blur' if @safe_mode %>">
+              <%= image_tag pinimage.photo.url, class: 'pin-gallery-image', alt: pinimage.caption.presence || pin_title %>
+              <%= render 'shared/safe_reveal' if @safe_mode %>
+            </div>
             <div class="caption pin-gallery-caption">
               <%= pinimage.caption.to_s %>
             </div>
           </div>
         <% end %>
         <div class="pin-page-actions">
-          <%= link_to fa_icon("arrow-left"), pins_path, title: t('header.submissions'), aria: { label: t('header.submissions') } %>
+          <%= link_to fa_icon("arrow-left"), pins_path, data: { pin_viewer_close: true }, title: t('header.submissions'), aria: { label: t('header.submissions') } %>
         <% if can_edit_pin %>
-          | <%= link_to fa_icon("pencil-square-o"), edit_pin_path(id: @pin.id), title: t('public.extra.editing_submission'), aria: { label: t('public.extra.editing_submission') } %>
+          <span class="pin-page-actions-separator">|</span> <%= link_to fa_icon("pencil-square-o"), edit_pin_path(id: @pin.id), title: t('public.extra.editing_submission'), aria: { label: t('public.extra.editing_submission') } %>
       <% end %>
         </div>
     </div>
@@ -102,12 +106,11 @@
       <% end %>
       <% if @pin.user.present? %>
         <dt><%= t('public.pin.submitter') %></dt>
-        <dd><strong><%= link_to @pin.user.username.presence || @pin.user.id, pins_path(user: @pin.user) %></strong></dd>
+        <dd><strong><%= link_to @pin.user.username.presence || @pin.user.id, pins_path(user: @pin.user) %></strong><%= render 'shared/trust_badge', user: @pin.user %></dd>
       <% end %>
     </dl>
     <% if @pin.details.present? %>
       <div id="details" class="pin-details">
-        <%= fa_icon "quote-left" %>
         <%= simple_format(@pin.details) %>
       </div>
     <% end %>
@@ -115,11 +118,18 @@
   <br clear="both" />
   </div>
 <% end %>
+<%# Comments: a heading with the count (it is also the target of the cards'
+    comment links), the thread, then a box to add to it, already open. The
+    pronoun reminder sits with the box, where it is needed. %>
 <div id="comments-container">
-  <h4><%= fa_icon("comments-o") %> <%= t('public.pin.discussion') %></h4>
-  <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>
-    <h5><%= t('public.pin.respect_pronouns') %> <%= uses_pronouns(@pin.user.try(:gender)) %>.</h5>
-  <%= link_to "<h5>#{fa_icon("comments-o")} #{t('public.pin.add_thread')}</h5>".html_safe, new_comment_path(commentable_id: @pin.id, commentable_type: "Pin"), remote: true %>
-  <div id="commentable" class="reply-target">
+  <h2 class="comments-heading">
+    <%= t('public.pin.discussion') %><% if @comment_count > 0 %> <span class="comments-count"><%= @comment_count %></span><% end %>
+  </h2>
+  <div class="comment-list">
+    <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>
+  </div>
+  <div id="commentable" class="comment-composer reply-target">
+    <p class="comment-composer-hint"><%= t('public.pin.respect_pronouns') %> <%= pronouns_label(author_pronouns(@pin.user)) %>.</p>
+    <%= render partial: 'comments/form', locals: { comment: @new_comment } %>
   </div>
 </div>

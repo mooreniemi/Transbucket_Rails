@@ -3,6 +3,17 @@ module ApplicationHelper
   # (including validation failures rendered by create/update) free of ads.
   # This guard lives at the ad partials rather than only in the form templates,
   # so a future shared view cannot accidentally reintroduce an ad there.
+  # Ads are shown in production only (config.x.show_ads, set in application.rb;
+  # specs switch it on to check the markup) and never on the pin forms.
+  def ads_enabled?
+    Rails.configuration.x.show_ads && ads_allowed?
+  end
+
+  # Whether an ad slot goes before this feed card: about 1 card in feed_ad_odds.
+  def feed_ad_slot?
+    ads_enabled? && rand(Rails.configuration.x.feed_ad_odds).zero?
+  end
+
   def ads_allowed?
     !(controller_path == 'pins' && %w[new edit create update].include?(action_name))
   end

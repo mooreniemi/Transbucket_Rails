@@ -4,7 +4,7 @@
     data-sort-satisfaction="<%= avg_satisfaction || '' %>"
     data-sort-sensation="<%= avg_sensation || '' %>"
     data-sort-discussions="<%= @comments_per_procedure[procedure.id] || 0 %>">
-  <td data-label="<%= t('directory.name') %>"><%= link_to procedure.localized_name.titleize, procedure_path(procedure) %></td>
+  <td data-label="<%= t('directory.name') %>"><%= link_to procedure.localized_name.titleize, procedure_path(procedure), content_event_open_attributes('Procedure', procedure.id, surface: 'procedures_index', list_mode: 'default').merge('data-event-rank-from-row' => true) %></td>
   <% if user_signed_in? %>
   <td data-label="<%= t('directory.submissions') %>"><%= link_to @pins_per_procedure[procedure.id] || 0, pins_path(procedure: procedure.id) %></td>
 <% else %>

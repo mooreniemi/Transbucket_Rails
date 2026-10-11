@@ -1,0 +1,193 @@
+// Signed-in header on phones.
+//
+// Below 768px the bar holds four 44px targets, and search is an icon that
+// opens the field over the whole bar (header_search.js):
+//
+//   [logo]                    [🔍] [👁] [☰]
+//   [ Search…                  🔍 ] Cancel     <- after tapping 🔍
+//
+// Without the script the field simply stays in the bar. Scoped to
+// .navbar-signed-in (see layouts/_header.html.erb). The search form sits
+// outside the collapsible menu in the markup so it can stay visible.
+
+$signed-in-touch-height: 44px;   // minimum comfortable touch target
+$signed-in-field-height: 40px;   // fields are wide targets and the bar is 50px
+
+@media (max-width: 767px) {
+  .navbar-signed-in {
+    .container-fluid {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0 8px;
+
+      // Bootstrap's clearfix pseudo-elements would become empty flex items.
+      &:before,
+      &:after {
+        display: none;
+      }
+    }
+
+    // Flatten the header so the logo and the hamburger can be ordered around
+    // the search field.
+    .navbar-header {
+      display: contents;
+
+      &:before,
+      &:after {
+        display: none;
+      }
+    }
+
+    // The whole 44px square goes home, not just the 16px logo.
+    .container-fluid .navbar-brand {
+      align-items: center;
+      display: flex;
+      float: none;
+      height: 50px;
+      justify-content: center;
+      margin: 0;
+      min-width: $signed-in-touch-height;
+      order: 1;
+      padding: 0;
+    }
+
+    .header-search-open {
+      align-items: center;
+      background: transparent;
+      border: 0;
+      border-radius: 8px;
+      color: #666;
+      display: inline-flex;
+      flex: 0 0 auto;
+      font-size: 18px;
+      height: $signed-in-touch-height;
+      justify-content: center;
+      margin-left: auto;
+      order: 2;
+      padding: 0;
+      width: $signed-in-touch-height;
+
+      &:hover,
+      &:focus {
+        background: rgba(0, 0, 0, .06);
+        color: #222;
+        outline: 0;
+      }
+
+      &:focus-visible {
+        box-shadow: 0 0 0 3px rgba(11, 83, 148, .35);
+      }
+    }
+
+    &.search-collapsible:not(.is-searching) .navbar-form {
+      display: none;
+    }
+
+    // Open: the field and Cancel have the bar to themselves.
+    &.is-searching {
+      .navbar-brand,
+      .header-search-open,
+      .safe-mode-form-bar,
+      .navbar-toggle,
+      .navbar-collapse {
+        display: none !important;
+      }
+
+      .navbar-form {
+        align-items: center;
+        display: flex;
+        height: 50px;
+      }
+
+      .header-search-cancel {
+        background: transparent;
+        border: 0;
+        color: #0b5394;
+        display: inline-block;
+        flex: 0 0 auto;
+        font-size: 16px;
+        height: $signed-in-touch-height;
+        margin-left: 4px;
+        padding: 0 8px;
+      }
+    }
+
+    // Search takes all the room between the logo and the hamburger.
+    .navbar-form {
+      border: 0;
+      box-shadow: none;
+      flex: 1 1 0;
+      margin: 0;
+      min-width: 0;
+      order: 2;
+      padding: 0;
+      width: auto;
+
+      .input-group {
+        display: flex;
+        width: 100%;
+      }
+
+      // 16px, in px: iOS Safari zooms the page on focus for inputs under 16px,
+      // and the site's "1rem" rules resolve to 10px (Bootstrap 3 sets
+      // html { font-size: 10px }), so don't inherit that here.
+      .search-query {
+        flex: 1 1 auto;
+        font-size: 16px;
+        height: $signed-in-field-height;
+        min-width: 0;
+        width: auto;
+      }
+
+      .input-group-btn {
+        display: flex;
+        width: auto;
+      }
+
+      .search-submit {
+        height: $signed-in-field-height;
+        min-width: $signed-in-touch-height;
+      }
+    }
+
+    .navbar-toggle {
+      align-items: center;
+      display: flex;
+      flex: 0 0 auto;
+      flex-direction: column;
+      float: none;
+      height: $signed-in-touch-height;
+      justify-content: center;
+      margin: 0 0 0 4px;
+      order: 4;
+      padding: 0;
+      width: $signed-in-touch-height;
+    }
+
+    // The opened menu drops onto its own full-width row under the bar.
+    // Bootstrap pulls the menu out by 15px to match its default container
+    // padding; ours is 8px, so match that or the panel overshoots the screen.
+    .navbar-collapse {
+      flex: 1 1 100%;
+      margin-left: -8px;
+      margin-right: -8px;
+      order: 5;
+    }
+  }
+}
+
+// Phones only: the icon, and Cancel until search is opened.
+.header-search-open,
+.header-search-cancel {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  // Search now sits outside the collapse, so the language/account list is no
+  // longer a later .navbar-right sibling of it and would pick up Bootstrap's
+  // -15px right margin, overlapping the search box.
+  .navbar-signed-in .navbar-collapse > .navbar-right {
+    margin-right: 0;
+  }
+}

@@ -35,7 +35,7 @@ module CapybaraHelpers
 
   def gen_pin_data
     { :cost => rand(999),
-      :experience => Faker::Lorem.sentences(3).join(" ")
+      :experience => Faker::Lorem.sentences(number: 3).join(" ")
     }
   end
 

@@ -2,11 +2,14 @@ require 'uri'
 
 class Surgeon < ActiveRecord::Base
   include SanitizeNames
+  include CommentsHelper
   extend FriendlyId
   friendly_id :full_name, use: :slugged
   has_many :pins
   has_many :skills
   has_many :procedures, through: :skills
+
+  acts_as_commentable
 
   scope :has_procedures, -> { joins(:procedures).
                               group('surgeons.id').

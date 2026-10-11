@@ -1,25 +1,22 @@
 $(document).ready(function() {
-  $("#clear-filter").click(function() {
-    $("#filter_dropdown select").val([]);
-    $("#filter_dropdown select").trigger('chosen:updated');
-    // FIXME: hard coding the pins path here
-    window.history.pushState("cleared filter", "Submissions", "/" + document.documentElement.lang + "/pins");
-  });
+  // Desktop uses Chosen. Phones and tablets get touch_picker.js instead (Chosen
+  // switches itself off on phones, but not on tablets).
+  if (!(window.TouchPicker && window.TouchPicker.shouldUse())) {
+    $("#scope").chosen({
+      width: "100%",
+      placeholder_text_multiple: "General tags"
+    });
 
-  $("#scope").chosen({
-    width: "100%",
-    placeholder_text_multiple: "General tags"
-  })
+    $("#procedure").chosen({
+      width: "100%",
+      placeholder_text_multiple: "Procedures"
+    });
 
-  $("#procedure").chosen({
-    width: "100%",
-    placeholder_text_multiple: "Procedures"
-  });
-
-  $("#surgeon").chosen({
-    width: "100%",
-    placeholder_text_multiple: "Surgeons"
-  });
+    $("#surgeon").chosen({
+      width: "100%",
+      placeholder_text_multiple: "Surgeons"
+    });
+  }
 
   // used to explain flagging
   $('.label-with-popover').popover();

@@ -2,7 +2,9 @@
 # note that trapping signals can cause unicorn to hang on exit
 # see http://stackoverflow.com/a/20315864
 
-worker_processes Integer(ENV["WEB_CONCURRENCY"] || 3)
+# A single 512 MB Heroku dyno cannot safely hold three eager-loaded Rails
+# workers. Larger deployments can explicitly opt into more via WEB_CONCURRENCY.
+worker_processes Integer(ENV.fetch("WEB_CONCURRENCY", 1))
 timeout 15
 preload_app true
 

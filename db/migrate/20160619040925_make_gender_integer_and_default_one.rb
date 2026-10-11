@@ -1,4 +1,4 @@
-class MakeGenderIntegerAndDefaultOne < ActiveRecord::Migration
+class MakeGenderIntegerAndDefaultOne < ActiveRecord::Migration[4.2]
   def up
     change_column :users, :gender_id, 'integer USING CAST(gender_id AS integer)', default: 4, null: false
   end

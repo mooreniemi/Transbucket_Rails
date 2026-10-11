@@ -17,6 +17,18 @@ describe "pin creation" do
     Warden.test_reset!
   end
 
+  it 'renders a localized editor when production has only precompiled assets' do
+    # In production, config.assets.compile is false and Rails does not retain a
+    # Sprockets environment.  The TinyMCE helper still runs while rendering
+    # this form, so make that production constraint explicit here.
+    allow(Rails.application).to receive(:assets).and_return(nil)
+
+    visit '/de/pins/new'
+
+    expect(page).to have_field('pin_details')
+    expect(page.html).to include('language: "de"')
+  end
+
   shared_examples "the pin creation process" do |opts = {}|
     # rspec-core 3.3's include_examples passes options as a positional Hash
     # (module_exec(*args, &shared_block)), which relied on Ruby's pre-3.0
@@ -27,7 +39,7 @@ describe "pin creation" do
     let(:new_procedure) { build(:procedure) }
 
     def pin_create
-      visit '/pins/new'
+      visit '/en/pins/new'
 
       add_images(new_images, js: js)
       enter_details(pin_data, js: js)
@@ -36,12 +48,23 @@ describe "pin creation" do
     end
 
     context "with no surgeons or procedures" do
-      it "shows the complication tag editor without a redundant side label" do
+      it "keeps the complication tag editor hidden until the author says they had complications" do
         visit '/pins/new'
 
-        expect(page).to have_field('pin_complication_input', disabled: true)
-        expect(page).to have_no_selector('.complication-tag-editor .input-group-addon')
-        expect(page).to have_text(I18n.t('public.form.complications_help'))
+        if js
+          expect(page).to have_no_field('pin_complication_input')
+          expect(page).to have_no_text(I18n.t('public.form.complications_help'))
+
+          within('.complication-toggle') { choose I18n.t('public.form.complications_yes') }
+
+          expect(page).to have_field('pin_complication_input', disabled: false)
+          expect(page).to have_no_selector('.complication-tag-editor .input-group-addon')
+          expect(page).to have_text(I18n.t('public.form.complications_help'))
+        else
+          # Without JS/CSS the editor is in the page, but disabled until "Yes" is chosen.
+          expect(page).to have_field('pin_complication_input', disabled: true)
+          expect(page).to have_no_selector('.complication-tag-editor .input-group-addon')
+        end
       end
 
       it "returns errors upon submission" do
@@ -102,7 +125,7 @@ describe "pin creation" do
 
         click_button "Submit Now"
 
-        expect(find("#error_explanation")).to have_content("Procedure name has already been taken")
+        expect(find("#error_explanation")).to have_content("Name has already been taken")
       end
     end
   end
@@ -123,7 +146,10 @@ describe "pin creation" do
       photo = Tempfile.new(['phone-photo', '.jpg'])
       photo.binmode
       photo.write(File.binread(Rails.root.join('spec/fixtures/cat.jpg')))
-      photo.truncate(2.megabytes)
+      # Keep the JPEG valid while making it large enough to exercise the
+      # browser-side resize path. Truncating the file produces an undecodable
+      # image, which correctly cannot be resized by the browser.
+      photo.write("\0" * (2.megabytes - photo.pos))
       photo.rewind
 
       visit '/pins/new'

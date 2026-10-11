@@ -1,0 +1,965 @@
+# Discussions, procedure and surgeon pages, the feed toolbar and the header
+# and menu changes that came with them. Each language uses the words its
+# catalog already uses for "submission" (header.submissions), "discussion"
+# (public.pin.discussion) and "procedure". Counts use each language's plural
+# forms (rails-i18n rules). The audience labels say "posted a submission":
+# only a submission, not a discussion or comment, opens a restricted thread.
+en:
+  directory:
+    by_procedure: "By procedure"
+    page_actions: "Page actions"
+    stats: "Stats"
+    discussion_about: "Discussion about"
+    feed_actions: "Feed actions"
+  filter_menu:
+    all_content_short: "All"
+    content: "Content"
+    discussions_short: "Discussions"
+    show: "Show"
+    submissions_short: "Submissions"
+  header:
+    add_submission: "Add submission"
+    cancel_search: "Cancel"
+    start_discussion: "Start a discussion"
+  public:
+    comment:
+      audience_contributors: "People who have posted a submission"
+      audience_procedure_contributors: "People who posted a submission for %{subject}"
+      audience_surgeon_contributors: "People who posted a submission with %{subject}"
+      locked_discussion_for_html: "A discussion for %{audience}"
+      locked_join: "Share your experience to join"
+      visibility_everyone: "Everyone"
+      visibility_label: "Who can see this?"
+    discussion:
+      body: "Post"
+      cancel: "Cancel"
+      category: "Category"
+      created: "Discussion posted"
+      new_title: "Start a discussion"
+      post: "Post discussion"
+      title: "Title"
+      title_placeholder: "What do you want to talk about?"
+      toolbar_label: "Discussion"
+      categories:
+        discussion: "Discussion"
+        question: "Question"
+        experience: "Experience"
+        recovery: "Recovery"
+        planning: "Planning"
+        resources: "Resources"
+        community: "Community"
+    feed:
+      read_more: "Read more"
+      reply_count:
+        one: "%{count} reply"
+        other: "%{count} replies"
+    pin:
+      start_discussion: "Start a discussion"
+      toolbar_label: "Submission"
+    rating:
+      view_procedure_submissions:
+        one: "%{count} submission"
+        other: "%{count} submissions"
+    surgeon:
+      website: "Website"
+
+de:
+  directory:
+    by_procedure: "Nach Eingriff"
+    page_actions: "Seitenaktionen"
+    stats: "Statistik"
+    discussion_about: "Diskussion über"
+    feed_actions: "Feed-Aktionen"
+  filter_menu:
+    all_content_short: "Alle"
+    content: "Inhalt"
+    discussions_short: "Diskussionen"
+    show: "Anzeigen"
+    submissions_short: "Beiträge"
+  header:
+    add_submission: "Beitrag hinzufügen"
+    cancel_search: "Abbrechen"
+    start_discussion: "Diskussion starten"
+  public:
+    comment:
+      audience_contributors: "Personen, die einen Beitrag veröffentlicht haben"
+      audience_procedure_contributors: "Personen mit einem Beitrag zu %{subject}"
+      audience_surgeon_contributors: "Personen mit einem Beitrag zu einer OP bei %{subject}"
+      locked_discussion_for_html: "Eine Diskussion für %{audience}"
+      locked_join: "Teile deine Erfahrung, um mitzumachen"
+      visibility_everyone: "Alle"
+      visibility_label: "Wer kann das sehen?"
+    discussion:
+      body: "Text"
+      cancel: "Abbrechen"
+      category: "Kategorie"
+      created: "Diskussion veröffentlicht"
+      new_title: "Diskussion starten"
+      post: "Diskussion veröffentlichen"
+      title: "Titel"
+      title_placeholder: "Worüber möchtest du sprechen?"
+      toolbar_label: "Diskussion"
+      categories:
+        discussion: "Diskussion"
+        question: "Frage"
+        experience: "Erfahrung"
+        recovery: "Genesung"
+        planning: "Planung"
+        resources: "Ressourcen"
+        community: "Community"
+    feed:
+      read_more: "Weiterlesen"
+      reply_count:
+        one: "%{count} Antwort"
+        other: "%{count} Antworten"
+    pin:
+      start_discussion: "Diskussion starten"
+      toolbar_label: "Beitrag"
+    rating:
+      view_procedure_submissions:
+        one: "%{count} Beitrag"
+        other: "%{count} Beiträge"
+    surgeon:
+      website: "Webseite"
+
+es:
+  directory:
+    by_procedure: "Por procedimiento"
+    page_actions: "Acciones de la página"
+    stats: "Estadísticas"
+    discussion_about: "Debate sobre"
+    feed_actions: "Acciones del feed"
+  filter_menu:
+    all_content_short: "Todo"
+    content: "Contenido"
+    discussions_short: "Debates"
+    show: "Mostrar"
+    submissions_short: "Publicaciones"
+  header:
+    add_submission: "Añadir publicación"
+    cancel_search: "Cancelar"
+    start_discussion: "Iniciar un debate"
+  public:
+    comment:
+      audience_contributors: "Personas que han hecho una publicación"
+      audience_procedure_contributors: "Personas con una publicación de %{subject}"
+      audience_surgeon_contributors: "Personas con una publicación de una cirugía con %{subject}"
+      locked_discussion_for_html: "Un debate para %{audience}"
+      locked_join: "Comparte tu experiencia para unirte"
+      visibility_everyone: "Todos"
+      visibility_label: "¿Quién puede verlo?"
+    discussion:
+      body: "Texto"
+      cancel: "Cancelar"
+      category: "Categoría"
+      created: "Debate publicado"
+      new_title: "Iniciar un debate"
+      post: "Publicar debate"
+      title: "Título"
+      title_placeholder: "¿De qué quieres hablar?"
+      toolbar_label: "Debate"
+      categories:
+        discussion: "Debate"
+        question: "Pregunta"
+        experience: "Experiencia"
+        recovery: "Recuperación"
+        planning: "Planificación"
+        resources: "Recursos"
+        community: "Comunidad"
+    feed:
+      read_more: "Leer más"
+      reply_count:
+        one: "%{count} respuesta"
+        many: "%{count} respuestas"
+        other: "%{count} respuestas"
+    pin:
+      start_discussion: "Iniciar un debate"
+      toolbar_label: "Publicación"
+    rating:
+      view_procedure_submissions:
+        one: "%{count} publicación"
+        many: "%{count} publicaciones"
+        other: "%{count} publicaciones"
+    surgeon:
+      website: "Sitio web"
+
+fr:
+  directory:
+    by_procedure: "Par intervention"
+    page_actions: "Actions de la page"
+    stats: "Statistiques"
+    discussion_about: "Discussion sur"
+    feed_actions: "Actions du fil"
+  filter_menu:
+    all_content_short: "Tout"
+    content: "Contenu"
+    discussions_short: "Discussions"
+    show: "Afficher"
+    submissions_short: "Contributions"
+  header:
+    add_submission: "Ajouter une contribution"
+    cancel_search: "Annuler"
+    start_discussion: "Lancer une discussion"
+  public:
+    comment:
+      audience_contributors: "Personnes ayant publié une contribution"
+      audience_procedure_contributors: "Personnes ayant publié une contribution pour %{subject}"
+      audience_surgeon_contributors: "Personnes ayant publié une contribution avec %{subject}"
+      locked_discussion_for_html: "Une discussion pour %{audience}"
+      locked_join: "Partagez votre expérience pour participer"
+      visibility_everyone: "Tout le monde"
+      visibility_label: "Qui peut voir ceci ?"
+    discussion:
+      body: "Message"
+      cancel: "Annuler"
+      category: "Catégorie"
+      created: "Discussion publiée"
+      new_title: "Lancer une discussion"
+      post: "Publier la discussion"
+      title: "Titre"
+      title_placeholder: "De quoi voulez-vous parler ?"
+      toolbar_label: "Discussion"
+      categories:
+        discussion: "Discussion"
+        question: "Question"
+        experience: "Expérience"
+        recovery: "Rétablissement"
+        planning: "Préparation"
+        resources: "Ressources"
+        community: "Communauté"
+    feed:
+      read_more: "Lire la suite"
+      reply_count:
+        one: "%{count} réponse"
+        many: "%{count} réponses"
+        other: "%{count} réponses"
+    pin:
+      start_discussion: "Lancer une discussion"
+      toolbar_label: "Contribution"
+    rating:
+      view_procedure_submissions:
+        one: "%{count} contribution"
+        many: "%{count} contributions"
+        other: "%{count} contributions"
+    surgeon:
+      website: "Site web"
+
+it:
+  directory:
+    by_procedure: "Per procedura"
+    page_actions: "Azioni della pagina"
+    stats: "Statistiche"
+    discussion_about: "Discussione su"
+    feed_actions: "Azioni del feed"
+  filter_menu:
+    all_content_short: "Tutto"
+    content: "Contenuto"
+    discussions_short: "Discussioni"
+    show: "Mostra"
+    submissions_short: "Contributi"
+  header:
+    add_submission: "Aggiungi contributo"
+    cancel_search: "Annulla"
+    start_discussion: "Avvia una discussione"
+  public:
+    comment:
+      audience_contributors: "Persone che hanno pubblicato un contributo"
+      audience_procedure_contributors: "Persone che hanno pubblicato un contributo per %{subject}"
+      audience_surgeon_contributors: "Persone che hanno pubblicato un contributo con %{subject}"
+      locked_discussion_for_html: "Una discussione per %{audience}"
+      locked_join: "Condividi la tua esperienza per partecipare"
+      visibility_everyone: "Tutti"
+      visibility_label: "Chi può vederlo?"
+    discussion:
+      body: "Testo"
+      cancel: "Annulla"
+      category: "Categoria"
+      created: "Discussione pubblicata"
+      new_title: "Avvia una discussione"
+      post: "Pubblica discussione"
+      title: "Titolo"
+      title_placeholder: "Di cosa vuoi parlare?"
+      toolbar_label: "Discussione"
+      categories:
+        discussion: "Discussione"
+        question: "Domanda"
+        experience: "Esperienza"
+        recovery: "Recupero"
+        planning: "Pianificazione"
+        resources: "Risorse"
+        community: "Comunità"
+    feed:
+      read_more: "Leggi tutto"
+      reply_count:
+        one: "%{count} risposta"
+        many: "%{count} risposte"
+        other: "%{count} risposte"
+    pin:
+      start_discussion: "Avvia una discussione"
+      toolbar_label: "Contributo"
+    rating:
+      view_procedure_submissions:
+        one: "%{count} contributo"
+        many: "%{count} contributi"
+        other: "%{count} contributi"
+    surgeon:
+      website: "Sito web"
+
+ja:
+  directory:
+    by_procedure: "手術別"
+    page_actions: "ページの操作"
+    stats: "統計"
+    discussion_about: "ディスカッション："
+    feed_actions: "フィードの操作"
+  filter_menu:
+    all_content_short: "すべて"
+    content: "コンテンツ"
+    discussions_short: "ディスカッション"
+    show: "表示"
+    submissions_short: "投稿"
+  header:
+    add_submission: "投稿を追加"
+    cancel_search: "キャンセル"
+    start_discussion: "ディスカッションを始める"
+  public:
+    comment:
+      audience_contributors: "投稿したことのある人"
+      audience_procedure_contributors: "%{subject}の投稿をした人"
+      audience_surgeon_contributors: "%{subject}での手術を投稿した人"
+      locked_discussion_for_html: "%{audience}向けのディスカッション"
+      locked_join: "体験を共有して参加しましょう"
+      visibility_everyone: "全員"
+      visibility_label: "誰が見られますか？"
+    discussion:
+      body: "本文"
+      cancel: "キャンセル"
+      category: "カテゴリー"
+      created: "ディスカッションを投稿しました"
+      new_title: "ディスカッションを始める"
+      post: "ディスカッションを投稿"
+      title: "タイトル"
+      title_placeholder: "何について話したいですか？"
+      toolbar_label: "ディスカッション"
+      categories:
+        discussion: "ディスカッション"
+        question: "質問"
+        experience: "体験談"
+        recovery: "回復"
+        planning: "計画"
+        resources: "リソース"
+        community: "コミュニティ"
+    feed:
+      read_more: "続きを読む"
+      reply_count:
+        other: "返信%{count}件"
+    pin:
+      start_discussion: "ディスカッションを始める"
+      toolbar_label: "投稿"
+    rating:
+      view_procedure_submissions:
+        other: "%{count}件の投稿"
+    surgeon:
+      website: "ウェブサイト"
+
+zh-CN:
+  directory:
+    by_procedure: "按手术项目"
+    page_actions: "页面操作"
+    stats: "统计"
+    discussion_about: "讨论："
+    feed_actions: "动态操作"
+  filter_menu:
+    all_content_short: "全部"
+    content: "内容"
+    discussions_short: "讨论"
+    show: "显示"
+    submissions_short: "投稿"
+  header:
+    add_submission: "添加投稿"
+    cancel_search: "取消"
+    start_discussion: "发起讨论"
+  public:
+    comment:
+      audience_contributors: "发布过投稿的人"
+      audience_procedure_contributors: "发布过%{subject}投稿的人"
+      audience_surgeon_contributors: "发布过%{subject}手术投稿的人"
+      locked_discussion_for_html: "面向%{audience}的讨论"
+      locked_join: "分享你的经历即可加入"
+      visibility_everyone: "所有人"
+      visibility_label: "谁可以看到？"
+    discussion:
+      body: "正文"
+      cancel: "取消"
+      category: "分类"
+      created: "讨论已发布"
+      new_title: "发起讨论"
+      post: "发布讨论"
+      title: "标题"
+      title_placeholder: "你想聊些什么？"
+      toolbar_label: "讨论"
+      categories:
+        discussion: "讨论"
+        question: "提问"
+        experience: "经历"
+        recovery: "恢复"
+        planning: "规划"
+        resources: "资源"
+        community: "社区"
+    feed:
+      read_more: "阅读全文"
+      reply_count:
+        other: "%{count} 条回复"
+    pin:
+      start_discussion: "发起讨论"
+      toolbar_label: "投稿"
+    rating:
+      view_procedure_submissions:
+        other: "%{count} 篇投稿"
+    surgeon:
+      website: "网站"
+
+zh-TW:
+  directory:
+    by_procedure: "按手術項目"
+    page_actions: "頁面操作"
+    stats: "統計"
+    discussion_about: "討論："
+    feed_actions: "動態操作"
+  filter_menu:
+    all_content_short: "全部"
+    content: "內容"
+    discussions_short: "討論"
+    show: "顯示"
+    submissions_short: "投稿"
+  header:
+    add_submission: "新增投稿"
+    cancel_search: "取消"
+    start_discussion: "發起討論"
+  public:
+    comment:
+      audience_contributors: "發布過投稿的人"
+      audience_procedure_contributors: "發布過%{subject}投稿的人"
+      audience_surgeon_contributors: "發布過%{subject}手術投稿的人"
+      locked_discussion_for_html: "面向%{audience}的討論"
+      locked_join: "分享你的經歷即可加入"
+      visibility_everyone: "所有人"
+      visibility_label: "誰可以看到？"
+    discussion:
+      body: "內文"
+      cancel: "取消"
+      category: "分類"
+      created: "討論已發布"
+      new_title: "發起討論"
+      post: "發布討論"
+      title: "標題"
+      title_placeholder: "你想聊些什麼？"
+      toolbar_label: "討論"
+      categories:
+        discussion: "討論"
+        question: "提問"
+        experience: "經歷"
+        recovery: "恢復"
+        planning: "規劃"
+        resources: "資源"
+        community: "社群"
+    feed:
+      read_more: "閱讀全文"
+      reply_count:
+        other: "%{count} 則回覆"
+    pin:
+      start_discussion: "發起討論"
+      toolbar_label: "投稿"
+    rating:
+      view_procedure_submissions:
+        other: "%{count} 篇投稿"
+    surgeon:
+      website: "網站"
+
+pt-BR:
+  directory:
+    by_procedure: "Por procedimento"
+    page_actions: "Ações da página"
+    stats: "Estatísticas"
+    discussion_about: "Discussão sobre"
+    feed_actions: "Ações do feed"
+  filter_menu:
+    all_content_short: "Tudo"
+    content: "Conteúdo"
+    discussions_short: "Discussões"
+    show: "Mostrar"
+    submissions_short: "Publicações"
+  header:
+    add_submission: "Adicionar publicação"
+    cancel_search: "Cancelar"
+    start_discussion: "Iniciar uma discussão"
+  public:
+    comment:
+      audience_contributors: "Pessoas que já fizeram uma publicação"
+      audience_procedure_contributors: "Pessoas que fizeram uma publicação de %{subject}"
+      audience_surgeon_contributors: "Pessoas que fizeram uma publicação de cirurgia com %{subject}"
+      locked_discussion_for_html: "Uma discussão para %{audience}"
+      locked_join: "Compartilhe sua experiência para participar"
+      visibility_everyone: "Todos"
+      visibility_label: "Quem pode ver isto?"
+    discussion:
+      body: "Texto"
+      cancel: "Cancelar"
+      category: "Categoria"
+      created: "Discussão publicada"
+      new_title: "Iniciar uma discussão"
+      post: "Publicar discussão"
+      title: "Título"
+      title_placeholder: "Sobre o que você quer falar?"
+      toolbar_label: "Discussão"
+      categories:
+        discussion: "Discussão"
+        question: "Pergunta"
+        experience: "Experiência"
+        recovery: "Recuperação"
+        planning: "Planejamento"
+        resources: "Recursos"
+        community: "Comunidade"
+    feed:
+      read_more: "Ler mais"
+      reply_count:
+        one: "%{count} resposta"
+        many: "%{count} respostas"
+        other: "%{count} respostas"
+    pin:
+      start_discussion: "Iniciar uma discussão"
+      toolbar_label: "Publicação"
+    rating:
+      view_procedure_submissions:
+        one: "%{count} publicação"
+        many: "%{count} publicações"
+        other: "%{count} publicações"
+    surgeon:
+      website: "Site"
+
+nl:
+  directory:
+    by_procedure: "Per procedure"
+    page_actions: "Pagina-acties"
+    stats: "Statistieken"
+    discussion_about: "Discussie over"
+    feed_actions: "Feedacties"
+  filter_menu:
+    all_content_short: "Alles"
+    content: "Inhoud"
+    discussions_short: "Discussies"
+    show: "Tonen"
+    submissions_short: "Bijdragen"
+  header:
+    add_submission: "Bijdrage toevoegen"
+    cancel_search: "Annuleren"
+    start_discussion: "Discussie starten"
+  public:
+    comment:
+      audience_contributors: "Mensen die een bijdrage hebben geplaatst"
+      audience_procedure_contributors: "Mensen met een bijdrage voor %{subject}"
+      audience_surgeon_contributors: "Mensen met een bijdrage bij %{subject}"
+      locked_discussion_for_html: "Een discussie voor %{audience}"
+      locked_join: "Deel je ervaring om mee te doen"
+      visibility_everyone: "Iedereen"
+      visibility_label: "Wie kan dit zien?"
+    discussion:
+      body: "Tekst"
+      cancel: "Annuleren"
+      category: "Categorie"
+      created: "Discussie geplaatst"
+      new_title: "Discussie starten"
+      post: "Discussie plaatsen"
+      title: "Titel"
+      title_placeholder: "Waar wil je over praten?"
+      toolbar_label: "Discussie"
+      categories:
+        discussion: "Discussie"
+        question: "Vraag"
+        experience: "Ervaring"
+        recovery: "Herstel"
+        planning: "Voorbereiding"
+        resources: "Bronnen"
+        community: "Gemeenschap"
+    feed:
+      read_more: "Lees meer"
+      reply_count:
+        one: "%{count} reactie"
+        other: "%{count} reacties"
+    pin:
+      start_discussion: "Discussie starten"
+      toolbar_label: "Bijdrage"
+    rating:
+      view_procedure_submissions:
+        one: "%{count} bijdrage"
+        other: "%{count} bijdragen"
+    surgeon:
+      website: "Website"
+
+pl:
+  directory:
+    by_procedure: "Według zabiegu"
+    page_actions: "Akcje strony"
+    stats: "Statystyki"
+    discussion_about: "Dyskusja o"
+    feed_actions: "Akcje kanału"
+  filter_menu:
+    all_content_short: "Wszystko"
+    content: "Treść"
+    discussions_short: "Dyskusje"
+    show: "Pokaż"
+    submissions_short: "Wpisy"
+  header:
+    add_submission: "Dodaj wpis"
+    cancel_search: "Anuluj"
+    start_discussion: "Rozpocznij dyskusję"
+  public:
+    comment:
+      audience_contributors: "Osoby, które opublikowały wpis"
+      audience_procedure_contributors: "Osoby, które opublikowały wpis o zabiegu %{subject}"
+      audience_surgeon_contributors: "Osoby, które opublikowały wpis o zabiegu u %{subject}"
+      locked_discussion_for_html: "Dyskusja dla grupy: %{audience}"
+      locked_join: "Podziel się swoim doświadczeniem, aby dołączyć"
+      visibility_everyone: "Wszyscy"
+      visibility_label: "Kto może to zobaczyć?"
+    discussion:
+      body: "Treść"
+      cancel: "Anuluj"
+      category: "Kategoria"
+      created: "Dyskusja opublikowana"
+      new_title: "Rozpocznij dyskusję"
+      post: "Opublikuj dyskusję"
+      title: "Tytuł"
+      title_placeholder: "O czym chcesz porozmawiać?"
+      toolbar_label: "Dyskusja"
+      categories:
+        discussion: "Dyskusja"
+        question: "Pytanie"
+        experience: "Doświadczenie"
+        recovery: "Rekonwalescencja"
+        planning: "Planowanie"
+        resources: "Materiały"
+        community: "Społeczność"
+    feed:
+      read_more: "Czytaj dalej"
+      reply_count:
+        one: "%{count} odpowiedź"
+        few: "%{count} odpowiedzi"
+        many: "%{count} odpowiedzi"
+        other: "%{count} odpowiedzi"
+    pin:
+      start_discussion: "Rozpocznij dyskusję"
+      toolbar_label: "Wpis"
+    rating:
+      view_procedure_submissions:
+        one: "%{count} wpis"
+        few: "%{count} wpisy"
+        many: "%{count} wpisów"
+        other: "%{count} wpisu"
+    surgeon:
+      website: "Strona internetowa"
+
+ru:
+  directory:
+    by_procedure: "По операциям"
+    page_actions: "Действия на странице"
+    stats: "Статистика"
+    discussion_about: "Обсуждение:"
+    feed_actions: "Действия ленты"
+  filter_menu:
+    all_content_short: "Все"
+    content: "Содержимое"
+    discussions_short: "Обсуждения"
+    show: "Показать"
+    submissions_short: "Публикации"
+  header:
+    add_submission: "Добавить публикацию"
+    cancel_search: "Отмена"
+    start_discussion: "Начать обсуждение"
+  public:
+    comment:
+      audience_contributors: "Люди, у которых есть публикация"
+      audience_procedure_contributors: "Люди с публикацией по операции %{subject}"
+      audience_surgeon_contributors: "Люди с публикацией по операции у %{subject}"
+      locked_discussion_for_html: "Обсуждение для группы: %{audience}"
+      locked_join: "Поделитесь своим опытом, чтобы присоединиться"
+      visibility_everyone: "Все"
+      visibility_label: "Кто может это видеть?"
+    discussion:
+      body: "Текст"
+      cancel: "Отмена"
+      category: "Категория"
+      created: "Обсуждение опубликовано"
+      new_title: "Начать обсуждение"
+      post: "Опубликовать обсуждение"
+      title: "Заголовок"
+      title_placeholder: "О чём вы хотите поговорить?"
+      toolbar_label: "Обсуждение"
+      categories:
+        discussion: "Обсуждение"
+        question: "Вопрос"
+        experience: "Опыт"
+        recovery: "Восстановление"
+        planning: "Планирование"
+        resources: "Ресурсы"
+        community: "Сообщество"
+    feed:
+      read_more: "Читать далее"
+      reply_count:
+        one: "%{count} ответ"
+        few: "%{count} ответа"
+        many: "%{count} ответов"
+        other: "%{count} ответа"
+    pin:
+      start_discussion: "Начать обсуждение"
+      toolbar_label: "Публикация"
+    rating:
+      view_procedure_submissions:
+        one: "%{count} публикация"
+        few: "%{count} публикации"
+        many: "%{count} публикаций"
+        other: "%{count} публикации"
+    surgeon:
+      website: "Сайт"
+
+tr:
+  directory:
+    by_procedure: "Prosedüre göre"
+    page_actions: "Sayfa işlemleri"
+    stats: "İstatistikler"
+    discussion_about: "Tartışma:"
+    feed_actions: "Akış işlemleri"
+  filter_menu:
+    all_content_short: "Tümü"
+    content: "İçerik"
+    discussions_short: "Tartışmalar"
+    show: "Göster"
+    submissions_short: "Gönderiler"
+  header:
+    add_submission: "Gönderi ekle"
+    cancel_search: "İptal"
+    start_discussion: "Tartışma başlat"
+  public:
+    comment:
+      audience_contributors: "Gönderi paylaşmış kişiler"
+      audience_procedure_contributors: "%{subject} için gönderi paylaşmış kişiler"
+      audience_surgeon_contributors: "%{subject} ile gönderi paylaşmış kişiler"
+      locked_discussion_for_html: "%{audience} için bir tartışma"
+      locked_join: "Katılmak için deneyimini paylaş"
+      visibility_everyone: "Herkes"
+      visibility_label: "Bunu kimler görebilir?"
+    discussion:
+      body: "Metin"
+      cancel: "İptal"
+      category: "Kategori"
+      created: "Tartışma paylaşıldı"
+      new_title: "Tartışma başlat"
+      post: "Tartışmayı paylaş"
+      title: "Başlık"
+      title_placeholder: "Ne hakkında konuşmak istiyorsun?"
+      toolbar_label: "Tartışma"
+      categories:
+        discussion: "Tartışma"
+        question: "Soru"
+        experience: "Deneyim"
+        recovery: "İyileşme"
+        planning: "Planlama"
+        resources: "Kaynaklar"
+        community: "Topluluk"
+    feed:
+      read_more: "Devamını oku"
+      reply_count:
+        one: "%{count} yanıt"
+        other: "%{count} yanıt"
+    pin:
+      start_discussion: "Tartışma başlat"
+      toolbar_label: "Gönderi"
+    rating:
+      view_procedure_submissions:
+        one: "%{count} gönderi"
+        other: "%{count} gönderi"
+    surgeon:
+      website: "Web sitesi"
+
+vi:
+  directory:
+    by_procedure: "Theo thủ thuật"
+    page_actions: "Thao tác trang"
+    stats: "Thống kê"
+    discussion_about: "Thảo luận về"
+    feed_actions: "Thao tác bảng tin"
+  filter_menu:
+    all_content_short: "Tất cả"
+    content: "Nội dung"
+    discussions_short: "Thảo luận"
+    show: "Hiển thị"
+    submissions_short: "Bài đăng"
+  header:
+    add_submission: "Thêm bài đăng"
+    cancel_search: "Hủy"
+    start_discussion: "Bắt đầu thảo luận"
+  public:
+    comment:
+      audience_contributors: "Những người đã đăng bài"
+      audience_procedure_contributors: "Những người đã đăng bài cho %{subject}"
+      audience_surgeon_contributors: "Những người đã đăng bài với %{subject}"
+      locked_discussion_for_html: "Cuộc thảo luận dành cho %{audience}"
+      locked_join: "Chia sẻ trải nghiệm của bạn để tham gia"
+      visibility_everyone: "Mọi người"
+      visibility_label: "Ai có thể xem?"
+    discussion:
+      body: "Nội dung"
+      cancel: "Hủy"
+      category: "Danh mục"
+      created: "Đã đăng thảo luận"
+      new_title: "Bắt đầu thảo luận"
+      post: "Đăng thảo luận"
+      title: "Tiêu đề"
+      title_placeholder: "Bạn muốn nói về điều gì?"
+      toolbar_label: "Thảo luận"
+      categories:
+        discussion: "Thảo luận"
+        question: "Câu hỏi"
+        experience: "Trải nghiệm"
+        recovery: "Hồi phục"
+        planning: "Lên kế hoạch"
+        resources: "Tài nguyên"
+        community: "Cộng đồng"
+    feed:
+      read_more: "Đọc thêm"
+      reply_count:
+        other: "%{count} phản hồi"
+    pin:
+      start_discussion: "Bắt đầu thảo luận"
+      toolbar_label: "Bài đăng"
+    rating:
+      view_procedure_submissions:
+        other: "%{count} bài đăng"
+    surgeon:
+      website: "Trang web"
+
+ar:
+  directory:
+    by_procedure: "حسب الإجراء"
+    page_actions: "إجراءات الصفحة"
+    stats: "الإحصاءات"
+    discussion_about: "مناقشة حول"
+    feed_actions: "إجراءات الموجز"
+  filter_menu:
+    all_content_short: "الكل"
+    content: "المحتوى"
+    discussions_short: "المناقشات"
+    show: "عرض"
+    submissions_short: "المنشورات"
+  header:
+    add_submission: "إضافة منشور"
+    cancel_search: "إلغاء"
+    start_discussion: "بدء مناقشة"
+  public:
+    comment:
+      audience_contributors: "الأشخاص الذين نشروا منشورًا"
+      audience_procedure_contributors: "الأشخاص الذين نشروا منشورًا لإجراء %{subject}"
+      audience_surgeon_contributors: "الأشخاص الذين نشروا منشورًا مع %{subject}"
+      locked_discussion_for_html: "مناقشة مخصّصة لـ: %{audience}"
+      locked_join: "شارك تجربتك للانضمام"
+      visibility_everyone: "الجميع"
+      visibility_label: "من يمكنه رؤية هذا؟"
+    discussion:
+      body: "النص"
+      cancel: "إلغاء"
+      category: "الفئة"
+      created: "تم نشر المناقشة"
+      new_title: "بدء مناقشة"
+      post: "نشر المناقشة"
+      title: "العنوان"
+      title_placeholder: "عمّ تريد التحدث؟"
+      toolbar_label: "مناقشة"
+      categories:
+        discussion: "مناقشة"
+        question: "سؤال"
+        experience: "تجربة"
+        recovery: "التعافي"
+        planning: "التخطيط"
+        resources: "موارد"
+        community: "المجتمع"
+    feed:
+      read_more: "اقرأ المزيد"
+      reply_count:
+        zero: "لا توجد ردود"
+        one: "ردّ واحد"
+        two: "ردّان"
+        few: "%{count} ردود"
+        many: "%{count} ردًا"
+        other: "%{count} ردّ"
+    pin:
+      start_discussion: "بدء مناقشة"
+      toolbar_label: "منشور"
+    rating:
+      view_procedure_submissions:
+        zero: "لا توجد منشورات"
+        one: "منشور واحد"
+        two: "منشوران"
+        few: "%{count} منشورات"
+        many: "%{count} منشورًا"
+        other: "%{count} منشور"
+    surgeon:
+      website: "الموقع الإلكتروني"
+
+sv:
+  directory:
+    by_procedure: "Per ingrepp"
+    page_actions: "Sidåtgärder"
+    stats: "Statistik"
+    discussion_about: "Diskussion om"
+    feed_actions: "Flödesåtgärder"
+  filter_menu:
+    all_content_short: "Alla"
+    content: "Innehåll"
+    discussions_short: "Diskussioner"
+    show: "Visa"
+    submissions_short: "Bidrag"
+  header:
+    add_submission: "Lägg till bidrag"
+    cancel_search: "Avbryt"
+    start_discussion: "Starta en diskussion"
+  public:
+    comment:
+      audience_contributors: "Personer som har publicerat ett bidrag"
+      audience_procedure_contributors: "Personer som har publicerat ett bidrag för %{subject}"
+      audience_surgeon_contributors: "Personer som har publicerat ett bidrag med %{subject}"
+      locked_discussion_for_html: "En diskussion för %{audience}"
+      locked_join: "Dela din erfarenhet för att gå med"
+      visibility_everyone: "Alla"
+      visibility_label: "Vem kan se detta?"
+    discussion:
+      body: "Text"
+      cancel: "Avbryt"
+      category: "Kategori"
+      created: "Diskussionen publicerades"
+      new_title: "Starta en diskussion"
+      post: "Publicera diskussion"
+      title: "Rubrik"
+      title_placeholder: "Vad vill du prata om?"
+      toolbar_label: "Diskussion"
+      categories:
+        discussion: "Diskussion"
+        question: "Fråga"
+        experience: "Erfarenhet"
+        recovery: "Återhämtning"
+        planning: "Planering"
+        resources: "Resurser"
+        community: "Gemenskap"
+    feed:
+      read_more: "Läs mer"
+      reply_count:
+        one: "%{count} svar"
+        other: "%{count} svar"
+    pin:
+      start_discussion: "Starta en diskussion"
+      toolbar_label: "Bidrag"
+    rating:
+      view_procedure_submissions:
+        one: "%{count} bidrag"
+        other: "%{count} bidrag"
+    surgeon:
+      website: "Webbplats"

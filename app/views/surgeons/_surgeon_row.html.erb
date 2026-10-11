@@ -3,7 +3,7 @@
     data-sort-submissions="<%= pin_count || 0 %>"
     data-sort-satisfaction="<%= avg_satisfaction || '' %>"
     data-sort-sensation="<%= avg_sensation || '' %>">
-  <td data-label="<%= t('directory.name') %>"><%= link_to "#{surgeon.last_name}, #{surgeon.first_name}", surgeon_path(surgeon.id) %></td>
+  <td data-label="<%= t('directory.name') %>"><%= link_to "#{surgeon.last_name}, #{surgeon.first_name}", surgeon_path(surgeon.id), content_event_open_attributes('Surgeon', surgeon.id, surface: 'surgeons_index', list_mode: 'default').merge('data-event-rank-from-row' => true) %></td>
 <% if user_signed_in? %>
   <td data-label="<%= t('directory.submissions') %>"><%= link_to pin_count || 0, pins_path(surgeon: surgeon.id)  %></td>
   <td data-label="<%= t('directory.average_satisfaction') %>"><%= avg_satisfaction && avg_satisfaction.round(1) %></td>

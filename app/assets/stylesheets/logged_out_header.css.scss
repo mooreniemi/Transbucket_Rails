@@ -1,0 +1,222 @@
+// Logged-out header on phones.
+//
+// A logged-out visitor only has three destinations (news, procedures,
+// surgeons) plus login / register / language, so below 768px we show them all
+// instead of hiding them behind a hamburger. Desktop and the logged-in header
+// are untouched: every rule here is scoped to .navbar-anon (see
+// layouts/_header.html.erb) inside the phone media query.
+//
+//   [logo] Transbucket.com               [ Log in ] [ Register ]
+//   [   News   |  Procedures  |  Surgeons   ]                 [🌐]
+//
+// The site ships in 16 languages and labels vary a lot in length ("Register"
+// vs "Зарегистрироваться", "Surgeons" vs "Bác sĩ phẫu thuật"), so nothing
+// here assumes a width:
+//   * the brand is a flexible slot that shows the wordmark only if it fits
+//     and falls back to just the logo, never wrapping onto its own row;
+//   * page links size to their content, wrap onto a second line if they must,
+//     and may hyphenate, rather than overflow or clip.
+
+$anon-touch-height: 44px;   // minimum comfortable touch target
+$anon-logo-slot: 40px;      // the least room the brand slot is ever given
+$anon-locale-width: 48px;
+$anon-row-border: 1px solid #e7e7e7;
+
+@media (max-width: 767px) {
+  // The bar scrolls away with the page instead of staying fixed, so two rows
+  // don't permanently cost ~95px of a small screen.
+  body.logged-out {
+    padding-top: 0;
+  }
+
+  .navbar-anon {
+    position: relative;
+    margin-bottom: 10px;
+
+    .container-fluid {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0 8px;
+
+      // Bootstrap's clearfix pseudo-elements would become empty flex items.
+      &:before,
+      &:after {
+        display: none;
+      }
+    }
+
+    // Let the header, auth list, page links and language list all be flex
+    // children of .container-fluid so they can be reordered into two rows.
+    .navbar-collapse {
+      display: contents;
+
+      &:before,
+      &:after {
+        display: none;
+      }
+    }
+
+    // Row 1, left: brand. It takes whatever width login/register leave over
+    // (flex-basis 0). The wordmark wraps to a second, clipped line when it
+    // doesn't fit, which hides it without any script; the logo always stays.
+    .navbar-header {
+      align-content: flex-start;
+      align-items: center;
+      display: flex;
+      flex: 1 1 0;
+      flex-wrap: wrap;
+      float: none;
+      height: 50px;
+      margin: 0;
+      min-width: $anon-logo-slot;
+      order: 1;
+      overflow: hidden;
+    }
+
+    .container-fluid .navbar-brand {
+      align-items: center;
+      display: flex;
+      flex: 0 0 auto;
+      float: none;
+      height: 50px;
+      margin: 0;
+      padding: 0 8px 0 0;
+      white-space: nowrap;
+    }
+
+    // Big enough to read as the brand when it's all that's left.
+    .container-fluid .navbar-brand img {
+      height: 24px;
+      width: 24px;
+    }
+
+    // Row 1, right: login / register.
+    .navbar-anon-auth {
+      display: flex;
+      flex: 0 0 auto;
+      margin: 0 0 0 auto;
+      order: 2;
+
+      > li > a.nav-auth-link {
+        align-items: center;
+        box-sizing: border-box;
+        display: flex;
+        margin: 3px;
+        min-height: $anon-touch-height;
+        padding: 0 12px;
+        white-space: nowrap;
+      }
+    }
+
+    // Row 2: the page links. Each takes the width its label needs and they
+    // share what's left; if they can't fit on one line they wrap.
+    .navbar-collapse > .navbar-nav:not(.navbar-right) {
+      border-top: $anon-row-border;
+      display: flex;
+      flex: 1 1 unquote("calc(100% - #{$anon-locale-width})");
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 0;
+      min-width: 0;
+      order: 3;
+
+      // Each cell is at least as wide as its longest word and the rest of the
+      // row is shared out, so multi-word labels break inside their own cell
+      // ("Bác sĩ / phẫu thuật") and links only wrap onto a second line when
+      // even the longest words can't fit side by side.
+      > li {
+        flex: 1 1 0;
+        min-width: min-content;
+      }
+
+      // Thin dividers so adjacent labels never read as one phrase.
+      > li + li {
+        border-left: $anon-row-border;
+      }
+
+      > li > a {
+        align-items: center;
+        box-sizing: border-box;
+        display: flex;
+        height: 100%;
+        hyphens: auto;
+        justify-content: center;
+        line-height: 1.3;   // room for stacked diacritics (Vietnamese)
+        min-height: $anon-touch-height;
+        padding: 6px 4px;
+        text-align: center;
+      }
+    }
+
+    // Row 2, right: language switcher as an icon-only popover.
+    .navbar-anon-locale {
+      border-top: $anon-row-border;
+      flex: 0 0 $anon-locale-width;
+      margin: 0;
+      order: 4;
+
+      > li > a {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        min-height: $anon-touch-height;
+        padding: 0;
+      }
+
+      // Keep the code ("EN") for screen readers, drop it visually.
+      .locale-code {
+        clip: rect(0, 0, 0, 0);
+        height: 1px;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+        width: 1px;
+      }
+
+      .caret {
+        display: none;
+      }
+
+      // Bootstrap turns dropdowns inside a collapsed navbar into inline,
+      // unstyled lists. Here the list lives in a 48px column, so make it a
+      // real popover again.
+      .dropdown-menu {
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, .15);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+        float: none;
+        left: auto;
+        margin: 0;
+        max-height: 60vh;
+        overflow-y: auto;
+        position: absolute;
+        right: 0;
+        top: 100%;
+        width: 220px;
+
+        > li > a {
+          color: #333;
+          padding: 10px 15px;
+        }
+      }
+    }
+  }
+}
+
+// Narrowest phones: claw back space so long translated login/register labels
+// still share a row with the brand logo. (Selectors mirror the block above so
+// they win on specificity.)
+@media (max-width: 359px) {
+  .navbar-anon {
+    .navbar-anon-auth > li > a.nav-auth-link {
+      margin: 3px 2px;
+      padding: 0 8px;
+    }
+
+    .navbar-collapse > .navbar-nav:not(.navbar-right) > li > a {
+      font-size: 16px;
+      padding: 6px 4px;
+    }
+  }
+}

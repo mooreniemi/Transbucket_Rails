@@ -29,3 +29,12 @@ describe User, '.find_first_by_auth_conditions' do
     expect(found).to eq(user)
   end
 end
+
+describe User, 'preference setup' do
+  it 'creates and associates a default preference when the user is created' do
+    user = create(:user)
+
+    expect(user.preference).to be_present
+    expect(user.preference.safe_mode).to eq(false)
+  end
+end

@@ -1,24 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
-
-if RUBY_VERSION >= '3.0'
-  # Rails 4.2's Fanout#subscribe relies on `Proc.new` implicitly capturing
-  # the caller's block, which Ruby 3 no longer supports. Railties (e.g.
-  # rack-mini-profiler) call ActiveSupport::Notifications.subscribe during
-  # initialization, before config/initializers load, so this must be patched
-  # here rather than in an initializer.
-  class ActiveSupport::Notifications::Fanout
-    def subscribe(pattern = nil, callable = nil, &block)
-      subscriber = Subscribers.new pattern, (callable || block)
-      synchronize do
-        @subscribers << subscriber
-        @listeners_for.clear
-      end
-      subscriber
-    end
-  end
-end
+require 'sprockets/railtie'
 
 # https://github.com/elastic/elasticsearch-rails/tree/master/elasticsearch-rails#activesupport-instrumentation
 require 'elasticsearch/rails/instrumentation'
@@ -29,10 +12,18 @@ Bundler.require(*Rails.groups)
 
 module Transbucket
   class Application < Rails::Application
+    # AdSense ads render only in production (see ApplicationHelper#ads_enabled?).
+    config.x.show_ads = Rails.env.production?
+    # One ad slot goes before roughly 1 in this many feed cards. Specs set it to
+    # 1 so every card has one.
+    config.x.feed_ad_odds = 15
+    # Google's ad script. Specs point this at a stand-in so they never call Google.
+    config.x.ad_script_src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
+
     # TODO include blocking ips for bad users
     # config.middleware.use Rack::Attack
 
-    config.action_controller.page_cache_directory = "#{Rails.root.to_s}/public/page_cache"
+    config.action_controller.page_cache_directory = "#{Rails.root}/public/page_cache"
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -46,10 +37,11 @@ module Transbucket
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :en
     config.i18n.fallbacks = true
-    config.active_record.whitelist_attributes = false
-
-    config.active_record.raise_in_transactional_callbacks = true
-
+    config.active_support.cache_format_version = 7.1
+    # Set the signing key before Rails initializes, preserving the existing
+    # production/test values without consulting deprecated secrets.yml.
+    config.secret_key_base = ENV['SECRET_KEY_BASE'] if ENV['SECRET_KEY_BASE'].present?
+    config.secret_key_base = 'f607f528104f0200b0df7d08c353cc4458d1d943b066e25d0c922fbc786f47a8dcb33ccb9ebfaef7454b664bfbe5831e76dc3c8dbb7964b7c68edbff2d5fe813' if ENV['RAILS_ENV'] == 'test'
     # Rails' ruby schema dumper can't represent expression indexes (the
     # lower(username)/lower(email) functional indexes the login-lookup fix
     # depends on), so a plain `rake db:migrate` silently drops them from
@@ -59,10 +51,12 @@ module Transbucket
     config.active_record.schema_format = :sql
 
     # necessary for using bower-rails!
-    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
-    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'jquery-ui', 'themes', 'smoothness', 'images')
-    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'tinymce', 'skins', 'lightgray', 'img')
-    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'tinymce', 'skins', 'lightgray', 'fonts')
+    config.assets.paths = config.assets.paths + [
+      Rails.root.join('vendor', 'assets', 'bower_components'),
+      Rails.root.join('vendor', 'assets', 'bower_components', 'jquery-ui', 'themes', 'smoothness', 'images'),
+      Rails.root.join('vendor', 'assets', 'bower_components', 'tinymce', 'skins', 'lightgray', 'img'),
+      Rails.root.join('vendor', 'assets', 'bower_components', 'tinymce', 'skins', 'lightgray', 'fonts')
+    ]
     config.assets.precompile << 'tinymce/langs/*.js'
 
     config.generators do |g|

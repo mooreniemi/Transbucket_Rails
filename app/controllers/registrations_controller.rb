@@ -2,7 +2,7 @@ class RegistrationsController < Devise::RegistrationsController
   before_action :configure_permitted_parameters
 
   def configure_permitted_parameters
-    custom_params = [:name, :username, :gender_id, :email]
+    custom_params = [:name, :username, :gender_id, :pronouns, :pronouns_custom, :email]
     devise_parameter_sanitizer.permit(:account_update, keys: custom_params)
     devise_parameter_sanitizer.permit(:sign_up, keys: custom_params)
   end

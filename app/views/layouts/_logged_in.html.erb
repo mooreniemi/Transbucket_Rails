@@ -1,29 +1,62 @@
-<% if current_user.admin? %>
-  <li class="bg-danger">
-    <%= link_to 'MQ', queendom_path, title: 'Moderation queue', aria: { label: 'Moderation queue' } %>
-  </li>
-<% end %>
+<%# Signed-in navigation, in the order people reach for it. This is also the top
+    of the phone menu, so the most-used destinations come first. %>
 <li>
-  <%= link_to I18n.t(".header.submissions"), pins_path %>
+  <%= link_to I18n.t(".header.submissions"), pins_path, track_click_attributes(:submissions, :header) %>
+</li>
+<li>
+  <%= link_to I18n.t('.header.procedures'), procedures_path, track_click_attributes(:procedures, :header) %>
+</li>
+<li>
+  <%= link_to I18n.t('.header.surgeons'), surgeons_path, track_click_attributes(:surgeons, :header) %>
 </li>
 <% comparison_type = controller_name == 'surgeons' || params[:type] == 'surgeons' ? 'surgeons' : 'procedures' %>
 <li>
-  <%= link_to t('comparison.title', default: 'Compare'), compare_path(type: comparison_type) %>
+  <%# A little flair to draw people to it: yellow scales, like Add's yellow plus. %>
+  <%= link_to compare_path(type: comparison_type), track_click_attributes(:compare, :header) do %>
+    <%= t('comparison.title', default: 'Compare') %> <%= fa_icon('balance-scale', class: 'yellow') %>
+  <% end %>
 </li>
-<% unless current_user.gender.cis? %>
-  <li>
-    <%= link_to "#{I18n.t(".header.add")} #{fa_icon('plus-circle yellow')}".html_safe, new_pin_path %>
+<%# Creating, from any page. Phones: two rows in the menu. Desktop: one Add
+    dropdown, so the navbar doesn't wrap. Start a discussion opens the feed
+    with its discussion form already open (pins/index, feed_toolbar.js). %>
+<% can_add_submission = !current_user.gender&.cis? %>
+<% start_discussion_path = pins_path(compose: 1) %>
+<% if can_add_submission %>
+  <li class="visible-xs">
+    <%= link_to new_pin_path, track_click_attributes(:add, :header) do %>
+      <%= t('header.add_submission', default: 'Add submission') %> <%= fa_icon('plus-circle', class: 'yellow') %>
+    <% end %>
   </li>
 <% end %>
-<% if current_page?(pins_path) %>
-  <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      <%= I18n.t(".header.filter") %> <%= fa_icon "filter", { class: 'yellow' } %>
+<li class="visible-xs">
+  <%= link_to start_discussion_path, track_click_attributes(:add_discussion, :header).merge('data-open-compose' => true) do %>
+    <%= t('header.start_discussion', default: 'Start a discussion') %> <%= fa_icon('comments-o') %>
+  <% end %>
+</li>
+<li class="dropdown add-menu hidden-xs">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+    <%= t('header.add') %> <%= fa_icon('plus-circle', class: 'yellow') %> <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <% if can_add_submission %>
+      <li><%= link_to t('public.pin.toolbar_label', default: 'Submission'), new_pin_path, track_click_attributes(:add, :header) %></li>
+    <% end %>
+    <li><%= link_to t('public.discussion.toolbar_label', default: 'Discussion'), start_discussion_path, track_click_attributes(:add_discussion, :header).merge('data-open-compose' => true) %></li>
+  </ul>
+</li>
+<li>
+  <%= link_to I18n.t('.header.news'), newsfeed_path, track_click_attributes(:news, :header) %>
+</li>
+<% if current_user.moderator? %>
+  <li class="dropdown bg-danger moderator-tools">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Moderation tools" aria-label="Moderation tools">
+      <%= fa_icon 'shield' %> <span class="caret"></span>
     </a>
     <ul class="dropdown-menu" role="menu">
-      <li>
-        <%= render partial: 'pins/filter_controls' %>
-      </li>
+      <li><%= link_to 'Moderation queue', queendom_path %></li>
+      <% if current_user.admin? %>
+        <li><%= link_to 'Community trust', trust_grants_path %></li>
+      <% end %>
     </ul>
   </li>
 <% end %>

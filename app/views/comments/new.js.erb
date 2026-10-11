@@ -1,3 +1,7 @@
-$("<%= @parent_id ? "#comment-#{@parent_id} " : '#commentable' %>.reply-target").last().append(
-  "<%= escape_javascript(render :partial => 'comments/form', :locals => { :comment => @new_comment }) %>"
-).focus();
+(function() {
+  var target = $("<%= @parent_id ? "#comment-#{@parent_id} " : '#commentable' %>.reply-target").last();
+  target.append("<%= escape_javascript(render :partial => 'comments/form', :locals => { :comment => @new_comment }) %>");
+  if (window.syncCommentForms) { window.syncCommentForms(target); }
+  // Tapping Reply means you want to type: open the box with the cursor in it.
+  target.find('textarea').last().focus();
+})();

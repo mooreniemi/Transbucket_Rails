@@ -28,15 +28,13 @@ describe "the flagging process" do
       visit '/pins/' + pin.id.to_s
 
       comment_text = "This is my comment: nonce #{rand(9999)}"
-      click_link "add thread"
-      within("#new_comment") do
+      within("#commentable") do
         fill_in "comment_body", :with => comment_text
+        click_button "Post"
       end
 
-      click_button "Submit"
-
       comment = find('.comment', :text => comment_text)
-      expect(comment).to have_no_selector(".fa-flag")
+      expect(comment).to have_no_selector(".flag-comment")
     end
   end
 
@@ -47,7 +45,10 @@ describe "the flagging process" do
 
         visit '/pins'
         flag_link = find('a[href="/en/pins/' + pin.id.to_s + '/flags"]')
-        flag_link.click
+        # Reporting a pin asks first (a single stray tap used to report it).
+        expect(flag_link['data-confirm']).to eq(I18n.t('public.pin.report_confirm'))
+        accept_confirm { flag_link.click }
+        expect(page).to have_no_selector("a.flag-pin[data-pin-id='" + pin.id.to_s + "']")
       end
 
       visit '/pins'
@@ -61,8 +62,13 @@ describe "the flagging process" do
         login_as(user, :scope => :user)
 
         visit '/pins/' + pin.id.to_s
-        flag_link = find("#comment-#{comment_id} .fa-flag").find(:xpath, "..")
-        flag_link.click
+        flag_link = find("#comment-#{comment_id} .flag-comment")
+        expect(flag_link['data-confirm']).to eq(I18n.t('public.pin.report_comment_confirm'))
+        accept_confirm { flag_link.click }
+        # Wait for the report to land (the link turns into "Reported", or the
+        # comment hides on the last one) before the next user's visit, which
+        # could otherwise cancel the request mid-flight.
+        expect(page).to have_no_css("#comment-#{comment_id} .flag-comment")
       end
 
       visit '/pins/' + pin.id.to_s

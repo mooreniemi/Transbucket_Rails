@@ -1,0 +1,48 @@
+.trust-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 5px;
+  padding: 2px 7px;
+  border: 1px solid #6d5a13;
+  border-radius: 999px;
+  background: #fff8d6;
+  color: #584600;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+  vertical-align: middle;
+}
+
+.trust-badge--vetted {
+  border-color: #357a6b;
+  background: #e5f5f0;
+  color: #1d5a4d;
+}
+
+.trust-badge--moderator {
+  border-color: #365d9d;
+  background: #eaf1ff;
+  color: #254a85;
+}
+
+.trust-grant-form .form-control {
+  margin-right: 5px;
+}
+
+.trust-search-form {
+  margin-bottom: 14px;
+}
+
+.trust-search-form .form-control {
+  min-width: 260px;
+  margin-right: 5px;
+}
+
+.trust-search-hint {
+  margin: 8px 0 14px;
+}
+
+.trust-revoke-link {
+  margin-left: 5px;
+}

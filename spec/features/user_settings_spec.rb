@@ -26,4 +26,8 @@ RSpec.describe "user settings" do
     policy = UserPolicy.new(User.find_by(email: user.email))
     expect(policy.wants_email?).to be false
   end
+
+  it "says that the current password is needed to save any profile change" do
+    expect(page).to have_text(I18n.t('profile.password_required_hint'))
+  end
 end

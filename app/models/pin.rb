@@ -78,11 +78,13 @@ class Pin < ActiveRecord::Base
   validates :user_id, presence: true
   validates :pin_images, presence: true
 
+  after_create :grant_contributor_trust
+
   aasm column: :state do
     state :pending, value: 'pending'
     state :published, value: 'published', initial: :published
 
-    event :publish do
+    event :publish, after: :grant_contributor_trust do
       transitions from: :pending, to: :published
     end
 
@@ -111,19 +113,23 @@ class Pin < ActiveRecord::Base
     where(procedure_id: 911)
   end
 
+  # A post's latest activity: when it was created or a photo was last added or
+  # changed. Edits that only touch pins.updated_at (bulk cleanups) don't count.
+  # Shared with HomeFeedQuery, which merges posts with discussions by this time.
+  RECENT_ACTIVITY_SQL = <<~SQL.squish.freeze
+    GREATEST(
+      pins.created_at,
+      COALESCE(MAX(pin_images.created_at), pins.created_at),
+      COALESCE(MAX(pin_images.updated_at), pins.created_at),
+      COALESCE(MAX(pin_images.photo_updated_at), pins.created_at)
+    )
+  SQL
+
   def self.recent
     published.
       joins('LEFT OUTER JOIN pin_images ON pin_images.pin_id = pins.id').
       group('pins.id').
-      order(<<~SQL.squish)
-        GREATEST(
-          pins.created_at,
-          COALESCE(MAX(pin_images.created_at), pins.created_at),
-          COALESCE(MAX(pin_images.updated_at), pins.created_at),
-          COALESCE(MAX(pin_images.photo_updated_at), pins.created_at)
-        ) DESC,
-        pins.id DESC
-      SQL
+      order(Arel.sql("#{RECENT_ACTIVITY_SQL} DESC, pins.id DESC"))
   end
 
   def self.by_gender(gender_name)
@@ -155,5 +161,11 @@ class Pin < ActiveRecord::Base
     else
       where(surgeon_id: surgeon)
     end
+  end
+
+  private
+
+  def grant_contributor_trust
+    user.grant_trust!('contributor') if published? && user.present?
   end
 end

@@ -10,26 +10,30 @@
   <% title @presenter.showing_for_you? ? t('directory.for_you', default: 'For You') : t('directory.recent_submissions') %>
 <% end %>
 <% if params[:query].present? %>
-  <h1><%= t('directory.search_results') %></h1>
+  <h1 class="page-title-compact"><%= t('directory.search_results') %></h1>
 <% else %>
-  <h1><%= @presenter.showing_for_you? ? t('directory.for_you', default: 'For You') : t('directory.recent_submissions') %></h1>
-  <p class="lead"><%= t('directory.submissions_intro') %></p>
-  <% if @presenter.show_feed_navigation? %>
-    <ul class="nav nav-tabs submission-feed-tabs" role="tablist">
-      <li role="presentation" class="<%= 'active' unless @presenter.showing_for_you? %>">
-        <%= link_to t('directory.recent', default: 'Recent'), pins_path(feed: 'recent') %>
-      </li>
-      <li role="presentation" class="<%= 'active' if @presenter.showing_for_you? %>">
-        <%= link_to t('directory.for_you', default: 'For You'), pins_path(feed: 'for_you') %>
-      </li>
-    </ul>
-  <% end %>
+  <%# On phones the heading and blurb are visually hidden (see feed_mobile.css.scss) so the photos lead; they stay for screen readers and SEO. %>
+  <h1 class="feed-title"><%= @presenter.showing_for_you? ? t('directory.for_you', default: 'For You') : t('directory.recent_submissions') %></h1>
+  <p class="lead feed-intro"><%= t('directory.submissions_intro') %></p>
 <% end %>
-<div id="pins">
-  <% @presenter.pins.each_with_index do |pin, index| %>
-    <%= render partial: 'pin', locals: { pin: pin, event_context: @presenter.list_event_context.merge(rank: index + 1) } %>
-  <% end %>
+<%# Toolbar: Filter, + Discussion, + Submission. Filter and + Discussion each
+    open a form above the feed (one at a time, feed_toolbar.js); + Submission
+    is the submission form. Recent / For You is a choice inside Filter. On
+    phones the same three float at the bottom once this row scrolls away. %>
+<% filter_count = active_filter_count %>
+<%# ?compose=1 (Start a discussion in the menu) opens the discussion form instead. %>
+<% composing = params[:compose].present? %>
+<div class="feed-toolbar" id="feed-toolbar"><%= render 'pins/toolbar_actions', filter_count: filter_count, composing: composing, dock: false %></div>
+<div id="feed-filter-panel" class="feed-toolbar-panel collapse<%= ' in' if filter_count > 0 && !composing %>">
+  <%= render partial: 'pins/filter_controls' %>
 </div>
-<div id="paginator">
-  <%= will_paginate @presenter.pins, renderer: BootstrapPagination::Rails unless @presenter.pins.empty? %>
+<div id="feed-compose-panel" class="feed-toolbar-panel collapse<%= ' in' if composing %>">
+  <div class="feed-filter-card feed-compose-card">
+    <%= render 'discussions/form', discussion: Discussion.new(category: 'discussion', visibility: 'everyone'), in_feed: true %>
+  </div>
 </div>
+<%# Phones: the toolbar again, at the bottom of the screen, once the one above
+    has scrolled away (feed_toolbar.js shows it). Its buttons scroll back up
+    and open the same forms. %>
+<nav class="feed-dock" aria-label="<%= t('directory.feed_actions', default: 'Feed actions') %>" hidden><%= render 'pins/toolbar_actions', filter_count: filter_count, composing: composing, dock: true %></nav>
+<%= render 'pins/feed_page' %>

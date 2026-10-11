@@ -3,8 +3,8 @@ en:
     form:
       cost_question: How much did this cost?
       insurance_question: Was this covered by insurance?
-      insurance_yes: Yes
-      insurance_no: No
+      insurance_yes: 'Yes'
+      insurance_no: 'No'
       revision_question: Is this a revision procedure?
       sensation_question: How would you rate your sensation after this procedure?
       satisfaction_question: How satisfied are you with the result?
@@ -12,8 +12,8 @@ en:
       similar_existing: 'Possible existing match:'
       use_existing: Use existing
       complications_question: Did you have complications?
-      complications_yes: Yes
-      complications_no: No
+      complications_yes: 'Yes'
+      complications_no: 'No'
       complications_help: Use short tags separated by commas. Add symptoms, timing, and other detail below.
       complications_validation: Use short comma-separated tags. Each tag must be 80 characters or fewer and cannot contain line breaks.
 de:
@@ -40,7 +40,7 @@ es:
       cost_question: ¿Cuánto costó?
       insurance_question: ¿Lo cubrió el seguro?
       insurance_yes: Sí
-      insurance_no: No
+      insurance_no: 'No'
       revision_question: ¿Es una cirugía de revisión?
       sensation_question: ¿Cómo valorarías tu sensibilidad después de este procedimiento?
       satisfaction_question: ¿Qué tan satisfecho/a estás con el resultado?
@@ -49,7 +49,7 @@ es:
       use_existing: Usar existente
       complications_question: ¿Tuviste complicaciones?
       complications_yes: Sí
-      complications_no: No
+      complications_no: 'No'
       complications_help: Usa etiquetas breves separadas por comas. Añade los síntomas, el momento y otros detalles abajo.
       complications_validation: Usa etiquetas breves separadas por comas. Cada etiqueta debe tener 80 caracteres o menos y no puede contener saltos de línea.
 fr:
@@ -76,7 +76,7 @@ it:
       cost_question: Quanto è costato?
       insurance_question: È stato coperto dall'assicurazione?
       insurance_yes: Sì
-      insurance_no: No
+      insurance_no: 'No'
       revision_question: Si tratta di un intervento di revisione?
       sensation_question: Come valuteresti la tua sensibilità dopo questo intervento?
       satisfaction_question: Quanto sei soddisfattə del risultato?
@@ -85,7 +85,7 @@ it:
       use_existing: Usa esistente
       complications_question: Hai avuto complicazioni?
       complications_yes: Sì
-      complications_no: No
+      complications_no: 'No'
       complications_help: Usa tag brevi separati da virgole. Aggiungi sotto sintomi, tempistiche e altri dettagli.
       complications_validation: Usa tag brevi separati da virgole. Ogni tag deve avere al massimo 80 caratteri e non contenere interruzioni di riga.
 ja:

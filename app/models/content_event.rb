@@ -1,6 +1,8 @@
 class ContentEvent < ActiveRecord::Base
-  CONTENT_TYPES = %w[Pin Procedure Surgeon].freeze
-  EVENT_TYPES = %w[impression open view submission_created submission_updated].freeze
+  # Discussion: a standalone discussion. Comment: a procedure or surgeon
+  # discussion's opening comment, as shown on its feed card.
+  CONTENT_TYPES = %w[Pin Procedure Surgeon Page Discussion Comment].freeze
+  EVENT_TYPES = %w[impression open view submission_created submission_updated discussion_created comment_created].freeze
   SOURCES = %w[server client].freeze
 
   belongs_to :user
@@ -34,7 +36,7 @@ class ContentEvent < ActiveRecord::Base
     return if event_context.blank?
     return unless event_context.is_a?(Hash)
 
-    allowed_keys = %w[surface list_mode filter_signature rank ranking_version]
+    allowed_keys = %w[surface list_mode filter_signature rank ranking_version page target status]
     errors.add(:event_context, 'contains unsupported values') unless event_context.keys.all? { |key| allowed_keys.include?(key.to_s) }
   end
 end

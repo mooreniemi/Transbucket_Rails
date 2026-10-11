@@ -1,10 +1,62 @@
-<!-- TODO convert this from form to just pure remote calls? -->
-<%= form_tag pins_path, :method => 'get', :id => 'filter_dropdown' do %>
-  <%= submit_tag t('filter_menu.apply'), id: 'submit-filter', class: 'btn' %>
-  <%= link_to t('filter_menu.clear'), "#", id: 'clear-filter', class: 'btn' %>
-  <% scope_options = Pin::SCOPES.map { |scope| [t("filter_scopes.#{scope}"), scope] } %>
-  <%= select_tag :scope, options_for_select(scope_options, params[:scope]), {multiple: true, class: "chosen-select", 'data-placeholder' => t('filter_menu.scope')} %>
-      <%= select_tag :procedure, options_from_collection_for_select(Procedure.order('name asc'), "id", "localized_name", (params[:procedure].present? ? params[:procedure] : nil)), {multiple: true, class: "chosen-select", 'data-placeholder' => t('filter_menu.procedure')} %>
-  <%= select_tag :surgeon, options_from_collection_for_select(Surgeon.order('last_name asc'), "id", "to_s", (params[:surgeon].present? ? params[:surgeon] : nil)), {multiple: true, class: "chosen-select", 'data-placeholder' => t('filter_menu.surgeon')} %>
-  <%= hidden_field_tag :user, params[:user] if params[:user].present? %>
-<% end %>
+<%# The feed filter, in the collapsible panel above the feed (pins/index).
+    Desktop: Chosen multi-selects (pins/index.js). Phones and tablets: the
+    selects become touch pickers (touch_picker.js): chips for the short
+    gender/area list, a full-screen searchable sheet for procedures/surgeons.
+    Clear is a real link, so it works without any script. %>
+<div class="feed-filter-card">
+  <%= form_tag pins_path, method: 'get', id: 'filter_dropdown' do %>
+    <% scope_options = Pin::SCOPES.map { |scope| [t("filter_scopes.#{scope}"), scope] } %>
+    <% content_options = [
+      [t('filter_menu.all_content_short', default: 'All'), 'all'],
+      [t('filter_menu.submissions_short', default: 'Submissions'), 'submissions'],
+      [t('filter_menu.discussions_short', default: 'Discussions'), 'discussions']
+    ] %>
+    <% current_content = params[:content].presence_in(content_options.map(&:last)) || 'all' %>
+    <div class="feed-filter-fields">
+      <%# Recent / For You, for people who get a For You feed (PinPresenter).
+          For You works together with the filters below. %>
+      <% if @presenter&.offer_for_you? %>
+        <fieldset class="feed-filter-field feed-content-choice feed-show-choice">
+          <legend><%= t('filter_menu.show', default: 'Show') %></legend>
+          <div class="feed-content-pills">
+            <% [[t('directory.recent', default: 'Recent'), 'recent'], [t('directory.for_you', default: 'For You'), 'for_you']].each do |label, value| %>
+              <label class="feed-content-pill">
+                <%= radio_button_tag :feed, value, (value == 'for_you') == @presenter.for_you_chosen? %>
+                <span><%= label %></span>
+              </label>
+            <% end %>
+          </div>
+        </fieldset>
+      <% end %>
+      <%# Three choices, so one tap each (radio pills) rather than a dropdown. %>
+      <fieldset class="feed-filter-field feed-content-choice">
+        <legend><%= t('filter_menu.content', default: 'Content') %></legend>
+        <div class="feed-content-pills">
+          <% content_options.each do |label, value| %>
+            <label class="feed-content-pill">
+              <%= radio_button_tag :content, value, current_content == value %>
+              <span><%= label %></span>
+            </label>
+          <% end %>
+        </div>
+      </fieldset>
+      <div class="feed-filter-field">
+        <%= label_tag :scope, t('filter_menu.scope') %>
+        <%= select_tag :scope, options_for_select(scope_options, params[:scope]), { multiple: true, class: 'chosen-select', 'data-placeholder' => t('filter_menu.scope') }.merge(touch_picker_data(t('filter_menu.scope'))) %>
+      </div>
+      <div class="feed-filter-field">
+        <%= label_tag :procedure, t('filter_menu.procedure') %>
+        <%= select_tag :procedure, options_from_collection_for_select(Procedure.order('name asc'), 'id', 'localized_name', (params[:procedure].present? ? params[:procedure] : nil)), { multiple: true, class: 'chosen-select', 'data-placeholder' => t('filter_menu.procedure') }.merge(touch_picker_data(t('filter_menu.procedure'))) %>
+      </div>
+      <div class="feed-filter-field">
+        <%= label_tag :surgeon, t('filter_menu.surgeon') %>
+        <%= select_tag :surgeon, options_from_collection_for_select(Surgeon.order('last_name asc'), 'id', 'to_s', (params[:surgeon].present? ? params[:surgeon] : nil)), { multiple: true, class: 'chosen-select', 'data-placeholder' => t('filter_menu.surgeon') }.merge(touch_picker_data(t('filter_menu.surgeon'))) %>
+      </div>
+    </div>
+    <%= hidden_field_tag :user, params[:user] if params[:user].present? %>
+    <div class="feed-filter-actions">
+      <%= submit_tag t('filter_menu.apply'), id: 'submit-filter', class: 'btn btn-primary', **track_click_attributes(:filter_apply, :feed_filter) %>
+      <%= link_to t('filter_menu.clear'), pins_path, id: 'clear-filter', class: 'btn btn-default' %>
+    </div>
+  <% end %>
+</div>

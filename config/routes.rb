@@ -17,10 +17,12 @@ Rails.application.routes.draw do
     resources :users do
       resource :preferences
     end
+    resources :trust_grants, path: 'trust', only: [:index, :create, :destroy]
 
-    resources :comments, :only => [:new, :create, :destroy] do
+    resources :comments, :only => [:new, :create, :show, :destroy] do
       resources :flags, :only => [:create]
     end
+    resources :discussions, only: [:new, :create, :show, :destroy]
     resources :content_events, only: [:create] do
       collection { post :batch }
     end

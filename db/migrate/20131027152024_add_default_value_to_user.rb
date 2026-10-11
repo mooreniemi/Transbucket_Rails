@@ -1,4 +1,4 @@
-class AddDefaultValueToUser < ActiveRecord::Migration
+class AddDefaultValueToUser < ActiveRecord::Migration[4.2]
   def self.up
     change_column :users, :safe_mode, :boolean, :default => false
     User.update_all(:safe_mode => false)

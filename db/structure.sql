@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict 8VqrnWMekZSbpesdWJRlKE5Xe4HAad9GFvXdpKD73wJM14KPmSbdNfUaCaKa1be
+\restrict t7fhqQvZ3cttV6viQgblNxzWx9ddyX4aYxBJ4qlwjT1kcZue6isG69YpipMn20F
 
 -- Dumped from database version 13.14 (Debian 13.14-1.pgdg120+2)
 -- Dumped by pg_dump version 15.19 (Debian 15.19-0+deb12u1)
@@ -86,7 +86,8 @@ CREATE TABLE public.comments (
     rgt integer,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    state character varying
+    state character varying,
+    visibility character varying DEFAULT 'everyone'::character varying NOT NULL
 );
 
 
@@ -188,6 +189,43 @@ CREATE SEQUENCE public.delayed_jobs_id_seq
 --
 
 ALTER SEQUENCE public.delayed_jobs_id_seq OWNED BY public.delayed_jobs.id;
+
+
+--
+-- Name: discussions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.discussions (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    title character varying NOT NULL,
+    body text NOT NULL,
+    visibility character varying DEFAULT 'everyone'::character varying NOT NULL,
+    state character varying DEFAULT 'published'::character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    category character varying DEFAULT 'discussion'::character varying NOT NULL
+);
+
+
+--
+-- Name: discussions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.discussions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: discussions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.discussions_id_seq OWNED BY public.discussions.id;
 
 
 --
@@ -700,6 +738,44 @@ ALTER SEQUENCE public.tags_id_seq OWNED BY public.tags.id;
 
 
 --
+-- Name: user_trust_grants; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_trust_grants (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    granted_by_user_id integer,
+    kind character varying NOT NULL,
+    source character varying DEFAULT 'automatic'::character varying NOT NULL,
+    internal_note text,
+    granted_at timestamp without time zone NOT NULL,
+    revoked_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: user_trust_grants_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.user_trust_grants_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_trust_grants_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.user_trust_grants_id_seq OWNED BY public.user_trust_grants.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -728,7 +804,8 @@ CREATE TABLE public.users (
     unconfirmed_email character varying,
     confirmation_reminder_sent_at timestamp without time zone,
     never_signed_in_outreach_sent_at timestamp without time zone,
-    locale character varying
+    locale character varying,
+    pronouns character varying
 );
 
 
@@ -816,6 +893,13 @@ ALTER TABLE ONLY public.content_events ALTER COLUMN id SET DEFAULT nextval('publ
 --
 
 ALTER TABLE ONLY public.delayed_jobs ALTER COLUMN id SET DEFAULT nextval('public.delayed_jobs_id_seq'::regclass);
+
+
+--
+-- Name: discussions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.discussions ALTER COLUMN id SET DEFAULT nextval('public.discussions_id_seq'::regclass);
 
 
 --
@@ -917,6 +1001,13 @@ ALTER TABLE ONLY public.tags ALTER COLUMN id SET DEFAULT nextval('public.tags_id
 
 
 --
+-- Name: user_trust_grants id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_trust_grants ALTER COLUMN id SET DEFAULT nextval('public.user_trust_grants_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -960,6 +1051,14 @@ ALTER TABLE ONLY public.content_events
 
 ALTER TABLE ONLY public.delayed_jobs
     ADD CONSTRAINT delayed_jobs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: discussions discussions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.discussions
+    ADD CONSTRAINT discussions_pkey PRIMARY KEY (id);
 
 
 --
@@ -1075,6 +1174,14 @@ ALTER TABLE ONLY public.tags
 
 
 --
+-- Name: user_trust_grants user_trust_grants_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_trust_grants
+    ADD CONSTRAINT user_trust_grants_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1102,6 +1209,13 @@ CREATE INDEX delayed_jobs_priority ON public.delayed_jobs USING btree (priority,
 --
 
 CREATE INDEX index_comments_on_commentable_id_and_commentable_type ON public.comments USING btree (commentable_id, commentable_type);
+
+
+--
+-- Name: index_comments_on_subject_visibility; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_comments_on_subject_visibility ON public.comments USING btree (commentable_type, commentable_id, parent_id, visibility);
 
 
 --
@@ -1151,6 +1265,27 @@ CREATE INDEX index_content_events_on_visitor_deduplication ON public.content_eve
 --
 
 CREATE INDEX index_content_events_on_visitor_hash_and_occurred_at ON public.content_events USING btree (visitor_hash, occurred_at);
+
+
+--
+-- Name: index_discussions_on_category_and_created_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_discussions_on_category_and_created_at ON public.discussions USING btree (category, created_at);
+
+
+--
+-- Name: index_discussions_on_state_and_visibility_and_created_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_discussions_on_state_and_visibility_and_created_at ON public.discussions USING btree (state, visibility, created_at);
+
+
+--
+-- Name: index_discussions_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_discussions_on_user_id ON public.discussions USING btree (user_id);
 
 
 --
@@ -1280,6 +1415,20 @@ CREATE UNIQUE INDEX index_tags_on_name ON public.tags USING btree (name);
 
 
 --
+-- Name: index_user_trust_grants_on_granted_by_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_trust_grants_on_granted_by_user_id ON public.user_trust_grants USING btree (granted_by_user_id);
+
+
+--
+-- Name: index_user_trust_grants_on_user_id_and_kind; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_user_trust_grants_on_user_id_and_kind ON public.user_trust_grants USING btree (user_id, kind);
+
+
+--
 -- Name: index_users_on_confirmation_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1354,7 +1503,7 @@ ALTER TABLE ONLY public.procedure_translations
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 8VqrnWMekZSbpesdWJRlKE5Xe4HAad9GFvXdpKD73wJM14KPmSbdNfUaCaKa1be
+\unrestrict t7fhqQvZ3cttV6viQgblNxzWx9ddyX4aYxBJ4qlwjT1kcZue6isG69YpipMn20F
 
 SET search_path TO "$user", public;
 
@@ -1507,4 +1656,17 @@ INSERT INTO schema_migrations (version) VALUES ('20260919132000');
 INSERT INTO schema_migrations (version) VALUES ('20260919133000');
 
 INSERT INTO schema_migrations (version) VALUES ('20260919134000');
+
+INSERT INTO schema_migrations (version) VALUES ('20260920060000');
+
+INSERT INTO schema_migrations (version) VALUES ('20260920061000');
+
+
+INSERT INTO schema_migrations (version) VALUES ('20260920190000');
+
+INSERT INTO schema_migrations (version) VALUES ('20261004000000');
+
+INSERT INTO schema_migrations (version) VALUES ('20261005000000');
+
+INSERT INTO schema_migrations (version) VALUES ('20261005000100');
 

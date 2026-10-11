@@ -12,8 +12,18 @@ describe PinPresenter do
       presenter = PinPresenter.new(current_user: create(:user))
 
       expect(presenter.list_event_context).to eq(
-        surface: 'pins_index', list_mode: 'recent', filter_signature: '', ranking_version: 'recent_submission_activity_v1'
+        surface: 'pins_index', list_mode: 'recent', filter_signature: '', ranking_version: 'recent_submission_activity_v1', page: 1
       )
+    end
+
+    it 'reports the page being shown and keeps ranks counting up across pages' do
+      first_page = PinPresenter.new(current_user: create(:user))
+      second_page = PinPresenter.new(current_user: create(:user), page: '2')
+
+      expect(first_page.list_event_context[:page]).to eq(1)
+      expect(first_page.rank_offset).to eq(0)
+      expect(second_page.list_event_context[:page]).to eq(2)
+      expect(second_page.rank_offset).to eq(Pin.per_page)
     end
 
     it 'identifies the actual filtered list shape without retaining filter values' do
@@ -21,13 +31,36 @@ describe PinPresenter do
       presenter = PinPresenter.new(current_user: create(:user), procedure: [procedure.id], satisfaction: '5')
 
       expect(presenter.list_event_context).to eq(
-        surface: 'pins_index', list_mode: 'filtered', filter_signature: 'procedure,satisfaction', ranking_version: 'filtered_recent_activity_v1'
+        surface: 'pins_index', list_mode: 'filtered', filter_signature: 'procedure,satisfaction', ranking_version: 'filtered_recent_activity_v1', page: 1
       )
     end
   end
 
   it 'returns pins' do
     expect(PinPresenter.new.pins).to eq(pins.to_a.reverse)
+  end
+
+  describe 'mixed contextual feed' do
+    it 'wraps submissions and root contextual comments in a paginated feed' do
+      procedure = create(:procedure)
+      comment = Comment.create!(commentable: procedure, user: create(:user), body: 'A discussion')
+
+      presenter = PinPresenter.new(current_user: create(:user), content: 'all')
+
+      expect(presenter.mixed_feed?).to eq(true)
+      expect(presenter.pins.map(&:record)).to include(comment)
+      expect(presenter.pins).to respond_to(:total_entries)
+    end
+
+    it 'supports submissions-only content filtering' do
+      procedure = create(:procedure)
+      comment = Comment.create!(commentable: procedure, user: create(:user), body: 'A discussion')
+
+      presenter = PinPresenter.new(current_user: create(:user), content: 'submissions')
+
+      expect(presenter.pins.map(&:record)).not_to include(comment)
+      expect(presenter.list_event_context[:list_mode]).to eq('mixed')
+    end
   end
 
   describe 'personalized feeds' do
@@ -112,13 +145,13 @@ describe PinPresenter do
     let(:user_id) { pins.last.user_id }
 
     it 'returns pins scoped by surgeon' do
-      pins.last.update_attributes!(surgeon_id: surgeon.id)
+      pins.last.update!(surgeon_id: surgeon.id)
       presenter = PinPresenter.new({surgeon: surgeon.id})
       expect(presenter.pins.last).to eq(pins.last)
     end
 
     it 'returns pins scoped by procedure' do
-      pins.last.update_attributes!(procedure_id: procedure.id)
+      pins.last.update!(procedure_id: procedure.id)
       presenter = PinPresenter.new({procedure: procedure.id})
 
       expect(presenter.pins.last).to eq(pins.last)
@@ -130,17 +163,6 @@ describe PinPresenter do
       expect(presenter.pins.last).to eq(pins.last)
     end
 
-    skip 'performance tests' do
-      it 'needs to perform user filtering quickly' do
-        expect { PinPresenter.new({user: user_id}) }.to perform_under(0.50).and_sample(10)
-      end
-      it 'needs to perform surgeon filtering quickly' do
-        expect { PinPresenter.new({surgeon: surgeon.id}) }.to perform_under(0.50).and_sample(10)
-      end
-      it 'needs to perform procedure filtering quickly' do
-        expect { PinPresenter.new({procedure: procedure.id}) }.to perform_under(0.50).and_sample(10)
-      end
-    end
   end
 
   describe '#has_keywords?' do

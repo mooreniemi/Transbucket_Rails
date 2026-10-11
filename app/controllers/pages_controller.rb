@@ -1,5 +1,12 @@
 class PagesController < ApplicationController
   NEWSFEED_ENTRY_TIMESTAMPS = {
+    'comment_reports' => Time.utc(2026, 9, 21, 1, 0),
+    'pronouns' => Time.utc(2026, 9, 20, 22, 30),
+    'comment_counts' => Time.utc(2026, 9, 20, 22, 20),
+    'safe_mode_blur' => Time.utc(2026, 9, 20, 22, 10),
+    'mobile_refresh' => Time.utc(2026, 9, 20, 22, 0),
+    'contributor_badges' => Time.utc(2026, 9, 20, 21, 15),
+    'readable_pin_details' => Time.utc(2026, 9, 20, 3, 45),
     'mobile_directory_layout' => Time.utc(2026, 9, 19, 22, 40),
     'automatic_photo_resizing' => Time.utc(2026, 9, 19, 22, 30),
     'recent_for_you' => Time.utc(2026, 9, 19, 20, 46),
@@ -14,8 +21,8 @@ class PagesController < ApplicationController
 
   # Page-cache keys use the full request path, so each locale gets its own cached document.
   caches_page :home, :about, :terms, :privacy
-  before_filter :force_request_format_to_html
-  before_filter :authenticate_user!, only: :compare
+  before_action :force_request_format_to_html
+  before_action :authenticate_user!, only: :compare
 
   def home
   end
@@ -85,15 +92,22 @@ class PagesController < ApplicationController
        [t('newsfeed.links.for_you', default: 'For You'), pins_path(feed: 'for_you', locale: I18n.locale)]]
     when 'automatic_photo_resizing'
       [[t('newsfeed.links.submit_photo', default: 'Submit a photo'), new_pin_path(locale: I18n.locale)]]
+    when 'mobile_refresh', 'comment_counts', 'comment_reports'
+      [[t('newsfeed.links.browse_submissions', default: 'Browse submissions'), pins_path(locale: I18n.locale)]]
+    when 'contributor_badges'
+      [[t('newsfeed.links.browse_submissions', default: 'Browse submissions'), pins_path(locale: I18n.locale)]]
     when 'directory_improvements'
       [[t('newsfeed.links.browse_procedures', default: 'Browse procedures'), procedures_path(locale: I18n.locale)],
        [t('newsfeed.links.browse_surgeons', default: 'browse surgeons'), surgeons_path(locale: I18n.locale)]]
     when 'mobile_directory_layout'
       [[t('newsfeed.links.browse_surgeons', default: 'Browse surgeons'), surgeons_path(locale: I18n.locale)]]
+    when 'readable_pin_details'
+      [[t('newsfeed.links.browse_submissions', default: 'Browse submissions'), pins_path(locale: I18n.locale)]]
     when 'locales' then [[t('newsfeed.links.choose_language', default: 'Choose a language'), home_path(locale: I18n.locale)]]
     when 'discord_invite' then [[t('newsfeed.links.join_discord', default: 'Join Discord'), 'https://discord.gg/fRW4RnPqgv']]
     when 'prefix_search' then [[t('newsfeed.links.search_pins', default: 'Search pins'), pins_path(locale: I18n.locale)]]
     when 'procedure_cleanup' then [[t('newsfeed.links.browse_procedures', default: 'Browse procedures'), procedures_path(locale: I18n.locale)]]
+    when 'complication_cleanup' then [[t('newsfeed.links.browse_procedures', default: 'Browse procedures'), procedures_path(locale: I18n.locale)]]
     else []
     end
   end

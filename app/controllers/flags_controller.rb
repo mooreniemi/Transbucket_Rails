@@ -1,7 +1,7 @@
 class FlagsController < ApplicationController
-  before_filter :authenticate_user!
-  after_filter :flash_to_headers
-  respond_to :js
+  before_action :authenticate_user!
+  before_action :require_moderator!, only: :destroy
+  after_action :flash_to_headers
 
   def create
     type, id = content_reference
@@ -75,6 +75,10 @@ class FlagsController < ApplicationController
     [:error, :warning, :notice].each do |type|
       return type unless flash[type].blank?
     end
+  end
+
+  def require_moderator!
+    head :forbidden unless current_user.moderator?
   end
 
 end

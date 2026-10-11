@@ -28,6 +28,7 @@
 
         $(table).find('.directory-sort-button').attr('aria-sort', 'none');
         button.setAttribute('aria-sort', descending ? 'descending' : 'ascending');
+        table.setAttribute('data-sort-state', key + '-' + (descending ? 'desc' : 'asc'));
         $(table).find('tbody').append(rows);
       });
     });

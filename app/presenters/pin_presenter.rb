@@ -1,18 +1,32 @@
 class PinPresenter
   PERSONALIZED_FEED_GENDERS = %w[MTF FTM].freeze
 
-  attr_accessor :query, :page, :filter, :pins, :feed
+  # What a feed card reads from each pin. Loading these up front keeps the query
+  # count flat as the page fills (it used to add four per card: the images, the
+  # surgeon, the procedure and the procedure's translations).
+  CARD_INCLUDES = [:user, :pin_images, :surgeon, { procedure: :translations }].freeze
+
+  attr_accessor :query, :page, :filter, :pins, :feed, :feed_items
   attr_accessor :user, :procedures, :surgeons, :general
 
   def initialize(opts = {})
-    @page = opts.delete(:page)
+    @page = Integer(opts.delete(:page), exception: false) || 1
     @query = opts.delete(:query)
     @user = opts.delete(:user)
     @current_user = opts.delete(:current_user)
     @feed = opts.delete(:feed)
+    @content = opts.delete(:content)
     @filter = opts
 
-    @pins = if @query.present?
+    if browsing_feed? && @feed != 'for_you' && @content.present?
+      @feed_items_query = HomeFeedQuery.new(content: @content, page: @page, viewer: @current_user)
+      @feed_items = @feed_items_query.call
+      @pins = WillPaginate::Collection.create(@page, @feed_items_query.per_page, @feed_items_query.total_entries) do |pager|
+        pager.replace(@feed_items)
+      end
+    end
+
+    @pins ||= if @query.present?
               begin
                 search_results = Pin.search(PinSearchQuery.all_xfields(@query), PinSearchQuery::DEFAULT_OPTIONS)
                                      .paginate(page: @page)
@@ -29,17 +43,25 @@ class PinPresenter
                 Pin.includes(:user).recent.paginate(page: @page)
               end
             elsif @user.present?
-              Pin.includes(:user, :pin_images, :procedure, :surgeon).by_user(@user).paginate(:page => @page)
+              Pin.includes(*CARD_INCLUDES).by_user(@user).paginate(:page => @page)
             elsif has_keywords?
-              # includes are handled inside Query object
-              PinFilterQuery.new(filter).filtered.paginate(:page => @page)
+              # includes are handled inside Query object. For You narrows the
+              # filtered list the same way it narrows the feed (feed_scope),
+              # rather than being dropped while filters are on.
+              filtered = PinFilterQuery.new(filter).filtered
+              filtered = filtered.where(procedure_id: Procedure.where(gender: @current_user.gender.name).select(:id)) if for_you_chosen?
+              filtered.paginate(:page => @page)
             else
-              feed_scope.includes(:user).recent.paginate(:page => @page)
+              feed_scope.includes(*CARD_INCLUDES).recent.paginate(:page => @page)
             end
   end
 
   def personalized_feed_available?
     PERSONALIZED_FEED_GENDERS.include?(@current_user.try(:gender).try(:name))
+  end
+
+  def mixed_feed?
+    browsing_feed? && @feed != 'for_you' && (@feed_items.present? || @content.present?)
   end
 
   def showing_for_you?
@@ -50,13 +72,36 @@ class PinPresenter
     browsing_feed? && personalized_feed_available?
   end
 
+  # Recent / For You is a choice inside Filter (pins/_filter_controls), for
+  # people who get a For You feed. Not on search results or someone's own
+  # submissions, which are separate views.
+  def offer_for_you?
+    @query.blank? && @user.blank? && personalized_feed_available?
+  end
+
+  def for_you_chosen?
+    offer_for_you? && @feed == 'for_you'
+  end
+
   def list_event_context
     {
       surface: 'pins_index',
       list_mode: list_mode,
       filter_signature: active_filter_names.join(','),
-      ranking_version: ranking_version
+      ranking_version: ranking_version,
+      page: current_page
     }
+  end
+
+  # 1-based page being shown (a missing or invalid page param means page 1).
+  def current_page
+    [@page, 1].max
+  end
+
+  # Number of pins on earlier pages, so ranks keep counting up across pages
+  # (page 2 starts at 31, not back at 1) and opens can be compared by depth.
+  def rank_offset
+    (current_page - 1) * Pin.per_page
   end
 
   private
@@ -70,8 +115,10 @@ class PinPresenter
   end
 
   def list_mode
+    return 'mixed' if mixed_feed?
     return 'search' if @query.present?
     return 'user' if @user.present?
+    return 'filtered_for_you' if has_keywords? && for_you_chosen?
     return 'filtered' if has_keywords?
     return 'for_you' if showing_for_you?
 
@@ -90,7 +137,9 @@ class PinPresenter
       'for_you' => 'for_you_gender_v1',
       'search' => 'search_v1',
       'filtered' => 'filtered_recent_activity_v1',
-      'user' => 'user_submissions_v1'
+      'filtered_for_you' => 'filtered_for_you_v1',
+      'user' => 'user_submissions_v1',
+      'mixed' => 'mixed_recent_activity_v1'
     }.fetch(list_mode)
   end
 

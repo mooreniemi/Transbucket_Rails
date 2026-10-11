@@ -8,7 +8,7 @@ describe "pin updating", :fake_images => true do
   let(:pin) { create(:pin, :with_surgeon_and_procedure, :real_pin_images, user: user) }
   let!(:unknown_surgeon) { create(:surgeon, id: 911, first_name: "Surgeon", last_name: "Unknown") }
   let(:pin_data) { { :cost => rand(999),
-                     :experience => Faker::Lorem.sentences(3).join(" ")
+                     :experience => Faker::Lorem.sentences(number: 3).join(" ")
                    } }
   let(:new_images) { build_list(:pin_image, 2) }
 

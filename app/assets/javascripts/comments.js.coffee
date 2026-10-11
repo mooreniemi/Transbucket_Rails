@@ -8,15 +8,50 @@ $(document)
     $(this).find('textarea')
       .removeClass('uneditable-input')
       .removeAttr('disabled', 'disabled')
-      .val('');
-    $($.parseHTML(xhr.responseText)).hide().insertAfter($(this)).show('slow')
-    $(this).hide()
+      .val('')
+      .trigger('input')
+      .blur();
+    # The box under the thread folds back to one line once it is empty again.
+    $(this).removeClass('is-open') if $(this).closest('.comment-composer').length
+    comment = $($.parseHTML(xhr.responseText)).hide()
+    list = $(this).closest('.comment-composer').siblings('.comment-list')
+    if list.length
+      # The always-open box under a pin's comments: the new comment joins the
+      # end of the list and the box stays, empty, for the next one.
+      list.append(comment)
+      window.formatPinAges?(comment)
+      comment.show('slow')
+    else
+      parent = $(this).closest('.reply-target').parent('.comment')
+      if parent.length
+        # A reply: it joins the parent's indented replies, where it will also
+        # be after a reload, and the reply form goes away.
+        replies = parent.children('.comment-replies')
+        unless replies.length
+          replies = $('<div class="comment-replies"></div>').insertBefore(parent.children('.reply-target'))
+        replies.append(comment)
+        $(this).remove()
+      else
+        # A procedure page's "add thread" form: the comment takes its place.
+        comment.insertAfter($(this))
+        $(this).hide()
+      window.formatPinAges?(comment)
+      comment.show('slow')
 
 # Delete a comment
 $(document)
   .on "ajax:beforeSend", ".close", (evt, xhr) ->
-    $(this.parentElement.parentElement).fadeTo('fast', 0.5)
+    $(this).closest('.comment').fadeTo('fast', 0.5)
   .on "ajax:success", ".close", (evt, xhr) ->
-    $(this.parentElement.parentElement).hide('fast')
+    $(this).closest('.comment').hide('fast')
   .on "ajax:error", ".close", ->
-    $(this.parentElement.parentElement).fadeTo('fast', 1)
+    $(this).closest('.comment').fadeTo('fast', 1)
+
+# Delete your own discussion from its home-feed card (pins/_feed_item)
+$(document)
+  .on "ajax:beforeSend", ".feed-discussion-delete", ->
+    $(this).closest('.feed-discussion').fadeTo('fast', 0.5)
+  .on "ajax:success", ".feed-discussion-delete", ->
+    $(this).closest('.feed-discussion').hide('fast')
+  .on "ajax:error", ".feed-discussion-delete", ->
+    $(this).closest('.feed-discussion').fadeTo('fast', 1)

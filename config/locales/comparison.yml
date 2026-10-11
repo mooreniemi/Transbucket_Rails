@@ -35,73 +35,493 @@ de:
   comparison:
     deduplicate: Wiederholte Beiträge gruppieren
     deduplicate_help: 'Ein: höchstens den neuesten Beitrag pro erkannter Kombination aus einreichender Person, Chirurg und Eingriff zählen, damit Wiederholungen die Durchschnittswerte nicht verzerren. Aus: jeden Beitrag zählen.'
+    title: Vergleichen
+    comparing: "%{first} und %{second} vergleichen"
+    metric: Kennzahl
+    rating_distribution: Bewertungsverteilung
+    submissions: Beiträge
+    submission_count: Veröffentlichte Beiträge
+    procedures_count: Vertretene Eingriffe
+    surgeons_count: Vertretene Chirurgen
+    good_outcomes: Mit 3/5 oder besser bewertet (von bewerteten Beiträgen)
+    challenging_outcomes: Mit 1/5 bewertet (von bewerteten Beiträgen)
+    not_enough_data: Nicht genügend Daten
+    common_complications: Häufige Komplikationen
+    none_reported: Keine gemeldet
+    scope_surgeon: 'Optional: gemeinsamer Chirurg'
+    scope_procedure: 'Optional: gemeinsamer Eingriff'
+    interpretation: Dieses Werkzeug fasst Muster in den vorhandenen Beiträgen zusammen. Es kann nicht vorhersagen, was eine einzelne Person erleben wird.
+    insufficient_data: Die Aussagekraft ist begrenzt, da die bewerteten Stichproben nur %{first_count} und %{second_count} Beiträge umfassen; Unterschiede können instabil sein. Dies ist keine Vorhersage für ein individuelles Ergebnis.
+    no_clear_difference: 'Diese Stichprobe zeigt keinen klaren Unterschied (bewertete Beiträge: %{first_count} und %{second_count}; exakter Fisher-Test, p=%{p_value}). Dies ist keine Vorhersage für ein individuelles Ergebnis.'
+    signal_detected: Diese Stichprobe zeigt einen statistischen Unterschied (exakter Fisher-Test, p=%{p_value}), aber das belegt keine Ursache und sagt kein individuelles Ergebnis voraus.
+    complication_rate: "%{rate} der Beiträge"
+    first: Erste Auswahl
+    second: Zweite Auswahl
+    submit: Vergleichen
+    procedures_title: Eingriffe vergleichen
+    procedures_description: Vergleiche die Bewertungsverteilungen von Eingriffen auf Transbucket.
+    surgeons_title: Chirurgen vergleichen
+    surgeons_description: Vergleiche die Bewertungsverteilungen von Chirurgen auf Transbucket.
+    choose_description: Vergleiche die Bewertungsverteilungen von Eingriffen oder Chirurgen auf Transbucket.
 
 es:
   comparison:
     deduplicate: Agrupar envíos repetidos
     deduplicate_help: 'Activado: contar como máximo el envío más reciente de cada combinación identificada de persona, cirujano e intervención para que las repeticiones no inflen los promedios. Desactivado: contar todos los envíos.'
+    title: Comparar
+    comparing: Comparar %{first} y %{second}
+    metric: Métrica
+    rating_distribution: Distribución de valoraciones
+    submissions: Publicaciones
+    submission_count: Publicaciones publicadas
+    procedures_count: Procedimientos representados
+    surgeons_count: Cirujanos representados
+    good_outcomes: Valoradas con 3/5 o más (de las publicaciones valoradas)
+    challenging_outcomes: Valoradas con 1/5 (de las publicaciones valoradas)
+    not_enough_data: No hay datos suficientes
+    common_complications: Complicaciones frecuentes
+    none_reported: Ninguna notificada
+    scope_surgeon: Cirujano compartido (opcional)
+    scope_procedure: Procedimiento compartido (opcional)
+    interpretation: Esta herramienta resume patrones en las publicaciones disponibles. No puede predecir lo que vivirá cada persona.
+    insufficient_data: La evidencia es limitada porque los tamaños de muestra valorados son %{first_count} y %{second_count}; las diferencias pueden ser inestables. Esto no es una predicción del resultado de una persona concreta.
+    no_clear_difference: 'Esta muestra no presenta una diferencia clara (publicaciones valoradas: %{first_count} y %{second_count}; prueba exacta de Fisher, p=%{p_value}). Esto no es una predicción del resultado de una persona concreta.'
+    signal_detected: En esta muestra hay una diferencia estadística (prueba exacta de Fisher, p=%{p_value}), pero eso no establece una causa ni predice el resultado de una persona concreta.
+    complication_rate: "%{rate} de las publicaciones"
+    first: Primera opción
+    second: Segunda opción
+    submit: Comparar
+    procedures_title: Comparar procedimientos
+    procedures_description: Compara las distribuciones de valoraciones de procedimientos en Transbucket.
+    surgeons_title: Comparar cirujanos
+    surgeons_description: Compara las distribuciones de valoraciones de cirujanos en Transbucket.
+    choose_description: Compara las distribuciones de valoraciones de procedimientos o cirujanos en Transbucket.
 
 fr:
   comparison:
     deduplicate: Regrouper les publications répétées
     deduplicate_help: 'Activé : compter au plus la publication la plus récente de chaque combinaison identifiée de personne, chirurgien et intervention afin que les répétitions ne faussent pas les moyennes. Désactivé : compter chaque publication.'
+    title: Comparer
+    comparing: Comparer %{first} et %{second}
+    metric: Indicateur
+    rating_distribution: Répartition des notes
+    submissions: Contributions
+    submission_count: Contributions publiées
+    procedures_count: Procédures représentées
+    surgeons_count: Chirurgiens représentés
+    good_outcomes: Notées 3/5 ou plus (parmi les contributions notées)
+    challenging_outcomes: Notées 1/5 (parmi les contributions notées)
+    not_enough_data: Données insuffisantes
+    common_complications: Complications fréquentes
+    none_reported: Aucune signalée
+    scope_surgeon: Chirurgien commun (facultatif)
+    scope_procedure: Procédure commune (facultative)
+    interpretation: Cet outil résume des tendances dans les contributions disponibles. Il ne peut pas prédire ce que vivra une personne en particulier.
+    insufficient_data: Les preuves sont limitées, car les échantillons notés sont de %{first_count} et %{second_count} ; les différences peuvent être instables. Ceci n’est pas une prédiction du résultat d’une personne.
+    no_clear_difference: 'Cet échantillon ne montre pas de différence nette (contributions notées : %{first_count} et %{second_count} ; test exact de Fisher, p=%{p_value}). Ceci n’est pas une prédiction du résultat d’une personne.'
+    signal_detected: Cet échantillon montre une différence statistique (test exact de Fisher, p=%{p_value}), mais cela n’établit pas de cause et ne prédit pas le résultat d’une personne.
+    complication_rate: "%{rate} des contributions"
+    first: Premier choix
+    second: Deuxième choix
+    submit: Comparer
+    procedures_title: Comparer des procédures
+    procedures_description: Comparez les répartitions des notes des procédures sur Transbucket.
+    surgeons_title: Comparer des chirurgiens
+    surgeons_description: Comparez les répartitions des notes des chirurgiens sur Transbucket.
+    choose_description: Comparez les répartitions des notes des procédures ou des chirurgiens sur Transbucket.
 
 it:
   comparison:
     deduplicate: Raggruppa gli invii ripetuti
     deduplicate_help: 'Attivo: conta al massimo l invio più recente per ogni combinazione identificata di persona, chirurgo e procedura, così le ripetizioni non gonfiano le medie. Disattivo: conta ogni invio.'
+    title: Confronta
+    comparing: Confronta %{first} e %{second}
+    metric: Metrica
+    rating_distribution: Distribuzione delle valutazioni
+    submissions: Contributi
+    submission_count: Contributi pubblicati
+    procedures_count: Procedure rappresentate
+    surgeons_count: Chirurghi rappresentati
+    good_outcomes: Valutati 3/5 o più (tra i contributi valutati)
+    challenging_outcomes: Valutati 1/5 (tra i contributi valutati)
+    not_enough_data: Dati insufficienti
+    common_complications: Complicazioni frequenti
+    none_reported: Nessuna segnalata
+    scope_surgeon: Chirurgo in comune (facoltativo)
+    scope_procedure: Procedura in comune (facoltativa)
+    interpretation: Questo strumento riassume gli andamenti nei contributi disponibili. Non può prevedere cosa vivrà una singola persona.
+    insufficient_data: Le evidenze sono limitate perché i campioni valutati sono %{first_count} e %{second_count}; le differenze potrebbero non essere stabili. Non è una previsione dell’esito per una singola persona.
+    no_clear_difference: 'Questo campione non mostra una differenza evidente (contributi valutati: %{first_count} e %{second_count}; test esatto di Fisher, p=%{p_value}). Non è una previsione dell’esito per una singola persona.'
+    signal_detected: Questo campione mostra una differenza statistica (test esatto di Fisher, p=%{p_value}), ma ciò non stabilisce una causa né prevede l’esito per una singola persona.
+    complication_rate: "%{rate} dei contributi"
+    first: Prima scelta
+    second: Seconda scelta
+    submit: Confronta
+    procedures_title: Confronta le procedure
+    procedures_description: Confronta le distribuzioni delle valutazioni delle procedure su Transbucket.
+    surgeons_title: Confronta i chirurghi
+    surgeons_description: Confronta le distribuzioni delle valutazioni dei chirurghi su Transbucket.
+    choose_description: Confronta le distribuzioni delle valutazioni di procedure o chirurghi su Transbucket.
 
 ja:
   comparison:
     deduplicate: 繰り返しの投稿をまとめる
     deduplicate_help: 'オン: 投稿者・外科医・施術の組み合わせごとに最新の投稿を最大1件だけ数え、繰り返し投稿が平均値を膨らませないようにします。オフ: すべての投稿を数えます。'
+    title: 比較
+    comparing: "%{first}と%{second}を比較"
+    metric: 指標
+    rating_distribution: 評価の分布
+    submissions: 投稿
+    submission_count: 公開済みの投稿
+    procedures_count: 対象の手術
+    surgeons_count: 対象の外科医
+    good_outcomes: 評価3/5以上（評価付き投稿のうち）
+    challenging_outcomes: 評価1/5（評価付き投稿のうち）
+    not_enough_data: データが不足しています
+    common_complications: よくある合併症
+    none_reported: 報告なし
+    scope_surgeon: 共通の外科医（任意）
+    scope_procedure: 共通の手術（任意）
+    interpretation: このツールは、利用可能な投稿から見られる傾向をまとめたものです。個人が実際にどのような経験をするかを予測することはできません。
+    insufficient_data: 評価付きのサンプル数が%{first_count}件と%{second_count}件と少ないため、根拠は限られており、差は安定していない可能性があります。これは個人の結果を予測するものではありません。
+    no_clear_difference: このサンプルでは明確な差は見られませんでした（評価付き投稿：%{first_count}件と%{second_count}件、フィッシャーの正確確率検定 p=%{p_value}）。これは個人の結果を予測するものではありません。
+    signal_detected: このサンプルには統計的な差が見られます（フィッシャーの正確確率検定 p=%{p_value}）が、原因を示すものではなく、個人の結果を予測するものでもありません。
+    complication_rate: 投稿の%{rate}
+    first: 1つ目
+    second: 2つ目
+    submit: 比較する
+    procedures_title: 手術を比較
+    procedures_description: Transbucketで手術の評価分布を比較します。
+    surgeons_title: 外科医を比較
+    surgeons_description: Transbucketで外科医の評価分布を比較します。
+    choose_description: Transbucketで手術または外科医の評価分布を比較します。
 
 zh-CN:
   comparison:
     deduplicate: 合并重复提交
     deduplicate_help: '开启：每个已识别的提交者、外科医生和手术组合最多计入最新的一条提交，避免重复提交影响平均值。关闭：每条提交都计入。'
+    title: 比较
+    comparing: 比较 %{first} 与 %{second}
+    metric: 指标
+    rating_distribution: 评分分布
+    submissions: 投稿
+    submission_count: 已发布的投稿
+    procedures_count: 涉及的手术项目
+    surgeons_count: 涉及的医生
+    good_outcomes: 评分为 3/5 或更高（在已评分的投稿中）
+    challenging_outcomes: 评分为 1/5（在已评分的投稿中）
+    not_enough_data: 数据不足
+    common_complications: 常见并发症
+    none_reported: 无相关报告
+    scope_surgeon: 可选的共同医生
+    scope_procedure: 可选的共同手术项目
+    interpretation: 本工具汇总现有投稿中的规律，无法预测任何个人的实际经历。
+    insufficient_data: 由于已评分的样本量仅为 %{first_count} 和 %{second_count}，证据有限，差异可能不稳定。这不是对个人结果的预测。
+    no_clear_difference: 该样本未显示出明显差异（已评分投稿：%{first_count} 和 %{second_count}；Fisher 精确检验 p=%{p_value}）。这不是对个人结果的预测。
+    signal_detected: 该样本显示出统计学差异（Fisher 精确检验 p=%{p_value}），但这并不能确定因果关系，也无法预测个人结果。
+    complication_rate: 占投稿的 %{rate}
+    first: 第一项
+    second: 第二项
+    submit: 比较
+    procedures_title: 比较手术项目
+    procedures_description: 在 Transbucket 上比较各手术项目的评分分布。
+    surgeons_title: 比较医生
+    surgeons_description: 在 Transbucket 上比较各医生的评分分布。
+    choose_description: 在 Transbucket 上比较手术项目或医生的评分分布。
 
 zh-TW:
   comparison:
     deduplicate: 分組重複提交
     deduplicate_help: '開啟：每個已識別的提交者、外科醫師和手術組合最多計入最新的一筆提交，避免重複提交影響平均值。關閉：每筆提交都計入。'
+    title: 比較
+    comparing: 比較 %{first} 與 %{second}
+    metric: 指標
+    rating_distribution: 評分分布
+    submissions: 投稿
+    submission_count: 已發布的投稿
+    procedures_count: 涵蓋的手術項目
+    surgeons_count: 涵蓋的醫師
+    good_outcomes: 評分為 3/5 以上（已評分投稿中）
+    challenging_outcomes: 評分為 1/5（已評分投稿中）
+    not_enough_data: 資料不足
+    common_complications: 常見併發症
+    none_reported: 無相關回報
+    scope_surgeon: 可選的共同醫師
+    scope_procedure: 可選的共同手術項目
+    interpretation: 本工具彙整現有投稿中的規律，無法預測任何個人的實際經歷。
+    insufficient_data: 由於已評分的樣本數僅為 %{first_count} 與 %{second_count}，證據有限，差異可能不穩定。這不是對個人結果的預測。
+    no_clear_difference: 此樣本未顯示明顯差異（已評分投稿：%{first_count} 與 %{second_count}；Fisher 精確檢定 p=%{p_value}）。這不是對個人結果的預測。
+    signal_detected: 此樣本顯示出統計上的差異（Fisher 精確檢定 p=%{p_value}），但這並不能確立因果關係，也無法預測個人結果。
+    complication_rate: 佔投稿的 %{rate}
+    first: 第一項
+    second: 第二項
+    submit: 比較
+    procedures_title: 比較手術項目
+    procedures_description: 在 Transbucket 上比較各手術項目的評分分布。
+    surgeons_title: 比較醫師
+    surgeons_description: 在 Transbucket 上比較各醫師的評分分布。
+    choose_description: 在 Transbucket 上比較手術項目或醫師的評分分布。
 
 pt-BR:
   comparison:
     deduplicate: Agrupar envios repetidos
     deduplicate_help: 'Ativado: contar no máximo o envio mais recente de cada combinação identificada de pessoa, cirurgião e procedimento, para que repetições não aumentem as médias. Desativado: contar todos os envios.'
+    title: Comparar
+    comparing: Comparar %{first} e %{second}
+    metric: Métrica
+    rating_distribution: Distribuição das avaliações
+    submissions: Publicações
+    submission_count: Publicações publicadas
+    procedures_count: Procedimentos representados
+    surgeons_count: Cirurgiões representados
+    good_outcomes: Avaliadas com 3/5 ou mais (das publicações avaliadas)
+    challenging_outcomes: Avaliadas com 1/5 (das publicações avaliadas)
+    not_enough_data: Dados insuficientes
+    common_complications: Complicações comuns
+    none_reported: Nenhuma relatada
+    scope_surgeon: Cirurgião em comum (opcional)
+    scope_procedure: Procedimento em comum (opcional)
+    interpretation: Esta ferramenta resume padrões nas publicações disponíveis. Ela não pode prever o que cada pessoa vai vivenciar.
+    insufficient_data: As evidências são limitadas porque os tamanhos das amostras avaliadas são %{first_count} e %{second_count}; as diferenças podem ser instáveis. Isso não é uma previsão do resultado de uma pessoa.
+    no_clear_difference: 'Esta amostra não mostra uma diferença clara (publicações avaliadas: %{first_count} e %{second_count}; teste exato de Fisher, p=%{p_value}). Isso não é uma previsão do resultado de uma pessoa.'
+    signal_detected: Esta amostra mostra uma diferença estatística (teste exato de Fisher, p=%{p_value}), mas isso não estabelece uma causa nem prevê o resultado de uma pessoa.
+    complication_rate: "%{rate} das publicações"
+    first: Primeira opção
+    second: Segunda opção
+    submit: Comparar
+    procedures_title: Comparar procedimentos
+    procedures_description: Compare as distribuições de avaliações de procedimentos no Transbucket.
+    surgeons_title: Comparar cirurgiões
+    surgeons_description: Compare as distribuições de avaliações de cirurgiões no Transbucket.
+    choose_description: Compare as distribuições de avaliações de procedimentos ou cirurgiões no Transbucket.
 
 nl:
   comparison:
     deduplicate: Herhaalde inzendingen groeperen
     deduplicate_help: 'Aan: tel per geïdentificeerde combinatie van inzender, chirurg en ingreep maximaal het nieuwste bericht mee, zodat herhalingen de gemiddelden niet verhogen. Uit: tel elk bericht mee.'
+    title: Vergelijken
+    comparing: Vergelijk %{first} en %{second}
+    metric: Maatstaf
+    rating_distribution: Verdeling van beoordelingen
+    submissions: Bijdragen
+    submission_count: Gepubliceerde bijdragen
+    procedures_count: Vertegenwoordigde procedures
+    surgeons_count: Vertegenwoordigde chirurgen
+    good_outcomes: Beoordeeld met 3/5 of hoger (van de beoordeelde bijdragen)
+    challenging_outcomes: Beoordeeld met 1/5 (van de beoordeelde bijdragen)
+    not_enough_data: Onvoldoende gegevens
+    common_complications: Veelvoorkomende complicaties
+    none_reported: Geen gemeld
+    scope_surgeon: Optionele gedeelde chirurg
+    scope_procedure: Optionele gedeelde procedure
+    interpretation: Deze tool vat patronen in de beschikbare bijdragen samen. Ze kan niet voorspellen wat een individuele persoon zal ervaren.
+    insufficient_data: Het bewijs is beperkt omdat de beoordeelde steekproeven %{first_count} en %{second_count} groot zijn; verschillen kunnen onstabiel zijn. Dit is geen voorspelling van een individueel resultaat.
+    no_clear_difference: 'Deze steekproef toont geen duidelijk verschil (beoordeelde bijdragen: %{first_count} en %{second_count}; exacte toets van Fisher, p=%{p_value}). Dit is geen voorspelling van een individueel resultaat.'
+    signal_detected: Deze steekproef toont een statistisch verschil (exacte toets van Fisher, p=%{p_value}), maar dit bewijst geen oorzaak en voorspelt geen individueel resultaat.
+    complication_rate: "%{rate} van de bijdragen"
+    first: Eerste keuze
+    second: Tweede keuze
+    submit: Vergelijken
+    procedures_title: Procedures vergelijken
+    procedures_description: Vergelijk de verdeling van beoordelingen van procedures op Transbucket.
+    surgeons_title: Chirurgen vergelijken
+    surgeons_description: Vergelijk de verdeling van beoordelingen van chirurgen op Transbucket.
+    choose_description: Vergelijk de verdeling van beoordelingen van procedures of chirurgen op Transbucket.
 
 pl:
   comparison:
     deduplicate: Grupuj powtórne zgłoszenia
     deduplicate_help: 'Włączone: uwzględniaj najwyżej najnowsze zgłoszenie dla każdej rozpoznanej kombinacji osoby zgłaszającej, chirurga i zabiegu, aby powtórzenia nie zawyżały średnich. Wyłączone: uwzględniaj każde zgłoszenie.'
+    title: Porównaj
+    comparing: 'Porównaj: %{first} i %{second}'
+    metric: Wskaźnik
+    rating_distribution: Rozkład ocen
+    submissions: Wpisy
+    submission_count: Opublikowane wpisy
+    procedures_count: Uwzględnione zabiegi
+    surgeons_count: Uwzględnieni chirurdzy
+    good_outcomes: Ocena 3/5 lub wyższa (spośród ocenionych wpisów)
+    challenging_outcomes: Ocena 1/5 (spośród ocenionych wpisów)
+    not_enough_data: Za mało danych
+    common_complications: Częste powikłania
+    none_reported: Brak zgłoszeń
+    scope_surgeon: Opcjonalny wspólny chirurg
+    scope_procedure: Opcjonalny wspólny zabieg
+    interpretation: To narzędzie podsumowuje wzorce w dostępnych wpisach. Nie może przewidzieć, czego doświadczy dana osoba.
+    insufficient_data: Dowody są ograniczone, ponieważ liczebność ocenionych prób wynosi %{first_count} i %{second_count}; różnice mogą być niestabilne. To nie jest prognoza wyniku dla konkretnej osoby.
+    no_clear_difference: 'Ta próba nie wykazuje wyraźnej różnicy (ocenione wpisy: %{first_count} i %{second_count}; dokładny test Fishera, p=%{p_value}). To nie jest prognoza wyniku dla konkretnej osoby.'
+    signal_detected: Ta próba wykazuje różnicę statystyczną (dokładny test Fishera, p=%{p_value}), ale nie dowodzi to przyczyny ani nie przewiduje wyniku dla konkretnej osoby.
+    complication_rate: "%{rate} wpisów"
+    first: Pierwszy wybór
+    second: Drugi wybór
+    submit: Porównaj
+    procedures_title: Porównaj zabiegi
+    procedures_description: Porównaj rozkłady ocen zabiegów w Transbucket.
+    surgeons_title: Porównaj chirurgów
+    surgeons_description: Porównaj rozkłady ocen chirurgów w Transbucket.
+    choose_description: Porównaj rozkłady ocen zabiegów lub chirurgów w Transbucket.
 
 ru:
   comparison:
     deduplicate: Группировать повторные публикации
     deduplicate_help: 'Включено: учитывать не более одной, самой новой публикации для каждой распознанной комбинации автора, хирурга и процедуры, чтобы повторы не завышали средние значения. Выключено: учитывать каждую публикацию.'
+    title: Сравнить
+    comparing: 'Сравнить: %{first} и %{second}'
+    metric: Показатель
+    rating_distribution: Распределение оценок
+    submissions: Публикации
+    submission_count: Всего опубликовано
+    procedures_count: Представленные операции
+    surgeons_count: Представленные хирурги
+    good_outcomes: Оценка 3/5 и выше (среди оценённых публикаций)
+    challenging_outcomes: Оценка 1/5 (среди оценённых публикаций)
+    not_enough_data: Недостаточно данных
+    common_complications: Частые осложнения
+    none_reported: Не сообщалось
+    scope_surgeon: Общий хирург (необязательно)
+    scope_procedure: Общая операция (необязательно)
+    interpretation: Этот инструмент обобщает закономерности в имеющихся публикациях. Он не может предсказать, что переживёт конкретный человек.
+    insufficient_data: 'Данных для выводов мало: размеры оценённых выборок составляют %{first_count} и %{second_count}, поэтому различия могут быть нестабильными. Это не прогноз результата для конкретного человека.'
+    no_clear_difference: 'В этой выборке нет чёткой разницы (оценённые публикации: %{first_count} и %{second_count}; точный критерий Фишера, p=%{p_value}). Это не прогноз результата для конкретного человека.'
+    signal_detected: В этой выборке есть статистическая разница (точный критерий Фишера, p=%{p_value}), но это не устанавливает причину и не предсказывает результат для конкретного человека.
+    complication_rate: "%{rate} публикаций"
+    first: Первый выбор
+    second: Второй выбор
+    submit: Сравнить
+    procedures_title: Сравнение операций
+    procedures_description: Сравнивайте распределение оценок операций на Transbucket.
+    surgeons_title: Сравнение хирургов
+    surgeons_description: Сравнивайте распределение оценок хирургов на Transbucket.
+    choose_description: Сравнивайте распределение оценок операций или хирургов на Transbucket.
 
 tr:
   comparison:
     deduplicate: Tekrarlanan gönderileri grupla
     deduplicate_help: 'Açık: tekrar gönderilerin ortalamaları artırmaması için tanımlanabilen kullanıcı, cerrah ve işlem kombinasyonu başına en fazla en yeni gönderiyi say. Kapalı: her gönderiyi say.'
+    title: Karşılaştır
+    comparing: "%{first} ile %{second} karşılaştırması"
+    metric: Ölçüt
+    rating_distribution: Puan dağılımı
+    submissions: Gönderiler
+    submission_count: Yayınlanan gönderiler
+    procedures_count: Temsil edilen prosedürler
+    surgeons_count: Temsil edilen cerrahlar
+    good_outcomes: 3/5 veya daha yüksek puan (puanlanan gönderiler arasında)
+    challenging_outcomes: 1/5 puan (puanlanan gönderiler arasında)
+    not_enough_data: Yeterli veri yok
+    common_complications: Sık görülen komplikasyonlar
+    none_reported: Bildirilmedi
+    scope_surgeon: İsteğe bağlı ortak cerrah
+    scope_procedure: İsteğe bağlı ortak prosedür
+    interpretation: Bu araç, mevcut gönderilerdeki örüntüleri özetler. Herhangi bir kişinin ne yaşayacağını öngöremez.
+    insufficient_data: Puanlanan örneklem büyüklükleri %{first_count} ve %{second_count} olduğu için kanıt sınırlıdır; farklar kararsız olabilir. Bu, bireysel bir sonucun tahmini değildir.
+    no_clear_difference: 'Bu örneklem belirgin bir fark göstermiyor (puanlanan gönderiler: %{first_count} ve %{second_count}; Fisher kesin testi, p=%{p_value}). Bu, bireysel bir sonucun tahmini değildir.'
+    signal_detected: Bu örneklem istatistiksel bir fark gösteriyor (Fisher kesin testi, p=%{p_value}), ancak bu bir neden kanıtlamaz ve bireysel bir sonucu öngörmez.
+    complication_rate: 'Gönderi oranı: %{rate}'
+    first: Birinci seçim
+    second: İkinci seçim
+    submit: Karşılaştır
+    procedures_title: Prosedürleri karşılaştır
+    procedures_description: Transbucket’ta prosedürlerin puan dağılımlarını karşılaştırın.
+    surgeons_title: Cerrahları karşılaştır
+    surgeons_description: Transbucket’ta cerrahların puan dağılımlarını karşılaştırın.
+    choose_description: Transbucket’ta prosedürlerin veya cerrahların puan dağılımlarını karşılaştırın.
 
 vi:
   comparison:
     deduplicate: Nhóm bài đăng lặp lại
     deduplicate_help: 'Bật: chỉ tính tối đa bài đăng mới nhất cho mỗi tổ hợp người gửi, bác sĩ phẫu thuật và thủ thuật đã xác định, để bài đăng lặp lại không làm tăng trung bình. Tắt: tính mọi bài đăng.'
+    title: So sánh
+    comparing: So sánh %{first} và %{second}
+    metric: Chỉ số
+    rating_distribution: Phân bố điểm đánh giá
+    submissions: Bài đăng
+    submission_count: Bài đăng đã xuất bản
+    procedures_count: Số thủ thuật được đại diện
+    surgeons_count: Số bác sĩ phẫu thuật được đại diện
+    good_outcomes: Được đánh giá từ 3/5 trở lên (trong các bài đăng có đánh giá)
+    challenging_outcomes: Được đánh giá 1/5 (trong các bài đăng có đánh giá)
+    not_enough_data: Chưa đủ dữ liệu
+    common_complications: Biến chứng thường gặp
+    none_reported: Không có báo cáo
+    scope_surgeon: Bác sĩ phẫu thuật chung (tùy chọn)
+    scope_procedure: Thủ thuật chung (tùy chọn)
+    interpretation: Công cụ này tóm tắt các xu hướng trong những bài đăng hiện có. Nó không thể dự đoán điều mà từng người sẽ trải qua.
+    insufficient_data: Bằng chứng còn hạn chế vì cỡ mẫu có đánh giá chỉ là %{first_count} và %{second_count}; sự khác biệt có thể không ổn định. Đây không phải là dự đoán kết quả của một cá nhân.
+    no_clear_difference: 'Mẫu này không cho thấy sự khác biệt rõ ràng (bài đăng có đánh giá: %{first_count} và %{second_count}; kiểm định chính xác Fisher, p=%{p_value}). Đây không phải là dự đoán kết quả của một cá nhân.'
+    signal_detected: Mẫu này cho thấy sự khác biệt có ý nghĩa thống kê (kiểm định chính xác Fisher, p=%{p_value}), nhưng điều này không xác lập nguyên nhân hay dự đoán kết quả của một cá nhân.
+    complication_rate: "%{rate} số bài đăng"
+    first: Lựa chọn thứ nhất
+    second: Lựa chọn thứ hai
+    submit: So sánh
+    procedures_title: So sánh thủ thuật
+    procedures_description: So sánh phân bố điểm đánh giá của các thủ thuật trên Transbucket.
+    surgeons_title: So sánh bác sĩ phẫu thuật
+    surgeons_description: So sánh phân bố điểm đánh giá của các bác sĩ phẫu thuật trên Transbucket.
+    choose_description: So sánh phân bố điểm đánh giá của thủ thuật hoặc bác sĩ phẫu thuật trên Transbucket.
 
 ar:
   comparison:
     deduplicate: تجميع المشاركات المتكررة
     deduplicate_help: 'مفعّل: احتسب أحدث مشاركة واحدة كحد أقصى لكل مجموعة محددة من مقدم المشاركة والجراح والإجراء، حتى لا ترفع المشاركات المتكررة المتوسطات. معطّل: احتسب كل مشاركة.'
+    title: مقارنة
+    comparing: مقارنة %{first} و%{second}
+    metric: المقياس
+    rating_distribution: توزيع التقييمات
+    submissions: المنشورات
+    submission_count: المنشورات المنشورة
+    procedures_count: الإجراءات الممثَّلة
+    surgeons_count: الجراحون الممثَّلون
+    good_outcomes: تقييم 3/5 أو أعلى (من المنشورات المقيَّمة)
+    challenging_outcomes: تقييم 1/5 (من المنشورات المقيَّمة)
+    not_enough_data: لا توجد بيانات كافية
+    common_complications: المضاعفات الشائعة
+    none_reported: لم يُبلَّغ عن أي منها
+    scope_surgeon: جرّاح مشترك (اختياري)
+    scope_procedure: إجراء مشترك (اختياري)
+    interpretation: تلخّص هذه الأداة الأنماط في المنشورات المتاحة. ولا يمكنها التنبؤ بما سيمرّ به أي شخص بعينه.
+    insufficient_data: الأدلة محدودة لأن أحجام العيّنات المقيَّمة هي %{first_count} و%{second_count}؛ وقد تكون الفروق غير مستقرة. هذا ليس تنبؤًا بنتيجة شخص بعينه.
+    no_clear_difference: 'لا تُظهر هذه العيّنة فرقًا واضحًا (المنشورات المقيَّمة: %{first_count} و%{second_count}؛ اختبار فيشر الدقيق، p=%{p_value}). هذا ليس تنبؤًا بنتيجة شخص بعينه.'
+    signal_detected: تُظهر هذه العيّنة فرقًا إحصائيًا (اختبار فيشر الدقيق، p=%{p_value})، لكن ذلك لا يثبت سببًا ولا يتنبأ بنتيجة شخص بعينه.
+    complication_rate: "%{rate} من المنشورات"
+    first: الاختيار الأول
+    second: الاختيار الثاني
+    submit: قارن
+    procedures_title: مقارنة الإجراءات
+    procedures_description: قارن توزيعات تقييمات الإجراءات على Transbucket.
+    surgeons_title: مقارنة الجراحين
+    surgeons_description: قارن توزيعات تقييمات الجراحين على Transbucket.
+    choose_description: قارن توزيعات تقييمات الإجراءات أو الجراحين على Transbucket.
 
 sv:
   comparison:
     deduplicate: Gruppera upprepade bidrag
     deduplicate_help: 'På: räkna högst det senaste bidraget för varje identifierad kombination av inskickare, kirurg och ingrepp, så att upprepningar inte höjer genomsnitten. Av: räkna varje bidrag.'
+    title: Jämför
+    comparing: Jämför %{first} och %{second}
+    metric: Mått
+    rating_distribution: Betygsfördelning
+    submissions: Bidrag
+    submission_count: Publicerade bidrag
+    procedures_count: Ingrepp som ingår
+    surgeons_count: Kirurger som ingår
+    good_outcomes: Betyg 3/5 eller högre (av betygsatta bidrag)
+    challenging_outcomes: Betyg 1/5 (av betygsatta bidrag)
+    not_enough_data: Otillräckligt med data
+    common_complications: Vanliga komplikationer
+    none_reported: Inga rapporterade
+    scope_surgeon: Valfri gemensam kirurg
+    scope_procedure: Valfritt gemensamt ingrepp
+    interpretation: Det här verktyget sammanfattar mönster i de tillgängliga bidragen. Det kan inte förutsäga vad en enskild person kommer att uppleva.
+    insufficient_data: Underlaget är begränsat eftersom de betygsatta urvalen är %{first_count} och %{second_count} stora; skillnaderna kan vara instabila. Detta är ingen förutsägelse av ett enskilt resultat.
+    no_clear_difference: 'Urvalet visar ingen tydlig skillnad (betygsatta bidrag: %{first_count} och %{second_count}; Fishers exakta test, p=%{p_value}). Detta är ingen förutsägelse av ett enskilt resultat.'
+    signal_detected: Urvalet visar en statistisk skillnad (Fishers exakta test, p=%{p_value}), men det fastställer ingen orsak och förutsäger inget enskilt resultat.
+    complication_rate: "%{rate} av bidragen"
+    first: Första valet
+    second: Andra valet
+    submit: Jämför
+    procedures_title: Jämför ingrepp
+    procedures_description: Jämför betygsfördelningar för ingrepp på Transbucket.
+    surgeons_title: Jämför kirurger
+    surgeons_description: Jämför betygsfördelningar för kirurger på Transbucket.
+    choose_description: Jämför betygsfördelningar för ingrepp eller kirurger på Transbucket.

@@ -1,0 +1,41 @@
+<%# Starting a discussion: in the panel above the feed (in_feed: true, posted
+    by feed_toolbar.js, which puts the new card at the top of the feed) and on
+    its own page (discussions/new). Category and audience are one tap each. %>
+<% in_feed = local_assigns.fetch(:in_feed, false) %>
+<%= simple_form_for discussion, html: { class: 'discussion-form' } do |f| %>
+  <%= f.input :title, label: t('public.discussion.title', default: 'Title'),
+        placeholder: t('public.discussion.title_placeholder', default: 'What do you want to talk about?'),
+        input_html: { maxlength: 160, autofocus: !in_feed, class: 'form-control discussion-title-input' } %>
+  <fieldset class="discussion-pill-group discussion-category-choice">
+    <legend><%= t('public.discussion.category', default: 'Category') %></legend>
+    <div class="feed-content-pills">
+      <% discussion_category_options.each do |label, value| %>
+        <label class="feed-content-pill">
+          <%= f.radio_button :category, value %>
+          <span><%= label %></span>
+        </label>
+      <% end %>
+    </div>
+  </fieldset>
+  <%= f.input :body, as: :text, label: t('public.discussion.body', default: 'Post'),
+        input_html: { rows: in_feed ? 5 : 8, class: 'form-control discussion-body-input' } %>
+  <fieldset class="discussion-pill-group discussion-visibility">
+    <legend><%= t('public.comment.visibility_label', default: 'Who can see this?') %></legend>
+    <div class="feed-content-pills">
+      <% Discussion::VISIBILITIES.each do |visibility| %>
+        <label class="feed-content-pill">
+          <%= f.radio_button :visibility, visibility %>
+          <span><%= visibility == 'everyone' ? t('public.comment.visibility_everyone', default: 'Everyone') : t('public.comment.audience_contributors', default: 'People who have posted a submission') %></span>
+        </label>
+      <% end %>
+    </div>
+  </fieldset>
+  <div class="feed-filter-actions discussion-form-actions">
+    <%= f.button :submit, t('public.discussion.post', default: 'Post discussion'), class: 'btn btn-primary' %>
+    <% if in_feed %>
+      <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#feed-compose-panel"><%= t('public.discussion.cancel', default: 'Cancel') %></button>
+    <% else %>
+      <%= link_to t('public.discussion.cancel', default: 'Cancel'), pins_path, class: 'btn btn-default' %>
+    <% end %>
+  </div>
+<% end %>

@@ -94,6 +94,21 @@ This uses the local `psql_test` database. Full Compose mode remains available
 when Rails itself needs to run in the `web` container; do not combine its
 internal `db:5432` settings with a host Rails process.
 
+Before pushing any branch to CircleCI, verify the same change locally first:
+
+```sh
+rbenv exec bundle install
+script/local_setup
+script/local_rspec spec/controllers/procedures_controller_spec.rb spec/controllers/surgeons_controller_spec.rb
+script/local_rspec
+```
+
+Do not use a CircleCI run as the first test of a Rails or dependency change.
+The local database and focused specs must pass before starting the full local
+suite; only then should the branch be pushed to CircleCI for an independent
+environment check. Capybara uses an OS-assigned local test port, so do not
+reintroduce a fixed browser-test port.
+
 To stop the environment, run:
 ```sh
 docker-compose down
@@ -168,7 +183,7 @@ If you need to test against an actual S3 instance, you can uncomment the config 
 
 ## [ci](https://circleci.com/dashboard)
 
-Currently using [CircleCI](https://circleci.com/) (config version 2.1, `.circleci/config.yml`), running `cimg/ruby:3.1.6` images with the `browser-tools` orb for the Selenium/Capybara feature specs. It runs `build` then `test` on a push to any branch -- there's no branch filter restricting it to PRs specifically, and no deploy job of any kind. CI is test-only; it has no effect on staging or production.
+Currently using [CircleCI](https://circleci.com/) (config version 2.1, `.circleci/config.yml`), running `cimg/ruby:3.3.12` and `cimg/postgres:16.10` images with the `browser-tools` orb for the Selenium/Capybara feature specs. It runs `build` then `test` on a push to any branch -- there's no branch filter restricting it to PRs specifically, and no deploy job of any kind. CI is test-only; it has no effect on staging or production.
 
 For master branch: [![CircleCI](https://circleci.com/gh/mooreniemi/Transbucket_Rails/tree/master.svg?style=svg&circle-token=22981fbc246ebdb12d14ef593592e163d093caf7)](https://circleci.com/gh/mooreniemi/Transbucket_Rails/tree/master)
 
@@ -232,7 +247,13 @@ normal deploy path.
 
 ### Pre-production release gate
 
-Before every production deploy, run the relevant local suite and deploy the exact tested commit to staging. After the staging release completes, run the authenticated smoke with credentials supplied only in the local shell:
+Before every production deploy:
+
+- CircleCI must be green on the exact commit being deployed. Local runs alone are not enough: CI runs inside Docker images that pin their own Ruby and Postgres versions.
+- A Ruby or database version bump changes `.ruby-version`, the `ruby` line in the `Gemfile`, the `Dockerfile`, and both images in `.circleci/config.yml` together. CI and the Docker setup use Postgres 16 to match production.
+- Prod runs exactly what is on `master`: fast-forward `master` first, then deploy `master`. Only one person or agent deploys at a time.
+
+Run the relevant local suite and deploy the exact tested commit to staging. After the staging release completes, run the authenticated smoke with credentials supplied only in the local shell:
 
 ```
 STAGING_USER=meowmeow STAGING_PASSWORD='(local secret)' \
@@ -299,7 +320,7 @@ spring rake parallel:spec
 
 Best if you run `unicorn` rather than usual development server `thin`:
 
-`unicorn -c config/unicorn.rb` # this will spawn 3 processes
+`unicorn -c config/unicorn.rb` # defaults to one process; set WEB_CONCURRENCY to increase it
 
 Then after installing [apache_bench](http://work.stevegrossi.com/2015/02/07/load-testing-rails-apps-with-apache-bench-siege-and-jmeter/) (you should be able to do `brew install ab`) run:
 
@@ -377,22 +398,35 @@ heroku run rake environment elasticsearch:import:model CLASS='Pin' INCLUDE='PinI
 This uses staging's `INDEX_PREFIX=staging` and recreates only `staging_pins`.
 Never run this command against the production app as part of staging testing.
 
-For a fast local smoke loop, reseed the test DB and run the same script
-against localhost:
+For a fast local smoke loop, use the same development database and server
+workflow as the local browser app. Run the setup once, then keep the server
+and delayed-job worker in separate terminals:
 
 ```
-DISABLE_SPRING=1 OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES \
-POSTGRES_HOST=localhost POSTGRES_PORT=5433 POSTGRES_USER=postgres \
-POSTGRES_PASSWORD=password RAILS_ENV=test bundle exec rake db:seed
+script/local_setup
+PORT=3004 script/local_server
+RAILS_ENV=development bundle exec rake jobs:work
+```
 
-DISABLE_SPRING=1 OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES \
-POSTGRES_HOST=localhost POSTGRES_PORT=5433 POSTGRES_USER=postgres \
-POSTGRES_PASSWORD=password RAILS_ENV=test bundle exec rake jobs:work
+Then run the smoke against that local server from a third terminal:
 
-STAGING_URL=http://127.0.0.1:3003 \
+```
+STAGING_URL=http://127.0.0.1:3004 \
 STAGING_USER=meowmeow STAGING_PASSWORD='local-login' \
 bundle exec ruby script/staging_smoke.rb
 ```
+
+Use `STAGING_LOCALES=en,de,sv` to run the same authenticated flow for several
+locales in one invocation. The smoke covers public localization, registration
+and login/CSRF, authenticated navigation, multi-image submission, comments,
+editing, safe mode, linked surgeon/procedure pages, and eventual search
+indexing. It does not replace admin/moderation, email-delivery, or external
+S3 checks; those need separate targeted tests.
+
+The smoke creates test data, including a pin with two images and a comment;
+use the local workflow for that data-changing run. For staging, supply only
+the local shell credentials, temporarily run the worker needed for indexing,
+and scale it back to zero immediately afterward.
 
 ```
 rake environment elasticsearch:import:model CLASS='Pin' INCLUDE='PinImage,Surgeon,Procedure' FORCE=true

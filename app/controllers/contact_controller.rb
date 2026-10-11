@@ -8,7 +8,7 @@ class ContactController < ApplicationController
     @message = Message.new(message_params)
 
     if @message.valid?
-      ContactMailer.new_message(@message).deliver
+      ContactMailer.new_message(@message).deliver_now
       redirect_to(root_path, :notice => t('flash.contact_sent'))
     else
       flash.now.alert = t('flash.contact_invalid')

@@ -8,6 +8,16 @@
   margin-bottom: 20px;
 }
 
+// Bootstrap's 36px h1 wrapped to three lines on a phone and pushed the photos
+// below the fold. Keep it as a compact heading so the image leads.
+@media (max-width: 767px) {
+  .pin-page-title {
+    font-size: 20px;
+    line-height: 1.3;
+    margin: 12px 0;
+  }
+}
+
 .pin-gallery-panel {
   background-color: #fff;
   padding: 15px;
@@ -43,13 +53,13 @@
 
 .pin-rating-stars {
   color: #d49b00;
-  font-size: 1rem;
+  font-size: 16px;
   letter-spacing: 2px;
 }
 
 .pin-rating-score {
   color: #666;
-  font-size: 1rem;
+  font-size: 16px;
   margin-left: 8px;
 }
 
@@ -92,7 +102,7 @@
   max-width: 420px;
   margin-top: 4px;
   color: #666;
-  font-size: 1rem;
+  font-size: 16px;
   line-height: 1.4;
   min-height: 2.8em;
 }
@@ -349,14 +359,14 @@
   border: 1px solid #c8d8e5;
   border-radius: 4px;
   color: #234;
-  font-size: 1rem;
+  font-size: 16px;
   line-height: 1.4;
   margin: .5rem 0;
   padding: .6rem .75rem;
 }
 
 .entity-suggestion .btn {
-  font-size: 1rem;
+  font-size: 16px;
   padding: 0;
 }
 
@@ -476,8 +486,21 @@
   max-width: 100%;
 }
 
+// The photo box spans the card, like the feed cards: the image fills it when
+// its shape is close to 4:3, otherwise it shows whole over a blurred copy.
+.procedure-recent-pin .pin-card-image img {
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  width: 100%;
+}
+
+.procedure-recent-pin .pin-card-image.is-filled img {
+  object-fit: cover;
+}
+
 .procedure-recent-pin h3 {
-  font-size: 1.1rem;
+  font-size: 17.6px;
   margin: .75rem 0 .35rem;
 }
 
@@ -487,7 +510,7 @@
 
 .procedure-recent-pin-date {
   color: #666;
-  font-size: 1rem;
+  font-size: 16px;
 }
 
 .directory-login-prompt {
@@ -522,7 +545,7 @@
 
 .rating-distribution-score,
 .rating-distribution-count {
-  font-size: 1rem;
+  font-size: 16px;
 }
 
 .rating-distribution-count {
@@ -563,7 +586,7 @@
   display: block;
   margin: 8px 10px 12px;
   color: #666;
-  font-size: 1rem;
+  font-size: 16px;
   line-height: 1.4;
 }
 
@@ -573,6 +596,15 @@
 }
 
 @media (max-width: 767px) {
+  #details {
+    padding: 16px;
+  }
+
+  #details p {
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
   .pin-meta {
     margin-top: 20px;
   }
@@ -587,6 +619,17 @@
     margin-left: 0;
   }
 }
-.submission-feed-tabs {
-  margin-bottom: 20px;
+// On phones the submitter's own words come straight after the photos, before
+// the facts list, the way a caption follows a photo. It is also where the text
+// of a text-only post will lead.
+@media (max-width: 767px) {
+  .pin-show-grid > .col-md-5 {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pin-show-grid .pin-details {
+    margin-top: 12px;
+    order: -1;
+  }
 }

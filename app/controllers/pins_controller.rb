@@ -1,17 +1,31 @@
 class PinsController < ApplicationController
   include SanitizeNames
-  before_filter :authenticate_user!
-  before_filter :validate_user, :only => [:edit, :update, :destroy]
-  before_filter :get_pin, :except => [:index, :new, :create, :admin, :complication_suggestions]
+  before_action :authenticate_user!
+  before_action :validate_user, :only => [:edit, :update, :destroy]
+  before_action :require_moderator!, :only => :admin
+  before_action :get_pin, :except => [:index, :new, :create, :admin, :complication_suggestions]
   respond_to :json
 
   # GET /pins
   # GET /pins.json
   def index
     @presenter = PinPresenter.new(pin_index_params)
-    @comments = Comment.new_as_of(user_last_sign_in)
+    @comments = Comment.new_as_of(user_last_sign_in).includes(:user)
+    feed_records = @presenter.pins.map { |item| item.respond_to?(:record) ? item.record : item }
+    pin_ids = feed_records.select { |record| record.is_a?(Pin) }.map(&:id)
+    @comment_counts = Comment.published_counts_for('Pin', pin_ids)
+    # The card's "new comment" snippet: the newest published comment on each pin since
+    # the last sign-in, picked from the comments loaded above (no query per card).
+    @latest_new_comments = @comments.select { |comment| comment.commentable_type == 'Pin' }
+                                    .group_by(&:commentable_id)
+                                    .each_with_object({}) { |(pin_id, group), latest| latest[pin_id] = group.max_by(&:created_at) }
+    # Pin cards are fragment-cached by this value, so set it before rendering
+    # rather than relying on an unset instance variable in the partial.
+    @safe_mode = safe_mode
     respond_to do |format|
-      format.html # index.html.erb
+      # Infinite scroll on phones (feed_scroll.js) asks for just the next
+      # cards and page link, not the whole page around them.
+      format.html { render(partial: 'pins/feed_page') if params[:fragment].present? }
       format.js
     end
   end
@@ -19,11 +33,16 @@ class PinsController < ApplicationController
   # GET /pins/1
   # GET /pins/1.json
   def show
-    @comments = @pin.comments_asc
+    @comments = @pin.comments_asc(viewer: current_user)
+    ActiveRecord::Associations::Preloader.new(records: @comments, associations: { user: :trust_grants }).call
     @new_comment = Comment.build_from(@pin, current_user, "")
+    @comment_count = Comment.published_counts_for('Pin', [@pin.id])[@pin.id].to_i
+    @safe_mode = safe_mode
 
     respond_to do |format|
-      format.html # show.html.erb
+      # The phone feed opens pins in an in-page viewer (pin_viewer.js), which
+      # only wants the page body, not the header, footer and scripts again.
+      format.html { render layout: false if params[:viewer].present? }
       format.json { render json: @pin }
     end
   end
@@ -78,6 +97,7 @@ class PinsController < ApplicationController
         @form.save
         @pin = @form.model
         @pin.procedure.recalculate_avgs
+        SubmissionEventRecorder.record(pin: @pin, user: current_user, event_type: 'submission_created', locale: I18n.locale)
 
         format.html { redirect_to @pin, notice: t('flash.pin_created') }
         format.json { render json: @pin, status: :created, location: @pin }
@@ -98,6 +118,7 @@ class PinsController < ApplicationController
         @form.save
         @pin = @form.model
         @pin.procedure.recalculate_avgs
+        SubmissionEventRecorder.record(pin: @pin, user: current_user, event_type: 'submission_updated', locale: I18n.locale)
 
         format.html { redirect_to @pin, notice: t('flash.pin_updated') }
         format.json { head :no_content }
@@ -116,9 +137,11 @@ class PinsController < ApplicationController
     respond_to do |format|
       if Pin.find_by_id(@pin.id)
         flash[:error] = t('flash.destroy_failed', id: @pin.id)
+        format.html { redirect_to pins_url }
         format.json { render json: @pin.errors.full_messages, status: :unprocessable_entity }
       else
         flash[:notice] = t('flash.destroyed', id: @pin.id)
+        format.html { redirect_to pins_url }
         format.json { render json: { status: 'destroyed' }, status: :ok }
       end
     end
@@ -143,8 +166,8 @@ class PinsController < ApplicationController
       current_flags: current_flag_counts(pins, comments),
       lifetime_flags: lifetime_flag_counts(pins, comments),
       current_flaggers: current_flaggers(pins, comments),
-      top_flaggers: ModerationEvent.where(action: 'flag').select('user_id, COUNT(*) AS flag_count').group(:user_id).order('COUNT(*) DESC').limit(10),
-      top_flagged: ModerationEvent.where(action: 'flag').select('content_type, content_id, COUNT(*) AS flag_count').group(:content_type, :content_id).order('COUNT(*) DESC').limit(10)
+      top_flaggers: ModerationEvent.where(action: 'flag').select('user_id, COUNT(*) AS flag_count').group(:user_id).order(Arel.sql('COUNT(*) DESC')).limit(10),
+      top_flagged: ModerationEvent.where(action: 'flag').select('content_type, content_id, COUNT(*) AS flag_count').group(:content_type, :content_id).order(Arel.sql('COUNT(*) DESC')).limit(10)
     }
   end
 
@@ -178,7 +201,7 @@ class PinsController < ApplicationController
   end
 
   def get_pin
-    @pin = Pin.includes(comment_threads: [:children]).find(params[:id])
+    @pin = Pin.includes(user: :trust_grants, comment_threads: [:children]).find(params[:id])
   end
 
   def id_or_attributes(attributes)
@@ -227,6 +250,7 @@ class PinsController < ApplicationController
       satisfaction: params[:satisfaction],
       sensation: params[:sensation],
       feed: params[:feed],
+      content: params[:content].presence || 'all',
       current_user: current_user,
       page: params[:page]
     }
@@ -247,10 +271,14 @@ class PinsController < ApplicationController
   def validate_user
     pin = Pin.find(params[:id])
 
-    if current_user == pin.user || current_user.admin
+    if current_user == pin.user || current_user.admin? || (action_name == 'destroy' && current_user.moderator?)
       return true
     else
       head :forbidden
     end
+  end
+
+  def require_moderator!
+    head :forbidden unless current_user.moderator?
   end
 end

@@ -1,0 +1,146 @@
+// The phone feed's infinite scroll (feed_scroll.js) and in-page pin viewer
+// (pin_viewer.js).
+
+$viewer-bar-height: 48px;
+
+// Infinite scroll status line. Takes a fixed height whatever it says, so
+// switching between "loading" and "all caught up" never moves the cards.
+.feed-scroll-status {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .feed-infinite #paginator {
+    display: none;
+  }
+
+  .feed-infinite .feed-scroll-status {
+    align-items: center;
+    color: #555;
+    display: flex;
+    justify-content: center;
+    min-height: 64px;
+    padding: 8px 0 16px;
+  }
+}
+
+// The viewer is a full-screen layer over the feed. The feed underneath keeps
+// its scroll position because it is only hidden from scrolling, never moved.
+.pin-viewer {
+  background-color: #ccc;   // same as the page behind it
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1060;            // above the fixed navbar (1030) and popovers
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.pin-viewer-open,
+.pin-viewer-open body {
+  overflow: hidden;
+}
+
+.pin-viewer-bar {
+  align-items: center;
+  background-color: #fff;
+  border-bottom: 1px solid #bbb;
+  display: flex;
+  flex: 0 0 $viewer-bar-height;
+  min-width: 0;
+}
+
+.pin-viewer-close {
+  background: transparent;
+  border: 0;
+  color: #222;
+  flex: 0 0 $viewer-bar-height;
+  font-size: 20px;
+  height: $viewer-bar-height;
+  padding: 0;
+}
+
+.pin-viewer-title {
+  flex: 1 1 auto;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  padding-right: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pin-viewer-body {
+  -webkit-overflow-scrolling: touch;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;  // don't scroll the feed behind at either end
+  padding: 0 0 24px;
+
+  // The bar already shows the title.
+  .pin-page-title {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  // ...and its back arrow, so the page's own one is not needed.
+  [data-pin-viewer-close],
+  .pin-page-actions-separator {
+    display: none;
+  }
+
+  // The page's grid row has negative side margins meant for .container.
+  .pin-show-grid {
+    margin: 0;
+  }
+
+  .pin-show-grid > [class*="col-"] {
+    padding: 0;
+  }
+
+  // Edge to edge: the viewer has no page gutter to pull back into.
+  #comments-container {
+    margin: 12px 0 0;
+  }
+}
+
+.pin-viewer-loading {
+  align-items: center;
+  color: #555;
+  display: flex;
+  justify-content: center;
+  min-height: 50vh;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pin-viewer:not([hidden]) {
+    animation: pin-viewer-in 180ms ease-out;
+  }
+}
+
+@keyframes pin-viewer-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

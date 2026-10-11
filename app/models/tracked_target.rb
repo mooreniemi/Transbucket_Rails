@@ -1,0 +1,54 @@
+# Site navigation targets whose clicks are recorded as ContentEvents of type
+# 'Page' (event_type 'open'), so we can tell which header, menu and footer links
+# people actually use (News? About? the hamburger?).
+#
+# The id is what gets stored in content_events.content_id, and the target name
+# and surface (header / footer / home) go in event_context. Never renumber or
+# reuse an id: recorded events refer to them. Add new targets at the end.
+module TrackedTarget
+  TARGETS = {
+    'news' => 1,
+    'about' => 2,
+    'terms' => 3,
+    'privacy' => 4,
+    'discord' => 5,
+    'facebook' => 6,
+    'twitter' => 7,
+    'procedures' => 8,
+    'surgeons' => 9,
+    'submissions' => 10,
+    'compare' => 11,
+    'add' => 12,
+    'login' => 13,
+    'register' => 14,
+    'menu' => 15,      # the phone hamburger button
+    'language' => 16,  # the language switcher
+    'home_cta' => 17,  # the three call-to-action images on the logged-out home page
+    'account' => 18,   # the signed-in Account menu
+    'safe_mode' => 19, # the safe mode switch in the signed-in header
+    'search' => 20,    # the phone header's search icon (opens the field)
+    # The feed toolbar (pins/_toolbar_actions): above the feed, and again in
+    # the phone bar at the bottom of the screen. Separate ids so a click on one
+    # isn't deduplicated away by a click on the other.
+    'feed_filter' => 21,
+    'feed_discussion' => 22,
+    'feed_submission' => 23,
+    'dock_filter' => 24,
+    'dock_discussion' => 25,
+    'dock_submission' => 26,
+    'add_discussion' => 27,  # Start a discussion, in the menu (opens the feed's form)
+    'filter_apply' => 28,    # Apply, in the feed's filter
+    # An ad slot on a page (ads/_slot). Unlike the targets above this is not a
+    # click: ad_tracking.js records an 'impression' when the slot resolves (with
+    # its status) and a 'view' once a filled ad has been on screen for a second.
+    'ad_slot' => 29
+  }.freeze
+
+  def self.id_for(name)
+    TARGETS.fetch(name.to_s)
+  end
+
+  def self.valid_id?(id)
+    TARGETS.values.include?(id.to_i)
+  end
+end

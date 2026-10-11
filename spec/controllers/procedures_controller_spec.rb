@@ -4,7 +4,7 @@ describe ProceduresController, :type => :controller do
   describe "#index" do
     it 'gives a list of procedures and their average sensation and satisfaction' do
       procedures = create_list(:procedure, 2)
-      get :index
+      get :index, params: { locale: 'en' }
       expect(assigns(:procedures)).to match_array(procedures)
       expect(response).to render_template(:index)
     end
@@ -16,14 +16,12 @@ describe ProceduresController, :type => :controller do
       create(:pin, procedure: procedure, sensation: 5, satisfaction: 2)
 
       sign_in user
-      get :index
+      get :index, params: { locale: 'en' }
 
       expect(assigns(:avg_sensation_by_procedure)[procedure.id]).to eq(4.0)
       expect(assigns(:avg_satisfaction_by_procedure)[procedure.id]).to eq(3.0)
     end
 
-    xit 'links procedures to queries for all pins of that procedure' do
-    end
   end
   describe "#show" do
     describe 'activity marker' do
@@ -32,7 +30,7 @@ describe ProceduresController, :type => :controller do
       it 'renders a best-effort view-event marker for public procedure pages' do
         procedure = create(:procedure)
 
-        get :show, id: procedure.id
+        get :show, params: { id: procedure.id, locale: 'en' }
 
         expect(response.body).to include('data-content-event="true"')
         expect(response.body).to include('data-content-type="Procedure"')
@@ -49,7 +47,7 @@ describe ProceduresController, :type => :controller do
       create(:pin, procedure: procedure, sensation: 2, satisfaction: 1)
 
       sign_in user
-      get :show, id: procedure.id
+      get :show, params: { id: procedure.id, locale: 'en' }
 
       expect(assigns(:rating_distributions)).to eq(
         sensation: { 2 => 1, 5 => 2 },
@@ -66,7 +64,7 @@ describe ProceduresController, :type => :controller do
       create(:pin, procedure: procedure, created_at: 4.days.ago)
 
       sign_in user
-      get :show, id: procedure.id
+      get :show, params: { id: procedure.id, locale: 'en' }
 
       expect(assigns(:latest_pins).length).to eq(3)
     end
@@ -74,7 +72,7 @@ describe ProceduresController, :type => :controller do
     it 'does not prepare rating distributions for anonymous users' do
       procedure = create(:procedure)
 
-      get :show, id: procedure.id
+      get :show, params: { id: procedure.id, locale: 'en' }
 
       expect(assigns(:rating_distributions)).to be_nil
     end
@@ -83,10 +81,10 @@ describe ProceduresController, :type => :controller do
       procedure = create(:procedure, name: 'phalloplasty')
       related = create(:procedure, name: 'rff phalloplasty')
 
-      get :show, id: procedure.id
+      get :show, params: { id: procedure.id, locale: 'en' }
 
       expect(assigns(:related_procedures)).to include(related)
-      expect(response).to be_success
+      expect(response).to have_http_status(:success)
     end
 
     it 'finds related procedures that share a meaningful procedure term' do
@@ -94,7 +92,7 @@ describe ProceduresController, :type => :controller do
       related = create(:procedure, name: 'groin flap phalloplasty')
       unrelated = create(:procedure, name: 'hysterectomy')
 
-      get :show, id: procedure.id
+      get :show, params: { id: procedure.id, locale: 'en' }
 
       expect(assigns(:related_procedures)).to include(related)
       expect(assigns(:related_procedures)).not_to include(unrelated)
@@ -108,9 +106,9 @@ describe ProceduresController, :type => :controller do
       create(:pin, procedure: second, sensation: 2, satisfaction: 1)
 
       sign_in user
-      get :compare, first_id: first.to_param, second_id: second.to_param
+      get :compare, params: { first_id: first.to_param, second_id: second.to_param, locale: 'en' }
 
-      expect(response).to be_success
+      expect(response).to have_http_status(:success)
       expect(assigns(:comparison_data)[first][:distributions][:sensation]).to eq(5 => 1)
       expect(assigns(:comparison_data)[second][:distributions][:satisfaction]).to eq(1 => 1)
     end
@@ -127,7 +125,7 @@ describe ProceduresController, :type => :controller do
       create(:pin, procedure: second)
 
       sign_in user
-      get :compare, first_id: first.to_param, second_id: second.to_param
+      get :compare, params: { first_id: first.to_param, second_id: second.to_param, locale: 'en' }
 
       expect(assigns(:comparison_data)[first][:stats][:submissions]).to eq(2)
       expect(assigns(:comparison_data)[first][:stats][:surgeons]).to eq(1)
@@ -145,11 +143,11 @@ describe ProceduresController, :type => :controller do
       create(:pin, procedure: first)
 
       sign_in user
-      get :compare, first_id: first.to_param, second_id: second.to_param
+      get :compare, params: { first_id: first.to_param, second_id: second.to_param, locale: 'en' }
       original_version = assigns(:comparison_cache_version)
 
       create(:pin, procedure: second)
-      get :compare, first_id: first.to_param, second_id: second.to_param
+      get :compare, params: { first_id: first.to_param, second_id: second.to_param, locale: 'en' }
 
       expect(assigns(:comparison_cache_version)).not_to eq(original_version)
     end
@@ -165,7 +163,7 @@ describe ProceduresController, :type => :controller do
       create(:pin, procedure: second, surgeon: shared_surgeon, sensation: 4, satisfaction: 4)
 
       sign_in user
-      get :compare, first_id: first.to_param, second_id: second.to_param, surgeon_id: shared_surgeon.to_param
+      get :compare, params: { first_id: first.to_param, second_id: second.to_param, surgeon_id: shared_surgeon.to_param, locale: 'en' }
 
       expect(assigns(:comparison_surgeon)).to eq(shared_surgeon)
       expect(assigns(:comparison_data)[first][:stats][:submissions]).to eq(1)
@@ -186,15 +184,30 @@ describe ProceduresController, :type => :controller do
       create(:pin, user: submitter, procedure: second, surgeon: surgeon, sensation: 3)
 
       sign_in viewer
-      get :compare, first_id: first.to_param, second_id: second.to_param
+      get :compare, params: { first_id: first.to_param, second_id: second.to_param, locale: 'en' }
 
       expect(assigns(:comparison_data)[first][:stats][:submissions]).to eq(2)
       expect(assigns(:comparison_data)[first][:distributions][:sensation]).to eq(4 => 1, 5 => 1)
 
-      get :compare, first_id: first.to_param, second_id: second.to_param, deduplicate: '0'
+      get :compare, params: { first_id: first.to_param, second_id: second.to_param, deduplicate: '0', locale: 'en' }
 
       expect(assigns(:comparison_data)[first][:stats][:submissions]).to eq(3)
       expect(assigns(:comparison_data)[first][:distributions][:sensation]).to eq(1 => 1, 4 => 1, 5 => 1)
+    end
+  end
+
+  describe 'creating a procedure' do
+    let(:params) { { procedure: { name: 'made up procedure', body_type: 'top', gender: 'ftm' } } }
+
+    it 'is refused for anyone who is not signed in' do
+      expect { post :create, params: params, format: :js, xhr: true }.not_to change { Procedure.count }
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+    it 'works for a signed-in user (the pin form\'s \"add a new procedure\")' do
+      sign_in(create(:user))
+
+      expect { post :create, params: params, format: :js, xhr: true }.to change { Procedure.count }.by(1)
     end
   end
 end

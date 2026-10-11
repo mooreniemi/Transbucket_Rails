@@ -1,0 +1,90 @@
+// Safe mode: real images are shown blurred until tapped (see safe_reveal.js and
+// shared/_safe_reveal.html.erb). This replaces the old behaviour of swapping in
+// a cat picture.
+//
+// Note this is a CSS blur, like most sites use: the image is still downloaded,
+// and a determined person can still save the original. It is for not being
+// surprised by an image, not for keeping one off the device.
+
+.safe-blur {
+  overflow: hidden;
+  position: relative;
+
+  // Blurred until revealed. Scaling up hides the soft, see-through edge a blur
+  // leaves at the border.
+  &:not(.is-revealed) img {
+    -webkit-filter: blur(32px);
+    filter: blur(32px);
+    -webkit-transform: scale(1.25);
+    transform: scale(1.25);
+  }
+
+  // Until revealed, taps must hit the reveal button, not the image's link.
+  &:not(.is-revealed) a {
+    pointer-events: none;
+  }
+
+  &.is-revealed .safe-reveal {
+    display: none;
+  }
+
+  &.is-revealed .safe-hide {
+    display: flex;
+  }
+}
+
+// A small corner button on a revealed image that blurs it again.
+.safe-hide {
+  align-items: center;
+  background: rgba(0, 0, 0, .55);
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  display: none;
+  font-size: 18px;
+  height: 44px;
+  justify-content: center;
+  padding: 0;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  width: 44px;
+  z-index: 2;
+
+  &:focus {
+    outline: 3px solid #FCC000;
+    outline-offset: 2px;
+  }
+}
+
+.safe-reveal {
+  align-items: center;
+  background: rgba(0, 0, 0, .35);
+  border: 0;
+  bottom: 0;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  font-weight: 600;
+  gap: 8px;
+  justify-content: center;
+  left: 0;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, .7);
+  top: 0;
+  width: 100%;
+  z-index: 2;
+
+  .fa {
+    font-size: 28px;
+  }
+
+  &:focus {
+    outline: 3px solid #FCC000;
+    outline-offset: -3px;
+  }
+}

@@ -22,11 +22,12 @@ class PinFilterQuery
       active_filters << filter
     end
 
-    # this will make the instance_eval a no-op
-    args = general.present? ? general.join('.') : 'Pin'
+    # 'all' keeps the relation (and its includes) when there are no extra scopes;
+    # evaluating 'Pin' here returned the bare class and dropped the preloading.
+    args = general.present? ? general.join('.') : 'all'
     Rails.cache.fetch(cache_key_for(active_filters, keywords)) do
       # FIXME not crazy about eval here, how can we make sure this is safe from delete
-      filtered = Pin.includes(:user, :pin_images, :surgeon, :procedure).instance_eval { eval args }.
+      filtered = Pin.includes(*PinPresenter::CARD_INCLUDES).instance_eval { eval args }.
         tagged_with(*complications).
         by_procedure([procedures].flatten).
         by_surgeon([surgeons].flatten).

@@ -8,10 +8,12 @@ Rails.application.routes.draw do
     get "/users", to: redirect("/login")
 
     devise_scope :user do
-      get "/register" => "devise/registrations#new"
+      # Named so RegistrationsController#new can redirect_to register_path --
+      # sign-up itself (POST /users) is untouched.
+      get "/register" => "react_app#guest_page", as: "register"
       # Named so SessionsController#new can redirect_to login_path --
       # sign-in itself (POST /users/sign_in) is untouched.
-      get "/login" => "react_app#show", as: "login"
+      get "/login" => "react_app#guest_page", as: "login"
     end
 
     resources :users do
@@ -82,7 +84,11 @@ Rails.application.routes.draw do
     # Catch-all for new React-only pages that don't have a Rails route yet.
     # Must stay last: every route above still wins first, so nothing already
     # working here changes. Restricted to HTML so it doesn't swallow
-    # requests for a format (json, etc.) nothing above was meant to answer.
-    get '*path', to: 'react_app#show', constraints: ->(req) { req.format == :html }
+    # requests for a format (json, etc.) nothing above was meant to answer,
+    # and to paths that start with a supported locale -- every React route
+    # lives under /:locale, and anything else (e.g. /xx/pins) should 404
+    # rather than be treated as a page.
+    get '*path', to: 'react_app#show',
+      constraints: ->(req) { req.format == :html && req.path_parameters[:locale].present? }
   end
 end

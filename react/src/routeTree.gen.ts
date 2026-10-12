@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LocaleRouteImport } from './routes/$locale'
 import { Route as LocalePublicLoginRouteImport } from './routes/$locale/_public/login'
+import { Route as LocalePublicRegisterRouteImport } from './routes/$locale/_public/register'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,29 +29,42 @@ const LocalePublicLoginRoute = LocalePublicLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => LocaleRoute,
 } as any)
+const LocalePublicRegisterRoute = LocalePublicRegisterRouteImport.update({
+  id: '/_public/register',
+  path: '/register',
+  getParentRoute: () => LocaleRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
   '/$locale/login': typeof LocalePublicLoginRoute
+  '/$locale/register': typeof LocalePublicRegisterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
   '/$locale/login': typeof LocalePublicLoginRoute
+  '/$locale/register': typeof LocalePublicRegisterRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
   '/$locale/_public/login': typeof LocalePublicLoginRoute
+  '/$locale/_public/register': typeof LocalePublicRegisterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$locale' | '/$locale/login'
+  fullPaths: '/' | '/$locale' | '/$locale/login' | '/$locale/register'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$locale' | '/$locale/login'
-  id: '__root__' | '/' | '/$locale' | '/$locale/_public/login'
+  to: '/' | '/$locale' | '/$locale/login' | '/$locale/register'
+  id:
+    | '__root__'
+    | '/'
+    | '/$locale'
+    | '/$locale/_public/login'
+    | '/$locale/_public/register'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -81,15 +95,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocalePublicLoginRouteImport
       parentRoute: typeof LocaleRoute
     }
+    '/$locale/_public/register': {
+      id: '/$locale/_public/register'
+      path: '/register'
+      fullPath: '/$locale/register'
+      preLoaderRoute: typeof LocalePublicRegisterRouteImport
+      parentRoute: typeof LocaleRoute
+    }
   }
 }
 
 interface LocaleRouteChildren {
   LocalePublicLoginRoute: typeof LocalePublicLoginRoute
+  LocalePublicRegisterRoute: typeof LocalePublicRegisterRoute
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
   LocalePublicLoginRoute: LocalePublicLoginRoute,
+  LocalePublicRegisterRoute: LocalePublicRegisterRoute,
 }
 
 const LocaleRouteWithChildren =

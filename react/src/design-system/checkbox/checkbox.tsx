@@ -43,6 +43,20 @@ const boxStyles = tv({
 
 const iconStyles = "pointer-events-none size-3.5 text-white"
 
+function stopIfLink(event: React.SyntheticEvent) {
+  if ((event.target as Element).closest("a")) event.stopPropagation()
+}
+
+const stopLinkPresses = {
+  onPointerDown: stopIfLink,
+  onPointerUp: stopIfLink,
+  onMouseDown: stopIfLink,
+  onMouseUp: stopIfLink,
+  onClick: stopIfLink,
+  onKeyDown: stopIfLink,
+  onKeyUp: stopIfLink,
+}
+
 export interface CheckboxProps extends Omit<CheckboxFieldPrimitiveProps, "className" | "children"> {
   className?: string
   children?: React.ReactNode
@@ -78,7 +92,12 @@ function Checkbox({
                 <Check aria-hidden className={iconStyles} />
               ) : null}
             </div>
-            {children}
+            {/* One flex item, so rich labels (text mixed with links) flow
+                inline instead of each text run becoming its own column.
+                Presses that start on a link are kept from reaching the
+                field's own press handling, which would otherwise toggle
+                the checkbox and swallow the link's navigation. */}
+            <span {...stopLinkPresses}>{children}</span>
           </>
         )}
       </CheckboxButtonPrimitive>

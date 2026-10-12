@@ -6,11 +6,16 @@
             "register": "Register",
             "confirmation": "Didn't receive confirmation instructions?"
         },
+        "errors": {
+            "network": "We couldn't reach the server. Check your connection and try again.",
+            "generic": "Something went wrong. Please try again."
+        },
         "pages": {
             "news": "News",
             "procedures": "Procedures",
             "surgeons": "Surgeons",
-            "login": "Log in"
+            "login": "Log in",
+            "register": "Register"
         }
     }
 }

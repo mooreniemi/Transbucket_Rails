@@ -86,21 +86,28 @@ describe 'locale-prefixed URLs', type: :request do
     expect(response.body).to include('href="/sv/procedures"')
   end
 
-  it 'renders the login and registration forms for every locale' do
-    original_caching = ActionController::Base.perform_caching
-    ActionController::Base.perform_caching = true
-
+  it 'serves the React login and registration pages for every locale' do
     REQUEST_SUPPORTED_LOCALES.each do |locale|
-      get "/#{locale}/users/sign_in"
-      expect(response).to have_http_status(:success), "login form failed for #{locale}"
-      expect(response.body).to include('id="new_user"'), "login form missing for #{locale}"
+      get "/#{locale}/login"
+      expect(response).to have_http_status(:success), "login page failed for #{locale}"
+      expect(response.body).to include("<html lang=\"#{locale}\">"), "login page lang wrong for #{locale}"
+      expect(response.body).to include('id="app"'), "login page missing the React mount for #{locale}"
 
       get "/#{locale}/register"
-      expect(response).to have_http_status(:success), "registration form failed for #{locale}"
-      expect(response.body).to include('id="new_user"'), "registration form missing for #{locale}"
+      expect(response).to have_http_status(:success), "registration page failed for #{locale}"
+      expect(response.body).to include("<html lang=\"#{locale}\">"), "registration page lang wrong for #{locale}"
+      expect(response.body).to include('id="app"'), "registration page missing the React mount for #{locale}"
     end
-  ensure
-    ActionController::Base.perform_caching = original_caching
+  end
+
+  it "sends Devise's own sign-in and sign-up URLs to the React pages, keeping the locale" do
+    REQUEST_SUPPORTED_LOCALES.each do |locale|
+      get "/#{locale}/users/sign_in"
+      expect(response).to redirect_to("/#{locale}/login")
+
+      get "/#{locale}/users/sign_up"
+      expect(response).to redirect_to("/#{locale}/register")
+    end
   end
 
   it 'has every translation used by the signup form in every locale' do

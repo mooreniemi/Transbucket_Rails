@@ -27,7 +27,8 @@
     "pathPattern": [
       "./src/assets/locales/{locale}/footer.json",
       "./src/assets/locales/{locale}/global.json",
-      "./src/assets/locales/{locale}/login.json"
+      "./src/assets/locales/{locale}/login.json",
+      "./src/assets/locales/{locale}/register.json"
     ]
   }
 }

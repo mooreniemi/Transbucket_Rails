@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
   belongs_to :gender
+  # users.gender_id is NOT NULL; without this a missing or unknown gender
+  # raised from the database (a 500) instead of failing validation.
+  validates :gender, presence: true
   has_one :preference
   has_many :trust_grants, class_name: 'UserTrustGrant', dependent: :destroy
   has_many :discussions, dependent: :destroy

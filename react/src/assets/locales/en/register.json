@@ -1,0 +1,45 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "register": {
+        "usernameInputLabel": "Username",
+        "usernameDescription": "Your username will be visible to others",
+        "emailInputLabel": "Email",
+        "emailDescription": "Your email address will not be shared with others. Verification is required.", 
+        "passwordInputLabel": "Password",
+        "confirmationInputLabel": "Confirm Password",
+        "nameInputLabel": "Full name",
+        "nameDescription": "Your name will be visible only to administrators and used in communications.",
+        "nameWarning": "Care providers must use their real name or the account will be removed.",
+        "genderInputLabel": "Gender",
+        "genderOptions": {
+            "ftm": "FTM",
+            "mtf": "MTF",
+            "genderQueer": "Genderqueer",
+            "none": "None",
+            "cisgender": "Cisgender"
+        },
+        "genderDescription": "Gender can be updated after registration in your profile.",
+        "pronounsInputLabel": "Pronouns",
+        "pronounsOptions": {
+            "default": "Default - derived from gender",
+            "sheHer": "she/her",
+            "heHim": "he/him",
+            "theyThem": "they/them",
+            "other": "Enter my own"
+        },
+        "genderPronounAccordion": "How are my gender and pronouns used?",
+        "genderAccordionDescription": "Gender is used to set default content, including pronouns unless otherwise indicated.",
+        "pronounsAccordionDescription": "Pronouns are visible to other users on submissions. Default pronouns are only used if alternate pronouns are not specified. You can select pronouns from the list or supply your own.",
+        "pronounDefaultTitle": "Default pronouns:",
+        "ftmDefault": "FTM: he/him",
+        "mtfDefault": "MTF: she/her",
+        "genderQueerDefault": "Genderqueer: they/them",
+        "noneDefault": "None: they/them",
+        "cisgenderDefault": "Cisgender: they/them",
+        "customPronouns": "Customize pronouns",
+        "pronounsDescription": "Pronouns can be updated after registration in your profile.",
+        "errorSummary": "Please fix the problems below and submit again.",
+        "loginTitle": "Already have an account?",
+        "termsText": "I agree to the {#terms}Terms of Service{/terms} and have read the {#privacy}Privacy Policy{/privacy}."
+    }
+}

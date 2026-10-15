@@ -1,7 +1,7 @@
 "use client"
 
 import { tv } from "tailwind-variants"
-import { cn } from "#/lib/utils"
+import { cn } from "cn"
 import {
   TextField as TextFieldPrimitive,
   TextArea as TextAreaPrimitive,

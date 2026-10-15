@@ -1,7 +1,7 @@
 "use client"
 
 import { tv } from "tailwind-variants"
-import { cn } from "#/lib/utils"
+import { cn } from "cn"
 import { Label as LabelPrimitive, type LabelProps as LabelPrimitiveProps } from "react-aria-components"
 
 const labelStyles = tv({

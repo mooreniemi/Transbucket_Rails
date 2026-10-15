@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react"
 import { ChevronDown, ChevronRight } from "lucide-react"
-import { cn } from "#/lib/utils"
+import { cn } from "cn"
 import {
   Button as ButtonPrimitive,
   Disclosure,

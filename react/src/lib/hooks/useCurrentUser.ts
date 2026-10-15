@@ -6,5 +6,5 @@ import { currentUserQueryOptions } from '../data/currentUser'
 // fetch, and picks up TanStack Query's own background-refetch behavior
 // going forward.
 export function useCurrentUser() {
-  return useQuery(currentUserQueryOptions()).data
+  return useQuery(currentUserQueryOptions());
 }

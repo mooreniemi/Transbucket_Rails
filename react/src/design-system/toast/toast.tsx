@@ -2,7 +2,7 @@
 
 import { X } from "lucide-react"
 import { tv } from "tailwind-variants"
-import { cn } from "#/lib/utils"
+import { cn } from "cn"
 import { flushSync } from "react-dom"
 import {
   UNSTABLE_ToastRegion as ToastRegionPrimitive,

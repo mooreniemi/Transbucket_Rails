@@ -1,13 +1,6 @@
-import { queryOptions } from '@tanstack/react-query'
-
-export interface CurrentUser {
-  id: number
-  name: string
-  username: string
-  email: string
-  /** From the user's Preference record, not the user record itself -- whether to show NSFW pins (e.g. on the logged-in home page). Named to match the JSON response's snake_case key, not transformed to camelCase. */
-  safe_mode: boolean
-}
+import { queryOptions } from '@tanstack/react-query';
+import type { User } from '../models';
+import type { CurrentUserResponse } from '../models/responses';
 
 // No locale prefix needed -- the route matches with or without one
 // (Rails' locale scope segment is optional), and set_locale falls back to
@@ -19,13 +12,17 @@ export interface CurrentUser {
 // unreachable, dev server not proxying yet, etc.) must resolve to "not
 // signed in" rather than throwing, or it takes the whole route tree down
 // instead of just showing signed-out layout.
-async function fetchCurrentUser(): Promise<CurrentUser | null> {
+async function fetchCurrentUser(): Promise<User | null> {
   try {
-    const response = await fetch('/me.json', { credentials: 'same-origin' })
+    const response = await fetch('/me.json', { credentials: 'same-origin' });
     if (!response.ok) return null
 
-    const data: { user: CurrentUser | null } = await response.json()
-    return data.user
+    const { user }: CurrentUserResponse = await response.json();
+    if (user) {
+      const { safe_mode: safeMode, ...rest } = user; // normalize object to camelCase
+      return { safeMode, ...rest };
+    }
+    return null;
   } catch {
     return null
   }

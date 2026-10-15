@@ -3,7 +3,7 @@
 import { useContext, type AriaAttributes, type ReactNode } from "react"
 import { ChevronDown } from "lucide-react"
 import { tv } from "tailwind-variants"
-import { cn } from "#/lib/utils"
+import { cn } from "cn"
 import {
   Button as ButtonPrimitive,
   MenuTrigger,

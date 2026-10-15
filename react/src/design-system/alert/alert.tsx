@@ -1,7 +1,7 @@
 import type { ComponentProps, ReactNode } from "react"
 import { Info, OctagonAlert, TriangleAlert } from "lucide-react"
 import { tv } from "tailwind-variants"
-import { cn } from "#/lib/utils"
+import { cn } from "cn"
 
 const alertStyles = tv({
   base: "flex items-start gap-3 rounded-lg border p-3 text-sm text-black-900",

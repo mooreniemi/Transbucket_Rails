@@ -3,7 +3,7 @@
 import type * as React from "react"
 import { X } from "lucide-react"
 import { tv } from "tailwind-variants"
-import { cn } from "#/lib/utils"
+import { cn } from "cn"
 import {
   ModalOverlay as ModalOverlayPrimitive,
   Modal as ModalPrimitive,

@@ -5,7 +5,7 @@ import { Button } from '#/design-system/button'
 import { Card } from '#/design-system/card';
 import { CsrfToken } from '#/components/csrfToken';
 import { Alert } from '#/design-system/alert';
-import { useRailsForm } from '#/lib/useRailsForm';
+import { useRailsForm } from '#/lib/hooks/useRailsForm';
 import { m } from '#/generated/paraglide/messages';
 import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';

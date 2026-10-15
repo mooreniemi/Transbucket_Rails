@@ -2,7 +2,7 @@
 
 import type * as React from "react"
 import { tv } from "tailwind-variants"
-import { cn } from "#/lib/utils"
+import { cn } from "cn"
 import {
   SwitchField as SwitchFieldPrimitive,
   SwitchButton as SwitchButtonPrimitive,

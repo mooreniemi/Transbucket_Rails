@@ -3,7 +3,7 @@
 import type * as React from "react"
 import { Check, Minus } from "lucide-react"
 import { tv } from "tailwind-variants"
-import { cn } from "#/lib/utils"
+import { cn } from "cn"
 import {
   CheckboxField as CheckboxFieldPrimitive,
   CheckboxButton as CheckboxButtonPrimitive,

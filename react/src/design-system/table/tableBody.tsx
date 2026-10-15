@@ -1,5 +1,5 @@
 import { TableBody as TableBodyPrimitive, type TableBodyProps } from "react-aria-components";
-import { cn } from "#/lib/utils";
+import { cn } from "cn";
 
 function TableBody<T extends object>(props: TableBodyProps<T>) {
   return (

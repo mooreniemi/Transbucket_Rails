@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type ComponentPropsWithoutRef, type ReactNode } from "react"
 import { Menu as MenuIcon, X } from "lucide-react"
-import { cn } from "#/lib/utils"
+import { cn } from "cn"
 import { Button as ButtonPrimitive, Link } from "react-aria-components"
 import { HeaderContext, NavVariantContext, useHeaderContext } from "./headerContext"
 import logo from "#/assets/keys_optimized.png"

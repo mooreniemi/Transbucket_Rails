@@ -3,7 +3,7 @@
 import type * as React from "react"
 import { Check, ChevronDown } from "lucide-react"
 import { tv } from "tailwind-variants"
-import { cn } from "#/lib/utils"
+import { cn } from "cn"
 import {
   ComboBox as ComboBoxPrimitive,
   Input as InputPrimitive,

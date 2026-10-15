@@ -11,7 +11,7 @@ import { Select, SelectItem } from '#/design-system/select';
 import { CsrfToken } from '#/components/csrfToken';
 import { ParaglideMessage } from '@inlang/paraglide-js-react';
 import { Accordion, AccordionItem } from '#/design-system/accordion';
-import { useRailsForm } from '#/lib/useRailsForm';
+import { useRailsForm } from '#/lib/hooks/useRailsForm';
 
 export const Route = createFileRoute('/$locale/_public/register')({
   component: RegisterPage,

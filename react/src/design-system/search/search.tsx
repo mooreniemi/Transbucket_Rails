@@ -2,7 +2,7 @@
 
 import { Search as SearchIcon, X } from "lucide-react"
 import { tv } from "tailwind-variants"
-import { cn } from "#/lib/utils"
+import { cn } from "cn"
 import {
   SearchField as SearchFieldPrimitive,
   Input as InputPrimitive,

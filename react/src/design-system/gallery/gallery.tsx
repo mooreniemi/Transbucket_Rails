@@ -2,7 +2,7 @@
 
 import type { ComponentPropsWithoutRef } from "react"
 import { Link, type LinkProps } from "react-aria-components"
-import { cn } from "#/lib/utils"
+import { cn } from "cn"
 import { formatDateTime } from "#/lib/dateTime"
 
 export interface GalleryProps extends ComponentPropsWithoutRef<"div"> {}

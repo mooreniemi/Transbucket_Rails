@@ -7,12 +7,12 @@ import { Gallery, GalleryItem } from './gallery';
 // come from users at whatever aspect ratio and orientation they uploaded,
 // so the story exercises that instead of a uniform grid of squares.
 const pins = [
-  { id: 1, procedure: 'Vaginoplasty, 6 months post-op', doctor: 'Dr. Chen', updatedAt: '2026-08-02', image: 'https://picsum.photos/seed/pin1/480/640' },
-  { id: 2, procedure: 'Phalloplasty, 1 year post-op', doctor: 'Dr. Patel', updatedAt: '2026-07-18', image: 'https://picsum.photos/seed/pin2/480/320' },
-  { id: 3, procedure: 'Mastectomy, 3 months post-op', doctor: 'Dr. Smith', updatedAt: '2026-06-30', image: 'https://picsum.photos/seed/pin3/480/480' },
-  { id: 4, procedure: 'Facial feminization, 2 years post-op', doctor: 'Dr. Banana', updatedAt: '2026-05-11', image: 'https://picsum.photos/seed/pin4/480/720' },
-  { id: 5, procedure: 'Vaginoplasty, 2 weeks post-op', doctor: 'Dr. Doe', updatedAt: '2026-04-22', image: 'https://picsum.photos/seed/pin5/480/360' },
-  { id: 6, procedure: 'Mastectomy, 1 year post-op', doctor: 'Dr. Evil', updatedAt: '2026-03-09', image: 'https://picsum.photos/seed/pin6/480/560' },
+  { id: 1, procedure: 'Vaginoplasty, 6 months post-op', doctor: 'Dr. Chen', updatedAt: '2026-08-02T12:00:00.000Z', image: 'https://picsum.photos/seed/pin1/480/640' },
+  { id: 2, procedure: 'Phalloplasty, 1 year post-op', doctor: 'Dr. Patel', updatedAt: '2026-07-18T12:00:00.000Z', image: 'https://picsum.photos/seed/pin2/480/320' },
+  { id: 3, procedure: 'Mastectomy, 3 months post-op', doctor: 'Dr. Smith', updatedAt: '2026-06-30T12:00:00.000Z', image: 'https://picsum.photos/seed/pin3/480/480' },
+  { id: 4, procedure: 'Facial feminization, 2 years post-op', doctor: 'Dr. Banana', updatedAt: '2026-05-11T12:00:00.000Z', image: 'https://picsum.photos/seed/pin4/480/720' },
+  { id: 5, procedure: 'Vaginoplasty, 2 weeks post-op', doctor: 'Dr. Doe', updatedAt: '2026-04-22T12:00:00.000Z', image: 'https://picsum.photos/seed/pin5/480/360' },
+  { id: 6, procedure: 'Mastectomy, 1 year post-op', doctor: 'Dr. Evil', updatedAt: '2026-03-09T12:00:00.000Z', image: 'https://picsum.photos/seed/pin6/480/560' },
 ];
 
 const meta = {

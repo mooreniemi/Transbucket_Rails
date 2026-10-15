@@ -1,7 +1,7 @@
 import { Column as ColumnPrimitive } from 'react-aria-components'
 import { ArrowUp } from "lucide-react"
 import { tv } from "tailwind-variants"
-import { cn } from "#/lib/utils"
+import { cn } from "cn"
 import type { ColumnProps } from "react-aria-components"
 
 const columnStyles = tv({

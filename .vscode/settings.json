@@ -1,0 +1,17 @@
+{
+  // The Vitest config lives in vite.config.ts (the test: block), not a
+  // separate vitest.config.ts.
+  "vitest.rootConfig": "./react/vite.config.ts",
+
+  "vitest.runtime": "auto",
+  "vitest.shellType": "child_process",
+  "vitest.nodeExecutable": "~/.nvm/versions/node/v24.18.0/bin/node",
+
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.profiles.osx": {
+    "zsh": {
+      "path": "/bin/zsh",
+      "args": ["-l"]
+    }
+  }
+}

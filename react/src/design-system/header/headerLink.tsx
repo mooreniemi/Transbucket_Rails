@@ -1,7 +1,7 @@
 "use client"
 
 import { Link, type LinkProps } from "react-aria-components"
-import { cn } from "#/lib/utils"
+import { cn } from "cn"
 import { useHeaderContext } from "./headerContext"
 
 export interface HeaderLinkProps extends Omit<LinkProps, "className"> {

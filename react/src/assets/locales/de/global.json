@@ -11,6 +11,18 @@
             "procedures": "Eingriffe",
             "surgeons": "Chirurgen",
             "login": "Anmelden"
+        },
+        "errors": {
+            "blank": "Dieses Feld ist erforderlich",
+            "invalid": "Ungültige Eingabe",
+            "tooShort": "Muss mindestens {count} Zeichen lang sein",
+            "tooLong": "Darf höchstens {count} Zeichen lang sein",
+            "confirmation": "Die Passwörter stimmen nicht überein",
+            "invalidCredentials": "Ungültige E-Mail-Adresse oder ungültiges Passwort.",
+            "pronounsInvalid": "Die Pronomen müssen so aussehen wie they/them oder she/her/hers (Wörter, durch Schrägstriche getrennt).",
+            "sessionExpired": "Ihre Sitzung ist abgelaufen. Laden Sie die Seite neu und versuchen Sie es erneut.",
+            "usernameTaken": "Dieser Benutzername ist nicht verfügbar",
+            "emailTaken": "Diese E-Mail-Adresse ist nicht verfügbar"
         }
     }
 }

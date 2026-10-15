@@ -1,0 +1,46 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "register": {
+        "usernameInputLabel": "Gebruikersnaam",
+        "usernameDescription": "Je gebruikersnaam is zichtbaar voor anderen",
+        "emailInputLabel": "E-mailadres",
+        "emailDescription": "Je e-mailadres wordt niet met anderen gedeeld. Verificatie is vereist.",
+        "passwordInputLabel": "Wachtwoord",
+        "confirmationInputLabel": "Wachtwoord bevestigen",
+        "nameInputLabel": "Volledige naam",
+        "nameDescription": "Je naam is alleen zichtbaar voor beheerders en wordt gebruikt in communicatie.",
+        "nameWarning": "Zorgverleners moeten hun echte naam gebruiken, anders wordt het account verwijderd.",
+        "genderInputLabel": "Geslacht",
+        "genderOptions": {
+            "ftm": "FTM",
+            "mtf": "MTF",
+            "genderQueer": "Genderqueer",
+            "none": "Geen",
+            "cisgender": "Cisgender"
+        },
+        "genderDescription": "Je geslacht kan na registratie in je profiel worden aangepast.",
+        "pronounsInputLabel": "Voornaamwoorden",
+        "pronounsOptions": {
+            "default": "Standaard (op basis van je geslacht)",
+            "sheHer": "zij/haar",
+            "heHim": "hij/hem",
+            "theyThem": "they/them",
+            "other": "Zelf invullen"
+        },
+        "genderPronounAccordion": "Hoe worden mijn geslacht en voornaamwoorden gebruikt?",
+        "genderAccordionDescription": "Geslacht wordt gebruikt om standaardinhoud in te stellen, inclusief voornaamwoorden, tenzij anders aangegeven.",
+        "pronounsAccordionDescription": "Voornaamwoorden zijn zichtbaar voor andere gebruikers bij inzendingen. Standaardvoornaamwoorden worden alleen gebruikt als er geen andere voornaamwoorden zijn opgegeven. Je kunt voornaamwoorden uit de lijst kiezen of je eigen invullen.",
+        "pronounDefaultTitle": "Standaardvoornaamwoorden:",
+        "pronounPlaceholder": "bijv. hij/they, they/zij",
+        "ftmDefault": "FTM: hij/hem",
+        "mtfDefault": "MTF: zij/haar",
+        "genderQueerDefault": "Genderqueer: they/them",
+        "noneDefault": "Geen: they/them",
+        "cisgenderDefault": "Cisgender: they/them",
+        "customPronouns": "Voornaamwoorden aanpassen",
+        "pronounsDescription": "Je voornaamwoorden kunnen na registratie in je profiel worden aangepast.",
+        "errorSummary": "Los de onderstaande problemen op en verstuur het formulier opnieuw.",
+        "loginTitle": "Heb je al een account?",
+        "termsText": "Ik ga akkoord met de {#terms}Servicevoorwaarden{/terms} en heb het {#privacy}Privacybeleid{/privacy} gelezen."
+    }
+}

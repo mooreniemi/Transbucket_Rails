@@ -1,0 +1,46 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "register": {
+        "usernameInputLabel": "Имя пользователя",
+        "usernameDescription": "Ваше имя пользователя будет видно другим",
+        "emailInputLabel": "Эл. почта",
+        "emailDescription": "Ваш адрес электронной почты не будет передан другим. Требуется подтверждение.",
+        "passwordInputLabel": "Пароль",
+        "confirmationInputLabel": "Подтвердите пароль",
+        "nameInputLabel": "Полное имя",
+        "nameDescription": "Ваше имя будет видно только администраторам и будет использоваться для связи с вами.",
+        "nameWarning": "Медицинские специалисты должны указывать настоящее имя, иначе аккаунт будет удалён.",
+        "genderInputLabel": "Пол",
+        "genderOptions": {
+            "ftm": "Транс-мужчина (FTM)",
+            "mtf": "Транс-женщина (MTF)",
+            "genderQueer": "Гендерквир",
+            "none": "Не указано",
+            "cisgender": "Цисгендер"
+        },
+        "genderDescription": "Пол можно изменить в профиле после регистрации.",
+        "pronounsInputLabel": "Местоимения",
+        "pronounsOptions": {
+            "default": "По умолчанию (по вашему полу)",
+            "sheHer": "она/её",
+            "heHim": "он/его",
+            "theyThem": "they/them",
+            "other": "Указать свои"
+        },
+        "genderPronounAccordion": "Как используются мой пол и местоимения?",
+        "genderAccordionDescription": "Пол используется для настройки содержимого по умолчанию, включая местоимения, если не указано иное.",
+        "pronounsAccordionDescription": "Местоимения видны другим пользователям в публикациях. Местоимения по умолчанию используются, только если не указаны другие. Вы можете выбрать местоимения из списка или указать свои.",
+        "pronounDefaultTitle": "Местоимения по умолчанию:",
+        "pronounPlaceholder": "например, он/they, they/она",
+        "ftmDefault": "Транс-мужчина (FTM): он/его",
+        "mtfDefault": "Транс-женщина (MTF): она/её",
+        "genderQueerDefault": "Гендерквир: they/them",
+        "noneDefault": "Не указано: they/them",
+        "cisgenderDefault": "Цисгендер: they/them",
+        "customPronouns": "Настроить местоимения",
+        "pronounsDescription": "Местоимения можно изменить в профиле после регистрации.",
+        "errorSummary": "Исправьте указанные ниже ошибки и отправьте форму ещё раз.",
+        "loginTitle": "Уже есть аккаунт?",
+        "termsText": "Я принимаю {#terms}Условия использования{/terms} и ознакомлен(а) с {#privacy}Политикой конфиденциальности{/privacy}."
+    }
+}

@@ -1,0 +1,46 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "register": {
+        "usernameInputLabel": "Benutzername",
+        "usernameDescription": "Ihr Benutzername ist für andere sichtbar",
+        "emailInputLabel": "E-Mail-Adresse",
+        "emailDescription": "Ihre E-Mail-Adresse wird nicht an andere weitergegeben. Eine Bestätigung ist erforderlich.",
+        "passwordInputLabel": "Passwort",
+        "confirmationInputLabel": "Passwort bestätigen",
+        "nameInputLabel": "Vollständiger Name",
+        "nameDescription": "Ihr Name ist nur für Administrator*innen sichtbar und wird für die Kommunikation verwendet.",
+        "nameWarning": "Gesundheitsdienstleister*innen müssen ihren echten Namen verwenden, andernfalls wird das Konto entfernt.",
+        "genderInputLabel": "Geschlecht",
+        "genderOptions": {
+            "ftm": "FTM",
+            "mtf": "MTF",
+            "genderQueer": "Genderqueer",
+            "none": "Keine Angabe",
+            "cisgender": "Cisgender"
+        },
+        "genderDescription": "Das Geschlecht kann nach der Registrierung in Ihrem Profil geändert werden.",
+        "pronounsInputLabel": "Pronomen",
+        "pronounsOptions": {
+            "default": "Standard – vom Geschlecht abgeleitet",
+            "sheHer": "sie/ihr",
+            "heHim": "er/ihm",
+            "theyThem": "they/them",
+            "other": "Eigene eingeben"
+        },
+        "genderPronounAccordion": "Wie werden mein Geschlecht und meine Pronomen verwendet?",
+        "genderAccordionDescription": "Das Geschlecht wird verwendet, um Standardinhalte einschließlich der Pronomen festzulegen, sofern nicht anders angegeben.",
+        "pronounsAccordionDescription": "Pronomen sind für andere Nutzer*innen bei Beiträgen sichtbar. Standardpronomen werden nur verwendet, wenn keine anderen Pronomen angegeben sind. Sie können Pronomen aus der Liste auswählen oder eigene angeben.",
+        "pronounDefaultTitle": "Standardpronomen:",
+        "pronounPlaceholder": "z. B. er/they, they/sie",
+        "ftmDefault": "FTM: er/ihm",
+        "mtfDefault": "MTF: sie/ihr",
+        "genderQueerDefault": "Genderqueer: they/them",
+        "noneDefault": "Keine Angabe: they/them",
+        "cisgenderDefault": "Cisgender: they/them",
+        "customPronouns": "Pronomen anpassen",
+        "pronounsDescription": "Die Pronomen können nach der Registrierung in Ihrem Profil geändert werden.",
+        "errorSummary": "Bitte beheben Sie die unten aufgeführten Probleme und senden Sie das Formular erneut ab.",
+        "loginTitle": "Sie haben bereits ein Konto?",
+        "termsText": "Ich stimme den {#terms}Nutzungsbedingungen{/terms} zu und habe die {#privacy}Datenschutzerklärung{/privacy} gelesen."
+    }
+}

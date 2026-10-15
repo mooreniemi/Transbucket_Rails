@@ -1,0 +1,46 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "register": {
+        "usernameInputLabel": "Användarnamn",
+        "usernameDescription": "Ditt användarnamn är synligt för andra",
+        "emailInputLabel": "E-post",
+        "emailDescription": "Din e-postadress delas inte med andra. Verifiering krävs.",
+        "passwordInputLabel": "Lösenord",
+        "confirmationInputLabel": "Bekräfta lösenord",
+        "nameInputLabel": "Fullständigt namn",
+        "nameDescription": "Ditt namn är bara synligt för administratörer och används i kommunikation.",
+        "nameWarning": "Vårdgivare måste använda sitt riktiga namn, annars tas kontot bort.",
+        "genderInputLabel": "Kön",
+        "genderOptions": {
+            "ftm": "FTM",
+            "mtf": "MTF",
+            "genderQueer": "Genderqueer",
+            "none": "Ingen",
+            "cisgender": "Cisgender"
+        },
+        "genderDescription": "Kön kan ändras i din profil efter registreringen.",
+        "pronounsInputLabel": "Pronomen",
+        "pronounsOptions": {
+            "default": "Standard (utifrån ditt kön)",
+            "sheHer": "hon/henne",
+            "heHim": "han/honom",
+            "theyThem": "hen",
+            "other": "Ange egna"
+        },
+        "genderPronounAccordion": "Hur används mitt kön och mina pronomen?",
+        "genderAccordionDescription": "Kön används för att ställa in standardinnehåll, inklusive pronomen, om inget annat anges.",
+        "pronounsAccordionDescription": "Pronomen är synliga för andra användare i inlägg. Standardpronomen används bara om inga andra pronomen har angetts. Du kan välja pronomen i listan eller ange egna.",
+        "pronounDefaultTitle": "Standardpronomen:",
+        "pronounPlaceholder": "t.ex. han/hen, hen/hon",
+        "ftmDefault": "FTM: han/honom",
+        "mtfDefault": "MTF: hon/henne",
+        "genderQueerDefault": "Genderqueer: hen",
+        "noneDefault": "Ingen: hen",
+        "cisgenderDefault": "Cisgender: hen",
+        "customPronouns": "Anpassa pronomen",
+        "pronounsDescription": "Pronomen kan ändras i din profil efter registreringen.",
+        "errorSummary": "Åtgärda problemen nedan och skicka igen.",
+        "loginTitle": "Har du redan ett konto?",
+        "termsText": "Jag godkänner {#terms}användarvillkoren{/terms} och har läst {#privacy}integritetspolicyn{/privacy}."
+    }
+}

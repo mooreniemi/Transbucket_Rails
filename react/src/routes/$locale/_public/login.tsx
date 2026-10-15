@@ -7,6 +7,8 @@ import { CsrfToken } from '#/components/csrfToken';
 import { Alert } from '#/design-system/alert';
 import { useRailsForm } from '#/lib/useRailsForm';
 import { m } from '#/generated/paraglide/messages';
+import { useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 
 export const Route = createFileRoute('/$locale/_public/login')({
   component: LoginPage,
@@ -28,7 +30,8 @@ interface SignInResult {
 }
 
 function LoginPage() {
-  const { locale } = Route.useParams()
+  const { locale } = Route.useParams();
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const form = useRailsForm<SignInResult>({
     url: `/${locale}/users/sign_in`,
@@ -37,7 +40,11 @@ function LoginPage() {
     // A full page load: the signed-in pages are still server-rendered and
     // need the session cookie this response just set.
     onSuccess: (data) => window.location.assign(data.redirect_to),
-  })
+  });
+
+  const onTogglePassword = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   return (
     <Card className="md:mx-auto flex flex-col w-full md:max-w-sm min-h-full md:min-h-auto gap-6 my-0 md:my-20">
@@ -49,8 +56,20 @@ function LoginPage() {
       )}
       <form name="login" onSubmit={form.onSubmit} className="flex flex-col gap-4">
         <CsrfToken />
-        <Input name="user[login]" label={m['login.userInputLabel']()} autoFocus isRequired />
-        <Input name="user[password]" type="password" label={m['login.passwordInputLabel']()} isRequired autoComplete="password" />
+        <Input name="user[login]" label={m['login.userInputLabel']()} autoFocus isRequired autoComplete="username" />
+        <Input
+          name="user[password]"
+          type={showPassword ? 'text' : 'password'}
+          label={m['login.passwordInputLabel']()}
+          isRequired
+          autoComplete="current-password"
+          append={{
+            content: showPassword ? <EyeOff size={16} /> : <Eye size={16} />,
+            onClick: onTogglePassword,
+            isPressed: showPassword,
+            ariaLabel: showPassword ? 'hide password' : 'show password'
+          }} />
+        <div className="text-right text-xs"><a href={`/${locale}/users/password/new`}>{m['login.forgotPasswordLink']()}</a></div>
         {/* Hidden "0" before the checkbox, matching Rails' own check_box
             helper -- an unchecked box submits nothing on its own, so the
             hidden field is what tells Devise remember_me is explicitly

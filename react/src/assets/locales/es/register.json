@@ -1,0 +1,46 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "register": {
+        "usernameInputLabel": "Nombre de usuario",
+        "usernameDescription": "Tu nombre de usuario será visible para los demás",
+        "emailInputLabel": "Correo electrónico",
+        "emailDescription": "Tu dirección de correo electrónico no se compartirá con nadie. Se requiere verificación.",
+        "passwordInputLabel": "Contraseña",
+        "confirmationInputLabel": "Confirmar contraseña",
+        "nameInputLabel": "Nombre completo",
+        "nameDescription": "Tu nombre solo será visible para los administradores y se usará en las comunicaciones.",
+        "nameWarning": "Los profesionales de la salud deben usar su nombre real o la cuenta será eliminada.",
+        "genderInputLabel": "Género",
+        "genderOptions": {
+            "ftm": "Hombre trans (FTM)",
+            "mtf": "Mujer trans (MTF)",
+            "genderQueer": "Género queer",
+            "none": "Ninguno",
+            "cisgender": "Cisgénero"
+        },
+        "genderDescription": "Puedes actualizar tu género en tu perfil después del registro.",
+        "pronounsInputLabel": "Pronombres",
+        "pronounsOptions": {
+            "default": "Predeterminado (según tu género)",
+            "sheHer": "ella",
+            "heHim": "él",
+            "theyThem": "elle",
+            "other": "Escribir los míos"
+        },
+        "genderPronounAccordion": "¿Cómo se usan mi género y mis pronombres?",
+        "genderAccordionDescription": "El género se usa para establecer el contenido predeterminado, incluidos los pronombres, salvo que se indique lo contrario.",
+        "pronounsAccordionDescription": "Los pronombres son visibles para otros usuarios en las publicaciones. Los pronombres predeterminados solo se usan si no se especifican otros. Puedes elegir pronombres de la lista o escribir los tuyos.",
+        "pronounDefaultTitle": "Pronombres predeterminados:",
+        "pronounPlaceholder": "p. ej., él/elle, elle/ella",
+        "ftmDefault": "Hombre trans (FTM): él",
+        "mtfDefault": "Mujer trans (MTF): ella",
+        "genderQueerDefault": "Género queer: elle",
+        "noneDefault": "Ninguno: elle",
+        "cisgenderDefault": "Cisgénero: elle",
+        "customPronouns": "Personalizar pronombres",
+        "pronounsDescription": "Puedes actualizar tus pronombres en tu perfil después del registro.",
+        "errorSummary": "Corrige los problemas indicados abajo y vuelve a enviar el formulario.",
+        "loginTitle": "¿Ya tienes una cuenta?",
+        "termsText": "Acepto los {#terms}Términos del servicio{/terms} y he leído la {#privacy}Política de privacidad{/privacy}."
+    }
+}

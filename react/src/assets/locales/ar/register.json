@@ -1,0 +1,46 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "register": {
+        "usernameInputLabel": "اسم المستخدم",
+        "usernameDescription": "سيكون اسم المستخدم الخاص بك مرئيًا للآخرين",
+        "emailInputLabel": "البريد الإلكتروني",
+        "emailDescription": "لن تتم مشاركة عنوان بريدك الإلكتروني مع الآخرين. التحقق مطلوب.",
+        "passwordInputLabel": "كلمة المرور",
+        "confirmationInputLabel": "تأكيد كلمة المرور",
+        "nameInputLabel": "الاسم الكامل",
+        "nameDescription": "سيكون اسمك مرئيًا للمسؤولين فقط وسيُستخدم في المراسلات.",
+        "nameWarning": "يجب على مقدمي الرعاية استخدام أسمائهم الحقيقية وإلا ستتم إزالة الحساب.",
+        "genderInputLabel": "النوع الاجتماعي",
+        "genderOptions": {
+            "ftm": "رجل عابر (FTM)",
+            "mtf": "امرأة عابرة (MTF)",
+            "genderQueer": "جندر كوير",
+            "none": "غير محدد",
+            "cisgender": "متوافق الجنس"
+        },
+        "genderDescription": "يمكن تحديث النوع الاجتماعي بعد التسجيل من ملفك الشخصي.",
+        "pronounsInputLabel": "الضمائر",
+        "pronounsOptions": {
+            "default": "الافتراضي (حسب النوع الاجتماعي)",
+            "sheHer": "هي",
+            "heHim": "هو",
+            "theyThem": "they/them",
+            "other": "إدخال ضمائري الخاصة"
+        },
+        "genderPronounAccordion": "كيف يُستخدم نوعي الاجتماعي وضمائري؟",
+        "genderAccordionDescription": "يُستخدم النوع الاجتماعي لتعيين المحتوى الافتراضي بما في ذلك الضمائر، ما لم يُذكر خلاف ذلك.",
+        "pronounsAccordionDescription": "تظهر الضمائر للمستخدمين الآخرين في المشاركات. لا تُستخدم الضمائر الافتراضية إلا إذا لم تُحدَّد ضمائر بديلة. يمكنك اختيار الضمائر من القائمة أو إدخال ضمائرك الخاصة.",
+        "pronounDefaultTitle": "الضمائر الافتراضية:",
+        "pronounPlaceholder": "مثال: هو/they, they/هي",
+        "ftmDefault": "رجل عابر (FTM): هو",
+        "mtfDefault": "امرأة عابرة (MTF): هي",
+        "genderQueerDefault": "جندر كوير: they/them",
+        "noneDefault": "غير محدد: they/them",
+        "cisgenderDefault": "متوافق الجنس: they/them",
+        "customPronouns": "تخصيص الضمائر",
+        "pronounsDescription": "يمكن تحديث الضمائر بعد التسجيل من ملفك الشخصي.",
+        "errorSummary": "يرجى إصلاح المشكلات أدناه ثم الإرسال مرة أخرى.",
+        "loginTitle": "هل لديك حساب بالفعل؟",
+        "termsText": "أوافق على {#terms}شروط الخدمة{/terms} وقد قرأت {#privacy}سياسة الخصوصية{/privacy}."
+    }
+}

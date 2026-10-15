@@ -1,0 +1,46 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "register": {
+        "usernameInputLabel": "Nom d’utilisateur",
+        "usernameDescription": "Votre nom d’utilisateur sera visible par les autres",
+        "emailInputLabel": "E-mail",
+        "emailDescription": "Votre adresse e-mail ne sera pas partagée. Une vérification est requise.",
+        "passwordInputLabel": "Mot de passe",
+        "confirmationInputLabel": "Confirmer le mot de passe",
+        "nameInputLabel": "Nom complet",
+        "nameDescription": "Votre nom ne sera visible que par les administrateurs et sera utilisé dans nos communications.",
+        "nameWarning": "Les professionnels de santé doivent utiliser leur vrai nom, sinon le compte sera supprimé.",
+        "genderInputLabel": "Genre",
+        "genderOptions": {
+            "ftm": "FTM",
+            "mtf": "MTF",
+            "genderQueer": "Genre queer",
+            "none": "Aucun",
+            "cisgender": "Cisgenre"
+        },
+        "genderDescription": "Le genre peut être modifié après l’inscription dans votre profil.",
+        "pronounsInputLabel": "Pronoms",
+        "pronounsOptions": {
+            "default": "Par défaut (selon votre genre)",
+            "sheHer": "elle",
+            "heHim": "il",
+            "theyThem": "iel",
+            "other": "Saisir les miens"
+        },
+        "genderPronounAccordion": "Comment mon genre et mes pronoms sont-ils utilisés ?",
+        "genderAccordionDescription": "Le genre sert à définir le contenu par défaut, y compris les pronoms, sauf indication contraire.",
+        "pronounsAccordionDescription": "Les pronoms sont visibles par les autres utilisateurs sur les publications. Les pronoms par défaut ne sont utilisés que si aucun autre pronom n’est indiqué. Vous pouvez choisir des pronoms dans la liste ou saisir les vôtres.",
+        "pronounDefaultTitle": "Pronoms par défaut :",
+        "pronounPlaceholder": "p. ex. il/iel, iel/elle",
+        "ftmDefault": "FTM : il",
+        "mtfDefault": "MTF : elle",
+        "genderQueerDefault": "Genre queer : iel",
+        "noneDefault": "Aucun : iel",
+        "cisgenderDefault": "Cisgenre : iel",
+        "customPronouns": "Personnaliser les pronoms",
+        "pronounsDescription": "Les pronoms peuvent être modifiés après l’inscription dans votre profil.",
+        "errorSummary": "Veuillez corriger les problèmes ci-dessous et soumettre à nouveau.",
+        "loginTitle": "Vous avez déjà un compte ?",
+        "termsText": "J’accepte les {#terms}Conditions d’utilisation{/terms} et j’ai lu la {#privacy}Politique de confidentialité{/privacy}."
+    }
+}

@@ -11,6 +11,18 @@
             "procedures": "手术项目",
             "surgeons": "医生",
             "login": "登录"
+        },
+        "errors": {
+            "blank": "此字段为必填项",
+            "invalid": "输入无效",
+            "tooShort": "至少需要 {count} 个字符",
+            "tooLong": "最多 {count} 个字符",
+            "confirmation": "两次输入的密码不一致",
+            "invalidCredentials": "邮箱或密码无效。",
+            "pronounsInvalid": "代词的格式应类似 they/them 或 she/her/hers：用斜杠分隔的单词。",
+            "sessionExpired": "会话已过期。请刷新页面后重试。",
+            "usernameTaken": "此用户名不可用",
+            "emailTaken": "此邮箱不可用"
         }
     }
 }

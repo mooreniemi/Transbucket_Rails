@@ -16,13 +16,17 @@ class AuthFailureApp < Devise::FailureApp
     super
   end
 
-  # JSON failures use the same { errors: { base: [...] } } shape as the
-  # sign-up endpoint, so the React forms have one shape to read. `error` is
-  # kept for anything that already reads Devise's own key.
+  # JSON failures use the same { errors: { base: [{ code }] } } shape as the
+  # sign-up endpoint, so the React forms have one shape to read. Anything that
+  # says the credentials didn't work is one code, whatever the reason (see
+  # above). `error` is kept for anything that already reads Devise's own key.
+  CREDENTIAL_FAILURES = (ACCOUNT_STATE_FAILURES + %i[invalid not_found_in_database]).freeze
+
   def http_auth_body
     return super unless request_format == :json
 
-    message = i18n_message
-    { error: message, errors: { base: [message] } }.to_json
+    key = warden_message&.to_sym
+    code = CREDENTIAL_FAILURES.include?(key) ? 'invalid_credentials' : (key || 'unauthenticated').to_s
+    { error: i18n_message, errors: { base: [{ code: code }] } }.to_json
   end
 end

@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
-import { m } from '#/generated/paraglide/messages'
 import { formToParams, postJson } from '#/lib/api'
+import { messageFor, messageForStatus, type ErrorCode } from '#/lib/errorMessages'
 
 type FieldErrors = Record<string, string[]>
+type ServerErrors = Record<string, ErrorCode[]>
 
 interface Options<T> {
   url: string
@@ -17,8 +18,9 @@ interface Options<T> {
 }
 
 // Submits a form to a Rails JSON endpoint and sorts the answer into what the
-// page needs. Rails answers failures with `{ errors: { field: [messages],
-// base: [messages] } }` (a 422 from validation, a 401 from Devise).
+// page needs. Rails answers failures with `{ errors: { field: [codes],
+// base: [codes] } }` (a 422 from validation, a 401 from Devise), where each
+// code is `{ code: 'too_short', count: 8 }`; the words come from messageFor.
 //
 // - fieldErrors: keyed by input name (`user[email]`), the shape React Aria's
 //   <Form validationErrors> wants.
@@ -46,7 +48,7 @@ export function useRailsForm<T>({ url, scope, summary, onSuccess }: Options<T>) 
     setFormError(null)
     setFieldErrors({})
 
-    const result = await postJson<T & { errors?: FieldErrors }>(url, params)
+    const result = await postJson<T & { errors?: ServerErrors }>(url, params)
 
     if (result.ok && result.data) {
       onSuccess(result.data)
@@ -57,14 +59,14 @@ export function useRailsForm<T>({ url, scope, summary, onSuccess }: Options<T>) 
 
     if (result.data?.errors) {
       const { base, ...fields } = result.data.errors
-      setFormError(base?.join(' ') ?? null)
+      setFormError(base ? base.map((error) => messageFor(error, 'base')).join(' ') : null)
       setFieldErrors(
         Object.fromEntries(
-          Object.entries(fields).map(([field, messages]) => [`${scope}[${field}]`, messages]),
+          Object.entries(fields).map(([field, codes]) => [`${scope}[${field}]`, codes.map((error) => messageFor(error, field))]),
         ),
       )
     } else {
-      setFormError(result.networkError ? m['global.errors.network']() : m['global.errors.generic']())
+      setFormError(messageForStatus(result.status, result.networkError))
     }
   }
 

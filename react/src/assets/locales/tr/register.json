@@ -1,0 +1,46 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "register": {
+        "usernameInputLabel": "Kullanıcı adı",
+        "usernameDescription": "Kullanıcı adınız başkaları tarafından görülebilir",
+        "emailInputLabel": "E-posta",
+        "emailDescription": "E-posta adresiniz başkalarıyla paylaşılmaz. Doğrulama gereklidir.",
+        "passwordInputLabel": "Şifre",
+        "confirmationInputLabel": "Şifreyi onayla",
+        "nameInputLabel": "Ad soyad",
+        "nameDescription": "Adınız yalnızca yöneticiler tarafından görülebilir ve iletişimde kullanılır.",
+        "nameWarning": "Sağlık hizmeti sağlayıcıları gerçek adlarını kullanmalıdır, aksi takdirde hesap kaldırılır.",
+        "genderInputLabel": "Cinsiyet",
+        "genderOptions": {
+            "ftm": "Trans erkek (FTM)",
+            "mtf": "Trans kadın (MTF)",
+            "genderQueer": "Genderqueer",
+            "none": "Belirtilmedi",
+            "cisgender": "Cisgender"
+        },
+        "genderDescription": "Cinsiyet, kayıttan sonra profilinizden güncellenebilir.",
+        "pronounsInputLabel": "Zamirler",
+        "pronounsOptions": {
+            "default": "Varsayılan (cinsiyetinize göre)",
+            "sheHer": "she/her",
+            "heHim": "he/him",
+            "theyThem": "they/them",
+            "other": "Kendim gireyim"
+        },
+        "genderPronounAccordion": "Cinsiyetim ve zamirlerim nasıl kullanılıyor?",
+        "genderAccordionDescription": "Cinsiyet, aksi belirtilmedikçe zamirler dahil varsayılan içeriği ayarlamak için kullanılır.",
+        "pronounsAccordionDescription": "Zamirler, gönderilerde diğer kullanıcılar tarafından görülebilir. Varsayılan zamirler yalnızca başka zamir belirtilmediğinde kullanılır. Zamirleri listeden seçebilir veya kendiniz girebilirsiniz.",
+        "pronounDefaultTitle": "Varsayılan zamirler:",
+        "pronounPlaceholder": "örn. he/they, they/she",
+        "ftmDefault": "Trans erkek (FTM): he/him",
+        "mtfDefault": "Trans kadın (MTF): she/her",
+        "genderQueerDefault": "Genderqueer: they/them",
+        "noneDefault": "Belirtilmedi: they/them",
+        "cisgenderDefault": "Cisgender: they/them",
+        "customPronouns": "Zamirleri özelleştir",
+        "pronounsDescription": "Zamirler, kayıttan sonra profilinizden güncellenebilir.",
+        "errorSummary": "Lütfen aşağıdaki sorunları düzeltip tekrar gönderin.",
+        "loginTitle": "Zaten bir hesabınız var mı?",
+        "termsText": "{#terms}Hizmet Şartları{/terms}’nı kabul ediyorum ve {#privacy}Gizlilik Politikası{/privacy}’nı okudum."
+    }
+}

@@ -11,6 +11,18 @@
             "procedures": "Procedures",
             "surgeons": "Chirurgen",
             "login": "Inloggen"
+        },
+        "errors": {
+            "blank": "Dit veld is verplicht",
+            "invalid": "Ongeldige invoer",
+            "tooShort": "Moet minimaal {count} tekens bevatten",
+            "tooLong": "Mag maximaal {count} tekens bevatten",
+            "confirmation": "De wachtwoorden komen niet overeen",
+            "invalidCredentials": "Ongeldig e-mailadres of wachtwoord.",
+            "pronounsInvalid": "Voornaamwoorden moeten eruitzien als they/them of she/her/hers: woorden gescheiden door schuine strepen.",
+            "sessionExpired": "Je sessie is verlopen. Laad de pagina opnieuw en probeer het nog een keer.",
+            "usernameTaken": "Deze gebruikersnaam is niet beschikbaar",
+            "emailTaken": "Dit e-mailadres is niet beschikbaar"
         }
     }
 }

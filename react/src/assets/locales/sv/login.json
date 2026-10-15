@@ -4,6 +4,7 @@
         "userInputLabel": "Användarnamn eller e-post",
         "passwordInputLabel": "Lösenord",
         "rememberInputLabel": "Kom ihåg mig",
-        "registrationTitle": "Ny på Transbucket?"
+        "registrationTitle": "Ny på Transbucket?",
+        "forgotPasswordLink": "Glömt ditt lösenord?"
     }
 }

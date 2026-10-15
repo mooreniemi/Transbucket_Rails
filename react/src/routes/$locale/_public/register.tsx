@@ -100,6 +100,7 @@ function RegisterPage() {
             isRequired
             autoComplete="new-password"
             minLength={8}
+            maxLength={128}
         />
         <Input
             name="user[password_confirmation]"
@@ -108,6 +109,7 @@ function RegisterPage() {
             isRequired
             autoComplete="new-password"
             minLength={8}
+            maxLength={128}
         />
         <Input
             type="text"
@@ -145,7 +147,13 @@ function RegisterPage() {
             <SelectItem id="other">{m['register.pronounsOptions.other']()}</SelectItem>
         </Select>
         { pronouns === 'other' && (
-          <Input type="text" name="user[pronouns_custom]" aria-label={m['register.customPronouns']()} placeholder="ex: ze/zir, she/they/them" />
+          <Input
+            type="text"
+            name="user[pronouns_custom]"
+            aria-label={m['register.customPronouns']()}
+            placeholder={m['register.pronounPlaceholder']()}
+            max-length={40}
+          />
         )}
         <Accordion>
             <AccordionItem title={m['register.genderPronounAccordion']()}>

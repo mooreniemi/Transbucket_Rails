@@ -57,16 +57,32 @@ RSpec.describe 'React sign-up form', type: :request do
     expect(User.find_by(email: 'pat@example.com')).to be_nil
   end
 
-  it 'answers 422 with full error messages keyed by attribute, and nothing secret' do
+  it 'answers 422 with error codes keyed by attribute, and nothing secret' do
     sign_up(email: '', password: 'Zq7!x', password_confirmation: 'Nope-9')
 
     expect(response).to have_http_status(:unprocessable_entity)
-    errors = response.parsed_body.fetch('errors')
-    expect(errors.fetch('email')).to include("Email can't be blank")
-    expect(errors.keys).to include('password', 'password_confirmation')
+    expect(response.parsed_body.fetch('errors')).to include(
+      'email' => include({ 'code' => 'blank' }),
+      'password' => [{ 'code' => 'too_short', 'count' => 8 }],
+      'password_confirmation' => [{ 'code' => 'confirmation' }]
+    )
     expect(User.find_by(username: 'pat_example')).to be_nil
     expect(response.body).not_to include('Zq7!x')
     expect(response.body).not_to include('Nope-9')
+  end
+
+  it 'reports a duplicate username as taken' do
+    create(:user, username: 'pat_example')
+
+    sign_up
+
+    expect(response.parsed_body.dig('errors', 'username')).to eq([{ 'code' => 'taken' }])
+  end
+
+  it 'reports invalid pronouns as a base error code' do
+    sign_up(pronouns: 'custom', pronouns_custom: 'not valid at all')
+
+    expect(response.parsed_body.dig('errors', 'base')).to eq([{ 'code' => 'pronouns_invalid' }])
   end
 
   it 'answers 201 with the confirmation message and where to go' do

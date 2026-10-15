@@ -4,6 +4,7 @@
         "userInputLabel": "Gebruikersnaam of e-mail",
         "passwordInputLabel": "Wachtwoord",
         "rememberInputLabel": "Onthoud mij",
-        "registrationTitle": "Nieuw bij Transbucket?"
+        "registrationTitle": "Nieuw bij Transbucket?",
+        "forgotPasswordLink": "Wachtwoord vergeten?"
     }
 }

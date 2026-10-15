@@ -59,14 +59,14 @@ describe "the sign-in process", type: :request do
       sign_in_json user.username, password: 'not-it'
 
       expect(response).to have_http_status(:unauthorized)
-      expect(response.parsed_body.fetch('errors')).to eq('base' => [generic])
+      expect(response.parsed_body.fetch('errors')).to eq('base' => [{ 'code' => 'invalid_credentials' }])
     end
 
     it 'gives the same answer for an account that does not exist' do
       sign_in_json 'nobody_here', password: 'whatever-it-is'
 
       expect(response).to have_http_status(:unauthorized)
-      expect(response.parsed_body.fetch('errors')).to eq('base' => [generic])
+      expect(response.parsed_body.fetch('errors')).to eq('base' => [{ 'code' => 'invalid_credentials' }])
     end
 
     it 'does not reveal that an unconfirmed account exists' do
@@ -75,7 +75,7 @@ describe "the sign-in process", type: :request do
       sign_in_json unconfirmed.username, password: unconfirmed.password
 
       expect(response).to have_http_status(:unauthorized)
-      expect(response.parsed_body.fetch('errors')).to eq('base' => [generic])
+      expect(response.parsed_body.fetch('errors')).to eq('base' => [{ 'code' => 'invalid_credentials' }])
     end
 
     it 'uses the same generic message for plain HTML posts' do

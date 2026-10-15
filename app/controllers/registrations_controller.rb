@@ -18,13 +18,14 @@ class RegistrationsController < Devise::RegistrationsController
   protected
 
   # JSON sign-ups (the React page) get small, predictable bodies: errors keyed
-  # by attribute with full messages, or the success message and where to go.
+  # by attribute as codes (see ErrorCodes), or the success message and where
+  # to go.
   # HTML sign-ups keep Devise's own behavior.
   def respond_with(*resources, &block)
     resource = resources.first
     if request.format.json? && action_name == 'create' && resource.respond_to?(:errors)
       if resource.errors.any?
-        return render json: { errors: resource.errors.to_hash(true) }, status: :unprocessable_entity
+        return render json: { errors: ErrorCodes.for(resource) }, status: :unprocessable_entity
       elsif resource.persisted?
         return render json: {
           message: I18n.t('devise.registrations.signed_up_but_unconfirmed'),

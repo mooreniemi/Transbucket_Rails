@@ -8,7 +8,17 @@
         },
         "errors": {
             "network": "We couldn't reach the server. Check your connection and try again.",
-            "generic": "Something went wrong. Please try again."
+            "generic": "Something went wrong. Please try again.",
+            "blank": "This field is required",
+            "invalid": "Invalid input",
+            "tooShort": "Must be at least {count} characters",
+            "tooLong": "Must be at most {count} characters",
+            "confirmation": "Passwords do not match",
+            "invalidCredentials": "Invalid email or password.",
+            "pronounsInvalid": "Pronouns should look like they/them or she/her/hers: words separated by slashes.",
+            "sessionExpired": "Your session has expired. Reload the page and try again.",
+            "usernameTaken": "This username is unavailable",
+            "emailTaken": "This email is unavailable"
         },
         "pages": {
             "news": "News",

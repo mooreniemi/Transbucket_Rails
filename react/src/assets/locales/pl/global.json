@@ -11,6 +11,18 @@
             "procedures": "Zabiegi",
             "surgeons": "Chirurdzy",
             "login": "Zaloguj się"
+        },
+        "errors": {
+            "blank": "To pole jest wymagane",
+            "invalid": "Nieprawidłowe dane",
+            "tooShort": "Musi mieć co najmniej {count} znaków",
+            "tooLong": "Może mieć najwyżej {count} znaków",
+            "confirmation": "Hasła nie są takie same",
+            "invalidCredentials": "Nieprawidłowy adres e-mail lub hasło.",
+            "pronounsInvalid": "Zaimki powinny wyglądać jak they/them lub she/her/hers: słowa oddzielone ukośnikami.",
+            "sessionExpired": "Twoja sesja wygasła. Odśwież stronę i spróbuj ponownie.",
+            "usernameTaken": "Ta nazwa użytkownika jest niedostępna",
+            "emailTaken": "Ten adres e-mail jest niedostępny"
         }
     }
 }

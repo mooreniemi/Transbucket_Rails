@@ -4,6 +4,7 @@
         "userInputLabel": "Kullanıcı adı veya e-posta",
         "passwordInputLabel": "Şifre",
         "rememberInputLabel": "Beni hatırla",
-        "registrationTitle": "Transbucket’a yeni misiniz?"
+        "registrationTitle": "Transbucket’a yeni misiniz?",
+        "forgotPasswordLink": "Şifrenizi mi unuttunuz?"
     }
 }

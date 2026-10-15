@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/tanstack-react';
 import { expect } from 'storybook/test';
+import { Search, Eye, EyeOff } from 'lucide-react';
+import { useState } from 'react';
 
-import { Input } from './input';
+import { Input, type StartEndElement } from './input';
 
 const meta = {
   title: 'Components/Forms/Input',
@@ -65,3 +67,46 @@ export const Disabled: Story = {
    expect(canvas.getByRole('textbox')).toBeDisabled();
   }
 };
+
+export const WithPrependedElement: Story = {
+  args: {
+    'aria-label': 'Search',
+    label: undefined,
+    prepend: {
+      content: <Search size={16} />
+    }
+  }
+};
+
+export const WithAppendedElement: Story = {
+  args: {
+    label: 'Password',
+    type: 'password',
+    append:  {
+      content: <Eye size={16} />,
+      isPressed: false,
+      onClick: () => {},
+      ariaLabel: 'show password',
+    },
+    placeholder: undefined,
+  },
+  render: ({ type, append, ...args }) => {
+    const [appendState, setAppendState] = useState<StartEndElement>({
+      content: append?.content,
+      ...append,
+      onClick: () => {
+        setAppendState((prev) => ({
+          ...prev,
+          isPressed: !prev.isPressed,
+          content: prev.isPressed ? <Eye size={16} /> : <EyeOff size={16} />,
+          ariaLabel: prev.isPressed ? 'show password' : 'hide password',
+        }));
+      }
+    });
+
+    return (
+      <Input type={appendState.isPressed ? 'text' : type } {...args} append={appendState} />
+    )
+  }
+};
+

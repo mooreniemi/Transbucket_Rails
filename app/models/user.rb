@@ -83,7 +83,7 @@ class User < ActiveRecord::Base
     return if pronouns.blank?
     return if pronouns.length <= PRONOUNS_MAX_LENGTH && pronouns.match?(PRONOUNS_FORMAT)
 
-    errors.add(:base, I18n.t('public.auth.pronouns_invalid'))
+    errors.add(:base, :pronouns_invalid, message: I18n.t('public.auth.pronouns_invalid'))
   end
 
   def legacy_password_hash=(password)

@@ -11,6 +11,18 @@
             "procedures": "Procédures",
             "surgeons": "Chirurgiens",
             "login": "Se connecter"
+        },
+        "errors": {
+            "blank": "Ce champ est obligatoire",
+            "invalid": "Saisie invalide",
+            "tooShort": "Doit contenir au moins {count} caractères",
+            "tooLong": "Doit contenir au plus {count} caractères",
+            "confirmation": "Les mots de passe ne correspondent pas",
+            "invalidCredentials": "E-mail ou mot de passe incorrect.",
+            "pronounsInvalid": "Les pronoms doivent ressembler à they/them ou she/her/hers : des mots séparés par des barres obliques.",
+            "sessionExpired": "Votre session a expiré. Rechargez la page et réessayez.",
+            "usernameTaken": "Ce nom d’utilisateur n’est pas disponible",
+            "emailTaken": "Cette adresse e-mail n’est pas disponible"
         }
     }
 }

@@ -11,6 +11,18 @@
             "procedures": "Ingrepp",
             "surgeons": "Kirurger",
             "login": "Logga in"
+        },
+        "errors": {
+            "blank": "Det här fältet är obligatoriskt",
+            "invalid": "Ogiltig inmatning",
+            "tooShort": "Måste vara minst {count} tecken",
+            "tooLong": "Får vara högst {count} tecken",
+            "confirmation": "Lösenorden matchar inte",
+            "invalidCredentials": "Ogiltig e-postadress eller ogiltigt lösenord.",
+            "pronounsInvalid": "Pronomen ska se ut som they/them eller she/her/hers: ord åtskilda av snedstreck.",
+            "sessionExpired": "Din session har gått ut. Ladda om sidan och försök igen.",
+            "usernameTaken": "Det här användarnamnet är inte tillgängligt",
+            "emailTaken": "Den här e-postadressen är inte tillgänglig"
         }
     }
 }

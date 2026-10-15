@@ -1,0 +1,46 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "register": {
+        "usernameInputLabel": "Tên người dùng",
+        "usernameDescription": "Tên người dùng của bạn sẽ hiển thị với người khác",
+        "emailInputLabel": "Email",
+        "emailDescription": "Địa chỉ email của bạn sẽ không được chia sẻ với người khác. Cần xác minh email.",
+        "passwordInputLabel": "Mật khẩu",
+        "confirmationInputLabel": "Xác nhận mật khẩu",
+        "nameInputLabel": "Họ và tên",
+        "nameDescription": "Tên của bạn chỉ hiển thị với quản trị viên và được dùng khi liên lạc.",
+        "nameWarning": "Nhà cung cấp dịch vụ chăm sóc phải dùng tên thật, nếu không tài khoản sẽ bị xóa.",
+        "genderInputLabel": "Giới tính",
+        "genderOptions": {
+            "ftm": "Nam chuyển giới (FTM)",
+            "mtf": "Nữ chuyển giới (MTF)",
+            "genderQueer": "Genderqueer",
+            "none": "Không nêu",
+            "cisgender": "Cisgender"
+        },
+        "genderDescription": "Bạn có thể cập nhật giới tính trong hồ sơ sau khi đăng ký.",
+        "pronounsInputLabel": "Đại từ nhân xưng",
+        "pronounsOptions": {
+            "default": "Mặc định (theo giới tính của bạn)",
+            "sheHer": "cô ấy",
+            "heHim": "anh ấy",
+            "theyThem": "they/them",
+            "other": "Tự nhập"
+        },
+        "genderPronounAccordion": "Giới tính và đại từ của tôi được sử dụng như thế nào?",
+        "genderAccordionDescription": "Giới tính được dùng để thiết lập nội dung mặc định, bao gồm cả đại từ, trừ khi có chỉ định khác.",
+        "pronounsAccordionDescription": "Đại từ hiển thị với người dùng khác trên các bài đăng. Đại từ mặc định chỉ được dùng khi không chỉ định đại từ khác. Bạn có thể chọn đại từ từ danh sách hoặc tự nhập.",
+        "pronounDefaultTitle": "Đại từ mặc định:",
+        "pronounPlaceholder": "vd: he/they, they/she",
+        "ftmDefault": "Nam chuyển giới (FTM): anh ấy",
+        "mtfDefault": "Nữ chuyển giới (MTF): cô ấy",
+        "genderQueerDefault": "Genderqueer: they/them",
+        "noneDefault": "Không nêu: they/them",
+        "cisgenderDefault": "Cisgender: they/them",
+        "customPronouns": "Tùy chỉnh đại từ",
+        "pronounsDescription": "Bạn có thể cập nhật đại từ trong hồ sơ sau khi đăng ký.",
+        "errorSummary": "Vui lòng khắc phục các vấn đề bên dưới rồi gửi lại.",
+        "loginTitle": "Bạn đã có tài khoản?",
+        "termsText": "Tôi đồng ý với {#terms}Điều khoản dịch vụ{/terms} và đã đọc {#privacy}Chính sách quyền riêng tư{/privacy}."
+    }
+}

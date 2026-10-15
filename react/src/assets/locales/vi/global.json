@@ -11,6 +11,18 @@
             "procedures": "Thủ thuật",
             "surgeons": "Bác sĩ phẫu thuật",
             "login": "Đăng nhập"
+        },
+        "errors": {
+            "blank": "Trường này là bắt buộc",
+            "invalid": "Dữ liệu nhập không hợp lệ",
+            "tooShort": "Phải có ít nhất {count} ký tự",
+            "tooLong": "Chỉ được có tối đa {count} ký tự",
+            "confirmation": "Mật khẩu không khớp",
+            "invalidCredentials": "Email hoặc mật khẩu không hợp lệ.",
+            "pronounsInvalid": "Đại từ nên có dạng như they/them hoặc she/her/hers: các từ ngăn cách bằng dấu gạch chéo.",
+            "sessionExpired": "Phiên của bạn đã hết hạn. Hãy tải lại trang và thử lại.",
+            "usernameTaken": "Tên người dùng này không khả dụng",
+            "emailTaken": "Email này không khả dụng"
         }
     }
 }

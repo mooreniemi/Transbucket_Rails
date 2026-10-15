@@ -1,0 +1,46 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "register": {
+        "usernameInputLabel": "Nazwa użytkownika",
+        "usernameDescription": "Nazwa użytkownika będzie widoczna dla innych",
+        "emailInputLabel": "E-mail",
+        "emailDescription": "Adres e-mail nie będzie udostępniany innym. Wymagana jest weryfikacja.",
+        "passwordInputLabel": "Hasło",
+        "confirmationInputLabel": "Potwierdź hasło",
+        "nameInputLabel": "Imię i nazwisko",
+        "nameDescription": "Imię i nazwisko będą widoczne tylko dla administratorów i używane w komunikacji.",
+        "nameWarning": "Osoby świadczące opiekę medyczną muszą używać prawdziwego imienia i nazwiska, w przeciwnym razie konto zostanie usunięte.",
+        "genderInputLabel": "Płeć",
+        "genderOptions": {
+            "ftm": "Trans mężczyzna (FTM)",
+            "mtf": "Trans kobieta (MTF)",
+            "genderQueer": "Genderqueer",
+            "none": "Nie podano",
+            "cisgender": "Cispłciowy"
+        },
+        "genderDescription": "Płeć można zmienić po rejestracji w swoim profilu.",
+        "pronounsInputLabel": "Zaimki",
+        "pronounsOptions": {
+            "default": "Domyślne (według Twojej płci)",
+            "sheHer": "ona/jej",
+            "heHim": "on/jego",
+            "theyThem": "they/them",
+            "other": "Wpisz własne"
+        },
+        "genderPronounAccordion": "Jak wykorzystywane są moja płeć i zaimki?",
+        "genderAccordionDescription": "Płeć służy do ustawienia domyślnych treści, w tym zaimków, chyba że wskazano inaczej.",
+        "pronounsAccordionDescription": "Zaimki są widoczne dla innych użytkowników przy zgłoszeniach. Zaimki domyślne są używane tylko wtedy, gdy nie podano innych. Możesz wybrać zaimki z listy lub wpisać własne.",
+        "pronounDefaultTitle": "Zaimki domyślne:",
+        "pronounPlaceholder": "np. on/they, they/ona",
+        "ftmDefault": "Trans mężczyzna (FTM): on/jego",
+        "mtfDefault": "Trans kobieta (MTF): ona/jej",
+        "genderQueerDefault": "Genderqueer: they/them",
+        "noneDefault": "Nie podano: they/them",
+        "cisgenderDefault": "Cispłciowy: they/them",
+        "customPronouns": "Dostosuj zaimki",
+        "pronounsDescription": "Zaimki można zmienić po rejestracji w swoim profilu.",
+        "errorSummary": "Popraw poniższe błędy i wyślij formularz ponownie.",
+        "loginTitle": "Masz już konto?",
+        "termsText": "Akceptuję {#terms}Warunki korzystania z usługi{/terms} i zapoznałem/-am się z {#privacy}Polityką prywatności{/privacy}."
+    }
+}

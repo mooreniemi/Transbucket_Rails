@@ -1,0 +1,46 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "register": {
+        "usernameInputLabel": "Nome utente",
+        "usernameDescription": "Il tuo nome utente sarà visibile agli altri",
+        "emailInputLabel": "Email",
+        "emailDescription": "Il tuo indirizzo email non sarà condiviso con altri. È richiesta la verifica.",
+        "passwordInputLabel": "Password",
+        "confirmationInputLabel": "Conferma password",
+        "nameInputLabel": "Nome completo",
+        "nameDescription": "Il tuo nome sarà visibile solo agli amministratori e verrà usato nelle comunicazioni.",
+        "nameWarning": "I professionisti sanitari devono usare il loro vero nome, altrimenti l’account verrà rimosso.",
+        "genderInputLabel": "Genere",
+        "genderOptions": {
+            "ftm": "FTM",
+            "mtf": "MTF",
+            "genderQueer": "Genere queer",
+            "none": "Nessuno",
+            "cisgender": "Cisgender"
+        },
+        "genderDescription": "Puoi aggiornare il genere nel tuo profilo dopo la registrazione.",
+        "pronounsInputLabel": "Pronomi",
+        "pronounsOptions": {
+            "default": "Predefinito (in base al tuo genere)",
+            "sheHer": "lei",
+            "heHim": "lui",
+            "theyThem": "they/them",
+            "other": "Inserisci i miei"
+        },
+        "genderPronounAccordion": "Come vengono usati il mio genere e i miei pronomi?",
+        "genderAccordionDescription": "Il genere viene usato per impostare i contenuti predefiniti, inclusi i pronomi, salvo diversa indicazione.",
+        "pronounsAccordionDescription": "I pronomi sono visibili agli altri utenti nei contributi. I pronomi predefiniti vengono usati solo se non ne sono specificati altri. Puoi scegliere i pronomi dall’elenco o inserire i tuoi.",
+        "pronounDefaultTitle": "Pronomi predefiniti:",
+        "pronounPlaceholder": "es. lui/they, they/lei",
+        "ftmDefault": "FTM: lui",
+        "mtfDefault": "MTF: lei",
+        "genderQueerDefault": "Genere queer: they/them",
+        "noneDefault": "Nessuno: they/them",
+        "cisgenderDefault": "Cisgender: they/them",
+        "customPronouns": "Personalizza i pronomi",
+        "pronounsDescription": "Puoi aggiornare i pronomi nel tuo profilo dopo la registrazione.",
+        "errorSummary": "Correggi i problemi indicati qui sotto e invia di nuovo.",
+        "loginTitle": "Hai già un account?",
+        "termsText": "Accetto i {#terms}Termini di servizio{/terms} e ho letto l’{#privacy}Informativa sulla privacy{/privacy}."
+    }
+}

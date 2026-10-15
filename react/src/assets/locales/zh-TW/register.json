@@ -1,0 +1,46 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "register": {
+        "usernameInputLabel": "使用者名稱",
+        "usernameDescription": "你的使用者名稱將對其他人顯示",
+        "emailInputLabel": "電子郵件",
+        "emailDescription": "你的電子郵件地址不會與他人分享。需要進行驗證。",
+        "passwordInputLabel": "密碼",
+        "confirmationInputLabel": "確認密碼",
+        "nameInputLabel": "全名",
+        "nameDescription": "你的姓名僅對管理員顯示，並將用於聯絡溝通。",
+        "nameWarning": "醫療服務提供者必須使用真實姓名，否則帳號將被移除。",
+        "genderInputLabel": "性別",
+        "genderOptions": {
+            "ftm": "跨性別男性（FTM）",
+            "mtf": "跨性別女性（MTF）",
+            "genderQueer": "酷兒性別",
+            "none": "未指定",
+            "cisgender": "順性別"
+        },
+        "genderDescription": "註冊後可在個人檔案中更新性別。",
+        "pronounsInputLabel": "代名詞",
+        "pronounsOptions": {
+            "default": "預設（依你的性別）",
+            "sheHer": "她",
+            "heHim": "他",
+            "theyThem": "they/them",
+            "other": "自行輸入"
+        },
+        "genderPronounAccordion": "我的性別和代名詞會如何使用？",
+        "genderAccordionDescription": "除非另有說明，性別將用於設定預設內容，包括代名詞。",
+        "pronounsAccordionDescription": "代名詞會在投稿中對其他使用者顯示。僅在未指定其他代名詞時才會使用預設代名詞。你可以從清單中選擇代名詞，也可以自行輸入。",
+        "pronounDefaultTitle": "預設代名詞：",
+        "pronounPlaceholder": "例如 他/they、they/她",
+        "ftmDefault": "跨性別男性（FTM）：他",
+        "mtfDefault": "跨性別女性（MTF）：她",
+        "genderQueerDefault": "酷兒性別：they/them",
+        "noneDefault": "未指定：they/them",
+        "cisgenderDefault": "順性別：they/them",
+        "customPronouns": "自訂代名詞",
+        "pronounsDescription": "註冊後可在個人檔案中更新代名詞。",
+        "errorSummary": "請修正以下問題後重新送出。",
+        "loginTitle": "已經有帳號了嗎？",
+        "termsText": "我同意{#terms}服務條款{/terms}，並已閱讀{#privacy}隱私權政策{/privacy}。"
+    }
+}

@@ -1,0 +1,46 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "register": {
+        "usernameInputLabel": "Nome de usuário",
+        "usernameDescription": "Seu nome de usuário ficará visível para outras pessoas",
+        "emailInputLabel": "E-mail",
+        "emailDescription": "Seu endereço de e-mail não será compartilhado. A verificação é obrigatória.",
+        "passwordInputLabel": "Senha",
+        "confirmationInputLabel": "Confirmar senha",
+        "nameInputLabel": "Nome completo",
+        "nameDescription": "Seu nome ficará visível apenas para os administradores e será usado nas comunicações.",
+        "nameWarning": "Profissionais de saúde devem usar o nome verdadeiro, caso contrário a conta será removida.",
+        "genderInputLabel": "Gênero",
+        "genderOptions": {
+            "ftm": "Homem trans (FTM)",
+            "mtf": "Mulher trans (MTF)",
+            "genderQueer": "Gênero queer",
+            "none": "Nenhum",
+            "cisgender": "Cisgênero"
+        },
+        "genderDescription": "O gênero pode ser atualizado no seu perfil após o cadastro.",
+        "pronounsInputLabel": "Pronomes",
+        "pronounsOptions": {
+            "default": "Padrão (de acordo com seu gênero)",
+            "sheHer": "ela/dela",
+            "heHim": "ele/dele",
+            "theyThem": "elu/delu",
+            "other": "Inserir os meus"
+        },
+        "genderPronounAccordion": "Como meu gênero e meus pronomes são usados?",
+        "genderAccordionDescription": "O gênero é usado para definir o conteúdo padrão, incluindo os pronomes, salvo indicação em contrário.",
+        "pronounsAccordionDescription": "Os pronomes ficam visíveis para outros usuários nas publicações. Os pronomes padrão só são usados se nenhum outro for informado. Você pode escolher pronomes da lista ou inserir os seus.",
+        "pronounDefaultTitle": "Pronomes padrão:",
+        "pronounPlaceholder": "ex.: ele/elu, elu/ela",
+        "ftmDefault": "Homem trans (FTM): ele/dele",
+        "mtfDefault": "Mulher trans (MTF): ela/dela",
+        "genderQueerDefault": "Gênero queer: elu/delu",
+        "noneDefault": "Nenhum: elu/delu",
+        "cisgenderDefault": "Cisgênero: elu/delu",
+        "customPronouns": "Personalizar pronomes",
+        "pronounsDescription": "Os pronomes podem ser atualizados no seu perfil após o cadastro.",
+        "errorSummary": "Corrija os problemas abaixo e envie novamente.",
+        "loginTitle": "Já tem uma conta?",
+        "termsText": "Concordo com os {#terms}Termos de Serviço{/terms} e li a {#privacy}Política de Privacidade{/privacy}."
+    }
+}

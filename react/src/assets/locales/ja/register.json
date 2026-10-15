@@ -1,0 +1,46 @@
+{
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "register": {
+        "usernameInputLabel": "ユーザー名",
+        "usernameDescription": "ユーザー名は他のユーザーに表示されます",
+        "emailInputLabel": "メールアドレス",
+        "emailDescription": "メールアドレスが他のユーザーに共有されることはありません。確認が必要です。",
+        "passwordInputLabel": "パスワード",
+        "confirmationInputLabel": "パスワード（確認）",
+        "nameInputLabel": "氏名",
+        "nameDescription": "氏名は管理者にのみ表示され、ご連絡の際に使用されます。",
+        "nameWarning": "医療提供者は実名を使用する必要があります。使用しない場合、アカウントは削除されます。",
+        "genderInputLabel": "性別",
+        "genderOptions": {
+            "ftm": "FTM",
+            "mtf": "MTF",
+            "genderQueer": "ジェンダークィア",
+            "none": "指定なし",
+            "cisgender": "シスジェンダー"
+        },
+        "genderDescription": "性別は登録後にプロフィールから変更できます。",
+        "pronounsInputLabel": "代名詞",
+        "pronounsOptions": {
+            "default": "デフォルト（性別に基づく）",
+            "sheHer": "彼女",
+            "heHim": "彼",
+            "theyThem": "they/them",
+            "other": "自分で入力する"
+        },
+        "genderPronounAccordion": "性別と代名詞はどのように使われますか？",
+        "genderAccordionDescription": "性別は、特に指定がない限り、代名詞を含むデフォルトの内容を設定するために使用されます。",
+        "pronounsAccordionDescription": "代名詞は投稿上で他のユーザーに表示されます。デフォルトの代名詞は、別の代名詞が指定されていない場合にのみ使用されます。代名詞はリストから選ぶか、自分で入力できます。",
+        "pronounDefaultTitle": "デフォルトの代名詞：",
+        "pronounPlaceholder": "例：彼/they、they/彼女",
+        "ftmDefault": "FTM：彼",
+        "mtfDefault": "MTF：彼女",
+        "genderQueerDefault": "ジェンダークィア：they/them",
+        "noneDefault": "指定なし：they/them",
+        "cisgenderDefault": "シスジェンダー：they/them",
+        "customPronouns": "代名詞をカスタマイズ",
+        "pronounsDescription": "代名詞は登録後にプロフィールから変更できます。",
+        "errorSummary": "以下の問題を修正して、もう一度送信してください。",
+        "loginTitle": "すでにアカウントをお持ちですか？",
+        "termsText": "{#terms}利用規約{/terms}に同意し、{#privacy}プライバシーポリシー{/privacy}を読みました。"
+    }
+}

@@ -28,9 +28,10 @@
             "other": "Enter my own"
         },
         "genderPronounAccordion": "How are my gender and pronouns used?",
-        "genderAccordionDescription": "Gender is used to set default content, including pronouns unless otherwise indicated.",
+        "genderAccordionDescription": "Gender is used to set default content including pronouns, unless otherwise indicated.",
         "pronounsAccordionDescription": "Pronouns are visible to other users on submissions. Default pronouns are only used if alternate pronouns are not specified. You can select pronouns from the list or supply your own.",
         "pronounDefaultTitle": "Default pronouns:",
+        "pronounPlaceholder": "ex: ze/zir, she/they/them",
         "ftmDefault": "FTM: he/him",
         "mtfDefault": "MTF: she/her",
         "genderQueerDefault": "Genderqueer: they/them",

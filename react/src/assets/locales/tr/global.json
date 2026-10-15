@@ -11,6 +11,18 @@
             "procedures": "Prosedürler",
             "surgeons": "Cerrahlar",
             "login": "Giriş yap"
+        },
+        "errors": {
+            "blank": "Bu alan zorunludur",
+            "invalid": "Geçersiz giriş",
+            "tooShort": "En az {count} karakter olmalıdır",
+            "tooLong": "En fazla {count} karakter olmalıdır",
+            "confirmation": "Şifreler eşleşmiyor",
+            "invalidCredentials": "Geçersiz e-posta veya şifre.",
+            "pronounsInvalid": "Zamirler they/them veya she/her/hers gibi görünmelidir: eğik çizgiyle ayrılmış sözcükler.",
+            "sessionExpired": "Oturumunuzun süresi doldu. Sayfayı yenileyin ve tekrar deneyin.",
+            "usernameTaken": "Bu kullanıcı adı kullanılamıyor",
+            "emailTaken": "Bu e-posta adresi kullanılamıyor"
         }
     }
 }

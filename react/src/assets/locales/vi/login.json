@@ -4,6 +4,7 @@
         "userInputLabel": "Tên người dùng hoặc email",
         "passwordInputLabel": "Mật khẩu",
         "rememberInputLabel": "Ghi nhớ tôi",
-        "registrationTitle": "Bạn mới dùng Transbucket?"
+        "registrationTitle": "Bạn mới dùng Transbucket?",
+        "forgotPasswordLink": "Bạn quên mật khẩu?"
     }
 }

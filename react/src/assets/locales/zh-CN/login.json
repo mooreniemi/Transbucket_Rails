@@ -4,6 +4,7 @@
         "userInputLabel": "用户名或邮箱",
         "passwordInputLabel": "密码",
         "rememberInputLabel": "记住我",
-        "registrationTitle": "初次使用 Transbucket？"
+        "registrationTitle": "初次使用 Transbucket？",
+        "forgotPasswordLink": "忘记密码？"
     }
 }

@@ -7,22 +7,24 @@ import { Checkbox } from '../checkbox/checkbox';
 const meta = {
   title: 'Components/Forms/Checkbox Group',
   component: CheckboxGroup,
+  subcomponents: {
+    Checkbox
+  },
   args: {
     label: 'Notifications',
     isDisabled: false,
     isRequired: false,
     isInvalid: false,
+    validationBehavior: 'native'
   },
   argTypes: {
-    isDisabled: {
-      control: { type: 'boolean' },
+    errorMessage: {
+      control: { type: 'text' }
     },
-    isRequired: {
-      control: { type: 'boolean' },
-    },
-    isInvalid: {
-      control: { type: 'boolean' },
-    },
+    validationBehavior: {
+      options: ['native', 'aria'],
+      control: { type: 'select' }
+    }
   },
   render: (args) => (
     <CheckboxGroup {...args}>

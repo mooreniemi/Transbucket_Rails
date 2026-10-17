@@ -4,8 +4,11 @@ import { expect } from 'storybook/test';
 import { Accordion, AccordionItem } from './accordion';
 
 const meta = {
-  title: 'Components/Features/Accordion',
+  title: 'Components/Features/Accordion/Group',
   component: Accordion,
+  subcomponents: {
+    AccordionItem,
+  },
   args: {
     children: (
       <>

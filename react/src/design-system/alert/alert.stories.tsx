@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/tanstack-react';
+import { Sparkles, Bell } from 'lucide-react';
 
 import { Alert } from './alert';
 
@@ -13,6 +14,17 @@ const meta = {
       options: ['info', 'warning', 'error'],
       control: { type: 'select' },
     },
+    title: {
+      control: { type: 'text' }
+    },
+    icon: {
+      options: ['Sparkles', 'Bell'],
+      mapping: {
+        Sparkles: <Sparkles />,
+        Bell: <Bell />,
+      },
+      control: { type: 'select' },
+    }
   },
 } satisfies Meta<typeof Alert>;
 

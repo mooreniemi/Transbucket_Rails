@@ -13,6 +13,16 @@ const meta = {
   args: {
     children: 'Cell content',
   },
+  argTypes: {
+    id: { control: 'text'},
+    className: {
+      control: { type: 'text' }
+    },
+    focusMode: {
+      options: ['cell', 'child'],
+      control: { type: 'select' }
+    }
+  },
   render: (args) => (
     <Table>
         <TableHeader>

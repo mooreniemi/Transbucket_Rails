@@ -13,6 +13,28 @@ const meta = {
   args: {
     children: 'Column content',
   },
+  argTypes: {
+    id: { control: 'text'},
+    className: {
+      control: { type: 'text' }
+    },
+    focusMode: {
+      options: ['cell', 'child'],
+      control: { type: 'select' }
+    },
+    width: {
+      control: { type: 'number' }
+    },
+    defaultWidth: {
+      control: { type: 'number' }
+    },
+    minWidth: {
+      control: { type: 'number' }
+    },
+    maxWidth: {
+      control: { type: 'number' }
+    }
+  },
   render: (args) => (
     <Table>
         <TableHeader>

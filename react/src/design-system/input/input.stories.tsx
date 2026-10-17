@@ -15,16 +15,21 @@ const meta = {
     isRequired: false,
     isInvalid: false,
     type: 'email',
+    validationBehavior: 'native'
   },
   argTypes: {
-    isDisabled: {
-      control: { type: 'boolean' },
+   errorMessage: {
+      control: { type: 'text' }
     },
-    isRequired: {
-      control: { type: 'boolean' },
+    validationBehavior: {
+      options: ['native', 'aria'],
+      control: { type: 'select' }
     },
-    isInvalid: {
-      control: { type: 'boolean' },
+    prepend: {
+      control: false
+    },
+    append: {
+      control: false
     },
     type: {
       table: {

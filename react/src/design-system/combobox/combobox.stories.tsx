@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/tanstack-react';
 import { expect } from 'storybook/test';
 
-import { ComboBox, ComboBoxItem } from './combobox';
+import { ComboBox, ComboBoxItem, type ComboBoxOption } from './combobox';
 
 const meta = {
   title: 'Components/Forms/ComboBox',
@@ -12,27 +12,35 @@ const meta = {
     isDisabled: false,
     isRequired: false,
     isInvalid: false,
+    defaultItems: [
+      { id: 'phalloplasty', name: 'Phalloplasty' },
+      { id: 'vaginoplasty', name: 'Vaginoplasty' },
+      { id: 'mastectomy', name: 'Mastectomy' },
+      { id: 'facial-feminization', name: 'Facial Feminization' }
+    ],
+    formValue: 'key',
+    validationBehavior: 'native'
   },
   argTypes: {
-    isDisabled: {
-      control: { type: 'boolean' },
+    errorMessage: {
+      control: { type: 'text' }
     },
-    isRequired: {
-      control: { type: 'boolean' },
+    validationBehavior: {
+      options: ['native', 'aria'],
+      control: { type: 'select' }
     },
-    isInvalid: {
-      control: { type: 'boolean' },
+    defaultItems: {
+      control: false
     },
+    formValue: {
+      options: ['key', 'textValue'],
+      control: { type: 'select' },
+    }
   },
   render: (args) => (
-    <ComboBox {...args}>
-      <ComboBoxItem id="phalloplasty">Phalloplasty</ComboBoxItem>
-      <ComboBoxItem id="vaginoplasty">Vaginoplasty</ComboBoxItem>
-      <ComboBoxItem id="mastectomy">Mastectomy</ComboBoxItem>
-      <ComboBoxItem id="facial-feminization">Facial feminization</ComboBoxItem>
-    </ComboBox>
+    <ComboBox {...args} />
   ),
-} satisfies Meta<typeof ComboBox>;
+} satisfies Meta<typeof ComboBox<ComboBoxOption>>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -69,4 +77,25 @@ export const Disabled: Story = {
   args: {
     isDisabled: true,
   },
+};
+
+export const WithRenderFunction: Story = {
+  render: (args) => (
+    <ComboBox {...args}>
+      {(item) => (
+        <ComboBoxItem id={item.id} textValue={item.name}>
+          <strong>{item.name}</strong>
+        </ComboBoxItem>
+      )}
+    </ComboBox>
+  ),
+};
+
+export const WithStaticItems: Story = {
+  render: ({ defaultItems: _defaultItems, ...args }) => (
+    <ComboBox {...args}>
+      <ComboBoxItem id="phalloplasty">Phalloplasty</ComboBoxItem>
+      <ComboBoxItem id="vaginoplasty">Vaginoplasty</ComboBoxItem>
+    </ComboBox>
+  ),
 };

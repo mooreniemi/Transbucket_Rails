@@ -13,6 +13,11 @@ const meta = {
   subcomponents: {
     Comment
   },
+  argTypes: {
+    children: {
+      control: false
+    }
+  },
   args: {
     children: (
         <>

@@ -23,11 +23,9 @@ export default definePreview({
        date: /Date$/i,
       },
     },
-
     docs: {
       codePanel: true,
     },
-
     a11y: {
       // 'todo' - show a11y violations in the test UI only
       // 'error' - fail CI on a11y violations
@@ -35,4 +33,40 @@ export default definePreview({
       test: 'todo'
     }
   },
+  argTypesEnhancers: [
+    (context) => {
+      const { argTypes } = context;
+      // Handle common ts-doc control issues
+      Object.keys(argTypes).forEach((key) => {
+        if (key !== 'locale') {
+          // @ts-ignore next
+          switch(argTypes[key].type?.value) {
+            case 'string | undefined':
+              argTypes[key].control = { type: 'text'};
+              break;
+            case 'number | undefined':
+              argTypes[key].control = { type: 'number'};
+              break;
+            case 'boolean | undefined':
+              argTypes[key].control = { type: 'boolean'};
+              break;
+            default:
+              break;
+          }
+        }
+        
+        const noControl = ['style', 'render', 'children', 'slot', 'inputRef'];
+        if (noControl.includes(key)) {
+          argTypes[key].control = false;
+        }
+
+        // Force children to have no control panel UI across all stories
+        argTypes['children'] = {
+          ...argTypes['children'],
+          control: false,
+        };
+      });
+      return argTypes;
+    }
+  ]
 });

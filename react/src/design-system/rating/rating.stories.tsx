@@ -19,14 +19,9 @@ const meta = {
     ])
   },
   argTypes: {
-    isDisabled: {
-      control: { type: 'boolean' },
-    },
-    isRequired: {
-      control: { type: 'boolean' },
-    },
-    isInvalid: {
-      control: { type: 'boolean' },
+    scale: {
+      description: 'Map where key is a number between 1-5 and the value is the display text for that rating',
+      control: false
     }
   },
 } satisfies Meta<typeof Rating>;

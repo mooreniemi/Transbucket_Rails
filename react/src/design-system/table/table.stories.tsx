@@ -23,6 +23,21 @@ const meta = {
   subcomponents: { TableHeader, TableBody, Column, Row, Cell },
   args: {
     'aria-label': 'Patients',
+    selectionBehavior: 'toggle',
+    disabledBehavior: 'all',
+  },
+  argTypes: {
+    selectionBehavior: {
+      options: ['toggle', 'replace'],
+      control: { type: 'select' },
+    },
+    disabledBehavior: {
+      options: ['all', 'selection'],
+      control: { type: 'select' },
+    },
+    dragAndDropHooks: {
+      control: false
+    }
   },
   render: (args) => (
     <Table {...args}>

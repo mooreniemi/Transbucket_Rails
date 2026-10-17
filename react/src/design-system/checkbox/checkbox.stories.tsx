@@ -12,20 +12,16 @@ const meta = {
     isRequired: false,
     isInvalid: false,
     isIndeterminate: false,
+    validationBehavior: 'native'
   },
   argTypes: {
-    isDisabled: {
-      control: { type: 'boolean' },
+    errorMessage: {
+      control: { type: 'text' }
     },
-    isRequired: {
-      control: { type: 'boolean' },
-    },
-    isInvalid: {
-      control: { type: 'boolean' },
-    },
-    isIndeterminate: {
-      control: { type: 'boolean' },
-    },
+    validationBehavior: {
+      options: ['native', 'aria'],
+      control: { type: 'select' }
+    }
   },
 } satisfies Meta<typeof Checkbox>;
 

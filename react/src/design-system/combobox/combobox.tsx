@@ -14,6 +14,7 @@ import {
   Text,
   FieldError,
   type ComboBoxProps as ComboBoxPrimitiveProps,
+  type Key,
   type ListBoxItemProps,
   type ValidationResult,
 } from "react-aria-components"
@@ -51,6 +52,13 @@ const itemStyles = tv({
   },
 })
 
+// Shape the default item renderer understands. Pass items in this shape and
+// you can omit children entirely.
+export interface ComboBoxOption {
+  id: Key
+  name: string
+}
+
 export interface ComboBoxProps<T extends object>
   extends Omit<ComboBoxPrimitiveProps<T>, "className" | "children"> {
   className?: string
@@ -58,8 +66,31 @@ export interface ComboBoxProps<T extends object>
   description?: string
   placeholder?: string
   errorMessage?: string | ((validation: ValidationResult) => string)
-  items?: Iterable<T>
+  // Static <ComboBoxItem>s, or a render function for items/defaultItems.
+  // Omit it when the items are ComboBoxOptions to use the default renderer.
   children?: React.ReactNode | ((item: T) => React.ReactNode)
+}
+
+function ComboBoxItem({ children, textValue, ...props }: ComboBoxItemProps) {
+  return (
+    <ListBoxItem
+      {...props}
+      textValue={textValue ?? (typeof children === "string" ? children : undefined)}
+      className={(renderProps) => itemStyles(renderProps)}
+    >
+      {({ isSelected }) => (
+        <>
+          <span className="flex-1 truncate">{children}</span>
+          {isSelected && <Check aria-hidden className="size-4 shrink-0 text-blue-500" />}
+        </>
+      )}
+    </ListBoxItem>
+  )
+}
+
+function renderDefaultItem(item: object) {
+  const { id, name } = item as ComboBoxOption
+  return <ComboBoxItem id={id}>{name}</ComboBoxItem>
 }
 
 function ComboBox<T extends object>({
@@ -68,7 +99,6 @@ function ComboBox<T extends object>({
   description,
   placeholder,
   errorMessage,
-  items,
   children,
   ...props
 }: ComboBoxProps<T>) {
@@ -95,8 +125,9 @@ function ComboBox<T extends object>({
           )}
           <FieldError className="text-xs text-red-500">{errorMessage}</FieldError>
           <Popover className={popoverStyles()}>
-            <ListBox items={items} className="outline-none">
-              {children}
+            {/* items/defaultItems reach the ListBox through ComboBoxPrimitive's context */}
+            <ListBox<T> className="outline-none">
+              {children ?? renderDefaultItem}
             </ListBox>
           </Popover>
         </>
@@ -107,23 +138,6 @@ function ComboBox<T extends object>({
 
 export interface ComboBoxItemProps extends Omit<ListBoxItemProps, "children"> {
   children?: React.ReactNode
-}
-
-function ComboBoxItem({ children, textValue, ...props }: ComboBoxItemProps) {
-  return (
-    <ListBoxItem
-      {...props}
-      textValue={textValue ?? (typeof children === "string" ? children : undefined)}
-      className={(renderProps) => itemStyles(renderProps)}
-    >
-      {({ isSelected }) => (
-        <>
-          <span className="flex-1 truncate">{children}</span>
-          {isSelected && <Check aria-hidden className="size-4 shrink-0 text-blue-500" />}
-        </>
-      )}
-    </ListBoxItem>
-  )
 }
 
 export { ComboBox, ComboBoxItem }

@@ -8,6 +8,11 @@ const meta = {
   title: 'Components/Overlays/Modal',
   component: Modal,
   subcomponents: { Dialog, DialogTrigger },
+  argTypes: {
+    UNSTABLE_portalContainer: {
+      control: false
+    }
+  }
 } satisfies Meta<typeof Modal>;
 
 export default meta;

@@ -34,6 +34,6 @@ export const Default: Story = {
     play: async ({ canvasElement }) => {
         const canvas = within(canvasElement.ownerDocument.body);
         await userEvent.click(canvas.getByRole('button', { name: 'Procedures' }));
-        expect(await canvas.findByRole('menuitem', { name: 'Phalloplasty' })).toBeInTheDocument();
+        expect(await canvas.findByRole('menuitem', { name: 'Vaginoplasty' })).toBeInTheDocument();
     },
 };

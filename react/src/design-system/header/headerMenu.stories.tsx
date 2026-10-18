@@ -11,7 +11,7 @@ const meta = {
     HeaderMenuItem,
   },
   args: {
-    label: 'Procedure'
+    label: 'Procedures'
   },
   render: (args) => (
     <div>

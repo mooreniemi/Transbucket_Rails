@@ -11,21 +11,25 @@ const meta = {
     page: 1,
     totalPages: 10,
     // Real apps should pass real per-page URLs (see the component's own
-    // getPageHref doc comment) -- these stories point at "#" so clicking a
-    // page link in Storybook's preview doesn't navigate the iframe away
-    // from the story.
+    // getPageHref doc comment). These stories point at "#", and the render
+    // below blocks the links' default navigation as well: under the Vitest
+    // browser runner even a "#" link navigates the test page away and
+    // drops the runner's connection.
     getPageHref: () => '#',
   },
   render: (args) => {
     function Controlled() {
       const [page, setPage] = useState(args.page);
+      const handleClickCapture = (event: React.MouseEvent) => event.preventDefault();
       return (
-        <Pagination
-          {...args}
-          page={page}
-          getPageHref={() => '#'}
-          onPageChange={setPage}
-        />
+        <div onClickCapture={handleClickCapture}>
+          <Pagination
+            {...args}
+            page={page}
+            getPageHref={() => '#'}
+            onPageChange={setPage}
+          />
+        </div>
       );
     }
     return <Controlled />;

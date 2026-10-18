@@ -15,10 +15,14 @@ function TableHeader<T extends object>(props: TableHeaderProps<T>) {
     <TableHeaderPrimitive {...props}>
       {selectionBehavior === "toggle" && (
         <ColumnPrimitive className={selectionColumnStyles}>
-          {selectionMode === "multiple" && (
+          {selectionMode === "multiple" ? (
             <div className="flex h-9 items-center">
               <Checkbox slot="selection" />
             </div>
+          ) : (
+            // Single selection has no select-all checkbox, but the header
+            // still needs a name for screen readers.
+            <span className="sr-only">Select</span>
           )}
         </ColumnPrimitive>
       )}

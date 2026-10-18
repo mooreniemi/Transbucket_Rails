@@ -24,7 +24,7 @@ const buttonVariants = tv({
       secondary:
         "bg-blue-300 text-black-900 hover:bg-blue-300/80 aria-expanded:bg-blue-300",
       ghost: "hover:bg-black-100 aria-expanded:bg-black-100",
-      link: "text-blue-500 underline-offset-4 hover:underline",
+      link: "text-blue-700 underline-offset-4 hover:text-blue-800 hover:underline",
     },
     theme: {
       default: "",

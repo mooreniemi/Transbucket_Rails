@@ -24,10 +24,12 @@ body {
    is Tailwind's own layer for exactly this kind of overridable default. */
 @layer base {
   a {
-    color: var(--color-blue-500);
+    /* blue-700 is the lightest blue that passes 4.5:1 on white (5.16:1);
+       blue-500 is only 3.01:1. */
+    color: var(--color-blue-700);
 
     &:hover, &:focus-visible {
-      color: var(--color-blue-700);
+      color: var(--color-blue-800);
       text-decoration-line: underline;
     }
 

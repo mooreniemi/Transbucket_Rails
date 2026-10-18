@@ -8,11 +8,26 @@ import { HeaderMenu, HeaderMenuItem } from './headerMenu';
 const meta = {
   title: 'Components/Navigation/Header',
   component: Header,
-  render: () => (
+  subcomponents: {
+    HeaderMenu,
+    HeaderMenuItem,
+    HeaderLink
+  },
+  args: {
+    sectionRight: <HeaderLink href="#">Sign in</HeaderLink>,
+    skipNavId: 'main-content'
+  },
+  argTypes: {
+    skipNavId: {
+      control: { type: 'text' }
+    },
+    sectionRight: {
+      control: false
+    }
+  },
+  render: (args) => (
     <div>
-      <Header
-        sectionRight={<HeaderLink href="#">Sign in</HeaderLink>}
-      >
+      <Header {...args}>
         <HeaderLink href="#" aria-current="page">Explore</HeaderLink>
         <HeaderMenu label="Procedures">
           <HeaderMenuItem href="#">Phalloplasty</HeaderMenuItem>

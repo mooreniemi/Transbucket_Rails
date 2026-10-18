@@ -64,6 +64,14 @@ export interface CheckboxProps extends Omit<CheckboxFieldPrimitiveProps, "classN
   errorMessage?: string | ((validation: ValidationResult) => string)
 }
 
+/**
+ * `Checkbox` component for use within forms. If multiple related checkboxes are needed, use within a `CheckboxGroup` component.
+ * 
+ * ## Import
+ * ```javascript
+ * import { Checkbox } from '#/design-sytem/checkbox';
+ * ```
+ */
 function Checkbox({
   className,
   children,

@@ -93,6 +93,14 @@ function renderDefaultItem(item: object) {
   return <ComboBoxItem id={id}>{name}</ComboBoxItem>
 }
 
+/**
+ * The `Combobox` component can be used in a form to select an item from a list with the ability to filter by typed user input. If filtering is not necessary, use a `Select` component. Provide a list of items via the `defaultItems` property or provide `ComboBoxItem` components as children.
+ * 
+ * ## Import
+ * ```javascript
+ * import { ComboBox, ComboBoxItem } from '#/design-system/combobox';
+ * ```
+ */
 function ComboBox<T extends object>({
   className,
   label,

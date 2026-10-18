@@ -7,6 +7,14 @@ import { formatDateTime } from "#/lib/dateTime"
 
 export interface GalleryProps extends ComponentPropsWithoutRef<"div"> {}
 
+/**
+ * 
+ * The `Gallery` component is a grid-style container for `GalleryItem` components.
+ * 
+ * ## Import
+ * ```javascript
+ * import { Gallery, GalleryItem } from '#/design-system/gallery';
+ */
 function Gallery({ className, ...props }: GalleryProps) {
   return (
     // Multi-column masonry layout, not a grid -- items vary in aspect
@@ -20,16 +28,24 @@ function Gallery({ className, ...props }: GalleryProps) {
 export interface GalleryItemProps extends Omit<LinkProps, "className" | "children"> {
   className?: string
   src: string
-  doctor: string
-  procedure: string
+  description: string
+  headline: string
   updatedAt: string | Date
 }
 
+/**
+ * 
+ * The `GalleryItem` component is an individual card featuring a hero image, a headline, a description, and a date. It should be used within a `Gallery` component. This component should link to a detail page.
+ * 
+ * ## Import
+ * ```javascript
+ * import { Gallery, GalleryItem } from '#/design-system/gallery';
+ */
 function GalleryItem({
   className,
   src,
-  doctor,
-  procedure,
+  description,
+  headline,
   updatedAt,
   ...props
 }: GalleryItemProps) {
@@ -48,8 +64,8 @@ function GalleryItem({
           column rather than being cropped to a uniform shape. */}
       <img src={src} alt="" className="block w-full transition-transform group-hover:scale-105" />
       <div className="flex flex-col gap-1 p-3">
-        <span className="text-sm font-medium text-black-900">{procedure}</span>
-        <span className="text-sm text-black-600">{doctor}</span>
+        <span className="text-sm font-medium text-black-900">{headline}</span>
+        <span className="text-sm text-black-600">{description}</span>
         <time dateTime={date.toISOString()} className="text-xs text-black-600 italic">
           Updated {formatDateTime(date)}
         </time>

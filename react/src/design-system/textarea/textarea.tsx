@@ -25,6 +25,14 @@ export interface TextareaProps extends Omit<TextFieldPrimitiveProps, "className"
   errorMessage?: string | ((validation: ValidationResult) => string)
 }
 
+/**
+ * The `Textarea` component is an expandable text field for use with multiline text in forms.
+ * 
+ * ## Import
+ * ```javascript
+ * import { Textarea } from '#/design-system/textarea';
+ * ```
+ */
 function Textarea({
   className,
   label,

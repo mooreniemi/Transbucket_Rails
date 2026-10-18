@@ -56,6 +56,14 @@ const tagStyles = tv({
 // The group state is shared with each radio through React context.
 let RatingContext = createContext<RadioGroupState | null>(null);
 
+/**
+ * The `Rating` component provides an input that allows the user to select a rating between 1 and 5. It requires a map to provide a description label for each rating level. 
+ *
+ * ## Import
+ * ```javascript
+ * import { Rating } from '#/design-system/rating';
+ * ```
+ */
 export function Rating({ scale, ...props }: RatingProps) {
     const ratingProps: AriaRadioGroupProps = { orientation: 'horizontal', ...props };
     let state = useRadioGroupState(ratingProps);

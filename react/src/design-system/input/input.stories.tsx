@@ -9,12 +9,13 @@ const meta = {
   title: 'Components/Forms/Input',
   component: Input,
   args: {
-    label: 'Email',
-    placeholder: 'you@example.com',
+    label: 'Name',
+    placeholder: 'John Smith',
     isDisabled: false,
     isRequired: false,
     isInvalid: false,
-    type: 'email',
+    type: 'text',
+    autoComplete: 'name',
     validationBehavior: 'native'
   },
   argTypes: {
@@ -50,14 +51,14 @@ export const Default: Story = {
 
 export const WithDescription: Story = {
   args: {
-    description: "We'll never share your email.",
+    description: 'Your name will be visible only to administrators and used in communications.',
   },
 };
 
 export const Invalid: Story = {
   args: {
     isInvalid: true,
-    errorMessage: 'Please enter a valid email address.',
+    errorMessage: 'Must be at least 2 characters long.',
   },
   play: async ({ canvas }) => {
    expect(canvas.getByRole('textbox')).toBeInvalid();
@@ -73,20 +74,34 @@ export const Disabled: Story = {
   }
 };
 
+/**
+ * Prepend an element with the following shape to the input:
+ * `{ content: ReactNode; isPressed?: Boolean; onClick()?: void; ariaLabel?: string; }`
+ * 
+ * If passing an `onClick` handler the prepended element will be wrapped in a button. Provide the `ariaLabel` property if an `onClick` handler is being used and only an icon is provided to the `content` property. If the action has a toggle state use the `isPressed` property to indicate whether it is active or not.
+ */
 export const WithPrependedElement: Story = {
   args: {
     'aria-label': 'Search',
     label: undefined,
+    autoComplete: 'off',
     prepend: {
       content: <Search size={16} />
     }
   }
 };
 
+/**
+ * Append an element with the following shape to the input:
+ * `{ content: ReactNode; isPressed?: Boolean; onClick()?: void; ariaLabel?: string; }`
+ * 
+ * If passing an `onClick` handler the appended element will be wrapped in a button. Provide the `ariaLabel` property if an `onClick` handler is being used and only an icon is provided to the `content` property. If the action has a toggle state use the `isPressed` property to indicate whether it is active or not.
+ */
 export const WithAppendedElement: Story = {
   args: {
     label: 'Password',
     type: 'password',
+    autoComplete: 'off',
     append:  {
       content: <Eye size={16} />,
       isPressed: false,

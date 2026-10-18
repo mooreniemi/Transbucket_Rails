@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/tanstack-react';
 import { AccordionItem } from './accordion';
 
 const meta = {
-  title: 'Components/Features/Accordion/AccordionItem',
+  title: 'Components/Features/Accordion/Accordion Item',
   component: AccordionItem,
   args: {
     title: 'How is my gender used?',

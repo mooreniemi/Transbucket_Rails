@@ -50,6 +50,17 @@ function getPageRange(page: number, totalPages: number) {
   return range
 }
 
+/**
+ * The `Pagination` component can be used to navigate any paginated data. Frequently paired with cards or tables.
+ * 
+ * ## Import
+ * ```javascript
+ * import { Pagination } from '#/design-system/pagination';
+ * ```
+ * 
+ * ## Accessibility information
+ * The `Pagination` table has a default label of `Pagination` but should be given a more specific label via the `aria-label` property that indicates what data it is paginating.
+ */
 function Pagination({
   page,
   totalPages,

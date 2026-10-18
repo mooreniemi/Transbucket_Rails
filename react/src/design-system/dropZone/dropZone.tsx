@@ -20,6 +20,14 @@ const dropZoneStyles = tv({
   },
 })
 
+/**
+ * The `DropZone` component can be used to attach files in a form. Files can be added via drag & drop in the outlined zone or by clicking the browse button to browse the file system.
+ * 
+ * ## Import
+ * ```javascript
+ * import { DropZone } from '#/design-system/dropZone';
+ * ``` 
+ */
 function DropZone(props: DropZoneProps) {
   return (
     <DropZonePrimitive

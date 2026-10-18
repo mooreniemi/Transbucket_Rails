@@ -28,8 +28,8 @@ const meta = {
           key={pin.id}
           href={`#pin-${pin.id}`}
           src={pin.image}
-          doctor={pin.doctor}
-          procedure={pin.procedure}
+          description={pin.doctor}
+          headline={pin.procedure}
           updatedAt={pin.updatedAt}
         />
       ))}

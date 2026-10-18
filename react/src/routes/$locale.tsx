@@ -82,7 +82,7 @@ function RouteComponent() {
           {/* relative: react-aria renders visually-hidden form inputs with
               position:absolute. Without a positioned ancestor they escape
               this scroll container and stretch the whole document. */}
-          <main id="main-content" className="relative overflow-auto bg-slate-50">
+          <main id="main-content" tabIndex={-1} className="relative overflow-auto bg-slate-50">
               <Outlet />
           </main>
           <Footer locale={currLocale} />

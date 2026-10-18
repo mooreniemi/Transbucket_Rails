@@ -17,19 +17,30 @@ export interface HeaderProps extends Omit<ComponentPropsWithoutRef<"header">, "c
   /** Right-aligned content, e.g. a sign-in link. Shown next to the desktop nav and inside the mobile menu. */
   sectionRight?: ReactNode
   /**
-   * Target for the built-in skip-navigation link, e.g. "#main-content".
+   * Target for the built-in skip-navigation link, e.g. "main-content".
    * Pair it with a target element carrying that id and tabIndex={-1} so
    * focus actually lands there. Every page that renders a Header gets one
    * of these for free -- pass false to omit it (e.g. in isolated previews).
    */
-  skipNavHref?: string | false
+  skipNavId?: string | false
 }
 
+/**
+ * The `Header` component provides top-level navigation for the website. Use the `sectionRight` slot for any menu items that need to be aligned right. On mobile devices the menu items are stacked vertically and items in the `sectionRight` stack show up below left-aligned menu items in children.
+ * 
+ * ## Import
+ * ```javascript
+ * import { Header } from '#/design-system/header';
+ * ```
+ * 
+ * ## Accessibility information
+ * The `Header` component should be provided an ID that matches the main content container using the `skipNavId` property, if none is provided it will use the default ID of `main-content`. Additionally the corresponding container should be given a tab index of -1 so that focus can be programatically adjusted. See the [w3 test evaluation article on skip links](https://www.w3.org/WAI/test-evaluate/easy-checks/skip-link/) for more information on the importance of providing skip navigation.
+ */
 function Header({
   className,
   sectionRight,
   children,
-  skipNavHref = "#main-content",
+  skipNavId = "main-content",
   ...props
 }: HeaderProps) {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false)
@@ -52,7 +63,7 @@ function Header({
           className,
         )}
       >
-        {skipNavHref && <SkipNav href={skipNavHref} />}
+        {skipNavId && <SkipNav href={`#${skipNavId}`} />}
         <div className="flex w-full items-center justify-between">
           <div className="flex items-center gap-4">
             <h1>

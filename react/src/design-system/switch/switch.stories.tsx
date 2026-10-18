@@ -51,7 +51,7 @@ export const WithDescription: Story = {
 export const Invalid: Story = {
   args: {
     isInvalid: true,
-    errorMessage: 'This setting is required.',
+    errorMessage: 'Must select at least one option.',
   },
   play: async ({ canvas }) => {
    expect(canvas.getByRole('switch')).toBeInvalid();

@@ -27,10 +27,13 @@ export interface HeaderMenuProps {
   className?: string
 }
 
-// Renders as a popover menu in the desktop nav and as an accordion in the
-// mobile menu, based on which copy of Header's children it's part of --
-// see NavVariantContext in headerContext.ts. Either way, HeaderMenuItem
-// children are authored once and adapt the same way.
+/**
+ * The `HeaderMenu` creates a popover menu on desktop devices and an accordion menu on mobile within the top-level header navigation. Use the `HeaderMenuItem` component to add menu items to the popup.
+ * 
+ * ## Import
+ * ```javascript
+ * import { HeaderMenu, HeaderMenuItem } from '#/design-system/header';
+ */
 function HeaderMenu({ label, children, className }: HeaderMenuProps) {
   const variant = useContext(NavVariantContext)
 
@@ -81,6 +84,13 @@ export interface HeaderMenuItemProps
   "aria-current"?: AriaAttributes["aria-current"]
 }
 
+/**
+ * The `HeaderMenuItem` component adds a menu item to the `HeaderMenu`. On desktop devices it is displayed within a popover menu and on mobile devices it is displayed in an accordion.
+ * 
+ * ## Import
+ * ```javascript
+ * import { HeaderMenu, HeaderMenuItem } from '#/design-system/header';
+ */
 function HeaderMenuItem({ children, className, onPress, ...props }: HeaderMenuItemProps) {
   const variant = useContext(NavVariantContext)
   const { setMobileNavOpen } = useHeaderContext()

@@ -44,6 +44,9 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+/**
+ * Use for primary action or form submission.
+ */
 export const Primary: Story = {
   play: async ({ canvas, userEvent }) => {
     await userEvent.click(canvas.getByRole('button'));
@@ -51,26 +54,44 @@ export const Primary: Story = {
   }
 };
 
-export const Secondary: Story = {
+/**
+ * Alternate variant for actions that are less important than the primary action. Should not be used for form submission.
+ */
+export const SecondaryVariant: Story = {
   args: { variant: 'secondary' },
 };
 
-export const Outline: Story = {
+/**
+ * Alternate variant for actions that are less important than the primary action and require more subtle visual treatments than secondary actions. Should not be used for form submission.
+ */
+export const OutlineVariant: Story = {
   args: { variant: 'outline' },
 };
 
-export const Ghost: Story = {
+/**
+ * Alternate variant for actions that are less important than the primary action. This is the most subtle visual treatment. Should not be used for form submission.
+ */
+export const GhostVariant: Story = {
   args: { variant: 'ghost' },
 };
 
-export const Destructive: Story = {
-  args: { theme: 'destructive' },
-};
-
-export const Link: Story = {
+/**
+ * Alternate variant that styles a button to appear visually as a link. This is typically used to perform actions within a menu.
+ */
+export const LinkVariant: Story = {
   args: { variant: 'link' },
 };
 
+/**
+ * Use the destructive theme to indicate that a destructive action is being taken (delete, remove, clear, etc). This theme can be used with any style variant.
+ */
+export const DestructiveTheme: Story = {
+  args: { theme: 'destructive' },
+};
+
+/**
+ * The pending property disables the button and adds an indicator to the element that an action is in progress and not yet complete. It can be used with any variant or theme.
+ */
 export const Pending: Story = {
   args: { isPending: true },
   play: async ({ canvas }) => {
@@ -78,6 +99,9 @@ export const Pending: Story = {
   }
 };
 
+/**
+ * Pass a `href` and any other link properties to the `Button` component to visually style a link as a button
+ */
 export const LinkButton: Story = {
   args: {
     href: '#',

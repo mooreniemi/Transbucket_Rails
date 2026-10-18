@@ -6,6 +6,9 @@ import { ComboBox, ComboBoxItem, type ComboBoxOption } from './combobox';
 const meta = {
   title: 'Components/Forms/ComboBox',
   component: ComboBox,
+  subcomponents: {
+    ComboBoxItem
+  },
   args: {
     label: 'Procedure',
     placeholder: 'Search for a procedure',

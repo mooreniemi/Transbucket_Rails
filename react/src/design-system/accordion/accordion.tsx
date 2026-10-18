@@ -17,9 +17,14 @@ export interface AccordionProps extends Omit<DisclosureGroupProps, "className"> 
   className?: string
 }
 
-// A plain stack of AccordionItems, no box around them. By default several
-// items can be open at once; pass allowsMultipleExpanded={false} for
-// one-at-a-time.
+/**
+ * The `Accordion` contains a list of `AccordionItem` components that can be expanded and collapsed to show additional context related to each item.
+ * You can configure which items are expanded or collapsed by default as well as whether one or more can be expanded at a time.
+ * ## Import
+ * ```javascript
+ * import { Accordion } from '#/design-system/accordion;
+ * ```
+ */
 function Accordion({ className, ...props }: AccordionProps) {
   return (
     <DisclosureGroup
@@ -39,6 +44,13 @@ export interface AccordionItemProps extends Omit<DisclosureProps, "className" | 
   children?: ReactNode
 }
 
+/**
+ * The `AccordionItem` component should be used within an `Accordion`. It be expanded and collapsed to show additional context.
+ * ## Import
+ * ```javascript
+ * import { AccordionItem } from '#/design-system/accordion;
+ * ```
+ */
 function AccordionItem({
   title,
   headingLevel = 3,

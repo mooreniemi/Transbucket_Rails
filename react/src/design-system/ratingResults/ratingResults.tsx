@@ -1,3 +1,5 @@
+/* TODO: Update data shape when known, update link to match submission filter */
+
 import { Star } from 'lucide-react';
 import styles from './ratingResults.module.css';
 
@@ -10,7 +12,14 @@ interface RatingResults {
     data: StatData[];
 }
 
-/* This is OK for POC, will likely have to adjust this for data shape */
+/**
+ * The `RatingResults` component displays average rating information of procedures and breaks down the number of submissions for each rating level.
+ * 
+ * ## Import
+ * ```javascript
+ * import { RatingResults } from '#/design-system/ratingResults';
+ * ```
+ */
 export function RatingResults ({ data }: RatingResults) {
     const avgRating = data.length === 0
         ? 0

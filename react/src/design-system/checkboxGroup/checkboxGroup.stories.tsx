@@ -5,7 +5,7 @@ import { CheckboxGroup } from './checkboxGroup';
 import { Checkbox } from '../checkbox/checkbox';
 
 const meta = {
-  title: 'Components/Forms/Checkbox Group',
+  title: 'Components/Forms/Checkbox/Checkbox Group',
   component: CheckboxGroup,
   subcomponents: {
     Checkbox

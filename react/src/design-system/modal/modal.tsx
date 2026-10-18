@@ -1,6 +1,6 @@
 "use client"
 
-import type * as React from "react"
+import { type  ReactNode } from "react"
 import { X } from "lucide-react"
 import { tv } from "tailwind-variants"
 import { cn } from "cn"
@@ -39,26 +39,11 @@ const modalStyles = tv({
   },
 })
 
-export interface ModalProps extends Omit<ModalOverlayPrimitiveProps, "className"> {
-  className?: string
-}
-
-function Modal({ className, ...props }: ModalProps) {
-  return (
-    <ModalOverlayPrimitive {...props} className={(renderProps) => overlayStyles(renderProps)}>
-      <ModalPrimitive
-        {...props}
-        className={(renderProps) => cn(modalStyles(renderProps), className)}
-      />
-    </ModalOverlayPrimitive>
-  )
-}
-
 export interface DialogProps extends Omit<DialogPrimitiveProps, "className" | "children"> {
   className?: string
-  children?: React.ReactNode
+  children?: ReactNode
   title?: string
-  showCloseButton?: boolean
+  showCloseButton?: boolean;
 }
 
 function Dialog({ className, title, showCloseButton = true, children, ...props }: DialogProps) {
@@ -74,7 +59,7 @@ function Dialog({ className, title, showCloseButton = true, children, ...props }
           slot="close"
           variant="ghost"
           size="icon-sm"
-          className="absolute top-3 end-3"
+          className="absolute top-3 inset-e-3"
           aria-label="Close"
         >
           <X aria-hidden className="size-4" />
@@ -82,6 +67,44 @@ function Dialog({ className, title, showCloseButton = true, children, ...props }
       )}
       {children}
     </DialogPrimitive>
+  )
+}
+
+export interface ModalProps extends Omit<ModalOverlayPrimitiveProps, "className" | "children"> {
+  className?: string;
+  dialogClassName?: string;
+  title?: string;
+  showCloseButton?: boolean;
+  children: ReactNode;
+  role?: 'dialog' | 'alertdialog';
+}
+
+/**
+ * 
+ * The `Modal` component opens an overlay with a dialog. You can use the `DialogTrigger` to wrap clickable elements to open the modal or manually set `isOpen`.
+ * 
+ * ## Import
+ * ```javascript
+ * import { Modal, DialogTrigger } from '#/design-system/modal';
+ * ```
+ * 
+ * ## Accessibility information
+ * The default role for the `Modal` component is `dialog`. For critical workflow-interrupting alerts use `role="alertdialog"` to notify users.
+ */
+function Modal({ className, dialogClassName, title, children, isDismissable = true, role='dialog', ...props }: ModalProps) {
+  return (
+    <ModalOverlayPrimitive isDismissable={isDismissable} isKeyboardDismissDisabled={!isDismissable} {...props} className={(renderProps) => overlayStyles(renderProps)}>
+      <ModalPrimitive
+        {...props}
+        isKeyboardDismissDisabled={!isDismissable}
+        isDismissable={isDismissable}
+        className={(renderProps) => cn(modalStyles(renderProps), className)}
+      >
+        <Dialog title={title} showCloseButton={isDismissable} className={dialogClassName} role={role}>
+          {children}
+        </Dialog>
+      </ModalPrimitive>
+    </ModalOverlayPrimitive>
   )
 }
 

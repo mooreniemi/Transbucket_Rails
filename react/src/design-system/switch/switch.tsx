@@ -54,6 +54,14 @@ export interface SwitchProps extends Omit<SwitchFieldPrimitiveProps, "className"
   errorMessage?: string | ((validation: ValidationResult) => string)
 }
 
+/**
+ * The `Switch` component can be used for toggleable inputs within a form.
+ * 
+ * ## Import
+ * ```javascript
+ * import { Switch } from '#/design-system/switch';
+ * ```
+ */
 function Switch({
   className,
   children,

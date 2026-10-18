@@ -20,6 +20,14 @@ export interface CheckboxGroupProps
   errorMessage?: string | ((validation: ValidationResult) => string)
 }
 
+/**
+ * The `CheckboxGroup` component is used to group multiple checkboxes together in a form. The `CheckboxGroup` can be used to mark all checkboxes within the group disabled, required, or invalid as well as provide group-level validation and error feedback.
+ * 
+ * ## Import
+ * ```javascript
+ * import { CheckboxGroup } from '#/design-sytem/checkboxGroup';
+ * ```
+ */
 function CheckboxGroup({
   className,
   children,

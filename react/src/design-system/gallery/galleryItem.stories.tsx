@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/tanstack-react';
 import { expect, within } from 'storybook/test';
 
-import { Gallery, GalleryItem } from './gallery';
+import { GalleryItem } from './gallery';
 
 // Deliberately mixed portrait/landscape/square dimensions -- pin photos
 // come from users at whatever aspect ratio and orientation they uploaded,
@@ -15,8 +15,8 @@ const meta = {
   component: GalleryItem,
   args: {
     src: pins[0].image,
-    procedure: pins[0].procedure,
-    doctor: pins[0].doctor,
+    headline: pins[0].procedure,
+    description: pins[0].doctor,
     updatedAt: pins[0].updatedAt
   },
   argTypes: {

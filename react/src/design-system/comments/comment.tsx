@@ -15,14 +15,22 @@ interface CommentProps {
     isPending?: boolean;
 }
 
+/**
+ * The `Comment` component should be used within a `CommentGroup` to display individual user comments.
+ * Comments replies are nested under the original comment and can be expanded and collapsed. Replies are expanded by default.
+ * ## Import
+ * ```javascript
+ * import { Comment } from '#/design-system/comments;
+ * ```
+ */
 export function Comment({ children, comment, locale, onReply, onReport, isPending = false }: CommentProps) {
     const formattedDate = formatDateTime(comment.date, true, locale);
-    const [editMode, setEditMode ] = useState(false);
+    const [replyMode, setReplyMode ] = useState(false);
     const openReplyBox = () => {
-        setEditMode(true);
+        setReplyMode(true);
     }
     const closeReplyBox = () => {
-        setEditMode(false);
+        setReplyMode(false);
     }
     const handleReply = (ev: SubmitEvent) => {
         ev.preventDefault();
@@ -43,7 +51,7 @@ export function Comment({ children, comment, locale, onReply, onReport, isPendin
                     <span className="px-2.5">{formattedDate}</span>
                     <Button variant="link" onClick={openReplyBox} className="text-xs h-auto">reply<MessageSquare size={16}/></Button>
                 </div>
-                { editMode && (
+                { replyMode && (
                     <form onSubmit={handleReply}>
                         <Textarea name="reply" />
                         <div className="mt-2 text-end">

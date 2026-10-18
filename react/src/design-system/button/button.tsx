@@ -63,6 +63,11 @@ const buttonVariants = tv({
       className: "bg-red-500/10 text-red-500 hover:bg-red-500/20"
     },
     {
+      variant: "ghost",
+      theme: "destructive",
+      className: "hover:text-red-500"
+    },
+    {
       variant: "link",
       theme: "destructive",
       className: "text-red-500"
@@ -90,6 +95,17 @@ function isLink(props: ButtonType | LinkButtonType): props is LinkButtonType {
   return "href" in props;
 }
 
+/**
+ * The `Button` component should be used for user actions. The button can also be given a URL via the `href` property and it will create a link styled to look like a button.
+ * 
+ * ## Import
+ * ```javascript
+ * import { Button } from '#/design-system/button';
+ * ```
+ * 
+ * ## Acessibility information
+ * The `Button` component defaults to `type=button` to avoid unintended form submissions. If this button submits a form update the type manually to `type=submit`.
+ */
 function Button({
   className,
   variant = "primary",

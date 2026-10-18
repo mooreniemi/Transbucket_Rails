@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/tanstack-react';
-import { expect } from 'storybook/test';
+import { expect, fn, userEvent, waitFor } from 'storybook/test';
 
 import { Search } from './search';
 
@@ -12,7 +12,8 @@ const meta = {
     isDisabled: false,
     isRequired: false,
     isInvalid: false,
-    validationBehavior: 'native'
+    validationBehavior: 'native',
+    onChange: fn(),
   },
   argTypes: {
     errorMessage: {
@@ -34,9 +35,9 @@ export const Default: Story = {
   }
 };
 
-export const WithDefaultValue: Story = {
+export const WithValue: Story = {
   args: {
-    defaultValue: 'vaginoplasty',
+    value: 'vaginoplasty',
   },
   play: async ({ canvas }) => {
    expect(canvas.getByRole('searchbox')).toHaveValue('vaginoplasty');
@@ -62,5 +63,51 @@ export const Disabled: Story = {
   },
   play: async ({ canvas }) => {
    expect(canvas.getByRole('searchbox')).toBeDisabled();
+  }
+};
+
+export const Debounced: Story = {
+  args: {
+    debounceMs: 200,
+  },
+  play: async ({ args, canvas }) => {
+    const input = canvas.getByRole('searchbox');
+    await userEvent.type(input, 'vagi');
+
+    // The input updates immediately even though onChange hasn't fired yet.
+    expect(input).toHaveValue('vagi');
+    expect(args.onChange).not.toHaveBeenCalled();
+
+    await waitFor(() => expect(args.onChange).toHaveBeenCalledTimes(1));
+    expect(args.onChange).toHaveBeenCalledWith('vagi');
+  }
+};
+
+export const ClearSkipsDebounce: Story = {
+  args: {
+    value: 'vaginoplasty',
+    debounceMs: 5000,
+  },
+  play: async ({ args, canvas }) => {
+    await userEvent.click(canvas.getByRole('button'));
+
+    expect(args.onChange).toHaveBeenCalledWith('');
+    expect(canvas.getByRole('searchbox')).toHaveValue('');
+  }
+};
+
+export const Controlled: Story = {
+  args: {
+    value: 'mastectomy',
+    debounceMs: 200,
+  },
+  play: async ({ args, canvas }) => {
+    const input = canvas.getByRole('searchbox');
+    expect(input).toHaveValue('mastectomy');
+
+    // Typing still works even though the parent's value doesn't change.
+    await userEvent.type(input, 'X');
+    expect(input).toHaveValue('mastectomyX');
+    await waitFor(() => expect(args.onChange).toHaveBeenCalledWith('mastectomyX'));
   }
 };

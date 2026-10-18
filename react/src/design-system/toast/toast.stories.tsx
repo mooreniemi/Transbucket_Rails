@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/tanstack-react';
 import { expect, userEvent, within } from 'storybook/test';
 
-import { ToastRegion, createToastQueue } from './toast';
+import { ToastRegion, createToastQueue, Toast } from './toast';
 import { Button } from '../button';
 
 // In a real app this queue is created once near the app root, not per-story
@@ -11,12 +11,15 @@ const queue = createToastQueue();
 const meta = {
   title: 'Components/Overlays/Toast',
   component: ToastRegion,
+  subcomponents: {
+    Toast
+  },
   args: {
     queue,
   },
-  render: () => (
+  render: (args) => (
     <div className="flex gap-2">
-      <ToastRegion queue={queue} />
+      <ToastRegion {...args} />
       <Button
         onPress={() =>
           queue.add({

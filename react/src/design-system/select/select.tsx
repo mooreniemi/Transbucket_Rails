@@ -74,6 +74,14 @@ function renderDefaultItem(item: object) {
   return <SelectItem id={id}>{name}</SelectItem>
 }
 
+/**
+ * The `Select` component can be used in a form to select an item from a list. Provide a list of items via the `items` property or provide `SelectItem` components as children.
+ * 
+ * ## Import
+ * ```javascript
+ * import { Select, SelectItem } from '#/design-system/combobox';
+ * ```
+ */
 function Select<T extends object>({
   className,
   label,

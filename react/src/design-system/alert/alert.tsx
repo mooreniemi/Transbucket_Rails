@@ -40,10 +40,17 @@ export interface AlertProps extends Omit<ComponentProps<"div">, "title"> {
   icon?: ReactNode | false
 }
 
-// Callout for important information. Defaults to role="note" -- content
-// that's present on load, which screen readers read in place -- and to
-// role="alert" for the error variant, so it's announced immediately. Pass
-// role explicitly to override either default.
+/**
+ * The `Alert` component is used to highlight important information to the user. Alerts can be used for supplemental information or top-level errors, for inline alerts use the error and validation properties associated with the form corresponding input.
+ *
+ * ## Import
+ * ```javascript
+ * import { Alert } from '#/design-system/alert;
+ * ```
+ * 
+ * ## Accessibility Information
+ * The `error` variant of the alert defaults to `role=alert` which will interrupt screen readers to alert them of errors. All other variants default to `role=note` which does not interrupt and instead provides a note region. To alert a screen reader with natural pauses override with `role=status` to achieve the equivalent behavior to `aria-live=polite`. 
+ */
 function Alert({
   variant = "info",
   title,

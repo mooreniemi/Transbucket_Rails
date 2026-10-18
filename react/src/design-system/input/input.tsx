@@ -64,6 +64,17 @@ export interface InputProps extends Omit<TextFieldPrimitiveProps, "className"> {
   append?: StartEndElement;
 }
 
+/**
+ * 
+ * Input component for forms. Defaults to a plain text input, for other types use the `type` property. Ensure you are using proper [autocomplete attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete) to make forms easier for users.
+ * 
+ * ## Import
+ * ```javascript
+ * import { Input } from '#/design-system/input';
+ * ```
+ * ## Accessibilty information
+ * All inputs should be labeled. If the default position of an input's built-in label is undesirable the [standalone label component](?path=/docs/components-forms-label--docs) can be used. If an input has an icon or some other information that makes a label redundent to sighted users an `aria-label` must be used on the input in lieu of an associated label element.
+ */
 function Input({
   className,
   label,

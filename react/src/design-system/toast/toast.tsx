@@ -97,11 +97,19 @@ export interface ToastRegionProps {
   className?: string
 }
 
+/**
+ * The `ToastRegion` component handles a queue which listens for new statuses to display with the `Toast` component. The `ToastRegion` should be added close to the root level of your applicaiton so it can be used app-wide. The queue should be added to global state to push new toast statuses.
+ * 
+ * ## Import
+ * ```javascript
+ * import { ToastRegion, createToastQueue } from '#/design-system/toast';
+ * ```
+ */
 function ToastRegion({ queue, className }: ToastRegionProps) {
   return (
     <ToastRegionPrimitive
       queue={queue}
-      className={cn("fixed end-4 bottom-4 z-50 flex flex-col-reverse gap-2 outline-none", className)}
+      className={cn("fixed inset-e-4 bottom-4 z-50 flex flex-col-reverse gap-2 outline-none", className)}
     >
       {({ toast }) => <Toast toast={toast} />}
     </ToastRegionPrimitive>

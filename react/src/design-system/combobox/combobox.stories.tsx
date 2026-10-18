@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/tanstack-react';
-import { expect } from 'storybook/test';
+import { expect, waitFor } from 'storybook/test';
 
 import { ComboBox, ComboBoxItem, type ComboBoxOption } from './combobox';
 
@@ -59,7 +59,9 @@ export const WithDefaultValue: Story = {
     defaultSelectedKey: 'vaginoplasty',
   },
   play: async ({ canvas }) => {
-   expect(canvas.getByRole('combobox')).toHaveValue('Vaginoplasty');
+    // The input text comes from the item's label, which only exists once
+    // react-aria has built the collection; wait for it (see table stories).
+    await waitFor(() => expect(canvas.getByRole('combobox')).toHaveValue('Vaginoplasty'));
   }
 };
 

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/tanstack-react';
-import { expect } from 'storybook/test';
+import { expect, waitFor } from 'storybook/test';
 import type { SortDescriptor } from 'react-aria-components';
 
 import { Table } from './table';
@@ -64,9 +64,12 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+// react-aria builds the table's collection in a second render pass, so rows
+// can lag the first paint -- noticeably so in Chromatic's production build.
+// Wait for them rather than asserting synchronously.
 export const Default: Story = {
   play: async ({ canvas }) => {
-    expect(canvas.getAllByRole('row')).toHaveLength(5);
+    await waitFor(() => expect(canvas.getAllByRole('row')).toHaveLength(5));
   },
 };
 
@@ -75,7 +78,7 @@ export const SingleSelection: Story = {
     selectionMode: 'single',
   },
   play: async ({ canvas }) => {
-    expect(canvas.getAllByRole('row')).toHaveLength(5);
+    await waitFor(() => expect(canvas.getAllByRole('row')).toHaveLength(5));
   },
 };
 
@@ -84,7 +87,7 @@ export const MultipleSelection: Story = {
     selectionMode: 'multiple',
   },
   play: async ({ canvas }) => {
-    expect(canvas.getAllByRole('checkbox')).toHaveLength(5);
+    await waitFor(() => expect(canvas.getAllByRole('checkbox')).toHaveLength(5));
   },
 };
 
@@ -103,7 +106,7 @@ export const Empty: Story = {
     </Table>
   ),
   play: async ({ canvas }) => {
-    expect(canvas.getByText('No patients found.')).toBeInTheDocument();
+    expect(await canvas.findByText('No patients found.')).toBeInTheDocument();
   },
 };
 
@@ -144,7 +147,6 @@ function SortableTable() {
 export const Sortable: Story = {
   render: () => <SortableTable />,
   play: async ({ canvas }) => {
-    const rowHeaders = canvas.getAllByRole('rowheader');
-    expect(rowHeaders[0]).toHaveTextContent('A. Rivera');
+    await waitFor(() => expect(canvas.getAllByRole('rowheader')[0]).toHaveTextContent('A. Rivera'));
   },
 };

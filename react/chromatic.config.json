@@ -1,8 +1,9 @@
 
 {
-  "buildScriptName": "chromatic",
+  "buildScriptName": "build-storybook",
   "debug": true,
   "projectId": "Project:6aa9b714bbe175dd9b96613a",
   "zip": true,
-  "storybookBaseDir": "react"
+  "storybookBaseDir": "react",
+  "onlyChanged": true
 }

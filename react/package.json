@@ -70,7 +70,7 @@
     "chromatic": "^18.13.0",
     "jest-environment-jsdom": "^30.5.2",
     "msw": "^2.15.0",
-    "playwright": "latest",
+    "playwright": "1.63.0",
     "storybook": "^10.6.0",
     "typescript": "^6.0.2",
     "vite": "^8.0.0",

@@ -9,9 +9,10 @@ jobs:
       run:
         working-directory: ./react
     container:
-      # Make sure to grab the latest version of the Playwright image
-      # https://playwright.dev/docs/docker#pull-the-image
-      image: mcr.microsoft.com/playwright:latest
+      # Must match the exact `playwright` version in react/package.json, or the
+      # bundled browsers won't be the ones Playwright expects. There is no
+      # maintained `latest` tag. https://playwright.dev/docs/docker#pull-the-image
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
     steps:
       - uses: actions/checkout@v4
 
@@ -24,8 +25,6 @@ jobs:
         run: npm ci
 
       - name: Run tests
-        env:
-            PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
         run: npm run test
 
       # - name: Run Chromatic

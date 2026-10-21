@@ -22,11 +22,10 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-      
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps chromium
 
       - name: Run tests
+        env:
+            PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
         run: npm run test
 
       # - name: Run Chromatic

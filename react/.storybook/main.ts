@@ -3,11 +3,14 @@ import tailwindcss from '@tailwindcss/vite';
 import tailwindIntegration from '@unpunnyfuns/swatchbook-integrations/tailwind';
 
 const config: StorybookConfig = {
-  "stories": [
+  stories: [
     "../src/**/*.mdx",
     "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"
   ],
-  "addons": [
+  features: {
+    componentsManifest: true,
+  },
+  addons: [
     "@chromatic-com/storybook",
     "@storybook/addon-vitest",
     "@storybook/addon-a11y",
@@ -21,7 +24,7 @@ const config: StorybookConfig = {
       },
     },
   ],
-  "framework": "@storybook/tanstack-react",
+  framework: "@storybook/tanstack-react",
   // Default docgen (react-docgen) can't resolve generic prop types like
   // `RenderProps<T, ElementType>`, which every react-aria-components wrapper
   // in this library extends -- switch to the TS-compiler-based docgen, and

@@ -15,6 +15,9 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.63.0-noble
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Chromatic needs full git history for `onlyChanged` (TurboSnap)
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -32,5 +35,7 @@ jobs:
         with:
           # ⚠️ Make sure to configure a `CHROMATIC_PROJECT_TOKEN` repository secret
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          # `defaults.run.working-directory` only applies to `run:` steps, not actions
+          workingDir: react
           onlyChanged: true
           skip: 'dependabot/**'

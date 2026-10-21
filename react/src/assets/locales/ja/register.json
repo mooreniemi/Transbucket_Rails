@@ -39,7 +39,6 @@
         "cisgenderDefault": "シスジェンダー：they/them",
         "customPronouns": "代名詞をカスタマイズ",
         "pronounsDescription": "代名詞は登録後にプロフィールから変更できます。",
-        "errorSummary": "以下の問題を修正して、もう一度送信してください。",
         "loginTitle": "すでにアカウントをお持ちですか？",
         "termsText": "{#terms}利用規約{/terms}に同意し、{#privacy}プライバシーポリシー{/privacy}を読みました。"
     }

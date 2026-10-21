@@ -39,7 +39,6 @@
         "cisgenderDefault": "Cisgénero: elle",
         "customPronouns": "Personalizar pronombres",
         "pronounsDescription": "Puedes actualizar tus pronombres en tu perfil después del registro.",
-        "errorSummary": "Corrige los problemas indicados abajo y vuelve a enviar el formulario.",
         "loginTitle": "¿Ya tienes una cuenta?",
         "termsText": "Acepto los {#terms}Términos del servicio{/terms} y he leído la {#privacy}Política de privacidad{/privacy}."
     }

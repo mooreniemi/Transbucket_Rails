@@ -39,7 +39,6 @@
         "cisgenderDefault": "Cisgender: they/them",
         "customPronouns": "Voornaamwoorden aanpassen",
         "pronounsDescription": "Je voornaamwoorden kunnen na registratie in je profiel worden aangepast.",
-        "errorSummary": "Los de onderstaande problemen op en verstuur het formulier opnieuw.",
         "loginTitle": "Heb je al een account?",
         "termsText": "Ik ga akkoord met de {#terms}Servicevoorwaarden{/terms} en heb het {#privacy}Privacybeleid{/privacy} gelezen."
     }

@@ -28,6 +28,7 @@
             "usernameTaken": "Tên người dùng này không khả dụng",
             "emailTaken": "Email này không khả dụng"
         },
-        "registrationTitle": "Bạn mới dùng Transbucket?"
+        "registrationTitle": "Bạn mới dùng Transbucket?",
+        "errorSummary": "Vui lòng khắc phục các vấn đề bên dưới rồi gửi lại."
     }
 }

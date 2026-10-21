@@ -6,9 +6,10 @@ class ReactAppController < ApplicationController
   def show
   end
 
-  # The login, register and forgot password pages: nothing to do for someone who is already
-  # signed in, so send them where signing in would have (what Devise's
-  # require_no_authentication did for the old server-rendered pages).
+  # The login, register, forgot and reset password pages: nothing to do for
+  # someone who is already signed in, so send them where signing in would have
+  # (what Devise's require_no_authentication did for the old server-rendered
+  # pages).
   def guest_page
     render :show
   end

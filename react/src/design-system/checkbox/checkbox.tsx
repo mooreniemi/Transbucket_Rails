@@ -69,7 +69,7 @@ export interface CheckboxProps extends Omit<CheckboxFieldPrimitiveProps, "classN
  * 
  * ## Import
  * ```javascript
- * import { Checkbox } from '#/design-sytem/checkbox';
+ * import { Checkbox } from '#/design-system/checkbox';
  * ```
  */
 function Checkbox({

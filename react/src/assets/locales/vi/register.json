@@ -39,7 +39,6 @@
         "cisgenderDefault": "Cisgender: they/them",
         "customPronouns": "Tùy chỉnh đại từ",
         "pronounsDescription": "Bạn có thể cập nhật đại từ trong hồ sơ sau khi đăng ký.",
-        "errorSummary": "Vui lòng khắc phục các vấn đề bên dưới rồi gửi lại.",
         "loginTitle": "Bạn đã có tài khoản?",
         "termsText": "Tôi đồng ý với {#terms}Điều khoản dịch vụ{/terms} và đã đọc {#privacy}Chính sách quyền riêng tư{/privacy}."
     }

@@ -22,7 +22,7 @@ export interface AccordionProps extends Omit<DisclosureGroupProps, "className"> 
  * You can configure which items are expanded or collapsed by default as well as whether one or more can be expanded at a time.
  * ## Import
  * ```javascript
- * import { Accordion } from '#/design-system/accordion;
+ * import { Accordion } from '#/design-system/accordion';
  * ```
  */
 function Accordion({ className, ...props }: AccordionProps) {
@@ -48,7 +48,7 @@ export interface AccordionItemProps extends Omit<DisclosureProps, "className" | 
  * The `AccordionItem` component should be used within an `Accordion`. It be expanded and collapsed to show additional context.
  * ## Import
  * ```javascript
- * import { AccordionItem } from '#/design-system/accordion;
+ * import { AccordionItem } from '#/design-system/accordion';
  * ```
  */
 function AccordionItem({

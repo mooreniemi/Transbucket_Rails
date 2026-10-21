@@ -28,6 +28,7 @@
             "usernameTaken": "Dieser Benutzername ist nicht verfügbar",
             "emailTaken": "Diese E-Mail-Adresse ist nicht verfügbar"
         },
-        "registrationTitle": "Neu bei Transbucket?"
+        "registrationTitle": "Neu bei Transbucket?",
+        "errorSummary": "Bitte beheben Sie die unten aufgeführten Probleme und senden Sie das Formular erneut ab."
     }
 }

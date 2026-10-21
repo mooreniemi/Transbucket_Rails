@@ -28,6 +28,7 @@
             "usernameTaken": "اسم المستخدم هذا غير متاح",
             "emailTaken": "هذا البريد الإلكتروني غير متاح"
         },
-        "registrationTitle": "هل هذه أول زيارة لك إلى Transbucket؟"
+        "registrationTitle": "هل هذه أول زيارة لك إلى Transbucket؟",
+        "errorSummary": "يرجى إصلاح المشكلات أدناه ثم الإرسال مرة أخرى."
     }
 }

@@ -39,7 +39,6 @@
         "cisgenderDefault": "Cisgender: they/them",
         "customPronouns": "Zamirleri özelleştir",
         "pronounsDescription": "Zamirler, kayıttan sonra profilinizden güncellenebilir.",
-        "errorSummary": "Lütfen aşağıdaki sorunları düzeltip tekrar gönderin.",
         "loginTitle": "Zaten bir hesabınız var mı?",
         "termsText": "{#terms}Hizmet Şartları{/terms}’nı kabul ediyorum ve {#privacy}Gizlilik Politikası{/privacy}’nı okudum."
     }

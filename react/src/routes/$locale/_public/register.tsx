@@ -51,7 +51,7 @@ function RegisterPage() {
   const form = useRailsForm<SignUpSuccess>({
     url: `/${locale}/users`,
     scope: 'user',
-    summary: m['register.errorSummary'](),
+    summary: m['global.errorSummary'](),
     onSuccess: setSuccess,
   })
 

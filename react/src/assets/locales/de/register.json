@@ -39,7 +39,6 @@
         "cisgenderDefault": "Cisgender: they/them",
         "customPronouns": "Pronomen anpassen",
         "pronounsDescription": "Die Pronomen können nach der Registrierung in Ihrem Profil geändert werden.",
-        "errorSummary": "Bitte beheben Sie die unten aufgeführten Probleme und senden Sie das Formular erneut ab.",
         "loginTitle": "Sie haben bereits ein Konto?",
         "termsText": "Ich stimme den {#terms}Nutzungsbedingungen{/terms} zu und habe die {#privacy}Datenschutzerklärung{/privacy} gelesen."
     }

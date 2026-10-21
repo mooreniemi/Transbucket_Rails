@@ -26,8 +26,10 @@
             "surgeons": "Surgeons",
             "login": "Log in",
             "register": "Register",
-            "forgotPassword": "Forgot your password?"
+            "forgotPassword": "Forgot your password?",
+            "resetPassword": "Change your password"
         },
-        "registrationTitle": "New to Transbucket?"
+        "registrationTitle": "New to Transbucket?",
+        "errorSummary": "Please fix the problems below and submit again."
     }
 }

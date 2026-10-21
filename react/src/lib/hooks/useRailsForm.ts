@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
-import { formToParams, postJson } from '#/lib/api'
+import { formToParams, postJson, type JsonMethod } from '#/lib/api'
 import { messageFor, messageForStatus, type ErrorCode } from '#/lib/errorMessages'
 
 type FieldErrors = Record<string, string[]>
@@ -7,6 +7,9 @@ type ServerErrors = Record<string, ErrorCode[]>
 
 interface Options<T> {
   url: string
+  // POST unless the endpoint wants another verb, e.g. PUT for Devise's
+  // password change.
+  method?: JsonMethod
   // Rails' param scope for the form's fields, e.g. "user" for user[email].
   scope: string
   // Text for the alert when field errors come back, e.g. "Please fix the
@@ -26,7 +29,7 @@ interface Options<T> {
 //   <Form validationErrors> wants.
 // - banner: text for an alert at the top of the form, with bannerRef to focus
 //   it when it appears (the Form guide's pattern for server errors).
-export function useRailsForm<T>({ url, scope, summary, onSuccess }: Options<T>) {
+export function useRailsForm<T>({ url, method, scope, summary, onSuccess }: Options<T>) {
   const [isPending, setPending] = useState(false)
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({})
   const [formError, setFormError] = useState<string | null>(null)
@@ -48,7 +51,7 @@ export function useRailsForm<T>({ url, scope, summary, onSuccess }: Options<T>) 
     setFormError(null)
     setFieldErrors({})
 
-    const result = await postJson<T & { errors?: ServerErrors }>(url, params)
+    const result = await postJson<T & { errors?: ServerErrors }>(url, params, method)
 
     if (result.ok && result.data) {
       onSuccess(result.data)

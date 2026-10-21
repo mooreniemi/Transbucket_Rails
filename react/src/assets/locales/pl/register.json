@@ -39,7 +39,6 @@
         "cisgenderDefault": "Cispłciowy: they/them",
         "customPronouns": "Dostosuj zaimki",
         "pronounsDescription": "Zaimki można zmienić po rejestracji w swoim profilu.",
-        "errorSummary": "Popraw poniższe błędy i wyślij formularz ponownie.",
         "loginTitle": "Masz już konto?",
         "termsText": "Akceptuję {#terms}Warunki korzystania z usługi{/terms} i zapoznałem/-am się z {#privacy}Polityką prywatności{/privacy}."
     }

@@ -20,7 +20,7 @@ interface CommentProps {
  * Comments replies are nested under the original comment and can be expanded and collapsed. Replies are expanded by default.
  * ## Import
  * ```javascript
- * import { Comment } from '#/design-system/comments;
+ * import { Comment } from '#/design-system/comments';
  * ```
  */
 export function Comment({ children, comment, locale, onReply, onReport, isPending = false }: CommentProps) {

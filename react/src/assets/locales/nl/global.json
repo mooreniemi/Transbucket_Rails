@@ -28,6 +28,7 @@
             "usernameTaken": "Deze gebruikersnaam is niet beschikbaar",
             "emailTaken": "Dit e-mailadres is niet beschikbaar"
         },
-        "registrationTitle": "Nieuw bij Transbucket?"
+        "registrationTitle": "Nieuw bij Transbucket?",
+        "errorSummary": "Los de onderstaande problemen op en verstuur het formulier opnieuw."
     }
 }

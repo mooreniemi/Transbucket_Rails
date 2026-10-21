@@ -9,13 +9,15 @@ export interface ApiResult<T> {
   networkError: boolean
 }
 
-// POST JSON to Rails with its CSRF token. Never throws: callers branch on
+export type JsonMethod = 'POST' | 'PUT' | 'PATCH'
+
+// Send JSON to Rails with its CSRF token. Never throws: callers branch on
 // `ok` / `data` rather than catching, since a 401 or 422 is an expected
 // answer here, not an exception.
-export async function postJson<T>(url: string, body: unknown): Promise<ApiResult<T>> {
+export async function postJson<T>(url: string, body: unknown, method: JsonMethod = 'POST'): Promise<ApiResult<T>> {
   try {
     const response = await fetch(url, {
-      method: 'POST',
+      method,
       credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json',

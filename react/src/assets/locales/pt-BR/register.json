@@ -39,7 +39,6 @@
         "cisgenderDefault": "Cisgênero: elu/delu",
         "customPronouns": "Personalizar pronomes",
         "pronounsDescription": "Os pronomes podem ser atualizados no seu perfil após o cadastro.",
-        "errorSummary": "Corrija os problemas abaixo e envie novamente.",
         "loginTitle": "Já tem uma conta?",
         "termsText": "Concordo com os {#terms}Termos de Serviço{/terms} e li a {#privacy}Política de Privacidade{/privacy}."
     }

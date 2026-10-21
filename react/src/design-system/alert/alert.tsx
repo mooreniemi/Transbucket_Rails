@@ -45,7 +45,7 @@ export interface AlertProps extends Omit<ComponentProps<"div">, "title"> {
  *
  * ## Import
  * ```javascript
- * import { Alert } from '#/design-system/alert;
+ * import { Alert } from '#/design-system/alert';
  * ```
  * 
  * ## Accessibility Information

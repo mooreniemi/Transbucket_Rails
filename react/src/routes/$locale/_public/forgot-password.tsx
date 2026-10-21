@@ -47,7 +47,7 @@ function ForgotPasswordPage() {
       <h2 className="text-xl font-semibold">{m['global.pages.forgotPassword']()}</h2>
       {sent ? (
         <>
-          <Alert variant="info">{sent.message}</Alert>
+          <p>{sent.message}</p>
           <Button href={sent.redirect_to}>{m['global.buttons.login']()}</Button>
         </>
       ) : (

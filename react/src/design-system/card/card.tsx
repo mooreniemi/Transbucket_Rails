@@ -9,7 +9,7 @@ interface CardProps {
  * The `Card` component can be used to create visual definition and heirarchy to information or a list of items.
  * ## Import
  * ```javascript
- * import { Card } from '#/design-system/card;
+ * import { Card } from '#/design-system/card';
  * ```
  */
 export function Card({ children, className }: CardProps) {

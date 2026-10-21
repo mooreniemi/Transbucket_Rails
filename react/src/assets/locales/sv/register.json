@@ -39,7 +39,6 @@
         "cisgenderDefault": "Cisgender: hen",
         "customPronouns": "Anpassa pronomen",
         "pronounsDescription": "Pronomen kan ändras i din profil efter registreringen.",
-        "errorSummary": "Åtgärda problemen nedan och skicka igen.",
         "loginTitle": "Har du redan ett konto?",
         "termsText": "Jag godkänner {#terms}användarvillkoren{/terms} och har läst {#privacy}integritetspolicyn{/privacy}."
     }

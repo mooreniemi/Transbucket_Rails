@@ -39,7 +39,6 @@
         "cisgenderDefault": "Cisgenre : iel",
         "customPronouns": "Personnaliser les pronoms",
         "pronounsDescription": "Les pronoms peuvent être modifiés après l’inscription dans votre profil.",
-        "errorSummary": "Veuillez corriger les problèmes ci-dessous et soumettre à nouveau.",
         "loginTitle": "Vous avez déjà un compte ?",
         "termsText": "J’accepte les {#terms}Conditions d’utilisation{/terms} et j’ai lu la {#privacy}Politique de confidentialité{/privacy}."
     }

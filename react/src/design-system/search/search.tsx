@@ -45,7 +45,7 @@ export interface SearchProps
  * 
  * ## Import
  * ```javascript
- * import { Search } from '#design-system/search';
+ * import { Search } from '#/design-system/search';
  * ```
  * 
  * ## Accessibility information

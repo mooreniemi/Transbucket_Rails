@@ -79,7 +79,7 @@ function renderDefaultItem(item: object) {
  * 
  * ## Import
  * ```javascript
- * import { Select, SelectItem } from '#/design-system/combobox';
+ * import { Select, SelectItem } from '#/design-system/select';
  * ```
  */
 function Select<T extends object>({

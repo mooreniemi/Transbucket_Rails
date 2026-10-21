@@ -4,7 +4,7 @@
         "usernameInputLabel": "Username",
         "usernameDescription": "Your username will be visible to others",
         "emailInputLabel": "Email",
-        "emailDescription": "Your email address will not be shared with others. Verification is required.", 
+        "emailDescription": "Your email address will not be shared with others. Verification is required.",
         "passwordInputLabel": "Password",
         "confirmationInputLabel": "Confirm Password",
         "nameInputLabel": "Full name",
@@ -39,7 +39,6 @@
         "cisgenderDefault": "Cisgender: they/them",
         "customPronouns": "Customize pronouns",
         "pronounsDescription": "Pronouns can be updated after registration in your profile.",
-        "errorSummary": "Please fix the problems below and submit again.",
         "loginTitle": "Already have an account?",
         "termsText": "I agree to the {#terms}Terms of Service{/terms} and have read the {#privacy}Privacy Policy{/privacy}."
     }

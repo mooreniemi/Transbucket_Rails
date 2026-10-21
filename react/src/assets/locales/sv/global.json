@@ -28,6 +28,7 @@
             "usernameTaken": "Det här användarnamnet är inte tillgängligt",
             "emailTaken": "Den här e-postadressen är inte tillgänglig"
         },
-        "registrationTitle": "Ny på Transbucket?"
+        "registrationTitle": "Ny på Transbucket?",
+        "errorSummary": "Åtgärda problemen nedan och skicka igen."
     }
 }

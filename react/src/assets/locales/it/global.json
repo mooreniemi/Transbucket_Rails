@@ -28,6 +28,7 @@
             "usernameTaken": "Questo nome utente non è disponibile",
             "emailTaken": "Questo indirizzo email non è disponibile"
         },
-        "registrationTitle": "Prima volta su Transbucket?"
+        "registrationTitle": "Prima volta su Transbucket?",
+        "errorSummary": "Correggi i problemi indicati qui sotto e invia di nuovo."
     }
 }

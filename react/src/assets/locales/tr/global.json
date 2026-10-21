@@ -28,6 +28,7 @@
             "usernameTaken": "Bu kullanıcı adı kullanılamıyor",
             "emailTaken": "Bu e-posta adresi kullanılamıyor"
         },
-        "registrationTitle": "Transbucket’a yeni misiniz?"
+        "registrationTitle": "Transbucket’a yeni misiniz?",
+        "errorSummary": "Lütfen aşağıdaki sorunları düzeltip tekrar gönderin."
     }
 }

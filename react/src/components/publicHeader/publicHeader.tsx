@@ -18,6 +18,8 @@ interface LocaleSwitcher {
   currentLocale: string;
 }
 
+// search={true} keeps the query string, e.g. the reset password page's token,
+// which "." alone would drop.
 function LocaleSwitcher({ currentLocale }: LocaleSwitcher) {
   return (
     <HeaderMenu label={
@@ -26,22 +28,22 @@ function LocaleSwitcher({ currentLocale }: LocaleSwitcher) {
           <span className="align-middle">{currentLocale}</span>
         </>
       }>
-        <TanstackMenuItem to="." params={(prev) => ({ ...prev, locale: 'en' })}>English</TanstackMenuItem>
-        <TanstackMenuItem to="." params={(prev) => ({ ...prev, locale: 'de' })}>Deutsch</TanstackMenuItem>
-        <TanstackMenuItem to="." params={(prev) => ({ ...prev, locale: 'es' })}>Español</TanstackMenuItem>
-        <TanstackMenuItem to="." params={(prev) => ({ ...prev, locale: 'fr' })}>Français</TanstackMenuItem>
-        <TanstackMenuItem to="." params={(prev) => ({ ...prev, locale: 'it' })}>Italiano</TanstackMenuItem>
-        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'ja'})}>日本語</TanstackMenuItem>
-        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'zh-CN'})}>简体中文</TanstackMenuItem>
-        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'zh-TW'})}>繁體中文</TanstackMenuItem>
-        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'pt-BR'})}>Português (Brasil)</TanstackMenuItem>
-        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'nl'})}>Nederlands</TanstackMenuItem>
-        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'pl'})}>Polski</TanstackMenuItem>
-        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'ru'})}>Русский</TanstackMenuItem>
-        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'tr'})}>Türkçe</TanstackMenuItem>
-        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'vi'})}>Tiếng Việt</TanstackMenuItem>
-        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'ar'})}>العربية</TanstackMenuItem>
-        <TanstackMenuItem to='.' params={(prev) => ({ ...prev, locale: 'sv'})}>Svenska</TanstackMenuItem>
+        <TanstackMenuItem to="." search={true} params={(prev) => ({ ...prev, locale: 'en' })}>English</TanstackMenuItem>
+        <TanstackMenuItem to="." search={true} params={(prev) => ({ ...prev, locale: 'de' })}>Deutsch</TanstackMenuItem>
+        <TanstackMenuItem to="." search={true} params={(prev) => ({ ...prev, locale: 'es' })}>Español</TanstackMenuItem>
+        <TanstackMenuItem to="." search={true} params={(prev) => ({ ...prev, locale: 'fr' })}>Français</TanstackMenuItem>
+        <TanstackMenuItem to="." search={true} params={(prev) => ({ ...prev, locale: 'it' })}>Italiano</TanstackMenuItem>
+        <TanstackMenuItem to='.' search={true} params={(prev) => ({ ...prev, locale: 'ja'})}>日本語</TanstackMenuItem>
+        <TanstackMenuItem to='.' search={true} params={(prev) => ({ ...prev, locale: 'zh-CN'})}>简体中文</TanstackMenuItem>
+        <TanstackMenuItem to='.' search={true} params={(prev) => ({ ...prev, locale: 'zh-TW'})}>繁體中文</TanstackMenuItem>
+        <TanstackMenuItem to='.' search={true} params={(prev) => ({ ...prev, locale: 'pt-BR'})}>Português (Brasil)</TanstackMenuItem>
+        <TanstackMenuItem to='.' search={true} params={(prev) => ({ ...prev, locale: 'nl'})}>Nederlands</TanstackMenuItem>
+        <TanstackMenuItem to='.' search={true} params={(prev) => ({ ...prev, locale: 'pl'})}>Polski</TanstackMenuItem>
+        <TanstackMenuItem to='.' search={true} params={(prev) => ({ ...prev, locale: 'ru'})}>Русский</TanstackMenuItem>
+        <TanstackMenuItem to='.' search={true} params={(prev) => ({ ...prev, locale: 'tr'})}>Türkçe</TanstackMenuItem>
+        <TanstackMenuItem to='.' search={true} params={(prev) => ({ ...prev, locale: 'vi'})}>Tiếng Việt</TanstackMenuItem>
+        <TanstackMenuItem to='.' search={true} params={(prev) => ({ ...prev, locale: 'ar'})}>العربية</TanstackMenuItem>
+        <TanstackMenuItem to='.' search={true} params={(prev) => ({ ...prev, locale: 'sv'})}>Svenska</TanstackMenuItem>
     </HeaderMenu>
   )
 }

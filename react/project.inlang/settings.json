@@ -29,7 +29,8 @@
       "./src/assets/locales/{locale}/global.json",
       "./src/assets/locales/{locale}/login.json",
       "./src/assets/locales/{locale}/register.json",
-      "./src/assets/locales/{locale}/forgotPassword.json"
+      "./src/assets/locales/{locale}/forgotPassword.json",
+      "./src/assets/locales/{locale}/resetPassword.json"
     ]
   }
 }

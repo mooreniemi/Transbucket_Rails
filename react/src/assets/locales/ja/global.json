@@ -28,6 +28,7 @@
             "usernameTaken": "このユーザー名は使用できません",
             "emailTaken": "このメールアドレスは使用できません"
         },
-        "registrationTitle": "Transbucketは初めてですか？"
+        "registrationTitle": "Transbucketは初めてですか？",
+        "errorSummary": "以下の問題を修正して、もう一度送信してください。"
     }
 }

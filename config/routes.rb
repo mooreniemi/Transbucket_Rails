@@ -24,9 +24,9 @@ Rails.application.routes.draw do
       # Named so PasswordsController#new can redirect_to forgot_password_path --
       # requesting the email (POST /users/password) is untouched.
       get "/forgot-password" => "react_app#guest_page", as: "forgot_password"
-      # Still Devise's own page, just at a nicer URL -- changing the password
-      # (PUT /users/password) is untouched.
-      get "/reset-password" => "passwords#edit", as: "reset_password"
+      # Where the reset email links to, with ?reset_password_token=... --
+      # changing the password (PUT /users/password) is untouched.
+      get "/reset-password" => "react_app#guest_page", as: "reset_password"
     end
 
     resources :users do

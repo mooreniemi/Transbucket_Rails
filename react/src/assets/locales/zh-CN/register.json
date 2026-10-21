@@ -39,7 +39,6 @@
         "cisgenderDefault": "顺性别：they/them",
         "customPronouns": "自定义代词",
         "pronounsDescription": "注册后可在个人资料中更新代词。",
-        "errorSummary": "请修正以下问题后重新提交。",
         "loginTitle": "已有账户？",
         "termsText": "我同意{#terms}服务条款{/terms}，并已阅读{#privacy}隐私政策{/privacy}。"
     }

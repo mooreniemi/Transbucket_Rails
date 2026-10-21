@@ -39,7 +39,6 @@
         "cisgenderDefault": "متوافق الجنس: they/them",
         "customPronouns": "تخصيص الضمائر",
         "pronounsDescription": "يمكن تحديث الضمائر بعد التسجيل من ملفك الشخصي.",
-        "errorSummary": "يرجى إصلاح المشكلات أدناه ثم الإرسال مرة أخرى.",
         "loginTitle": "هل لديك حساب بالفعل؟",
         "termsText": "أوافق على {#terms}شروط الخدمة{/terms} وقد قرأت {#privacy}سياسة الخصوصية{/privacy}."
     }

@@ -28,6 +28,7 @@
             "usernameTaken": "Это имя пользователя недоступно",
             "emailTaken": "Этот адрес электронной почты недоступен"
         },
-        "registrationTitle": "Впервые на Transbucket?"
+        "registrationTitle": "Впервые на Transbucket?",
+        "errorSummary": "Исправьте указанные ниже ошибки и отправьте форму ещё раз."
     }
 }

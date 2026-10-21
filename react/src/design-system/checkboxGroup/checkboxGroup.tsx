@@ -25,7 +25,7 @@ export interface CheckboxGroupProps
  * 
  * ## Import
  * ```javascript
- * import { CheckboxGroup } from '#/design-sytem/checkboxGroup';
+ * import { CheckboxGroup } from '#/design-system/checkboxGroup';
  * ```
  */
 function CheckboxGroup({

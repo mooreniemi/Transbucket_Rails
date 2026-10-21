@@ -39,7 +39,7 @@ Check off as each page type is rebuilt.
 - [ ] My Account — profile + settings + submissions in one page, three
       partials (`/users/edit`)
 - [x] Forgot password (`/forgot-password`)
-- [ ] Reset password (`/reset-password`)
+- [x] Reset password (`/reset-password`)
 - [ ] Resend confirmation (`/users/confirmation/new`)
 - [ ] Unlock account (`/users/unlock/new`)
 

@@ -28,6 +28,7 @@
             "usernameTaken": "此用户名不可用",
             "emailTaken": "此邮箱不可用"
         },
-        "registrationTitle": "初次使用 Transbucket？"
+        "registrationTitle": "初次使用 Transbucket？",
+        "errorSummary": "请修正以下问题后重新提交。"
     }
 }

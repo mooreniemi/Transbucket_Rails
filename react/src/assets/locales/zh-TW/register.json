@@ -39,7 +39,6 @@
         "cisgenderDefault": "順性別：they/them",
         "customPronouns": "自訂代名詞",
         "pronounsDescription": "註冊後可在個人檔案中更新代名詞。",
-        "errorSummary": "請修正以下問題後重新送出。",
         "loginTitle": "已經有帳號了嗎？",
         "termsText": "我同意{#terms}服務條款{/terms}，並已閱讀{#privacy}隱私權政策{/privacy}。"
     }

@@ -39,7 +39,6 @@
         "cisgenderDefault": "Cisgender: they/them",
         "customPronouns": "Personalizza i pronomi",
         "pronounsDescription": "Puoi aggiornare i pronomi nel tuo profilo dopo la registrazione.",
-        "errorSummary": "Correggi i problemi indicati qui sotto e invia di nuovo.",
         "loginTitle": "Hai già un account?",
         "termsText": "Accetto i {#terms}Termini di servizio{/terms} e ho letto l’{#privacy}Informativa sulla privacy{/privacy}."
     }

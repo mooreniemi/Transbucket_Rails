@@ -1,8 +1,0 @@
-{
-  "servers": {
-    "transbucket-ds": {
-      "type": "http",
-      "url": "http://localhost:6006/mcp"
-    }
-  }
-}

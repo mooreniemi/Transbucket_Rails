@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "transbucket-ds": {
+      "url": "${STORYBOOK_MCP_URL:-https://main--6aa9b714bbe175dd9b96613a.chromatic.com/mcp}",
+      "type": "http"
+    }
+  }
+}

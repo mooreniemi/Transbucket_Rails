@@ -19,6 +19,11 @@ jobs:
           # Chromatic needs full git history for `onlyChanged` (TurboSnap)
           fetch-depth: 0
 
+      # The container runs as root but the checkout is owned by the runner user,
+      # so git refuses to read it (which breaks Chromatic) unless we trust it
+      - name: Trust workspace for git
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:

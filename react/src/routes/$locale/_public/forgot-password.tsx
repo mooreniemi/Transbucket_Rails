@@ -65,7 +65,7 @@ function ForgotPasswordPage() {
             <Button variant="ghost" href={`/${locale}/login`}>{m['forgotPassword.backToLogin']()}</Button>
           </Form>
           <hr className="border-black-400" />
-          <p className="text-center">{m['login.registrationTitle']()}</p>
+          <p className="text-center">{m['global.registrationTitle']()}</p>
           <Button variant="outline" href={`/${locale}/register`}>{m['global.buttons.register']()}</Button>
           <Button variant="ghost" href={`/${locale}/users/confirmation/new`}>{m['global.buttons.confirmation']()}</Button>
         </>

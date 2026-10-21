@@ -10,9 +10,13 @@
             "news": "Nyheter",
             "procedures": "Ingrepp",
             "surgeons": "Kirurger",
-            "login": "Logga in"
+            "login": "Logga in",
+            "register": "Registrera dig",
+            "forgotPassword": "Glömt ditt lösenord?"
         },
         "errors": {
+            "network": "Vi kunde inte nå servern. Kontrollera din anslutning och försök igen.",
+            "generic": "Något gick fel. Försök igen.",
             "blank": "Det här fältet är obligatoriskt",
             "invalid": "Ogiltig inmatning",
             "tooShort": "Måste vara minst {count} tecken",
@@ -23,6 +27,7 @@
             "sessionExpired": "Din session har gått ut. Ladda om sidan och försök igen.",
             "usernameTaken": "Det här användarnamnet är inte tillgängligt",
             "emailTaken": "Den här e-postadressen är inte tillgänglig"
-        }
+        },
+        "registrationTitle": "Ny på Transbucket?"
     }
 }

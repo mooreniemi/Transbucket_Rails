@@ -10,9 +10,13 @@
             "news": "ニュース",
             "procedures": "手術",
             "surgeons": "外科医",
-            "login": "ログイン"
+            "login": "ログイン",
+            "register": "登録",
+            "forgotPassword": "パスワードをお忘れですか？"
         },
         "errors": {
+            "network": "サーバーに接続できませんでした。接続を確認して、もう一度お試しください。",
+            "generic": "問題が発生しました。もう一度お試しください。",
             "blank": "この項目は必須です",
             "invalid": "入力が正しくありません",
             "tooShort": "{count}文字以上で入力してください",
@@ -23,6 +27,7 @@
             "sessionExpired": "セッションの有効期限が切れました。ページを再読み込みして、もう一度お試しください。",
             "usernameTaken": "このユーザー名は使用できません",
             "emailTaken": "このメールアドレスは使用できません"
-        }
+        },
+        "registrationTitle": "Transbucketは初めてですか？"
     }
 }

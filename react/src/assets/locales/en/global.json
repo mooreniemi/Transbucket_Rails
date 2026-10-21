@@ -27,6 +27,7 @@
             "login": "Log in",
             "register": "Register",
             "forgotPassword": "Forgot your password?"
-        }
+        },
+        "registrationTitle": "New to Transbucket?"
     }
 }

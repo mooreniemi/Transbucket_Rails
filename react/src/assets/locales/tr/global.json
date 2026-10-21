@@ -10,9 +10,13 @@
             "news": "Haberler",
             "procedures": "Prosedürler",
             "surgeons": "Cerrahlar",
-            "login": "Giriş yap"
+            "login": "Giriş yap",
+            "register": "Kayıt ol",
+            "forgotPassword": "Şifrenizi mi unuttunuz?"
         },
         "errors": {
+            "network": "Sunucuya ulaşılamadı. Bağlantınızı kontrol edip tekrar deneyin.",
+            "generic": "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
             "blank": "Bu alan zorunludur",
             "invalid": "Geçersiz giriş",
             "tooShort": "En az {count} karakter olmalıdır",
@@ -23,6 +27,7 @@
             "sessionExpired": "Oturumunuzun süresi doldu. Sayfayı yenileyin ve tekrar deneyin.",
             "usernameTaken": "Bu kullanıcı adı kullanılamıyor",
             "emailTaken": "Bu e-posta adresi kullanılamıyor"
-        }
+        },
+        "registrationTitle": "Transbucket’a yeni misiniz?"
     }
 }

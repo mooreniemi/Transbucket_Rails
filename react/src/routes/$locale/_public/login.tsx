@@ -80,7 +80,7 @@ function LoginPage() {
         </div>
         <Button type="submit" isPending={form.isPending}>{m['global.buttons.login']()}</Button>
         <hr className="border-black-400" />
-        <p className="text-center">{m['login.registrationTitle']()}</p>
+        <p className="text-center">{m['global.registrationTitle']()}</p>
         <Button variant="outline" href={`/${locale}/register`}>{m['global.buttons.register']()}</Button>
         <Button variant="ghost" href={`/${locale}/users/confirmation/new`}>{m['global.buttons.confirmation']()}</Button>
       </form>

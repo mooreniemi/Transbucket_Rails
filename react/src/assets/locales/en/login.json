@@ -4,7 +4,6 @@
         "userInputLabel": "Username or email",
         "passwordInputLabel": "Password",
         "rememberInputLabel": "Remember me",
-        "registrationTitle": "New to Transbucket?",
         "forgotPasswordLink": "Forgot your password?"
     }
 }

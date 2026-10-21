@@ -10,9 +10,13 @@
             "news": "Notícias",
             "procedures": "Procedimentos",
             "surgeons": "Cirurgiões",
-            "login": "Entrar"
+            "login": "Entrar",
+            "register": "Cadastrar",
+            "forgotPassword": "Esqueceu sua senha?"
         },
         "errors": {
+            "network": "Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente.",
+            "generic": "Algo deu errado. Tente novamente.",
             "blank": "Este campo é obrigatório",
             "invalid": "Entrada inválida",
             "tooShort": "Deve ter pelo menos {count} caracteres",
@@ -23,6 +27,7 @@
             "sessionExpired": "Sua sessão expirou. Recarregue a página e tente novamente.",
             "usernameTaken": "Este nome de usuário não está disponível",
             "emailTaken": "Este e-mail não está disponível"
-        }
+        },
+        "registrationTitle": "Primeira vez no Transbucket?"
     }
 }

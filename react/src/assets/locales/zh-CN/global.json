@@ -10,9 +10,13 @@
             "news": "新闻",
             "procedures": "手术项目",
             "surgeons": "医生",
-            "login": "登录"
+            "login": "登录",
+            "register": "注册",
+            "forgotPassword": "忘记密码？"
         },
         "errors": {
+            "network": "无法连接到服务器。请检查网络连接后重试。",
+            "generic": "出了点问题，请重试。",
             "blank": "此字段为必填项",
             "invalid": "输入无效",
             "tooShort": "至少需要 {count} 个字符",
@@ -23,6 +27,7 @@
             "sessionExpired": "会话已过期。请刷新页面后重试。",
             "usernameTaken": "此用户名不可用",
             "emailTaken": "此邮箱不可用"
-        }
+        },
+        "registrationTitle": "初次使用 Transbucket？"
     }
 }

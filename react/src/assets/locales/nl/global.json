@@ -10,9 +10,13 @@
             "news": "Nieuws",
             "procedures": "Procedures",
             "surgeons": "Chirurgen",
-            "login": "Inloggen"
+            "login": "Inloggen",
+            "register": "Registreren",
+            "forgotPassword": "Wachtwoord vergeten?"
         },
         "errors": {
+            "network": "We konden de server niet bereiken. Controleer je verbinding en probeer het nog een keer.",
+            "generic": "Er ging iets mis. Probeer het nog een keer.",
             "blank": "Dit veld is verplicht",
             "invalid": "Ongeldige invoer",
             "tooShort": "Moet minimaal {count} tekens bevatten",
@@ -23,6 +27,7 @@
             "sessionExpired": "Je sessie is verlopen. Laad de pagina opnieuw en probeer het nog een keer.",
             "usernameTaken": "Deze gebruikersnaam is niet beschikbaar",
             "emailTaken": "Dit e-mailadres is niet beschikbaar"
-        }
+        },
+        "registrationTitle": "Nieuw bij Transbucket?"
     }
 }

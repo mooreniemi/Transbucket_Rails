@@ -10,9 +10,13 @@
             "news": "Tin tức",
             "procedures": "Thủ thuật",
             "surgeons": "Bác sĩ phẫu thuật",
-            "login": "Đăng nhập"
+            "login": "Đăng nhập",
+            "register": "Đăng ký",
+            "forgotPassword": "Bạn quên mật khẩu?"
         },
         "errors": {
+            "network": "Không thể kết nối đến máy chủ. Hãy kiểm tra kết nối và thử lại.",
+            "generic": "Đã xảy ra lỗi. Vui lòng thử lại.",
             "blank": "Trường này là bắt buộc",
             "invalid": "Dữ liệu nhập không hợp lệ",
             "tooShort": "Phải có ít nhất {count} ký tự",
@@ -23,6 +27,7 @@
             "sessionExpired": "Phiên của bạn đã hết hạn. Hãy tải lại trang và thử lại.",
             "usernameTaken": "Tên người dùng này không khả dụng",
             "emailTaken": "Email này không khả dụng"
-        }
+        },
+        "registrationTitle": "Bạn mới dùng Transbucket?"
     }
 }

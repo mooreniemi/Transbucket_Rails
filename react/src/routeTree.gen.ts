@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LocaleRouteImport } from './routes/$locale'
+import { Route as LocalePublicForgotPasswordRouteImport } from './routes/$locale/_public/forgot-password'
 import { Route as LocalePublicLoginRouteImport } from './routes/$locale/_public/login'
 import { Route as LocalePublicRegisterRouteImport } from './routes/$locale/_public/register'
 
@@ -24,6 +25,12 @@ const LocaleRoute = LocaleRouteImport.update({
   path: '/$locale',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LocalePublicForgotPasswordRoute =
+  LocalePublicForgotPasswordRouteImport.update({
+    id: '/_public/forgot-password',
+    path: '/forgot-password',
+    getParentRoute: () => LocaleRoute,
+  } as any)
 const LocalePublicLoginRoute = LocalePublicLoginRouteImport.update({
   id: '/_public/login',
   path: '/login',
@@ -38,12 +45,14 @@ const LocalePublicRegisterRoute = LocalePublicRegisterRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
+  '/$locale/forgot-password': typeof LocalePublicForgotPasswordRoute
   '/$locale/login': typeof LocalePublicLoginRoute
   '/$locale/register': typeof LocalePublicRegisterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
+  '/$locale/forgot-password': typeof LocalePublicForgotPasswordRoute
   '/$locale/login': typeof LocalePublicLoginRoute
   '/$locale/register': typeof LocalePublicRegisterRoute
 }
@@ -51,18 +60,30 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
+  '/$locale/_public/forgot-password': typeof LocalePublicForgotPasswordRoute
   '/$locale/_public/login': typeof LocalePublicLoginRoute
   '/$locale/_public/register': typeof LocalePublicRegisterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$locale' | '/$locale/login' | '/$locale/register'
+  fullPaths:
+    | '/'
+    | '/$locale'
+    | '/$locale/forgot-password'
+    | '/$locale/login'
+    | '/$locale/register'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$locale' | '/$locale/login' | '/$locale/register'
+  to:
+    | '/'
+    | '/$locale'
+    | '/$locale/forgot-password'
+    | '/$locale/login'
+    | '/$locale/register'
   id:
     | '__root__'
     | '/'
     | '/$locale'
+    | '/$locale/_public/forgot-password'
     | '/$locale/_public/login'
     | '/$locale/_public/register'
   fileRoutesById: FileRoutesById
@@ -88,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$locale/_public/forgot-password': {
+      id: '/$locale/_public/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/$locale/forgot-password'
+      preLoaderRoute: typeof LocalePublicForgotPasswordRouteImport
+      parentRoute: typeof LocaleRoute
+    }
     '/$locale/_public/login': {
       id: '/$locale/_public/login'
       path: '/login'
@@ -106,11 +134,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface LocaleRouteChildren {
+  LocalePublicForgotPasswordRoute: typeof LocalePublicForgotPasswordRoute
   LocalePublicLoginRoute: typeof LocalePublicLoginRoute
   LocalePublicRegisterRoute: typeof LocalePublicRegisterRoute
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
+  LocalePublicForgotPasswordRoute: LocalePublicForgotPasswordRoute,
   LocalePublicLoginRoute: LocalePublicLoginRoute,
   LocalePublicRegisterRoute: LocalePublicRegisterRoute,
 }

@@ -2,7 +2,14 @@ Rails.application.routes.draw do
   scope '(:locale)', locale: /en|de|es|fr|it|ja|zh-CN|zh-TW|pt-BR|nl|pl|ru|tr|vi|ar|sv/ do
     root :to => 'pages#home'
 
-    devise_for :users, controllers: { registrations: "registrations", confirmations: "confirmations", sessions: "sessions" }
+    # Devise's old reset password URL, from reset emails that were already
+    # sent. Declared before devise_for so it wins. (The old forgot password
+    # URL is handled by PasswordsController#new.)
+    get "/users/password/edit", to: redirect { |params, req|
+      "#{params[:locale] && "/#{params[:locale]}"}/reset-password#{req.query_string.presence && "?#{req.query_string}"}"
+    }
+
+    devise_for :users, controllers:{ registrations: "registrations", confirmations: "confirmations", sessions: "sessions", passwords: "passwords" }
     # don't want 404 on requesting users index, it breaks google crawlers
     # if user is signed in, login will actually redirect to pins
     get "/users", to: redirect("/login")
@@ -14,6 +21,12 @@ Rails.application.routes.draw do
       # Named so SessionsController#new can redirect_to login_path --
       # sign-in itself (POST /users/sign_in) is untouched.
       get "/login" => "react_app#guest_page", as: "login"
+      # Named so PasswordsController#new can redirect_to forgot_password_path --
+      # requesting the email (POST /users/password) is untouched.
+      get "/forgot-password" => "react_app#guest_page", as: "forgot_password"
+      # Still Devise's own page, just at a nicer URL -- changing the password
+      # (PUT /users/password) is untouched.
+      get "/reset-password" => "passwords#edit", as: "reset_password"
     end
 
     resources :users do

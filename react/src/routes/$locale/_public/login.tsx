@@ -69,7 +69,7 @@ function LoginPage() {
             isPressed: showPassword,
             ariaLabel: showPassword ? 'hide password' : 'show password'
           }} />
-        <div className="text-right text-xs"><a href={`/${locale}/users/password/new`}>{m['login.forgotPasswordLink']()}</a></div>
+        <div className="text-right text-xs"><a href={`/${locale}/forgot-password`}>{m['login.forgotPasswordLink']()}</a></div>
         {/* Hidden "0" before the checkbox, matching Rails' own check_box
             helper -- an unchecked box submits nothing on its own, so the
             hidden field is what tells Devise remember_me is explicitly

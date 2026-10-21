@@ -25,7 +25,8 @@
             "procedures": "Procedures",
             "surgeons": "Surgeons",
             "login": "Log in",
-            "register": "Register"
+            "register": "Register",
+            "forgotPassword": "Forgot your password?"
         }
     }
 }

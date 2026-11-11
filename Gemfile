@@ -62,7 +62,7 @@ gem 'http_accept_language'
 gem 'rails-i18n', '~> 8.1'
 # Floor at the release that fixes the CSS-selector ReDoS (CVE-2026-79770) and
 # the use-after-free advisories in 1.19.3 and earlier.
-gem 'nokogiri', '~> 1.19', '>= 1.19.4'
+gem 'nokogiri', '~> 1.19'
 gem 'i18n_generators'
 
 # for authentication
